@@ -1,0 +1,39 @@
+﻿using Domain.Primitives;
+using Domain.ValueObjects;
+using Infrastructure.Abstractions;
+using Infrastructure.DatabaseEntity;
+
+namespace Infrastructure.Mapper.Concrete
+{
+    internal class UserRoleMapper : AbstractMapper<UserRole, UserRelationToRole>
+    {
+        public override UserRelationToRole MapToDatabaseEntity(UserRole entity, bool mapRelationObjects)
+        {
+            if (entity == null)
+                return null;
+            UserRelationToRole role = new UserRelationToRole();
+
+            role.UserUuid = entity.User.Uuid.ToGuid();
+            role.RoleUuid = entity.Role.Uuid.ToGuid();
+            role.CreatedTime = entity.CreatedTime;  
+            role.LastModifiedTime = entity.LastModifiedTime;    
+            role.DeletedTime = entity.DeletedTime;
+            role.Deleted = Convert.ToSByte(entity.DeletedTime != DateTime.MinValue);
+            return role;
+        }
+
+        public override UserRole MapToDomainEntity(UserRelationToRole entity, bool withRelations)
+        {
+            if (entity == null)
+                return null;
+            var userDomainEntity = entity.UserUu.MapToDomainEntity<Domain.Entities.User.User,User>(false);
+            var roleDomainEntity = entity.RoleUu.MapToDomainEntity<Domain.Entities.Role.Role, Role>(false);
+            return UserRole.Create(
+                userDomainEntity,
+                roleDomainEntity,
+                entity.CreatedTime??DateTime.MinValue,
+                entity.LastModifiedTime,
+                entity.DeletedTime);
+        }
+    }
+}

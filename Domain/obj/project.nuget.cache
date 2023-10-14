@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "VtVpgEDV/9/BU2opOzahEOpx3Hh12w5MdRJw6zB60IH/ynVZSqP2y504PMlom6lpH5FHnnFFJVJRMGLPvA8Oaw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Domain\\Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Mika\\.nuget\\packages\\mediatr\\12.1.1\\mediatr.12.1.1.nupkg.sha512",
+    "C:\\Users\\Mika\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\Mika\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
