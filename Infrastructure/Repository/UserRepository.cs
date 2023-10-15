@@ -19,8 +19,9 @@ namespace Infrastructure.Repository
             var value = await _dbSet.Include(i => i.UserTypeUu)
                                     .Include(i => i.UserRelationToRoles)
                                     .ThenInclude(ur => ur.RoleUu)
-                                    .Include(i => i.UserFriendUserUus) 
-                                    .ThenInclude(uf => uf.FriendUserUu) 
+                                    .Include(i => i.UserFriendUserUus)
+                                    .ThenInclude(uf => uf.FriendUserUu)
+                                    .ThenInclude(ut => ut.UserTypeUu)
                                     .FirstOrDefaultAsync(expression);
             return this.MapToDomainEntity(value,true);
         }
@@ -43,7 +44,10 @@ namespace Infrastructure.Repository
         {
             var value = await _dbSet.Include(i => i.UserTypeUu)
                                     .Include(i => i.UserRelationToRoles)
-                                    .Include(i => i.UserFriendFriendUserUus)
+                                    .ThenInclude(ur => ur.RoleUu)
+                                    .Include(i => i.UserFriendUserUus)
+                                    .ThenInclude(uf => uf.FriendUserUu)
+                                    .ThenInclude(ut => ut.UserTypeUu)
                                     .AsNoTracking()
                                     .Where(expression)
                                     .ToListAsync();

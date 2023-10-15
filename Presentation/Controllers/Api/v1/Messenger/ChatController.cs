@@ -32,10 +32,8 @@ namespace Presentation.Controllers.Api.v1.Messenger
         [HttpPost()]
         public async Task<IActionResult> CreateChat([FromBody] ChatDTO chatDto, CancellationToken cancellationToken)
         {
-            var membersUuidList = chatDto.Members.Select(x => x.Uuid??default(Guid))
-                .ToList();
-            var adminsUuidList = chatDto.Members.Select(x => x.Uuid ?? default(Guid))
-                .ToList();
+            var membersUuidList = chatDto.Members.ToList();
+            var adminsUuidList = chatDto.Members.ToList();
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
             var commandCreateChat = new CreateChatCommand(userUuid,
                                                           chatDto.ChatName,
@@ -50,9 +48,9 @@ namespace Presentation.Controllers.Api.v1.Messenger
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         [HttpGet("{chatId}")]
-        public async Task<IActionResult> GetChat(Guid guid, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetChat(Guid chatId, CancellationToken cancellationToken)
         {
-            var command = new GetChatByIdQuery(guid);
+            var command = new GetChatByIdQuery(chatId);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.IsSuccess ? Ok(result.Value) : BadRequest();

@@ -7,11 +7,11 @@ namespace Application.DataTransferObject.Messenger
         [JsonPropertyName("uuid")]
         public Guid? Uuid { get; set; }
 
-        [JsonPropertyName("chat")]
-        public ChatDTO Chat { get; set; }
+        [JsonPropertyName("chat_uuid")]
+        public Guid ChatId { get; set; }
 
-        [JsonPropertyName("owner")]
-        public MessengerUserDTO Owner { get; set; }
+        [JsonPropertyName("owner_uuid")]
+        public Guid OwnerUuid { get; set; }
 
         [JsonPropertyName("text")]
         public string? Text { get; set; }
@@ -28,13 +28,13 @@ namespace Application.DataTransferObject.Messenger
         [JsonPropertyName("deleted_time")]
         public DateTime? DeletedTime { get; set; }
 
-        [JsonPropertyName("created_by_user")]
-        public MessengerUserDTO? CreatedByUser { get; set; }
+        [JsonPropertyName("created_by_user_uuid")]
+        public Guid? CreatedByUserUuid { get; set; }
 
-        [JsonPropertyName("last_modified_by_user")]
-        public MessengerUserDTO? LastModifiedByUser { get; set; }
+        [JsonPropertyName("last_modified_by_user_uuid")]
+        public Guid? LastModifiedByUserUuid { get; set; }
 
-        [JsonPropertyName("deleted_by_user")]
-        public MessengerUserDTO? DeletedByUser { get; set; }
+        [JsonPropertyName("deleted_by_user_uuid")]
+        public Guid? DeletedByUserUuid { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace Infrastructure.Mapper.Concrete
         {
             Message message = new Message();
             message.Uuid = entity.Uuid.Id;
-            message.ChatUuid = entity.Chat.Uuid.Id;
+            message.ChatUuid = entity.Chat.ToGuid();
             message.Text = entity.Text;
             message.BinaryContent = entity.MediaContent?.Data;
             message.CreatedTime = entity.CreatedTime;
@@ -27,13 +27,18 @@ namespace Infrastructure.Mapper.Concrete
             if (entity == null)
                 return null;
             var messageId = entity.Uuid.ToIdentification<Domain.Entities.Message.MessageId>();
-            var chat = withRelations?entity.ChatUu.MapToDomainEntity< Domain.Entities.Chats.Chat, Chat>(false):null;
-            var user = withRelations?entity.MessageOwnerNavigation.MapToDomainEntity< Domain.Entities.User.User, User>(false):null;
+            Domain.Entities.Chats.ChatId chatId = null;
+            Domain.Entities.User.User user= null;
+            if (withRelations)
+            {
+                chatId = new Domain.Entities.Chats.ChatId(entity.ChatUu.Uuid);
+                user = entity.MessageOwnerNavigation.MapToDomainEntity<Domain.Entities.User.User, User>(false);
+            }
             var mediaContent = MediaContent.Parse(entity.BinaryContent);
 
             return Domain.Entities.Message.Message.Create(
                 messageId,
-                chat,
+                chatId,
                 user,
                 entity.Text,
                 mediaContent,

@@ -167,7 +167,7 @@
         "projectName": "Shared",
         "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj",
         "packagesPath": "C:\\Users\\Mika\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mika\\Source\\Repos\\jellyfish-backend-ddd\\Shared\\obj\\",
+        "outputPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

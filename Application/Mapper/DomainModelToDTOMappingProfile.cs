@@ -1,6 +1,9 @@
 ﻿using Application.DataTransferObject;
 using Application.DataTransferObject.Messenger;
 using AutoMapper;
+using Domain.Primitives;
+using Domain.ValueObjects;
+using System.Security.Cryptography;
 
 namespace Application.Mapper
 {
@@ -9,48 +12,70 @@ namespace Application.Mapper
         public DomainModelToDTOMappingProfile()
         {
             CreateMap<DateOnly, DateTime>()
-                .ConvertUsing(src => new DateTime(src.Year,src.Month,src.Day));
+                .ConvertUsing(dst => new DateTime(dst.Year, dst.Month, dst.Day));
             CreateMap<DateTime, DateOnly>()
-                .ConvertUsing(src => DateOnly.FromDateTime(src));
+                .ConvertUsing(dst => DateOnly.FromDateTime(dst));
 
             CreateMap<Domain.ValueObjects.PhoneNumber, string>()
-                .ConvertUsing(src => src.PhoneNumb);
+                .ConvertUsing(dst => dst.PhoneNumb);
             CreateMap<Domain.ValueObjects.Email, string>()
-                .ConvertUsing(src => src.EmailValue);
+                .ConvertUsing(dst => dst.EmailValue);
             CreateMap<Domain.ValueObjects.Picture, string>()
-                .ConvertUsing(src => Convert.ToBase64String(src.Data));
+                .ConvertUsing(dst => Convert.ToBase64String(dst.Data));
 
             CreateMap<Domain.Entities.Message.MessageId, Guid>()
-                .ConvertUsing(src => src.Id);
+                .ConvertUsing(dst => dst.Id);
             CreateMap<Guid, Domain.Entities.Message.MessageId>()
-                .ConvertUsing(src => new Domain.Entities.Message.MessageId(src));
-            CreateMap<Domain.Entities.Message.Message, Application.DataTransferObject.Messenger.MessageDTO>();
+                .ConvertUsing(dst => new Domain.Entities.Message.MessageId(dst));
+            CreateMap<Domain.Entities.Message.Message, Application.DataTransferObject.Messenger.MessageDTO>()
+                .ForMember(dst => dst.ChatId, dst => dst.MapFrom(x => x.Chat.ToGuid()))
+                .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Uuid.ToGuid()))
+                .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Uuid.ToGuid()))
+                .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Uuid.ToGuid()))
+                .ForMember(dst => dst.OwnerUuid, dst => dst.MapFrom(x => x.Owner.Uuid.ToGuid()));
 
             CreateMap<Domain.Entities.Chats.ChatId, Guid>()
-                .ConvertUsing(src => src.Id);
+                .ConvertUsing(dst => dst.Id);
             CreateMap<Guid, Domain.Entities.Chats.ChatId>()
-                .ConvertUsing(src => new Domain.Entities.Chats.ChatId(src));
-            CreateMap<Domain.Entities.Chats.Chat, Application.DataTransferObject.Messenger.ChatDTO>();/*
-                ForMember(src => src.PictureBase64, dst => dst.ConvertUsing(new ByteArrayToBase64StringConverter()));*/
+                .ConvertUsing(dst => new Domain.Entities.Chats.ChatId(dst));
+
+            CreateMap<ChatMember, Domain.ValueObjects.UserFriend>();
+            CreateMap<Domain.Entities.Chats.Chat, Application.DataTransferObject.Messenger.ChatDTO>()
+                .ForMember(dst => dst.Members, src => src.MapFrom(x => x.Members.Select(x => x.User.Uuid.ToGuid()).ToList()))
+                .ForMember(dst => dst.Admins, src => src.MapFrom(x => x.Admins.Select(x => x.User.Uuid.ToGuid()).ToList()))
+                .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Uuid.ToGuid()))
+                .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Uuid.ToGuid()))
+                .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Uuid.ToGuid()))
+                .ForMember(dst => dst.Messages, src => src.MapFrom(x => x.Messages));
 
             CreateMap<Domain.Entities.Role.RoleId, Guid>()
-                .ConvertUsing(src => src.Id);
+                .ConvertUsing(dst => dst.Id);
             CreateMap<Guid, Domain.Entities.Role.RoleId>()
-                .ConvertUsing(src => new Domain.Entities.Role.RoleId(src));
-            CreateMap<Domain.Entities.Role.Role, RoleDTO>();
+                .ConvertUsing(dst => new Domain.Entities.Role.RoleId(dst));
+            CreateMap<Domain.Entities.Role.Role, RoleDTO>()
+                .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Uuid.ToGuid()))
+                .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Uuid.ToGuid()))
+                .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Uuid.ToGuid()));
 
             CreateMap<Domain.Entities.User.UserId, Guid>()
-                .ConvertUsing(src => src.Id);
+                .ConvertUsing(dst => dst.Id);
             CreateMap<Guid, Domain.Entities.User.UserId>()
-                .ConvertUsing(src => new Domain.Entities.User.UserId(src));
+                .ConvertUsing(dst => new Domain.Entities.User.UserId(dst));
             CreateMap<Domain.Entities.User.User, UserDTO>()
-                .ForMember(src => src.Roles, dst => dst.MapFrom(x => x.Roles.Select(x => x.Role).ToList()))
-                .ForMember(src => src.Friends, dst => dst.MapFrom(x => x.Friends.Select(x => x.Friend).ToList()))
-                .ForMember(src => src.FriendshipRequests, dst => dst.MapFrom(x => x.FriendshipRequests))
-                .ForMember(src => src.Phone, dst => dst.MapFrom(x => x.Phone.ToString()))
-                .ForMember(src => src.PictureBase64, dst => dst.MapFrom(x=>x.Picture.ToString()))
-                .ForMember(src => src.Email, dst => dst.MapFrom(x => x.Email.ToString()));/*.
-                ForMember(src => src.PictureBase64, dst => dst.ConvertUsing(new ByteArrayToBase64StringConverter())); */
+                .ForMember(dst => dst.Roles, dst => dst.MapFrom(x => x.Roles.Select(x => x.Role).ToList()))
+                .ForMember(dst => dst.Friends, dst => dst.MapFrom(x => x.Friends.Select(x => x.Friend.Uuid.ToGuid()).ToList()))
+                .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.FriendshipRequests))
+                .ForMember(dst => dst.Phone, dst => dst.MapFrom(x => x.Phone.ToString()))
+                .ForMember(dst => dst.UserTypeUuid, dst => dst.MapFrom(x => x.UserType.Uuid.ToGuid()))
+                .ForMember(dst => dst.PictureBase64, dst => dst.MapFrom(x=>x.Picture.ToString()))
+                .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Uuid.ToGuid()))
+                .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Uuid.ToGuid()))
+                .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Uuid.ToGuid()))
+                .ForMember(dst => dst.Email, dst => dst.MapFrom(x => x.Email.ToString()));
+            CreateMap<Domain.Entities.User.User, MessengerUserDTO>()
+                .ForMember(dst => dst.Friends, dst => dst.MapFrom(x => x.Friends.Select(x => x.Friend).ToList()))
+                .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.FriendshipRequests))
+                .ForMember(dst => dst.PictureBase64, dst => dst.MapFrom(x => x.Picture.ToString()));
 
             /*CreateMap<Domain.ValueObjects.UserRole, RoleDTO>()
                 .ForMember(src => src, dst => dst.MapFrom(x => x.Role));
@@ -62,10 +87,13 @@ namespace Application.Mapper
             CreateMap<UserDTO, Domain.ValueObjects.UserFriend>();
 
             CreateMap<Domain.Entities.User.UserTypeId, Guid>()
-                .ConvertUsing(src => src.Id);
+                .ConvertUsing(dst => dst.Id);
             CreateMap<Guid, Domain.Entities.User.UserTypeId>()
-                .ConvertUsing(src => new Domain.Entities.User.UserTypeId(src));
-            CreateMap<Domain.Entities.User.UserType, UserTypeDTO>();
+                .ConvertUsing(dst => new Domain.Entities.User.UserTypeId(dst));
+            CreateMap<Domain.Entities.User.UserType, UserTypeDTO>()
+                .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Uuid.ToGuid()))
+                .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Uuid.ToGuid()))
+                .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Uuid.ToGuid()));
         }
     }
     public class ByteArrayToBase64StringConverter : IValueConverter<byte[], string>

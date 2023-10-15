@@ -22,13 +22,13 @@ namespace Application.DataTransferObject
         [JsonPropertyName("deleted_time")]
         public DateTime? DeletedTime { get; set; }
 
-        [JsonPropertyName("created_by_user")]
-        public UserDTO? CreatedByUser { get; set; }
+        [JsonPropertyName("created_by_user_uuid")]
+        public Guid? CreatedByUserUuid { get; set; }
 
-        [JsonPropertyName("last_modified_by_user")]
-        public UserDTO? LastModifiedByUser { get; set; }
+        [JsonPropertyName("last_modified_by_user_uuid")]
+        public Guid? LastModifiedByUserUuid { get; set; }
 
-        [JsonPropertyName("deleted_by_user")]
-        public UserDTO? DeletedByUser { get; set; }
+        [JsonPropertyName("deleted_by_user_uuid")]
+        public Guid? DeletedByUserUuid { get; set; }
     }
 }

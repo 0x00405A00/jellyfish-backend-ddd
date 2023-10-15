@@ -29,8 +29,8 @@ namespace Application.DataTransferObject
         [JsonPropertyName("picture_base64")]
         public string? PictureBase64 { get; set; }
 
-        [JsonPropertyName("user_type")]
-        public UserTypeDTO? UserType { get; set; }
+        [JsonPropertyName("user_type_uuid")]
+        public Guid? UserTypeUuid { get; set; }
 
         [JsonPropertyName("date_of_birth")]
         public DateTime? DateOfBirth { get; set; }
@@ -42,13 +42,10 @@ namespace Application.DataTransferObject
         public ICollection<RoleDTO>? Roles { get; set; }
 
         [JsonPropertyName("friends")]
-        public ICollection<UserDTO>? Friends { get; set; }
+        public ICollection<Guid>? Friends { get; set; }
 
         [JsonPropertyName("friendship_requests")]
         public ICollection<FriendshipRequestDTO>? FriendshipRequests { get; set; }
-
-        [JsonPropertyName("chats")]
-        public ICollection<ChatDTO>? Chats { get; set; }
 
         [JsonPropertyName("created_time")]
         public DateTime? CreatedTime { get; set; }
@@ -59,14 +56,14 @@ namespace Application.DataTransferObject
         [JsonPropertyName("deleted_time")]
         public DateTime? DeletedTime { get; set; }
 
-        [JsonPropertyName("created_by_user")]
-        public UserDTO? CreatedByUser { get; set; }
+        [JsonPropertyName("created_by_user_uuid")]
+        public Guid? CreatedByUserUuid { get; set; }
 
-        [JsonPropertyName("last_modified_by_user")]
-        public UserDTO? LastModifiedByUser { get; set; }
+        [JsonPropertyName("last_modified_by_user_uuid")]
+        public Guid? LastModifiedByUserUuid { get; set; }
 
-        [JsonPropertyName("deleted_by_user")]
-        public UserDTO? DeletedByUser { get; set; }
+        [JsonPropertyName("deleted_by_user_uuid")]
+        public Guid? DeletedByUserUuid { get; set; }
 
         public UserDTO()
         {

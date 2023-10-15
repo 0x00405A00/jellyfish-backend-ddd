@@ -63,7 +63,7 @@ namespace Infrastructure.Mapper.Concrete
                 return ChatMember.Create(user, isChatAdmin, userRelation.CreatedTime ?? DateTime.MinValue, userRelation.LastModifiedTime, userRelation.DeletedTime);
             })
                                                       .ToList();
-            var chatMessages = entity.Messages.MapToDomainEntity<Domain.Entities.Message.Message, Message>(false);
+            var chatMessages = entity.Messages.MapToDomainEntity<Domain.Entities.Message.Message, Message>(true);
             var picture = Picture.Parse(entity.Picture);
 
             return Domain.Entities.Chats.Chat.Create(

@@ -16,7 +16,7 @@ namespace Domain.Entities.Message
         public MediaContent? MediaContent { get; private set; }
 
         public DateTime? CreatedTime { get; private set; }
-        public Chat Chat { get; }
+        public ChatId Chat { get; }
         public DateTime? LastModifiedTime { get; private set; }
         public DateTime? DeletedTime { get; private set; }
         public User.User? CreatedByUser { get; private set; }
@@ -28,7 +28,7 @@ namespace Domain.Entities.Message
         }
         private Message(
             MessageId id,
-            Chat chat,
+            ChatId chat,
             User.User owner,
             string text,
             MediaContent? mediaContent,
@@ -57,7 +57,7 @@ namespace Domain.Entities.Message
         /// <returns></returns>
         public static Message Create(
             MessageId messageId,
-            Chat chat,
+            ChatId chat,
             User.User owner,
             string text,
             MediaContent? mediaContent,
@@ -69,7 +69,7 @@ namespace Domain.Entities.Message
             {
                 throw new NotValidEntityIdentification();
             }
-            if((String.IsNullOrWhiteSpace(text)&&mediaContent ==null) || owner == null || chat == null)
+            if((String.IsNullOrWhiteSpace(text)&&mediaContent ==null) || owner == null)
             {
                 throw new NotValidMessageException();   
             }

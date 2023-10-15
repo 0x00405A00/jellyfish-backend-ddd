@@ -211,7 +211,7 @@ namespace Domain.Entities.Chats
             {
                 throw new NotValidMessageException();
             }
-            var message = Message.Message.Create(new Message.MessageId(Guid.NewGuid()), this, messageOwner, text, mediaContent, DateTime.Now, null, null);
+            var message = Message.Message.Create(new Message.MessageId(Guid.NewGuid()), this.Uuid, messageOwner, text, mediaContent, DateTime.Now, null, null);
             this._messages.Add(message);
             Raise(new ChatAppendMessageDomainEvent(this, messageOwner, message));
             return message;

@@ -17,10 +17,10 @@ namespace Application.DataTransferObject.Messenger
         public string? PictureBase64 { get; set; }
 
         [JsonPropertyName("members")]
-        public ICollection<MessengerUserDTO>? Members { get; set; }
+        public ICollection<Guid>? Members { get; set; }
 
         [JsonPropertyName("admins")]
-        public ICollection<MessengerUserDTO>? Admins { get; set; }
+        public ICollection<Guid>? Admins { get; set; }
 
         [JsonPropertyName("messages")]
         public ICollection<MessageDTO>? Messages { get; set; }
@@ -34,14 +34,14 @@ namespace Application.DataTransferObject.Messenger
         [JsonPropertyName("deleted_time")]
         public DateTime? DeletedTime { get; set; }
 
-        [JsonPropertyName("created_by_user")]
-        public MessengerUserDTO? CreatedByUser { get; set; }
+        [JsonPropertyName("created_by_user_uuid")]
+        public Guid? CreatedByUserUuid { get; set; }
 
-        [JsonPropertyName("last_modified_by_user")]
-        public MessengerUserDTO? LastModifiedByUser { get; set; }
+        [JsonPropertyName("last_modified_by_user_uuid")]
+        public Guid? LastModifiedByUserUuid { get; set; }
 
-        [JsonPropertyName("deleted_by_user")]
-        public MessengerUserDTO? DeletedByUser { get; set; }
+        [JsonPropertyName("deleted_by_user_uuid")]
+        public Guid? DeletedByUserUuid { get; set; }
 
         public ChatDTO()
         {
