@@ -25,6 +25,8 @@ namespace Application.CQS.User.Commands.RegisterUser.Register
             _mapper = mapper;
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
+            _userTypeRepository = userTypeRepository;
+            _roleRepository = roleRepository;
         }
 
         public async Task<Result<UserDTO>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -69,7 +71,7 @@ namespace Application.CQS.User.Commands.RegisterUser.Register
                 null,
                 null,
                 null,
-                request.DateOfBirth,
+                DateOnly.FromDateTime(request.DateOfBirth),
                 null,
                 DateTime.Now,
                 null,

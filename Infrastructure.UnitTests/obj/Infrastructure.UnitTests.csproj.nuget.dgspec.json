@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Infrastructure.UnitTests\\Infrastructure.UnitTests.csproj": {}
+    "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure.UnitTests\\Infrastructure.UnitTests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Domain\\Domain.csproj": {
+    "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Domain\\Domain.csproj",
+        "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\Mika\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Domain\\obj\\",
+        "outputPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -33,8 +33,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Shared\\Shared.csproj": {
-                "projectPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Shared\\Shared.csproj"
+              "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj": {
+                "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj"
               }
             }
           }
@@ -74,14 +74,14 @@
         }
       }
     },
-    "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Infrastructure.UnitTests\\Infrastructure.UnitTests.csproj": {
+    "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure.UnitTests\\Infrastructure.UnitTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Infrastructure.UnitTests\\Infrastructure.UnitTests.csproj",
+        "projectUniqueName": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure.UnitTests\\Infrastructure.UnitTests.csproj",
         "projectName": "Infrastructure.UnitTests",
-        "projectPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Infrastructure.UnitTests\\Infrastructure.UnitTests.csproj",
+        "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure.UnitTests\\Infrastructure.UnitTests.csproj",
         "packagesPath": "C:\\Users\\Mika\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Infrastructure.UnitTests\\obj\\",
+        "outputPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure.UnitTests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -103,11 +103,11 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Domain\\Domain.csproj"
+              "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj"
               },
-              "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -167,14 +167,14 @@
         }
       }
     },
-    "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Infrastructure\\Infrastructure.csproj",
+        "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Mika\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -196,11 +196,11 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Domain\\Domain.csproj"
+              "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj"
               },
-              "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Shared\\Shared.csproj": {
-                "projectPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Shared\\Shared.csproj"
+              "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj": {
+                "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj"
               }
             }
           }
@@ -258,14 +258,14 @@
         }
       }
     },
-    "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Shared\\Shared.csproj": {
+    "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Shared\\Shared.csproj",
+        "projectUniqueName": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj",
         "projectName": "Shared",
-        "projectPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Shared\\Shared.csproj",
+        "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj",
         "packagesPath": "C:\\Users\\Mika\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Shared\\obj\\",
+        "outputPath": "C:\\Users\\Mika\\Source\\Repos\\jellyfish-backend-ddd\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

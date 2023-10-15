@@ -22,5 +22,5 @@ namespace Application.CQS.User.Commands.UpdateUser
                                     string? LastName,
                                     string? Email,
                                     string? Phone,
-                                    DateOnly? DateOfBirth) : ICommand<Guid>;
+                                    DateTime? DateOfBirth) : ICommand<Guid>;
 }

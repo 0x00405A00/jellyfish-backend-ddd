@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "69wJ0NCNPlCErf/4SEWwOWluJDfee60haechMklu+Yk7MqHBrYo423C63EGulhnuaTYcRmJNjCaK+0iemY1Dvg==",
+  "dgSpecHash": "PA6NhoF4TeY0P4Gk0syMmq7KZDAMwVkkcfYmHs61xqPOaJ59o2AtbaiLM3+5f+TBPIxgUFhDpGbYDadWyakH3w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Shared\\Shared.csproj",
+  "projectFilePath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

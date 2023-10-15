@@ -482,6 +482,7 @@ internal partial class ApplicationDbContext : DbContext
                 .HasConstraintName("fkUserChatInviteRequestToUser1");
         });
 
+
         modelBuilder.Entity<UserFriend>(entity =>
         {
             entity.HasKey(e => new { e.UserUuid, e.FriendUserUuid }).HasName("PRIMARY");

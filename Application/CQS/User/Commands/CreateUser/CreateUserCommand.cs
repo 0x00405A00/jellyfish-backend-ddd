@@ -10,5 +10,5 @@ namespace Application.CQS.User.Commands.CreateUser
                                     string LastName,
                                     string Email,
                                     string Phone,
-                                    DateOnly DateOfBirth) : ICommand<UserDTO>;
+                                    DateTime DateOfBirth) : ICommand<UserDTO>;
 }

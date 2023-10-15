@@ -1,4 +1,5 @@
 ﻿using Application.DataTransferObject;
+using Application.DataTransferObject.Messenger;
 using AutoMapper;
 
 namespace Application.Mapper
@@ -7,6 +8,11 @@ namespace Application.Mapper
     {
         public DomainModelToDTOMappingProfile()
         {
+            CreateMap<DateOnly, DateTime>()
+                .ConvertUsing(src => new DateTime(src.Year,src.Month,src.Day));
+            CreateMap<DateTime, DateOnly>()
+                .ConvertUsing(src => DateOnly.FromDateTime(src));
+
             CreateMap<Domain.ValueObjects.PhoneNumber, string>()
                 .ConvertUsing(src => src.PhoneNumb);
             CreateMap<Domain.ValueObjects.Email, string>()
@@ -37,9 +43,24 @@ namespace Application.Mapper
                 .ConvertUsing(src => src.Id);
             CreateMap<Guid, Domain.Entities.User.UserId>()
                 .ConvertUsing(src => new Domain.Entities.User.UserId(src));
-            CreateMap<Domain.Entities.User.User, UserDTO>();
-            CreateMap<Domain.Entities.User.User, Application.DataTransferObject.Messenger.MessengerUserDTO>();/*.
+            CreateMap<Domain.Entities.User.User, UserDTO>()
+                .ForMember(src => src.Roles, dst => dst.MapFrom(x => x.Roles.Select(x => x.Role).ToList()))
+                .ForMember(src => src.Friends, dst => dst.MapFrom(x => x.Friends.Select(x => x.Friend).ToList()))
+                .ForMember(src => src.FriendshipRequests, dst => dst.MapFrom(x => x.FriendshipRequests))
+                .ForMember(src => src.Phone, dst => dst.MapFrom(x => x.Phone.ToString()))
+                .ForMember(src => src.PictureBase64, dst => dst.MapFrom(x=>x.Picture.ToString()))
+                .ForMember(src => src.Email, dst => dst.MapFrom(x => x.Email.ToString()));/*.
                 ForMember(src => src.PictureBase64, dst => dst.ConvertUsing(new ByteArrayToBase64StringConverter())); */
+
+            /*CreateMap<Domain.ValueObjects.UserRole, RoleDTO>()
+                .ForMember(src => src, dst => dst.MapFrom(x => x.Role));
+            CreateMap<Domain.ValueObjects.FriendshipRequest, UserFriendshipRequestDTO>();
+            CreateMap<Domain.ValueObjects.UserFriend, UserDTO>();*/
+
+            CreateMap<UserFriendshipRequestDTO, Domain.ValueObjects.FriendshipRequest>();
+            CreateMap<RoleDTO, Domain.ValueObjects.UserRole>();
+            CreateMap<UserDTO, Domain.ValueObjects.UserFriend>();
+
             CreateMap<Domain.Entities.User.UserTypeId, Guid>()
                 .ConvertUsing(src => src.Id);
             CreateMap<Guid, Domain.Entities.User.UserTypeId>()

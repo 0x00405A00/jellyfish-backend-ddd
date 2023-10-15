@@ -16,24 +16,10 @@ namespace Infrastructure_Test.Mapper.DatabaseToEntity
         [ClassData(typeof(UserDatabaseEntityTestData))]
         public void UserDatabaseEntity_ShouldMapTo_UserDomainEntity_WithoutNull(User user)
         {
-            try
-            {
-
-                var t1 = user.UserFriendFriendUserUus.GetType();
-                var result = user.MapToDomainEntity < Domain.Entities.User.User, User>(true);
-
-                /*result.Update<Domain.Entities.User.User>(new KeyValuePair<Expression<Func<Domain.Entities.User.User, object>>, object>[]
-                {
-                    new KeyValuePair<Expression<Func<Domain.Entities.User.User, object>>, object>(x=>x.UserName,"neuer name"),
-                    new KeyValuePair<Expression<Func<Domain.Entities.User.User, object>>, object>(x=>x.LastName,"neuer lastname"),
-                });*/
-                var t2 = result.Friends.GetType();
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.ToString());
-
-            }
+            var t1 = user.UserFriendFriendUserUus.GetType();
+            var result = user.MapToDomainEntity<Domain.Entities.User.User, User>(true);
+            Assert.NotNull(result);
+            Assert.NotNull(result.Friends);
         }
     }
     public class UserDatabaseEntityTestData : TheoryData<User>

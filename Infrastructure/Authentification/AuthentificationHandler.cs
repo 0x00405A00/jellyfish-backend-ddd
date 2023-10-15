@@ -25,17 +25,17 @@ namespace Infrastructure.Authentification
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            /*var endpoint = Context.Features.Get<IEndpointFeature>()?.Endpoint;
-            if (endpoint == null)
-                throw new NullReferenceException("endpoint is null; are endpoints mapped in Startup.Configure.UseEndpoints(endpoint=>{...})?");
-            
+            var endpoint = Context.Features.Get<IEndpointFeature>()?.Endpoint;
+            bool isSwaggerEndpoint = (Request.Path.HasValue && Request.Path.Value.ToLower().Contains("swagger"));
+            if (endpoint == null && !isSwaggerEndpoint)//endpoint is null by requesting swagger doc endpoint or when route does not exists
+            {
+                return AuthenticateResult.NoResult();
+            }
             if (endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null)
             {
                 return AuthenticateResult.NoResult();
             }
-            if (!Request.Headers.ContainsKey("Authorization"))
-                return AuthenticateResult.Fail("unauthorized");
-             */
+             
 
 
             string token = Request.Headers["Authorization"];
@@ -87,7 +87,10 @@ namespace Infrastructure.Authentification
             var texpMin = int.Parse(config["TokenExpiresMinutes"]);
             var rexpMin = int.Parse(config["RefreshTokenExpiresMinutes"]);
             var jwtToken = JwtHandler.DecodeJwt(token, symetricKey,issuer, audience);
-
+            if(jwtToken==null)
+            {
+                return AuthenticateResult.Fail("unauthorized");
+            }
             if (DateTimeExtension.UnixTimeStampToDateTime((long)jwtToken.Payload.Exp) <= DateTime.Now)
             {
                 return AuthenticateResult.Fail("unauthorized");

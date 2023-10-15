@@ -1,24 +1,27 @@
 ﻿using Domain.Entities.User;
+using Domain.ValueObjects;
 using Infrastructure.Abstractions;
+using Infrastructure.DatabaseEntity;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repository
 {
-    internal class UserRepository : GenericRepository<User, Infrastructure.DatabaseEntity.User>,IUserRepository
+    internal class UserRepository : GenericRepository<Domain.Entities.User.User, Infrastructure.DatabaseEntity.User>,IUserRepository
     {
         public UserRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext) 
         { 
         
         }
-        public async override Task<User> GetAsync(Expression<Func<DatabaseEntity.User, bool>> expression)
+        public async override Task<Domain.Entities.User.User> GetAsync(Expression<Func<DatabaseEntity.User, bool>> expression)
         {
             var value = await _dbSet.Include(i => i.UserTypeUu)
                                     .Include(i => i.UserRelationToRoles)
-                                    .Include(i => i.UserFriendFriendUserUus)
-                                    .AsNoTracking()
+                                    .ThenInclude(ur => ur.RoleUu)
+                                    .Include(i => i.UserFriendUserUus) 
+                                    .ThenInclude(uf => uf.FriendUserUu) 
                                     .FirstOrDefaultAsync(expression);
-
             return this.MapToDomainEntity(value,true);
         }
 
@@ -36,7 +39,7 @@ namespace Infrastructure.Repository
                          .AnyAsync();
         }
 
-        public async override Task<ICollection<User>> ListAsync(Expression<Func<DatabaseEntity.User, bool>> expression)
+        public async override Task<ICollection<Domain.Entities.User.User>> ListAsync(Expression<Func<DatabaseEntity.User, bool>> expression)
         {
             var value = await _dbSet.Include(i => i.UserTypeUu)
                                     .Include(i => i.UserRelationToRoles)

@@ -11,5 +11,9 @@
         {
             return new MediaContent(data);
         }
+        public override string ToString()
+        {
+            return Data == null ? null: Convert.ToBase64String(Data);
+        }
     }
 }

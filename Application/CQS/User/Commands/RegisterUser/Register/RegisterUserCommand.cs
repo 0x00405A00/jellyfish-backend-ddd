@@ -11,9 +11,9 @@ namespace Application.CQS.User.Commands.RegisterUser.Register
         public readonly string? LastName;
         public readonly string? Email;
         public readonly string? Phone;
-        public readonly DateOnly DateOfBirth;
+        public readonly DateTime DateOfBirth;
 
-        public RegisterUserCommand(string? UserName, string? Password, string? FirstName, string? LastName, string? Email, string? Phone, DateOnly DateOfBirth)
+        public RegisterUserCommand(string? UserName, string? Password, string? FirstName, string? LastName, string? Email, string? Phone, DateTime DateOfBirth)
         {
             this.UserName = UserName;
             this.Password = Password;

@@ -93,7 +93,7 @@ namespace Infrastructure.Mapper.Concrete
                         role.LastModifiedTime,
                         role.DeletedTime);
                 }).ToList();
-                friends = entity.UserFriendFriendUserUus.Select(friend =>
+                friends = entity.UserFriendUserUus.Select(friend =>
                 {
                     var userFriendDomainModel = friend.FriendUserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
                     var userDomainModel = friend.UserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);

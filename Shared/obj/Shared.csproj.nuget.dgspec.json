@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Shared\\Shared.csproj": {}
+    "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Shared\\Shared.csproj": {
+    "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Shared\\Shared.csproj",
+        "projectUniqueName": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj",
         "projectName": "Shared",
-        "projectPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Shared\\Shared.csproj",
+        "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj",
         "packagesPath": "C:\\Users\\Mika\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Shared\\obj\\",
+        "outputPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

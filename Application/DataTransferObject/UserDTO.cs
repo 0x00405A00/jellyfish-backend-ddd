@@ -33,7 +33,7 @@ namespace Application.DataTransferObject
         public UserTypeDTO? UserType { get; set; }
 
         [JsonPropertyName("date_of_birth")]
-        public DateOnly? DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         [JsonPropertyName("activation_date_time")]
         public DateTime? ActivationDateTime { get; set; }
@@ -45,7 +45,7 @@ namespace Application.DataTransferObject
         public ICollection<UserDTO>? Friends { get; set; }
 
         [JsonPropertyName("friendship_requests")]
-        public ICollection<UserDTO>? FriendshipRequests { get; set; }
+        public ICollection<FriendshipRequestDTO>? FriendshipRequests { get; set; }
 
         [JsonPropertyName("chats")]
         public ICollection<ChatDTO>? Chats { get; set; }

@@ -73,7 +73,7 @@ namespace Application.CQS.User.Commands.UpdateUser
             {
                 try
                 {
-                    user.UpdateDateOfBirth(user, (DateOnly)request.DateOfBirth);
+                    user.UpdateDateOfBirth(user,DateOnly.FromDateTime(request.DateOfBirth??DateTime.MinValue));
                 }
                 catch (InvalidDateOfBirthException ex)
                 {

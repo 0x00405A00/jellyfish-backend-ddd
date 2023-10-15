@@ -26,6 +26,8 @@ namespace Application.CQS.User.Commands.CreateUser
             this._mapper = mapper;
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
+            _userTypeRepository = userTypeRepository;
+            _roleRepository = roleRepository;
         }
 
         public async Task<Result<UserDTO>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -71,7 +73,7 @@ namespace Application.CQS.User.Commands.CreateUser
                 null,
                 null,
                 null,
-                request.DateOfBirth,
+                DateOnly.FromDateTime(request.DateOfBirth),
                 null,
                 DateTime.Now,
                 null,

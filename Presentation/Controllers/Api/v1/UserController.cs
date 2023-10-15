@@ -43,7 +43,7 @@ namespace Presentation.Controllers.Api.v1
         [Produces(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDTO registerUserDTO, CancellationToken cancellationToken)
         {
-            var command = new RegisterUserCommand(registerUserDTO.UserName, registerUserDTO.Password, registerUserDTO.FirstName, registerUserDTO.LastName, registerUserDTO.Email, registerUserDTO.Phone, (DateOnly)registerUserDTO.DateOfBirth);
+            var command = new RegisterUserCommand(registerUserDTO.UserName, registerUserDTO.Password, registerUserDTO.FirstName, registerUserDTO.LastName, registerUserDTO.Email, registerUserDTO.Phone, (DateTime)registerUserDTO.DateOfBirth);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.IsSuccess ? Ok(result.Value) : BadRequest();
@@ -74,7 +74,7 @@ namespace Presentation.Controllers.Api.v1
         }
 
         [AllowAnonymous]
-        [HttpPost("password/reset/{base64?}")]
+        [HttpPost("password/reset/{base64Token?}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> PasswordReset(string? base64Token,[FromBody] PasswordResetDataTransferModel passwordResetDataTransferModel, CancellationToken cancellationToken)
@@ -94,7 +94,7 @@ namespace Presentation.Controllers.Api.v1
         }
 
         [AllowAnonymous]
-        [HttpPost("activation/{base64}")]
+        [HttpPost("activation/{base64Token}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> ActivateUser(string base64Token, [FromBody] UserActivationDataTransferModel userActivationDataTransferModel, CancellationToken cancellationToken)
@@ -111,7 +111,7 @@ namespace Presentation.Controllers.Api.v1
         public async Task<IActionResult> CreateUser([FromBody] UserDTO userDto, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new CreateUserCommand(userUuid,userDto.UserName, userDto.Password, userDto.FirstName, userDto.LastName, userDto.Email, userDto.Phone, (DateOnly)userDto.DateOfBirth);
+            var command = new CreateUserCommand(userUuid,userDto.UserName, userDto.Password, userDto.FirstName, userDto.LastName, userDto.Email, userDto.Phone, (DateTime)userDto.DateOfBirth);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.IsSuccess ? Ok(result.Value) : BadRequest();
@@ -122,7 +122,7 @@ namespace Presentation.Controllers.Api.v1
         [Produces(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> GetUser(Guid guid, CancellationToken cancellationToken)
         {
-            var command = new GetUserByIdQuery(guid);
+            var command = new Application.CQS.User.Queries.GetUserById.GetUserByIdQuery(guid);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.IsSuccess ? Ok(result.Value) : BadRequest();
@@ -133,7 +133,7 @@ namespace Presentation.Controllers.Api.v1
         [Produces(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> GetUsers(CancellationToken cancellationToken)
         {
-            var command = new GetUsersQuery();
+            var command = new Application.CQS.User.Queries.GetUsers.GetUsersQuery();
 
             var result = await Sender.Send(command, cancellationToken);
             return result.IsSuccess ? Ok(result.Value) : BadRequest();
@@ -149,7 +149,7 @@ namespace Presentation.Controllers.Api.v1
             return result.IsSuccess ? Ok(result.Value) : BadRequest();
         }
 
-        [HttpPut("{guid}")]
+        [HttpPut("{userId}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> UpdateUser(Guid userId, [FromBody] UserDTO userDto, CancellationToken cancellationToken)
@@ -160,7 +160,7 @@ namespace Presentation.Controllers.Api.v1
             var result = await Sender.Send(command, cancellationToken);
             return result.IsSuccess ? Ok(result.Value) : BadRequest();
         }
-        [HttpDelete("{guid}")]
+        [HttpDelete("{userId}")]
         [Produces(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> DeleteUser(Guid userId, CancellationToken cancellationToken)
         {

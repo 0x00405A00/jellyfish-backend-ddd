@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "eV/0bwwZku9ZXKL1AhSgcp43QMbERjRRGzZANk+HrQPwKnAQOUZ44s7f0m3//QTvVtKXeLEC7Q/CDo7oMFZHSQ==",
+  "dgSpecHash": "btnMTmcqFrgzNVl97r171HzUQEMquO26879+qfg8VQWtpZ36DshqPf5xc7vBd8FKXFVCq8qe6ukVwOqPoMrnxg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Application\\Application.csproj",
+  "projectFilePath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application\\Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Mika\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\automapper.collection\\9.0.0\\automapper.collection.9.0.0.nupkg.sha512",

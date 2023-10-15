@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Application",
+    "\\Application\\CQS",
+    "\\Application\\CQS\\User",
+    "\\Application\\CQS\\User\\Commands",
+    "\\Application\\CQS\\User\\Commands\\CreateUser"
   ],
-  "SelectedNode": "\\C:\\Users\\Mika\\Source\\Repos\\jellyfish-backend-ddd",
+  "SelectedNode": "\\Application\\CQS\\User\\Commands\\CreateUser\\CreateUserCommandHandler.cs",
   "PreviewInSolutionExplorer": false
 }

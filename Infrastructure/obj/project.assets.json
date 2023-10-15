@@ -3113,11 +3113,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Infrastructure\\Infrastructure.csproj",
+      "projectUniqueName": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Infrastructure.csproj",
       "projectName": "Infrastructure",
-      "projectPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Infrastructure\\Infrastructure.csproj",
+      "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Infrastructure.csproj",
       "packagesPath": "C:\\Users\\Mika\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Infrastructure\\obj\\",
+      "outputPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3139,11 +3139,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Domain\\Domain.csproj": {
-              "projectPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Domain\\Domain.csproj"
+            "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj"
             },
-            "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Shared\\Shared.csproj": {
-              "projectPath": "C:\\Users\\Mika\\Desktop\\Projekte\\jellyfish-backend-ddd\\backend\\Shared\\Shared.csproj"
+            "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj": {
+              "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj"
             }
           }
         }

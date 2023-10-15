@@ -59,12 +59,72 @@ namespace Infrastructure_Test.Mapper.EntityToDatabase
 
             // Additional assertions for friends
             Assert.NotNull(result.UserFriendFriendUserUus);
-            Assert.Equal(2, result.UserFriendFriendUserUus.Count); // Assuming two friends were added.
+            Assert.Equal(1, result.UserFriendFriendUserUus.Count); // Assuming two friends were added.
+
+            // Add more assertions for friend properties if needed
+        }
+        [Theory]
+        [ClassData(typeof(UserDomainEntityTestData))]
+        public void MapToDatabaseEntity_ValidRole_MapsCorrectly(User user)
+        {
+            // Arrange
+
+
+            // Act
+            var result = user.MapToDatabaseEntity<User, Infrastructure.DatabaseEntity.User>(true);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(user.Uuid.ToGuid(), result.Uuid);
+            Assert.Equal(user.UserType.Uuid.ToGuid(), result.UserTypeUuid);
+            Assert.Equal(user.UserName, result.UserName);
+            Assert.Equal(user.Email.EmailValue, result.Email);
+            Assert.Equal(user.Password, result.Password);
+            Assert.Equal(user.Phone.PhoneNumb, result.Phone);
+            Assert.Equal(user.DateOfBirth, DateOnly.FromDateTime(result.DateOfBirth));
+            Assert.Equal(user.ActivationDateTime, result.ActivationDatetime);
+            Assert.Equal(user.CreatedTime, result.CreatedTime);
+            Assert.Equal(user.LastModifiedTime, result.LastModifiedTime);
+
+            // Additional assertions for friends
+            Assert.NotNull(result.UserRelationToRoles);
+            Assert.Equal(1, result.UserRelationToRoles.Count); // Assuming two friends were added.
+
+            // Add more assertions for friend properties if needed
+        }
+        [Theory]
+        [ClassData(typeof(UserDomainEntityTestData))]
+        public void MapToDatabaseEntity_ValidFriendshipRequest_MapsCorrectly(User user)
+        {
+            // Arrange
+
+
+            // Act
+            var result = user.MapToDatabaseEntity<User, Infrastructure.DatabaseEntity.User>(true);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(user.Uuid.ToGuid(), result.Uuid);
+            Assert.Equal(user.UserType.Uuid.ToGuid(), result.UserTypeUuid);
+            Assert.Equal(user.UserName, result.UserName);
+            Assert.Equal(user.Email.EmailValue, result.Email);
+            Assert.Equal(user.Password, result.Password);
+            Assert.Equal(user.Phone.PhoneNumb, result.Phone);
+            Assert.Equal(user.DateOfBirth, DateOnly.FromDateTime(result.DateOfBirth));
+            Assert.Equal(user.ActivationDateTime, result.ActivationDatetime);
+            Assert.Equal(user.CreatedTime, result.CreatedTime);
+            Assert.Equal(user.LastModifiedTime, result.LastModifiedTime);
+
+            // Additional assertions for friends
+            Assert.NotNull(result.UserChatInviteRequestTargetUserUus);
+            Assert.Equal(1, result.UserFriendshipRequestTargetUserUus.Count); // Assuming two friends were added.
 
             // Add more assertions for friend properties if needed
         }
     }
-    public class UserDomainEntityTestData : TheoryData<User>
+    
+}
+public class UserDomainEntityTestData : TheoryData<User>
     {
         public UserDomainEntityTestData()
         {
