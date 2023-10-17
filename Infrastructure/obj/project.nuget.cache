@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "TVIy5XMiG8N4jSDIPfjT9LA6OCvmphITNWaoU3sbtMI+391NqQ4DikrvKhKEGwJKUeNaVHgY9ZDDMR3i23/P5w==",
+  "dgSpecHash": "pOF2kZ3YZGGGzmRi7vtwmIsPtN6Y7kmDQXxAKL3I0jT2273GeEKjinQqghDoXRudG9+2wAgq6fr5ICJ5uzRJJA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -41,6 +41,7 @@
     "C:\\Users\\Mika\\.nuget\\packages\\mysql.data\\8.1.0\\mysql.data.8.1.0.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\mysql.entityframeworkcore\\7.0.5\\mysql.entityframeworkcore.7.0.5.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
+    "C:\\Users\\Mika\\.nuget\\packages\\scrutor\\4.2.2\\scrutor.4.2.2.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\system.configuration.configurationmanager\\4.4.1\\system.configuration.configurationmanager.4.4.1.nupkg.sha512",

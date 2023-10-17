@@ -10,13 +10,6 @@ namespace WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-
-            builder.Services.Scan(selector => selector
-            .FromAssemblies(Infrastructure.AssemblyReference.Assembly)
-            .AddClasses(false)
-            .AsImplementedInterfaces()
-            .WithScopedLifetime());
-
             builder.Services.AddInfrastructure();
             builder.Services.AddApplication(new System.Reflection.Assembly[] {Application.AssemblyReference.Assembly});
             builder.Services.AddPresentation();

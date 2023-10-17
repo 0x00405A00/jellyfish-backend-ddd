@@ -14,6 +14,7 @@
           "Microsoft.EntityFrameworkCore.Relational": "7.0.10",
           "Microsoft.EntityFrameworkCore.Tools": "7.0.10",
           "MySql.EntityFrameworkCore": "7.0.5",
+          "Scrutor": "4.2.2",
           "Shared": "1.0.0"
         },
         "runtime": {
@@ -361,6 +362,18 @@
           "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
             "assemblyVersion": "1.9.0.0",
             "fileVersion": "1.9.0.1"
+          }
+        }
+      },
+      "Scrutor/4.2.2": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
+          "Microsoft.Extensions.DependencyModel": "7.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/Scrutor.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.0"
           }
         }
       },
@@ -832,6 +845,13 @@
       "sha512": "sha512-eZZBCABzVOek+id9Xy04HhmgykF0wZg9wpByzrWN7q8qEI0Qen9b7tfd7w8VA3dOeesumMG7C5ZPy0jk7PSRHw==",
       "path": "portable.bouncycastle/1.9.0",
       "hashPath": "portable.bouncycastle.1.9.0.nupkg.sha512"
+    },
+    "Scrutor/4.2.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-t5VIYA7WJXoJJo7s4DoHakMGwTu+MeEnZumMOhTCH7kz9xWha24G7dJNxWrHPlu0ZdZAS4jDZCxxAnyaBh7uYw==",
+      "path": "scrutor/4.2.2",
+      "hashPath": "scrutor.4.2.2.nupkg.sha512"
     },
     "System.Buffers/4.5.1": {
       "type": "package",

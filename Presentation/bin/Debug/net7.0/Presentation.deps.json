@@ -695,6 +695,7 @@
           "Microsoft.EntityFrameworkCore": "7.0.10",
           "Microsoft.EntityFrameworkCore.Relational": "7.0.10",
           "MySql.EntityFrameworkCore": "7.0.5",
+          "Scrutor": "4.2.2",
           "Shared": "1.0.0"
         },
         "runtime": {
