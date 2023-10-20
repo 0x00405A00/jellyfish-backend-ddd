@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Abstractions;
+using Microsoft.VisualBasic;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -10,7 +11,7 @@ namespace Infrastructure
         public static Func<Guid, string> UserKey = (g) => $"user-{g.ToString()}";
         public static Func<string, string> UsersKey = (g) => $"user-{g}";
 
-        public static Guid? ExtractUuid<T>(this Expression<Func<T, bool>> expression)
+        public static T2? ExtractValueFromExpression<T,T2>(this Expression<Func<T, bool>> expression)
             where T : class
         {
             ParameterExpression parameter = expression.Parameters[0];
@@ -27,16 +28,37 @@ namespace Infrastructure
                     var t = rightMemberExpression.Expression.GetType();
                     var tt = ((MemberExpression)(rightMemberExpression).Expression).Expression;
                     var ttt = tt.GetType();
-                    if (rightMemberExpression.Member.Name == "Id" && ttt ==typeof(ConstantExpression))
+                    var x = rightMemberExpression.Member.MemberType.GetType().GetProperties();
+                    var y = rightMemberExpression.Member.DeclaringType.GetType().GetProperties();
+                    var z = rightMemberExpression.Member.ReflectedType.GetType().GetProperties();
+                    if (ttt ==typeof(ConstantExpression))
                     {
                         var val = (((ConstantExpression)tt).Value);
+                        var rm= rightMemberExpression.Member.GetType().GetProperties();
+                        
                         var tttt = val.GetType();
-                        return (Guid)Guid.Empty;
+                        var f = tttt.GetFields();
+                        foreach(var i in f)//1. Hierarchie
+                        {
+                            var vt =i.GetValue(val);
+                            var pp = vt.GetType().GetProperties();
+                            foreach( var v in pp)//2. Hierarchie, da record Value in record gekapselt und keine direkte Value
+                            {
+                                var vp = v.GetValue(vt);
+                                if(vp is T2)
+                                {
+                                    return (T2)vp;
+                                }
+                            }
+                            var ff=vt.GetType().GetFields();
+                        }
+                        var p = tttt.GetProperties();
+                        return default;
                     }
                 }
             }
 
-            return null;
+            return default;
         }
         public class UuidExtractor<T> : ExpressionVisitor
             where T : class

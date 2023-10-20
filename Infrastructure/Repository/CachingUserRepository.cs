@@ -22,10 +22,10 @@ namespace Infrastructure.Repository
 
         public async override Task<Domain.Entities.User.User> GetAsync(Expression<Func<DatabaseEntity.User, bool>> expression)
         {
-            var id = expression.ExtractUuid<DatabaseEntity.User>();
+            var id = expression.ExtractValueFromExpression<DatabaseEntity.User,Guid?>();
             if(id != null)
             {
-                var result = await _memoryCache.GetOrCreateAsync(CacheKeys.UserKey(id ?? Guid.NewGuid()), async (cacheEntry) => 
+                var result = await _memoryCache.GetOrCreateAsync(CacheKeys.UserKey(id ?? Guid.Empty), async (cacheEntry) => 
                 {
                     cacheEntry.AbsoluteExpirationRelativeToNow = UserCachePersistenceTime;
                     return await _userRepository.GetAsync(expression);
