@@ -9,11 +9,11 @@ namespace Application.CQS.User.Commands.PasswordReset.Request
     internal sealed class UserPasswordResetRequestCommandHandler : ICommandHandler<UserPasswordResetRequestCommand, bool>
     {
         private readonly IMapper _mapper;
-        private readonly IMailoutboxRepository _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         public UserPasswordResetRequestCommandHandler(
             IMapper mapper,
-            IMailoutboxRepository userRepository,
+            IUserRepository userRepository,
             IUnitOfWork unitOfWork)
         {
             _mapper = mapper;

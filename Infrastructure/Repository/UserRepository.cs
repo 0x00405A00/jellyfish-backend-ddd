@@ -18,6 +18,7 @@ namespace Infrastructure.Repository
                                     .Include(i => i.UserFriendUserUus)
                                     .ThenInclude(uf => uf.FriendUserUu)
                                     .ThenInclude(ut => ut.UserTypeUu)
+                                    .AsNoTracking()
                                     .FirstOrDefaultAsync(expression);
             return this.MapToDomainEntity(value,true);
         }

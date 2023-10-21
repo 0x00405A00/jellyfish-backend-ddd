@@ -8,12 +8,12 @@ namespace Application.CQS.User.Commands.Roles.RevokeRole
 {
     internal sealed class RevokeRoleCommandHandler : ICommandHandler<RevokeRoleCommand, RoleDTO>
     {
-        private readonly IMailoutboxRepository _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         public RevokeRoleCommandHandler(
             IMapper mapper,
-            IMailoutboxRepository userRepository,
+            IUserRepository userRepository,
             IUnitOfWork unitOfWork)
         {
             _mapper = mapper;

@@ -10,13 +10,13 @@ using System.Text;
 
 namespace Application.CQS.User.EventHandler
 {
-    internal sealed class UserCreatedDomainEventHandler :
-        INotificationHandler<UserCreatedDomainEvent>
+    internal sealed class UserActivatedDomainEventHandler :
+        INotificationHandler<UserActivatedDomainEvent>
     {
         private readonly IConfiguration configuration;
         private readonly IMailoutboxRepositoryScoped mailoutboxRepository;
 
-        public UserCreatedDomainEventHandler(
+        public UserActivatedDomainEventHandler(
             IConfiguration configuration,
             IMailoutboxRepositoryScoped mailoutboxRepository)
         {
@@ -24,30 +24,55 @@ namespace Application.CQS.User.EventHandler
             this.mailoutboxRepository = mailoutboxRepository;
         }
 
-        public async Task Handle(UserCreatedDomainEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(UserActivatedDomainEvent notification, CancellationToken cancellationToken)
         {
             var mailSection = configuration.GetSection("Infrastructure:Mail");
-            var userSection = configuration.GetSection("Infrastructure:User:Registration");
-            var activationLink = string.Format("{0}{1}", userSection.GetValue<string>("account_activation_link"),notification.e.ActivationToken) ;
 
             var mailSender = mailSection.GetValue<string>("system_sender_anonymous_mail");
             var mailUuid = Guid.NewGuid();
-            var imageUuid = Guid.NewGuid();
 
-            var image = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory,"Media","Static","jellyfish_image.png"));//nur für test
+            var imageJellyfish = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory, "Media", "Static", "jellyfish_image.png"));
+            var imagePlaystore = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory, "Media", "Static", "playstore_icon.png"));
+            var imageAppstore = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory, "Media", "Static", "appstore_icon.png"));
 
             MailOutboxAttachment jellyfishIcon = new MailOutboxAttachment
             {
                 MimeMediatype = "image",
                 MimeMediasubtype = "png",
                 MailUuid = mailUuid,
-                Attachment = image,
-                AttachmentSha1 ="xyz",
+                Attachment = imageJellyfish,
+                AttachmentSha1 = "xyz",
                 Filename = "jellyfish_image.png",
                 Order = 0,
-                Uuid=imageUuid,
-                IsEmbeddedInHtml=Convert.ToSByte(true),
-                MimeCid= MimeUtils.GenerateMessageId()
+                Uuid = Guid.NewGuid(),
+                IsEmbeddedInHtml = Convert.ToSByte(true),
+                MimeCid = MimeUtils.GenerateMessageId()
+            };
+            MailOutboxAttachment appStore = new MailOutboxAttachment
+            {
+                MimeMediatype = "image",
+                MimeMediasubtype = "png",
+                MailUuid = mailUuid,
+                Attachment = imageAppstore,
+                AttachmentSha1 = "xyz",
+                Filename = "appstore_icon.png",
+                Order = 1,
+                Uuid = Guid.NewGuid(),
+                IsEmbeddedInHtml = Convert.ToSByte(true),
+                MimeCid = MimeUtils.GenerateMessageId()
+            };
+            MailOutboxAttachment playStore = new MailOutboxAttachment
+            {
+                MimeMediatype = "image",
+                MimeMediasubtype = "png",
+                MailUuid = mailUuid,
+                Attachment = imageAppstore,
+                AttachmentSha1 = "xyz",
+                Filename = "playstore_icon.png",
+                Order = 2,
+                Uuid = Guid.NewGuid(),
+                IsEmbeddedInHtml = Convert.ToSByte(true),
+                MimeCid = MimeUtils.GenerateMessageId()
             };
 
             var emailType = await mailoutboxRepository.GetEmailType(MailHandler.MailType.To);
@@ -57,7 +82,7 @@ namespace Application.CQS.User.EventHandler
                                 <head>
                                     <meta charset=""UTF-8"">
                                     <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
-                                    <title>Willkommen bei Jellyfish</title>
+                                    <title>Da bist du ja!</title>
                                     <style>
                                         body {{
                                             font-family: Arial, sans-serif;
@@ -97,17 +122,21 @@ namespace Application.CQS.User.EventHandler
                                 </head>
                                 <body>
                                     <div class=""container"">
-                                        <h1>Willkommen bei Jellyfish!</h1>
-                                        <p>Vielen Dank, dass du dich registriert hast. Wir freuen uns, dich als Teil unserer Jellyfish-Community begrüßen zu dürfen.</p>
-                                        <p>Um alle Funktionen nutzen zu können musst du deinen Account erst einmal aktivieren.</p>
-                                        <a alt=""{0}"" href=""{0}"" class=""cta-button"">Hier geht es zur Akitivierung</a>
+                                        <h1>Du hast die Registrierung abgeschlossen!</h1>
+                                        <p>Lad dir jetzt die Jellyfish runter. Egal ob Android oder IOS.</p>
                                         <p>
-                                            <img class=""footer-img"" alt=""{2}"" src=""cid:{1}"">
+                                            <img class=""footer-img"" alt=""{4}"" src=""cid:{5}"">
+                                        </p>
+                                        <p>
+                                            <img class=""footer-img"" alt=""{2}"" src=""cid:{3}"">
+                                        </p>
+                                        <p>
+                                            <img class=""footer-img"" alt=""{0}"" src=""cid:{1}"">
                                         </p>
                                     </div>
                                 </body>
                                 </html>",
-            activationLink, jellyfishIcon.MimeCid,jellyfishIcon.Filename);
+            jellyfishIcon.Filename, jellyfishIcon.MimeCid, appStore.Filename,appStore.MimeCid, playStore.Filename, playStore.MimeCid);
             
             var body = Encoding.UTF8.GetBytes(bodyHtml);
             var mail = new MailOutbox
@@ -115,7 +144,7 @@ namespace Application.CQS.User.EventHandler
                 Uuid = mailUuid,
                 CreatedTime = DateTime.Now,
                 From = mailSender,
-                Subject = @"Willkommen bei Jellyfish "+notification.e.UserName + " \U0001F44B",// 
+                Subject = @"Registrierung abgeschlossen "+notification.e.UserName + ", Jellyfish im vollem Umfang nutzen \u2764",
                 Body = body,
                 BodyIsHtml = Convert.ToSByte(true),
                 MailOutboxRecipients = new List<MailOutboxRecipient>()
@@ -130,9 +159,12 @@ namespace Application.CQS.User.EventHandler
                 },
                 MailOutboxAttachments = new List<MailOutboxAttachment>()
                 {
-                    jellyfishIcon
                 }
+
             };
+            mail.MailOutboxAttachments.Add(playStore);
+            mail.MailOutboxAttachments.Add(appStore);
+            mail.MailOutboxAttachments.Add(jellyfishIcon);
             mailoutboxRepository.Add(mail);
 
         }

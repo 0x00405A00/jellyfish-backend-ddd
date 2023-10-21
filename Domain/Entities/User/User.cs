@@ -4,6 +4,7 @@ using Domain.Entities.User.Exception;
 using Domain.Primitives;
 using Domain.ValueObjects;
 using System.Data;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Domain.Entities.User
@@ -26,6 +27,7 @@ namespace Domain.Entities.User
             {"Three lowercase letters",new Regex("^(?:.*[a-z]){3,}") },
             {"Length of minimal 8",new Regex("^.{8,}$") },
         };
+        public static int ActivationCodeLen = 4;
 
         private ICollection<UserFriend> _friends = new List<UserFriend>();
         public ICollection<UserFriend> Friends { get => _friends?.ToList(); }
@@ -37,8 +39,10 @@ namespace Domain.Entities.User
         public UserType UserType { get;private set; }
         public string UserName { get; protected set; }
         public string Password { get; private set; }
-        public string FirstName { get;private set; }
-        public string LastName { get;private set; }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
+        public string ActivationToken { get; private set; }
+        public string ActivationCode { get; private set; }
         public Email Email { get; protected set; }
         public PhoneNumber Phone { get; private set; }
         public Picture Picture { get; private set; }
@@ -63,6 +67,8 @@ namespace Domain.Entities.User
                     string password,
                     string firstName,
                     string lastName,
+                    string activationToken,
+                    string activationCode,
                     Email email,
                     PhoneNumber phone,
                     Picture? picture,
@@ -89,6 +95,8 @@ namespace Domain.Entities.User
             ActivationDateTime = activationDateTime;
             LastModifiedTime = lastModifiedTime;
             DeletedTime = deletedTime;
+            ActivationCode = activationCode;
+            ActivationToken = activationToken;
             _friendshipRequests = friendshipRequests ?? new List<FriendshipRequest>();
             _friends = friends??new List<UserFriend>();
             _roles = roles??new List<UserRole>();
@@ -118,6 +126,8 @@ namespace Domain.Entities.User
             string password,
             string firstName,
             string lastName,
+            string activationToken,
+            string activationCode,
             Email email,
             PhoneNumber phone,
             Picture? picture,
@@ -158,6 +168,8 @@ namespace Domain.Entities.User
                 password,
                 firstName,
                 lastName,
+                activationToken,
+                activationCode,
                 email,
                 phone,
                 picture,
@@ -171,7 +183,6 @@ namespace Domain.Entities.User
                 deletedTime);
             user.SetCreated(createdBy);
 
-            user.Raise(new UserCreatedDomainEvent(user));
             return user;
         }
 
@@ -187,6 +198,8 @@ namespace Domain.Entities.User
                 string.Empty,
                 string.Empty,
                 string.Empty,
+                null,
+                null,
                 null,
                 null,
                 null,
@@ -213,7 +226,41 @@ namespace Domain.Entities.User
                 Raise(new UserUpdatedDomainEvent<User, UserId>(this, e.Key, e.Value));
             });
         }*/
+        private string GenerateCode(int len)
+        {
+            string actCode = null;
+            Random random = new Random();
+            for (int i = 0; i < len; i++)
+            {
+                actCode += random.Next(0, 9);
+            }
+            return actCode;
+        }
+        public void GenerateActivationToken()
+        {
+            this.ActivationCode = GenerateCode(ActivationCodeLen);
+            var bytes = Encoding.UTF8.GetBytes(Guid.NewGuid().ToString());
+            var base64 = Convert.ToBase64String(bytes);
+            this.ActivationToken = base64;
+        }
+        public void Activate(string code,string activationToken)
+        {
+            if(code!=this.ActivationCode&&activationToken!=this.ActivationToken)
+            {
+                throw new InvalidActivationTry();
+            }
+            if(ActivationDateTime!=null)
+            {
+                throw new InvalidActivationTry();
+            }
 
+            ActivationDateTime = DateTime.Now;
+            Raise(new UserActivatedDomainEvent(this));
+        }
+        public void NewRegistered()
+        {
+            this.Raise(new UserCreatedDomainEvent(this));
+        }
         public void UpdateUserType(User modifiedUser, UserType userType)
         {
             if(userType == null)

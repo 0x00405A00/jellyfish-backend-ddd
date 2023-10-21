@@ -7,12 +7,12 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.CreateFriend
 {
     internal sealed class CreateFriendshipRequestCommandHandler : ICommandHandler<CreateFriendshipRequestCommand, bool>
     {
-        private readonly IMailoutboxRepository _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         public CreateFriendshipRequestCommandHandler(
             IMapper mapper,
-            IMailoutboxRepository userRepository,
+            IUserRepository userRepository,
             IUnitOfWork unitOfWork)
         {
             _mapper = mapper;

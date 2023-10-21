@@ -11,8 +11,9 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.AddMemoryCache();  
-            services.AddSingleton<IMailoutboxRepository,MailOutboxRepository>();
+            services.AddMemoryCache();
+            services.AddSingleton<IMailoutboxRepositorySingleton, MailOutboxRepository>();
+            services.AddScoped<IMailoutboxRepositoryScoped, MailOutboxRepositoryScoped>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.Decorate<IUserRepository, CachingUserRepository>();
 

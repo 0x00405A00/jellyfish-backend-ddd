@@ -15,14 +15,14 @@ namespace Infrastructure.HostedService.Backgroundservice
         private readonly ILogger<MailHostedService> _logger;
         private readonly IMailHandler _mailHandler;
         private readonly IUnitOfWork unitOfWork;
-        private readonly IMailoutboxRepository _mailoutboxRepository;
+        private readonly IMailoutboxRepositorySingleton _mailoutboxRepository;
         private readonly CancellationToken _cancelationToken;
 
         public MailHostedService(
             ILogger<MailHostedService> logger,
             IMailHandler mailHandler,
             IUnitOfWork unitOfWork,
-            IMailoutboxRepository mailoutboxRepository)
+            IMailoutboxRepositorySingleton mailoutboxRepository)
         {
             _logger = logger;
             _mailHandler = mailHandler;
@@ -63,9 +63,10 @@ namespace Infrastructure.HostedService.Backgroundservice
                 InternetAddressList recipientsCcList = new InternetAddressList();
                 InternetAddressList recipientsBccList = new InternetAddressList();
 
-                mail.MailOutboxRecipients.ToList().ForEach(recipient =>
+                foreach(var recipient in mail.MailOutboxRecipients)
                 {
-                    switch(recipient.EmailTypeUu.Type)
+
+                    switch (recipient.EmailTypeUu.Type)
                     {
                         case MailHandler.MailType.To:
                             recipientsToList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
@@ -77,7 +78,7 @@ namespace Infrastructure.HostedService.Backgroundservice
                             recipientsBccList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
                             break;
                     }
-                });
+                }
                 string subject = mail.Subject??String.Empty;
                 string body = Encoding.UTF8.GetString(mail.Body??new byte[0]);
                 MimeKit.AttachmentCollection mailAttachments = new MimeKit.AttachmentCollection();

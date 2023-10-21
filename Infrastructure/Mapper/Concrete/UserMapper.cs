@@ -21,6 +21,8 @@ namespace Infrastructure.Mapper.Concrete
             user.Phone = entity.Phone.PhoneNumb;
             user.DateOfBirth = entity.DateOfBirth.ToDateTime(new TimeOnly());
             user.ActivationDatetime = entity.ActivationDateTime;
+            user.ActivationToken = entity.ActivationToken;
+            user.ActivationCode = entity.ActivationCode;
             user.CreatedTime = entity.CreatedTime;
             user.LastModifiedTime = entity.LastModifiedTime;    
             user.DeletedTime = entity.DeletedTime;
@@ -120,6 +122,8 @@ namespace Infrastructure.Mapper.Concrete
                 entity.Password,
                 entity.FirstName,
                 entity.LastName,
+                entity.ActivationToken,
+                entity.ActivationCode,
                 email,
                 phone,
                 picture,

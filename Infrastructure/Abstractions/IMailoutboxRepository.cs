@@ -7,4 +7,12 @@ namespace Infrastructure.Abstractions
     {
         Task<EmailType> GetEmailType(string type);
     }
+    public interface IMailoutboxRepositorySingleton : IMailoutboxRepository
+    {
+
+    }
+    public interface IMailoutboxRepositoryScoped : IMailoutboxRepository
+    {
+
+    }
 }

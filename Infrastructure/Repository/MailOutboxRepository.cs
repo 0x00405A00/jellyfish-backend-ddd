@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.Repository
 {
-    internal class MailOutboxRepository : GenericRepository<Infrastructure.DatabaseEntity.MailOutbox>, IMailoutboxRepository
+    internal class MailOutboxRepository : GenericRepository<Infrastructure.DatabaseEntity.MailOutbox>, IMailoutboxRepositorySingleton
     {
         public MailOutboxRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext) 
         { 
@@ -21,16 +21,24 @@ namespace Infrastructure.Repository
 
         public override async Task<ICollection<MailOutbox>> ListAsync(Expression<Func<MailOutbox, bool>> expression = null)
         {
-            var result = expression==null? await _dbSet.Include(x => x.MailOutboxAttachments)
+            var result = expression==null? await _dbSet.AsNoTracking().Include(x => x.MailOutboxAttachments)
                 .Include(x => x.MailOutboxRecipients)
                 .ThenInclude(x => x.EmailTypeUu)
-                .ToListAsync():await _dbSet.Include(x => x.MailOutboxAttachments)
+                .AsNoTracking()
+                .ToListAsync():
+                await _dbSet.AsNoTracking().Include(x => x.MailOutboxAttachments)
                 .Include(x => x.MailOutboxRecipients)
                 .ThenInclude(x=>x.EmailTypeUu)
                 .Where(expression)
-                .AsNoTracking()
                 .ToListAsync();
             return result;
+        }
+    }
+    internal class MailOutboxRepositoryScoped : MailOutboxRepository, IMailoutboxRepositoryScoped
+    {
+        public MailOutboxRepositoryScoped(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
+        {
+
         }
     }
 }

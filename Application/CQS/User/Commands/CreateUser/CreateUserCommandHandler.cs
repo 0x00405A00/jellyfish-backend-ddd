@@ -85,6 +85,8 @@ namespace Application.CQS.User.Commands.CreateUser
                         request.Password,
                         request.FirstName,
                         request.LastName,
+                        null,
+                        null,
                         email,
                         phoneNumber,
                         null,
@@ -98,7 +100,8 @@ namespace Application.CQS.User.Commands.CreateUser
                         null,
                         createdByUser);
                     user.AddRole(createdByUser, userRole);
-
+                    user.GenerateActivationToken();
+                    user.NewRegistered();
                     _userRepository.Add(user);
                     await transaction.CommitAsync();
 

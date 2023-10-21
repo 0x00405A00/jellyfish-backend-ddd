@@ -7,5 +7,10 @@
         {
 
         }
+        public UserNotFoundException(string activationToken)
+            : base($"User with activationToken: {activationToken} not found")
+        {
+
+        }
     }
 }
