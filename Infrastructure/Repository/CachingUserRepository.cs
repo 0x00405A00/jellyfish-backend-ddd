@@ -1,5 +1,4 @@
 ﻿using Infrastructure.Abstractions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using System.Linq.Expressions;
 

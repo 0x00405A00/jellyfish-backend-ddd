@@ -9,11 +9,11 @@ namespace Application.CQS.User.Commands.RegisterUser.Activation
     internal sealed class UserActivationCommandHandler : ICommandHandler<UserActivationCommand, UserDTO>
     {
         private readonly IMapper _mapper;
-        private readonly IUserRepository _userRepository;
+        private readonly IMailoutboxRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         public UserActivationCommandHandler(
             IMapper mapper,
-            IUserRepository userRepository,
+            IMailoutboxRepository userRepository,
             IUnitOfWork unitOfWork)
         {
             _mapper = mapper;

@@ -7,12 +7,12 @@ namespace Application.CQS.Messenger.User.Command.Friends.RemoveFriend
 {
     internal sealed class RemoveFriendCommandHandler : ICommandHandler<RemoveFriendCommand, bool>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IMailoutboxRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         public RemoveFriendCommandHandler(
             IMapper mapper,
-            IUserRepository userRepository,
+            IMailoutboxRepository userRepository,
             IUnitOfWork unitOfWork)
         {
             _mapper = mapper;

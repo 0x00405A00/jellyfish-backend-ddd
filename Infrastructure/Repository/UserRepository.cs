@@ -1,14 +1,10 @@
-﻿using Domain.Entities.User;
-using Domain.ValueObjects;
-using Infrastructure.Abstractions;
-using Infrastructure.DatabaseEntity;
+﻿using Infrastructure.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repository
 {
-    internal class UserRepository : GenericRepository<Domain.Entities.User.User, Infrastructure.DatabaseEntity.User>,IUserRepository
+    internal class UserRepository : GenericRepository<Domain.Entities.User.User, Infrastructure.DatabaseEntity.User>, IUserRepository
     {
         public UserRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext) 
         { 
@@ -30,6 +26,13 @@ namespace Infrastructure.Repository
         {
             return await _dbSet.AsNoTracking()
                          .Where(x => x.Email == email.ToLower())
+                         .AnyAsync();
+        }
+
+        public async Task<bool> IsPhoneAlreadyInUse(string phone)
+        {
+            return await _dbSet.AsNoTracking()
+                         .Where(x => x.Phone == phone.ToLower())
                          .AnyAsync();
         }
 

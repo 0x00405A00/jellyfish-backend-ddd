@@ -147,6 +147,10 @@ namespace Domain.Entities.User
             {
                 throw new InvalidDataException($"item of list {nameof(friendshipRequests)} contains one or more items with null value");
             }
+            if (userName.ToLower() == email.ToString())
+            {
+                throw new InvalidUserNameException();
+            }
             User user = new User(
                 id,
                 userType,
@@ -166,6 +170,7 @@ namespace Domain.Entities.User
                 lastModifiedTime,
                 deletedTime);
             user.SetCreated(createdBy);
+
             user.Raise(new UserCreatedDomainEvent(user));
             return user;
         }
@@ -226,6 +231,14 @@ namespace Domain.Entities.User
             {
                 throw new InvalidUserNameException();
             }
+            if(userName.ToLower()==this.Email.ToString())
+            {
+                throw new InvalidUserNameException();
+            }
+            if(UserName != userName)
+            {
+                return;
+            }
             UserName = userName;
             SetLastModified(modifiedUser);
             Raise(new UserUpdatedDomainEvent<User, UserId>(this, x => x.UserName, userName));
@@ -273,6 +286,10 @@ namespace Domain.Entities.User
             {
                 throw new InvalidFirstNameException();
             }
+            if (FirstName != firstName)
+            {
+                return;
+            }
             FirstName = firstName;
             SetLastModified(modifiedUser);
             Raise(new UserUpdatedDomainEvent<User, UserId>(this, x => x.Email, firstName));
@@ -284,6 +301,10 @@ namespace Domain.Entities.User
             {
                 throw new InvalidLastNameException();
             }
+            if (LastName != LastName)
+            {
+                return;
+            }
             LastName = LastName;
             SetLastModified(modifiedUser);
             Raise(new UserUpdatedDomainEvent<User, UserId>(this, x => x.Email, lastName));
@@ -294,6 +315,10 @@ namespace Domain.Entities.User
             if(email == null)
             {
                 throw new ArgumentNullException(nameof(email));
+            }
+            if (this.Email != email)
+            {
+                return;
             }
             Email = email;
             SetLastModified(modifiedUser);

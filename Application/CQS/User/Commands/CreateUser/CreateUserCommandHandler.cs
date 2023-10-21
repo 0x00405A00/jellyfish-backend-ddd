@@ -6,6 +6,7 @@ using Domain.Entities.User;
 using Domain.Exceptions;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
+using MediatR;
 
 namespace Application.CQS.User.Commands.CreateUser
 {
@@ -16,29 +17,26 @@ namespace Application.CQS.User.Commands.CreateUser
         private readonly IUserTypeRepository _userTypeRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMediator mediator;
+
         public CreateUserCommandHandler(
             IMapper mapper,
             IUserRepository userRepository,
             IUserTypeRepository userTypeRepository,
             IRoleRepository roleRepository,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IMediator mediator)
         {
             this._mapper = mapper;
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
+            this.mediator = mediator;
             _userTypeRepository = userTypeRepository;
             _roleRepository = roleRepository;
         }
 
         public async Task<Result<UserDTO>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var createdByUser = await _userRepository.GetAsync(x=>x.Uuid == request.CreatedBy);
-
-            bool emailAlreadyInUseCheck = await _userRepository.IsEmailAlreadyInUse(request.Email);
-            if (emailAlreadyInUseCheck)
-            {
-                return Result<UserDTO>.Failure("email address already in use");
-            }
             PhoneNumber phoneNumber = null!;
             try
             {
@@ -57,31 +55,63 @@ namespace Application.CQS.User.Commands.CreateUser
             {
                 return Result<UserDTO>.Failure(ex.Message);
             }
-            var userId = new Domain.Entities.User.UserId(Guid.NewGuid());
-            var userType = await _userTypeRepository.GetAsync(x => x.Uuid == AuthorizationConst.UserType.UserTypeUuid);
-            var userRole = await _roleRepository.GetAsync(x => x.Uuid == AuthorizationConst.Role.UserRoleUuid);
-            var user = Domain.Entities.User.User.Create(
-                userId,
-                userType,
-                request.UserName,
-                request.Password,
-                request.FirstName,
-                request.LastName,
-                email,
-                phoneNumber,
-                null,
-                null,
-                null,
-                null,
-                DateOnly.FromDateTime(request.DateOfBirth),
-                null,
-                DateTime.Now,
-                null,
-                null,
-                createdByUser);
-            user.AddRole(createdByUser, userRole);
+            var createdByUser = await _userRepository.GetAsync(x => x.Uuid == request.CreatedBy);
 
-            _userRepository.Add(user);
+            bool emailAlreadyInUseCheck = await _userRepository.IsEmailAlreadyInUse(request.Email);
+            bool phoneAlreadyInUseCheck = await _userRepository.IsPhoneAlreadyInUse(request.Phone);
+
+            if (emailAlreadyInUseCheck)
+            {
+                return Result<UserDTO>.Failure("email address already in use");
+            }
+            if (phoneAlreadyInUseCheck)
+            {
+                return Result<UserDTO>.Failure("phonenumber already in use");
+            }
+            Domain.Entities.User.User user;
+            using(var transaction = await _unitOfWork.BeginTransaction())
+            {
+
+                try
+                {
+
+                    var userId = new Domain.Entities.User.UserId(Guid.NewGuid());
+                    var userType = await _userTypeRepository.GetAsync(x => x.Uuid == AuthorizationConst.UserType.UserTypeUuid);
+                    var userRole = await _roleRepository.GetAsync(x => x.Uuid == AuthorizationConst.Role.UserRoleUuid);
+                    user = Domain.Entities.User.User.Create(
+                        userId,
+                        userType,
+                        request.UserName,
+                        request.Password,
+                        request.FirstName,
+                        request.LastName,
+                        email,
+                        phoneNumber,
+                        null,
+                        null,
+                        null,
+                        null,
+                        DateOnly.FromDateTime(request.DateOfBirth),
+                        null,
+                        DateTime.Now,
+                        null,
+                        null,
+                        createdByUser);
+                    user.AddRole(createdByUser, userRole);
+
+                    _userRepository.Add(user);
+                    await transaction.CommitAsync();
+
+                    user.DomainEvents.ToList().ForEach(e => {
+                        mediator.Publish(e);
+                    });
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    return Result<UserDTO>.Failure(ex.Message);
+                }
+            }
             var result = Result<UserDTO>.Success();
             var mapValue = _mapper.Map<UserDTO>(user);
             mapValue.Password = null;

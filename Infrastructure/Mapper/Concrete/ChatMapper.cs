@@ -20,7 +20,6 @@ namespace Infrastructure.Mapper.Concrete
             chat.CreatedTime =entity.CreatedTime;
             chat.LastModifiedTime=entity.LastModifiedTime;
             chat.DeletedTime =entity.DeletedTime;
-            chat.Deleted = Convert.ToSByte(entity.DeletedTime != null && entity.DeletedTime != DateTime.MinValue);
             chat.OwnerUserUuid =entity.CreatedByUser.Uuid.ToGuid();
             if(mapRelationObjects)
             {
@@ -30,12 +29,11 @@ namespace Infrastructure.Mapper.Concrete
                                   var memberDatabaseEntity = member.User.MapToDatabaseEntity<Domain.Entities.User.User, User>(false);
 
                                   ChatRelationToUser chatRelationToUser = new ChatRelationToUser();
-                                  chatRelationToUser.ChatUu = chat;
-                                  chatRelationToUser.UserUu = memberDatabaseEntity;
+                                  chatRelationToUser.ChatUuid = chat.Uuid;
+                                  chatRelationToUser.UserUuid = memberDatabaseEntity.Uuid;
                                   chatRelationToUser.CreatedTime = chat.CreatedTime;
                                   chatRelationToUser.LastModifiedTime = chat.LastModifiedTime;
                                   chatRelationToUser.DeletedTime = chat.DeletedTime;
-                                  chatRelationToUser.Deleted = Convert.ToSByte(chat.DeletedTime != null && chat.DeletedTime != DateTime.MinValue);
                                   chatRelationToUser.IsChatAdmin = Convert.ToSByte(entity.Admins.Contains(member));
                                   chat.ChatRelationToUsers.Add(chatRelationToUser);
 

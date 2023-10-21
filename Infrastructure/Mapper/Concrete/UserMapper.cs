@@ -24,17 +24,15 @@ namespace Infrastructure.Mapper.Concrete
             user.CreatedTime = entity.CreatedTime;
             user.LastModifiedTime = entity.LastModifiedTime;    
             user.DeletedTime = entity.DeletedTime;
-            user.Deleted = Convert.ToSByte(entity.DeletedTime!=DateTime.MinValue);
             if(mapRelationObjects)
             {
                 entity.Friends.ToList().ForEach(userFriend => {
                     var friend = userFriend.Friend.MapToDatabaseEntity<Domain.Entities.User.User, User>(false);
                     Infrastructure.DatabaseEntity.UserFriend userFriendDatabaseEntity = new DatabaseEntity.UserFriend();
-                    userFriendDatabaseEntity.FriendUserUu = friend;
-                    userFriendDatabaseEntity.UserUu =user;
+                    userFriendDatabaseEntity.FriendUserUuid = friend.Uuid;
+                    userFriendDatabaseEntity.UserUuid =user.Uuid;
                     userFriendDatabaseEntity.CreatedTime = userFriend.CreatedTime;
                     userFriendDatabaseEntity.DeletedTime = userFriend.DeletedTime;
-                    userFriendDatabaseEntity.Deleted = Convert.ToSByte(userFriend.DeletedTime != DateTime.MinValue);
                     userFriendDatabaseEntity.LastModifiedTime = userFriend.LastModifiedTime;
                     user.UserFriendFriendUserUus.Add(userFriendDatabaseEntity);
                 });
@@ -42,11 +40,10 @@ namespace Infrastructure.Mapper.Concrete
                     var role = userRole.Role.MapToDatabaseEntity<Domain.Entities.Role.Role, Role>(false);
 
                     UserRelationToRole userRelationToRoleDatabaseEntity = new UserRelationToRole();
-                    userRelationToRoleDatabaseEntity.RoleUu =role;
-                    userRelationToRoleDatabaseEntity.UserUu =user;
+                    userRelationToRoleDatabaseEntity.RoleUuid =role.Uuid;
+                    userRelationToRoleDatabaseEntity.UserUuid =user.Uuid;
                     userRelationToRoleDatabaseEntity.CreatedTime =userRole.CreatedTime;
                     userRelationToRoleDatabaseEntity.DeletedTime = userRole.DeletedTime;
-                    userRelationToRoleDatabaseEntity.Deleted = Convert.ToSByte(userRole.DeletedTime != DateTime.MinValue);
                     userRelationToRoleDatabaseEntity.LastModifiedTime = userRole.LastModifiedTime;
                     user.UserRelationToRoles.Add(userRelationToRoleDatabaseEntity);
                 });
@@ -54,8 +51,8 @@ namespace Infrastructure.Mapper.Concrete
                     var requester = friendShipRequest.RequestUser.MapToDatabaseEntity<Domain.Entities.User.User, User>(false);
 
                     Infrastructure.DatabaseEntity.UserFriendshipRequest userFriendshipRequest = new UserFriendshipRequest();
-                    userFriendshipRequest.UserUu = requester; 
-                    userFriendshipRequest.TargetUserUu =user; 
+                    userFriendshipRequest.UserUuid = requester.Uuid; 
+                    userFriendshipRequest.TargetUserUuid =user.Uuid; 
                     userFriendshipRequest.TargetUserRequestMessage =friendShipRequest.TargetUserRequestMessage;
                     userFriendshipRequest.CreatedTime = friendShipRequest.CreatedTime;
 

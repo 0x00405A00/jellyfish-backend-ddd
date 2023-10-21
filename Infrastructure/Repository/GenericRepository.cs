@@ -41,9 +41,10 @@ namespace Infrastructure.Repository
             return value;
         }
 
-        public virtual ICollection<TDbEntity> List(Expression<Func<TDbEntity, bool>> expression)
+        public virtual ICollection<TDbEntity> List(Expression<Func<TDbEntity, bool>> expression = null)
         {
-            var value = _dbSet.AsNoTracking().Where(expression).ToList();
+            var value = expression==null?
+                _dbSet.AsNoTracking().ToList() : _dbSet.AsNoTracking().Where(expression).ToList();
 
             return value;
         }
@@ -57,9 +58,10 @@ namespace Infrastructure.Repository
             return value!;
         }
 
-        public virtual async Task<ICollection<TDbEntity>> ListAsync(Expression<Func<TDbEntity, bool>> expression)
+        public virtual async Task<ICollection<TDbEntity>> ListAsync(Expression<Func<TDbEntity, bool>> expression=null)
         {
-            var value = await _dbSet.AsNoTracking().Where(expression).ToListAsync();
+            var value = expression==null?
+                await _dbSet.AsNoTracking().ToListAsync() : await _dbSet.AsNoTracking().Where(expression).ToListAsync();
 
             return value;
         }
@@ -76,7 +78,7 @@ namespace Infrastructure.Repository
         #region Sync
         public void Add(TEntity entity)
         {
-            var dbModel = MapToDatabaseEntity(entity, false);
+            var dbModel = MapToDatabaseEntity(entity, true);
             base.Add(dbModel);
         }
 
@@ -99,7 +101,7 @@ namespace Infrastructure.Repository
             return this.MapToDomainEntity(value, true);
         }
 
-        ICollection<TEntity> IGenericRepository<TEntity, TDbEntity>.List(Expression<Func<TDbEntity, bool>> expression)
+        ICollection<TEntity> IGenericRepository<TEntity, TDbEntity>.List(Expression<Func<TDbEntity, bool>> expression = null)
         {
             var value = base.List(expression);
 

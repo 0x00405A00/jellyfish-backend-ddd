@@ -6,7 +6,7 @@ namespace Infrastructure.Abstractions
     public interface IUserRepository : IGenericRepository<Domain.Entities.User.User,User>
     {
         /// <summary>
-        /// Check is user email is already in database
+        /// Check if user email is already in database
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
@@ -18,5 +18,11 @@ namespace Infrastructure.Abstractions
         /// <param name="email"></param>
         /// <returns></returns>
         public Task<bool> IsUserRegistered(string email);
+        /// <summary>
+        /// Check if given phonenumber is already in use by other user
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <returns></returns>
+        public Task<bool> IsPhoneAlreadyInUse(string phone);
     }
 }

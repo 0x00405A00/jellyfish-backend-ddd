@@ -17,7 +17,6 @@ namespace Infrastructure.Mapper.Concrete
             role.CreatedTime = entity.CreatedTime;  
             role.LastModifiedTime = entity.LastModifiedTime;    
             role.DeletedTime = entity.DeletedTime;
-            role.Deleted = Convert.ToSByte(entity.DeletedTime != DateTime.MinValue);
             role.Description = entity.Name;
             return role;
         }

@@ -8,12 +8,12 @@ namespace Application.CQS.User.Commands.Roles.AssignRole
 {
     internal sealed class AssignRoleCommandHandler : ICommandHandler<AssignRoleCommand, RoleDTO>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IMailoutboxRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         public AssignRoleCommandHandler(
             IMapper mapper,
-            IUserRepository userRepository,
+            IMailoutboxRepository userRepository,
             IUnitOfWork unitOfWork)
         {
             _mapper = mapper;

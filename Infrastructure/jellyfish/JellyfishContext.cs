@@ -21,6 +21,14 @@ public partial class JellyfishContext : DbContext
 
     public virtual DbSet<ChatRelationToUser> ChatRelationToUsers { get; set; }
 
+    public virtual DbSet<EmailType> EmailTypes { get; set; }
+
+    public virtual DbSet<MailOutbox> MailOutboxes { get; set; }
+
+    public virtual DbSet<MailOutboxAttachment> MailOutboxAttachments { get; set; }
+
+    public virtual DbSet<MailOutboxRecipient> MailOutboxRecipients { get; set; }
+
     public virtual DbSet<Message> Messages { get; set; }
 
     public virtual DbSet<MessageAcknowledge> MessageAcknowledges { get; set; }
@@ -198,6 +206,125 @@ public partial class JellyfishContext : DbContext
                 .HasForeignKey(d => d.UserUuid)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fkChatToUser");
+        });
+
+        modelBuilder.Entity<EmailType>(entity =>
+        {
+            entity.HasKey(e => e.Uuid).HasName("PRIMARY");
+
+            entity.ToTable("email_type");
+
+            entity.Property(e => e.Uuid)
+                .HasMaxLength(36)
+                .HasColumnName("uuid");
+            entity.Property(e => e.CreatedTime)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp")
+                .HasColumnName("created_time");
+            entity.Property(e => e.DeletedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_time");
+            entity.Property(e => e.LastModifiedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("last_modified_time");
+            entity.Property(e => e.Type)
+                .HasMaxLength(45)
+                .HasColumnName("type");
+        });
+
+        modelBuilder.Entity<MailOutbox>(entity =>
+        {
+            entity.HasKey(e => e.Uuid).HasName("PRIMARY");
+
+            entity.ToTable("mail_outbox");
+
+            entity.Property(e => e.Uuid)
+                .HasMaxLength(36)
+                .HasColumnName("uuid");
+            entity.Property(e => e.Body).HasColumnName("body");
+            entity.Property(e => e.BodyIsHtml).HasColumnName("body_is_html");
+            entity.Property(e => e.CreatedTime)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp")
+                .HasColumnName("created_time");
+            entity.Property(e => e.DeletedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_time");
+            entity.Property(e => e.From)
+                .HasMaxLength(255)
+                .HasColumnName("from");
+            entity.Property(e => e.LastModifiedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("last_modified_time");
+            entity.Property(e => e.Subject)
+                .HasMaxLength(255)
+                .HasColumnName("subject");
+        });
+
+        modelBuilder.Entity<MailOutboxAttachment>(entity =>
+        {
+            entity.HasKey(e => new { e.MailUuid, e.Order }).HasName("PRIMARY");
+
+            entity.ToTable("mail_outbox_attachment");
+
+            entity.Property(e => e.MailUuid)
+                .HasMaxLength(36)
+                .HasColumnName("mail_uuid");
+            entity.Property(e => e.Order).HasColumnName("order");
+            entity.Property(e => e.Attachment).HasColumnName("attachment");
+            entity.Property(e => e.AttachmentSha1)
+                .HasMaxLength(45)
+                .HasColumnName("attachment_sha1");
+            entity.Property(e => e.CreatedTime)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp")
+                .HasColumnName("created_time");
+            entity.Property(e => e.DeletedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_time");
+            entity.Property(e => e.LastModifiedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("last_modified_time");
+
+            entity.HasOne(d => d.MailUu).WithMany(p => p.MailOutboxAttachments)
+                .HasForeignKey(d => d.MailUuid)
+                .HasConstraintName("fk_mailOutboxAttachmentToMailOutbox");
+        });
+
+        modelBuilder.Entity<MailOutboxRecipient>(entity =>
+        {
+            entity.HasKey(e => new { e.MailUuid, e.Email, e.EmailTypeUuid }).HasName("PRIMARY");
+
+            entity.ToTable("mail_outbox_recipient");
+
+            entity.HasIndex(e => e.EmailTypeUuid, "fk_mailOutboxRecipientToEmailType_idx");
+
+            entity.Property(e => e.MailUuid)
+                .HasMaxLength(36)
+                .HasColumnName("mail_uuid");
+            entity.Property(e => e.Email).HasColumnName("email");
+            entity.Property(e => e.EmailTypeUuid)
+                .HasMaxLength(36)
+                .HasColumnName("email_type_uuid");
+            entity.Property(e => e.CreatedTime)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp")
+                .HasColumnName("created_time");
+            entity.Property(e => e.DeletedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_time");
+            entity.Property(e => e.LastModifiedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("last_modified_time");
+
+            entity.HasOne(d => d.EmailTypeUu).WithMany(p => p.MailOutboxRecipients)
+                .HasForeignKey(d => d.EmailTypeUuid)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_mailOutboxRecipientToEmailType");
+
+            entity.HasOne(d => d.MailUu).WithMany(p => p.MailOutboxRecipients)
+                .HasForeignKey(d => d.MailUuid)
+                .HasConstraintName("fk_mailOutboxRecipientToMailOutbox");
         });
 
         modelBuilder.Entity<Message>(entity =>
@@ -383,7 +510,7 @@ public partial class JellyfishContext : DbContext
                 .HasComment("Base64 von Pic Binary")
                 .HasColumnName("picture");
             entity.Property(e => e.UserName)
-                .HasMaxLength(20)
+                .HasMaxLength(64)
                 .HasColumnName("user_name");
             entity.Property(e => e.UserTypeUuid)
                 .HasMaxLength(36)

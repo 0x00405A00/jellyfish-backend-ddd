@@ -15,7 +15,6 @@ namespace Infrastructure.Mapper.Concrete
             userType.CreatedTime = entity.CreatedTime;  
             userType.LastModifiedTime = entity.LastModifiedTime;
             userType.DeletedTime = entity.DeletedTime;
-            userType.Deleted = Convert.ToSByte(entity.DeletedTime!=DateTime.MinValue);
             return  userType;
         }
 

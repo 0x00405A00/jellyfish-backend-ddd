@@ -256,3 +256,8 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\r
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.pdb
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.genruntimeconfig.cache
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\ref\Presentation.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\BouncyCastle.Cryptography.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\MailKit.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\MimeKit.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll

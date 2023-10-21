@@ -1,8 +1,8 @@
 ﻿using Infrastructure.Abstractions;
+using Infrastructure.HostedService.Backgroundservice;
 using Infrastructure.Interceptors;
-using Infrastructure.Mapper;
+using Infrastructure.Mail;
 using Infrastructure.Repository;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure
@@ -12,8 +12,12 @@ namespace Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddMemoryCache();  
+            services.AddSingleton<IMailoutboxRepository,MailOutboxRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.Decorate<IUserRepository, CachingUserRepository>();
+
+            services.AddHostedService<MailHostedService>();
+            services.AddSingleton<IMailHandler, MailHandler>();
 
             services.Scan(selector => selector
             .FromAssemblies(AssemblyReference.Assembly)
@@ -25,6 +29,7 @@ namespace Infrastructure
             services.AddHttpContextAccessor();
             services.AddSingleton<DbContextAuditLogInterceptor>();
             services.AddSingleton<ApplicationDbContext>();
+
 
             services.AddSingleton<IUnitOfWork,UnitOfWork>();
             return services;    

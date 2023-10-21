@@ -1,13 +1,9 @@
 ﻿using Domain.Const;
 using Infrastructure.Authentification;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Presentation.Swagger.OperationFilter;
 using Presentation.Swagger.SignalR;
 using Shared.Json;
-using System.Text.Json;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace Presentation
 {

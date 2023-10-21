@@ -13,7 +13,7 @@ namespace Infrastructure_Test.Mapper.EntityToDatabase
     {
         //NameingConvention for TestMethods: [ThingToTest]_Should_[ExspectedResult]_[Conditions]
         //Names in Brackets are Variable, without are the oposite (constant)
-        public Mock<IUserRepository> mock = new Mock<IUserRepository>();
+        public Mock<IMailoutboxRepository> mock = new Mock<IMailoutboxRepository>();
         public MapTest()
         {
         }
@@ -122,15 +122,14 @@ namespace Infrastructure_Test.Mapper.EntityToDatabase
             // Add more assertions for friend properties if needed
         }
     }
-    
-}
-public class UserDomainEntityTestData : TheoryData<User>
+
+    public class UserDomainEntityTestData : TheoryData<User>
     {
         public UserDomainEntityTestData()
         {
             var systemUser = User.GetSystemUser();
 
-            var role = Role.Create(new RoleId(),"role",null,DateTime.Now,null,null);
+            var role = Role.Create(new RoleId(), "role", null, DateTime.Now, null, null);
 
 
             var friend = User.Create(
@@ -174,7 +173,7 @@ public class UserDomainEntityTestData : TheoryData<User>
                 systemUser);
 
             //friend ist hier requester für Test
-            var friendshipRequest = FriendshipRequest.Create("do you want to be my friend",friend,user);
+            var friendshipRequest = FriendshipRequest.Create("do you want to be my friend", friend, user);
 
             user.AddFriend(systemUser, friend);
             user.AddFriendshipRequest(friendshipRequest);

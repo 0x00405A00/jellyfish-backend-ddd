@@ -17,7 +17,6 @@ namespace Infrastructure.Mapper.Concrete
             message.CreatedTime = entity.CreatedTime;
             message.LastModifiedTime = entity.LastModifiedTime;
             message.DeletedTime = entity.DeletedTime;
-            message.Deleted = Convert.ToSByte(entity.DeletedTime != DateTime.MinValue);
             message.MessageOwner = entity.Owner.Uuid.Id;
             return message;
         }

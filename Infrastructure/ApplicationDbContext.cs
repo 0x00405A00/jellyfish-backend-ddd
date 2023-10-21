@@ -2,6 +2,8 @@
 using Infrastructure.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Infrastructure;
 
@@ -65,13 +67,24 @@ internal partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<UserType> UserTypes { get; set; }
 
+    public virtual DbSet<EmailType> EmailTypes { get; set; }
+
+    public virtual DbSet<MailOutbox> MailOutboxes { get; set; }
+
+    public virtual DbSet<MailOutboxAttachment> MailOutboxAttachments { get; set; }
+
+    public virtual DbSet<MailOutboxRecipient> MailOutboxRecipients { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
     {
         var connectionString = _configuration.GetConnectionString("JellyfishMySqlDatabase");
         optionsBuilder.UseMySQL(connectionString);
         optionsBuilder.AddInterceptors(DbContextAuditLogInterceptor);
+        optionsBuilder.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
+
         optionsBuilder.EnableSensitiveDataLogging ( true);
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -91,9 +104,6 @@ internal partial class ApplicationDbContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp")
                 .HasColumnName("created_time");
-            entity.Property(e => e.Deleted)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("deleted");
             entity.Property(e => e.DeletedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_time");
@@ -157,9 +167,6 @@ internal partial class ApplicationDbContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp")
                 .HasColumnName("created_time");
-            entity.Property(e => e.Deleted)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("deleted");
             entity.Property(e => e.DeletedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_time");
@@ -202,9 +209,6 @@ internal partial class ApplicationDbContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp")
                 .HasColumnName("created_time");
-            entity.Property(e => e.Deleted)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("deleted");
             entity.Property(e => e.IsChatAdmin)
                 .HasDefaultValueSql("'0'")
                 .HasColumnName("is_chat_admin");
@@ -227,6 +231,146 @@ internal partial class ApplicationDbContext : DbContext
                 .HasForeignKey(d => d.UserUuid)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fkChatToUser");
+        });
+
+        modelBuilder.Entity<EmailType>(entity =>
+        {
+            entity.HasKey(e => e.Uuid).HasName("PRIMARY");
+
+            entity.ToTable("email_type");
+
+            entity.Property(e => e.Uuid)
+                .HasMaxLength(36)
+                .HasColumnName("uuid");
+            entity.Property(e => e.Type)
+                .HasMaxLength(45)
+                .HasColumnName("type");
+            entity.Property(e => e.CreatedTime)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp")
+                .HasColumnName("created_time");
+            entity.Property(e => e.DeletedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_time");
+            entity.Property(e => e.LastModifiedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("last_modified_time");
+        });
+
+        modelBuilder.Entity<MailOutbox>(entity =>
+        {
+            entity.HasKey(e => e.Uuid).HasName("PRIMARY");
+            entity.ToTable("mail_outbox");
+
+            entity.Property(e => e.Uuid)
+                .HasMaxLength(36)
+                .HasColumnName("uuid");
+            entity.Property(e => e.Body).HasColumnName("body");
+            entity.Property(e => e.BodyIsHtml)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("body_is_html");
+            entity.Property(e => e.From)
+                .HasMaxLength(255)
+                .HasColumnName("from");
+            entity.Property(e => e.Subject)
+                .HasMaxLength(255)
+                .UseCollation("utf8mb4_unicode_ci")
+                .HasColumnName("subject");
+            entity.Property(e => e.CreatedTime)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp")
+                .HasColumnName("created_time");
+            entity.Property(e => e.DeletedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_time");
+            entity.Property(e => e.LastModifiedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("last_modified_time");
+        });
+
+        modelBuilder.Entity<MailOutboxAttachment>(entity =>
+        {
+            entity.HasKey(e => new { e.MailUuid, e.Order }).HasName("PRIMARY");
+
+            entity.ToTable("mail_outbox_attachment");
+
+            entity.Property(e => e.MailUuid)
+                .HasMaxLength(36)
+                .HasColumnName("mail_uuid");
+            entity.Property(e => e.Uuid)
+                .HasMaxLength(36)
+                .HasColumnName("uuid");
+            entity.Property(e => e.Order).HasColumnName("order");
+            entity.Property(e => e.Attachment).HasColumnName("attachment");
+            entity.Property(e => e.Filename)
+                .HasMaxLength(255)
+                .HasColumnName("filename");
+            entity.Property(e => e.IsEmbeddedInHtml)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("is_embedded_in_html");
+            entity.Property(e => e.MimeCid)
+                .HasMaxLength(45)
+                .HasColumnName("mime_cid");
+            entity.Property(e => e.MimeMediasubtype)
+                .HasMaxLength(45)
+                .HasColumnName("mime_mediasubtype");
+            entity.Property(e => e.MimeMediatype)
+                .HasMaxLength(45)
+                .HasColumnName("mime_mediatype");
+            entity.Property(e => e.AttachmentSha1)
+                .HasMaxLength(45)
+                .HasColumnName("attachment_sha1");
+            entity.Property(e => e.CreatedTime)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp")
+                .HasColumnName("created_time");
+            entity.Property(e => e.DeletedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_time");
+            entity.Property(e => e.LastModifiedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("last_modified_time");
+
+            entity.HasOne(d => d.MailUu).WithMany(p => p.MailOutboxAttachments)
+                .HasForeignKey(d => d.MailUuid)
+                .HasConstraintName("fk_mailOutboxAttachmentToMailOutbox");
+        });
+
+        modelBuilder.Entity<MailOutboxRecipient>(entity =>
+        {
+            entity.HasKey(e => new { e.MailUuid, e.Email, e.EmailTypeUuid }).HasName("PRIMARY");
+
+            entity.ToTable("mail_outbox_recipient");
+
+            entity.HasIndex(e => e.EmailTypeUuid, "fk_mailOutboxRecipientToEmailType_idx");
+
+            entity.Property(e => e.MailUuid)
+                .HasMaxLength(36)
+                .HasColumnName("mail_uuid");
+            entity.Property(e => e.Email).HasColumnName("email");
+            entity.Property(e => e.EmailTypeUuid)
+                .HasMaxLength(36)
+                .HasColumnName("email_type_uuid");
+            entity.Property(e => e.CreatedTime)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp")
+                .HasColumnName("created_time");
+            entity.Property(e => e.DeletedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_time");
+            entity.Property(e => e.LastModifiedTime)
+                .HasColumnType("datetime")
+                .HasColumnName("last_modified_time");
+
+            entity.HasOne(d => d.EmailTypeUu).WithMany(p => p.MailOutboxRecipients)
+                .HasForeignKey(d => d.EmailTypeUuid)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_mailOutboxRecipientToEmailType");
+
+            entity.HasOne(d => d.MailUu).WithMany(p => p.MailOutboxRecipients)
+                .HasForeignKey(d => d.MailUuid)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_mailOutboxRecipientToMailOutbox");
         });
 
         modelBuilder.Entity<Message>(entity =>
@@ -252,9 +396,6 @@ internal partial class ApplicationDbContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp")
                 .HasColumnName("created_time");
-            entity.Property(e => e.Deleted)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("deleted");
             entity.Property(e => e.DeletedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_time");
@@ -293,9 +434,6 @@ internal partial class ApplicationDbContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp")
                 .HasColumnName("created_time");
-            entity.Property(e => e.Deleted)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("deleted");
             entity.Property(e => e.DeletedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_time");
@@ -329,9 +467,6 @@ internal partial class ApplicationDbContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp")
                 .HasColumnName("created_time");
-            entity.Property(e => e.Deleted)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("deleted");
             entity.Property(e => e.DeletedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_time");
@@ -373,9 +508,6 @@ internal partial class ApplicationDbContext : DbContext
             entity.Property(e => e.DateOfBirth)
                 .HasColumnType("date")
                 .HasColumnName("date_of_birth");
-            entity.Property(e => e.Deleted)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("deleted");
             entity.Property(e => e.DeletedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_time");
@@ -408,10 +540,10 @@ internal partial class ApplicationDbContext : DbContext
                 .HasComment("Base64 von Pic Binary")
                 .HasColumnName("picture");
             entity.Property(e => e.UserName)
-                .HasMaxLength(20)
+                .HasMaxLength(64)
                 .HasColumnName("user_name");
             entity.Property(e => e.Email)
-                .HasMaxLength(20)
+                .HasMaxLength(255)
                 .HasColumnName("email");
             entity.Property(e => e.UserTypeUuid)
                 .HasMaxLength(36)
@@ -450,9 +582,6 @@ internal partial class ApplicationDbContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp")
                 .HasColumnName("created_time");
-            entity.Property(e => e.Deleted)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("deleted");
             entity.Property(e => e.DeletedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_time");
@@ -501,9 +630,6 @@ internal partial class ApplicationDbContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp")
                 .HasColumnName("created_time");
-            entity.Property(e => e.Deleted)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("deleted");
             entity.Property(e => e.DeletedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_time");
@@ -543,9 +669,6 @@ internal partial class ApplicationDbContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp")
                 .HasColumnName("created_time");
-            entity.Property(e => e.Deleted)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("deleted");
             entity.Property(e => e.DeletedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_time");
@@ -587,9 +710,6 @@ internal partial class ApplicationDbContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp")
                 .HasColumnName("created_time");
-            entity.Property(e => e.Deleted)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("deleted");
             entity.Property(e => e.DeletedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_time");
@@ -629,9 +749,6 @@ internal partial class ApplicationDbContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp")
                 .HasColumnName("created_time");
-            entity.Property(e => e.Deleted)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("deleted");
             entity.Property(e => e.DeletedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_time");

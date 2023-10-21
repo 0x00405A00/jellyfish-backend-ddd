@@ -1,9 +1,10 @@
 ﻿using Domain.Exceptions;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace Domain.ValueObjects
 {
-    public class Email
+    public class Email : IEquatable<Email>
     {
         public static Regex EmailRegex = new Regex(@"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.Compiled|RegexOptions.IgnoreCase);
         public string EmailValue { get; private set; } 
@@ -26,6 +27,24 @@ namespace Domain.ValueObjects
         public override string ToString()
         {
             return EmailValue;
+        }
+
+        public static bool operator !=(Email emailLeft, Email emailRight)
+        {
+            if (ReferenceEquals(emailLeft, null) && ReferenceEquals(emailRight, null))return true;
+            if (ReferenceEquals(emailLeft, null)) return false;
+
+            return emailLeft.Equals(emailRight);
+        }
+        public static bool operator ==(Email emailLeft, Email emailRight)
+        {
+            return !(emailLeft!=emailRight);
+        }
+
+        public bool Equals(Email? other)
+        {
+            if (ReferenceEquals(other, null)) return false;
+            return this.EmailValue==other.EmailValue;
         }
     }
 }
