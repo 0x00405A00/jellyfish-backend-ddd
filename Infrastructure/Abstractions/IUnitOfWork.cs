@@ -7,4 +7,8 @@ namespace Infrastructure.Abstractions
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         Task<IDbContextTransaction> BeginTransaction(CancellationToken cancellationToken = default);
     }
+    public interface IUnitOfWorkMailService:IUnitOfWork
+    {
+
+    }
 }

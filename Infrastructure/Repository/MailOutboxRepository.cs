@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.Repository
 {
-    internal class MailOutboxRepository : GenericRepository<Infrastructure.DatabaseEntity.MailOutbox>, IMailoutboxRepositorySingleton
+    internal class MailOutboxRepository : GenericRepository<Infrastructure.DatabaseEntity.MailOutbox>, IMailoutboxRepository
     {
         public MailOutboxRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext) 
         { 
@@ -19,26 +19,36 @@ namespace Infrastructure.Repository
             return result;
         }
 
+        public void InsertMailAttachment(List<MailOutboxAttachment> mailOutboxAttachments)
+        {
+            _context.MailOutboxAttachments.AddRange(mailOutboxAttachments);
+        }
+
+        public void InsertMailRecipients(List<MailOutboxRecipient> mailOutboxRecipients)
+        {
+            _context.MailOutboxRecipients.AddRange(mailOutboxRecipients);
+        }
+
         public override async Task<ICollection<MailOutbox>> ListAsync(Expression<Func<MailOutbox, bool>> expression = null)
         {
-            var result = expression==null? await _dbSet.AsNoTracking().Include(x => x.MailOutboxAttachments)
+            var result = expression==null? await _dbSet.Include(x => x.MailOutboxAttachments)
                 .Include(x => x.MailOutboxRecipients)
                 .ThenInclude(x => x.EmailTypeUu)
-                .AsNoTracking()
+                .AsSingleQuery()
                 .ToListAsync():
-                await _dbSet.AsNoTracking().Include(x => x.MailOutboxAttachments)
+                await _dbSet.Include(x => x.MailOutboxAttachments)
                 .Include(x => x.MailOutboxRecipients)
                 .ThenInclude(x=>x.EmailTypeUu)
+                .AsSingleQuery()
                 .Where(expression)
                 .ToListAsync();
             return result;
         }
     }
-    internal class MailOutboxRepositoryScoped : MailOutboxRepository, IMailoutboxRepositoryScoped
+    internal class MailOutboxRepositoryMailService : MailOutboxRepository, IMailoutboxRepositoryMailService
     {
-        public MailOutboxRepositoryScoped(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
+        public MailOutboxRepositoryMailService(ApplicationDbContextMailService applicationDbContext) : base(applicationDbContext)
         {
-
         }
     }
 }

@@ -9,11 +9,15 @@ namespace Infrastructure.Repository
 
     {
         public void Add(TDbEntity entity);
+        public void Attach(TDbEntity entity);
         public void Remove(TDbEntity entity);
         public void Update(TDbEntity entity);
         public TDbEntity Get(Expression<Func<TDbEntity, bool>> expression);
         public ICollection<TDbEntity> List(Expression<Func<TDbEntity, bool>> expression = null);
 
+        public Task AddAsync(TDbEntity entity);
+        public void RemoveAsync(TDbEntity entity);
+        public void UpdateAsync(TDbEntity entity);
         public Task<TDbEntity> GetAsync(Expression<Func<TDbEntity, bool>> expression);
         public Task<ICollection<TDbEntity>> ListAsync(Expression<Func<TDbEntity, bool>> expression=null);
     }
@@ -28,6 +32,9 @@ namespace Infrastructure.Repository
         public TEntity Get(Expression<Func<TDbEntity, bool>> expression);
         public ICollection<TEntity> List(Expression<Func<TDbEntity, bool>> expression = null);
 
+        public Task AddAsync(TEntity entity);
+        public void RemoveAsync(TEntity entity);
+        public void UpdateAsync(TEntity entity);
         public Task<TEntity> GetAsync(Expression<Func<TDbEntity, bool>> expression);
         public Task<ICollection<TEntity>> ListAsync(Expression<Func<TDbEntity, bool>> expression=null);
     }

@@ -25,4 +25,10 @@ namespace Infrastructure
             return await _applicationDbContext.Database.BeginTransactionAsync();
         }
     }
+    internal class UnitOfWorkMailService : UnitOfWork, IUnitOfWorkMailService
+    {
+        public UnitOfWorkMailService(ApplicationDbContextMailService applicationDbContext) : base(applicationDbContext)
+        {
+        }
+    }
 }

@@ -263,14 +263,16 @@ public partial class JellyfishContext : DbContext
 
         modelBuilder.Entity<MailOutboxAttachment>(entity =>
         {
-            entity.HasKey(e => new { e.MailUuid, e.Order }).HasName("PRIMARY");
+            entity.HasKey(e => new { e.MailUuid, e.Uuid }).HasName("PRIMARY");
 
             entity.ToTable("mail_outbox_attachment");
 
             entity.Property(e => e.MailUuid)
                 .HasMaxLength(36)
                 .HasColumnName("mail_uuid");
-            entity.Property(e => e.Order).HasColumnName("order");
+            entity.Property(e => e.Uuid)
+                .HasMaxLength(36)
+                .HasColumnName("uuid");
             entity.Property(e => e.Attachment).HasColumnName("attachment");
             entity.Property(e => e.AttachmentSha1)
                 .HasMaxLength(45)
@@ -282,9 +284,25 @@ public partial class JellyfishContext : DbContext
             entity.Property(e => e.DeletedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_time");
+            entity.Property(e => e.Filename)
+                .HasMaxLength(255)
+                .HasColumnName("filename");
+            entity.Property(e => e.IsEmbeddedInHtml)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("is_embedded_in_html");
             entity.Property(e => e.LastModifiedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("last_modified_time");
+            entity.Property(e => e.MimeCid)
+                .HasMaxLength(45)
+                .HasColumnName("mime_cid");
+            entity.Property(e => e.MimeMediasubtype)
+                .HasMaxLength(45)
+                .HasColumnName("mime_mediasubtype");
+            entity.Property(e => e.MimeMediatype)
+                .HasMaxLength(45)
+                .HasColumnName("mime_mediatype");
+            entity.Property(e => e.Order).HasColumnName("order");
 
             entity.HasOne(d => d.MailUu).WithMany(p => p.MailOutboxAttachments)
                 .HasForeignKey(d => d.MailUuid)

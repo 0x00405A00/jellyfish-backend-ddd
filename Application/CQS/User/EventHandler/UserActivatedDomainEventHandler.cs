@@ -4,6 +4,7 @@ using Infrastructure.DatabaseEntity;
 using Infrastructure.Mail;
 using MediatR;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using MimeKit.Utils;
 using System.Configuration;
 using System.Text;
@@ -13,70 +14,75 @@ namespace Application.CQS.User.EventHandler
     internal sealed class UserActivatedDomainEventHandler :
         INotificationHandler<UserActivatedDomainEvent>
     {
-        private readonly IConfiguration configuration;
-        private readonly IMailoutboxRepositoryScoped mailoutboxRepository;
+        private readonly IServiceProvider serviceProvider;
 
         public UserActivatedDomainEventHandler(
-            IConfiguration configuration,
-            IMailoutboxRepositoryScoped mailoutboxRepository)
+            IServiceProvider serviceProvider)
         {
-            this.configuration = configuration;
-            this.mailoutboxRepository = mailoutboxRepository;
+            this.serviceProvider = serviceProvider;
         }
 
         public async Task Handle(UserActivatedDomainEvent notification, CancellationToken cancellationToken)
         {
-            var mailSection = configuration.GetSection("Infrastructure:Mail");
-
-            var mailSender = mailSection.GetValue<string>("system_sender_anonymous_mail");
-            var mailUuid = Guid.NewGuid();
-
-            var imageJellyfish = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory, "Media", "Static", "jellyfish_image.png"));
-            var imagePlaystore = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory, "Media", "Static", "playstore_icon.png"));
-            var imageAppstore = File.ReadAllBytes(Path.Combine(Environment.CurrentDirectory, "Media", "Static", "appstore_icon.png"));
-
-            MailOutboxAttachment jellyfishIcon = new MailOutboxAttachment
+            using(var scope = serviceProvider.CreateScope())
             {
-                MimeMediatype = "image",
-                MimeMediasubtype = "png",
-                MailUuid = mailUuid,
-                Attachment = imageJellyfish,
-                AttachmentSha1 = "xyz",
-                Filename = "jellyfish_image.png",
-                Order = 0,
-                Uuid = Guid.NewGuid(),
-                IsEmbeddedInHtml = Convert.ToSByte(true),
-                MimeCid = MimeUtils.GenerateMessageId()
-            };
-            MailOutboxAttachment appStore = new MailOutboxAttachment
-            {
-                MimeMediatype = "image",
-                MimeMediasubtype = "png",
-                MailUuid = mailUuid,
-                Attachment = imageAppstore,
-                AttachmentSha1 = "xyz",
-                Filename = "appstore_icon.png",
-                Order = 1,
-                Uuid = Guid.NewGuid(),
-                IsEmbeddedInHtml = Convert.ToSByte(true),
-                MimeCid = MimeUtils.GenerateMessageId()
-            };
-            MailOutboxAttachment playStore = new MailOutboxAttachment
-            {
-                MimeMediatype = "image",
-                MimeMediasubtype = "png",
-                MailUuid = mailUuid,
-                Attachment = imageAppstore,
-                AttachmentSha1 = "xyz",
-                Filename = "playstore_icon.png",
-                Order = 2,
-                Uuid = Guid.NewGuid(),
-                IsEmbeddedInHtml = Convert.ToSByte(true),
-                MimeCid = MimeUtils.GenerateMessageId()
-            };
 
-            var emailType = await mailoutboxRepository.GetEmailType(MailHandler.MailType.To);
-            string bodyHtml = string.Format(@"
+                var mailoutboxRepository = scope.ServiceProvider.GetRequiredService<IMailoutboxRepository>();
+                var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+                var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+                var mailSection = configuration.GetSection("Infrastructure:Mail");
+
+                var mailSender = mailSection.GetValue<string>("system_sender_anonymous_mail");
+                var mailUuid = Guid.NewGuid();
+
+                var imageJellyfishPath = Path.Combine(Environment.CurrentDirectory, "Media", "Static", "jellyfish_image.png");
+                var imagePlaystorePath = Path.Combine(Environment.CurrentDirectory, "Media", "Static", "playstore_icon.png");
+                var imageAppstorePath = Path.Combine(Environment.CurrentDirectory, "Media", "Static", "appstore_icon.png");
+
+
+                MailOutboxAttachment jellyfishIcon = new MailOutboxAttachment
+                {
+                    MimeMediatype = "image",
+                    MimeMediasubtype = "png",
+                    MailUuid = mailUuid,
+                    AttachmentPath = imageJellyfishPath,
+                    AttachmentSha1 = "xyz",
+                    Filename = "jellyfish_image.png",
+                    Order = 1,
+                    Uuid = Guid.NewGuid(),
+                    IsEmbeddedInHtml = Convert.ToSByte(true),
+                    MimeCid = MimeUtils.GenerateMessageId()
+                };
+                MailOutboxAttachment appStore = new MailOutboxAttachment
+                {
+                    MimeMediatype = "image",
+                    MimeMediasubtype = "png",
+                    MailUuid = mailUuid,
+                    AttachmentPath = imageAppstorePath,
+                    AttachmentSha1 = "xyz",
+                    Filename = "appstore_icon.png",
+                    Order = 2,
+                    Uuid = Guid.NewGuid(),
+                    IsEmbeddedInHtml = Convert.ToSByte(true),
+                    MimeCid = MimeUtils.GenerateMessageId()
+                };
+                MailOutboxAttachment playStore = new MailOutboxAttachment
+                {
+                    MimeMediatype = "image",
+                    MimeMediasubtype = "png",
+                    MailUuid = mailUuid,
+                    AttachmentPath = imagePlaystorePath,
+                    AttachmentSha1 = "xyz",
+                    Filename = "playstore_icon.png",
+                    Order = 3,
+                    Uuid = Guid.NewGuid(),
+                    IsEmbeddedInHtml = Convert.ToSByte(true),
+                    MimeCid = MimeUtils.GenerateMessageId()
+                };
+
+                var emailType = await mailoutboxRepository.GetEmailType(MailHandler.MailType.To);
+                string bodyHtml = string.Format(@"
                                 <!DOCTYPE html>
                                 <html lang=""de"">
                                 <head>
@@ -118,54 +124,75 @@ namespace Application.CQS.User.EventHandler
                                             width: 50%;
                                             height: 50%;
                                         }}
+                                        .appstore-img {{
+                                            width: 50%;
+                                            height: 25%;
+                                        }}
+                                        .inline-order {{
+                                            display: inline;
+                                        }}
                                     </style>
                                 </head>
                                 <body>
                                     <div class=""container"">
                                         <h1>Du hast die Registrierung abgeschlossen!</h1>
                                         <p>Lad dir jetzt die Jellyfish runter. Egal ob Android oder IOS.</p>
-                                        <p>
-                                            <img class=""footer-img"" alt=""{4}"" src=""cid:{5}"">
-                                        </p>
-                                        <p>
-                                            <img class=""footer-img"" alt=""{2}"" src=""cid:{3}"">
-                                        </p>
+                                        <div class=""inline-order"">
+                                            <img class=""appstore-img"" alt=""{4}"" src=""cid:{5}"">
+                                            <img class=""appstore-img"" alt=""{2}"" src=""cid:{3}"">
+                                        </div>
                                         <p>
                                             <img class=""footer-img"" alt=""{0}"" src=""cid:{1}"">
                                         </p>
                                     </div>
                                 </body>
                                 </html>",
-            jellyfishIcon.Filename, jellyfishIcon.MimeCid, appStore.Filename,appStore.MimeCid, playStore.Filename, playStore.MimeCid);
-            
-            var body = Encoding.UTF8.GetBytes(bodyHtml);
-            var mail = new MailOutbox
-            {
-                Uuid = mailUuid,
-                CreatedTime = DateTime.Now,
-                From = mailSender,
-                Subject = @"Registrierung abgeschlossen "+notification.e.UserName + ", Jellyfish im vollem Umfang nutzen \u2764",
-                Body = body,
-                BodyIsHtml = Convert.ToSByte(true),
-                MailOutboxRecipients = new List<MailOutboxRecipient>()
+                jellyfishIcon.Filename, jellyfishIcon.MimeCid, appStore.Filename, appStore.MimeCid, playStore.Filename, playStore.MimeCid);
+
+
+                using (var transaction = await unitOfWork.BeginTransaction())
                 {
-                    new MailOutboxRecipient 
-                    { 
-                        CreatedTime = DateTime.Now, 
-                        Email="mika_roos@web.de", 
-                        MailUuid=mailUuid, 
-                        EmailTypeUuid=emailType.Uuid 
+                    try
+                    {
+
+                        var recipients = new List<MailOutboxRecipient>()
+                        {
+                            new MailOutboxRecipient
+                            {
+                                CreatedTime = DateTime.Now,
+                                Email="mika_roos@web.de",
+                                MailUuid=mailUuid,
+                                EmailTypeUuid=emailType.Uuid
+                            }
+                        };
+                        var attachments = new List<MailOutboxAttachment>() {
+                                    playStore,jellyfishIcon,appStore
+                                };
+                        var body = Encoding.UTF8.GetBytes(bodyHtml);
+                        var mail = new MailOutbox
+                        {
+                            Uuid = mailUuid,
+                            CreatedTime = DateTime.Now,
+                            From = mailSender,
+                            Subject = @"Registrierung abgeschlossen " + notification.e.UserName + ", Jellyfish im vollem Umfang nutzen \u2764",
+                            Body = body,
+                            BodyIsHtml = Convert.ToSByte(true),
+                            MailOutboxAttachments = attachments,
+                            MailOutboxRecipients = recipients,
+                        };
+                        await mailoutboxRepository.AddAsync(mail);
+                        mail.MailOutboxAttachments.ToList().ForEach(y => System.Diagnostics.Debug.WriteLine(y.Uuid));
+                        await unitOfWork.SaveChangesAsync();
+                        transaction.Commit();
                     }
-                },
-                MailOutboxAttachments = new List<MailOutboxAttachment>()
-                {
+                    catch(Exception ex)
+                    {
+                        transaction.Rollback();
+                    }
+
                 }
 
-            };
-            mail.MailOutboxAttachments.Add(playStore);
-            mail.MailOutboxAttachments.Add(appStore);
-            mail.MailOutboxAttachments.Add(jellyfishIcon);
-            mailoutboxRepository.Add(mail);
+            }
 
         }
     }

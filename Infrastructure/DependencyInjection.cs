@@ -11,14 +11,23 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
             services.AddMemoryCache();
-            services.AddSingleton<IMailoutboxRepositorySingleton, MailOutboxRepository>();
-            services.AddScoped<IMailoutboxRepositoryScoped, MailOutboxRepositoryScoped>();
+
+            services.AddScoped<DbContextAuditLogInterceptor>();
+            services.AddScoped<ApplicationDbContext>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IMailoutboxRepository, MailOutboxRepository>();
+
+            services.AddScoped<ApplicationDbContextMailService>();
+            services.AddScoped<IUnitOfWorkMailService, UnitOfWorkMailService>();
+            services.AddScoped<IMailoutboxRepositoryMailService, MailOutboxRepositoryMailService>();//<----- für MailHostedService
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.Decorate<IUserRepository, CachingUserRepository>();
 
             services.AddHostedService<MailHostedService>();
-            services.AddSingleton<IMailHandler, MailHandler>();
+            services.AddScoped<IMailHandler, MailHandler>();
 
             services.Scan(selector => selector
             .FromAssemblies(AssemblyReference.Assembly)
@@ -27,12 +36,6 @@ namespace Infrastructure
             .AsImplementedInterfaces()//ClassName => IClassName
             .WithScopedLifetime());
 
-            services.AddHttpContextAccessor();
-            services.AddSingleton<DbContextAuditLogInterceptor>();
-            services.AddSingleton<ApplicationDbContext>();
-
-
-            services.AddSingleton<IUnitOfWork,UnitOfWork>();
             return services;    
 
         }

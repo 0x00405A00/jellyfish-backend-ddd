@@ -19,6 +19,7 @@ namespace Infrastructure.Repository
                                     .ThenInclude(uf => uf.FriendUserUu)
                                     .ThenInclude(ut => ut.UserTypeUu)
                                     .AsNoTracking()
+                                    .AsSingleQuery()
                                     .FirstOrDefaultAsync(expression);
             return this.MapToDomainEntity(value,true);
         }
@@ -53,6 +54,7 @@ namespace Infrastructure.Repository
                                     .ThenInclude(uf => uf.FriendUserUu)
                                     .ThenInclude(ut => ut.UserTypeUu)
                                     .AsNoTracking()
+                                    .AsSingleQuery()
                                     .Where(expression)
                                     .ToListAsync();
 

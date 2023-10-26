@@ -6,13 +6,10 @@ namespace Infrastructure.Abstractions
     public interface IMailoutboxRepository : IGenericRepository<MailOutbox>
     {
         Task<EmailType> GetEmailType(string type);
+        void InsertMailAttachment(List<MailOutboxAttachment> mailOutboxAttachments);
+        void InsertMailRecipients(List<MailOutboxRecipient> mailOutboxRecipients);
     }
-    public interface IMailoutboxRepositorySingleton : IMailoutboxRepository
+    public interface IMailoutboxRepositoryMailService : IMailoutboxRepository
     {
-
-    }
-    public interface IMailoutboxRepositoryScoped : IMailoutboxRepository
-    {
-
     }
 }

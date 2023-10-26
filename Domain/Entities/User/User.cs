@@ -254,7 +254,7 @@ namespace Domain.Entities.User
                 throw new InvalidActivationTry();
             }
 
-            ActivationDateTime = DateTime.Now;
+            //ActivationDateTime = DateTime.Now;
             Raise(new UserActivatedDomainEvent(this));
         }
         public void NewRegistered()

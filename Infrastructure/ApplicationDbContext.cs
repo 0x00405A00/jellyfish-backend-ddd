@@ -1,6 +1,7 @@
 ﻿using Infrastructure.DatabaseEntity;
 using Infrastructure.Interceptors;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -82,7 +83,7 @@ internal partial class ApplicationDbContext : DbContext
         optionsBuilder.UseMySQL(connectionString);
         optionsBuilder.AddInterceptors(DbContextAuditLogInterceptor);
         optionsBuilder.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
-
+        optionsBuilder.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
         optionsBuilder.EnableSensitiveDataLogging ( true);
 
     }
@@ -290,7 +291,7 @@ internal partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<MailOutboxAttachment>(entity =>
         {
-            entity.HasKey(e => new { e.MailUuid, e.Order }).HasName("PRIMARY");
+            entity.HasKey(e => new { e.MailUuid, e.Uuid }).HasName("PRIMARY");
 
             entity.ToTable("mail_outbox_attachment");
 
@@ -300,23 +301,7 @@ internal partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Uuid)
                 .HasMaxLength(36)
                 .HasColumnName("uuid");
-            entity.Property(e => e.Order).HasColumnName("order");
-            entity.Property(e => e.Attachment).HasColumnName("attachment");
-            entity.Property(e => e.Filename)
-                .HasMaxLength(255)
-                .HasColumnName("filename");
-            entity.Property(e => e.IsEmbeddedInHtml)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("is_embedded_in_html");
-            entity.Property(e => e.MimeCid)
-                .HasMaxLength(45)
-                .HasColumnName("mime_cid");
-            entity.Property(e => e.MimeMediasubtype)
-                .HasMaxLength(45)
-                .HasColumnName("mime_mediasubtype");
-            entity.Property(e => e.MimeMediatype)
-                .HasMaxLength(45)
-                .HasColumnName("mime_mediatype");
+            entity.Property(e => e.AttachmentPath).HasColumnName("attachment_path");
             entity.Property(e => e.AttachmentSha1)
                 .HasMaxLength(45)
                 .HasColumnName("attachment_sha1");
@@ -327,12 +312,29 @@ internal partial class ApplicationDbContext : DbContext
             entity.Property(e => e.DeletedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_time");
+            entity.Property(e => e.Filename)
+                .HasMaxLength(255)
+                .HasColumnName("filename");
+            entity.Property(e => e.IsEmbeddedInHtml)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("is_embedded_in_html");
             entity.Property(e => e.LastModifiedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("last_modified_time");
+            entity.Property(e => e.MimeCid)
+                .HasMaxLength(45)
+                .HasColumnName("mime_cid");
+            entity.Property(e => e.MimeMediasubtype)
+                .HasMaxLength(45)
+                .HasColumnName("mime_mediasubtype");
+            entity.Property(e => e.MimeMediatype)
+                .HasMaxLength(45)
+                .HasColumnName("mime_mediatype");
+            entity.Property(e => e.Order).HasColumnName("order");
 
             entity.HasOne(d => d.MailUu).WithMany(p => p.MailOutboxAttachments)
                 .HasForeignKey(d => d.MailUuid)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_mailOutboxAttachmentToMailOutbox");
         });
 
@@ -364,7 +366,7 @@ internal partial class ApplicationDbContext : DbContext
 
             entity.HasOne(d => d.EmailTypeUu).WithMany(p => p.MailOutboxRecipients)
                 .HasForeignKey(d => d.EmailTypeUuid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_mailOutboxRecipientToEmailType");
 
             entity.HasOne(d => d.MailUu).WithMany(p => p.MailOutboxRecipients)
@@ -765,4 +767,22 @@ internal partial class ApplicationDbContext : DbContext
 
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+}
+internal partial class ApplicationDbContextMailService : ApplicationDbContext
+{
+    public ApplicationDbContextMailService(IConfiguration configuration) : base(configuration)
+    {
+    }
+
+    public ApplicationDbContextMailService(IConfiguration configuration, DbContextOptions<ApplicationDbContext> options) : base(configuration, options)
+    {
+    }
+
+    public ApplicationDbContextMailService(IConfiguration configuration, DbContextAuditLogInterceptor dbContextAuditLogInterceptor) : base(configuration, dbContextAuditLogInterceptor)
+    {
+    }
+
+    public ApplicationDbContextMailService(IConfiguration configuration, DbContextOptions<ApplicationDbContext> options, DbContextAuditLogInterceptor dbContextAuditLogInterceptor) : base(configuration, options, dbContextAuditLogInterceptor)
+    {
+    }
 }

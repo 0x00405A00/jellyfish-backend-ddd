@@ -12,7 +12,7 @@ public partial class MailOutboxAttachment : DatabaseEntityModel
     public string Filename { get; set; } = null!;
     public string MimeCid { get; set; } = null!;
     public int Order { get; set; }
-    public byte[] Attachment { get; set; } = null!;
+    public string AttachmentPath { get; set; }
 
     public string AttachmentSha1 { get; set; } = null!;
     public sbyte? IsEmbeddedInHtml { get; set; } = null!;

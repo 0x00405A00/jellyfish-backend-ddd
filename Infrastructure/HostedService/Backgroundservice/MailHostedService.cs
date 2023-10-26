@@ -1,5 +1,8 @@
 ﻿using Infrastructure.Abstractions;
 using Infrastructure.Mail;
+using Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
@@ -12,22 +15,16 @@ namespace Infrastructure.HostedService.Backgroundservice
     internal class MailHostedService : BackgroundService
     {
         internal static int MailSentIntervalInSeconds = 60;
+        private readonly IServiceProvider serviceProvider;
         private readonly ILogger<MailHostedService> _logger;
-        private readonly IMailHandler _mailHandler;
-        private readonly IUnitOfWork unitOfWork;
-        private readonly IMailoutboxRepositorySingleton _mailoutboxRepository;
         private readonly CancellationToken _cancelationToken;
 
         public MailHostedService(
-            ILogger<MailHostedService> logger,
-            IMailHandler mailHandler,
-            IUnitOfWork unitOfWork,
-            IMailoutboxRepositorySingleton mailoutboxRepository)
+            IServiceProvider serviceProvider,
+            ILogger<MailHostedService> logger)
         {
+            this.serviceProvider = serviceProvider;
             _logger = logger;
-            _mailHandler = mailHandler;
-            this.unitOfWork = unitOfWork;
-            this._mailoutboxRepository = mailoutboxRepository;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -40,7 +37,7 @@ namespace Infrastructure.HostedService.Backgroundservice
             {
                 do
                 {
-                    await ExecuteTask();
+                    await TExecuteTask();
                 }
                 while (await timer.WaitForNextTickAsync(stoppingToken));
             }
@@ -49,86 +46,93 @@ namespace Infrastructure.HostedService.Backgroundservice
 
             }
         }
-        private async Task ExecuteTask()
+        private async Task TExecuteTask()
         {
-            var mails = await _mailoutboxRepository.ListAsync();
-            if (mails.Count == 0)
-                return;
-
-            foreach(var mail in mails)
+            using (var scope = serviceProvider.CreateScope())
             {
-                var mailIsHtml = Convert.ToBoolean(mail.BodyIsHtml);
-                var from = new MailboxAddress(mail.From,mail.From);
-                InternetAddressList recipientsToList = new InternetAddressList();
-                InternetAddressList recipientsCcList = new InternetAddressList();
-                InternetAddressList recipientsBccList = new InternetAddressList();
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContextMailService>();
+                var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWorkMailService>();
+                var mailoutboxRepository = scope.ServiceProvider.GetRequiredService<IMailoutboxRepositoryMailService>();
+                var mailHandler = scope.ServiceProvider.GetRequiredService<IMailHandler>();
 
-                foreach(var recipient in mail.MailOutboxRecipients)
-                {
+                var mails = await mailoutboxRepository.ListAsync();
+                if (mails.Count == 0)
+                    return;
 
-                    switch (recipient.EmailTypeUu.Type)
-                    {
-                        case MailHandler.MailType.To:
-                            recipientsToList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
-                            break;
-                        case MailHandler.MailType.Cc:
-                            recipientsCcList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
-                            break;
-                        case MailHandler.MailType.Bcc:
-                            recipientsBccList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
-                            break;
-                    }
-                }
-                string subject = mail.Subject??String.Empty;
-                string body = Encoding.UTF8.GetString(mail.Body??new byte[0]);
-                MimeKit.AttachmentCollection mailAttachments = new MimeKit.AttachmentCollection();
-                MimeKit.AttachmentCollection mailEmbeddedInHtmlMedia = new MimeKit.AttachmentCollection();
-                foreach(var attachment in mail.MailOutboxAttachments)
+                foreach (var mail in mails)
                 {
-                    var isEmbedded = Convert.ToBoolean(attachment.IsEmbeddedInHtml);
-                    string filePath = Path.Combine(Environment.CurrentDirectory,"Mail","Attachments", attachment.Filename);
-                    await File.WriteAllBytesAsync(filePath, attachment.Attachment, _cancelationToken);
-                    if (isEmbedded)
+                    var mailIsHtml = Convert.ToBoolean(mail.BodyIsHtml);
+                    var from = new MailboxAddress(mail.From, mail.From);
+                    InternetAddressList recipientsToList = new InternetAddressList();
+                    InternetAddressList recipientsCcList = new InternetAddressList();
+                    InternetAddressList recipientsBccList = new InternetAddressList();
+
+                    foreach (var recipient in mail.MailOutboxRecipients)
                     {
-                        var builder = new BodyBuilder();
-                        var image = builder.LinkedResources.Add(filePath);
-                        image.ContentId = attachment.MimeCid;
-                        mailEmbeddedInHtmlMedia.Add(image);
-                    }
-                    else
-                    {
-                        using (FileStream fs = File.OpenRead(filePath))
+
+                        switch (recipient.EmailTypeUu.Type)
                         {
-                            var mediaAttachent = new MimePart(attachment.MimeMediatype, attachment.MimeMediasubtype)
-                            {
-
-                                Content = new MimeContent(fs, ContentEncoding.Default),
-                                ContentDisposition = new ContentDisposition(isEmbedded ? ContentDisposition.Inline : ContentDisposition.Attachment),
-                                ContentTransferEncoding = ContentEncoding.Base64,
-                                FileName = Path.GetFileName(attachment.Filename),
-                                ContentId = attachment.MimeCid,
-                            };
-                            mailAttachments.Add(mediaAttachent);
-                            fs.Close();
+                            case MailHandler.MailType.To:
+                                recipientsToList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
+                                break;
+                            case MailHandler.MailType.Cc:
+                                recipientsCcList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
+                                break;
+                            case MailHandler.MailType.Bcc:
+                                recipientsBccList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
+                                break;
                         }
-
                     }
+                    string subject = mail.Subject ?? String.Empty;
+                    string body = Encoding.UTF8.GetString(mail.Body ?? new byte[0]);
+                    MimeKit.AttachmentCollection mailAttachments = new MimeKit.AttachmentCollection();
+                    MimeKit.AttachmentCollection mailEmbeddedInHtmlMedia = new MimeKit.AttachmentCollection();
+                    foreach (var attachment in mail.MailOutboxAttachments)
+                    {
+                        var isEmbedded = Convert.ToBoolean(attachment.IsEmbeddedInHtml);
+                        string filePath = attachment.AttachmentPath;
+                        if (isEmbedded)
+                        {
+                            var builder = new BodyBuilder();
+                            var image = builder.LinkedResources.Add(filePath);
+                            image.ContentId = attachment.MimeCid;
+                            mailEmbeddedInHtmlMedia.Add(image);
+                        }
+                        else
+                        {
+                            using (FileStream fs = File.OpenRead(filePath))
+                            {
+                                var mediaAttachent = new MimePart(attachment.MimeMediatype, attachment.MimeMediasubtype)
+                                {
+
+                                    Content = new MimeContent(fs, ContentEncoding.Default),
+                                    ContentDisposition = new ContentDisposition(isEmbedded ? ContentDisposition.Inline : ContentDisposition.Attachment),
+                                    ContentTransferEncoding = ContentEncoding.Base64,
+                                    FileName = Path.GetFileName(attachment.Filename),
+                                    ContentId = attachment.MimeCid,
+                                };
+                                mailAttachments.Add(mediaAttachent);
+                                fs.Close();
+                            }
+
+                        }
+                    }
+                    var mailMessage = mailHandler.CreateMimeMessage(
+                        recipientsToList,
+                        recipientsCcList,
+                        recipientsBccList,
+                        from,
+                        subject,
+                        body,
+                        mailEmbeddedInHtmlMedia,
+                        mailAttachments,
+                        mailIsHtml);
+                    await mailHandler.SendMail(mailMessage);
+                    _logger.LogInformation($"{DateTime.Now.ToLongTimeString()}-mailservice send mail");
+                    mailoutboxRepository.Remove(mail);
                 }
-                var mailMessage = _mailHandler.CreateMimeMessage(
-                    recipientsToList,
-                    recipientsCcList,
-                    recipientsBccList,
-                    from,
-                    subject,
-                    body,
-                    mailEmbeddedInHtmlMedia,
-                    mailAttachments,
-                    mailIsHtml);
-                await _mailHandler.SendMail(mailMessage);
-                _logger.LogInformation($"{DateTime.Now.ToLongTimeString()}-mailservice send mail");
-                _mailoutboxRepository.Remove(mail);
+                await unitOfWork.SaveChangesAsync();
             }
-            await unitOfWork.SaveChangesAsync();
         }
 
     }

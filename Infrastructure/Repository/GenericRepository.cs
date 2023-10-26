@@ -11,7 +11,6 @@ namespace Infrastructure.Repository
     {
         protected readonly DbSet<TDbEntity> _dbSet;
         protected readonly ApplicationDbContext _context;
-        protected readonly ApplicationDbContext applicationDbContext;
 
         protected GenericRepository(ApplicationDbContext applicationDbContext)
         {
@@ -23,6 +22,10 @@ namespace Infrastructure.Repository
         public void Add(TDbEntity entity)
         {
             _dbSet.Add(entity);
+        }
+        public void Attach(TDbEntity entity)
+        {
+            _dbSet.Attach(entity);
         }
 
         public void Update(TDbEntity entity)
@@ -52,6 +55,20 @@ namespace Infrastructure.Repository
 
         #region Async
 
+        public async Task AddAsync(TDbEntity entity)
+        {
+            await _dbSet.AddAsync(entity);
+        }
+
+        public void UpdateAsync(TDbEntity entity)
+        {
+            _dbSet.Update(entity);
+        }
+
+        public void RemoveAsync(TDbEntity entity)
+        {
+            _dbSet.Remove(entity) ;
+        }
         public virtual async Task<TDbEntity> GetAsync(Expression<Func<TDbEntity, bool>> expression)
         {
             var value = await _dbSet.AsNoTracking().FirstOrDefaultAsync(expression);
@@ -128,6 +145,7 @@ namespace Infrastructure.Repository
         }
         #endregion
         #region Async
+
         public async virtual Task<TEntity> GetAsync(Expression<Func<TDbEntity, bool>> expression)
         {
             var value = await base.GetAsync(expression);
@@ -141,6 +159,24 @@ namespace Infrastructure.Repository
             var value = await base.ListAsync(expression);
 
             return this.MapToDomainEntity(value, true);
+        }
+
+        public async Task AddAsync(TEntity entity)
+        {
+            var dbModel = MapToDatabaseEntity(entity, false);
+            await base.AddAsync(dbModel);
+        }
+
+        public void RemoveAsync(TEntity entity)
+        {
+            var dbModel = MapToDatabaseEntity(entity, false);
+            base.RemoveAsync(dbModel);
+        }
+
+        public void UpdateAsync(TEntity entity)
+        {
+            var dbModel = MapToDatabaseEntity(entity, false);
+            base.UpdateAsync(dbModel);
         }
         #endregion
     }
