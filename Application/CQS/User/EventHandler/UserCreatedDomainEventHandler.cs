@@ -127,7 +127,7 @@ namespace Application.CQS.User.EventHandler
                     new MailOutboxRecipient
                     {
                         CreatedTime = DateTime.Now,
-                        Email="mika_roos@web.de",
+                        Email=notification.e.Email.EmailValue,
                         MailUuid=mailUuid,
                         EmailTypeUuid=emailType.Uuid
                     }

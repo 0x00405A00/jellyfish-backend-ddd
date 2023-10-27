@@ -31,8 +31,6 @@ public partial class User : DatabaseEntityModel
 
     public DateTime? PasswordResetExpiresIn { get; set; }
 
-    public sbyte? PasswordResetCodeConfirmation { get; set; }
-
     public DateTime? ActivationDatetime { get; set; }
 
     /// <summary>

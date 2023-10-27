@@ -2,10 +2,8 @@ using Application.CQS.Messenger.User.Command.Friends.RemoveFriend;
 using Application.CQS.Messenger.User.Command.FriendshipRequests.AcceptFriendshipRequest;
 using Application.CQS.Messenger.User.Command.FriendshipRequests.CreateFriendshipRequest;
 using Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriendshipRequest;
-using Application.CQS.Messenger.User.Queries.GetUsers;
 using Application.CQS.User.Commands.CreateUser;
 using Application.CQS.User.Commands.DeleteUser;
-using Application.CQS.User.Commands.PasswordReset.Confirmation;
 using Application.CQS.User.Commands.PasswordReset.Request;
 using Application.CQS.User.Commands.PasswordReset.Reset;
 using Application.CQS.User.Commands.RegisterUser.Activation;
@@ -58,39 +56,19 @@ namespace Presentation.Controllers.Api.v1
             var command = new UserPasswordResetRequestCommand(passwordResetRequestDTO.Email);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
         [AllowAnonymous]
-        [HttpPost("password/reset/confirmation")]
+        [HttpPost("password/reset/{base64Token}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> PasswordResetRequestConfirmation([FromBody] PasswordResetConfirmationCodeDataTransferModel passwordResetConfirmationCodeDataTransferModel, CancellationToken cancellationToken)
+        public async Task<IActionResult> PasswordReset(string base64Token,[FromBody] PasswordResetDataTransferModel passwordResetDataTransferModel, CancellationToken cancellationToken)
         {
-            var command = new UserPasswordResetRequestConfirmationCommand(passwordResetConfirmationCodeDataTransferModel.PasswordResetCode);
+            UserPasswordResetCommand command= new UserPasswordResetCommand(passwordResetDataTransferModel.Password,passwordResetDataTransferModel.PasswordRepeat, passwordResetDataTransferModel.PasswordResetCode, base64Token);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
-        }
-
-        [AllowAnonymous]
-        [HttpPost("password/reset/{base64Token?}")]
-        [Consumes(MediaTypeNames.Application.Json)]
-        [Produces(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> PasswordReset(string? base64Token,[FromBody] PasswordResetDataTransferModel passwordResetDataTransferModel, CancellationToken cancellationToken)
-        {
-            UserPasswordResetCommand command;
-            if (!String.IsNullOrEmpty(base64Token))
-            {
-                command = new UserPasswordResetCommand(base64Token);
-            }
-            else
-            {
-                command = new UserPasswordResetCommand(passwordResetDataTransferModel.Password, passwordResetDataTransferModel.PasswordResetCode);
-            }
-
-            var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
         [AllowAnonymous]
@@ -102,7 +80,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new UserActivationCommand(base64Token,userActivationDataTransferModel.ActivationCode);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
         [HttpPost()]
@@ -114,7 +92,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new CreateUserCommand(userUuid,userDto.UserName, userDto.Password, userDto.FirstName, userDto.LastName, userDto.Email, userDto.Phone, (DateTime)userDto.DateOfBirth);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
         [HttpGet("{guid}")]
@@ -125,7 +103,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new Application.CQS.User.Queries.GetUserById.GetUserByIdQuery(guid);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
         [HttpGet()]
@@ -136,7 +114,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new Application.CQS.User.Queries.GetUsers.GetUsersQuery();
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
         [Produces(MediaTypeNames.Application.Json)]
@@ -146,7 +124,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new Application.CQS.Messenger.User.Queries.GetUserById.GetUserByIdQuery(guid);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
         [HttpPut("{userId}")]
@@ -155,10 +133,18 @@ namespace Presentation.Controllers.Api.v1
         public async Task<IActionResult> UpdateUser(Guid userId, [FromBody] UserDTO userDto, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new UpdateUserCommand(userId, userDto.UserName, userDto.Password, userDto.FirstName, userDto.LastName, userDto.Email, userDto.Phone, userDto.DateOfBirth);
+            var command = new UpdateUserCommand(userId,
+                                                userDto.UserName,
+                                                userDto.Password,
+                                                userDto.PasswordConfirm,
+                                                userDto.FirstName,
+                                                userDto.LastName,
+                                                userDto.Email,
+                                                userDto.Phone,
+                                                userDto.DateOfBirth);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
         [HttpDelete("{userId}")]
         [Produces(MediaTypeNames.Application.Json)]
@@ -168,7 +154,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new DeleteUserCommand(userUuid, userId);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
         [Consumes(MediaTypeNames.Application.Json)]
@@ -180,7 +166,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new CreateFriendshipRequestCommand(userUuid, userFriendshipRequestDTO.UserUuid);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
         [Consumes(MediaTypeNames.Application.Json)]
@@ -192,7 +178,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new RemoveFriendshipRequestCommand(userUuid, userFriendshipRequestDTO.UserUuid);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
         [Consumes(MediaTypeNames.Application.Json)]
@@ -204,7 +190,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new GetUserByIdQuery(userUuid);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value.FriendshipRequests) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value.FriendshipRequests) : BadRequest(result);
         }
 
         [Consumes(MediaTypeNames.Application.Json)]
@@ -216,7 +202,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new AcceptFriendshipRequestCommand(userUuid, userFriendshipRequestDTO.UserUuid);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
         [Consumes(MediaTypeNames.Application.Json)]
@@ -228,7 +214,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new GetUserByIdQuery(userUuid);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value.Friends) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value.Friends) : BadRequest(result);
         }
 
         [Consumes(MediaTypeNames.Application.Json)]
@@ -240,7 +226,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new RemoveFriendCommand(userUuid, friend.Uuid);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
     }

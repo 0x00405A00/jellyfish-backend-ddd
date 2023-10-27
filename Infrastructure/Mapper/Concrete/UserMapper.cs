@@ -23,6 +23,11 @@ namespace Infrastructure.Mapper.Concrete
             user.ActivationDatetime = entity.ActivationDateTime;
             user.ActivationToken = entity.ActivationToken;
             user.ActivationCode = entity.ActivationCode;
+
+            user.PasswordResetCode = entity.PasswordResetCode;
+            user.PasswordResetExpiresIn = entity.PasswordResetExpiresIn;
+            user.PasswordResetToken = entity.PasswordResetToken;
+
             user.CreatedTime = entity.CreatedTime;
             user.LastModifiedTime = entity.LastModifiedTime;    
             user.DeletedTime = entity.DeletedTime;
@@ -124,6 +129,9 @@ namespace Infrastructure.Mapper.Concrete
                 entity.LastName,
                 entity.ActivationToken,
                 entity.ActivationCode,
+                entity.PasswordResetCode,
+                entity.PasswordResetToken,
+                entity.PasswordResetExpiresIn,
                 email,
                 phone,
                 picture,

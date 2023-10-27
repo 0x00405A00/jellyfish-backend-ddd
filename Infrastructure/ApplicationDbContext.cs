@@ -528,7 +528,6 @@ internal partial class ApplicationDbContext : DbContext
             entity.Property(e => e.PasswordResetCode)
                 .HasMaxLength(10)
                 .HasColumnName("password_reset_code");
-            entity.Property(e => e.PasswordResetCodeConfirmation).HasColumnName("password_reset_code_confirmation");
             entity.Property(e => e.PasswordResetExpiresIn)
                 .HasColumnType("datetime")
                 .HasColumnName("password_reset_expires_in");

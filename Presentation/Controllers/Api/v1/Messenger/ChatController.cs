@@ -42,7 +42,7 @@ namespace Presentation.Controllers.Api.v1.Messenger
                                                           chatDto.PictureBase64);
 
             var result = await Sender.Send(commandCreateChat, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
         [Consumes(MediaTypeNames.Application.Json)]
@@ -53,7 +53,7 @@ namespace Presentation.Controllers.Api.v1.Messenger
             var command = new GetChatByIdQuery(chatId);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
         [Consumes(MediaTypeNames.Application.Json)]
@@ -69,7 +69,7 @@ namespace Presentation.Controllers.Api.v1.Messenger
                                                 chatDto.ChatDescription,
                                                 chatDto.PictureBase64);
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
         [Produces(MediaTypeNames.Application.Json)]
@@ -80,7 +80,7 @@ namespace Presentation.Controllers.Api.v1.Messenger
             var command = new DeleteChatCommand(userUuid, chatId);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
     }

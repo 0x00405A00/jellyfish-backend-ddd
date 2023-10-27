@@ -20,6 +20,9 @@ namespace Application.DataTransferObject
         [JsonPropertyName("password")]
         public string? Password { get; set; }
 
+        [JsonPropertyName("password_repeat")]
+        public string? PasswordConfirm { get; set; }
+
         [JsonPropertyName("email")]
         public string? Email { get; set; }
 

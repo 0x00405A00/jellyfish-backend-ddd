@@ -28,6 +28,7 @@ namespace Domain.Entities.User
             {"Length of minimal 8",new Regex("^.{8,}$") },
         };
         public static int ActivationCodeLen = 4;
+        public static TimeSpan PasswordResetExpiresInTime = new TimeSpan(12, 0, 0);
 
         private ICollection<UserFriend> _friends = new List<UserFriend>();
         public ICollection<UserFriend> Friends { get => _friends?.ToList(); }
@@ -43,6 +44,11 @@ namespace Domain.Entities.User
         public string LastName { get; private set; }
         public string ActivationToken { get; private set; }
         public string ActivationCode { get; private set; }
+
+        public string PasswordResetCode { get; private set; }
+        public string PasswordResetToken { get; private set; }
+        public DateTime? PasswordResetExpiresIn { get; private set; }
+
         public Email Email { get; protected set; }
         public PhoneNumber Phone { get; private set; }
         public Picture Picture { get; private set; }
@@ -69,6 +75,9 @@ namespace Domain.Entities.User
                     string lastName,
                     string activationToken,
                     string activationCode,
+                    string passwordResetCode,
+                    string passwordResetToken,
+                    DateTime? passwordResetExpiresIn,
                     Email email,
                     PhoneNumber phone,
                     Picture? picture,
@@ -100,6 +109,9 @@ namespace Domain.Entities.User
             _friendshipRequests = friendshipRequests ?? new List<FriendshipRequest>();
             _friends = friends??new List<UserFriend>();
             _roles = roles??new List<UserRole>();
+            PasswordResetCode = passwordResetCode;
+            PasswordResetExpiresIn = passwordResetExpiresIn;
+            PasswordResetToken = passwordResetToken;
         }
 
         /// <summary>
@@ -128,6 +140,9 @@ namespace Domain.Entities.User
             string lastName,
             string activationToken,
             string activationCode,
+            string passwordResetCode,
+            string passwordResetToken,
+            DateTime? passwordResetExpiresIn,
             Email email,
             PhoneNumber phone,
             Picture? picture,
@@ -170,6 +185,9 @@ namespace Domain.Entities.User
                 lastName,
                 activationToken,
                 activationCode,
+                passwordResetCode,
+                passwordResetToken,
+                passwordResetExpiresIn,
                 email,
                 phone,
                 picture,
@@ -198,6 +216,9 @@ namespace Domain.Entities.User
                 string.Empty,
                 string.Empty,
                 string.Empty,
+                null,
+                null,
+                null,
                 null,
                 null,
                 null,
@@ -291,11 +312,15 @@ namespace Domain.Entities.User
             Raise(new UserUpdatedDomainEvent<User, UserId>(this, x => x.UserName, userName));
         }
 
-        public void UpdatePassword(User modifiedUser, string password)
+        public void UpdatePassword(User modifiedUser, string password,string passwordConfirm)
         {
-            if (String.IsNullOrWhiteSpace(password))
+            if (String.IsNullOrWhiteSpace(password) || String.IsNullOrWhiteSpace(passwordConfirm))
             {
                 throw new InvalidPasswordException("password is empty");
+            }
+            if(password!=passwordConfirm)
+            {
+                throw new InvalidPasswordException("password != passwordConfirm");
             }
 
             bool[] matches = new bool[PasswordPolicy.Keys.Count];
@@ -325,6 +350,40 @@ namespace Domain.Entities.User
             Password = password;
             SetLastModified(modifiedUser);
             Raise(new UserUpdatedDomainEvent<User, UserId>(this, x => x.Password, password));
+        }
+
+        public void ResetPasswordRequest()
+        {
+            this.PasswordResetCode = GenerateCode(ActivationCodeLen);
+            this.PasswordResetExpiresIn =DateTime.Now.Add(User.PasswordResetExpiresInTime);
+            this.PasswordResetToken =Convert.ToBase64String(Encoding.UTF8.GetBytes((Random.Shared.Next(1000) + Guid.NewGuid().ToString())));
+            Raise(new UserPasswordResetRequestDomainEvent(this));
+        }
+        public void ResetPassword(string newPassword,string newPasswordConfirm,string base64,string code)
+        {
+            if(this.PasswordResetExpiresIn <= DateTime.Now)
+            {
+                throw new InvalidPasswordException("password-reset action time frame is expired");
+            }
+            if(this.PasswordResetToken != base64)
+            {
+                throw new InvalidPasswordException("this.PasswordResetToken != base64");
+            }
+            if(this.PasswordResetCode != code)
+            {
+                throw new InvalidPasswordException("this.PasswordResetCode != code");
+            }
+            try
+            {
+
+                UpdatePassword(this, newPassword,newPasswordConfirm);
+            }
+            catch(InvalidPasswordException ex)
+            {
+                throw;
+            }
+
+            Raise(new UserPasswordResetCompletedDomainEvent(this));
         }
 
         public void UpdateFirstName(User modifiedUser, string firstName)

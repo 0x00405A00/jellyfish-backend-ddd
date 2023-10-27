@@ -58,11 +58,11 @@ namespace Application.CQS.User.Commands.UpdateUser
                     return Result<Guid>.Failure(ex.Message);
                 }
             }
-            if (request.Password != null)
+            if (request.Password != null && request.PasswordConfirm != null)
             {
                 try
                 {
-                    user.UpdatePassword(user,request.Password);
+                    user.UpdatePassword(user, request.Password, request.PasswordConfirm);
                 }
                 catch (InvalidPasswordException ex)
                 {

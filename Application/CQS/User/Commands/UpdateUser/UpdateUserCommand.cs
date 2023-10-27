@@ -18,6 +18,7 @@ namespace Application.CQS.User.Commands.UpdateUser
     public record UpdateUserCommand(Guid UserId,
                                     string? UserName,
                                     string? Password,
+                                    string? PasswordConfirm,
                                     string? FirstName,
                                     string? LastName,
                                     string? Email,

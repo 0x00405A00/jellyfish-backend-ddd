@@ -6,16 +6,14 @@ namespace Application.CQS.User.Commands.PasswordReset.Reset
     {
         public string PasswordResetBase64Token { get; }
         public string Password { get; }
+        public string PasswordConfirm { get; }
         public string PasswordResetCode { get; }
 
-        public UserPasswordResetCommand(string PasswordResetBase64Token)
+        public UserPasswordResetCommand(string Password,string PasswordConfirm,string PasswordResetCode, string PasswordResetBase64Token)
         {
             this.PasswordResetBase64Token = PasswordResetBase64Token;
-        }
-
-        public UserPasswordResetCommand(string Password, string PasswordResetCode)
-        {
             this.Password = Password;
+            this.PasswordConfirm = PasswordConfirm;
             this.PasswordResetCode = PasswordResetCode;
         }
     }
