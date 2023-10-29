@@ -1,0 +1,77 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = WebFrontEnd
+build_property.RootNamespace = WebFrontEnd
+build_property.ProjectDir = C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/Pages/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/Pages/Health.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSGVhbHRoLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/Pages/PasswortReset.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGFzc3dvcnRSZXNldC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/Pages/PasswortResetRequest.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGFzc3dvcnRSZXNldFJlcXVlc3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/Pages/SignIn.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2lnbkluLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/Pages/Users.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xTdXJ2ZXlQcm9tcHQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xNYWluTGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-ou8me86jdl
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xOYXZNZW51LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-2jkij9op13
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 

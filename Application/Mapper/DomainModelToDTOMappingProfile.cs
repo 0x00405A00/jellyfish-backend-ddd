@@ -1,8 +1,8 @@
-﻿using Application.DataTransferObject;
-using Application.DataTransferObject.Messenger;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Primitives;
 using Domain.ValueObjects;
+using Shared.DataTransferObject;
+using Shared.DataTransferObject.Messenger;
 using System.Security.Cryptography;
 
 namespace Application.Mapper
@@ -27,7 +27,7 @@ namespace Application.Mapper
                 .ConvertUsing(dst => dst.Id);
             CreateMap<Guid, Domain.Entities.Message.MessageId>()
                 .ConvertUsing(dst => new Domain.Entities.Message.MessageId(dst));
-            CreateMap<Domain.Entities.Message.Message, Application.DataTransferObject.Messenger.MessageDTO>()
+            CreateMap<Domain.Entities.Message.Message, MessageDTO>()
                 .ForMember(dst => dst.ChatId, dst => dst.MapFrom(x => x.Chat.ToGuid()))
                 .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Uuid.ToGuid()))
                 .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Uuid.ToGuid()))
@@ -40,7 +40,7 @@ namespace Application.Mapper
                 .ConvertUsing(dst => new Domain.Entities.Chats.ChatId(dst));
 
             CreateMap<ChatMember, Domain.ValueObjects.UserFriend>();
-            CreateMap<Domain.Entities.Chats.Chat, Application.DataTransferObject.Messenger.ChatDTO>()
+            CreateMap<Domain.Entities.Chats.Chat, ChatDTO>()
                 .ForMember(dst => dst.Members, src => src.MapFrom(x => x.Members.Select(x => x.User.Uuid.ToGuid()).ToList()))
                 .ForMember(dst => dst.Admins, src => src.MapFrom(x => x.Admins.Select(x => x.User.Uuid.ToGuid()).ToList()))
                 .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Uuid.ToGuid()))
@@ -85,6 +85,12 @@ namespace Application.Mapper
             CreateMap<UserFriendshipRequestDTO, Domain.ValueObjects.FriendshipRequest>();
             CreateMap<RoleDTO, Domain.ValueObjects.UserRole>();
             CreateMap<UserDTO, Domain.ValueObjects.UserFriend>();
+
+
+            CreateMap<Infrastructure.DatabaseEntity.MailOutbox, MailOutboxDTO>();
+            CreateMap<Infrastructure.DatabaseEntity.MailOutboxAttachment, MailOutboxAttachmentDTO>();
+            CreateMap<Infrastructure.DatabaseEntity.MailOutboxRecipient, MailOutboxRecipientDTO>()
+                .ForMember(dst => dst.EmailType, dst => dst.MapFrom(x => x.EmailTypeUu.Type));
 
             CreateMap<Domain.Entities.User.UserTypeId, Guid>()
                 .ConvertUsing(dst => dst.Id);

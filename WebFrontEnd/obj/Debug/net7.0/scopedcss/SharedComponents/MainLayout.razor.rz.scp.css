@@ -1,0 +1,107 @@
+.page[b-ou8me86jdl] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height:100%;
+}
+
+main[b-ou8me86jdl] {
+    flex: 1;
+    background: #FFFFFF;
+}
+
+.sidebar[b-ou8me86jdl] {
+    background-image: linear-gradient(to bottom, #6C4F87, #d05ea1); /*linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 100%);*/
+    flex-direction: row;
+}
+.sidebar-header[b-ou8me86jdl] {
+    top: 0;
+    z-index: 1;
+}
+.jellyicon[b-ou8me86jdl] {
+    height: 10rem;
+    width: 100%;
+}
+.loading-container[b-ou8me86jdl] {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000f;
+}
+
+.loading[b-ou8me86jdl] {
+    width: 150px;
+    height: 150px;
+    border: 15px solid #06F;
+    border-top: 15px solid transparent;
+    border-radius: 50%;
+    animation: spin-b-ou8me86jdl 2s linear infinite;
+}
+
+@keyframes spin-b-ou8me86jdl {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.top-row[b-ou8me86jdl] {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+    .top-row[b-ou8me86jdl]  a, .top-row .btn-link[b-ou8me86jdl] {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+    }
+
+    .top-row a:first-child[b-ou8me86jdl] {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+@media (max-width: 640.98px) {
+    .top-row:not(.auth)[b-ou8me86jdl] {
+        display: none;
+    }
+
+    .top-row.auth[b-ou8me86jdl] {
+        justify-content: space-between;
+    }
+
+    .top-row a[b-ou8me86jdl], .top-row .btn-link[b-ou8me86jdl] {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 641px) {
+    .page[b-ou8me86jdl] {
+        flex-direction: row;
+    }
+
+    .sidebar[b-ou8me86jdl] {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row[b-ou8me86jdl] {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .top-row[b-ou8me86jdl], article[b-ou8me86jdl] {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}

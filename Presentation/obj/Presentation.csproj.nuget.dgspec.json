@@ -226,6 +226,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.1.15, )"
+            },
             "MailKit": {
               "target": "Package",
               "version": "[4.2.0, )"

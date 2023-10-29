@@ -1,8 +1,8 @@
 ﻿using Application.Abstractions.Messaging;
-using Application.DataTransferObject;
 using AutoMapper;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
+using Shared.DataTransferObject;
 
 namespace Application.CQS.User.Commands.Roles.AssignRole
 {

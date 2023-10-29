@@ -2,21 +2,18 @@ using Application.CQS.Messenger.Chat.Command.CreateChat;
 using Application.CQS.Messenger.Chat.Command.DeleteChat;
 using Application.CQS.Messenger.Chat.Command.UpdateChat;
 using Application.CQS.Messenger.Chat.Queries.GetChatById;
-using Application.DataTransferObject.Messenger;
 using Domain.Const;
-using Domain.Entities.User;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Abstractions;
+using Shared.DataTransferObject.Messenger;
 using System.Net.Mime;
 using WebApi.Abstractions;
 
 namespace Presentation.Controllers.Api.v1.Messenger
 {
     [Authorize(Policy = AuthorizationConst.Policy.UserPolicy)]
-    [Route("api/v{version:apiVersion}/messenger/[controller]")]
-    [ApiVersion("1.0")]
     public class ChatController : ApiController
     {
         private readonly ILogger<ChatController> _logger;

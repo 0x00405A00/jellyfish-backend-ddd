@@ -108,18 +108,12 @@ internal partial class ApplicationDbContext : DbContext
             entity.Property(e => e.DeletedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_time");
-            entity.Property(e => e.IpAddrv4Local)
-                .HasMaxLength(45)
-                .HasColumnName("ip_addrv4_local");
-            entity.Property(e => e.IpAddrv4Remote)
-                .HasMaxLength(45)
-                .HasColumnName("ip_addrv4_remote");
-            entity.Property(e => e.IpAddrv6Local)
+            entity.Property(e => e.IpAddrLocal)
                 .HasMaxLength(150)
-                .HasColumnName("ip_addrv6_local");
-            entity.Property(e => e.IpAddrv6Remote)
+                .HasColumnName("ip_addr_local");
+            entity.Property(e => e.IpAddrRemote)
                 .HasMaxLength(150)
-                .HasColumnName("ip_addrv6_remote");
+                .HasColumnName("ip_addr_remote");
             entity.Property(e => e.LastModifiedTime)
                 .HasColumnType("datetime")
                 .HasColumnName("last_modified_time");
@@ -643,12 +637,12 @@ internal partial class ApplicationDbContext : DbContext
 
             entity.HasOne(d => d.FriendUserUu).WithMany(p => p.UserFriendFriendUserUus)
                 .HasForeignKey(d => d.FriendUserUuid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_UserFriendFriendToUser");
 
             entity.HasOne(d => d.UserUu).WithMany(p => p.UserFriendUserUus)
                 .HasForeignKey(d => d.UserUuid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_UserFriendUserToUser");
         });
 
@@ -682,12 +676,12 @@ internal partial class ApplicationDbContext : DbContext
 
             entity.HasOne(d => d.TargetUserUu).WithMany(p => p.UserFriendshipRequestTargetUserUus)
                 .HasForeignKey(d => d.TargetUserUuid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fkUserFriendshipRequestToUser2");
 
             entity.HasOne(d => d.UserUu).WithMany(p => p.UserFriendshipRequestUserUus)
                 .HasForeignKey(d => d.UserUuid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fkUserFriendshipRequestToUser1");
         });
 
@@ -720,12 +714,12 @@ internal partial class ApplicationDbContext : DbContext
 
             entity.HasOne(d => d.RoleUu).WithMany(p => p.UserRelationToRoles)
                 .HasForeignKey(d => d.RoleUuid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_userRoleToRole");
 
             entity.HasOne(d => d.UserUu).WithMany(p => p.UserRelationToRoles)
                 .HasForeignKey(d => d.UserUuid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_userRoleToUser");
         });
 

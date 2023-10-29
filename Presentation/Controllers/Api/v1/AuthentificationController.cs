@@ -1,9 +1,9 @@
 ﻿using Application.CQS.Auth.Command.CreateAuth;
 using Application.CQS.Auth.Command.RemoveAuth;
-using Application.DataTransferObject;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.DataTransferObject;
 using System;
 using System.Net.Mime;
 using WebApi.Abstractions;
@@ -30,7 +30,7 @@ namespace Presentation.Controllers.Api.v1
         public async Task<IActionResult> Login([FromBody] UserLoginDTO userLoginDTO)
         {
             
-            var command = new CreateAuthCommand(userLoginDTO.Email, userLoginDTO.Password);
+            var command = new CreateAuthCommand(userLoginDTO.Email, userLoginDTO.Password,HttpContext.Connection.LocalIpAddress, HttpContext.Connection.LocalPort, HttpContext.Connection.RemoteIpAddress, HttpContext.Connection.RemotePort, HttpContext.Request.Headers.UserAgent);
             var result = await _sender.Send(command);
             return result.IsSuccess?Ok(result.Value):BadRequest();
         }

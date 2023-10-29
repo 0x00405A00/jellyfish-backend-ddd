@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Abstractions
 {
     [ApiController]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
     public abstract class ApiController : ControllerBase
     {
         protected readonly string JwtToken;
@@ -16,7 +18,10 @@ namespace WebApi.Abstractions
             HttpContextAccessor = httpContextAccessor;
             JwtToken = HttpContextAccessor.HttpContext.Request.Headers.TryGetValue("Authorization",
                                                                out var bearer) ? null : null;
-            var tmp = HttpContextAccessor.HttpContext.Request.Headers.Authorization;
+        }
+        protected ApiController() 
+        {
+
         }
 
     }

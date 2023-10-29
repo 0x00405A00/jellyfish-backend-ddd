@@ -1,5 +1,4 @@
 ﻿using Application.Abstractions.Messaging;
-using Application.DataTransferObject;
 using AutoMapper;
 using Domain.Const;
 using Domain.Entities.User;
@@ -7,6 +6,7 @@ using Domain.Exceptions;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
+using Shared.DataTransferObject;
 
 namespace Application.CQS.User.Commands.CreateUser
 {
@@ -74,6 +74,7 @@ namespace Application.CQS.User.Commands.CreateUser
 
                 try
                 {
+                    Domain.Entities.User.User.CheckPasswordWithPolicy(request.Password, request.PasswordRepeat);
 
                     var userId = new Domain.Entities.User.UserId(Guid.NewGuid());
                     var userType = await _userTypeRepository.GetAsync(x => x.Uuid == AuthorizationConst.UserType.UserTypeUuid);

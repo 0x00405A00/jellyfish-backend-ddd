@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
-using Application.DataTransferObject;
+using Shared.DataTransferObject;
+using System.Net;
 
 namespace Application.CQS.Auth.Command.CreateAuth
 {
@@ -9,5 +10,10 @@ namespace Application.CQS.Auth.Command.CreateAuth
     /// <param name="Email">Users email</param>
     /// <param name="Password">User Password</param>
     public record CreateAuthCommand(string Email,
-                                    string Password) : ICommand<AuthDTO>;
+                                    string Password,
+                                    IPAddress LocalIp,
+                                    int LocalIpPort,
+                                    IPAddress RemoteIp,
+                                    int RemoteIpPort,
+                                    string UserAgent) : ICommand<AuthDTO>;
 }

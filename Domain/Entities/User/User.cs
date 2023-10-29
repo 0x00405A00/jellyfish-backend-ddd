@@ -312,40 +312,52 @@ namespace Domain.Entities.User
             Raise(new UserUpdatedDomainEvent<User, UserId>(this, x => x.UserName, userName));
         }
 
-        public void UpdatePassword(User modifiedUser, string password,string passwordConfirm)
+        public static void CheckPasswordWithPolicy(string password,string passwordConfirm)
         {
             if (String.IsNullOrWhiteSpace(password) || String.IsNullOrWhiteSpace(passwordConfirm))
             {
                 throw new InvalidPasswordException("password is empty");
             }
-            if(password!=passwordConfirm)
+            if (password != passwordConfirm)
             {
                 throw new InvalidPasswordException("password != passwordConfirm");
             }
 
             bool[] matches = new bool[PasswordPolicy.Keys.Count];
-            int idx1 = 0,idx2 = 0;
+            int idx1 = 0, idx2 = 0;
             PasswordPolicy.ToList().ForEach(x => {
                 Match match = x.Value.Match(password);
                 if (match.Success)
                 {
-                    matches[idx1] = true;   
+                    matches[idx1] = true;
                 }
                 idx1++;
             });
-            if (matches.Where(x=>x).Count()!=PasswordPolicy.Keys.Count)
+            if (matches.Where(x => x).Count() != PasswordPolicy.Keys.Count)
             {
                 string[] passwordPolicyViolences = new string[matches.Length];
 
                 matches.ToList().ForEach(x =>
                 {
-                    if(!x)
+                    if (!x)
                     {
                         passwordPolicyViolences[idx2] = PasswordPolicy.Keys.ToList()[idx2];
                     }
                     idx2++;
                 });
                 throw new InvalidPasswordException(passwordPolicyViolences);
+            }
+        }
+
+        public void UpdatePassword(User modifiedUser, string password,string passwordConfirm)
+        {
+            try
+            {
+                CheckPasswordWithPolicy(password, passwordConfirm);
+            }
+            catch(InvalidPasswordException ex)
+            {
+                throw;
             }
             Password = password;
             SetLastModified(modifiedUser);

@@ -1,15 +1,12 @@
-﻿using Application.Shared.Kernel.Web.AspNet.Healthcheck;
-using Infrastructure.Abstractions;
-using Infrastructure.Healthcheck.Abstraction;
+﻿using Infrastructure.Abstractions;
+using Infrastructure.Healthcheck.Concrete.Cache;
+using Infrastructure.Healthcheck.Concrete.MySql;
 using Infrastructure.HostedService.Backgroundservice;
 using Infrastructure.Interceptors;
 using Infrastructure.Mail;
 using Infrastructure.Repository;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using System;
 
 namespace Infrastructure
 {
@@ -17,8 +14,13 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
+            services.AddW3CLogging(x => {
+                
+            });
             services.AddHttpContextAccessor();
-            services.AddMemoryCache();
+            services.AddMemoryCache();//Singleton
+
+            services.AddSingleton<IHealtCheckMySqlHandler,HealtCheckMySqlHandler>();
 
             services.AddScoped<DbContextAuditLogInterceptor>();
             services.AddScoped<ApplicationDbContext>();
@@ -33,6 +35,7 @@ namespace Infrastructure
             services.Decorate<IUserRepository, CachingUserRepository>();
 
             services.AddHostedService<MailHostedService>();
+            services.AddHostedService<SignalRTestHostedService>();
             services.AddScoped<IMailHandler, MailHandler>();
 
             services.Scan(selector => selector
@@ -42,39 +45,13 @@ namespace Infrastructure
             .AsImplementedInterfaces()//ClassName => IClassName
             .WithScopedLifetime());
 
+            services.AddHealthChecks()
+                .AddCheck<HealthCheckMySql>("mysql")
+                .AddCheck<HealthCheckCache>("cache");
+
+
             var sp = services.BuildServiceProvider();
             var configuration = sp.GetRequiredService<IConfiguration>();
-            var cacheService = sp.GetRequiredService<IMemoryCache>();
-            var databaseSingletonService = sp.GetRequiredService<ApplicationDbContext>();
-
-            services.AddHealthChecks()
-                .AddHealthChecks(new List<HealthCheckDescriptor>()
-                {
-                    new HealthCheckDescriptor(typeof(HealthCheckMySql),"mysql", HealthStatus.Unhealthy, new object[]
-                    {
-                        HealthCheckMySql.CheckMySqlBackend, databaseSingletonService
-                    })
-                })
-                .AddHealthChecks(new List<HealthCheckDescriptor>()
-                {
-                    new HealthCheckDescriptor(typeof(HealthCheckCache),"cache", HealthStatus.Unhealthy, new object[]
-                    {
-                        HealthCheckCache.CheckCacheBackend, cacheService
-                    })
-                });
-
-            var healthCheckService = sp.GetService<HealthCheckService>();
-            var resultHealthCheck = async () => {
-                var result = await healthCheckService.CheckHealthAsync();
-                foreach (var item in result.Entries)
-                {
-                    Console.WriteLine("[HealthCheckService]: " + item.Key + ": " + item.Value.Description + "");
-                }
-            };
-            resultHealthCheck.Invoke();
-
-
-
 
             var signalRSection = configuration.GetSection("Infrastructure:SignalR");
             if(signalRSection != null)

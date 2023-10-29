@@ -1,5 +1,10 @@
 using Application;
+using Domain.Const;
 using Infrastructure;
+using Infrastructure.Healthcheck.Response;
+using Infrastructure.SignalR;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Presentation;
 
 namespace WebApi
@@ -31,8 +36,21 @@ namespace WebApi
                 app.UseExceptionHandler("/error");
             }
 
+            app.MapHealthChecks("/healthz", new HealthCheckOptions
+            {
+                ResultStatusCodes =
+                {
+                    [HealthStatus.Healthy] = StatusCodes.Status200OK,
+                    [HealthStatus.Degraded] = StatusCodes.Status200OK,
+                    [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
+                },
+                ResponseWriter = HealthCheckResponseWriter.WriteResponse
+            }).RequireAuthorization(AuthorizationConst.Policy.AdminPolicy);
+
             app.UseEndpoints(x => x.MapControllers());
             app.MapControllers();
+
+            app.MapHub<MessengerHub>("/messengerhub");
 
             app.Run();
         }

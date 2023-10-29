@@ -105,3 +105,12 @@ C:\Users\Mika\Desktop\Projekte\jellyfish-backend-ddd\backend\Domain.UnitTests\ob
 C:\Users\Mika\Desktop\Projekte\jellyfish-backend-ddd\backend\Domain.UnitTests\obj\Debug\net7.0\Domain.UnitTests.pdb
 C:\Users\Mika\Desktop\Projekte\jellyfish-backend-ddd\backend\Domain.UnitTests\obj\Debug\net7.0\Domain.UnitTests.genruntimeconfig.cache
 C:\Users\Mika\Desktop\Projekte\jellyfish-backend-ddd\backend\Domain.UnitTests\obj\Debug\net7.0\ref\Domain.UnitTests.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain.UnitTests\bin\Debug\net7.0\CoverletSourceRootsMapping
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain.UnitTests\obj\Debug\net7.0\Domain.UnitTests.csproj.AssemblyReference.cache
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain.UnitTests\obj\Debug\net7.0\Domain.UnitTests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain.UnitTests\obj\Debug\net7.0\Domain.UnitTests.AssemblyInfoInputs.cache
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain.UnitTests\obj\Debug\net7.0\Domain.UnitTests.AssemblyInfo.cs
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain.UnitTests\obj\Debug\net7.0\Domain.UnitTests.csproj.CoreCompileInputs.cache
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain.UnitTests\obj\Debug\net7.0\Domain.UnitTests.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain.UnitTests\obj\Debug\net7.0\refint\Domain.UnitTests.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain.UnitTests\obj\Debug\net7.0\Domain.UnitTests.pdb

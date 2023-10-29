@@ -1,5 +1,4 @@
 ﻿using Application.Abstractions.Messaging;
-using Application.DataTransferObject;
 
 namespace Application.CQS.User.Commands.PasswordReset.Request
 {

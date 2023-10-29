@@ -14,7 +14,7 @@ namespace Infrastructure.HostedService.Backgroundservice
 {
     internal class MailHostedService : BackgroundService
     {
-        internal static int MailSentIntervalInSeconds = 60;
+        internal static int MailSentIntervalInSeconds = 3*60;
         private readonly IServiceProvider serviceProvider;
         private readonly ILogger<MailHostedService> _logger;
         private readonly CancellationToken _cancelationToken;

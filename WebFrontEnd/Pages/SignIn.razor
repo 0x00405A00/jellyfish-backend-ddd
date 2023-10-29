@@ -1,0 +1,89 @@
+﻿@attribute [Route(RouteConst.Routes.SignIn)]
+@using Microsoft.AspNetCore.Http
+@inject WebApiRestClient WebApiClient
+@inject ILocalStorageService LocalStorageService
+@inject NavigationManager NavigationManager
+
+<PageTitle>SignIn</PageTitle>
+
+<div class="sign-in-container">
+    <MudCard>
+        <MudText Typo="Typo.h6">Register</MudText>
+
+        <MudCardContent>
+            <MudForm>
+                <MudTextField T="string" Label="Username" InputType="InputType.Text" @bind-Value=@RegisterUserDTO.UserName required />
+
+                <MudTextField T="string" Label="Vorname" InputType="InputType.Text" @bind-Value=@RegisterUserDTO.FirstName required />
+
+                <MudTextField T="string" Label="Nachname" InputType="InputType.Text" @bind-Value=@RegisterUserDTO.LastName required />
+
+                <MudTextField T="string" Label="Passwort" InputType="InputType.Password" @bind-Value=@RegisterUserDTO.Password required />
+
+                <MudTextField T="string" Label="Passwort (wiederholen)" InputType="InputType.Password" @bind-Value=@RegisterUserDTO.Password required />
+
+                <MudTextField T="string" Label="Email" InputType="InputType.Text" @bind-Value=@RegisterUserDTO.Email required />
+
+                <MudTextField T="string" Label="Telefon" InputType="InputType.Telephone" @bind-Value=@RegisterUserDTO.Phone required />
+
+                <MudTextField T="DateTime" Label="Geburstag" InputType="InputType.Date" @bind-Value=@RegisterDateTime required />
+
+                <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick=@OnSubmitRegister Color="Color.Primary">Register</MudButton>
+            </MudForm>
+        </MudCardContent>
+    </MudCard>
+    <MudSpacer></MudSpacer>
+    <MudCard>
+        <MudCardHeader>Login</MudCardHeader>
+        <MudCardContent>
+            <MudForm>
+                <MudTextField T="string" Label="Email" InputType="InputType.Text" @bind-Value=@UserLoginDTO.Email required />
+
+                <MudTextField T="string" Label="Passwort" InputType="InputType.Password" @bind-Value=@UserLoginDTO.Password required />
+                <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick=@OnSubmitLogin Color="Color.Primary">Login</MudButton>
+            </MudForm>
+        </MudCardContent>
+    </MudCard>
+</div>
+
+@code {
+    public DateTime RegisterDateTime = DateTime.MinValue;
+    public UserLoginDTO UserLoginDTO = new UserLoginDTO();
+    public RegisterUserDTO RegisterUserDTO = new RegisterUserDTO();
+
+    private CancellationTokenSource cancellationToken = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            bool hasLogin = await LocalStorageService.CheckIfValidTokenExists();
+            if(hasLogin)
+            {
+                NavigationManager.NavigateTo("/");
+            }
+        }
+    }
+    public async Task OnSubmitLogin()
+    {
+        var response = await WebApiClient.Authentificate(UserLoginDTO.Email, UserLoginDTO.Password, cancellationToken.Token);
+        if(response.Token!=null)
+        {
+            await LocalStorageService.SetDeserializedJsonItemFromKey(AuthorizationConst.BrowserLocalStorageItemKey.Authorization,response);
+            NavigationManager.NavigateTo("/dashboard");
+        }
+    }
+    public async Task OnSubmitRegister()
+    {
+        RegisterUserDTO.DateOfBirth = RegisterDateTime;
+        var response = await WebApiClient.Register(RegisterUserDTO, cancellationToken.Token);
+    }
+}
+@functions {
+
+
+}

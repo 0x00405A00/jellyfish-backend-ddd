@@ -1,0 +1,53 @@
+﻿@attribute [Route(RouteConst.Routes.ResetPasswordRequest)]
+@using Microsoft.AspNetCore.Http
+@inject WebApiRestClient WebApiClient
+@inject ILocalStorageService LocalStorageService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Passwordreset</PageTitle>
+
+<div class="sign-in-container">
+    <MudSpacer></MudSpacer>
+    <MudCard>
+        <MudCardHeader>Passwordreset</MudCardHeader>
+        <MudCardContent>
+            <MudForm>
+                <MudTextField T="string" Label="Email" InputType="InputType.Email" @bind-Value=@PasswordResetRequestDTO.Email required />
+                <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick=@OnSubmit Color="Color.Primary">Request reset</MudButton>
+            </MudForm>
+        </MudCardContent>
+    </MudCard>
+</div>
+
+@code {
+    public DateTime RegisterDateTime = DateTime.MinValue;
+    public PasswordResetRequestDTO PasswordResetRequestDTO = new PasswordResetRequestDTO();
+    public RegisterUserDTO RegisterUserDTO = new RegisterUserDTO();
+
+    private CancellationTokenSource cancellationToken = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            
+        }
+    }
+    public async Task OnSubmit()
+    {
+        var response = await WebApiClient.ResetPasswordRequest(PasswordResetRequestDTO, cancellationToken.Token);
+        if(response.IsSuccess)
+        {
+            await LocalStorageService.SetDeserializedJsonItemFromKey(AuthorizationConst.BrowserLocalStorageItemKey.Authorization,response);
+            NavigationManager.NavigateTo(RouteConst.Routes.Home);
+        }
+    }
+}
+@functions {
+
+
+}

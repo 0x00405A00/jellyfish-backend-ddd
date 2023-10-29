@@ -1,5 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
-using Application.DataTransferObject;
+using Shared.DataTransferObject;
 
 namespace Application.CQS.User.Queries.GetUsers
 {

@@ -43,6 +43,10 @@ namespace Infrastructure.Authentification
             {
                 return AuthenticateResult.Fail("unauthorized");
             }
+            if(token.StartsWith("Bearer"))
+            {
+                token = token.Replace("Bearer", "").TrimStart();
+            }
 
             AuthenticateResult authenticateResult = AuthenticateResult.Fail("unauthorized");
             try

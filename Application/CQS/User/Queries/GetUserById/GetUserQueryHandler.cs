@@ -1,9 +1,9 @@
 ﻿using Application.Abstractions.Messaging;
-using Application.DataTransferObject;
 using AutoMapper;
 using Domain.Entities.User.Exception;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
+using Shared.DataTransferObject;
 
 namespace Application.CQS.User.Queries.GetUserById
 {

@@ -1,10 +1,10 @@
 ﻿using Application.Abstractions.Messaging;
-using Application.DataTransferObject.Messenger;
 using AutoMapper;
 using Domain.Entities.User.Exception;
 using Domain.Exceptions;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
+using Shared.DataTransferObject.Messenger;
 
 namespace Application.CQS.Messenger.Chat.Queries.GetChatById
 {

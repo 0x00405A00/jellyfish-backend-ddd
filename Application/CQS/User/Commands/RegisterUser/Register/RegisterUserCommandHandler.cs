@@ -1,6 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
 using Application.CQS.User.Commands.CreateUser;
-using Application.DataTransferObject;
 using AutoMapper;
 using Domain.Const;
 using Domain.Exceptions;
@@ -8,6 +7,7 @@ using Domain.Primitives;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
+using Shared.DataTransferObject;
 
 namespace Application.CQS.User.Commands.RegisterUser.Register
 {
@@ -43,6 +43,7 @@ namespace Application.CQS.User.Commands.RegisterUser.Register
                 systemUser.Uuid.ToGuid(),
                 request.UserName,
                 request.Password,
+                request.PasswordRepeat,
                 request.FirstName,
                 request.LastName,
                 request.Email,

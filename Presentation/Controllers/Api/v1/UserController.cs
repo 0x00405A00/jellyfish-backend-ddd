@@ -10,21 +10,19 @@ using Application.CQS.User.Commands.RegisterUser.Activation;
 using Application.CQS.User.Commands.RegisterUser.Register;
 using Application.CQS.User.Commands.UpdateUser;
 using Application.CQS.User.Queries.GetUserById;
-using Application.DataTransferObject;
-using Application.DataTransferObject.Messenger;
 using Domain.Const;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Abstractions;
+using Shared.DataTransferObject;
+using Shared.DataTransferObject.Messenger;
 using System.Net.Mime;
 using WebApi.Abstractions;
 
 namespace Presentation.Controllers.Api.v1
 {
     [Authorize(Policy = AuthorizationConst.Policy.AdminPolicy)]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    [ApiVersion("1.0")]
     public class UserController : ApiController
     {
 
@@ -41,7 +39,7 @@ namespace Presentation.Controllers.Api.v1
         [Produces(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDTO registerUserDTO, CancellationToken cancellationToken)
         {
-            var command = new RegisterUserCommand(registerUserDTO.UserName, registerUserDTO.Password, registerUserDTO.FirstName, registerUserDTO.LastName, registerUserDTO.Email, registerUserDTO.Phone, (DateTime)registerUserDTO.DateOfBirth);
+            var command = new RegisterUserCommand(registerUserDTO.UserName, registerUserDTO.Password, registerUserDTO.PasswordRepeat, registerUserDTO.FirstName, registerUserDTO.LastName, registerUserDTO.Email, registerUserDTO.Phone, (DateTime)registerUserDTO.DateOfBirth);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.IsSuccess ? Ok(result.Value) : BadRequest();
@@ -89,7 +87,7 @@ namespace Presentation.Controllers.Api.v1
         public async Task<IActionResult> CreateUser([FromBody] UserDTO userDto, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new CreateUserCommand(userUuid,userDto.UserName, userDto.Password, userDto.FirstName, userDto.LastName, userDto.Email, userDto.Phone, (DateTime)userDto.DateOfBirth);
+            var command = new CreateUserCommand(userUuid,userDto.UserName, userDto.Password, userDto.Password, userDto.FirstName, userDto.LastName, userDto.Email, userDto.Phone, (DateTime)userDto.DateOfBirth);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result);

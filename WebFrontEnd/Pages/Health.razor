@@ -1,0 +1,118 @@
+﻿@attribute [Route(RouteConst.Routes.BackendHealth)]
+@using Microsoft.AspNetCore.Http
+@inject WebApiRestClient WebApiClient
+@inject ILocalStorageService LocalStorageService
+@inject IConfiguration Configuration
+@inject NavigationManager NavigationManager
+
+<h3>Health</h3>
+
+<MudTabs Outlined="true">
+    <MudTabPanel Text="Database" Icon="@Icons.Material.Filled.DataArray">
+        @if (HealthCheck.Checks != null && HealthCheck.Checks.mysql != null)
+        {
+
+            <MudText Typo="Typo.caption">Stand: @TimeFromRequestHealthCheckService</MudText>
+            <MudText>@HealthCheck.Checks.mysql.description</MudText>
+        }
+        else
+        {
+
+            <MudSkeleton />
+            <MudSkeleton Animation="Animation.False" />
+            <MudSkeleton Animation="Animation.Wave" />
+        }
+    </MudTabPanel>
+    <MudTabPanel Text="Cache" Icon="@Icons.Material.Filled.Cached">
+
+        @if (HealthCheck.Checks != null && HealthCheck.Checks.cache != null)
+        {
+
+            <MudText Typo="Typo.caption">Stand: @TimeFromRequestHealthCheckService</MudText>
+            <MudText>@HealthCheck.Checks.cache.description</MudText>
+        }
+        else
+        {
+
+            <MudSkeleton />
+            <MudSkeleton Animation="Animation.False" />
+            <MudSkeleton Animation="Animation.Wave" />
+        }
+    </MudTabPanel>
+    <MudTabPanel Text="SignalR" Icon="@Icons.Material.Filled.Message">
+
+        @if (HealthCheck.Checks != null && HealthCheck.Checks.cache!=null)
+        {
+
+            <MudText Typo="Typo.caption">Stand: @TimeFromRequestHealthCheckService</MudText>
+            <MudText>@HealthCheck.Checks.cache.description</MudText>
+        }
+        else
+        {
+
+            <MudSkeleton />
+            <MudSkeleton Animation="Animation.False" />
+            <MudSkeleton Animation="Animation.Wave" />
+        }
+    </MudTabPanel>
+    <MudTabPanel Text="Mail Queue" Icon="@Icons.Material.Filled.Queue">
+
+        @if (MailQueue!=null&&MailQueue.Any())
+        {
+            <MudText Typo="Typo.caption">Stand: @TimeFromRequestHealthCheckService</MudText>
+            <MudDataGrid Items=@MailQueue Filterable="false" SortMode="@SortMode.None" Groupable="false">
+                <Columns>
+                    <SelectColumn T="UserDTO" />
+                    <PropertyColumn Property="x => x.CreatedTime" Format="dd.MM.yyyy HH:mm:ss" />
+                    <PropertyColumn Property="x => x.From" />
+                    <PropertyColumn Property="x => x.Subject" />
+                    <PropertyColumn Property="x => x.RecipientsAggregate" />
+                </Columns>
+            </MudDataGrid>
+        }
+        else
+        {
+
+            <MudSkeleton />
+            <MudSkeleton Animation="Animation.False" />
+            <MudSkeleton Animation="Animation.Wave" />
+        }
+    </MudTabPanel>
+</MudTabs>
+@code {
+    private DateTime TimeFromRequestHealthCheckService = DateTime.MinValue;
+    private DateTime TimeFromRequestHealthCheckMailQueue = DateTime.MinValue;
+    private CancellationTokenSource cancellationToken = new();
+    public HealthZDTO HealthCheck = new HealthZDTO();
+    public List<MailOutboxDTO> MailQueue = new List<MailOutboxDTO>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            await GetData();
+            StateHasChanged();
+        }
+    }
+    private async Task GetData()
+    {
+        var infrastructureApiSection = Configuration.GetSection("Infrastructure:Api");
+        var url = infrastructureApiSection.GetValue<string>("HealthCheck");
+        var urlController = infrastructureApiSection.GetValue<string>("HealthCheckController");
+
+        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+        var responseServices = await WebApiClient.Request<HealthZDTO, object>(url, RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
+        if (responseServices.IsSuccess)
+        {
+            HealthCheck = responseServices.ApiResponseDeserialized;
+            TimeFromRequestHealthCheckService = DateTime.Now;
+        }
+        urlController += "/mail-queue";
+        var responseMailQueue = await WebApiClient.Request<List<MailOutboxDTO>, object>(urlController, RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
+        if(responseMailQueue.IsSuccess)
+        {
+            MailQueue = responseMailQueue.ApiResponseDeserialized;
+            TimeFromRequestHealthCheckMailQueue = DateTime.Now;
+        }
+    }
+}

@@ -10,15 +10,10 @@ public partial class Auth : DatabaseEntityModel
 
     public Guid UserUuid { get; set; } = Guid.Empty;
 
-    public string? IpAddrv4Remote { get; set; }
-
-    public string? IpAddrv6Remote { get; set; }
-
+    public string? IpAddrRemote { get; set; }
     public int? RemotePort { get; set; }
 
-    public string? IpAddrv4Local { get; set; }
-
-    public string? IpAddrv6Local { get; set; }
+    public string? IpAddrLocal { get; set; }
 
     public int? LocalPort { get; set; }
 

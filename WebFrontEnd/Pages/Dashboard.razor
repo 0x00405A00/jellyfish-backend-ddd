@@ -1,0 +1,66 @@
+﻿@attribute [Route(RouteConst.Routes.DashBoard)]
+@using Microsoft.AspNetCore.Http
+@inject WebApiRestClient WebApiClient
+@inject ILocalStorageService LocalStorageService
+@inject NavigationManager NavigationManager
+@inject SignalRClient SignalRClient
+
+<h3>Dashboard</h3>
+<table>
+    @foreach(var user in Users)
+    {
+        <tr>
+            <td>@user.Email</td>
+        </tr>
+    }
+    @foreach(var msg in Messages)
+    {
+        <tr>
+            <td>@msg.Text</td>
+        </tr>
+    }
+</table>
+
+@code {
+
+    private CancellationTokenSource cancellationToken = new();
+    public List<UserDTO> Users=new List<UserDTO>();
+    public List<MessageDTO> Messages = new List<MessageDTO>();
+
+    public Dashboard()
+    {
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            await GetData();
+            StateHasChanged();
+        }
+    }
+    private async Task GetData()
+    {
+        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+        var response = await WebApiClient.Request<List<UserDTO>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
+        if (response.IsSuccess)
+        {
+            Users = response.ApiResponseDeserialized;
+        }
+        if (!SignalRClient.IsBuilded)
+        {
+            SignalRClient.BuildConnection();
+
+        }
+        if (SignalRClient.HubConnection.State != HubConnectionState.Connected)
+            SignalRClient.OpenConnection();
+
+        SignalRClient.HubConnection.On<List<MessageDTO>>(nameof(SignalRClient.ReceiveMessage), ReceiveMessage);
+    }
+
+    public Task ReceiveMessage(List<MessageDTO> messages)
+    {
+        Messages.AddRange(messages);
+        InvokeAsync(StateHasChanged);
+        return Task.CompletedTask;
+    }
+}

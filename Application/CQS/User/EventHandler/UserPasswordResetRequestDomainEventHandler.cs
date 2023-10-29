@@ -34,7 +34,7 @@ namespace Application.CQS.User.EventHandler
                 var userSection = configuration.GetSection("Infrastructure:User:PasswordReset");
                 var mailSection = configuration.GetSection("Infrastructure:Mail");
 
-                var resetPasswordBaseUrl = mailSection.GetValue<string>("reset_password_link");
+                var resetPasswordBaseUrl = userSection.GetValue<string>("reset_password_link");
                 var mailSender = mailSection.GetValue<string>("system_sender_anonymous_mail");
                 var mailUuid = Guid.NewGuid();
 

@@ -1,0 +1,74 @@
+﻿@attribute [Route(RouteConst.Routes.Users)]
+@using Microsoft.AspNetCore.Http
+@inject WebApiRestClient WebApiClient
+@inject ILocalStorageService LocalStorageService
+@inject NavigationManager NavigationManager
+
+<mud>Users</mud>
+<MudPaper Elevation="25">
+    <MudToolBar>
+        <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Class="mr-5" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Add" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Edit" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Remove" Color="Color.Inherit" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Settings" Color="Color.Inherit" />
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Material.Outlined.Notifications" />
+        <MudIconButton Icon="@Icons.Material.Outlined.PushPin" />
+        <MudIconButton Icon="@Icons.Material.Outlined.PeopleAlt" />
+        <MudIconButton Icon="@Icons.Material.Outlined.MoreVert" Color="Color.Inherit" />
+    </MudToolBar>
+</MudPaper>
+@if (UsersList!=null&&UsersList.Count>0)
+{
+    <MudDataGrid Items=@UsersList Filterable="false" SortMode="@SortMode.None" Groupable="false">
+        <Columns>
+            <SelectColumn T="UserDTO" />
+            <PropertyColumn Property="x => x.UserName" />
+            <PropertyColumn Property="x => x.FirstName" />
+            <PropertyColumn Property="x => x.LastName" />
+            <PropertyColumn Property="x => x.Email" />
+            <PropertyColumn Property="x => x.DateOfBirth" Format="dd.MM.yyyy" />
+            <PropertyColumn Property="x => x.Phone" />
+            <PropertyColumn Property="x => x.CreatedTime" Format="dd.MM.yyyy" />
+            <PropertyColumn Property="x => x.LastModifiedTime" Format="dd.MM.yyyy" />
+            <TemplateColumn>
+                <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary">Edit</MudButton>
+            </TemplateColumn>
+        </Columns>
+    </MudDataGrid>
+}
+else
+{
+    <MudSkeleton />
+    <MudSkeleton Animation="Animation.False" />
+    <MudSkeleton Animation="Animation.Wave" />
+}
+
+@code {
+
+
+    private CancellationTokenSource cancellationToken = new();
+    public List<UserDTO> UsersList=new List<UserDTO>();
+
+    public Users()
+    {
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            await GetData();
+            StateHasChanged();
+        }
+    }
+    private async Task GetData()
+    {
+        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+        var response = await WebApiClient.Request<List<UserDTO>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
+        if (response.IsSuccess)
+        {
+            UsersList = response.ApiResponseDeserialized;
+        }
+    }
+}

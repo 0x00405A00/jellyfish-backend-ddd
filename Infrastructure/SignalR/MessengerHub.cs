@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.SignalR
 {
-    internal class MessengerHub : Hub<IMessengerClient>
+    public class MessengerHub : Hub<IMessengerClient>
     {
         private readonly ILogger<MessengerHub> logger;
 

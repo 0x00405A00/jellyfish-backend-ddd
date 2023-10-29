@@ -1,5 +1,4 @@
 ﻿using Application.Abstractions.Messaging;
-using Application.DataTransferObject;
 using AutoMapper;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;

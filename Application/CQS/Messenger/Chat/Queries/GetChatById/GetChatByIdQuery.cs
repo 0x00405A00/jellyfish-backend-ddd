@@ -1,5 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
-using Application.DataTransferObject.Messenger;
+using Shared.DataTransferObject.Messenger;
 
 namespace Application.CQS.Messenger.Chat.Queries.GetChatById
 {

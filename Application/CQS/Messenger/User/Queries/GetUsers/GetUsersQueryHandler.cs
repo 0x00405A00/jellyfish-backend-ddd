@@ -1,8 +1,8 @@
 ﻿using Application.Abstractions.Messaging;
-using Application.DataTransferObject.Messenger;
 using AutoMapper;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
+using Shared.DataTransferObject.Messenger;
 
 namespace Application.CQS.Messenger.User.Queries.GetUsers
 {

@@ -1,0 +1,25 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>Jellyfish</PageTitle>
+
+<div class="page">
+
+    <MudThemeProvider />
+    <div class="sidebar">
+        <div class="sidebar-header">
+
+            <img class="jellyicon" src="static/media/jellyfish_image.svg" />
+        </div>
+        <NavMenu />
+    </div>
+
+    <main class="main">
+        <div class="top-row px-4">
+
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>

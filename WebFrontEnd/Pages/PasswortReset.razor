@@ -1,0 +1,63 @@
+﻿@attribute [Route(RouteConst.Routes.ResetPassword)]
+@using Microsoft.AspNetCore.Http
+@inject WebApiRestClient WebApiClient
+@inject ILocalStorageService LocalStorageService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Passwordreset</PageTitle>
+
+<div class="sign-in-container">
+    <MudSpacer></MudSpacer>
+    <MudCard>
+        <MudCardHeader>Passwordreset</MudCardHeader>
+        <MudCardContent>
+            <MudForm>
+                <MudTextField T="string" Label="Passwort" InputType="InputType.Password" @bind-Value=@PasswordResetDTO.Password required />
+                <MudTextField T="string" Label="Passwort repeat" InputType="InputType.Password" @bind-Value=@PasswordResetDTO.PasswordRepeat required />
+                <MudTextField T="string" Label="Passwort repeat" InputType="InputType.Text" MaxLength="4" @bind-Value=@PasswordResetDTO.PasswordResetCode required />
+                <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick=@OnSubmit Color="Color.Primary">Reset</MudButton>
+            </MudForm>
+        </MudCardContent>
+    </MudCard>
+</div>
+
+@code {
+    [Parameter]
+    public string? Base64 { get; set; }
+
+    public DateTime RegisterDateTime = DateTime.MinValue;
+    public PasswordResetDataTransferModel PasswordResetDTO = new PasswordResetDataTransferModel();
+    public RegisterUserDTO RegisterUserDTO = new RegisterUserDTO();
+
+    private CancellationTokenSource cancellationToken = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (String.IsNullOrEmpty(Base64))
+        {
+            NavigationManager.NavigateTo(RouteConst.Routes.Home);
+        }
+        if(firstRender)
+        {
+
+        }
+    }
+    public async Task OnSubmit()
+    {
+        PasswordResetDTO.Base64Token = Base64;
+        var response = await WebApiClient.ResetPassword(PasswordResetDTO, cancellationToken.Token);
+        if(response.IsSuccess)
+        {
+            await LocalStorageService.SetDeserializedJsonItemFromKey(AuthorizationConst.BrowserLocalStorageItemKey.Authorization,response);
+            NavigationManager.NavigateTo("/home");
+        }
+    }
+}
+@functions {
+
+
+}

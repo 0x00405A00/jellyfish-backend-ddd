@@ -1,11 +1,11 @@
 ﻿using Application.Abstractions.Messaging;
-using Application.DataTransferObject;
 using AutoMapper;
 using Domain.Entities.User.Exception;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.DataTransferObject;
 
 namespace Application.CQS.User.Commands.RegisterUser.Activation
 {
