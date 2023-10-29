@@ -53,6 +53,26 @@
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
+      "Id": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\wwwroot\\static\\media\\facebook-svgrepo-com.svg",
+      "PackagePath": "staticwebassets\\static\\media\\facebook-svgrepo-com.svg"
+    },
+    {
+      "Id": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\wwwroot\\static\\media\\github-142-svgrepo-com.svg",
+      "PackagePath": "staticwebassets\\static\\media\\github-142-svgrepo-com.svg"
+    },
+    {
+      "Id": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\wwwroot\\static\\media\\instagram-167-svgrepo-com.svg",
+      "PackagePath": "staticwebassets\\static\\media\\instagram-167-svgrepo-com.svg"
+    },
+    {
+      "Id": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\wwwroot\\static\\media\\linkedin-logo-svgrepo-com.svg",
+      "PackagePath": "staticwebassets\\static\\media\\linkedin-logo-svgrepo-com.svg"
+    },
+    {
+      "Id": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\wwwroot\\static\\media\\twitter-svgrepo-com.svg",
+      "PackagePath": "staticwebassets\\static\\media\\twitter-svgrepo-com.svg"
+    },
+    {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.WebFrontEnd.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

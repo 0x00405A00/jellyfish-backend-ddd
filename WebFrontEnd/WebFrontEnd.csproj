@@ -13,6 +13,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Pages\Dashboard.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Pages\Dashboard.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\favicon.png" />
     <None Include="wwwroot\static\media\jellyfish_image.png" />
     <None Include="wwwroot\static\media\jellyfish_image.svg" />

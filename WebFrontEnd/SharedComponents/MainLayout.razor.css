@@ -9,9 +9,28 @@ main {
     flex: 1;
     background: #FFFFFF;
 }
+footer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background: #443652;
+    height: 100%;
+    width: 100%;
+    justify-content: flex-end;
+    background-image: linear-gradient(to bottom, #d05ea1,#443652 );
+}
+.social-icon {
+    height: 1.5rem;
+    width: 1.5rem;
+    margin: 1px;
+}
+label {
+    color: black;
+}
 
 .sidebar {
-    background-image: linear-gradient(to bottom, #6C4F87, #d05ea1); /*linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 100%);*/
+    background-image: linear-gradient(to bottom, #302C33 20%, #d05ea1); /*linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 100%);*/
     flex-direction: row;
 }
 .sidebar-header {
@@ -19,25 +38,9 @@ main {
     z-index: 1;
 }
 .jellyicon {
-    height: 10rem;
+    height: 12rem;
     width: 100%;
-}
-.loading-container {
-    width: 200px;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #000f;
-}
-
-.loading {
-    width: 150px;
-    height: 150px;
-    border: 15px solid #06F;
-    border-top: 15px solid transparent;
-    border-radius: 50%;
-    animation: spin 2s linear infinite;
+    top: 0;
 }
 
 @keyframes spin {
@@ -56,6 +59,7 @@ main {
     height: 3.5rem;
     display: flex;
     align-items: center;
+    background-image: linear-gradient(to left, #d05ea1 10%,#302C33 );
 }
 
     .top-row ::deep a, .top-row .btn-link {

@@ -28,7 +28,7 @@
 
                 <MudTextField T="DateTime" Label="Geburstag" InputType="InputType.Date" @bind-Value=@RegisterDateTime required />
 
-                <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick=@OnSubmitRegister Color="Color.Primary">Register</MudButton>
+                <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick=@OnSubmitRegister Color="MudBlazor.Color.Primary">Register</MudButton>
             </MudForm>
         </MudCardContent>
     </MudCard>
@@ -40,7 +40,8 @@
                 <MudTextField T="string" Label="Email" InputType="InputType.Text" @bind-Value=@UserLoginDTO.Email required />
 
                 <MudTextField T="string" Label="Passwort" InputType="InputType.Password" @bind-Value=@UserLoginDTO.Password required />
-                <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick=@OnSubmitLogin Color="Color.Primary">Login</MudButton>
+                <MudLink Href=@RouteConst.Routes.ResetPasswordRequest>Passwort vergessen?</MudLink>
+                <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick=@OnSubmitLogin Color="MudBlazor.Color.Primary">Login</MudButton>
             </MudForm>
         </MudCardContent>
     </MudCard>

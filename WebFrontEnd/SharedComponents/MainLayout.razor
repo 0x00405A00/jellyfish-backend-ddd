@@ -1,10 +1,17 @@
 ﻿@inherits LayoutComponentBase
+@inject WebApiRestClient WebApiClient
+@inject ILocalStorageService LocalStorageService
+@inject NavigationManager NavigationManager
+@inject IDialogService DialogService
+@inject WebApiRestClient WebApiClient
+@inject IConfiguration Configuration
 
 <PageTitle>Jellyfish</PageTitle>
 
 <div class="page">
 
-    <MudThemeProvider />
+    <MudThemeProvider Theme="@_currentTheme" />
+    <MudDialogProvider />
     <div class="sidebar">
         <div class="sidebar-header">
 
@@ -15,7 +22,25 @@
 
     <main class="main">
         <div class="top-row px-4">
+            @if(IsLoggedIn)
+            {
+                <MudBadge Content="100" Color="MudBlazor.Color.Info" Overlap="true" Class="mx-6 my-4">
+                    <MudIcon Icon="@Icons.Material.Filled.Email" Color="MudBlazor.Color.Info" />
+                </MudBadge>
+            }
+            <MudMenu Icon="@Icons.Material.Filled.PeopleAlt" IconColor="MudBlazor.Color.Info">
+                <MudMenuItem >Profile</MudMenuItem>
+                <MudDivider></MudDivider>
 
+                @if (IsLoggedIn)
+                {
+                    <MudMenuItem OnClick="@ClickLogout">Logout</MudMenuItem>
+                }
+                else
+                {
+                    <MudMenuItem Href="@RouteConst.Routes.SignIn">Login</MudMenuItem>
+                }
+            </MudMenu>
         </div>
 
         <article class="content px-4">
@@ -23,3 +48,170 @@
         </article>
     </main>
 </div>
+
+<footer class="text-center text-white">
+    <div class="container p-4">
+        <!-- Section: Social media -->
+        <section class="mb-4 border-0 bg-transparent">
+            <!-- Facebook -->
+            <a class="btn btn-floating m-1" href="#!" role="button">
+                <img class="social-icon" src="static/media/facebook-svgrepo-com.svg" />
+            </a>
+            <!-- Twitter -->
+            <a class="btn btn-floating m-1" href="#!" role="button">
+                <img class="social-icon" src="static/media/twitter-svgrepo-com.svg" />
+            </a>
+
+            <!-- Instagram -->
+            <a class="btn btn-floating m-1" href="#!" role="button">
+                <img class="social-icon" src="static/media/instagram-167-svgrepo-com.svg" />
+            </a>
+
+            <!-- Linkedin -->
+            <a class="btn btn-floating m-1" href="#!" role="button">
+                <img class="social-icon" src="static/media/linkedin-logo-svgrepo-com.svg" />
+            </a>
+
+            <!-- Github -->
+            <a class="btn btn-floating m-1" href="https://github.com/0x00405A00/jellyfish-backend-ddd" role="button">
+                <img class="social-icon" src="static/media/github-142-svgrepo-com.svg" />
+            </a>
+        </section>
+        <!-- Section: Social media -->
+        <!-- Section: Links -->
+        <section>
+            <!--Grid row-->
+            <div class="d-flex flex-row justify-content-center align-content-center">
+                <!--Grid column-->
+                <!--Grid column-->
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Unsere Mission</h5>
+
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="@RouteConst.Routes.Functions" class="text-white">Funktionen</a>
+                        </li>
+                        <li>
+                            <a href="@RouteConst.Routes.Blog" class="text-white">Blog</a>
+                        </li>
+                        <li>
+                            <a href="@RouteConst.Routes.Security" class="text-white">Sicherheit</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--Grid column-->
+                <!--Grid column-->
+                <!--Grid column-->
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Wer sind wir</h5>
+
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="@RouteConst.Routes.AboutUs" class="text-white">About Us</a>
+                        </li>
+                        <li>
+                            <a href="@RouteConst.Routes.Careere" class="text-white">Karriere</a>
+                        </li>
+                        <li>
+                            <a href="@RouteConst.Routes.Privacy" class="text-white">Datenschutz</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Support</h5>
+
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="@RouteConst.Routes.Contact" class="text-white">Kontakt</a>
+                        </li>
+                        <li>
+                            <a href="@RouteConst.Routes.HelpArea" class="text-white">Hilfebereich</a>
+                        </li>
+                        <li>
+                            <a href="#@RouteConst.Routes.SecurityNews" class="text-white">Sicherheitsmeldungen</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--Grid column-->
+            </div>
+            <!--Grid row-->
+        </section>
+        <!-- Section: Links -->
+    </div>
+    <!-- Grid container -->
+    <!-- Copyright -->
+    <div class="text-center p-3">
+        © 2023 Copyright:
+        <a class="text-white" href="https://roos-it.net/">RoosIT.NET</a>
+    </div>
+    <!-- Copyright -->
+</footer>
+@code
+{
+
+    private readonly MudTheme _currentTheme = new()
+        {
+            Palette = new PaletteLight
+            {
+                Primary = "#0A7BCF",
+                Secondary = "#800EEB",
+                Info = "#64a7e2",
+                Success = "#2ECC40",
+                Warning = "#FFC107",
+                Error = "#FF0000",
+                AppbarBackground = "#212121",
+                TextPrimary = "#000000",
+                TextSecondary = "#000000",
+                White = "#FFFFFF",
+                
+            },
+        };
+
+
+    public UserLoginDTO UserLoginDTO = new UserLoginDTO();
+    private bool ProfileButtonExpand = false;
+    private bool IsLoggedIn = false;
+    private CancellationTokenSource cancellationToken = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+
+        }
+        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+
+        IsLoggedIn = token!= null&&!token.IsTokenExpired;
+
+    }
+    private async Task ClickLogout()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<LogoutDialog> { 
+            { x => x.Text, "Willlst du dich ausloggen?" }, 
+            { x => x.SubmitButtonText, "Logout" }, 
+            { x => x.CancelButtonText, "Abbrechen" } 
+        };
+        var dialog = await DialogService.ShowAsync<LogoutDialog>("Logout?", options);
+        var result = await dialog.Result;
+
+        if(!result.Cancelled)
+        {
+
+            var infrastructureApiSection = Configuration.GetSection("Infrastructure:Api");
+            var logoutEndpoint = infrastructureApiSection.GetValue<string>("LogoutEndpoint");
+            var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+
+            var logoutResponse = await WebApiClient.Request<object>(logoutEndpoint, RestSharp.Method.Post, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
+
+            await LocalStorageService.RemoveItem(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+
+            NavigationManager.NavigateTo(RouteConst.Routes.SignIn);
+        }
+    }
+    public Task ProfileButtonClick()
+    {
+        ProfileButtonExpand = !ProfileButtonExpand;
+        return Task.CompletedTask;
+    }
+}

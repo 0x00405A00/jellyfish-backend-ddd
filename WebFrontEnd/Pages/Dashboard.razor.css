@@ -1,0 +1,9 @@
+﻿.table-container {
+    max-height: 200px; /* Maximale Höhe für die Tabelle */
+    overflow-y: scroll; /* Vertikale Scrollleiste hinzufügen, wenn nötig */
+}
+table {
+    height: 200px;
+    width: 100%;
+    border-collapse: collapse;
+}

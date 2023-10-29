@@ -3,47 +3,38 @@
 @inject WebApiRestClient WebApiClient
 @inject IConfiguration Configuration
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <MudNavMenu Bordered Class="flex-column nav">
-         <div class="nav-item px-3">
-             <MudNavLink class="nav-link" Icon="@Icons.Material.Filled.Home" IconColor="Color.Info" Href="@RouteConst.Routes.Home">
-                 <a>Home</a>
+<MudNavMenu Bordered Class="flex-column mt-5" Color="MudBlazor.Color.Info">
+     <MudNavLink Icon="@Icons.Material.Filled.Home" IconColor="MudBlazor.Color.Info" Href="@RouteConst.Routes.Home">
+         Home
+     </MudNavLink>
+     @if (hasLogin)
+    {
+        <MudNavGroup Expanded Icon="@Icons.Material.Filled.AdminPanelSettings" IconColor="MudBlazor.Color.Info" Title="Administration">
+
+             <MudNavLink Icon="@Icons.Material.Filled.Dashboard" IconColor="MudBlazor.Color.Info" Href="@RouteConst.Routes.DashBoard">
+                 <a>Dashboard</a>
              </MudNavLink>
-         </div>
-        @if (hasLogin)
-        {
-            <div class="nav-item px-3">
-                <MudNavLink class="nav-link" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Info" Href="@RouteConst.Routes.DashBoard">
-                    <a>Dashboard</a>
-                </MudNavLink>
-            </div>
-            <div class="nav-item px-3">
-                <MudNavLink class="nav-link" Icon="@Icons.Material.Filled.HealthAndSafety" IconColor="Color.Info" Href="@RouteConst.Routes.BackendHealth">
-                    <a>Health</a>
-                </MudNavLink>
-            </div>
-            <div class="nav-item px-3">
-                <MudNavLink class="nav-link" Icon="@Icons.Material.Filled.People" IconColor="Color.Info" Href="@RouteConst.Routes.Users">
-                    <a>Users</a>
-                </MudNavLink>
-            </div>
-        }
-        @if (!hasLogin)
-        {
-            <div class="nav-item px-3">
-                <MudNavLink class="nav-link" Href="@RouteConst.Routes.SignIn">
-                    <a>SignIn</a>
-                </MudNavLink>
-            </div>
-        }
-        else
-        {
-            <div class="nav-item px-3">
-                <MudButton Variant="Variant.Filled" FullWidth DisableElevation="true" Color="Color.Primary" OnClick="@Logout">Logout</MudButton>
-             </div>
-        }
-    </MudNavMenu>
-</div>
+             <MudNavLink Icon="@Icons.Material.Filled.HealthAndSafety" IconColor="MudBlazor.Color.Info" Href="@RouteConst.Routes.BackendHealth">
+                 <a>Health</a>
+             </MudNavLink>
+             <MudNavLink Icon="@Icons.Material.Filled.People" IconColor="MudBlazor.Color.Info" Href="@RouteConst.Routes.Users">
+                 <a>Users</a>
+             </MudNavLink>
+         </MudNavGroup>
+    }
+
+        
+    @if (!hasLogin)
+    {
+        <MudNavLink Href="@RouteConst.Routes.SignIn">
+            <a>SignIn</a>
+        </MudNavLink>
+    }
+    else
+    {
+        <MudButton Class="mt-5 fixed-bottom" Variant="Variant.Filled" FullWidth DisableElevation="true" Color="MudBlazor.Color.Primary" OnClick="@Logout">Logout</MudButton>
+    }
+</MudNavMenu>
 
 @code {
     private bool hasLogin = false;
@@ -64,14 +55,5 @@
     }
     public async Task Logout()
     {
-        var infrastructureApiSection = Configuration.GetSection("Infrastructure:Api");
-        var logoutEndpoint = infrastructureApiSection.GetValue<string>("LogoutEndpoint");
-        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
-
-        var logoutResponse = await WebApiClient.Request<List<MailOutboxDTO>, object>(logoutEndpoint, RestSharp.Method.Post, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
-
-        await LocalStorageService.RemoveItem(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
-        
-        NavigationManager.NavigateTo(RouteConst.Routes.SignIn);
     }
 }

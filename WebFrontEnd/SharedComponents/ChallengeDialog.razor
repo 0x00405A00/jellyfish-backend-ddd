@@ -1,0 +1,78 @@
+﻿@using System.Threading;
+
+<MudDialog Style="width: 30rem;">
+    <DialogContent>
+        <MudText>@Text</MudText>
+        <MudText>Bitte löse die Challenge!</MudText>
+        <MudText>Challenge: @_challenge</MudText>
+        <MudTextField 
+            Class="mt-5"
+            T="string" 
+            ReadOnly=false
+            Disabled=@_showError
+            InputType="InputType.Text" 
+            Variant="Variant.Outlined"
+            Label="@_challenge" 
+            @bind-Value=@ChallengeInput></MudTextField>
+        @if (_showError)
+        {
+            <MudText Color="MudBlazor.Color.Error">Eingabe ist nicht gleich Challenge</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">@CancelButtonText</MudButton>
+        <MudButton Color="MudBlazor.Color.Primary" OnClick="Submit">@SubmitButtonText</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    public static int ChallengeLength = 6;
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public string Text { get; set; }
+    [Parameter] public string SubmitButtonText { get; set; } = "Ok";
+    [Parameter] public string CancelButtonText { get; set; } = "Abbrechen";
+
+    private Random _random = new Random();
+    private bool _showError { get; set; } = false;
+    private string _challenge { get; set; }
+    private string ChallengeInput { get; set; } = string.Empty;
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+
+            for (int i = 0; i < ChallengeLength; i++)
+            {
+                var value = _random.Next(0, 9);
+                _challenge += value;
+            }
+            StateHasChanged();
+        }
+        return Task.CompletedTask;
+    }
+
+    private async void Submit()
+    {
+        if (ChallengeInput == _challenge)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+        else
+        {
+            ChallengeInput = "";
+            _showError = true;
+            StateHasChanged();
+            using PeriodicTimer periodicTimer = new PeriodicTimer(new TimeSpan(0,0,2));
+            if(await periodicTimer.WaitForNextTickAsync())
+            {
+                _showError = false;
+            }
+            StateHasChanged();
+        }
+    }
+    void Cancel() => MudDialog.Cancel();
+}
+

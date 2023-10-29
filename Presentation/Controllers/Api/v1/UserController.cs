@@ -93,6 +93,17 @@ namespace Presentation.Controllers.Api.v1
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
+        [HttpGet("user-types")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        public async Task<IActionResult> GetUserTypes(CancellationToken cancellationToken)
+        {
+            var command = new Application.CQS.User.Queries.GetUserType.GetUserTypeQuery();
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+        }
+
         [HttpGet("{guid}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]

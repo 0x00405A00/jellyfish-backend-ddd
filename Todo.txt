@@ -1,0 +1,31 @@
+NavBar:
+- Funktionen
+- Datenschutz
+- Hilfebereich
+	-> NavBar als Sidebar mit Hilfepunkten
+	-> Body mit Suche für Hilfepunkte
+	-> Beliebte Artikel
+		-> bei Hilfepunkt für Android und iOS Hilfetabs
+
+- Blog
+	-> neuste Infos zur Jellyfish
+- Download
+	-> Link zu Appstores
+
+Footer:
+- Jellyfish Icon
+- Copyright
+- Nutzungsbedingungen und Datenschutzrichtlinie
+- Social Media Icons mit Kanälen
+- 
+
+
+
+Features:
+- SignIn Page mit Password vergessen Funktion
+- Impressum
+- DSGVO
+	-> Cookie Disclaimer
+- Users.razor:
+	CRUD+Search
+- Blog

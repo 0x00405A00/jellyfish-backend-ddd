@@ -53,3 +53,5 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Mi
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.Extensions.Localization.Abstractions.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.JSInterop.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\MudBlazor.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\scopedcss\Pages\Dashboard.razor.rz.scp.css
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\scopedcss\SharedComponents\ManagerUserDialog.razor.rz.scp.css

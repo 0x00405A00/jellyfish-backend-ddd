@@ -3,25 +3,20 @@
 @inject WebApiRestClient WebApiClient
 @inject ILocalStorageService LocalStorageService
 @inject NavigationManager NavigationManager
+@inject IDialogService DialogService
 
 <mud>Users</mud>
 <MudPaper Elevation="25">
     <MudToolBar>
-        <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Class="mr-5" />
-        <MudIconButton Icon="@Icons.Material.Outlined.Add" />
-        <MudIconButton Icon="@Icons.Material.Outlined.Edit" />
-        <MudIconButton Icon="@Icons.Material.Outlined.Remove" Color="Color.Inherit" />
-        <MudIconButton Icon="@Icons.Material.Outlined.Settings" Color="Color.Inherit" />
-        <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Outlined.Notifications" />
-        <MudIconButton Icon="@Icons.Material.Outlined.PushPin" />
-        <MudIconButton Icon="@Icons.Material.Outlined.PeopleAlt" />
-        <MudIconButton Icon="@Icons.Material.Outlined.MoreVert" Color="Color.Inherit" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Add" OnClick="AddUser"/>
+        <MudIconButton Icon="@Icons.Material.Outlined.Edit" Disabled=@CantExecByMultipleSelection OnClick="EditUser" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Remove" Disabled=@CanExecWhenMinOneUserIsSelected OnClick="RemoveUser" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Password" Disabled=@CanExecWhenMinOneUserIsSelected OnClick="ResetPassword" />
     </MudToolBar>
 </MudPaper>
 @if (UsersList!=null&&UsersList.Count>0)
 {
-    <MudDataGrid Items=@UsersList Filterable="false" SortMode="@SortMode.None" Groupable="false">
+    <MudDataGrid T="UserDTO" Items=@UsersList Filterable="false" RowClick=RowClicked SelectedItemsChanged="@SelectedItemsChanged" MultiSelection SelectedItems=@SelectedItems SortMode="@SortMode.Multiple" Groupable="false">
         <Columns>
             <SelectColumn T="UserDTO" />
             <PropertyColumn Property="x => x.UserName" />
@@ -31,9 +26,10 @@
             <PropertyColumn Property="x => x.DateOfBirth" Format="dd.MM.yyyy" />
             <PropertyColumn Property="x => x.Phone" />
             <PropertyColumn Property="x => x.CreatedTime" Format="dd.MM.yyyy" />
-            <PropertyColumn Property="x => x.LastModifiedTime" Format="dd.MM.yyyy" />
+             <PropertyColumn Property="x => x.LastModifiedTime" Format="dd.MM.yyyy" />
+             <PropertyColumn Property="x => UserTypesList.Where(y=>y.Uuid==x.UserTypeUuid).First().Name" />
             <TemplateColumn>
-                <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary">Edit</MudButton>
+                <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@MudBlazor.Color.Primary">Edit</MudButton>
             </TemplateColumn>
         </Columns>
     </MudDataGrid>
@@ -46,10 +42,14 @@ else
 }
 
 @code {
-
-
+    private HashSet<UserDTO> SelectedItems = new HashSet<UserDTO>();
     private CancellationTokenSource cancellationToken = new();
-    public List<UserDTO> UsersList=new List<UserDTO>();
+    public List<UserDTO> UsersList = new List<UserDTO>();
+    public List<UserTypeDTO> UserTypesList = new List<UserTypeDTO>();
+
+    public bool HasMoreThanOneUserSelected => SelectedItems != null && SelectedItems.Count > 1;
+    public bool CantExecByMultipleSelection => SelectedItems != null && SelectedItems.Count !=1 ;
+    public bool CanExecWhenMinOneUserIsSelected => !(SelectedItems != null && SelectedItems.Count >= 1);
 
     public Users()
     {
@@ -62,13 +62,95 @@ else
             StateHasChanged();
         }
     }
+    private Task RowClicked(DataGridRowClickEventArgs<UserDTO> args)
+    {
+        return Task.CompletedTask;
+    }
+
+    private Task SelectedItemsChanged(HashSet<UserDTO> SelectedItems)
+    {
+
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
     private async Task GetData()
     {
         var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
-        var response = await WebApiClient.Request<List<UserDTO>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
-        if (response.IsSuccess)
+
+
+        var requestUserTypes = WebApiClient.Request<List<UserTypeDTO>, object>("/user/user-types", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
+        var requestUsers = WebApiClient.Request<List<UserDTO>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
+
+        await Task.WhenAll(requestUserTypes, requestUsers);
+
+        var responseUsers = await requestUsers;
+        var responseUserTypes = await requestUserTypes;
+        if (responseUsers.IsSuccess)
         {
-            UsersList = response.ApiResponseDeserialized;
+            UsersList = responseUsers.ApiResponseDeserialized;
+        }
+        if (responseUserTypes.IsSuccess)
+        {
+            UserTypesList = responseUserTypes.ApiResponseDeserialized;
+        }
+    }
+    public async Task ResetPassword()
+    {
+        
+    }
+    public async Task AddUser()
+    {
+
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<ManagerUserDialog> {
+            { x => x.User, new UserDTO() },
+            { x => x.UserTypes, UserTypesList },
+            { x => x.Text, "Benutzer hinzufügen" }
+        };
+        var dialog = await DialogService.ShowAsync<ManagerUserDialog>("Benutzer hinzufügen",parameters);
+        var result = await dialog.Result;
+        if(!result.Cancelled)
+        {
+
+            StateHasChanged();   
+        }
+        
+    }
+    public async Task EditUser()
+    {
+
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<ManagerUserDialog> {
+            { x => x.User, SelectedItems.First() },
+            { x => x.UserTypes, UserTypesList },
+            { x => x.Text, "Benutzer editieren" }
+        };
+        var dialog = await DialogService.ShowAsync<ManagerUserDialog>("Benutzer editieren", parameters);
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+
+            StateHasChanged();
+        }
+    }
+    public async Task RemoveUser()
+    {
+
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<ChallengeDialog> {
+            { x => x.Text,"Möchtest du "+(HasMoreThanOneUserSelected?("'"+SelectedItems.Count+"' User"):("'"+SelectedItems.First().UserName+"'"))+" löschen?" }
+        };
+        var dialog = await DialogService.ShowAsync<ChallengeDialog>("Benutzer löschen", parameters);
+        var result = await dialog.Result;
+        if(!result.Cancelled)
+        {
+            foreach(var user in SelectedItems)
+            {
+                UsersList.Remove(user);
+
+            }
+            SelectedItems.Clear();
+            StateHasChanged();
         }
     }
 }

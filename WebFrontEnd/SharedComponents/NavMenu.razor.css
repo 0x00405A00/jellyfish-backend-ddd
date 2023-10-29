@@ -13,6 +13,9 @@
     font-size: 1.1rem;
 }
 
+div > a{
+    color: white;
+}
 
 .oi {
     width: 2rem;
@@ -21,10 +24,6 @@
     top: -2px;
 }
 
-.nav-item {
-    font-size: 0.9rem;
-    padding-bottom: 0.5rem;
-}
 
     .nav-item:first-of-type {
         padding-top: 1rem;
@@ -35,7 +34,6 @@
     }
 
     .nav-item ::deep a {
-        color: #d7d7d7;
         border-radius: 4px;
         height: 3rem;
         display: flex;

@@ -11,15 +11,12 @@ namespace Application.CQS.User.Queries.GetUserById
     {
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-        private readonly IUnitOfWork _unitOfWork;
         public GetUsersQueryHandler(
             IMapper mapper,
-            IUserRepository userRepository,
-            IUnitOfWork unitOfWork)
+            IUserRepository userRepository)
         {
             _mapper = mapper;
             _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
         }
         public async Task<Result<UserDTO>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {

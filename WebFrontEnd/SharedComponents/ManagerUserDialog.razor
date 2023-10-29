@@ -1,0 +1,66 @@
+﻿<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Info" Class="mr-3 mb-n1" />
+            @Text
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField Class="rule2" InputType="InputType.Text" Value="@User.UserName" Label="UserName" Variant="Variant.Filled" ReadOnly="false" />
+        <MudTextField InputType="InputType.Text" Value="@User.FirstName" Label="FirstName" ReadOnly="false" />
+        <MudTextField InputType="InputType.Text" Value="@User.LastName" Label="LastName" ReadOnly="false" />
+        <MudTextField InputType="InputType.Password" Value="@User.Password" Label="Password" ReadOnly="false" />
+        <MudTextField InputType="InputType.Password" Value="@User.PasswordConfirm" Label="PasswordConfirm" ReadOnly="false" />
+        <MudTextField InputType="InputType.Email" Value="@User.Email" Label="Email" ReadOnly="false" />
+        <div>
+            <label>UserType: </label>
+            <select @onchange=OnUserTypeSelect>
+                @foreach (var option in UserTypes)
+                {
+                    <option @key=@option.Uuid selected=@(SelectedUserType.Name!=null&&SelectedUserType.Name.Contains(option.Name)) value=@option.Uuid>@option.Name</option>
+                }
+            </select>
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Abbrechen</MudButton>
+        <MudButton Color="MudBlazor.Color.Info" OnClick="Commit">Hinzufügen</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public string Text { get; set; }
+    [Parameter] public UserDTO User { get; set; } = new UserDTO();
+    [Parameter] public List<UserTypeDTO> UserTypes { get; set; } = new List<UserTypeDTO>();
+
+    private UserTypeDTO SelectedUserType { get; set; } = new UserTypeDTO();
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            SelectedUserType = UserTypes.Where(x=>x.Uuid == User.UserTypeUuid).First();
+            StateHasChanged();
+        }
+        return Task.CompletedTask;
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+    public void OnUserTypeSelect(ChangeEventArgs selectEvent)
+    {
+        var userTypeUuid = Guid.Parse(selectEvent.Value.ToString());
+        SelectedUserType = UserTypes.Where(x => x.Uuid == userTypeUuid).First();
+        User.UserTypeUuid = userTypeUuid;
+    }
+    private void Commit()
+    {
+
+        MudDialog.Close(DialogResult.Ok(User));
+    }
+}
+

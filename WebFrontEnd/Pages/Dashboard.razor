@@ -4,31 +4,51 @@
 @inject ILocalStorageService LocalStorageService
 @inject NavigationManager NavigationManager
 @inject SignalRClient SignalRClient
+@inject IJSRuntime JsRuntime
 
 <h3>Dashboard</h3>
-<table>
-    @foreach(var user in Users)
-    {
-        <tr>
-            <td>@user.Email</td>
-        </tr>
-    }
-    @foreach(var msg in Messages)
-    {
-        <tr>
-            <td>@msg.Text</td>
-        </tr>
-    }
-</table>
+<div class="d-flex flex-row">
+    <div>
+
+        <MudChart ChartType="ChartType.Line" onmouseover="@HoverChart" ChartSeries="@Series" @bind-SelectedIndex="Index" XAxisLabels="@XAxisLabels" Width="100%" Height="350px"></MudChart>
+    </div>
+    <div>
+        <MudChart ChartType="ChartType.Bar" ChartSeries="@Series" @bind-SelectedIndex="Index" XAxisLabels="@XAxisLabels" Width="100%" Height="350px"></MudChart>
+
+    </div>
+</div>
+<div class="table-container">
+    <table>
+        @foreach (var msg in Messages)
+        {
+            <tr>
+                <td>@msg.Text</td>
+            </tr>
+        }
+    </table>
+    </div>
+
 
 @code {
 
     private CancellationTokenSource cancellationToken = new();
-    public List<UserDTO> Users=new List<UserDTO>();
     public List<MessageDTO> Messages = new List<MessageDTO>();
 
     public Dashboard()
     {
+    }
+    protected override Task OnInitializedAsync()
+    {
+        if (!SignalRClient.IsBuilded)
+        {
+            SignalRClient.BuildConnection();
+
+        }
+        if (SignalRClient.HubConnection.State != HubConnectionState.Connected)
+            SignalRClient.OpenConnection();
+
+        SignalRClient.HubConnection.On<List<MessageDTO>>(nameof(SignalRClient.ReceiveMessage), ReceiveMessage);
+        return Task.CompletedTask;
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -41,26 +61,29 @@
     private async Task GetData()
     {
         var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
-        var response = await WebApiClient.Request<List<UserDTO>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
-        if (response.IsSuccess)
-        {
-            Users = response.ApiResponseDeserialized;
-        }
-        if (!SignalRClient.IsBuilded)
-        {
-            SignalRClient.BuildConnection();
 
-        }
-        if (SignalRClient.HubConnection.State != HubConnectionState.Connected)
-            SignalRClient.OpenConnection();
-
-        SignalRClient.HubConnection.On<List<MessageDTO>>(nameof(SignalRClient.ReceiveMessage), ReceiveMessage);
     }
-
+    public Task HoverChart()
+    {
+        return Task.CompletedTask;
+    }
     public Task ReceiveMessage(List<MessageDTO> messages)
     {
         Messages.AddRange(messages);
         InvokeAsync(StateHasChanged);
+        Series[1].Data[8] += 5;
         return Task.CompletedTask;
     }
+    #region TestCode Chart
+    private int Index = -1; //default value cannot be 0 -> first selectedindex is 0.
+
+    public List<ChartSeries> Series = new List<ChartSeries>()
+    {
+        new ChartSeries() { Name = "Series 1", Data = new double[] { 90, 79, 72, 69, 62, 62, 55, 65, 70 } },
+        new ChartSeries() { Name = "Series 2", Data = new double[] { 10, 41, 35, 51, 49, 62, 69, 91, 148 } },
+    };
+    public string[] XAxisLabels = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep" };
+
+    Random random = new Random();
+    #endregion
 }
