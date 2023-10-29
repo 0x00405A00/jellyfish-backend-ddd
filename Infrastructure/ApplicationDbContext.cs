@@ -755,6 +755,7 @@ internal partial class ApplicationDbContext : DbContext
                 .HasColumnName("name");
         });
 
+
         OnModelCreatingPartial(modelBuilder);
     }
 
