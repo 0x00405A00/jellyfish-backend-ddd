@@ -2,7 +2,11 @@
 using Infrastructure.Abstractions;
 using Infrastructure.Mapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Shared.DataFilter;
+using Shared.DataFilter.Infrastructure;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 namespace Infrastructure.Repository
 {
@@ -46,10 +50,13 @@ namespace Infrastructure.Repository
 
         public virtual ICollection<TDbEntity> List(Expression<Func<TDbEntity, bool>> expression = null)
         {
-            var value = expression==null?
-                _dbSet.AsNoTracking().ToList() : _dbSet.AsNoTracking().Where(expression).ToList();
-
-            return value;
+            var value = _dbSet.ExpressionQuery(expression);
+            return value.ToList();
+        }
+        public virtual ICollection<TDbEntity> List(ColumnSearchAggregateDTO columnSearchAggregateDTO)
+        {
+            var value = _dbSet.ExpressionQuery(columnSearchAggregateDTO);
+            return value.ToList();
         }
         #endregion
 
@@ -82,6 +89,14 @@ namespace Infrastructure.Repository
 
             return value;
         }
+
+        public virtual async Task<ICollection<TDbEntity>> ListAsync(ColumnSearchAggregateDTO? columnSearchAggregateDTO)
+        {
+
+            var value = _dbSet.ExpressionQuery(columnSearchAggregateDTO);
+
+            return await value.ToListAsync();
+        }
         #endregion
     }
     internal abstract class GenericRepository<TEntity, TDbEntity> : GenericRepository<TDbEntity>, IGenericRepository<TEntity, TDbEntity> 
@@ -111,16 +126,22 @@ namespace Infrastructure.Repository
             base.Remove(dbModel);
         }
 
-        TEntity IGenericRepository<TEntity, TDbEntity>.Get(Expression<Func<TDbEntity, bool>> expression)
+        public virtual TEntity Get(Expression<Func<TDbEntity, bool>> expression)
         {
             var value = base.Get(expression);
 
             return this.MapToDomainEntity(value, true);
         }
 
-        ICollection<TEntity> IGenericRepository<TEntity, TDbEntity>.List(Expression<Func<TDbEntity, bool>> expression = null)
+        public virtual ICollection<TEntity> List(Expression<Func<TDbEntity, bool>> expression = null)
         {
             var value = base.List(expression);
+
+            return this.MapToDomainEntity(value, true);
+        }
+        public virtual ICollection<TEntity> List(ColumnSearchAggregateDTO columnSearchAggregateDTO)
+        {
+            var value = base.List(columnSearchAggregateDTO);
 
             return this.MapToDomainEntity(value, true);
         }
@@ -160,6 +181,12 @@ namespace Infrastructure.Repository
 
             return this.MapToDomainEntity(value, true);
         }
+        public async virtual Task<ICollection<TEntity>> ListAsync(ColumnSearchAggregateDTO? columnSearchAggregateDTO)
+        {
+            var value = await base.ListAsync(columnSearchAggregateDTO);
+
+            return this.MapToDomainEntity(value, true);
+        }
 
         public async Task AddAsync(TEntity entity)
         {
@@ -178,6 +205,8 @@ namespace Infrastructure.Repository
             var dbModel = MapToDatabaseEntity(entity, false);
             base.UpdateAsync(dbModel);
         }
+
+
         #endregion
     }
 }

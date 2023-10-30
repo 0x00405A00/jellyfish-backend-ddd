@@ -1,5 +1,6 @@
 ﻿using Domain.Primitives;
 using Infrastructure.Abstractions;
+using Shared.DataFilter.Infrastructure;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repository
@@ -14,12 +15,14 @@ namespace Infrastructure.Repository
         public void Update(TDbEntity entity);
         public TDbEntity Get(Expression<Func<TDbEntity, bool>> expression);
         public ICollection<TDbEntity> List(Expression<Func<TDbEntity, bool>> expression = null);
+        public ICollection<TDbEntity> List(ColumnSearchAggregateDTO? columnSearchAggregateDTO);
 
         public Task AddAsync(TDbEntity entity);
         public void RemoveAsync(TDbEntity entity);
         public void UpdateAsync(TDbEntity entity);
         public Task<TDbEntity> GetAsync(Expression<Func<TDbEntity, bool>> expression);
-        public Task<ICollection<TDbEntity>> ListAsync(Expression<Func<TDbEntity, bool>> expression=null);
+        public Task<ICollection<TDbEntity>> ListAsync(Expression<Func<TDbEntity, bool>> expression = null);
+        public Task<ICollection<TDbEntity>> ListAsync(ColumnSearchAggregateDTO? columnSearchAggregateDTO);
     }
     public interface IGenericRepository<TEntity,TDbEntity>
         where TEntity : Entity
@@ -31,11 +34,13 @@ namespace Infrastructure.Repository
         public void Update(TEntity entity);
         public TEntity Get(Expression<Func<TDbEntity, bool>> expression);
         public ICollection<TEntity> List(Expression<Func<TDbEntity, bool>> expression = null);
+        public ICollection<TEntity> List(ColumnSearchAggregateDTO? columnSearchAggregateDTO);
 
         public Task AddAsync(TEntity entity);
         public void RemoveAsync(TEntity entity);
         public void UpdateAsync(TEntity entity);
         public Task<TEntity> GetAsync(Expression<Func<TDbEntity, bool>> expression);
         public Task<ICollection<TEntity>> ListAsync(Expression<Func<TDbEntity, bool>> expression=null);
+        public Task<ICollection<TEntity>> ListAsync(ColumnSearchAggregateDTO? columnSearchAggregateDTO);
     }
 }

@@ -1,4 +1,9 @@
-﻿namespace Presentation.Abstractions
+﻿using Microsoft.IdentityModel.Tokens;
+using Shared.DataFilter.Infrastructure;
+using Shared.DataFilter.Presentation;
+using System.Text.Json;
+
+namespace Presentation.Abstractions
 {
     public static class ApiControllerExtensions
     {
@@ -16,5 +21,6 @@
             }
             return Guid.TryParse(uuidStr, out var uuid)?uuid:Guid.Empty;
         }
+
     }
 }

@@ -133,12 +133,6 @@
 
         }
 
-        var infrastructureApiSection = Configuration.GetSection("Infrastructure:Api");
-        var url = infrastructureApiSection.GetValue<string>("HealthCheck");
-        var urlController = infrastructureApiSection.GetValue<string>("HealthCheckController");
-
-
-
 
     }
     public Task HoverChart()

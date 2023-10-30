@@ -1,5 +1,8 @@
 ﻿using Infrastructure.Abstractions;
+using Infrastructure.DatabaseEntity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Shared.DataFilter.Infrastructure;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repository
@@ -47,7 +50,8 @@ namespace Infrastructure.Repository
 
         public async override Task<ICollection<Domain.Entities.User.User>> ListAsync(Expression<Func<DatabaseEntity.User, bool>> expression)
         {
-            var value = await _dbSet.Include(i => i.UserTypeUu)
+            var value = await _dbSet.ExpressionQuery(expression)
+                                    .Include(i => i.UserTypeUu)
                                     .Include(i => i.UserRelationToRoles)
                                     .ThenInclude(ur => ur.RoleUu)
                                     .Include(i => i.UserFriendUserUus)
@@ -55,8 +59,37 @@ namespace Infrastructure.Repository
                                     .ThenInclude(ut => ut.UserTypeUu)
                                     .AsNoTracking()
                                     .AsSingleQuery()
-                                    .Where(expression)
                                     .ToListAsync();
+
+            return this.MapToDomainEntity(value, true);
+        }
+        public async override Task<ICollection<Domain.Entities.User.User>> ListAsync(ColumnSearchAggregateDTO columnSearchAggregateDTO)
+        {
+            var value = await _dbSet.ExpressionQuery(columnSearchAggregateDTO)
+                                    .Include(i => i.UserTypeUu)
+                                    .Include(i => i.UserRelationToRoles)
+                                    .ThenInclude(ur => ur.RoleUu)
+                                    .Include(i => i.UserFriendUserUus)
+                                    .ThenInclude(uf => uf.FriendUserUu)
+                                    .ThenInclude(ut => ut.UserTypeUu)
+                                    .AsNoTracking()
+                                    .AsSingleQuery()
+                                    .ToListAsync();
+
+            return this.MapToDomainEntity(value, true);
+        }
+        public override ICollection<Domain.Entities.User.User> List(ColumnSearchAggregateDTO columnSearchAggregateDTO)
+        {
+            var value = _dbSet.ExpressionQuery(columnSearchAggregateDTO)
+                                    .Include(i => i.UserTypeUu)
+                                    .Include(i => i.UserRelationToRoles)
+                                    .ThenInclude(ur => ur.RoleUu)
+                                    .Include(i => i.UserFriendUserUus)
+                                    .ThenInclude(uf => uf.FriendUserUu)
+                                    .ThenInclude(ut => ut.UserTypeUu)
+                                    .AsNoTracking()
+                                    .AsSingleQuery()
+                                    .ToList();
 
             return this.MapToDomainEntity(value, true);
         }

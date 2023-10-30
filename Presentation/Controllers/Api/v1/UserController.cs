@@ -2,7 +2,6 @@ using Application.CQS.Messenger.User.Command.Friends.RemoveFriend;
 using Application.CQS.Messenger.User.Command.FriendshipRequests.AcceptFriendshipRequest;
 using Application.CQS.Messenger.User.Command.FriendshipRequests.CreateFriendshipRequest;
 using Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriendshipRequest;
-using Application.CQS.Role.Commands.CreateRole;
 using Application.CQS.User.Commands.CreateUser;
 using Application.CQS.User.Commands.DeleteUser;
 using Application.CQS.User.Commands.PasswordReset.Request;
@@ -16,6 +15,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Abstractions;
+using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
 using Shared.DataTransferObject.Messenger;
 using System.Net.Mime;
@@ -24,7 +24,7 @@ using WebApi.Abstractions;
 namespace Presentation.Controllers.Api.v1
 {
     [Authorize(Policy = AuthorizationConst.Policy.AdminPolicy)]
-    public class UserController : ApiController
+    public class UserController : ApiController<UserDTO>
     {
 
         private readonly ILogger<UserController> _logger;
@@ -82,6 +82,17 @@ namespace Presentation.Controllers.Api.v1
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
+        [HttpGet("user-types")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        public async Task<IActionResult> GetUserTypes(CancellationToken cancellationToken)
+        {
+            var command = new Application.CQS.User.Queries.GetUserType.GetUserTypeQuery();
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+        }
+
         [HttpPost()]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
@@ -94,44 +105,12 @@ namespace Presentation.Controllers.Api.v1
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
-        [HttpGet("user-types")]
-        [Consumes(MediaTypeNames.Application.Json)]
-        [Produces(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> GetUserTypes(CancellationToken cancellationToken)
-        {
-            var command = new Application.CQS.User.Queries.GetUserType.GetUserTypeQuery();
-
-            var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
-        }
-
         [HttpGet("{guid}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> GetUser(Guid guid, CancellationToken cancellationToken)
         {
             var command = new Application.CQS.User.Queries.GetUserById.GetUserByIdQuery(guid);
-
-            var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
-        }
-
-        [HttpGet()]
-        [Consumes(MediaTypeNames.Application.Json)]
-        [Produces(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> GetUsers(CancellationToken cancellationToken)
-        {
-            var command = new Application.CQS.User.Queries.GetUsers.GetUsersQuery();
-
-            var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
-        }
-
-        [Produces(MediaTypeNames.Application.Json)]
-        [HttpGet("messenger/{guid}")]
-        public async Task<IActionResult> GetChatUser(Guid guid, CancellationToken cancellationToken)
-        {
-            var command = new Application.CQS.Messenger.User.Queries.GetUserById.GetUserByIdQuery(guid);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
@@ -166,6 +145,17 @@ namespace Presentation.Controllers.Api.v1
             var result = await Sender.Send(command, cancellationToken);
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
+
+        [Produces(MediaTypeNames.Application.Json)]
+        [HttpGet("messenger/{guid}")]
+        public async Task<IActionResult> GetChatUser(Guid guid, CancellationToken cancellationToken)
+        {
+            var command = new Application.CQS.Messenger.User.Queries.GetUserById.GetUserByIdQuery(guid);
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+        }
+
 
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
@@ -239,5 +229,32 @@ namespace Presentation.Controllers.Api.v1
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
+        public override Task<IActionResult> Create([FromBody] UserDTO model, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task<IActionResult> Read(Guid id, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override async Task<IActionResult> ReadAll([FromQuery] SearchParams? searchParams,CancellationToken cancellationToken)
+        {
+            var command = new Application.CQS.User.Queries.GetUsers.GetUsersQuery(searchParams);
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+        }
+
+        public override Task<IActionResult> Update(Guid id, [FromBody] UserDTO model, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
