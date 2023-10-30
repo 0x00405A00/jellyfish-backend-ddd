@@ -20,7 +20,7 @@ namespace Application.CQS.User.Queries.GetUsers
         }
         public async Task<Result<List<UserDTO>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
-            var data = await _userRepository.ListAsync(x => x.ActivationDatetime != null);
+            var data = await _userRepository.ListAsync(x => x.ActivationDatetime != null && x.DeletedTime == null);
 
             var res = Result<List<UserDTO>>.Success();
 

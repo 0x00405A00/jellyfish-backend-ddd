@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using Domain.Entities.User.Exception;
 using Domain.Exceptions;
+using Domain.Primitives;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 
@@ -20,7 +21,7 @@ namespace Application.CQS.User.Commands.DeleteUser
 
         public async Task<Result<Guid>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetAsync(user => user.Uuid == request.UserId);
+            var user = await _userRepository.GetAsync(user => user.Uuid == request.UserId && user.DeletedTime==null);
             if (user == null)
                 return Result<Guid>.Failure("target user not found");
             var deletetByUser = await _userRepository.GetAsync(user => user.Uuid == request.DeletedByUserId);
@@ -34,9 +35,18 @@ namespace Application.CQS.User.Commands.DeleteUser
             {
                 return Result<Guid>.Failure(ex.Message);
             }
-            _userRepository.Remove(user);
+            try
+            {
+                _userRepository.Update(user);
+                await _unitOfWork.SaveChangesAsync();
+            }
+            catch(Exception ex) {
+                return Result<Guid>.Failure(ex.Message);
+            }
 
-            return Result<Guid>.Success();
+            var result = Result<Guid>.Success();
+            result.Value =user.Uuid.ToGuid();
+            return result;
         }
     }
 }

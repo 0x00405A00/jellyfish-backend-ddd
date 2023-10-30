@@ -1,7 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
 using Domain.Const;
-using Domain.Entities.User;
 using Domain.Exceptions;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;

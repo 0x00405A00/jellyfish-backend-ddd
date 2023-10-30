@@ -67,6 +67,24 @@ namespace Shared.DataTransferObject
         [JsonPropertyName("deleted_by_user_uuid")]
         public Guid? DeletedByUserUuid { get; set; }
 
+        [JsonIgnore]
+        public string RoleStr
+        {
+            get
+            {
+                if(Roles!=null && Roles.Count>0)
+                {
+                    string str =null;
+                    foreach(var role in Roles)
+                    {
+                        str+= role.Name+";";
+                    }
+                    return str;
+                }
+                return null;
+            }
+        }
+
         public UserDTO()
         {
 

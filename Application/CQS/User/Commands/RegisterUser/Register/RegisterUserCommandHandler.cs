@@ -1,8 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 using Application.CQS.User.Commands.CreateUser;
 using AutoMapper;
-using Domain.Const;
-using Domain.Exceptions;
 using Domain.Primitives;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;

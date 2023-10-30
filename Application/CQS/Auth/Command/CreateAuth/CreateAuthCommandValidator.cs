@@ -1,9 +1,8 @@
-﻿using Application.CQS.User.Commands.CreateUser;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Application.CQS.Auth.Command.CreateAuth
 {
-    internal class CreateAuthCommandValidator : AbstractValidator<CreateUserCommand>
+    internal class CreateAuthCommandValidator : AbstractValidator<CreateAuthCommand>
     {
         public CreateAuthCommandValidator()
         {

@@ -108,9 +108,9 @@ build_metadata.AdditionalFiles.CssScope = b-u2jr7lxeml
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xNYWluTGF5b3V0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-ou8me86jdl
 
-[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/ManagerUserDialog.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xNYW5hZ2VyVXNlckRpYWxvZy5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = b-tsdsug2dr0
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/ManageUserDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xNYW5hZ2VVc2VyRGlhbG9nLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-p9kpzwcyj8
 
 [C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xOYXZNZW51LnJhem9y

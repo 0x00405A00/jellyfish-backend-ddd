@@ -5,7 +5,7 @@
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
 
-<mud>Users</mud>
+<mud>@UsersList.Count Users</mud>
 <MudPaper Elevation="25">
     <MudToolBar>
         <MudIconButton Icon="@Icons.Material.Outlined.Add" OnClick="AddUser"/>
@@ -28,6 +28,7 @@
             <PropertyColumn Property="x => x.CreatedTime" Format="dd.MM.yyyy" />
              <PropertyColumn Property="x => x.LastModifiedTime" Format="dd.MM.yyyy" />
              <PropertyColumn Property="x => UserTypesList.Where(y=>y.Uuid==x.UserTypeUuid).First().Name" />
+             <PropertyColumn Property="x => x.RoleStr" />
             <TemplateColumn>
                 <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@MudBlazor.Color.Primary">Edit</MudButton>
             </TemplateColumn>
@@ -42,10 +43,12 @@ else
 }
 
 @code {
+    private AuthDTO _token;
     private HashSet<UserDTO> SelectedItems = new HashSet<UserDTO>();
     private CancellationTokenSource cancellationToken = new();
     public List<UserDTO> UsersList = new List<UserDTO>();
     public List<UserTypeDTO> UserTypesList = new List<UserTypeDTO>();
+    public List<RoleDTO> RoleList = new List<RoleDTO>();
 
     public bool HasMoreThanOneUserSelected => SelectedItems != null && SelectedItems.Count > 1;
     public bool CantExecByMultipleSelection => SelectedItems != null && SelectedItems.Count !=1 ;
@@ -54,6 +57,7 @@ else
     public Users()
     {
     }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if(firstRender)
@@ -75,16 +79,18 @@ else
     }
     private async Task GetData()
     {
-        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+        _token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
 
+        
+        var requestUserTypes = WebApiClient.Request<List<UserTypeDTO>, object>("/user/user-types", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+        var requestRoles = WebApiClient.Request<List<RoleDTO>, object>("/role", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+        var requestUsers = WebApiClient.Request<List<UserDTO>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
 
-        var requestUserTypes = WebApiClient.Request<List<UserTypeDTO>, object>("/user/user-types", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
-        var requestUsers = WebApiClient.Request<List<UserDTO>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
-
-        await Task.WhenAll(requestUserTypes, requestUsers);
+        await Task.WhenAll(requestUserTypes, requestUsers, requestRoles);
 
         var responseUsers = await requestUsers;
         var responseUserTypes = await requestUserTypes;
+        var responseRoles = await requestRoles;
         if (responseUsers.IsSuccess)
         {
             UsersList = responseUsers.ApiResponseDeserialized;
@@ -93,43 +99,59 @@ else
         {
             UserTypesList = responseUserTypes.ApiResponseDeserialized;
         }
+        if (responseRoles.IsSuccess)
+        {
+            RoleList = responseRoles.ApiResponseDeserialized;
+        }
     }
     public async Task ResetPassword()
     {
-        
+
     }
     public async Task AddUser()
     {
 
         var options = new DialogOptions { CloseOnEscapeKey = true };
-        var parameters = new DialogParameters<ManagerUserDialog> {
+        var parameters = new DialogParameters<ManageUserDialog> {
             { x => x.User, new UserDTO() },
-            { x => x.UserTypes, UserTypesList },
+            { x => x.UserTypes, UserTypesList.ToHashSet() },
+            { x => x.Roles, RoleList.ToHashSet() },
             { x => x.Text, "Benutzer hinzufügen" }
         };
-        var dialog = await DialogService.ShowAsync<ManagerUserDialog>("Benutzer hinzufügen",parameters);
+        var dialog = await DialogService.ShowAsync<ManageUserDialog>("Benutzer hinzufügen", parameters);
         var result = await dialog.Result;
         if(!result.Cancelled)
         {
-
+            var addUserRequest = await WebApiClient.Request<UserDTO, UserDTO>("/user", RestSharp.Method.Post, cancellationToken.Token, (UserDTO)result.Data, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+            if (addUserRequest.IsSuccess)
+            {
+                UsersList.Add((UserDTO)result.Data);
+            }
             StateHasChanged();   
         }
-        
+
     }
     public async Task EditUser()
     {
-
+        var user = SelectedItems.First();
+        int index = UsersList.IndexOf(user);
         var options = new DialogOptions { CloseOnEscapeKey = true };
-        var parameters = new DialogParameters<ManagerUserDialog> {
-            { x => x.User, SelectedItems.First() },
-            { x => x.UserTypes, UserTypesList },
+        var parameters = new DialogParameters<ManageUserDialog> {
+            { x => x.User, user },
+            { x => x.UserTypes, UserTypesList.ToHashSet() },
+            { x => x.Roles, RoleList.ToHashSet() },
             { x => x.Text, "Benutzer editieren" }
         };
-        var dialog = await DialogService.ShowAsync<ManagerUserDialog>("Benutzer editieren", parameters);
+        var dialog = await DialogService.ShowAsync<ManageUserDialog>("Benutzer editieren", parameters);
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
-
+            var url = "/user/"+user.Uuid+"";
+            var updateUserRequest = await WebApiClient.Request<UserDTO, UserDTO>(url, RestSharp.Method.Put, cancellationToken.Token, (UserDTO)result.Data, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+            if (updateUserRequest.IsSuccess)
+            {
+                UsersList[index]=((UserDTO)result.Data);
+            }
             StateHasChanged();
         }
     }
@@ -144,11 +166,18 @@ else
         var result = await dialog.Result;
         if(!result.Cancelled)
         {
+            List<Task<WebApiHttpRequestResponseModel<Guid>>> tasks = new List<Task<WebApiHttpRequestResponseModel<Guid>>>();
             foreach(var user in SelectedItems)
             {
-                UsersList.Remove(user);
-
+                var url = "/user/" + user.Uuid + "";
+                var deleteUserRequest = await WebApiClient.Request<Guid, object>(url, RestSharp.Method.Delete, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+                if (deleteUserRequest.IsSuccess)
+                {
+                    var userUuid = UsersList.Where(x => x.Uuid == deleteUserRequest.ApiResponseDeserialized).First();
+                    UsersList.Remove(userUuid);
+                }
             }
+
             SelectedItems.Clear();
             StateHasChanged();
         }

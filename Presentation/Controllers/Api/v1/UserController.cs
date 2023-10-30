@@ -2,6 +2,7 @@ using Application.CQS.Messenger.User.Command.Friends.RemoveFriend;
 using Application.CQS.Messenger.User.Command.FriendshipRequests.AcceptFriendshipRequest;
 using Application.CQS.Messenger.User.Command.FriendshipRequests.CreateFriendshipRequest;
 using Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriendshipRequest;
+using Application.CQS.Role.Commands.CreateRole;
 using Application.CQS.User.Commands.CreateUser;
 using Application.CQS.User.Commands.DeleteUser;
 using Application.CQS.User.Commands.PasswordReset.Request;

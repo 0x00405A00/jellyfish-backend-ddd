@@ -305,9 +305,16 @@ namespace WebFrontEnd.Service.Backend.Api
             responseModel.DefaultResponse = resp;
             if (resp != null && resp.Content != null && !string.IsNullOrEmpty(resp.Content))
             {
-                string responseJson = resp.Content;
+                try
+                {
+                    string responseJson = resp.Content;
 
-                responseModel.ApiResponseDeserialized = JsonSerializer.Deserialize<T1>(responseJson);
+                    responseModel.ApiResponseDeserialized = JsonSerializer.Deserialize<T1>(responseJson);
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
             return responseModel;
         }

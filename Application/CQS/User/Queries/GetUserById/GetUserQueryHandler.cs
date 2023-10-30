@@ -20,7 +20,7 @@ namespace Application.CQS.User.Queries.GetUserById
         }
         public async Task<Result<UserDTO>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var data = await _userRepository.GetAsync(x => x.Uuid == request.Id);
+            var data = await _userRepository.GetAsync(x => x.Uuid == request.Id && x.DeletedTime == null);
             if (data == null)
             {
                 throw new UserNotFoundException(request.Id);
