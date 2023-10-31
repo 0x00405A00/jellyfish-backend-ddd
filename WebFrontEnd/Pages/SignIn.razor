@@ -74,7 +74,7 @@
         var response = await WebApiClient.Authentificate(UserLoginDTO.Email, UserLoginDTO.Password, cancellationToken.Token);
         if(response.Token!=null)
         {
-            await LocalStorageService.SetDeserializedJsonItemFromKey(AuthorizationConst.BrowserLocalStorageItemKey.Authorization,response);
+            await LocalStorageService.SetDeserializedJsonItemFromKey(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization, response);
             NavigationManager.NavigateTo("/dashboard");
         }
     }

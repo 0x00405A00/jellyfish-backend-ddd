@@ -100,7 +100,7 @@
         var url = infrastructureApiSection.GetValue<string>("HealthCheck");
         var urlController = infrastructureApiSection.GetValue<string>("HealthCheckController");
 
-        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
         var responseServices = await WebApiClient.Request<HealthZDTO, object>(url, RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
         if (responseServices.IsSuccess)
         {

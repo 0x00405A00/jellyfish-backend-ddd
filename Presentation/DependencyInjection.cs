@@ -1,8 +1,8 @@
-﻿using Domain.Const;
-using Infrastructure.Authentification;
+﻿using Infrastructure.Authentification;
 using Microsoft.OpenApi.Models;
 using Presentation.Swagger.OperationFilter;
 using Presentation.Swagger.SignalR;
+using Shared.Const;
 using Shared.Json;
 
 namespace Presentation

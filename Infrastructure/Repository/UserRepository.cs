@@ -60,7 +60,6 @@ namespace Infrastructure.Repository
                                     .AsNoTracking()
                                     .AsSingleQuery()
                                     .ToListAsync();
-
             return this.MapToDomainEntity(value, true);
         }
         public async override Task<ICollection<Domain.Entities.User.User>> ListAsync(ColumnSearchAggregateDTO columnSearchAggregateDTO)
@@ -76,6 +75,7 @@ namespace Infrastructure.Repository
                                     .AsSingleQuery()
                                     .ToListAsync();
 
+            value = value.OrderQuery(columnSearchAggregateDTO);
             return this.MapToDomainEntity(value, true);
         }
         public override ICollection<Domain.Entities.User.User> List(ColumnSearchAggregateDTO columnSearchAggregateDTO)

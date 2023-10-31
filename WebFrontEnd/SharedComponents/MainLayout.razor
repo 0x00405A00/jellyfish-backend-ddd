@@ -179,7 +179,7 @@
         {
 
         }
-        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
 
         IsLoggedIn = token!= null&&!token.IsTokenExpired;
 
@@ -200,11 +200,11 @@
 
             var infrastructureApiSection = Configuration.GetSection("Infrastructure:Api");
             var logoutEndpoint = infrastructureApiSection.GetValue<string>("LogoutEndpoint");
-            var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+            var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
 
             var logoutResponse = await WebApiClient.Request<object>(logoutEndpoint, RestSharp.Method.Post, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
 
-            await LocalStorageService.RemoveItem(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+            await LocalStorageService.RemoveItem(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
 
             NavigationManager.NavigateTo(RouteConst.Routes.SignIn);
         }

@@ -94,7 +94,7 @@ namespace WebFrontEnd.Service.WebStorage.LocalStorage
         {
             try
             {
-                var value = await GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+                var value = await GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
                 if(value!=null)
                 {
                     return !value.IsTokenExpired;

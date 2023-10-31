@@ -21,7 +21,13 @@ namespace Infrastructure.Repository
             {
                 value = value.CustomPagination(columnSearchAggregateDTO.SearchParams.page_offset, columnSearchAggregateDTO.SearchParams.page_size);
             }
-            if(columnSearchAggregateDTO.Sorting!=null&&columnSearchAggregateDTO.Sorting.Any())
+            return value;
+        }
+        public static List<TDbEntity> OrderQuery<TDbEntity>(this List<TDbEntity> data, ColumnSearchAggregateDTO columnSearchAggregateDTO)
+            where TDbEntity : DatabaseEntityModel
+        {
+            var value = data;
+            if (columnSearchAggregateDTO.Sorting != null && columnSearchAggregateDTO.Sorting.Any())
             {
                 value = value.GetSortedEntities<TDbEntity>(columnSearchAggregateDTO.Sorting);
             }

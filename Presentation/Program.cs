@@ -1,11 +1,11 @@
 using Application;
-using Domain.Const;
 using Infrastructure;
 using Infrastructure.Healthcheck.Response;
 using Infrastructure.SignalR;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Presentation;
+using Shared.Const;
 
 namespace WebApi
 {

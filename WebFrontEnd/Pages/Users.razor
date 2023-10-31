@@ -79,7 +79,7 @@ else
     }
     private async Task GetData()
     {
-        _token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+        _token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
 
         
         var requestUserTypes = WebApiClient.Request<List<UserTypeDTO>, object>("/user/user-types", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });

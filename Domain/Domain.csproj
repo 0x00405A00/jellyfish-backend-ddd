@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Abstractions\" />
+    <Folder Include="Const\" />
     <Folder Include="Entities\Role\Exception\" />
     <Folder Include="Shared\" />
   </ItemGroup>

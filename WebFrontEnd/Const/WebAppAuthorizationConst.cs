@@ -1,6 +1,6 @@
 ﻿namespace WebFrontEnd.Const
 {
-    public static class AuthorizationConst
+    public static class WebAppAuthorizationConst
     {
         public struct BrowserLocalStorageItemKey
         {

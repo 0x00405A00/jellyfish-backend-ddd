@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "jmKAYcLdxz7NmDfVOwK+RF9nYsi4LkhnCTB/C43HswIP4h0VO9PAUDEfQzHgdbc1x63Xkqaw6sDXU/ogbBYlAQ==",
+  "dgSpecHash": "HFaZSj109IKEa27MfM0TISlgqe8uBQrmll7ajYgGk/7hsPfzah+suOmagd3RmlnJN5N4zy6FA36+t4U8hReXOg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\WebFrontEnd.csproj",
   "expectedPackageFiles": [
@@ -17,6 +17,11 @@
     "C:\\Users\\Mika\\.nuget\\packages\\microsoft.aspnetcore.signalr.client.core\\7.0.13\\microsoft.aspnetcore.signalr.client.core.7.0.13.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\microsoft.aspnetcore.signalr.common\\7.0.13\\microsoft.aspnetcore.signalr.common.7.0.13.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\microsoft.aspnetcore.signalr.protocols.json\\7.0.13\\microsoft.aspnetcore.signalr.protocols.json.7.0.13.nupkg.sha512",
+    "C:\\Users\\Mika\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.5\\microsoft.entityframeworkcore.7.0.5.nupkg.sha512",
+    "C:\\Users\\Mika\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.5\\microsoft.entityframeworkcore.abstractions.7.0.5.nupkg.sha512",
+    "C:\\Users\\Mika\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\7.0.5\\microsoft.entityframeworkcore.analyzers.7.0.5.nupkg.sha512",
+    "C:\\Users\\Mika\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\Mika\\.nuget\\packages\\microsoft.extensions.caching.memory\\7.0.0\\microsoft.extensions.caching.memory.7.0.0.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\microsoft.extensions.features\\7.0.13\\microsoft.extensions.features.7.0.13.nupkg.sha512",

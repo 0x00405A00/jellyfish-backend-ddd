@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using Shared.Const;
 using Shared.DataFilter.Infrastructure;
 using Shared.DataFilter.Presentation;
 using System.Text.Json;
@@ -12,7 +13,7 @@ namespace Presentation.Abstractions
             string uuidStr = null;
             try
             {
-                var userUuid = context.User.Claims.FirstOrDefault(x => x.Type == Domain.Const.AuthorizationConst.Claims.ClaimTypeUserUuid);
+                var userUuid = context.User.Claims.FirstOrDefault(x => x.Type == AuthorizationConst.Claims.ClaimTypeUserUuid);
                 uuidStr = userUuid != null ? userUuid.Value :   string.Empty;
             }
             catch

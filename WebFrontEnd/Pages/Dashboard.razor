@@ -6,8 +6,10 @@
 @inject SignalRClient SignalRClient
 @inject IJSRuntime JsRuntime
 @inject IConfiguration Configuration
+@inject LogoutBackgroundService LogoutBackgroundService
 
 <h3>Dashboard</h3>
+<h3>Uhrzeit: @CurTime.ToLongTimeString()</h3>
 <div class="d-flex flex-row">
     <div class="d-flex flex-column">
 
@@ -41,7 +43,7 @@
 
 
 @code {
-
+    private DateTime CurTime = DateTime.Now;
     private CancellationTokenSource cancellationToken = new();
     public List<MessageDTO> Messages = new List<MessageDTO>();
     public List<UserDTO> UsersList = new List<UserDTO>();
@@ -94,12 +96,22 @@
             }
 
             await GetData();
+            LogoutBackgroundService.OnRerenderRequested += RequestRerender;
             StateHasChanged();
         }
     }
+    private void RequestRerender()
+    {
+        InvokeAsync(()=>
+        {
+
+            CurTime = DateTime.Now;
+            StateHasChanged(); // Dies löst einen Rerender der Komponente aus
+        });
+    }
     private async Task GetData()
     {
-        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
         var requestUsers = WebApiClient.Request<List<UserDTO>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
 
 
@@ -108,8 +120,8 @@
         {
             UsersList = responseUsers.ApiResponseDeserialized;
             var onlyRegisteredAndNotActivated = UsersList.Where(x => x.CreatedTime.Value.Year == DateTime.Now.Year && x.ActivationDateTime==null).Select(x => x.CreatedTime).GroupBy(x => x.Value.Month);
-            var newFullyRegisteredAccountThisYearCounts = UsersList.Where(x => x.ActivationDateTime.Value.Year == DateTime.Now.Year).Select(x => x.ActivationDateTime).GroupBy(x => x.Value.Month);
-            var fullyRegisteredAccountPreYearDecCount = UsersList.Where(x => x.ActivationDateTime.Value.Year == DateTime.Now.Year - 1 && x.ActivationDateTime.Value.Month == 12).Select(x => x.ActivationDateTime).Count();
+            var newFullyRegisteredAccountThisYearCounts = UsersList.Where(x => x.ActivationDateTime != null && x.ActivationDateTime.Value.Year == DateTime.Now.Year).Select(x => x.ActivationDateTime).GroupBy(x => x.Value.Month);
+            var fullyRegisteredAccountPreYearDecCount = UsersList.Where(x => x.ActivationDateTime != null&&x.ActivationDateTime.Value.Year == DateTime.Now.Year - 1 && x.ActivationDateTime.Value.Month == 12).Select(x => x.ActivationDateTime).Count();
             foreach (var statistic in newFullyRegisteredAccountThisYearCounts)
             {
                 int preYear = DateTime.Now.Year - 1;

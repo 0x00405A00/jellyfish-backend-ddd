@@ -730,6 +730,9 @@
         }
       },
       "Shared/1.0.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "7.0.10"
+        },
         "runtime": {
           "Shared.dll": {}
         }

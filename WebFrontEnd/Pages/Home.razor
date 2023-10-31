@@ -4,7 +4,18 @@
 @inject ILocalStorageService LocalStorageService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime;
-
+<CascadingAuthenticationState>
+<AuthorizeView Policy="Admin">
+    <Authorized>
+        <!-- Dieser Inhalt wird nur angezeigt, wenn der Benutzer autorisiert ist -->
+        <p>Nur Administratoren haben Zugriff auf diese Seite.</p>
+    </Authorized>
+    <NotAuthorized>
+        <!-- Dieser Inhalt wird angezeigt, wenn der Benutzer nicht autorisiert ist -->
+        <p>Sie haben keine Berechtigung, diese Seite anzuzeigen.</p>
+    </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
 <MudTimeline>
     <MudVirtualize Items="@UsersList" T="UserDTO" OverscanCount="10">
         <MudTimelineItem Color="MudBlazor.Color.Info" Size="Size.Small">
@@ -58,7 +69,7 @@
     private async Task GetData()
     {
 
-        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
         var response = await WebApiClient.Request<List<UserDTO>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
         if (response.IsSuccess)
         {

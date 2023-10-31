@@ -1,6 +1,5 @@
-﻿using Shared.DataFilter.Infrastructure;
-using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore;
+using Shared.DataFilter.Infrastructure;
 
 namespace Shared.DataFilter
 {
@@ -22,29 +21,36 @@ namespace Shared.DataFilter
             }
             return query;
         }
-        public static IQueryable<T> GetSortedEntities<T>(this IQueryable<T> query, List<ColumnSorting> sortings)
+        public static List<T> GetSortedEntities<T>(this List<T> data, List<ColumnSorting> sortings)
         {
+
+            var queryAsList = data;
+
+            return OrderData(queryAsList,sortings);
+        }
+        public static List<T> OrderData<T>(List<T> queryAsList, List<ColumnSorting> sortings)
+        {
+
             foreach (var sorting in sortings)
             {
                 if (!string.IsNullOrEmpty(sorting.field))
                 {
-                    var property = typeof(T).GetProperty(sorting.field);
+                    var propertyInfo = typeof(T).GetProperty(sorting.field);
 
-                    if (property != null)
+                    if (propertyInfo != null)
                     {
                         if (sorting.desc)
                         {
-                            query = query.OrderByDescending(e => property.GetValue(e, null));
+                            queryAsList = queryAsList.OrderByDescending(e => propertyInfo.GetValue(e, null)).ToList();
                         }
                         else
                         {
-                            query = query.OrderBy(e => property.GetValue(e, null));
+                            queryAsList = queryAsList.OrderBy(e => propertyInfo.GetValue(e, null)).ToList();
                         }
                     }
                 }
             }
-
-            return query;
+            return queryAsList;
         }
     }
 }

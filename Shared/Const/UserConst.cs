@@ -1,4 +1,4 @@
-﻿namespace Domain.Const
+﻿namespace Shared.Const
 {
     public struct UserConst
     {

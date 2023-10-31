@@ -55,3 +55,5 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Mi
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\MudBlazor.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\scopedcss\Pages\Dashboard.razor.rz.scp.css
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\scopedcss\SharedComponents\ManageUserDialog.razor.rz.scp.css
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll

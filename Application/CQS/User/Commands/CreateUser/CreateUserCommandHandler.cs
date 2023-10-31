@@ -1,10 +1,10 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
-using Domain.Const;
 using Domain.Exceptions;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
+using Shared.Const;
 using Shared.DataTransferObject;
 
 namespace Application.CQS.User.Commands.CreateUser

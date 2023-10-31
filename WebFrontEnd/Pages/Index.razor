@@ -78,7 +78,7 @@ Welcome to your new app.
 {
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
         if (token!=null && !token.IsTokenExpired)
         {
             NavigationManager.NavigateTo(RouteConst.Routes.DashBoard);

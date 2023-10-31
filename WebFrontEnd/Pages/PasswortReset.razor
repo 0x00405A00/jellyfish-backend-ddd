@@ -52,7 +52,7 @@
         var response = await WebApiClient.ResetPassword(PasswordResetDTO, cancellationToken.Token);
         if(response.IsSuccess)
         {
-            await LocalStorageService.SetDeserializedJsonItemFromKey(AuthorizationConst.BrowserLocalStorageItemKey.Authorization,response);
+            await LocalStorageService.SetDeserializedJsonItemFromKey(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization, response);
             NavigationManager.NavigateTo("/home");
         }
     }

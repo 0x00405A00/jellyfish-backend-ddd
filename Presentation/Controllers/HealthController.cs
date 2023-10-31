@@ -1,9 +1,9 @@
 ﻿using Application.CQS.Mail.Queries.GetMails;
-using Domain.Const;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Shared.Const;
 using System.Net;
 
 namespace Presentation.Controllers

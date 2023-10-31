@@ -1,9 +1,9 @@
 using Application.CQS.Role.Commands.CreateRole;
-using Domain.Const;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Abstractions;
+using Shared.Const;
 using Shared.DataTransferObject;
 using System.Net.Mime;
 using WebApi.Abstractions;

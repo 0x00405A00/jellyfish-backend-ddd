@@ -1,8 +1,8 @@
-﻿using Domain.Const;
-using Domain.Entities.User.Event;
+﻿using Domain.Entities.User.Event;
 using Domain.Entities.User.Exception;
 using Domain.Primitives;
 using Domain.ValueObjects;
+using Shared.Const;
 using System.Data;
 using System.Text;
 using System.Text.RegularExpressions;
