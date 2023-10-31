@@ -10,6 +10,7 @@ using Application.CQS.User.Commands.RegisterUser.Activation;
 using Application.CQS.User.Commands.RegisterUser.Register;
 using Application.CQS.User.Commands.UpdateUser;
 using Application.CQS.User.Queries.GetUserById;
+using Domain.Entities.User;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,7 @@ using Shared.Const;
 using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
 using Shared.DataTransferObject.Messenger;
+using System;
 using System.Net.Mime;
 using WebApi.Abstractions;
 
@@ -88,59 +90,6 @@ namespace Presentation.Controllers.Api.v1
         public async Task<IActionResult> GetUserTypes(CancellationToken cancellationToken)
         {
             var command = new Application.CQS.User.Queries.GetUserType.GetUserTypeQuery();
-
-            var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
-        }
-
-        [HttpPost()]
-        [Consumes(MediaTypeNames.Application.Json)]
-        [Produces(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> CreateUser([FromBody] UserDTO userDto, CancellationToken cancellationToken)
-        {
-            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new CreateUserCommand(userUuid,userDto.UserName, userDto.Password, userDto.Password, userDto.FirstName, userDto.LastName, userDto.Email, userDto.Phone, (DateTime)userDto.DateOfBirth);
-
-            var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
-        }
-
-        [HttpGet("{guid}")]
-        [Consumes(MediaTypeNames.Application.Json)]
-        [Produces(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> GetUser(Guid guid, CancellationToken cancellationToken)
-        {
-            var command = new Application.CQS.User.Queries.GetUserById.GetUserByIdQuery(guid);
-
-            var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
-        }
-
-        [HttpPut("{userId}")]
-        [Consumes(MediaTypeNames.Application.Json)]
-        [Produces(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> UpdateUser(Guid userId, [FromBody] UserDTO userDto, CancellationToken cancellationToken)
-        {
-            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new UpdateUserCommand(userId,
-                                                userDto.UserName,
-                                                userDto.Password,
-                                                userDto.PasswordConfirm,
-                                                userDto.FirstName,
-                                                userDto.LastName,
-                                                userDto.Email,
-                                                userDto.Phone,
-                                                userDto.DateOfBirth);
-
-            var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
-        }
-        [HttpDelete("{userId}")]
-        [Produces(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> DeleteUser(Guid userId, CancellationToken cancellationToken)
-        {
-            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new DeleteUserCommand(userUuid, userId);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
@@ -229,14 +178,21 @@ namespace Presentation.Controllers.Api.v1
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
-        public override Task<IActionResult> Create([FromBody] UserDTO model, CancellationToken cancellationToken)
+        public override async Task<IActionResult> Create([FromBody] UserDTO userDto, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var command = new CreateUserCommand(userUuid, userDto.UserName, userDto.Password, userDto.Password, userDto.FirstName, userDto.LastName, userDto.Email, userDto.Phone, (DateTime)userDto.DateOfBirth);
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
-        public override Task<IActionResult> Read(Guid id, CancellationToken cancellationToken)
+        public override async Task<IActionResult> Read(Guid id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var command = new Application.CQS.User.Queries.GetUserById.GetUserByIdQuery(id);
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
         public override async Task<IActionResult> ReadAll([FromQuery] SearchParams? searchParams,CancellationToken cancellationToken)
@@ -247,14 +203,30 @@ namespace Presentation.Controllers.Api.v1
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
-        public override Task<IActionResult> Update(Guid id, [FromBody] UserDTO model, CancellationToken cancellationToken)
+        public override async Task<IActionResult> Update(Guid id, [FromBody] UserDTO userDto, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var command = new UpdateUserCommand(id,
+                                                userDto.UserName,
+                                                userDto.Password,
+                                                userDto.PasswordConfirm,
+                                                userDto.FirstName,
+                                                userDto.LastName,
+                                                userDto.Email,
+                                                userDto.Phone,
+                                                userDto.DateOfBirth);
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
 
-        public override Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+        public override async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var command = new DeleteUserCommand(userUuid, id);
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
     }
 }
