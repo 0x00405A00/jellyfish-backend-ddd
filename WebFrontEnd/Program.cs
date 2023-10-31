@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
 using RestSharp;
 using Shared.Const;
+using WebFrontEnd.Authentification;
 using WebFrontEnd.BackgroundService;
+using WebFrontEnd.Service.Authentification;
 using WebFrontEnd.Service.Backend.Api;
 using WebFrontEnd.Service.Backend.SignalR;
 using WebFrontEnd.Service.WebStorage.LocalStorage;
@@ -13,11 +17,24 @@ public class Program
 
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddMudServices();
+        builder.Services.AddSingleton<ISystemClock, SystemClock>();
         builder.Services.AddScoped<ILocalStorageService,LocalStorageService>();
+        var sp = builder.Services.BuildServiceProvider();
+        var configuration = sp.GetService<IConfiguration>();
+
+        var infrastructureApiSection = configuration.GetSection("Infrastructure:Api");
+        var apiBaseUrl = infrastructureApiSection.GetValue<string>("BaseUrl");
+        builder.Services.AddScoped(sp => new RestClient(new Uri(apiBaseUrl)));
+        builder.Services.AddScoped<WebApiRestClient>();
+        builder.Services.AddScoped<SignalRClient>();
+
         // Add services to the container.
         builder.Services.AddRazorPages();
         builder.Services.AddServerSideBlazor();
-        builder.Services.AddAuthorization(options =>
+
+        builder.Services.AddOptions();
+        builder.Services.AddScoped<WebFrontEnd.Service.Authentification.IAuthentificationService, WebFrontEnd.Service.Authentification.AuthentificationService>();    
+        builder.Services.AddAuthorizationCore(options =>
         {
             //User Policy: Any user with the role root
             options.AddPolicy(AuthorizationConst.Policy.RootPolicy, policy =>
@@ -29,15 +46,9 @@ public class Program
             options.AddPolicy(AuthorizationConst.Policy.UserPolicy, policy =>
                               policy.RequireClaim(AuthorizationConst.Claims.ClaimTypeIsActivatedUser, bool.TrueString));
         });
+        builder.Services.AddScoped<CustomAuthentificationStateProvider>();
+        builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomAuthentificationStateProvider>());
 
-        var sp = builder.Services.BuildServiceProvider();
-        var configuration = sp.GetService<IConfiguration>();
-
-        var infrastructureApiSection = configuration.GetSection("Infrastructure:Api");
-        var apiBaseUrl = infrastructureApiSection.GetValue<string>("BaseUrl");
-        builder.Services.AddScoped(sp => new RestClient(new Uri(apiBaseUrl)));
-        builder.Services.AddScoped<WebApiRestClient>();
-        builder.Services.AddScoped<SignalRClient>();
 
         builder.Services.AddSingleton<LogoutBackgroundService>();
         builder.Services.AddHostedService< LogoutBackgroundService>(p=>p.GetService<LogoutBackgroundService>());
@@ -55,7 +66,8 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseStaticFiles();
-
+        app.UseAuthentication();
+        app.UseAuthorization();
         app.UseRouting();
 
         app.MapBlazorHub();

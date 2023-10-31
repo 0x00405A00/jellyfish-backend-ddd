@@ -760,6 +760,7 @@
       },
       "Shared/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.11",
           "Microsoft.EntityFrameworkCore": "7.0.10"
         },
         "runtime": {

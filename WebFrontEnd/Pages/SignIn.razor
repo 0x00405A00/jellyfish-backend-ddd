@@ -1,8 +1,6 @@
 ﻿@attribute [Route(RouteConst.Routes.SignIn)]
-@using Microsoft.AspNetCore.Http
-@inject WebApiRestClient WebApiClient
-@inject ILocalStorageService LocalStorageService
 @inject NavigationManager NavigationManager
+@inject CustomAuthentificationStateProvider AuthentificationService
 
 <PageTitle>SignIn</PageTitle>
 
@@ -62,8 +60,8 @@
     {
         if(firstRender)
         {
-            bool hasLogin = await LocalStorageService.CheckIfValidTokenExists();
-            if(hasLogin)
+            var token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
+            if (token.IsAuthentificated)
             {
                 NavigationManager.NavigateTo("/");
             }
@@ -71,17 +69,20 @@
     }
     public async Task OnSubmitLogin()
     {
-        var response = await WebApiClient.Authentificate(UserLoginDTO.Email, UserLoginDTO.Password, cancellationToken.Token);
-        if(response.Token!=null)
+        var response = await AuthentificationService.Login(UserLoginDTO.Email,UserLoginDTO.Password,cancellationToken.Token);
+        if(response)
         {
-            await LocalStorageService.SetDeserializedJsonItemFromKey(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization, response);
             NavigationManager.NavigateTo("/dashboard");
         }
     }
     public async Task OnSubmitRegister()
     {
         RegisterUserDTO.DateOfBirth = RegisterDateTime;
-        var response = await WebApiClient.Register(RegisterUserDTO, cancellationToken.Token);
+        var response = await AuthentificationService.Register(RegisterUserDTO, cancellationToken.Token);
+        if(response)
+        {
+            NavigationManager.NavigateTo("/register-success");//page welche info über erfolgreiche registrierung gibt und infos über das weitere vorgehen
+        }
     }
 }
 @functions {

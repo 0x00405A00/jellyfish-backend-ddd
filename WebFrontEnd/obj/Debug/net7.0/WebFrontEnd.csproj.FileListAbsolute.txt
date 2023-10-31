@@ -57,3 +57,10 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\sc
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\scopedcss\SharedComponents\ManageUserDialog.razor.rz.scp.css
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll

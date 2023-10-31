@@ -1,10 +1,8 @@
 ﻿@inherits LayoutComponentBase
-@inject WebApiRestClient WebApiClient
-@inject ILocalStorageService LocalStorageService
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
-@inject WebApiRestClient WebApiClient
 @inject IConfiguration Configuration
+@inject CustomAuthentificationStateProvider AuthentificationService
 
 <PageTitle>Jellyfish</PageTitle>
 
@@ -163,12 +161,11 @@
                 TextPrimary = "#000000",
                 TextSecondary = "#000000",
                 White = "#FFFFFF",
-                
+
             },
         };
 
 
-    public UserLoginDTO UserLoginDTO = new UserLoginDTO();
     private bool ProfileButtonExpand = false;
     private bool IsLoggedIn = false;
     private CancellationTokenSource cancellationToken = new();
@@ -179,7 +176,7 @@
         {
 
         }
-        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+        var token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
 
         IsLoggedIn = token!= null&&!token.IsTokenExpired;
 
@@ -197,16 +194,11 @@
 
         if(!result.Cancelled)
         {
-
-            var infrastructureApiSection = Configuration.GetSection("Infrastructure:Api");
-            var logoutEndpoint = infrastructureApiSection.GetValue<string>("LogoutEndpoint");
-            var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
-
-            var logoutResponse = await WebApiClient.Request<object>(logoutEndpoint, RestSharp.Method.Post, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
-
-            await LocalStorageService.RemoveItem(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
-
-            NavigationManager.NavigateTo(RouteConst.Routes.SignIn);
+            var response = await AuthentificationService.Logout(cancellationToken.Token);
+            if(response)
+            {
+                NavigationManager.NavigateTo(RouteConst.Routes.SignIn);
+            }
         }
     }
     public Task ProfileButtonClick()

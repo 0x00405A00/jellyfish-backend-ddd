@@ -5,6 +5,7 @@ using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.Authentification;
 using Microsoft.Extensions.Configuration;
+using Shared.Authentification.Jwt;
 using Shared.Const;
 using Shared.DataTransferObject;
 using System.IdentityModel.Tokens.Jwt;

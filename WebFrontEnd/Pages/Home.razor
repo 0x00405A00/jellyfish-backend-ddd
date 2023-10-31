@@ -4,18 +4,6 @@
 @inject ILocalStorageService LocalStorageService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime;
-<CascadingAuthenticationState>
-<AuthorizeView Policy="Admin">
-    <Authorized>
-        <!-- Dieser Inhalt wird nur angezeigt, wenn der Benutzer autorisiert ist -->
-        <p>Nur Administratoren haben Zugriff auf diese Seite.</p>
-    </Authorized>
-    <NotAuthorized>
-        <!-- Dieser Inhalt wird angezeigt, wenn der Benutzer nicht autorisiert ist -->
-        <p>Sie haben keine Berechtigung, diese Seite anzuzeigen.</p>
-    </NotAuthorized>
-    </AuthorizeView>
-</CascadingAuthenticationState>
 <MudTimeline>
     <MudVirtualize Items="@UsersList" T="UserDTO" OverscanCount="10">
         <MudTimelineItem Color="MudBlazor.Color.Info" Size="Size.Small">
@@ -51,12 +39,30 @@
 
 @code {
 
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationState { get; set; }
+
     private CancellationTokenSource cancellationToken = new();
     public List<UserDTO> UsersList=new List<UserDTO>();
 
 
     public Home()
     {
+    }
+    private string authMessage = "The user is NOT authenticated.";
+    protected override async Task OnInitializedAsync()
+    {
+        if (authenticationState is not null)
+        {
+            var authState = await authenticationState;
+            var user = authState?.User;
+
+            if (user?.Identity is not null && user.Identity.IsAuthenticated)
+            {
+                authMessage = $"{user.Identity.Name} is authenticated.";
+            }
+        }
+
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

@@ -5,42 +5,52 @@
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
 
-<mud>@UsersList.Count Users</mud>
-<MudPaper Elevation="25">
-    <MudToolBar>
-        <MudIconButton Icon="@Icons.Material.Outlined.Add" OnClick="AddUser"/>
-        <MudIconButton Icon="@Icons.Material.Outlined.Edit" Disabled=@CantExecByMultipleSelection OnClick="EditUser" />
-        <MudIconButton Icon="@Icons.Material.Outlined.Remove" Disabled=@CanExecWhenMinOneUserIsSelected OnClick="RemoveUser" />
-        <MudIconButton Icon="@Icons.Material.Outlined.Password" Disabled=@CanExecWhenMinOneUserIsSelected OnClick="ResetPassword" />
-    </MudToolBar>
-</MudPaper>
-@if (UsersList!=null&&UsersList.Count>0)
-{
-    <MudDataGrid T="UserDTO" Items=@UsersList Filterable="false" RowClick=RowClicked SelectedItemsChanged="@SelectedItemsChanged" MultiSelection SelectedItems=@SelectedItems SortMode="@SortMode.Multiple" Groupable="false">
-        <Columns>
-            <SelectColumn T="UserDTO" />
-            <PropertyColumn Property="x => x.UserName" />
-            <PropertyColumn Property="x => x.FirstName" />
-            <PropertyColumn Property="x => x.LastName" />
-            <PropertyColumn Property="x => x.Email" />
-            <PropertyColumn Property="x => x.DateOfBirth" Format="dd.MM.yyyy" />
-            <PropertyColumn Property="x => x.Phone" />
-            <PropertyColumn Property="x => x.CreatedTime" Format="dd.MM.yyyy" />
-             <PropertyColumn Property="x => x.LastModifiedTime" Format="dd.MM.yyyy" />
-             <PropertyColumn Property="x => UserTypesList.Where(y=>y.Uuid==x.UserTypeUuid).First().Name" />
-             <PropertyColumn Property="x => x.RoleStr" />
-            <TemplateColumn>
-                <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@MudBlazor.Color.Primary">Edit</MudButton>
-            </TemplateColumn>
-        </Columns>
-    </MudDataGrid>
-}
-else
-{
-    <MudSkeleton />
-    <MudSkeleton Animation="Animation.False" />
-    <MudSkeleton Animation="Animation.Wave" />
-}
+<CascadingAuthenticationState>
+    <AuthorizeView Policy="Admin">
+        <Authorized>
+            <mud>@UsersList.Count Users</mud>
+            <MudPaper Elevation="25">
+                <MudToolBar>
+                    <MudIconButton Icon="@Icons.Material.Outlined.Add" OnClick="AddUser" />
+                    <MudIconButton Icon="@Icons.Material.Outlined.Edit" Disabled=@CantExecByMultipleSelection OnClick="EditUser" />
+                    <MudIconButton Icon="@Icons.Material.Outlined.Remove" Disabled=@CanExecWhenMinOneUserIsSelected OnClick="RemoveUser" />
+                    <MudIconButton Icon="@Icons.Material.Outlined.Password" Disabled=@CanExecWhenMinOneUserIsSelected OnClick="ResetPassword" />
+                </MudToolBar>
+            </MudPaper>
+            @if (UsersList != null && UsersList.Count > 0)
+            {
+                <MudDataGrid T="UserDTO" Items=@UsersList Filterable="false" RowClick=RowClicked SelectedItemsChanged="@SelectedItemsChanged" MultiSelection SelectedItems=@SelectedItems SortMode="@SortMode.Multiple" Groupable="false">
+                     <Columns>
+                         <SelectColumn T="UserDTO" />
+                         <PropertyColumn Property="x => x.UserName" />
+                         <PropertyColumn Property="x => x.FirstName" />
+                         <PropertyColumn Property="x => x.LastName" />
+                         <PropertyColumn Property="x => x.Email" />
+                         <PropertyColumn Property="x => x.DateOfBirth" Format="dd.MM.yyyy" />
+                         <PropertyColumn Property="x => x.Phone" />
+                         <PropertyColumn Property="x => x.CreatedTime" Format="dd.MM.yyyy" />
+                         <PropertyColumn Property="x => x.LastModifiedTime" Format="dd.MM.yyyy" />
+                         <PropertyColumn Property="x => UserTypesList.Where(y=>y.Uuid==x.UserTypeUuid).First().Name" />
+                         <PropertyColumn Property="x => x.RoleStr" />
+                         <TemplateColumn>
+                             <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@MudBlazor.Color.Primary">Edit</MudButton>
+                         </TemplateColumn>
+                     </Columns>
+                 </MudDataGrid>
+            }
+            else
+            {
+                <MudSkeleton />
+                <MudSkeleton Animation="Animation.False" />
+                <MudSkeleton Animation="Animation.Wave" />
+            }
+            
+        </Authorized>
+        <NotAuthorized>
+            <p>Sie haben keine Berechtigung, diese Seite anzuzeigen.</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
 
 @code {
     private AuthDTO _token;
@@ -51,7 +61,7 @@ else
     public List<RoleDTO> RoleList = new List<RoleDTO>();
 
     public bool HasMoreThanOneUserSelected => SelectedItems != null && SelectedItems.Count > 1;
-    public bool CantExecByMultipleSelection => SelectedItems != null && SelectedItems.Count !=1 ;
+    public bool CantExecByMultipleSelection => SelectedItems != null && SelectedItems.Count != 1;
     public bool CanExecWhenMinOneUserIsSelected => !(SelectedItems != null && SelectedItems.Count >= 1);
 
     public Users()
@@ -60,7 +70,7 @@ else
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if(firstRender)
+        if (firstRender)
         {
             await GetData();
             StateHasChanged();
@@ -81,7 +91,7 @@ else
     {
         _token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
 
-        
+
         var requestUserTypes = WebApiClient.Request<List<UserTypeDTO>, object>("/user/user-types", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
         var requestRoles = WebApiClient.Request<List<RoleDTO>, object>("/role", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
         var requestUsers = WebApiClient.Request<List<UserDTO>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
@@ -117,17 +127,17 @@ else
             { x => x.UserTypes, UserTypesList.ToHashSet() },
             { x => x.Roles, RoleList.ToHashSet() },
             { x => x.Text, "Benutzer hinzufügen" }
-        };
+            };
         var dialog = await DialogService.ShowAsync<ManageUserDialog>("Benutzer hinzufügen", parameters);
         var result = await dialog.Result;
-        if(!result.Cancelled)
+        if (!result.Cancelled)
         {
             var addUserRequest = await WebApiClient.Request<UserDTO, UserDTO>("/user", RestSharp.Method.Post, cancellationToken.Token, (UserDTO)result.Data, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
             if (addUserRequest.IsSuccess)
             {
                 UsersList.Add((UserDTO)result.Data);
             }
-            StateHasChanged();   
+            StateHasChanged();
         }
 
     }
@@ -141,16 +151,16 @@ else
             { x => x.UserTypes, UserTypesList.ToHashSet() },
             { x => x.Roles, RoleList.ToHashSet() },
             { x => x.Text, "Benutzer editieren" }
-        };
+            };
         var dialog = await DialogService.ShowAsync<ManageUserDialog>("Benutzer editieren", parameters);
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
-            var url = "/user/"+user.Uuid+"";
+            var url = "/user/" + user.Uuid + "";
             var updateUserRequest = await WebApiClient.Request<UserDTO, UserDTO>(url, RestSharp.Method.Put, cancellationToken.Token, (UserDTO)result.Data, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
             if (updateUserRequest.IsSuccess)
             {
-                UsersList[index]=((UserDTO)result.Data);
+                UsersList[index] = ((UserDTO)result.Data);
             }
             StateHasChanged();
         }
@@ -161,13 +171,13 @@ else
         var options = new DialogOptions { CloseOnEscapeKey = true };
         var parameters = new DialogParameters<ChallengeDialog> {
             { x => x.Text,"Möchtest du "+(HasMoreThanOneUserSelected?("'"+SelectedItems.Count+"' User"):("'"+SelectedItems.First().UserName+"'"))+" löschen?" }
-        };
+            };
         var dialog = await DialogService.ShowAsync<ChallengeDialog>("Benutzer löschen", parameters);
         var result = await dialog.Result;
-        if(!result.Cancelled)
+        if (!result.Cancelled)
         {
             List<Task<WebApiHttpRequestResponseModel<Guid>>> tasks = new List<Task<WebApiHttpRequestResponseModel<Guid>>>();
-            foreach(var user in SelectedItems)
+            foreach (var user in SelectedItems)
             {
                 var url = "/user/" + user.Uuid + "";
                 var deleteUserRequest = await WebApiClient.Request<Guid, object>(url, RestSharp.Method.Delete, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
@@ -183,3 +193,5 @@ else
         }
     }
 }
+
+

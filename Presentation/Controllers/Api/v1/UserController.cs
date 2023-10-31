@@ -10,7 +10,6 @@ using Application.CQS.User.Commands.RegisterUser.Activation;
 using Application.CQS.User.Commands.RegisterUser.Register;
 using Application.CQS.User.Commands.UpdateUser;
 using Application.CQS.User.Queries.GetUserById;
-using Domain.Entities.User;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +18,6 @@ using Shared.Const;
 using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
 using Shared.DataTransferObject.Messenger;
-using System;
 using System.Net.Mime;
 using WebApi.Abstractions;
 
