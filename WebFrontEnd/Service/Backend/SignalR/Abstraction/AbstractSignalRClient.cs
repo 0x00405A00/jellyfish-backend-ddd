@@ -15,6 +15,7 @@ namespace WebFrontEnd.Service.Backend.SignalR.Abstraction
         public Microsoft.AspNetCore.Http.Connections.HttpTransportType TransportType { get; private set; }
         public Microsoft.AspNetCore.Connections.TransferFormat TransferFormat { get; private set; }
         public EventHandler<string> HubConnectionReconnectedEvent { get; set; }
+        private bool disposedValue;
 
         public bool IsInit
         {
@@ -188,13 +189,38 @@ namespace WebFrontEnd.Service.Backend.SignalR.Abstraction
             }
         }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    CloseConnection();
+                    ConnectionBuilder = null;
+                    HubConnection = null;
+                    SignalRHubUrl = null;
+                    AccessTokenProviderAction = null;
+                    HubConnectionReconnectedEvent = null;
+                }
+
+                // TODO: Nicht verwaltete Ressourcen (nicht verwaltete Objekte) freigeben und Finalizer überschreiben
+                // TODO: Große Felder auf NULL setzen
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: Finalizer nur überschreiben, wenn "Dispose(bool disposing)" Code für die Freigabe nicht verwalteter Ressourcen enthält
+        // ~CustomAuthentificationStateProvider()
+        // {
+        //     // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
+        //     Dispose(disposing: false);
+        // }
+
         public void Dispose()
         {
-            if (!IsInit || !IsBuilded)
-            {
-                throw new InvalidOperationException("please initialize the handler correctly via method: " + nameof(Initialize) + " and " + nameof(BuildConnection) + "");
-            }
-            CloseConnection();
+            // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

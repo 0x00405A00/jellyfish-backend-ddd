@@ -7,10 +7,11 @@ using Shared.Authentification.Jwt;
 
 namespace WebFrontEnd.Authentification
 {
-    public class CustomAuthentificationStateProvider : AuthenticationStateProvider,IAuthentificationService
+    public class CustomAuthentificationStateProvider : AuthenticationStateProvider,IAuthentificationService,IDisposable
     {
         private readonly CancellationTokenSource tokenSource = new CancellationTokenSource();
         private readonly IAuthentificationService authentificationService;
+        private bool disposedValue;
 
         public CustomAuthentificationStateProvider(IAuthentificationService authentificationService)
         {
@@ -20,6 +21,10 @@ namespace WebFrontEnd.Authentification
         {
             var auth = await this.GetCurrentAuthentification(tokenSource.Token);
             var jwtDecoded = JwtHandler.DecodeJwt(auth.Token,null,null,null);
+            if (jwtDecoded == null) 
+            {
+                return new AuthenticationState(new ClaimsPrincipal());
+            }
             var identity = new ClaimsIdentity();
             try
             {
@@ -50,7 +55,6 @@ namespace WebFrontEnd.Authentification
         public async Task<AuthDTO> GetCurrentAuthentification(CancellationToken cancellationToken)
         {
             var result = await authentificationService.GetCurrentAuthentification(cancellationToken);
-            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
             return result;
         }
 
@@ -59,6 +63,35 @@ namespace WebFrontEnd.Authentification
             var result = await authentificationService.Register(registerUserDTO,cancellationToken);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
             return result;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: Verwalteten Zustand (verwaltete Objekte) bereinigen
+                }
+
+                // TODO: Nicht verwaltete Ressourcen (nicht verwaltete Objekte) freigeben und Finalizer überschreiben
+                // TODO: Große Felder auf NULL setzen
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: Finalizer nur überschreiben, wenn "Dispose(bool disposing)" Code für die Freigabe nicht verwalteter Ressourcen enthält
+        // ~CustomAuthentificationStateProvider()
+        // {
+        //     // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

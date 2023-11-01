@@ -1,11 +1,12 @@
-﻿using RestSharp;
+﻿using Microsoft.AspNetCore.Connections;
+using Microsoft.AspNetCore.SignalR.Client;
+using RestSharp;
 using Shared.DataTransferObject;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 
 namespace WebFrontEnd.Service.Backend.Api
 {
-    public class WebApiRestClient : AbstractRestClient
+    public class WebApiRestClient : AbstractRestClient,IDisposable
     {
         private bool _isInit;
         public AuthDTO CurrentWebApiSession = null;
@@ -17,12 +18,14 @@ namespace WebFrontEnd.Service.Backend.Api
         public string ConnectionTestEndpoint { get; private set; }
         public string RegistrationActivateEndpoint { get; private set; }
         public bool RefreshLogin { get; private set; }
-        public uint MaxRequestRetries { get; private set; } = 3;
+        public static uint MaxRequestRetries { get; private set; } = 3;
         public string User { get; private set; }
         public string Password { get; private set; }
         public string RegisterEndpoint { get; private set; }
         public string PasswordResetRequestDTOEndpoint { get; private set; }
         public string PasswordResetDataTransferModelEndpoint { get; private set; }
+        private bool disposedValue;
+
         public WebApiRestClient(IConfiguration configuration)
         {
             var infrastructureApiSection = configuration.GetSection("Infrastructure:Api");
@@ -317,6 +320,49 @@ namespace WebFrontEnd.Service.Backend.Api
                 }
             }
             return responseModel;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    CurrentWebApiSession = null;
+                    BaseUrl = null;
+                    LoginSessionEndpoint = null;
+                    LogoutSessionEndpoint = null;
+                    RefreshSessionEndpoint = null;
+                    ValidateSessionEndpoint = null;
+                    ConnectionTestEndpoint = null;
+                    RegistrationActivateEndpoint = null;
+                    RefreshLogin = false;
+                    MaxRequestRetries = 3;
+                    User = null;
+                    Password = null;
+                    RegisterEndpoint = null;
+                    PasswordResetRequestDTOEndpoint = null;
+                    PasswordResetDataTransferModelEndpoint = null;
+                }
+
+                // TODO: Nicht verwaltete Ressourcen (nicht verwaltete Objekte) freigeben und Finalizer überschreiben
+                // TODO: Große Felder auf NULL setzen
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: Finalizer nur überschreiben, wenn "Dispose(bool disposing)" Code für die Freigabe nicht verwalteter Ressourcen enthält
+        // ~CustomAuthentificationStateProvider()
+        // {
+        //     // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

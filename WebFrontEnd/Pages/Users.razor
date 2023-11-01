@@ -1,9 +1,9 @@
-﻿@attribute [Route(RouteConst.Routes.Users)]
-@using Microsoft.AspNetCore.Http
+﻿@implements IDisposable
+@attribute [Route(RouteConst.Routes.Users)]
 @inject WebApiRestClient WebApiClient
-@inject ILocalStorageService LocalStorageService
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
+@inject CustomAuthentificationStateProvider AuthentificationService
 
 <CascadingAuthenticationState>
     <AuthorizeView Policy="Admin">
@@ -53,6 +53,7 @@
 </CascadingAuthenticationState>
 
 @code {
+
     private AuthDTO _token;
     private HashSet<UserDTO> SelectedItems = new HashSet<UserDTO>();
     private CancellationTokenSource cancellationToken = new();
@@ -67,11 +68,32 @@
     public Users()
     {
     }
+    ~Users()
+    {
+    }
 
+    private void Dispose()
+    {
+        SelectedItems.Clear();
+        UsersList.Clear();
+        UserTypesList.Clear();
+        RoleList.Clear();
+        AuthentificationService.Dispose();
+        WebApiClient.Dispose();
+        _token = null;
+        cancellationToken?.Cancel();
+        GC.SuppressFinalize(this);
+    }
+    void IDisposable.Dispose()
+    {
+        Dispose();
+    }
+    
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
+            _token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
             await GetData();
             StateHasChanged();
         }
@@ -89,14 +111,12 @@
     }
     private async Task GetData()
     {
-        _token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
 
 
         var requestUserTypes = WebApiClient.Request<List<UserTypeDTO>, object>("/user/user-types", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
         var requestRoles = WebApiClient.Request<List<RoleDTO>, object>("/role", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
         var requestUsers = WebApiClient.Request<List<UserDTO>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
 
-        await Task.WhenAll(requestUserTypes, requestUsers, requestRoles);
 
         var responseUsers = await requestUsers;
         var responseUserTypes = await requestUserTypes;

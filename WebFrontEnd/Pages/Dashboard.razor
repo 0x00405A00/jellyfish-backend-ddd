@@ -1,12 +1,13 @@
-﻿@attribute [Route(RouteConst.Routes.DashBoard)]
+﻿@implements IDisposable
+@attribute [Route(RouteConst.Routes.DashBoard)]
 @using Microsoft.AspNetCore.Http
 @inject WebApiRestClient WebApiClient
-@inject ILocalStorageService LocalStorageService
 @inject NavigationManager NavigationManager
 @inject SignalRClient SignalRClient
 @inject IJSRuntime JsRuntime
 @inject IConfiguration Configuration
 @inject LogoutBackgroundService LogoutBackgroundService
+@inject CustomAuthentificationStateProvider AuthentificationService
 
 <h3>Dashboard</h3>
 <h3>Uhrzeit: @CurTime.ToLongTimeString()</h3>
@@ -70,23 +71,55 @@
     public Dashboard()
     {
     }
+    ~Dashboard()
+    {
+
+
+    }
+    private void Dispose()
+    {
+
+        NavigationManager.LocationChanged -= LocationChangedEvent;
+        LogoutBackgroundService.OnRerenderRequested -= RequestRerender;
+        cancellationToken.Cancel();
+        Series.Clear();
+        Series2.Clear();
+        Series3.Clear();
+        UsersList.Clear();
+        Messages.Clear();
+        MailQueue.Clear();
+        XAxisLastHours = null;
+        WebApiClient.Dispose();
+        AuthentificationService.Dispose();
+        if (SignalRClient != null)
+        {
+            SignalRClient.CloseConnection();
+            SignalRClient = null;
+        }
+        GC.SuppressFinalize(this);
+    }
+    void IDisposable.Dispose()
+    {
+        Dispose();
+    }
     protected override Task OnInitializedAsync()
     {
-        if (!SignalRClient.IsBuilded)
-        {
-            SignalRClient.BuildConnection();
-
-        }
-        if (SignalRClient.HubConnection.State != HubConnectionState.Connected)
-            SignalRClient.OpenConnection();
-
-        SignalRClient.HubConnection.On<List<MessageDTO>>(nameof(SignalRClient.ReceiveMessage), ReceiveMessage);
         return Task.CompletedTask;
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if(firstRender)
         {
+            if (!SignalRClient.IsBuilded)
+            {
+                SignalRClient.BuildConnection();
+
+            }
+            if (SignalRClient.HubConnection.State != HubConnectionState.Connected)
+                SignalRClient.OpenConnection();
+
+            SignalRClient.HubConnection.On<List<MessageDTO>>(nameof(SignalRClient.ReceiveMessage), ReceiveMessage);
+            NavigationManager.LocationChanged += LocationChangedEvent;
             for (int i = 0; i < XAxisLastHoursBarCount; i++)
             {
                 var dt = DateTime.Now;
@@ -100,18 +133,25 @@
             StateHasChanged();
         }
     }
+    private void LocationChangedEvent(object sender, LocationChangedEventArgs locationChangedEventArgs)
+    {
+
+        if (!locationChangedEventArgs.Location.EndsWith(RouteConst.Routes.DashBoard))
+        {
+            Dispose();
+        }
+    }
     private void RequestRerender()
     {
         InvokeAsync(()=>
         {
-
             CurTime = DateTime.Now;
             StateHasChanged(); // Dies löst einen Rerender der Komponente aus
         });
     }
     private async Task GetData()
     {
-        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+        var token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token) ;
         var requestUsers = WebApiClient.Request<List<UserDTO>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
 
 

@@ -6,8 +6,10 @@ using WebFrontEnd.Service.WebStorage.LocalStorage.Exception;
 
 namespace WebFrontEnd.Service.WebStorage.LocalStorage
 {
-    public class LocalStorageService : ILocalStorageService
+    public class LocalStorageService : ILocalStorageService,IDisposable
     {
+        private bool disposedValue;
+
         public IJSRuntime JsRuntime { get; }
 
 
@@ -105,6 +107,35 @@ namespace WebFrontEnd.Service.WebStorage.LocalStorage
             {
                 return false;
             }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+
+                }
+
+                // TODO: Nicht verwaltete Ressourcen (nicht verwaltete Objekte) freigeben und Finalizer überschreiben
+                // TODO: Große Felder auf NULL setzen
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: Finalizer nur überschreiben, wenn "Dispose(bool disposing)" Code für die Freigabe nicht verwalteter Ressourcen enthält
+        // ~LocalStorageService()
+        // {
+        //     // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

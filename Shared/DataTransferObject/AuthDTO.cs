@@ -18,6 +18,6 @@ namespace Shared.DataTransferObject
 
         public bool IsTokenExpired => TokenExpiresIn <= DateTime.Now;
         public bool IsRefreshTokenExpired => RefreshTokenExpiresIn <= DateTime.Now;
-        public bool IsAuthentificated => IsTokenExpired;
+        public bool IsAuthentificated => !IsTokenExpired;
     }
 }

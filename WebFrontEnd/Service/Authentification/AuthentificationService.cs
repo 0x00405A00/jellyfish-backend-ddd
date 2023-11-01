@@ -5,11 +5,12 @@ using WebFrontEnd.Service.WebStorage.LocalStorage;
 
 namespace WebFrontEnd.Service.Authentification
 {
-    public class AuthentificationService : IAuthentificationService
+    public class AuthentificationService : IAuthentificationService,IDisposable
     {
         private readonly IConfiguration configuration;
         private readonly WebApiRestClient webApiRestClient;
         private readonly ILocalStorageService localStorageService;
+        private bool disposedValue;
 
         public AuthentificationService(
             IConfiguration configuration,
@@ -69,6 +70,35 @@ namespace WebFrontEnd.Service.Authentification
                 return false;
             }
             return true;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    webApiRestClient.Dispose();
+                }
+
+                // TODO: Nicht verwaltete Ressourcen (nicht verwaltete Objekte) freigeben und Finalizer überschreiben
+                // TODO: Große Felder auf NULL setzen
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: Finalizer nur überschreiben, wenn "Dispose(bool disposing)" Code für die Freigabe nicht verwalteter Ressourcen enthält
+        // ~AuthentificationService()
+        // {
+        //     // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

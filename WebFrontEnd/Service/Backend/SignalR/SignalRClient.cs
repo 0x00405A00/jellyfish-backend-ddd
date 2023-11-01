@@ -10,7 +10,7 @@ using WebFrontEnd.Const;
 namespace WebFrontEnd.Service.Backend.SignalR
 {
 
-    public class SignalRClient : AbstractSignalRClient, IMessengerClient
+    public class SignalRClient : AbstractSignalRClient, IMessengerClient,IDisposable
     {
         public static Microsoft.AspNetCore.Connections.TransferFormat SignalRTransferFormat = Microsoft.AspNetCore.Connections.TransferFormat.Text;
         public static Microsoft.AspNetCore.Http.Connections.HttpTransportType SignalRTransportProtocol = Microsoft.AspNetCore.Http.Connections.HttpTransportType.WebSockets;

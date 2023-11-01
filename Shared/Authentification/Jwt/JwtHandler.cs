@@ -26,6 +26,10 @@ namespace Shared.Authentification.Jwt
         }
         public static JwtSecurityToken DecodeJwt(string token, string symetricPrivateKey, string issuer, string audience)
         {
+            if(String.IsNullOrEmpty(token))
+            {
+                return null;
+            }
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             if(symetricPrivateKey!=null)
             {
