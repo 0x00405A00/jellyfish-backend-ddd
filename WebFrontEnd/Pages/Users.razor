@@ -4,6 +4,7 @@
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
 @inject CustomAuthentificationStateProvider AuthentificationService
+@inject DialogHandler DialogHandler
 
 <CascadingAuthenticationState>
     <AuthorizeView Policy="Admin">
@@ -74,21 +75,19 @@
 
     private void Dispose()
     {
+        cancellationToken?.Cancel();
         SelectedItems.Clear();
         UsersList.Clear();
         UserTypesList.Clear();
         RoleList.Clear();
-        AuthentificationService.Dispose();
-        WebApiClient.Dispose();
         _token = null;
-        cancellationToken?.Cancel();
         GC.SuppressFinalize(this);
     }
     void IDisposable.Dispose()
     {
         Dispose();
     }
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -141,15 +140,7 @@
     public async Task AddUser()
     {
 
-        var options = new DialogOptions { CloseOnEscapeKey = true };
-        var parameters = new DialogParameters<ManageUserDialog> {
-            { x => x.User, new UserDTO() },
-            { x => x.UserTypes, UserTypesList.ToHashSet() },
-            { x => x.Roles, RoleList.ToHashSet() },
-            { x => x.Text, "Benutzer hinzufügen" }
-            };
-        var dialog = await DialogService.ShowAsync<ManageUserDialog>("Benutzer hinzufügen", parameters);
-        var result = await dialog.Result;
+        var result = await DialogHandler.ShowUserManagementDialog(DialogHandler.MANAGEMENT_TYPE.ADD, null, RoleList, UserTypesList);
         if (!result.Cancelled)
         {
             var addUserRequest = await WebApiClient.Request<UserDTO, UserDTO>("/user", RestSharp.Method.Post, cancellationToken.Token, (UserDTO)result.Data, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
@@ -165,15 +156,8 @@
     {
         var user = SelectedItems.First();
         int index = UsersList.IndexOf(user);
-        var options = new DialogOptions { CloseOnEscapeKey = true };
-        var parameters = new DialogParameters<ManageUserDialog> {
-            { x => x.User, user },
-            { x => x.UserTypes, UserTypesList.ToHashSet() },
-            { x => x.Roles, RoleList.ToHashSet() },
-            { x => x.Text, "Benutzer editieren" }
-            };
-        var dialog = await DialogService.ShowAsync<ManageUserDialog>("Benutzer editieren", parameters);
-        var result = await dialog.Result;
+
+        var result = await DialogHandler.ShowUserManagementDialog(DialogHandler.MANAGEMENT_TYPE.EDIT, user, RoleList, UserTypesList);
         if (!result.Cancelled)
         {
             var url = "/user/" + user.Uuid + "";

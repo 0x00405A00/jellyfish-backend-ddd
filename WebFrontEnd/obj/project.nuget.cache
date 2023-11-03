@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "eXDEPWpFTeE1r3vGdfK902JHeoaD9bq9rN93h0TcLgkQ2KyAkHQ9lxsuT/Kzk3CnozH3jSmb22EpYOzYntGeMg==",
+  "dgSpecHash": "v2bto7jRZttY0yQXN3yYVw2ymDLW6xeKdcOUP2tMAHqy6V/f95DTR5NAj+JaRRuDdCFNkByf9p+3VRXoe58U+Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\WebFrontEnd.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Mika\\.nuget\\packages\\mediatr\\12.1.1\\mediatr.12.1.1.nupkg.sha512",
+    "C:\\Users\\Mika\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.11\\microsoft.aspnetcore.authentication.jwtbearer.7.0.11.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\microsoft.aspnetcore.authorization\\7.0.5\\microsoft.aspnetcore.authorization.7.0.5.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\microsoft.aspnetcore.components\\7.0.5\\microsoft.aspnetcore.components.7.0.5.nupkg.sha512",

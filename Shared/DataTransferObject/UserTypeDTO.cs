@@ -32,5 +32,7 @@ namespace Shared.DataTransferObject
         {
 
         }
+
+        public override string ToString() => Name;
     }
 }

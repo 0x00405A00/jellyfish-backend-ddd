@@ -84,12 +84,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/ChallengeDialog.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xDaGFsbGVuZ2VEaWFsb2cucmF6b3I=
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/Dialog/ChallengeDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xEaWFsb2dcQ2hhbGxlbmdlRGlhbG9nLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/LogoutDialog.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xMb2dvdXREaWFsb2cucmF6b3I=
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/Dialog/LogoutDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xEaWFsb2dcTG9nb3V0RGlhbG9nLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/SurveyPrompt.razor]
@@ -104,13 +104,13 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-u2jr7lxeml
 
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/Dialog/ManageUserDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xEaWFsb2dcTWFuYWdlVXNlckRpYWxvZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-diq7i4i4ye
+
 [C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xNYWluTGF5b3V0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-ou8me86jdl
-
-[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/ManageUserDialog.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xNYW5hZ2VVc2VyRGlhbG9nLnJhem9y
-build_metadata.AdditionalFiles.CssScope = b-p9kpzwcyj8
 
 [C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xOYXZNZW51LnJhem9y

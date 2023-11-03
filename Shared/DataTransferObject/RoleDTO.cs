@@ -30,5 +30,7 @@ namespace Shared.DataTransferObject
 
         [JsonPropertyName("deleted_by_user_uuid")]
         public Guid? DeletedByUserUuid { get; set; }
+
+        public override string ToString() => Name;
     }
 }

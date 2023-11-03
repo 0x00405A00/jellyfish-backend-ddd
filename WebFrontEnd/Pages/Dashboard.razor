@@ -89,13 +89,6 @@
         Messages.Clear();
         MailQueue.Clear();
         XAxisLastHours = null;
-        WebApiClient.Dispose();
-        AuthentificationService.Dispose();
-        if (SignalRClient != null)
-        {
-            SignalRClient.CloseConnection();
-            SignalRClient = null;
-        }
         GC.SuppressFinalize(this);
     }
     void IDisposable.Dispose()

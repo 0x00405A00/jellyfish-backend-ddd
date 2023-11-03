@@ -1,7 +1,6 @@
 ﻿@inherits LayoutComponentBase
-@inject NavigationManager NavigationManager
-@inject IDialogService DialogService
 @inject IConfiguration Configuration
+@inject DialogHandler DialogHandler
 @inject CustomAuthentificationStateProvider AuthentificationService
 
 <PageTitle>Jellyfish</PageTitle>
@@ -181,25 +180,9 @@
         IsLoggedIn = token!= null&&!token.IsTokenExpired;
 
     }
-    private async Task ClickLogout()
+    public async Task ClickLogout()
     {
-        var options = new DialogOptions { CloseOnEscapeKey = true };
-        var parameters = new DialogParameters<LogoutDialog> { 
-            { x => x.Text, "Willlst du dich ausloggen?" }, 
-            { x => x.SubmitButtonText, "Logout" }, 
-            { x => x.CancelButtonText, "Abbrechen" } 
-        };
-        var dialog = await DialogService.ShowAsync<LogoutDialog>("Logout?", options);
-        var result = await dialog.Result;
-
-        if(!result.Cancelled)
-        {
-            var response = await AuthentificationService.Logout(cancellationToken.Token);
-            if(response)
-            {
-                NavigationManager.NavigateTo(RouteConst.Routes.SignIn);
-            }
-        }
+        await DialogHandler.ShowLogoutDialog(cancellationToken.Token);
     }
     public Task ProfileButtonClick()
     {

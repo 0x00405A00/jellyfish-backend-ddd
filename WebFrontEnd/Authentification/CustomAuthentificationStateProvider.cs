@@ -20,6 +20,10 @@ namespace WebFrontEnd.Authentification
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var auth = await this.GetCurrentAuthentification(tokenSource.Token);
+            if(auth == null)
+            {
+                return new AuthenticationState(new ClaimsPrincipal());
+            }
             var jwtDecoded = JwtHandler.DecodeJwt(auth.Token,null,null,null);
             if (jwtDecoded == null) 
             {
@@ -55,7 +59,7 @@ namespace WebFrontEnd.Authentification
         public async Task<AuthDTO> GetCurrentAuthentification(CancellationToken cancellationToken)
         {
             var result = await authentificationService.GetCurrentAuthentification(cancellationToken);
-            return result;
+            return result??new AuthDTO();
         }
 
         public async Task<bool> Register(RegisterUserDTO registerUserDTO, CancellationToken cancellationToken)
@@ -81,11 +85,11 @@ namespace WebFrontEnd.Authentification
         }
 
         // // TODO: Finalizer nur überschreiben, wenn "Dispose(bool disposing)" Code für die Freigabe nicht verwalteter Ressourcen enthält
-        // ~CustomAuthentificationStateProvider()
-        // {
-        //     // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
-        //     Dispose(disposing: false);
-        // }
+         ~CustomAuthentificationStateProvider()
+         {
+             // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
+             Dispose(disposing: false);
+         }
 
         public void Dispose()
         {

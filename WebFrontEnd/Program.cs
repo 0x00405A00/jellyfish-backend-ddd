@@ -5,6 +5,7 @@ using RestSharp;
 using Shared.Const;
 using WebFrontEnd.Authentification;
 using WebFrontEnd.BackgroundService;
+using WebFrontEnd.Handler;
 using WebFrontEnd.Service.Authentification;
 using WebFrontEnd.Service.Backend.Api;
 using WebFrontEnd.Service.Backend.SignalR;
@@ -49,9 +50,11 @@ public class Program
         builder.Services.AddScoped<CustomAuthentificationStateProvider>();
         builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomAuthentificationStateProvider>());
 
+        builder.Services.AddScoped<DialogHandler>();
 
         builder.Services.AddSingleton<LogoutBackgroundService>();
         builder.Services.AddHostedService< LogoutBackgroundService>(p=>p.GetService<LogoutBackgroundService>());
+
 
         var app = builder.Build();
 

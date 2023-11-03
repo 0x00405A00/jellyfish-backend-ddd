@@ -78,7 +78,7 @@ namespace WebFrontEnd.Service.Authentification
             {
                 if (disposing)
                 {
-                    webApiRestClient.Dispose();
+
                 }
 
                 // TODO: Nicht verwaltete Ressourcen (nicht verwaltete Objekte) freigeben und Finalizer überschreiben
@@ -88,11 +88,11 @@ namespace WebFrontEnd.Service.Authentification
         }
 
         // // TODO: Finalizer nur überschreiben, wenn "Dispose(bool disposing)" Code für die Freigabe nicht verwalteter Ressourcen enthält
-        // ~AuthentificationService()
-        // {
-        //     // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
-        //     Dispose(disposing: false);
-        // }
+         ~AuthentificationService()
+         {
+             // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
+             Dispose(disposing: false);
+         }
 
         public void Dispose()
         {

@@ -1,0 +1,111 @@
+﻿<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Info" Class="mr-3 mb-n1" />
+            @Text
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+            <MudTextField Class="rule2" InputType="InputType.Text" @bind-Value=@User.UserName Label="UserName" Variant="Variant.Filled" ReadOnly="false" />
+            <MudTextField InputType="InputType.Text" @bind-Value=@User.FirstName Label="FirstName" ReadOnly="false" Required />
+             <MudTextField @ref="lastNameTextField" InputType="InputType.Text" @bind-Value=@User.LastName Label="LastName" ReadOnly="false" Required RequiredError="Please enter a Lastname" OnKeyUp="@OnKeyUpEvent" />
+             <MudTextField @ref="passwordTextField" InputType="InputType.Password" @bind-Value=@User.Password Label="Password" ReadOnly="false" Required Validation="@(new Func<string, IEnumerable<string>>(ValidatePassword))" OnKeyUp="@OnKeyUpEvent" />
+             <MudTextField @ref="passwordConfirmTextField" InputType="InputType.Password" @bind-Value=@User.PasswordConfirm Label="PasswordConfirm" ReadOnly="false" Required Validation="@(new Func<string, string>(ComparePasswords))" />
+             <MudTextField InputType="InputType.Email" @bind-Value=@User.Email Label="Email" ReadOnly="false" />
+             <MudDatePicker Label="Geburstag" DisplayMonths="2" TitleDateFormat="dddd, dd MMMM" @bind-Date=@User.DateOfBirth />
+             <MudSelect T="UserTypeDTO" Label="UserType" AnchorOrigin="Origin.BottomCenter" @bind-SelectedValues="@UserTypes">
+                 @foreach (var item in UserTypes)
+                {
+                    <MudSelectItem T="UserTypeDTO" Value="@item">@item.Name</MudSelectItem>
+                }
+            </MudSelect>
+            <MudSelect T="RoleDTO" MultiSelection="true" Label="Rollen" AnchorOrigin="Origin.BottomCenter" @bind-SelectedValues=@Roles>
+                @foreach (var item in Roles)
+                {
+                    <MudSelectItem T="RoleDTO" Value="@item">@item.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Abbrechen</MudButton>
+        <MudButton Color="MudBlazor.Color.Info" OnClick="Commit">@(isEditDialog?"Bearbeiten":"Hinzufügen")</MudButton>
+    </DialogActions>
+</MudDialog>
+
+    @code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public string Text { get; set; }
+    [Parameter] public UserDTO User { get; set; } = new UserDTO();
+    [Parameter] public IEnumerable<UserTypeDTO> UserTypes { get; set; } = new HashSet<UserTypeDTO>();
+    [Parameter] public IEnumerable<RoleDTO> Roles { get; set; } = new HashSet<RoleDTO>();
+
+    private MudForm form;
+    private MudTextField<string> lastNameTextField;
+    private MudTextField<string> passwordTextField;
+    private MudTextField<string> passwordConfirmTextField;
+    private bool success;
+    private bool isEditDialog=>User!=null&&User.Uuid!=null&&User.Uuid!=Guid.Empty;
+    private string[] errors = { };
+    private UserTypeDTO SelectedUserType { get; set; } = new UserTypeDTO();
+    private List<RoleDTO> SelectedRoles { get; set; } = new List<RoleDTO>();
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            if (User.UserTypeUuid!=null)
+            {
+                SelectedUserType = UserTypes.Where(x => x.Uuid == User.UserTypeUuid).First();
+            }
+            if(User.Roles!=null)
+            {
+                SelectedRoles = User.Roles.ToList();
+            }   
+            StateHasChanged();
+        }
+        return Task.CompletedTask;
+    }
+    private IEnumerable<string> ValidatePassword(string password)
+    {
+        try
+        {
+            Domain.Entities.User.User.CheckPasswordWithPolicy(password, passwordConfirmTextField.Text);
+        }
+        catch (Domain.Entities.User.Exception.InvalidPasswordException ex)
+        {
+            return ex.Errors.ToList();
+        }
+        return null;
+    }
+    private string ComparePasswords(string input)
+    {
+        if (passwordConfirmTextField.Text!=input)
+        {
+            return "passwords are not identical";
+        }
+        return null;
+    }
+    private void OnKeyUpEvent(KeyboardEventArgs keyboardEventArgs)
+    {
+        passwordTextField.Validate();
+        passwordConfirmTextField.Validate();
+        StateHasChanged();
+    }
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+    private void Commit()
+    {
+        form.Validate();
+        if (!success)
+            return;
+        User.UserTypeUuid =SelectedUserType.Uuid;
+        User.Roles =SelectedRoles;
+        MudDialog.Close(DialogResult.Ok(User));
+    }
+}
+

@@ -54,7 +54,6 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Mi
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.JSInterop.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\MudBlazor.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\scopedcss\Pages\Dashboard.razor.rz.scp.css
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\scopedcss\SharedComponents\ManageUserDialog.razor.rz.scp.css
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
@@ -64,3 +63,8 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Mi
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\scopedcss\SharedComponents\Dialog\ManageUserDialog.razor.rz.scp.css
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\MediatR.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\MediatR.Contracts.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Domain.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\Domain.pdb

@@ -120,8 +120,6 @@
         cancellationToken.Cancel();
         MailQueue.Clear();
         HealthCheck = null;
-        WebApiClient.Dispose();
-        AuthentificationService.Dispose();
         GC.SuppressFinalize(this);
     }
     void IDisposable.Dispose()

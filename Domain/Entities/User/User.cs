@@ -21,11 +21,11 @@ namespace Domain.Entities.User
         /// $                         End anchor.
         /// </summary>
         public static Dictionary<string,Regex> PasswordPolicy = new Dictionary<string, Regex> {
-            {"Two uppercase letters",new Regex("^(.*[A-Z]){2,}") },
-            {"One special case letter",new Regex("^(?=.*[!@#$%^&*()_+{}\\[\\]:;<>,.?~\\\\|]).+")},
-            {"Two digits",new Regex("^(?:.*\\d.*){2,}") },
-            {"Three lowercase letters",new Regex("^(?:.*[a-z]){3,}") },
-            {"Length of minimal 8",new Regex("^.{8,}$") },
+            {"need two uppercase letters",new Regex("^(.*[A-Z]){2,}") },
+            {"need one special case letter",new Regex("^(?=.*[!@#$%^&*()_+{}\\[\\]:;<>,.?~\\\\|]).+")},
+            {"need two digits",new Regex("^(?:.*\\d.*){2,}") },
+            {"need three lowercase letters",new Regex("^(?:.*[a-z]){3,}") },
+            {"need length of minimal 8",new Regex("^.{8,}$") },
         };
         public static int ActivationCodeLen = 4;
         public static TimeSpan PasswordResetExpiresInTime = new TimeSpan(12, 0, 0);
@@ -314,9 +314,13 @@ namespace Domain.Entities.User
 
         public static void CheckPasswordWithPolicy(string password,string passwordConfirm)
         {
-            if (String.IsNullOrWhiteSpace(password) || String.IsNullOrWhiteSpace(passwordConfirm))
+            if (String.IsNullOrWhiteSpace(password))
             {
                 throw new InvalidPasswordException("password is empty");
+            }
+            if (String.IsNullOrWhiteSpace(passwordConfirm))
+            {
+                throw new InvalidPasswordException("passwordConfirm is empty");
             }
             if (password != passwordConfirm)
             {

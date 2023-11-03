@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Connections;
-using Microsoft.AspNetCore.SignalR.Client;
-using RestSharp;
+﻿using RestSharp;
 using Shared.DataTransferObject;
 using System.Text.Json;
 
@@ -75,6 +73,10 @@ namespace WebFrontEnd.Service.Backend.Api
         }
         public string BuildUrl(string endPoint)
         {
+            if(BaseUrl == null)
+            {
+                throw new ArgumentNullException();
+            }
             return BaseUrl + endPoint;
         }
         public bool IsInit

@@ -1,27 +1,32 @@
 ﻿@inject NavigationManager NavigationManager;
 @inject ILocalStorageService LocalStorageService;
 @inject WebApiRestClient WebApiClient
+@inject DialogHandler DialogHandler
 @inject IConfiguration Configuration
 
 <MudNavMenu Bordered Class="flex-column mt-5" Color="MudBlazor.Color.Info">
      <MudNavLink Icon="@Icons.Material.Filled.Home" IconColor="MudBlazor.Color.Info" Href="@RouteConst.Routes.Home">
          Home
      </MudNavLink>
-     @if (hasLogin)
-    {
-        <MudNavGroup Expanded Icon="@Icons.Material.Filled.AdminPanelSettings" IconColor="MudBlazor.Color.Info" Title="Administration">
+     <CascadingAuthenticationState>
+         <AuthorizeView Policy="Admin">
+             @if (hasLogin)
+            {
+                <MudNavGroup Expanded Icon="@Icons.Material.Filled.AdminPanelSettings" IconColor="MudBlazor.Color.Info" Title="Administration">
 
-             <MudNavLink Icon="@Icons.Material.Filled.Dashboard" IconColor="MudBlazor.Color.Info" Href="@RouteConst.Routes.DashBoard">
-                 <a>Dashboard</a>
-             </MudNavLink>
-             <MudNavLink Icon="@Icons.Material.Filled.HealthAndSafety" IconColor="MudBlazor.Color.Info" Href="@RouteConst.Routes.BackendHealth">
-                 <a>Health</a>
-             </MudNavLink>
-             <MudNavLink Icon="@Icons.Material.Filled.People" IconColor="MudBlazor.Color.Info" Href="@RouteConst.Routes.Users">
-                 <a>Users</a>
-             </MudNavLink>
-         </MudNavGroup>
-    }
+                     <MudNavLink Icon="@Icons.Material.Filled.Dashboard" IconColor="MudBlazor.Color.Info" Href="@RouteConst.Routes.DashBoard">
+                         <a>Dashboard</a>
+                     </MudNavLink>
+                     <MudNavLink Icon="@Icons.Material.Filled.HealthAndSafety" IconColor="MudBlazor.Color.Info" Href="@RouteConst.Routes.BackendHealth">
+                         <a>Health</a>
+                     </MudNavLink>
+                     <MudNavLink Icon="@Icons.Material.Filled.People" IconColor="MudBlazor.Color.Info" Href="@RouteConst.Routes.Users">
+                         <a>Users</a>
+                     </MudNavLink>
+                 </MudNavGroup>
+            }
+         </AuthorizeView>
+     </CascadingAuthenticationState>
 
         
     @if (!hasLogin)
@@ -32,7 +37,7 @@
     }
     else
     {
-        <MudButton Class="mt-5 fixed-bottom" Variant="Variant.Filled" FullWidth DisableElevation="true" Color="MudBlazor.Color.Primary" OnClick="@Logout">Logout</MudButton>
+        <MudButton Class="mt-5 fixed-bottom" Variant="Variant.Filled" FullWidth DisableElevation="true" Color="MudBlazor.Color.Primary" OnClick="@ClickLogout">Logout</MudButton>
     }
 </MudNavMenu>
 
@@ -53,7 +58,8 @@
         hasLogin = await LocalStorageService.CheckIfValidTokenExists();
         StateHasChanged();
     }
-    public async Task Logout()
+    public async Task ClickLogout()
     {
+        await DialogHandler.ShowLogoutDialog(cancellationToken.Token);
     }
 }
