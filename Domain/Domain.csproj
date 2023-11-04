@@ -8,17 +8,12 @@
 
   <ItemGroup>
     <Folder Include="Abstractions\" />
-    <Folder Include="Const\" />
     <Folder Include="Entities\Role\Exception\" />
     <Folder Include="Shared\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
 </Project>

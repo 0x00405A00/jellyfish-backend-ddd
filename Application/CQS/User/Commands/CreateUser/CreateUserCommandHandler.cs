@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
+using Domain.Const;
 using Domain.Exceptions;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
@@ -76,8 +77,8 @@ namespace Application.CQS.User.Commands.CreateUser
                     Domain.Entities.User.User.CheckPasswordWithPolicy(request.Password, request.PasswordRepeat);
 
                     var userId = new Domain.Entities.User.UserId(Guid.NewGuid());
-                    var userType = await _userTypeRepository.GetAsync(x => x.Uuid == AuthorizationConst.UserType.UserTypeUuid);
-                    var userRole = await _roleRepository.GetAsync(x => x.Uuid == AuthorizationConst.Role.UserRoleUuid);
+                    var userType = await _userTypeRepository.GetAsync(x => x.Uuid == UserTypeConst.UserTypeUuid);
+                    var userRole = await _roleRepository.GetAsync(x => x.Uuid == RoleConst.UserRoleUuid);
                     user = Domain.Entities.User.User.Create(
                         userId,
                         userType,

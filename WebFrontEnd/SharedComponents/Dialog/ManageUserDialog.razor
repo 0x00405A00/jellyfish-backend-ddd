@@ -1,4 +1,6 @@
-﻿<MudDialog>
+﻿@inject WebApiRestClient WebApiClient
+@inject CustomAuthentificationStateProvider AuthentificationService
+<MudDialog>
     <TitleContent>
         <MudText Typo="Typo.h6">
             <MudIcon Icon="@Icons.Material.Filled.Info" Class="mr-3 mb-n1" />
@@ -7,20 +9,22 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-            <MudTextField Class="rule2" InputType="InputType.Text" @bind-Value=@User.UserName Label="UserName" Variant="Variant.Filled" ReadOnly="false" />
+            <MudTextField InputType="InputType.Text" @bind-Value=@User.UserName Label="UserName" Variant="Variant.Filled" ReadOnly="false" Required />
             <MudTextField InputType="InputType.Text" @bind-Value=@User.FirstName Label="FirstName" ReadOnly="false" Required />
              <MudTextField @ref="lastNameTextField" InputType="InputType.Text" @bind-Value=@User.LastName Label="LastName" ReadOnly="false" Required RequiredError="Please enter a Lastname" OnKeyUp="@OnKeyUpEvent" />
+
              <MudTextField @ref="passwordTextField" InputType="InputType.Password" @bind-Value=@User.Password Label="Password" ReadOnly="false" Required Validation="@(new Func<string, IEnumerable<string>>(ValidatePassword))" OnKeyUp="@OnKeyUpEvent" />
              <MudTextField @ref="passwordConfirmTextField" InputType="InputType.Password" @bind-Value=@User.PasswordConfirm Label="PasswordConfirm" ReadOnly="false" Required Validation="@(new Func<string, string>(ComparePasswords))" />
-             <MudTextField InputType="InputType.Email" @bind-Value=@User.Email Label="Email" ReadOnly="false" />
-             <MudDatePicker Label="Geburstag" DisplayMonths="2" TitleDateFormat="dddd, dd MMMM" @bind-Date=@User.DateOfBirth />
-             <MudSelect T="UserTypeDTO" Label="UserType" AnchorOrigin="Origin.BottomCenter" @bind-SelectedValues="@UserTypes">
+
+             <MudTextField InputType="InputType.Email" @bind-Value=@User.Email Label="Email" ReadOnly="false" Required RequiredError="email must be setted" />
+             <MudDatePicker Label="Geburstag" DisplayMonths="2" MinDate="@(Domain.Entities.User.User.MinimumBirthDayDate)" MaxDate="@(Domain.Entities.User.User.MaximumBirthDayDate)" TitleDateFormat="dd.MM.yyyy" @bind-Date=@User.DateOfBirth Required RequiredError="birthday must be setted" />
+             <MudSelect T="UserTypeDTO" MultiSelection=false Label="UserType" AnchorOrigin="Origin.BottomCenter" @bind-SelectedValues=@SelectedUserType Required RequiredError="need one user-type">
                  @foreach (var item in UserTypes)
                 {
                     <MudSelectItem T="UserTypeDTO" Value="@item">@item.Name</MudSelectItem>
                 }
             </MudSelect>
-            <MudSelect T="RoleDTO" MultiSelection="true" Label="Rollen" AnchorOrigin="Origin.BottomCenter" @bind-SelectedValues=@Roles>
+            <MudSelect T="RoleDTO" MultiSelection="true" Label="Rollen" AnchorOrigin="Origin.BottomCenter" @bind-SelectedValues=@SelectedRoles Required RequiredError="need minimum one role">
                 @foreach (var item in Roles)
                 {
                     <MudSelectItem T="RoleDTO" Value="@item">@item.Name</MudSelectItem>
@@ -42,6 +46,8 @@
     [Parameter] public IEnumerable<UserTypeDTO> UserTypes { get; set; } = new HashSet<UserTypeDTO>();
     [Parameter] public IEnumerable<RoleDTO> Roles { get; set; } = new HashSet<RoleDTO>();
 
+    private AuthDTO _token;
+    private CancellationTokenSource cancellationToken = new();
     private MudForm form;
     private MudTextField<string> lastNameTextField;
     private MudTextField<string> passwordTextField;
@@ -49,16 +55,21 @@
     private bool success;
     private bool isEditDialog=>User!=null&&User.Uuid!=null&&User.Uuid!=Guid.Empty;
     private string[] errors = { };
-    private UserTypeDTO SelectedUserType { get; set; } = new UserTypeDTO();
-    private List<RoleDTO> SelectedRoles { get; set; } = new List<RoleDTO>();
+    private IEnumerable<UserTypeDTO> SelectedUserType { get; set; } = new List<UserTypeDTO>();
+    private IEnumerable<RoleDTO> SelectedRoles { get; set; } = new List<RoleDTO>();
 
-    protected override Task OnAfterRenderAsync(bool firstRender)
+    protected async override Task OnAfterRenderAsync(bool firstRender)
     {
         if(firstRender)
         {
+            _token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
+            if(User.DateOfBirth==null)
+            {
+                User.DateOfBirth = (Domain.Entities.User.User.MinimumBirthDayDate);
+            }
             if (User.UserTypeUuid!=null)
             {
-                SelectedUserType = UserTypes.Where(x => x.Uuid == User.UserTypeUuid).First();
+                SelectedUserType = new List<UserTypeDTO>() { UserTypes.Where(x => x.Uuid == User.UserTypeUuid).First() };
             }
             if(User.Roles!=null)
             {
@@ -66,7 +77,7 @@
             }   
             StateHasChanged();
         }
-        return Task.CompletedTask;
+
     }
     private IEnumerable<string> ValidatePassword(string password)
     {
@@ -98,13 +109,31 @@
     {
         MudDialog.Cancel();
     }
-    private void Commit()
+    private async void Commit()
     {
         form.Validate();
         if (!success)
             return;
-        User.UserTypeUuid =SelectedUserType.Uuid;
-        User.Roles =SelectedRoles;
+        User.UserTypeUuid =SelectedUserType.First().Uuid;
+        User.Roles =SelectedRoles.ToList();
+
+        if(isEditDialog)//Edit
+        {
+            var url = "/user/" + User.Uuid + "";
+            var updateUserRequest = await WebApiClient.Request<UserDTO, UserDTO>(url, RestSharp.Method.Put, cancellationToken.Token, User, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+            if (updateUserRequest.IsSuccess)
+            {
+
+            }
+        }
+        else//Add
+        {
+            var addUserRequest = await WebApiClient.Request<UserDTO, UserDTO>("/user", RestSharp.Method.Post, cancellationToken.Token, User, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+            if (addUserRequest.IsSuccess)
+            {
+                
+            }
+        }
         MudDialog.Close(DialogResult.Ok(User));
     }
 }

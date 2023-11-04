@@ -140,14 +140,10 @@
     public async Task AddUser()
     {
 
-        var result = await DialogHandler.ShowUserManagementDialog(DialogHandler.MANAGEMENT_TYPE.ADD, null, RoleList, UserTypesList);
+        var result = await DialogHandler.ShowUserManagementDialog(DialogHandler.MANAGEMENT_TYPE.ADD, new UserDTO(), RoleList, UserTypesList);
         if (!result.Cancelled)
         {
-            var addUserRequest = await WebApiClient.Request<UserDTO, UserDTO>("/user", RestSharp.Method.Post, cancellationToken.Token, (UserDTO)result.Data, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
-            if (addUserRequest.IsSuccess)
-            {
-                UsersList.Add((UserDTO)result.Data);
-            }
+            UsersList.Add((UserDTO)result.Data);
             StateHasChanged();
         }
 
@@ -160,12 +156,7 @@
         var result = await DialogHandler.ShowUserManagementDialog(DialogHandler.MANAGEMENT_TYPE.EDIT, user, RoleList, UserTypesList);
         if (!result.Cancelled)
         {
-            var url = "/user/" + user.Uuid + "";
-            var updateUserRequest = await WebApiClient.Request<UserDTO, UserDTO>(url, RestSharp.Method.Put, cancellationToken.Token, (UserDTO)result.Data, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
-            if (updateUserRequest.IsSuccess)
-            {
-                UsersList[index] = ((UserDTO)result.Data);
-            }
+            UsersList[index] = ((UserDTO)result.Data);
             StateHasChanged();
         }
     }

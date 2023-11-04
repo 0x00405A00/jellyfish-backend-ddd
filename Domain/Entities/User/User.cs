@@ -1,8 +1,8 @@
-﻿using Domain.Entities.User.Event;
+﻿using Domain.Const;
+using Domain.Entities.User.Event;
 using Domain.Entities.User.Exception;
 using Domain.Primitives;
 using Domain.ValueObjects;
-using Shared.Const;
 using System.Data;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -29,6 +29,8 @@ namespace Domain.Entities.User
         };
         public static int ActivationCodeLen = 4;
         public static TimeSpan PasswordResetExpiresInTime = new TimeSpan(12, 0, 0);
+        public static DateTime MinimumBirthDayDate = new DateTime(1900, 1, 1);
+        public static DateTime MaximumBirthDayDate = DateTime.Now.AddYears(-16);//man muss mindestens 16 sein
 
         private ICollection<UserFriend> _friends = new List<UserFriend>();
         public ICollection<UserFriend> Friends { get => _friends?.ToList(); }

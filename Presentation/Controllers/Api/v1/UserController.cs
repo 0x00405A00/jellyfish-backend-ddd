@@ -14,6 +14,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Abstractions;
+using Shared.ApiDataTransferObject;
 using Shared.Const;
 using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
@@ -198,7 +199,9 @@ namespace Presentation.Controllers.Api.v1
             var command = new Application.CQS.User.Queries.GetUsers.GetUsersQuery(searchParams);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            ApiResponse<List<UserDTO>> response = ApiResponse<List<UserDTO>>.Create(result, null);
+            response überall auf apiresponse ändern und webfrontend drauf abstimmen
+            return result.IsSuccess ? Ok(response) : BadRequest(response);
         }
 
         public override async Task<IActionResult> Update(Guid id, [FromBody] UserDTO userDto, CancellationToken cancellationToken)

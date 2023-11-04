@@ -32,11 +32,7 @@
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
-            "projectReferences": {
-              "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj": {
-                "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Shared.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {
@@ -314,7 +310,11 @@
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
