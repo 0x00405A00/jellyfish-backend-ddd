@@ -410,8 +410,7 @@
       "System.Threading.Channels/7.0.0": {},
       "Domain/1.0.0": {
         "dependencies": {
-          "MediatR": "12.1.1",
-          "Shared": "1.0.0"
+          "MediatR": "12.1.1"
         },
         "runtime": {
           "Domain.dll": {}
@@ -419,6 +418,7 @@
       },
       "Shared/1.0.0": {
         "dependencies": {
+          "Domain": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.11",
           "Microsoft.EntityFrameworkCore": "7.0.5"
         },

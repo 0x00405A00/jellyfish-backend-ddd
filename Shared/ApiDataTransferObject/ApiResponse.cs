@@ -11,6 +11,8 @@ namespace Shared.ApiDataTransferObject
         public ApiData<T> Data { get; set; }
         [JsonPropertyName("errors")]
         public List<ApiError> Errors { get; set; }
+        [JsonIgnore()]
+        public bool HasErrors => Errors!=null&& Errors.Any();
         [JsonPropertyName("meta")]
         public ApiMeta Meta { get; set; }
         public ApiResponse() 

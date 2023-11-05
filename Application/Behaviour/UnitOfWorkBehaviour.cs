@@ -16,7 +16,7 @@ namespace Application.Behaviour
             RequestHandlerDelegate<TResponse> next, 
             CancellationToken cancellationToken)
         {
-            if(IsNoCommand(request))
+            if(PipeLineBehaviourExtension.IsNoCommand(request))
             {
                 return await next();
             }
@@ -25,9 +25,6 @@ namespace Application.Behaviour
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             return response;    
         }
-        private static bool IsNoCommand(TRequest request)
-        {
-            return !request.GetType().Name.EndsWith("Command");
-        }
     }
+
 }

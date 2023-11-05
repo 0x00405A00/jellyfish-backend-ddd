@@ -21,6 +21,7 @@ using Shared.DataTransferObject;
 using Shared.DataTransferObject.Messenger;
 using System.Net.Mime;
 using WebApi.Abstractions;
+using Presentation.WebResponse;
 
 namespace Presentation.Controllers.Api.v1
 {
@@ -44,7 +45,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new RegisterUserCommand(registerUserDTO.UserName, registerUserDTO.Password, registerUserDTO.PasswordRepeat, registerUserDTO.FirstName, registerUserDTO.LastName, registerUserDTO.Email, registerUserDTO.Phone, (DateTime)registerUserDTO.DateOfBirth);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.PrepareResponse();
         }
 
         [AllowAnonymous]
@@ -56,7 +57,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new UserPasswordResetRequestCommand(passwordResetRequestDTO.Email);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         [AllowAnonymous]
@@ -68,7 +69,7 @@ namespace Presentation.Controllers.Api.v1
             UserPasswordResetCommand command= new UserPasswordResetCommand(passwordResetDataTransferModel.Password,passwordResetDataTransferModel.PasswordRepeat, passwordResetDataTransferModel.PasswordResetCode, base64Token);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         [AllowAnonymous]
@@ -80,7 +81,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new UserActivationCommand(base64Token,userActivationDataTransferModel.ActivationCode);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         [HttpGet("user-types")]
@@ -91,7 +92,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new Application.CQS.User.Queries.GetUserType.GetUserTypeQuery();
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         [Produces(MediaTypeNames.Application.Json)]
@@ -101,7 +102,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new Application.CQS.Messenger.User.Queries.GetUserById.GetUserByIdQuery(guid);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
 
@@ -114,7 +115,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new CreateFriendshipRequestCommand(userUuid, userFriendshipRequestDTO.UserUuid);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         [Consumes(MediaTypeNames.Application.Json)]
@@ -126,7 +127,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new RemoveFriendshipRequestCommand(userUuid, userFriendshipRequestDTO.UserUuid);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         [Consumes(MediaTypeNames.Application.Json)]
@@ -138,7 +139,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new GetUserByIdQuery(userUuid);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value.FriendshipRequests) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         [Consumes(MediaTypeNames.Application.Json)]
@@ -150,7 +151,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new AcceptFriendshipRequestCommand(userUuid, userFriendshipRequestDTO.UserUuid);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         [Consumes(MediaTypeNames.Application.Json)]
@@ -162,7 +163,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new GetUserByIdQuery(userUuid);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value.Friends) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         [Consumes(MediaTypeNames.Application.Json)]
@@ -172,9 +173,8 @@ namespace Presentation.Controllers.Api.v1
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
             var command = new RemoveFriendCommand(userUuid, friend.Uuid);
-
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         public override async Task<IActionResult> Create([FromBody] UserDTO userDto, CancellationToken cancellationToken)
@@ -183,7 +183,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new CreateUserCommand(userUuid, userDto.UserName, userDto.Password, userDto.Password, userDto.FirstName, userDto.LastName, userDto.Email, userDto.Phone, (DateTime)userDto.DateOfBirth);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         public override async Task<IActionResult> Read(Guid id, CancellationToken cancellationToken)
@@ -191,7 +191,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new Application.CQS.User.Queries.GetUserById.GetUserByIdQuery(id);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         public override async Task<IActionResult> ReadAll([FromQuery] SearchParams? searchParams,CancellationToken cancellationToken)
@@ -199,9 +199,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new Application.CQS.User.Queries.GetUsers.GetUsersQuery(searchParams);
 
             var result = await Sender.Send(command, cancellationToken);
-            ApiResponse<List<UserDTO>> response = ApiResponse<List<UserDTO>>.Create(result, null);
-            response überall auf apiresponse ändern und webfrontend drauf abstimmen
-            return result.IsSuccess ? Ok(response) : BadRequest(response);
+            return result.PrepareResponse();
         }
 
         public override async Task<IActionResult> Update(Guid id, [FromBody] UserDTO userDto, CancellationToken cancellationToken)
@@ -218,7 +216,7 @@ namespace Presentation.Controllers.Api.v1
                                                 userDto.DateOfBirth);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         public override async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
@@ -227,7 +225,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new DeleteUserCommand(userUuid, id);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
     }
 }

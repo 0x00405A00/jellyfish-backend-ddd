@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Abstractions;
+using Presentation.WebResponse;
 using Shared.Const;
 using Shared.DataTransferObject.Messenger;
 using System.Net.Mime;
@@ -39,7 +40,7 @@ namespace Presentation.Controllers.Api.v1.Messenger
                                                           chatDto.PictureBase64);
 
             var result = await Sender.Send(commandCreateChat, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         [Consumes(MediaTypeNames.Application.Json)]
@@ -50,7 +51,7 @@ namespace Presentation.Controllers.Api.v1.Messenger
             var command = new GetChatByIdQuery(chatId);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         [Consumes(MediaTypeNames.Application.Json)]
@@ -66,7 +67,7 @@ namespace Presentation.Controllers.Api.v1.Messenger
                                                 chatDto.ChatDescription,
                                                 chatDto.PictureBase64);
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         [Produces(MediaTypeNames.Application.Json)]
@@ -77,7 +78,7 @@ namespace Presentation.Controllers.Api.v1.Messenger
             var command = new DeleteChatCommand(userUuid, chatId);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
     }

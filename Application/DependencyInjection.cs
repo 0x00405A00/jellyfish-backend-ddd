@@ -16,10 +16,12 @@ namespace Application
             services.AddMediatR(config =>
             {
                 config.RegisterServicesFromAssemblies(assemblies);
+                config.AddOpenBehavior(typeof(PrepareResponseForPresentationPipelingBehaviour<,>));
                 config.AddOpenBehavior(typeof(UnitOfWorkBehaviour<,>));
                 config.AddOpenBehavior(typeof(LoggingBehaviour<,>));
             });
-            services.AddScoped(typeof(IPipelineBehavior<,>),typeof(ValidationPipelingBehaviour<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelingBehaviour<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PrepareResponseForPresentationPipelingBehaviour<,>));
             services.AddValidatorsFromAssembly(AssemblyReference.Assembly);
             return services;    
 

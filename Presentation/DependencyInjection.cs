@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Authentification;
 using Microsoft.OpenApi.Models;
+using Presentation.Filter;
 using Presentation.Swagger.OperationFilter;
 using Presentation.Swagger.SignalR;
 using Shared.Const;
@@ -38,7 +39,9 @@ namespace Presentation
                 options.AddPolicy(AuthorizationConst.Policy.UserPolicy, policy =>
                                   policy.RequireClaim(AuthorizationConst.Claims.ClaimTypeIsActivatedUser, bool.TrueString));
             });
-            services.AddControllers()
+            services.AddControllers(x => {
+                x.Filters.Add<PrepareResponseFilter>();
+            })
                 .AddApplicationPart(WebApi.AssemblyReference.Assembly)
                 .AddJsonOptions(x => {
                     x.JsonSerializerOptions.PropertyNamingPolicy = new LowerCaseNamingPolicy() ;

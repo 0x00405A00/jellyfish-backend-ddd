@@ -1,4 +1,5 @@
 ﻿using RestSharp;
+using Shared.ApiDataTransferObject;
 using Shared.DataTransferObject;
 using System.Text.Json;
 
@@ -313,8 +314,8 @@ namespace WebFrontEnd.Service.Backend.Api
                 try
                 {
                     string responseJson = resp.Content;
-
-                    responseModel.ApiResponseDeserialized = JsonSerializer.Deserialize<T1>(responseJson);
+                    var apiResponseModel = JsonSerializer.Deserialize<ApiResponse<T1>>(responseJson);
+                    responseModel.ApiResponseDeserialized = apiResponseModel.Data.Value;
                 }
                 catch (Exception ex)
                 {

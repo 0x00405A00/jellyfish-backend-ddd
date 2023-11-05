@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Mail\Attachments\" />
+    <Folder Include="Modelbinder\" />
   </ItemGroup>
 
 </Project>

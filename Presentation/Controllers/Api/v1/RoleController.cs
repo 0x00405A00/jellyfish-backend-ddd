@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Abstractions;
+using Presentation.WebResponse;
 using Shared.Const;
 using Shared.DataTransferObject;
 using System.Net.Mime;
@@ -31,7 +32,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new CreateRoleCommand(userUuid, RoleDTO.Name, RoleDTO.Description);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         [HttpGet("{guid}")]
@@ -42,7 +43,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new Application.CQS.Role.Queries.GetRoleById.GetRoleByIdQuery(guid);
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
 
         [HttpGet()]
@@ -53,7 +54,7 @@ namespace Presentation.Controllers.Api.v1
             var command = new Application.CQS.Role.Queries.GetRoles.GetRolesQuery();
 
             var result = await Sender.Send(command, cancellationToken);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
+            return result.PrepareResponse();
         }
     }
 }
