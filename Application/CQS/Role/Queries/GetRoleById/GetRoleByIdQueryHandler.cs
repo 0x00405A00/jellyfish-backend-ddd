@@ -25,10 +25,8 @@ namespace Application.CQS.Role.Queries.GetRoleById
                 return Result<RoleDTO>.Failure("role doenst exists");
             }
 
-            var result = Result<RoleDTO>.Success();
             var mapValue = _mapper.Map<RoleDTO>(role);
-            result.Value = mapValue;
-            return result;
+            return Result<RoleDTO>.Success(mapValue);
         }
     }
 }

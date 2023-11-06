@@ -4,7 +4,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DataTransferObject;
-using System;
 using System.Net.Mime;
 using WebApi.Abstractions;
 

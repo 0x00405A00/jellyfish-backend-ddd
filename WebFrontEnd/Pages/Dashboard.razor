@@ -145,13 +145,13 @@
     private async Task GetData()
     {
         var token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token) ;
-        var requestUsers = WebApiClient.Request<List<UserDTO>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
+        var requestUsers = WebApiClient.Request < ApiResponse<List<UserDTO>>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
 
 
         var responseUsers = await requestUsers;
         if (responseUsers.IsSuccess)
         {
-            UsersList = responseUsers.ApiResponseDeserialized;
+            UsersList = responseUsers.ApiResponseDeserialized.Data.Value;
             var onlyRegisteredAndNotActivated = UsersList.Where(x => x.CreatedTime.Value.Year == DateTime.Now.Year && x.ActivationDateTime==null).Select(x => x.CreatedTime).GroupBy(x => x.Value.Month);
             var newFullyRegisteredAccountThisYearCounts = UsersList.Where(x => x.ActivationDateTime != null && x.ActivationDateTime.Value.Year == DateTime.Now.Year).Select(x => x.ActivationDateTime).GroupBy(x => x.Value.Month);
             var fullyRegisteredAccountPreYearDecCount = UsersList.Where(x => x.ActivationDateTime != null&&x.ActivationDateTime.Value.Year == DateTime.Now.Year - 1 && x.ActivationDateTime.Value.Month == 12).Select(x => x.ActivationDateTime).Count();

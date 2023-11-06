@@ -43,9 +43,7 @@ namespace Application.CQS.Messenger.Chat.Command.DeleteChat
                 return Result<Guid>.Failure("execution user has no permissions");
             }
             _chatRepository.Remove(chat);
-            var result = Result<Guid>.Success();
-            result.Value = request.ChatId;
-            return result;
+            return Result<Guid>.Success(request.ChatId);
         }
     }
 }

@@ -52,10 +52,8 @@ namespace Application.CQS.Role.Commands.CreateRole
             {
                 return Result<RoleDTO>.Failure(ex.Message);
             }
-            var result = Result<RoleDTO>.Success();
             var mapValue = _mapper.Map<RoleDTO>(role);
-            result.Value = mapValue;
-            return result;
+            return Result<RoleDTO>.Success(mapValue);
         }
     }
 }

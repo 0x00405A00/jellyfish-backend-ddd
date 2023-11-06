@@ -1,8 +1,10 @@
 ﻿using Infrastructure.Abstractions;
 using Infrastructure.DatabaseEntity;
+using Infrastructure.Repository.Primitives;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Shared.DataFilter.Infrastructure;
+using System.Configuration;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repository
@@ -77,6 +79,45 @@ namespace Infrastructure.Repository
 
             value = value.OrderQuery(columnSearchAggregateDTO);
             return this.MapToDomainEntity(value, true);
+        }
+        public override async Task<RepositoryResponse<ICollection<Domain.Entities.User.User>>> ListAsyncWithMeta(Expression<Func<DatabaseEntity.User, bool>> expression = null)
+        {
+            int count = await CountMaxAsync();
+            var value = await _dbSet.ExpressionQuery(expression)
+                                    .Include(i => i.UserTypeUu)
+                                    .Include(i => i.UserRelationToRoles)
+                                    .ThenInclude(ur => ur.RoleUu)
+                                    .Include(i => i.UserFriendUserUus)
+                                    .ThenInclude(uf => uf.FriendUserUu)
+                                    .ThenInclude(ut => ut.UserTypeUu)
+                                    .AsNoTracking()
+                                    .AsSingleQuery()
+                                    .ToListAsync();
+
+            var data = this.MapToDomainEntity(value, true);
+            var meta = new Meta { TotalItems = count };
+
+            return new RepositoryResponse<ICollection<Domain.Entities.User.User>>(data, ref meta);
+        }
+        public override async Task<RepositoryResponse<ICollection<Domain.Entities.User.User>>> ListAsyncWithMeta(ColumnSearchAggregateDTO? columnSearchAggregateDTO)
+        {
+            int count = await CountMaxAsync();
+            var value = await _dbSet.ExpressionQuery(columnSearchAggregateDTO)
+                                    .Include(i => i.UserTypeUu)
+                                    .Include(i => i.UserRelationToRoles)
+                                    .ThenInclude(ur => ur.RoleUu)
+                                    .Include(i => i.UserFriendUserUus)
+                                    .ThenInclude(uf => uf.FriendUserUu)
+                                    .ThenInclude(ut => ut.UserTypeUu)
+                                    .AsNoTracking()
+                                    .AsSingleQuery()
+                                    .ToListAsync();
+
+            value = value.OrderQuery(columnSearchAggregateDTO);
+            var data = this.MapToDomainEntity(value, true);
+            var meta = new Meta { TotalItems = count };
+
+            return new RepositoryResponse<ICollection<Domain.Entities.User.User>>(data, ref meta, columnSearchAggregateDTO);
         }
         public override ICollection<Domain.Entities.User.User> List(ColumnSearchAggregateDTO columnSearchAggregateDTO)
         {

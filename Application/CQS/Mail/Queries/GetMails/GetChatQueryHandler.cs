@@ -21,10 +21,9 @@ namespace Application.CQS.Mail.Queries.GetMails
         public async Task<Result<List<MailOutboxDTO>>> Handle(GetMailsQuery request, CancellationToken cancellationToken)
         {
             var data = await mailoutboxRepository.ListAsync();
-            var res = Result<List<MailOutboxDTO>>.Success();
-
-            res.Value = _mapper.Map<List<MailOutboxDTO>>(data);
-            return res;
+            
+            var result = _mapper.Map<List<MailOutboxDTO>>(data);
+            return Result<List<MailOutboxDTO>>.Success(result);
         }
     }
 }

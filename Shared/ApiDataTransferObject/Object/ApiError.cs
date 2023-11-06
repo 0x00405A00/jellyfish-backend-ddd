@@ -12,9 +12,16 @@ namespace Shared.ApiDataTransferObject.Object
         public string Details {  get; set; }
         [JsonPropertyName("code")]
         public int Code {  get; set; }
-        public ApiError() 
+        public ApiError()
         {
 
+        }
+        public ApiError(string title,string message,string details,int code)
+        {
+            Title = title;
+            Message = message;
+            Details = details;
+            Code = code;
         }
     }
 }

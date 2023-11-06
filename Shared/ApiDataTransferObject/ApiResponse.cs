@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Shared.ApiDataTransferObject
 {
-    public class ApiResponse<T>
+    public partial class ApiResponse<T>
     {
         [JsonPropertyName("data")]
         public ApiData<T> Data { get; set; }
@@ -20,7 +20,7 @@ namespace Shared.ApiDataTransferObject
 
         }
 
-        public static ApiResponse<T> Create(Result<T> result, params ApiError[] apiError)
+        public static ApiResponse<T> Create(Result<T> result, PaginationBase paginationBase, params ApiError[] apiError)
         {
             var input = result.Value;
             if(!result.IsSuccess)
@@ -32,19 +32,19 @@ namespace Shared.ApiDataTransferObject
                     apiError.Append(errorObj);
                 }
             }
-            return Create(input, apiError);
+            return Create(input,paginationBase, apiError);
         }
-        public static ApiResponse<T> Create(T data, params ApiError[] apiError)
+        public static ApiResponse<T> Create(T data, PaginationBase paginationBase, params ApiError[] apiError)
         {
             string type = null;
-            if(ListExtension.IsGenericList(data))
+            bool isList = ListExtension.IsGenericList(data);
+            if (isList)
             {
                 var t = typeof(T).GetGenericArguments();
                 type = t.FirstOrDefault().Name;
             }
             else
             {
-
                 type =nameof(data); 
             }
 
@@ -52,6 +52,19 @@ namespace Shared.ApiDataTransferObject
             response.Data = new ApiData<T> { Value = data,Type= type };
             response.Errors = apiError?.ToList();
             response.Meta = ApiMeta.Create();
+
+            if(isList)
+            {
+                var pagination = new Pagination();
+                pagination.TotalItems = paginationBase.TotalItems;
+                pagination.CurrentPage = paginationBase.CurrentPage;
+                pagination.PrevPage = paginationBase.PrevPage;
+                pagination.PerPage = paginationBase.PerPage;
+                pagination.NextPage = paginationBase.NextPage;
+                pagination.TotalPages = paginationBase.TotalPages;
+                response.Meta.Pagination = pagination;
+            }
+
             return response;
         }
     }

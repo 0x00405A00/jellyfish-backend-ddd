@@ -7,7 +7,9 @@ namespace Shared.ApiDataTransferObject.Object
         [JsonPropertyName("copyright")]
         public string Copyright {  get; set; }
         [JsonPropertyName("authors")]
-        public List<string> Authors { get; set; }  
+        public List<string> Authors { get; set; }
+        [JsonPropertyName("pagination")]
+        public Pagination? Pagination { get; set; }
         public ApiMeta() 
         {
 

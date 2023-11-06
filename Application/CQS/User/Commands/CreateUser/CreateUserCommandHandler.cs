@@ -119,11 +119,9 @@ namespace Application.CQS.User.Commands.CreateUser
                     return Result<UserDTO>.Failure(ex.Message);
                 }
             }
-            var result = Result<UserDTO>.Success();
             var mapValue = _mapper.Map<UserDTO>(user);
             mapValue.Password = null;
-            result.Value = mapValue;
-            return result;
+            return Result<UserDTO>.Success(mapValue);
         }
     }
 }

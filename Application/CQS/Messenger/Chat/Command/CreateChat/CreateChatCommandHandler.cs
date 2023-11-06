@@ -65,10 +65,8 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
             }
 
             _chatRepository.Add(chat);
-            var result = Result<ChatDTO>.Success();
             var mapValue = _mapper.Map<ChatDTO>(chat);
-            result.Value = mapValue;
-            return result;
+            return Result<ChatDTO>.Success(mapValue);
         }
 
     }

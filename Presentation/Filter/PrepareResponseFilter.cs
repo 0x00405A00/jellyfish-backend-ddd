@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Shared.ApiDataTransferObject;
+using Shared.ApiDataTransferObject.Object;
 
 namespace Presentation.Filter
 {
@@ -14,7 +15,7 @@ namespace Presentation.Filter
             {
 
                 var currentResult = ((ObjectResult)currentResponse).Value;
-                if(currentResult is Result)
+                if(currentResult is Result result)
                 {
                     var currentResultType = currentResult.GetType();
 
@@ -24,10 +25,13 @@ namespace Presentation.Filter
                     var apiResponseTypeGenericInstance = Activator.CreateInstance(apiResponseTypeGeneric);
                     var createMethode = apiResponseTypeGeneric.GetMethods().Where(x => x.Name == "Create" && x.GetParameters().First().Name == "result").First();
 
-                    var responseFromMethod = createMethode.Invoke(apiResponseTypeGenericInstance, new object[] { currentResult, null });
-                    var data = responseFromMethod.GetType().GetProperties().Where(x => x.Name == "HasErrors").First();
-                    bool hasErrors = (bool)data.GetValue(responseFromMethod);
-                    context.Result = !hasErrors ? new OkObjectResult(responseFromMethod) : new BadRequestObjectResult(responseFromMethod);
+                    var paginationBase = new PaginationBase(result.Meta);
+
+                    var responseFromMethod = createMethode.Invoke(apiResponseTypeGenericInstance, new object[] { currentResult, paginationBase, null });
+                    var hasErrorsProp = responseFromMethod.GetType().GetProperties().Where(x => x.Name == "HasErrors").First();
+                    bool hasErrorsPropValue = (bool)hasErrorsProp.GetValue(responseFromMethod);
+
+                    context.Result = !hasErrorsPropValue ? new OkObjectResult(responseFromMethod) : new BadRequestObjectResult(responseFromMethod);
                 }
             }
         }

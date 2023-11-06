@@ -12,5 +12,10 @@ namespace Shared.DataFilter.Presentation
 
         public int page_offset { get; set; } = -1;
         public int page_size { get { return _pageSize; } set { _pageSize = value > MaxPageSize ? MaxPageSize : value; } }
+
+        public bool IsValidPaginationParam()
+        {
+            return page_size != -1 && page_offset!=-1;
+        }
     }
 }

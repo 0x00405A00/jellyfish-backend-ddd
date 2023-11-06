@@ -314,8 +314,8 @@ namespace WebFrontEnd.Service.Backend.Api
                 try
                 {
                     string responseJson = resp.Content;
-                    var apiResponseModel = JsonSerializer.Deserialize<ApiResponse<T1>>(responseJson);
-                    responseModel.ApiResponseDeserialized = apiResponseModel.Data.Value;
+                    var apiResponseModel = JsonSerializer.Deserialize<T1>(responseJson);
+                    responseModel.ApiResponseDeserialized = apiResponseModel;
                 }
                 catch (Exception ex)
                 {

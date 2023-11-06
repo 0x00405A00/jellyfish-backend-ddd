@@ -28,10 +28,8 @@ namespace Application.CQS.Messenger.User.Queries.GetUserById
             {
                 throw new UserNotFoundException(request.Id);
             }
-            var res = Result<MessengerUserDTO>.Success();
-
-            res.Value = _mapper.Map<MessengerUserDTO>(data);
-            return res;
+            var result = _mapper.Map<MessengerUserDTO>(data);
+            return Result<MessengerUserDTO>.Success(result);
         }
     }
 }

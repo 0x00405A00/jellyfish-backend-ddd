@@ -14,14 +14,13 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Abstractions;
-using Shared.ApiDataTransferObject;
+using Presentation.WebResponse;
 using Shared.Const;
 using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
 using Shared.DataTransferObject.Messenger;
 using System.Net.Mime;
 using WebApi.Abstractions;
-using Presentation.WebResponse;
 
 namespace Presentation.Controllers.Api.v1
 {
@@ -196,6 +195,7 @@ namespace Presentation.Controllers.Api.v1
 
         public override async Task<IActionResult> ReadAll([FromQuery] SearchParams? searchParams,CancellationToken cancellationToken)
         {
+
             var command = new Application.CQS.User.Queries.GetUsers.GetUsersQuery(searchParams);
 
             var result = await Sender.Send(command, cancellationToken);
@@ -223,7 +223,7 @@ namespace Presentation.Controllers.Api.v1
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
             var command = new DeleteUserCommand(userUuid, id);
-
+            
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
         }

@@ -7,11 +7,11 @@ using Shared.DataTransferObject;
 
 namespace Application.CQS.User.Queries.GetUserById
 {
-    internal sealed class GetUsersQueryHandler : IQueryHandler<GetUserByIdQuery, UserDTO>
+    internal sealed class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, UserDTO>
     {
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-        public GetUsersQueryHandler(
+        public GetUserByIdQueryHandler(
             IMapper mapper,
             IUserRepository userRepository)
         {
@@ -25,10 +25,9 @@ namespace Application.CQS.User.Queries.GetUserById
             {
                 throw new UserNotFoundException(request.Id);
             }
-            var res = Result<UserDTO>.Success();
 
-            res.Value = _mapper.Map<UserDTO>(data);
-            return res;
+            var result  = _mapper.Map<UserDTO>(data);
+            return Result<UserDTO>.Success(result);
         }
     }
 }

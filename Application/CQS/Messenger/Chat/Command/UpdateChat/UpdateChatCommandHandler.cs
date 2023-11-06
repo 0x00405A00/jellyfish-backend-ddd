@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using Domain.Entities.Chats.Exception;
 using Domain.Exceptions;
+using Domain.Primitives;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 
@@ -86,8 +87,7 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateChat
             }
 
             _chatRepository.Update(chat);
-            var result = Result<Guid>.Success();
-            return result;
+            return Result<Guid>.Success(chat.Uuid.ToGuid());
         }
     }
 }

@@ -120,7 +120,7 @@
         if(isEditDialog)//Edit
         {
             var url = "/user/" + User.Uuid + "";
-            var updateUserRequest = await WebApiClient.Request<UserDTO, UserDTO>(url, RestSharp.Method.Put, cancellationToken.Token, User, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+            var updateUserRequest = await WebApiClient.Request < ApiResponse<UserDTO>, UserDTO>(url, RestSharp.Method.Put, cancellationToken.Token, User, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
             if (updateUserRequest.IsSuccess)
             {
 
@@ -128,7 +128,7 @@
         }
         else//Add
         {
-            var addUserRequest = await WebApiClient.Request<UserDTO, UserDTO>("/user", RestSharp.Method.Post, cancellationToken.Token, User, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+            var addUserRequest = await WebApiClient.Request < ApiResponse<UserDTO>, UserDTO>("/user", RestSharp.Method.Post, cancellationToken.Token, User, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
             if (addUserRequest.IsSuccess)
             {
                 

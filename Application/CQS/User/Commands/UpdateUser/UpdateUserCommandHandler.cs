@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using Domain.Entities.User.Exception;
 using Domain.Exceptions;
+using Domain.Primitives;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using System.Diagnostics.CodeAnalysis;
@@ -116,7 +117,7 @@ namespace Application.CQS.User.Commands.UpdateUser
 
             _userRepository.Update(user);
 
-            return Result<Guid>.Success();
+            return Result<Guid>.Success(user.Uuid.ToGuid());
         }
     }
 }

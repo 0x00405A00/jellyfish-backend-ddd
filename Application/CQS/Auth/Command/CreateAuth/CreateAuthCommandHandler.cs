@@ -87,14 +87,13 @@ namespace Application.CQS.Auth.Command.CreateAuth
             {
                 return Result<AuthDTO>.Failure(ex.Message);
             }
-            var result = Result<AuthDTO>.Success();
-            result.Value = new AuthDTO {
+            var authDto = new AuthDTO {
                 Token = tokenStr,
                 RefreshToken = refreshTokenStr,
                 TokenExpiresIn = DateTimeExtension.DateTimeExtension.UnixTimeStampToDateTime((long)token.Payload.Exp),
                 RefreshTokenExpiresIn = DateTimeExtension.DateTimeExtension.UnixTimeStampToDateTime((long)refreshToken.Payload.Exp),
             };
-            return result;
+            return Result<AuthDTO>.Success(authDto);
         }
     }
 }

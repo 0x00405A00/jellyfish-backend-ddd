@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Shared.DataFilter.Presentation
+﻿namespace Shared.DataFilter.Presentation
 {
     [Serializable]
     public class SearchParams : PaginationParams

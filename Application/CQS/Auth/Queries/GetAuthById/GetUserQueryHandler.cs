@@ -21,17 +21,15 @@ namespace Application.CQS.Auth.Queries.GetAuthById
             _authRepository = authRepository;
             _unitOfWork = unitOfWork;
         }
-        public Task<Result<AuthDTO>> Handle(GetAuthByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Result<AuthDTO>> Handle(GetAuthByIdQuery request, CancellationToken cancellationToken)
         {
             var data = _authRepository.GetAsync(x => x.Uuid == request.Id);
             if (data == null)
             {
                 throw new UserNotFoundException(request.Id);
             }
-            var res = Result<AuthDTO>.Success();
-
-            res.Value = _mapper.Map<AuthDTO>(data);
-            return Task.FromResult(res);
+            var result = _mapper.Map<AuthDTO>(data);
+            return Result<AuthDTO>.Success(result);
         }
     }
 }

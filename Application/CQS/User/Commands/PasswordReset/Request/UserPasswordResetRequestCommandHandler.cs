@@ -53,7 +53,7 @@ namespace Application.CQS.User.Commands.PasswordReset.Request
             {
                 mediator.Publish(e);
             });
-            return Result<bool>.Success();
+            return Result<bool>.Success(true);
         }
     }
 }

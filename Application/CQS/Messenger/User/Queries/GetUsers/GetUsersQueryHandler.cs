@@ -24,11 +24,8 @@ namespace Application.CQS.Messenger.User.Queries.GetUsers
         {
             var data = await _userRepository.ListAsync(x => x.ActivationDatetime != null);
 
-            var res = Result<List<MessengerUserDTO>>.Success();
-
             var t = _mapper.Map<List<MessengerUserDTO>>(data);
-            res.Value = t;
-            return res;
+            return Result<List<MessengerUserDTO>>.Success(t);
         }
     }
 }

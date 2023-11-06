@@ -1,6 +1,7 @@
 ﻿using Domain.Primitives;
 using Infrastructure.Abstractions;
 using Infrastructure.Mapper;
+using Infrastructure.Repository.Primitives;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Shared.DataFilter;
@@ -58,6 +59,11 @@ namespace Infrastructure.Repository
             var value = _dbSet.ExpressionQuery(columnSearchAggregateDTO);
             return value.ToList();
         }
+        int IGenericRepository<TDbEntity>.CountMax()
+        {
+            return _dbSet.Count();
+        }
+
         #endregion
 
         #region Async
@@ -96,6 +102,11 @@ namespace Infrastructure.Repository
             var value = _dbSet.ExpressionQuery(columnSearchAggregateDTO);
 
             return await value.ToListAsync();
+        }
+
+        public Task<int> CountMaxAsync()
+        {
+            return _dbSet.CountAsync();
         }
         #endregion
     }
@@ -145,6 +156,10 @@ namespace Infrastructure.Repository
 
             return this.MapToDomainEntity(value, true);
         }
+        public int CountMax()
+        {
+            return _dbSet.Count();
+        }
         #endregion
 
         #region Mapping
@@ -188,6 +203,26 @@ namespace Infrastructure.Repository
             return this.MapToDomainEntity(value, true);
         }
 
+        public virtual async Task<RepositoryResponse<ICollection<TEntity>>> ListAsyncWithMeta(Expression<Func<TDbEntity, bool>> expression = null)
+        {
+            int count = await CountMaxAsync();
+            var value = await base.ListAsync(expression);
+            var data = this.MapToDomainEntity(value, true);
+            var meta = new Meta { TotalItems = count };
+
+            return new RepositoryResponse<ICollection<TEntity>>(data,ref meta);
+        }
+
+        public virtual async Task<RepositoryResponse<ICollection<TEntity>>> ListAsyncWithMeta(ColumnSearchAggregateDTO? columnSearchAggregateDTO)
+        {
+            int count = await CountMaxAsync();
+            var value = await base.ListAsync(columnSearchAggregateDTO);
+            var data = this.MapToDomainEntity(value, true);
+            var meta = new Meta { TotalItems = count };
+
+            return new RepositoryResponse<ICollection<TEntity>>(data, ref meta);
+        }
+
         public async Task AddAsync(TEntity entity)
         {
             var dbModel = MapToDatabaseEntity(entity, false);
@@ -205,6 +240,8 @@ namespace Infrastructure.Repository
             var dbModel = MapToDatabaseEntity(entity, false);
             base.UpdateAsync(dbModel);
         }
+
+
 
 
         #endregion

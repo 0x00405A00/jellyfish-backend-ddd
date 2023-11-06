@@ -21,7 +21,7 @@ namespace Application.CQS.User.Commands.RegisterUser.Activation
 
         public async Task<Result<UserDTO>> Handle(UserActivationCommand request, CancellationToken cancellationToken)
         {
-            var result = Result<UserDTO>.Success();
+
             using (var scope = serviceProvider.CreateAsyncScope())
             {
                 var userRepository = scope.ServiceProvider.GetService<IUserRepository>();
@@ -48,9 +48,8 @@ namespace Application.CQS.User.Commands.RegisterUser.Activation
 
                 var mapValue = mapper.Map<UserDTO>(user);
                 mapValue.Password = null;
-                result.Value = mapValue;
+                return Result<UserDTO>.Success(mapValue);
             }
-            return result;
         }
     }
 }

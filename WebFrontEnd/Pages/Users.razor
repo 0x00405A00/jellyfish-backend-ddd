@@ -38,6 +38,7 @@
                          </TemplateColumn>
                      </Columns>
                  </MudDataGrid>
+                <MudPagination ShowFirstButton="true" BoundaryCount="2" MiddleCount="5" @bind-Selected="@_selectedPage" ShowLastButton="true" Count="22" Class="mt-4" />
             }
             else
             {
@@ -55,6 +56,7 @@
 
 @code {
 
+    private int _selectedPage = 1;
     private AuthDTO _token;
     private HashSet<UserDTO> SelectedItems = new HashSet<UserDTO>();
     private CancellationTokenSource cancellationToken = new();
@@ -112,9 +114,12 @@
     {
 
 
-        var requestUserTypes = WebApiClient.Request<List<UserTypeDTO>, object>("/user/user-types", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
-        var requestRoles = WebApiClient.Request<List<RoleDTO>, object>("/role", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
-        var requestUsers = WebApiClient.Request<List<UserDTO>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+        var requestUserTypes = WebApiClient.Request<ApiResponse<List<UserTypeDTO>>, object>("/user/user-types", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+        var requestRoles = WebApiClient.Request <ApiResponse<List<RoleDTO>>, object>("/role", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+        var query = new List<KeyValuePair<string, string>>();
+        query.Add(new KeyValuePair<string, string>("page_size", "20"));
+        query.Add(new KeyValuePair<string, string>("page_offset", _selectedPage.ToString()));
+        var requestUsers = WebApiClient.Request < ApiResponse<List<UserDTO>>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, query: query, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
 
 
         var responseUsers = await requestUsers;
@@ -122,15 +127,15 @@
         var responseRoles = await requestRoles;
         if (responseUsers.IsSuccess)
         {
-            UsersList = responseUsers.ApiResponseDeserialized;
+            UsersList = responseUsers.ApiResponseDeserialized.Data.Value;
         }
         if (responseUserTypes.IsSuccess)
         {
-            UserTypesList = responseUserTypes.ApiResponseDeserialized;
+            UserTypesList = responseUserTypes.ApiResponseDeserialized.Data.Value;
         }
         if (responseRoles.IsSuccess)
         {
-            RoleList = responseRoles.ApiResponseDeserialized;
+            RoleList = responseRoles.ApiResponseDeserialized.Data.Value;
         }
     }
     public async Task ResetPassword()
@@ -175,10 +180,10 @@
             foreach (var user in SelectedItems)
             {
                 var url = "/user/" + user.Uuid + "";
-                var deleteUserRequest = await WebApiClient.Request<Guid, object>(url, RestSharp.Method.Delete, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+                var deleteUserRequest = await WebApiClient.Request < ApiResponse<Guid>, object>(url, RestSharp.Method.Delete, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
                 if (deleteUserRequest.IsSuccess)
                 {
-                    var userUuid = UsersList.Where(x => x.Uuid == deleteUserRequest.ApiResponseDeserialized).First();
+                    var userUuid = UsersList.Where(x => x.Uuid == deleteUserRequest.ApiResponseDeserialized.Data.Value).First();
                     UsersList.Remove(userUuid);
                 }
             }

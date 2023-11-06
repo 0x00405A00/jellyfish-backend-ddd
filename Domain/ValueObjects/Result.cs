@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.ValueObjects
+﻿namespace Domain.ValueObjects
 {
     public class Result 
     {
         public bool IsSuccess { get; protected set; }
         public Error.Error Error { get; set; }
+        public Meta Meta { get; protected set; }
 
         public static Result Success()
         {
@@ -26,12 +21,26 @@ namespace Domain.ValueObjects
     }
     public class Result<T> : Result
     {
-        public T Value { get; set; }
-
-        public new static Result<T> Success()
+        public T Value { get; private set; }
+        private Result(T? value=default)
         {
-            var result = new Result<T>();
+            Value = value;
+        }
+        public Result()
+        {
+
+        }
+        public new static Result<T> Success(T? value)
+        {
+            var result = new Result<T>(value);
             result.IsSuccess = true;
+            return result;
+        }
+        public new static Result<T> Success(T? value,Meta meta)
+        {
+            var result = new Result<T>(value);
+            result.IsSuccess = true;
+            result.Meta = meta;
             return result;
         }
         public new static Result<T> Failure(string errorMessage)

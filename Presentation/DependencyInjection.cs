@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Authentification;
 using Microsoft.OpenApi.Models;
 using Presentation.Filter;
+using Presentation.Modelbinder;
 using Presentation.Swagger.OperationFilter;
 using Presentation.Swagger.SignalR;
 using Shared.Const;
@@ -40,7 +41,10 @@ namespace Presentation
                                   policy.RequireClaim(AuthorizationConst.Claims.ClaimTypeIsActivatedUser, bool.TrueString));
             });
             services.AddControllers(x => {
-                x.Filters.Add<PrepareResponseFilter>();
+                //Filters
+                x.Filters.Add<PrepareResponseFilter>();//wandelt ObjectResult von Action in Ziel Json Struktur (ApiResponse<T>)
+                //ModelBinder
+                x.ModelBinderProviders.Insert(0,new QueryParametersModelBinderProvider());//Für Query Param falls gesetzt
             })
                 .AddApplicationPart(WebApi.AssemblyReference.Assembly)
                 .AddJsonOptions(x => {

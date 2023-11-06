@@ -21,10 +21,8 @@ namespace Application.CQS.Role.Queries.GetRoles
         {
             var roles = await _roleRepository.ListAsync(x=>x.DeletedTime==null);
 
-            var result = Result<List<RoleDTO>>.Success();
             var mapValue = _mapper.Map<List<RoleDTO>>(roles);
-            result.Value = mapValue;
-            return result;
+            return Result<List<RoleDTO>>.Success(mapValue);
         }
     }
 }

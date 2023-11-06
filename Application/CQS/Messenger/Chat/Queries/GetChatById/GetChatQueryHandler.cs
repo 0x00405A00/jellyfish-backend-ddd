@@ -29,10 +29,9 @@ namespace Application.CQS.Messenger.Chat.Queries.GetChatById
             {
                 throw new UserNotFoundException(request.Id);
             }
-            var res = Result<ChatDTO>.Success();
-            
-            res.Value = _mapper.Map<ChatDTO>(data);
-            return res;
+
+            var result = _mapper.Map<ChatDTO>(data);
+            return Result<ChatDTO>.Success(result);
         }
     }
 }

@@ -3,7 +3,6 @@ using AutoMapper;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Shared.DataFilter;
-using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
 
 namespace Application.CQS.User.Queries.GetUsers
@@ -22,13 +21,11 @@ namespace Application.CQS.User.Queries.GetUsers
         public async Task<Result<List<UserDTO>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
             var searchFilterDto = ColumnSearchAggregateDTOExtension.GetFiltersFromSearchParams<UserDTO,Infrastructure.DatabaseEntity.User>(request.SearchParams);
-            var data = await _userRepository.ListAsync(searchFilterDto);
+            var data = await _userRepository.ListAsyncWithMeta(searchFilterDto);
 
-            var res = Result<List<UserDTO>>.Success();
-
-            var t = _mapper.Map<List<UserDTO>>(data);
-            res.Value = t;
-            return res;
+            var t = _mapper.Map<List<UserDTO>>(data.Data);
+            var meta = Meta.Create(data.Meta.TotalItems, data.ColumnSearchAggregateDTO.SearchParams.page_size, data.ColumnSearchAggregateDTO.SearchParams.page_offset);
+            return Result<List<UserDTO>>.Success(t, meta);
         }
     }
 }

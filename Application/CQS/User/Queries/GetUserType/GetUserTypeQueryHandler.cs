@@ -22,11 +22,8 @@ namespace Application.CQS.User.Queries.GetUserType
         {
             var data = await _userTypeRepository.ListAsync();
 
-            var res = Result<List<UserTypeDTO>>.Success();
-
             var t = _mapper.Map<List<UserTypeDTO>>(data);
-            res.Value = t;
-            return res;
+            return Result<List<UserTypeDTO>>.Success(t);
         }
     }
 }

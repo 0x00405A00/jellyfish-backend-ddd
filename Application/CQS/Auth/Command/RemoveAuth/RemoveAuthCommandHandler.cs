@@ -29,7 +29,7 @@ namespace Application.CQS.Auth.Command.RemoveAuth
 
             _authRepository.Remove(auth);
 
-            return Result<Guid>.Success();
+            return Result<Guid>.Success(auth.Uuid);
         }
     }
 }

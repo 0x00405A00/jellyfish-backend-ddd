@@ -44,9 +44,7 @@ namespace Application.CQS.User.Commands.DeleteUser
                 return Result<Guid>.Failure(ex.Message);
             }
 
-            var result = Result<Guid>.Success();
-            result.Value =user.Uuid.ToGuid();
-            return result;
+            return Result<Guid>.Success(user.Uuid.ToGuid());
         }
     }
 }
