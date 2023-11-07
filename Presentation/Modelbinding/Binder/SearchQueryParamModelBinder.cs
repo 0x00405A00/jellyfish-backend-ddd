@@ -2,7 +2,7 @@
 using Shared.CustomException;
 using Shared.DataFilter.Presentation;
 
-namespace Presentation.Modelbinder
+namespace Presentation.Modelbinding.Binder
 {
     public class SearchQueryParamModelBinder : IModelBinder
     {
@@ -22,9 +22,9 @@ namespace Presentation.Modelbinder
             string filters = filtersValue.Any() && filtersValue.Count() == 1 ? filtersValue.FirstValue : null;
             string order_by = order_byValue.Any() && order_byValue.Count() == 1 ? order_byValue.FirstValue : null;
 
-            if (((page_sizeValue.Any()) || page_offsetValue.Any()))
+            if (page_sizeValue.Any() || page_offsetValue.Any())
             {
-                if(page_sizeValue.FirstValue==null || page_offsetValue.FirstValue==null)
+                if (page_sizeValue.FirstValue == null || page_offsetValue.FirstValue == null)
                 {
                     bindingContext.Result = ModelBindingResult.Failed();
                     throw new ModelBindingFailedException($"{nameof(SearchParams.page_size)} or {nameof(SearchParams.page_offset)} is not given, both are required");

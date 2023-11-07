@@ -1,7 +1,8 @@
 ﻿using Infrastructure.Authentification;
 using Microsoft.OpenApi.Models;
 using Presentation.Filter;
-using Presentation.Modelbinder;
+using Presentation.Modelbinding.Provider;
+using Presentation.Modelbinding.Provider.HttpQuery;
 using Presentation.Swagger.OperationFilter;
 using Presentation.Swagger.SignalR;
 using Shared.Const;
@@ -42,9 +43,11 @@ namespace Presentation
             });
             services.AddControllers(x => {
                 //Filters
-                x.Filters.Add<PrepareResponseFilter>();//wandelt ObjectResult von Action in Ziel Json Struktur (ApiResponse<T>)
+                x.Filters.Add<PrepareResponseFailoverFilter>(int.MinValue+1);//wandelt ObjectResult von Action in Ziel Json Struktur (ApiResponse<T>)
+                x.Filters.Add<PrepareResponseFilter>(int.MinValue);//wandelt ObjectResult von Action in Ziel Json Struktur (ApiResponse<T>)
                 //ModelBinder
-                x.ModelBinderProviders.Insert(0,new QueryParametersModelBinderProvider());//Für Query Param falls gesetzt
+                x.ModelBinderProviders.Insert(0, new QueryParametersModelBinderProvider());//Für Query Param falls gesetzt
+                x.ModelBinderProviders.Insert(1, new BodyModelBinderProvider());//Für Query Param falls gesetzt
             })
                 .AddApplicationPart(WebApi.AssemblyReference.Assembly)
                 .AddJsonOptions(x => {

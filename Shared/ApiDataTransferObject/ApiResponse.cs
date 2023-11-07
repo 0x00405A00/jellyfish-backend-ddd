@@ -8,33 +8,37 @@ namespace Shared.ApiDataTransferObject
     public partial class ApiResponse<T>
     {
         [JsonPropertyName("data")]
-        public ApiData<T> Data { get; set; }
+        public ApiData<T>? Data { get; set; }
         [JsonPropertyName("errors")]
-        public List<ApiError> Errors { get; set; }
+        public List<ApiError>? Errors { get; set; }
         [JsonIgnore()]
         public bool HasErrors => Errors!=null&& Errors.Any();
         [JsonPropertyName("meta")]
-        public ApiMeta Meta { get; set; }
+        public ApiMeta? Meta { get; set; }
         public ApiResponse() 
         {
 
         }
 
-        public static ApiResponse<T> Create(Result<T> result, PaginationBase paginationBase, params ApiError[] apiError)
+        public static ApiResponse<T> Create(Result<T> result, PaginationBase paginationBase, List<ApiError> apiError)
         {
             var input = result.Value;
             if(!result.IsSuccess)
             {
+                if(apiError==null)
+                {
+                    apiError =new List<ApiError>();
+                }
                 if(result.Error != null)
                 {
                     var errorObj = new ApiError();
                     errorObj.Message = result.Error.Message;
-                    apiError.Append(errorObj);
+                    apiError.Add(errorObj);
                 }
             }
             return Create(input,paginationBase, apiError);
         }
-        public static ApiResponse<T> Create(T data, PaginationBase paginationBase, params ApiError[] apiError)
+        public static ApiResponse<T> Create(T data, PaginationBase paginationBase, List<ApiError> apiError)
         {
             string type = null;
             bool isList = ListExtension.IsGenericList(data);

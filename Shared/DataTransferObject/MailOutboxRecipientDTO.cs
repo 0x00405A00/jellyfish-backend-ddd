@@ -2,7 +2,7 @@
 
 namespace Shared.DataTransferObject
 {
-    public class MailOutboxRecipientDTO
+    public class MailOutboxRecipientDTO : IDataTransferObject
     {
         [JsonPropertyName("email")]    
         public string Email { get; set; } = null!;

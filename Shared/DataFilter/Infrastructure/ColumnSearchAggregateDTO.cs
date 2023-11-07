@@ -9,18 +9,33 @@ namespace Shared.DataFilter.Infrastructure
         public SearchParams SearchParams { get; private set; }=new SearchParams();
         public List<ColumnFilter> Filters { get; private set; } = new List<ColumnFilter>();
         public List<ColumnSorting> Sorting { get; private set; } = new List<ColumnSorting>();
+        public List<Domain.Error.Error> Errors { get; private set; } = new List<Domain.Error.Error>();
+        public bool HasErrors=> Errors.Any();
         public bool HasPaginationParamsSet
         {
             get
             {
-                return SearchParams.page_offset!=-1 || SearchParams.page_size != -1;
+                return SearchParams.page_offset!=-1 && SearchParams.page_size != -1;
             }
         }
-        public ColumnSearchAggregateDTO(SearchParams searchParams,List<ColumnFilter> columnFilters,List<ColumnSorting> columnSortings)
+        public string ErrorsToString
+        {
+            get
+            {
+                string str = null;
+                foreach (var err in Errors)
+                {
+                    str += $"{err.Message}"+ Environment.NewLine;
+                }
+                return str;
+            }
+        }
+        public ColumnSearchAggregateDTO(SearchParams searchParams,List<ColumnFilter> columnFilters,List<ColumnSorting> columnSortings,List<Domain.Error.Error> errors)
         {
             Filters = columnFilters;
             Sorting = columnSortings;
             SearchParams = searchParams;
+            Errors = errors;    
         }
         public Expression<Func<T, bool>> GetExpression<T>(string className)
             where T : class

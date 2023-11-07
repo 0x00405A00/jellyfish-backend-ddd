@@ -2,7 +2,7 @@
 
 namespace Shared.DataTransferObject
 {
-    public class PasswordResetRequestDTO
+    public class PasswordResetRequestDTO : IDataTransferObject
     {
         [JsonPropertyName("email")]
         public string Email { get; set; }

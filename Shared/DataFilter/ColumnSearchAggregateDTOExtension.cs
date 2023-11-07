@@ -10,6 +10,7 @@ namespace Shared.DataFilter
     {
         public static ColumnSearchAggregateDTO GetFiltersFromSearchParams<TPresentationModel,TDBEntity>(this SearchParams searchParams)
         {
+            List<Domain.Error.Error> errors = new List<Domain.Error.Error>();
             if (searchParams == null)
             {
                 return null;
@@ -42,6 +43,14 @@ namespace Shared.DataFilter
                         }
                     }
                 }
+                for(int i=0; i<columnFilters.Count; i++)
+                {
+                    columnFilters[i].Op = columnFilters[i].GetOperatorFromOp();
+                    if(columnFilters[i].IsInvalidOperator)
+                    {
+                        errors.Add(new Domain.Error.Error($"field: {columnFilters[i].field} with given operator {columnFilters[i].op} is not valid"));
+                    }
+                }
             }
             List<ColumnSorting> columnSorting = new List<ColumnSorting>();
             if (!String.IsNullOrEmpty(searchParams.order_by))
@@ -72,7 +81,7 @@ namespace Shared.DataFilter
 
 
 
-            return new ColumnSearchAggregateDTO(searchParams, columnFilters, columnSorting);
+            return new ColumnSearchAggregateDTO(searchParams, columnFilters, columnSorting,errors);
         }
     }
 }

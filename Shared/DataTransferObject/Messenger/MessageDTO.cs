@@ -2,7 +2,7 @@
 
 namespace Shared.DataTransferObject.Messenger
 {
-    public class MessageDTO
+    public class MessageDTO : IDataTransferObject
     {
         [JsonPropertyName("uuid")]
         public Guid? Uuid { get; set; }

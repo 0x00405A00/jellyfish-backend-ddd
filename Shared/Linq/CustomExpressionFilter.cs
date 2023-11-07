@@ -3,22 +3,22 @@ using System.Linq.Expressions;
 
 namespace Shared.Linq
 {
-    public static class CustomExpressionFilter<T> where T : class
+    public static partial class CustomExpressionFilter<T> where T : class
     {
-        public class ExpressionFilter
-        {
-            public string ColumnName { get; set; }
-            public string Value { get; set; }
-        }
         public static Expression<Func<T, bool>> CustomFilter(List<ColumnFilter> columnFilters, string className)
         {
             Expression<Func<T, bool>> filters = null;
+            bool isAnyInvalidOperatorIncluded = columnFilters.Any(x => x.IsInvalidOperator);
+            if(isAnyInvalidOperatorIncluded)
+            {
+                throw new InvalidOperationException($"{columnFilters} include some invalid filters (Op==OPERATOR.INVALID)");
+            }
             try
             {
                 var expressionFilters = new List<ExpressionFilter>();
                 foreach (var item in columnFilters)
                 {
-                    expressionFilters.Add(new ExpressionFilter() { ColumnName = item.field, Value = item.value });
+                    expressionFilters.Add(new ExpressionFilter() { ColumnName = item.field, Value = item.value, Operator = item.Op });
                 }
                 // Create the parameter expression for the input data
                 var parameter = Expression.Parameter(typeof(T), className);

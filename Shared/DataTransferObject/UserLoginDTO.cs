@@ -2,7 +2,7 @@
 
 namespace Shared.DataTransferObject
 {
-    public class UserLoginDTO
+    public class UserLoginDTO 
     {
 
         [JsonPropertyName("email")]

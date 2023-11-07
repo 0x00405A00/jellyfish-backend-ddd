@@ -2,7 +2,7 @@
 
 namespace Shared.DataTransferObject
 {
-    public class UserTypeDTO
+    public class UserTypeDTO: IDataTransferObject
     {
         [JsonPropertyName("uuid")]
         public Guid Uuid { get; set; }

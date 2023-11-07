@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shared.DataTransferObject
+﻿namespace Shared.DataTransferObject
 {
-    public abstract class AbstractUserDTO
+    public abstract class AbstractUserDTO : IDataTransferObject
     {
     }
 }

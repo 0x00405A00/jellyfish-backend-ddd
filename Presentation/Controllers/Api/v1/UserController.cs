@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Abstractions;
 using Presentation.WebResponse;
+using Shared.ApiDataTransferObject;
 using Shared.Const;
 using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
@@ -226,6 +227,14 @@ namespace Presentation.Controllers.Api.v1
             
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
+        }
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [HttpPost("test2")]
+        public async Task<IActionResult> Test2([FromBody] UserDTO user)
+        {
+
+            return Ok();
         }
     }
 }

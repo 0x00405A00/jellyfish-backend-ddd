@@ -2,7 +2,7 @@
 
 namespace Shared.DataTransferObject
 {
-    public class MailOutboxAttachmentDTO
+    public class MailOutboxAttachmentDTO : IDataTransferObject
     {
         [JsonPropertyName("mime_mediatype")]
         public string MimeMediatype { get; set; } = null!;

@@ -21,6 +21,15 @@ namespace Application.CQS.User.Queries.GetUsers
         public async Task<Result<List<UserDTO>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
             var searchFilterDto = ColumnSearchAggregateDTOExtension.GetFiltersFromSearchParams<UserDTO,Infrastructure.DatabaseEntity.User>(request.SearchParams);
+            if(searchFilterDto.HasErrors)
+            {
+                return Result<List<UserDTO>>.Failure(searchFilterDto.ErrorsToString);
+            }
+            var count =await _userRepository.CountMaxAsync();
+            if(count< searchFilterDto.SearchParams.page_size* searchFilterDto.SearchParams.page_offset)
+            {
+                return Result<List<UserDTO>>.Failure("page not found");
+            }
             var data = await _userRepository.ListAsyncWithMeta(searchFilterDto);
 
             var t = _mapper.Map<List<UserDTO>>(data.Data);

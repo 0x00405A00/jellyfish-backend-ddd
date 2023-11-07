@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace Shared.DataTransferObject
 {
     [Serializable]  
-    public class HealthZDTO
+    public class HealthZDTO : IDataTransferObject
     {
 
         [JsonPropertyName("general-state")]

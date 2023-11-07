@@ -9,7 +9,7 @@
 <CascadingAuthenticationState>
     <AuthorizeView Policy="Admin">
         <Authorized>
-            <mud>@UsersList.Count Users</mud>
+            <mud>@(_selectedPage*UsersList.Count())/@_totalUsers Users</mud>
             <MudPaper Elevation="25">
                 <MudToolBar>
                     <MudIconButton Icon="@Icons.Material.Outlined.Add" OnClick="AddUser" />
@@ -38,7 +38,7 @@
                          </TemplateColumn>
                      </Columns>
                  </MudDataGrid>
-                <MudPagination ShowFirstButton="true" BoundaryCount="2" MiddleCount="5" @bind-Selected="@_selectedPage" ShowLastButton="true" Count="22" Class="mt-4" />
+                <MudPagination SelectedChanged=@PageChanged ShowFirstButton="true" BoundaryCount="2" MiddleCount="5" ShowLastButton="true" Count="@_maxPages" Class="mt-4" />
             }
             else
             {
@@ -56,7 +56,9 @@
 
 @code {
 
-    private int _selectedPage = 1;
+    private int _selectedPage= 1;
+    private int _maxPages = 1;
+    private int _totalUsers = 1;
     private AuthDTO _token;
     private HashSet<UserDTO> SelectedItems = new HashSet<UserDTO>();
     private CancellationTokenSource cancellationToken = new();
@@ -103,6 +105,25 @@
     {
         return Task.CompletedTask;
     }
+    private async void PageChanged(int page)
+    {
+        _selectedPage = page;
+        var query = new List<KeyValuePair<string, string>>();
+        query.Add(new KeyValuePair<string, string>("page_size", "20"));
+        query.Add(new KeyValuePair<string, string>("page_offset", _selectedPage.ToString()));
+        query.Add(new KeyValuePair<string, string>("filter", _selectedPage.ToString()));
+        var requestUsers = WebApiClient.Request<ApiResponse<List<UserDTO>>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, query: query, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+
+
+        var responseUsers = await requestUsers;
+        if (responseUsers.IsSuccess)
+        {
+            UsersList = responseUsers.ApiResponseDeserialized.Data.Value;
+            _maxPages = responseUsers.ApiResponseDeserialized.Meta.Pagination.TotalPages;
+            _totalUsers = responseUsers.ApiResponseDeserialized.Meta.Pagination.TotalItems;
+        }
+        StateHasChanged();
+    }
 
     private Task SelectedItemsChanged(HashSet<UserDTO> SelectedItems)
     {
@@ -116,19 +137,8 @@
 
         var requestUserTypes = WebApiClient.Request<ApiResponse<List<UserTypeDTO>>, object>("/user/user-types", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
         var requestRoles = WebApiClient.Request <ApiResponse<List<RoleDTO>>, object>("/role", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
-        var query = new List<KeyValuePair<string, string>>();
-        query.Add(new KeyValuePair<string, string>("page_size", "20"));
-        query.Add(new KeyValuePair<string, string>("page_offset", _selectedPage.ToString()));
-        var requestUsers = WebApiClient.Request < ApiResponse<List<UserDTO>>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, query: query, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
-
-
-        var responseUsers = await requestUsers;
         var responseUserTypes = await requestUserTypes;
         var responseRoles = await requestRoles;
-        if (responseUsers.IsSuccess)
-        {
-            UsersList = responseUsers.ApiResponseDeserialized.Data.Value;
-        }
         if (responseUserTypes.IsSuccess)
         {
             UserTypesList = responseUserTypes.ApiResponseDeserialized.Data.Value;
@@ -137,6 +147,7 @@
         {
             RoleList = responseRoles.ApiResponseDeserialized.Data.Value;
         }
+        PageChanged(_selectedPage);
     }
     public async Task ResetPassword()
     {

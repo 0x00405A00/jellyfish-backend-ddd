@@ -2,7 +2,7 @@
 
 namespace Shared.DataTransferObject
 {
-    public class AuthDTO
+    public class AuthDTO 
     {
         [JsonPropertyName("token")]
         public string? Token { get; set; }

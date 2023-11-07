@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Presentation.Modelbinding.Binder;
 using Shared.DataFilter.Presentation;
 
-namespace Presentation.Modelbinder
+namespace Presentation.Modelbinding.Provider.HttpQuery
 {
     public class QueryParametersModelBinderProvider : IModelBinderProvider
     {

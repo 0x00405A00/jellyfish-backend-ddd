@@ -2,7 +2,7 @@
 
 namespace Shared.DataTransferObject
 {
-    public class MailOutboxDTO
+    public class MailOutboxDTO : IDataTransferObject
     {
         [JsonPropertyName("created_time")]
         public DateTime? CreatedTime { get; set; }

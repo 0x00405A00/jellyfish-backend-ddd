@@ -2,7 +2,7 @@
 
 namespace Shared.DataTransferObject
 {
-    public class UserActivationDataTransferModel
+    public class UserActivationDataTransferModel : IDataTransferObject
     {
         [JsonPropertyName("activation_code")]
         public string ActivationCode { get; set; }
