@@ -15,7 +15,7 @@ namespace Shared.DataFilter
             List<Domain.Error.Error> errors = new List<Domain.Error.Error>();
             if (searchParams == null)
             {
-                return null;
+                return new ColumnSearchAggregateDTO();
             }
             var presentationDtoProps = typeof(TPresentationModel).GetProperties()
                 .Where(x => x.GetCustomAttribute<JsonPropertyNameAttribute>() != null);
@@ -44,7 +44,9 @@ namespace Shared.DataFilter
                 }
                 bool validDataInGroups =columnFilterGroups.Where(x=>x.Filters.Any()).Any();
                 if (!validDataInGroups)
-                    return null;
+                {
+                    return new ColumnSearchAggregateDTO();
+                }
                 //MANDANTORY-> Change ColumnFilter field+value to TDBEntity Structure, weil sich Filter nur auf die DTOs sich nach außen hin propagiert werden (eigentlich auf das JsonPropertyNameAttribute) beziehen aber eigentlich in der Linq Query zur Anwendung kommen, welche sich wiederum auf die Database Entities beschränkt.
                 //TPresentationModel.PropertyName == TDBEntity.PropertyName, d.h. siehe unten: columnFilters[index].field=property.Name;
                 for(int f=0;f< columnFilterGroups.Count;f++)

@@ -30,6 +30,10 @@ namespace Shared.DataFilter.Infrastructure
                 return str;
             }
         }
+        public ColumnSearchAggregateDTO()
+        {
+                
+        }
         public ColumnSearchAggregateDTO(SearchParams searchParams,List<ColumnFilterGroup> columnFilterGroups,List<ColumnSorting> columnSortings,List<Domain.Error.Error> errors)
         {
             FilterGroups = columnFilterGroups;

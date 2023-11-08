@@ -13,36 +13,38 @@ namespace Presentation.Modelbinding.Binder
             {
                 throw new ArgumentNullException(nameof(bindingContext));
             }
+            if (bindingContext.HttpContext.Request.Query.Any()|| (bindingContext.HttpContext.Request.ContentLength == null || bindingContext.HttpContext.Request.ContentLength == 0))
+            {
+                bindingContext.Result = ModelBindingResult.Success(null);
+                return;
+            }
             SearchParamsBody data= new SearchParamsBody();  
             string pageSizeValueStr = null;
             string pageOffSetValueStr = null;
             string filtersValueStr = null;
             string orderValueStr = null;
-            if (bindingContext.HttpContext.Request.Query.Count()==0 &&bindingContext.HttpContext.Request.ContentLength!=0)
+            using (var reader = new StreamReader(bindingContext.HttpContext.Request.Body))
             {
-                using (var reader = new StreamReader(bindingContext.HttpContext.Request.Body))
+                try
                 {
-                    try
+                    var jsonOpt = new JsonSerializerOptions { WriteIndented = true };
+                    var body = await reader.ReadToEndAsync();
+                    if (String.IsNullOrEmpty(body))
                     {
-                        var jsonOpt = new JsonSerializerOptions { WriteIndented = true };
-                        var body = await reader.ReadToEndAsync();
-                        if (String.IsNullOrEmpty(body))
-                        {
-                            throw new ModelBindingFailedException($"body is null");
-                        }
-                        data = JsonSerializer.Deserialize<SearchParamsBody>(body, jsonOpt);
-                        pageSizeValueStr = data.page_size.ToString();
-                        pageOffSetValueStr = data.page_offset.ToString();
+                        throw new ModelBindingFailedException($"body is null");
+                    }
+                    data = JsonSerializer.Deserialize<SearchParamsBody>(body, jsonOpt);
+                    pageSizeValueStr = data.page_size.ToString();
+                    pageOffSetValueStr = data.page_offset.ToString();
 
-                        var filtersStr =JsonSerializer.Serialize(data.filters);
-                        var orderByStr = JsonSerializer.Serialize(data.order_by);
-                        filtersValueStr = filtersStr;
-                        orderValueStr = orderByStr;
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new ModelBindingFailedException($"searchparams could not deserialized; {ex.Message}");
-                    }
+                    var filtersStr = JsonSerializer.Serialize(data.filters);
+                    var orderByStr = JsonSerializer.Serialize(data.order_by);
+                    filtersValueStr = filtersStr;
+                    orderValueStr = orderByStr;
+                }
+                catch (Exception ex)
+                {
+                    throw new ModelBindingFailedException($"searchparams could not deserialized; {ex.Message}");
                 }
             }
 

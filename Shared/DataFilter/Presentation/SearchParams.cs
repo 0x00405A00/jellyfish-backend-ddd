@@ -20,6 +20,6 @@ namespace Shared.DataFilter.Presentation
         public List<ColumnFilterGroup>? filters { get; set; }//explicit and condition + equal/contains by string
 
         [JsonIgnore]
-        public SearchParams SearchParams { get; set; }  
+        public SearchParams SearchParams { get; set; } 
     }
 }
