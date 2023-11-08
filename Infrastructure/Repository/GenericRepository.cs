@@ -59,9 +59,9 @@ namespace Infrastructure.Repository
             var value = _dbSet.ExpressionQuery(columnSearchAggregateDTO);
             return value.ToList();
         }
-        int IGenericRepository<TDbEntity>.CountMax()
+        int IGenericRepository<TDbEntity>.CountMax(Expression<Func<TDbEntity, bool>> expression = null)
         {
-            return _dbSet.Count();
+            return expression==null? _dbSet.Count():_dbSet.Count(expression);
         }
 
         #endregion
@@ -104,9 +104,9 @@ namespace Infrastructure.Repository
             return await value.ToListAsync();
         }
 
-        public Task<int> CountMaxAsync()
+        public Task<int> CountMaxAsync(Expression<Func<TDbEntity, bool>> expression = null)
         {
-            return _dbSet.CountAsync();
+            return expression==null?_dbSet.CountAsync(): _dbSet.CountAsync(expression);
         }
         #endregion
     }
@@ -156,9 +156,9 @@ namespace Infrastructure.Repository
 
             return this.MapToDomainEntity(value, true);
         }
-        public int CountMax()
+        public int CountMax(Expression<Func<TDbEntity, bool>> expression = null)
         {
-            return _dbSet.Count();
+            return expression == null ? _dbSet.Count() : _dbSet.Count(expression);
         }
         #endregion
 

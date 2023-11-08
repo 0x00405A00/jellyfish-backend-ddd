@@ -49,7 +49,7 @@ namespace WebApi.Abstractions
         [HttpGet()]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        public abstract Task<IActionResult> ReadAll([FromQuery] SearchParams? searchParams, CancellationToken cancellationToken);
+        public abstract Task<IActionResult> ReadAll([FromQuery] SearchParams? searchParamsFromQuery, [FromBody] SearchParamsBody? searchParamsFromBody, CancellationToken cancellationToken);
 
         [HttpPut("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]

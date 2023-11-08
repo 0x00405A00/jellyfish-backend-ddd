@@ -1,14 +1,19 @@
 ﻿using Shared.Linq;
 using System.Text.Json.Serialization;
+using static Shared.DataFilter.Infrastructure.ColumnFilterConst;
 
 namespace Shared.DataFilter.Infrastructure
 {
     [Serializable]
     public class ColumnFilter
     {
+        [JsonPropertyName("field")]
         public string field { get; set; }
-        public string value { get; set; }
+        [JsonPropertyName("value")]
+        public string? value { get; set; }
+        [JsonPropertyName("op")]
         public string? op { get; set; } = OperatorNames.EQUAL;//operator, when not set is OperatorNames.EQUAL the default Operator
+
         [JsonIgnore]
         public OPERATOR Op { get; set; }
 
@@ -34,16 +39,5 @@ namespace Shared.DataFilter.Infrastructure
             return OPERATOR.INVALID;
         }
         public OPERATOR GetOperatorFromOp() => GetOperator(op);
-    }
-    public struct OperatorNames
-    {
-        public const string EQUAL = "eq";
-        public const string CONTAINS = "contains";
-        public const string NOT_EQUAL = "neq";
-        public const string LESS_THAN = "lt";
-        public const string GREATER_THAN = "gt";
-        public const string LESS_THAN_OR_EQUAL = "ltoreq";
-        public const string GREATER_THAN_OR_EQUAL = "gtoreq";
-
     }
 }

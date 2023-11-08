@@ -10,7 +10,7 @@ namespace Presentation.Modelbinding.Provider.HttpQuery
         {
             if (context.Metadata.ModelType == typeof(SearchParams))
             {
-                return new SearchQueryParamModelBinder();
+                return new SearchParamQueryModelBinder();
             }
             return null;
         }

@@ -148,6 +148,3 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\Infrastructure.UnitTests\obj\De
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Infrastructure.UnitTests\obj\Debug\net7.0\Infrastructure.UnitTests.AssemblyInfoInputs.cache
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Infrastructure.UnitTests\obj\Debug\net7.0\Infrastructure.UnitTests.AssemblyInfo.cs
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Infrastructure.UnitTests\obj\Debug\net7.0\Infrastructure.UnitTests.csproj.CoreCompileInputs.cache
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Infrastructure.UnitTests\obj\Debug\net7.0\Infrastructure.UnitTests.dll
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Infrastructure.UnitTests\obj\Debug\net7.0\refint\Infrastructure.UnitTests.dll
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Infrastructure.UnitTests\obj\Debug\net7.0\Infrastructure.UnitTests.pdb

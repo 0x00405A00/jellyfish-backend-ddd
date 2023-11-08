@@ -170,12 +170,6 @@ C:\Users\Mika\Desktop\Projekte\jellyfish-backend-ddd\backend\Presentation\obj\De
 C:\Users\Mika\Desktop\Projekte\jellyfish-backend-ddd\backend\Presentation\obj\Debug\net7.0\Presentation.pdb
 C:\Users\Mika\Desktop\Projekte\jellyfish-backend-ddd\backend\Presentation\obj\Debug\net7.0\Presentation.genruntimeconfig.cache
 C:\Users\Mika\Desktop\Projekte\jellyfish-backend-ddd\backend\Presentation\obj\Debug\net7.0\ref\Presentation.dll
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.csproj.AssemblyReference.cache
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.AssemblyInfoInputs.cache
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.AssemblyInfo.cs
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.csproj.CoreCompileInputs.cache
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\appsettings.Development.json
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\appsettings.json
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Presentation.exe
@@ -225,6 +219,7 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\M
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\MySql.EntityFrameworkCore.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Newtonsoft.Json.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Owin.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\BouncyCastle.Crypto.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Scrutor.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
@@ -256,6 +251,13 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\A
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Infrastructure.pdb
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Shared.pdb
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Domain.pdb
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.csproj.AssemblyReference.cache
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.AssemblyInfoInputs.cache
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.AssemblyInfo.cs
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.csproj.CoreCompileInputs.cache
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\staticwebassets\msbuild.Presentation.Microsoft.AspNetCore.StaticWebAssets.props
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\staticwebassets\msbuild.build.Presentation.props
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.Presentation.props
@@ -270,4 +272,3 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\r
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.pdb
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.genruntimeconfig.cache
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\ref\Presentation.dll
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.MvcApplicationPartsAssemblyInfo.cs

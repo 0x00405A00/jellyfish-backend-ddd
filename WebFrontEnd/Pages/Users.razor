@@ -112,7 +112,7 @@
         query.Add(new KeyValuePair<string, string>("page_size", "20"));
         query.Add(new KeyValuePair<string, string>("page_offset", _selectedPage.ToString()));
         query.Add(new KeyValuePair<string, string>("filter", _selectedPage.ToString()));
-        var requestUsers = WebApiClient.Request<ApiResponse<List<UserDTO>>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, query: query, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+        var requestUsers = WebApiClient.Request<ApiDataTransferObject<List<UserDTO>>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, query: query, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
 
 
         var responseUsers = await requestUsers;
@@ -135,8 +135,8 @@
     {
 
 
-        var requestUserTypes = WebApiClient.Request<ApiResponse<List<UserTypeDTO>>, object>("/user/user-types", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
-        var requestRoles = WebApiClient.Request <ApiResponse<List<RoleDTO>>, object>("/role", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+        var requestUserTypes = WebApiClient.Request<ApiDataTransferObject<List<UserTypeDTO>>, object>("/user/user-types", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+        var requestRoles = WebApiClient.Request <ApiDataTransferObject<List<RoleDTO>>, object>("/role", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
         var responseUserTypes = await requestUserTypes;
         var responseRoles = await requestRoles;
         if (responseUserTypes.IsSuccess)
@@ -191,7 +191,7 @@
             foreach (var user in SelectedItems)
             {
                 var url = "/user/" + user.Uuid + "";
-                var deleteUserRequest = await WebApiClient.Request < ApiResponse<Guid>, object>(url, RestSharp.Method.Delete, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+                var deleteUserRequest = await WebApiClient.Request < ApiDataTransferObject<Guid>, object>(url, RestSharp.Method.Delete, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
                 if (deleteUserRequest.IsSuccess)
                 {
                     var userUuid = UsersList.Where(x => x.Uuid == deleteUserRequest.ApiResponseDeserialized.Data.Value).First();

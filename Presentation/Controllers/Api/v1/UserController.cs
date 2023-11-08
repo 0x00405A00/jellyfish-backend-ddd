@@ -194,10 +194,10 @@ namespace Presentation.Controllers.Api.v1
             return result.PrepareResponse();
         }
 
-        public override async Task<IActionResult> ReadAll([FromQuery] SearchParams? searchParams,CancellationToken cancellationToken)
+        public override async Task<IActionResult> ReadAll([FromQuery] SearchParams? searchParamsFromQuery, [FromBody] SearchParamsBody? searchParamsFromBody, CancellationToken cancellationToken)
         {
 
-            var command = new Application.CQS.User.Queries.GetUsers.GetUsersQuery(searchParams);
+            var command = new Application.CQS.User.Queries.GetUsers.GetUsersQuery(searchParamsFromQuery?? searchParamsFromBody.SearchParams);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();

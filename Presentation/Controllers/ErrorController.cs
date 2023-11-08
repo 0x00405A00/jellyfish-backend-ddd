@@ -26,13 +26,13 @@ namespace Presentation.Controllers
             if (exception is ModelBindingFailedException modelBindingFailedException)
             {
                 var error = new Shared.ApiDataTransferObject.Object.ApiError(modelBindingFailedException.Title, modelBindingFailedException.Message, modelBindingFailedException.Details, modelBindingFailedException.Code);
-                ApiResponse<object> response = ApiResponse<object>.Create(new object(),null,new List<Shared.ApiDataTransferObject.Object.ApiError> { error });
+                ApiDataTransferObject<object> response = ApiDataTransferObject<object>.Create(new object(),null,new List<Shared.ApiDataTransferObject.Object.ApiError> { error });
                 result = new UnprocessableEntityObjectResult(response);
             }
             else
             {
                 var error = new Shared.ApiDataTransferObject.Object.ApiError("internal server error", message, details, 500);
-                ApiResponse<object> response = ApiResponse<object>.Create(new object(), null, new List<Shared.ApiDataTransferObject.Object.ApiError> { error });
+                ApiDataTransferObject<object> response = ApiDataTransferObject<object>.Create(new object(), null, new List<Shared.ApiDataTransferObject.Object.ApiError> { error });
                 object debugRespObj = exceptionObject.StackTrace;
                 result = new ObjectResult(response);
                 result.StatusCode = 500;

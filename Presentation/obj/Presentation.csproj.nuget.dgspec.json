@@ -246,10 +246,6 @@
               "target": "Package",
               "version": "[7.0.13, )"
             },
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[7.0.10, )"
-            },
             "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
               "version": "[7.0.10, )"
@@ -262,7 +258,7 @@
             },
             "MySql.Data": {
               "target": "Package",
-              "version": "[8.2.0, )"
+              "version": "[8.0.33, )"
             },
             "MySql.EntityFrameworkCore": {
               "target": "Package",

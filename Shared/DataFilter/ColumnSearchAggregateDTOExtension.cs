@@ -1,8 +1,10 @@
-﻿using Shared.DataFilter.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Shared.DataFilter.Infrastructure;
 using Shared.DataFilter.Presentation;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using static Shared.DataFilter.Infrastructure.ColumnFilterConst;
 
 namespace Shared.DataFilter
 {
@@ -17,38 +19,59 @@ namespace Shared.DataFilter
             }
             var presentationDtoProps = typeof(TPresentationModel).GetProperties()
                 .Where(x => x.GetCustomAttribute<JsonPropertyNameAttribute>() != null);
-            List<ColumnFilter> columnFilters = new List<ColumnFilter>();
+
+            List<ColumnFilterGroup> columnFilterGroups = new List<ColumnFilterGroup>();
+            JsonSerializerOptions? serilizerOptions = new JsonSerializerOptions { MaxDepth = 10, WriteIndented = true };
             if (!String.IsNullOrEmpty(searchParams.filters))
             {
                 try
                 {
-                    columnFilters.AddRange(JsonSerializer.Deserialize<List<ColumnFilter>>(searchParams.filters));
+                    List<ColumnFilterGroup> value = JsonSerializer.Deserialize<List<ColumnFilterGroup>>(searchParams.filters,serilizerOptions);
+                    columnFilterGroups.AddRange(value);
                 }
-                catch (Exception ex)
+                catch (Exception _ex)
                 {
-                    columnFilters = new List<ColumnFilter>();
-                }
-                //MANDANTORY-> Change ColumnFilter field+value to TDBEntity Structure, weil sich Filter nur auf die DTOs sich nach außen hin propagiert werden (eigentlich auf das JsonPropertyNameAttribute) beziehen aber eigentlich in der Linq Query zur Anwendung kommen, welche sich wiederum auf die Database Entities beschränkt.
-                //TPresentationModel.PropertyName == TDBEntity.PropertyName, d.h. siehe unten: columnFilters[index].field=property.Name;
-                foreach (var property in presentationDtoProps)
-                {
-                    var jsonProp = property.GetCustomAttribute<JsonPropertyNameAttribute>();
-                    ColumnFilter foundInQueryFilter = columnFilters.Find(x => x.field == jsonProp.Name);
-                    if(foundInQueryFilter != null)
+                    try
                     {
-                        int index=columnFilters.IndexOf(foundInQueryFilter);
-                        if(index != -1)
-                        {
-                            columnFilters[index].field=property.Name;
-                        }
+                        List<ColumnFilter> columnFilters = new List<ColumnFilter>();
+                        var value = JsonSerializer.Deserialize<List<ColumnFilter>>(searchParams.filters);
+                        columnFilters.AddRange(value);
+                        columnFilterGroups.Add(new ColumnFilterGroup(columnFilters, OperatorGroupNames.AND));
+                    }
+                    catch (Exception ex)
+                    {
                     }
                 }
-                for(int i=0; i<columnFilters.Count; i++)
+                bool validDataInGroups =columnFilterGroups.Where(x=>x.Filters.Any()).Any();
+                if (!validDataInGroups)
+                    return null;
+                //MANDANTORY-> Change ColumnFilter field+value to TDBEntity Structure, weil sich Filter nur auf die DTOs sich nach außen hin propagiert werden (eigentlich auf das JsonPropertyNameAttribute) beziehen aber eigentlich in der Linq Query zur Anwendung kommen, welche sich wiederum auf die Database Entities beschränkt.
+                //TPresentationModel.PropertyName == TDBEntity.PropertyName, d.h. siehe unten: columnFilters[index].field=property.Name;
+                for(int f=0;f< columnFilterGroups.Count;f++)
                 {
-                    columnFilters[i].Op = columnFilters[i].GetOperatorFromOp();
-                    if(columnFilters[i].IsInvalidOperator)
+                    var columnFilterGroup= columnFilterGroups[f];
+                    columnFilterGroups[f].Group = columnFilterGroups[f].Group.ToLower();
+                    columnFilterGroups[f].OpGroup = columnFilterGroups[f].GetOperatorFromOp();
+                    foreach (var property in presentationDtoProps)
                     {
-                        errors.Add(new Domain.Error.Error($"field: {columnFilters[i].field} with given operator {columnFilters[i].op} is not valid"));
+                        var jsonProp = property.GetCustomAttribute<JsonPropertyNameAttribute>();
+                        ColumnFilter foundInQueryFilter = columnFilterGroup.Filters.Find(x => x.field == jsonProp.Name);
+                        if (foundInQueryFilter != null)
+                        {
+                            int index = columnFilterGroup.Filters.IndexOf(foundInQueryFilter);
+                            if (index != -1)
+                            {
+                                columnFilterGroup.Filters[index].field = property.Name;
+                            }
+                        }
+                    }
+                    for (int i = 0; i < columnFilterGroup.Filters.Count; i++)
+                    {
+                        columnFilterGroup.Filters[i].Op = columnFilterGroup.Filters[i].GetOperatorFromOp();
+                        if (columnFilterGroup.Filters[i].IsInvalidOperator)
+                        {
+                            errors.Add(new Domain.Error.Error($"field: {columnFilterGroup.Filters[i].field} with given operator {columnFilterGroup.Filters[i].op} is not valid"));
+                        }
                     }
                 }
             }
@@ -78,10 +101,7 @@ namespace Shared.DataFilter
                 }
             }
 
-
-
-
-            return new ColumnSearchAggregateDTO(searchParams, columnFilters, columnSorting,errors);
+            return new ColumnSearchAggregateDTO(searchParams, columnFilterGroups, columnSorting,errors);
         }
     }
 }

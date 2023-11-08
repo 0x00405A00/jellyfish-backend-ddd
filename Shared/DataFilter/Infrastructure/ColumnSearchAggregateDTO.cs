@@ -7,7 +7,7 @@ namespace Shared.DataFilter.Infrastructure
     public class ColumnSearchAggregateDTO
     {
         public SearchParams SearchParams { get; private set; }=new SearchParams();
-        public List<ColumnFilter> Filters { get; private set; } = new List<ColumnFilter>();
+        public List<ColumnFilterGroup> FilterGroups { get; private set; } = new List<ColumnFilterGroup>();
         public List<ColumnSorting> Sorting { get; private set; } = new List<ColumnSorting>();
         public List<Domain.Error.Error> Errors { get; private set; } = new List<Domain.Error.Error>();
         public bool HasErrors=> Errors.Any();
@@ -30,9 +30,9 @@ namespace Shared.DataFilter.Infrastructure
                 return str;
             }
         }
-        public ColumnSearchAggregateDTO(SearchParams searchParams,List<ColumnFilter> columnFilters,List<ColumnSorting> columnSortings,List<Domain.Error.Error> errors)
+        public ColumnSearchAggregateDTO(SearchParams searchParams,List<ColumnFilterGroup> columnFilterGroups,List<ColumnSorting> columnSortings,List<Domain.Error.Error> errors)
         {
-            Filters = columnFilters;
+            FilterGroups = columnFilterGroups;
             Sorting = columnSortings;
             SearchParams = searchParams;
             Errors = errors;    
@@ -50,9 +50,9 @@ namespace Shared.DataFilter.Infrastructure
                 filters = x => x.user_name.ToLower().Contains(searchTerm);
             }*/
             // Then we are overwriting a filter if columnFilters has data.
-            if (Filters.Count > 0)
+            if (FilterGroups.Count > 0)
             {
-                filters = CustomExpressionFilter<T>.CustomFilter(Filters, className);
+                filters = CustomExpressionFilter<T>.CustomFilter(FilterGroups, className);
             }
             return filters;
         }

@@ -19,7 +19,7 @@ namespace Presentation.Filter
                 {
                     var currentResultType = currentResult.GetType();
 
-                    var apiResponseTypeUnspecificGenericType = typeof(ApiResponse<>);
+                    var apiResponseTypeUnspecificGenericType = typeof(ApiDataTransferObject<>);
                     var genericArgs = currentResultType.GetGenericArguments();
                     var apiResponseTypeGeneric = apiResponseTypeUnspecificGenericType.MakeGenericType(genericArgs);
                     var apiResponseTypeGenericInstance = Activator.CreateInstance(apiResponseTypeGeneric);

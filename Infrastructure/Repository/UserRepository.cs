@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Shared.DataFilter.Infrastructure;
 using System.Configuration;
 using System.Linq.Expressions;
+using static Dapper.SqlMapper;
 
 namespace Infrastructure.Repository
 {
@@ -82,7 +83,7 @@ namespace Infrastructure.Repository
         }
         public override async Task<RepositoryResponse<ICollection<Domain.Entities.User.User>>> ListAsyncWithMeta(Expression<Func<DatabaseEntity.User, bool>> expression = null)
         {
-            int count = await CountMaxAsync();
+            int count = await CountMaxAsync(expression);
             var value = await _dbSet.ExpressionQuery(expression)
                                     .Include(i => i.UserTypeUu)
                                     .Include(i => i.UserRelationToRoles)
@@ -101,7 +102,8 @@ namespace Infrastructure.Repository
         }
         public override async Task<RepositoryResponse<ICollection<Domain.Entities.User.User>>> ListAsyncWithMeta(ColumnSearchAggregateDTO? columnSearchAggregateDTO)
         {
-            int count = await CountMaxAsync();
+            var expression = columnSearchAggregateDTO.GetExpression<User>(nameof(User));
+            int count = await CountMaxAsync(expression);
             var value = await _dbSet.ExpressionQuery(columnSearchAggregateDTO)
                                     .Include(i => i.UserTypeUu)
                                     .Include(i => i.UserRelationToRoles)
