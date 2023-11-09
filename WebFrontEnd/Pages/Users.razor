@@ -108,14 +108,14 @@
     private async void PageChanged(int page)
     {
         _selectedPage = page;
-        var query = new List<KeyValuePair<string, string>>();
-        query.Add(new KeyValuePair<string, string>("page_size", "20"));
-        query.Add(new KeyValuePair<string, string>("page_offset", _selectedPage.ToString()));
-        query.Add(new KeyValuePair<string, string>("filter", _selectedPage.ToString()));
-        var requestUsers = WebApiClient.Request<ApiDataTransferObject<List<UserDTO>>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, query: query, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+        SearchParamsBody searchParamsBody = new SearchParamsBody();
+        searchParamsBody.page_offset = _selectedPage;
+        searchParamsBody.page_size = 20;
+        searchParamsBody.filters = new List<Shared.DataFilter.Infrastructure.ColumnFilterGroup> { new Shared.DataFilter.Infrastructure.ColumnFilterGroup { Group = "and", Filters = new List<Shared.DataFilter.Infrastructure.ColumnFilter> { new Shared.DataFilter.Infrastructure.ColumnFilter { field = "deleted_time", op = "eq", value = null } } } };
+        var requestUsers = await WebApiClient.Request<ApiDataTransferObject<List<UserDTO>>, SearchParamsBody>("/user", RestSharp.Method.Get, cancellationToken.Token, searchParamsBody, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
 
 
-        var responseUsers = await requestUsers;
+        var responseUsers = requestUsers;
         if (responseUsers.IsSuccess)
         {
             UsersList = responseUsers.ApiResponseDeserialized.Data.Value;

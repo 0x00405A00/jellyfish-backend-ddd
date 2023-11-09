@@ -53,6 +53,7 @@ namespace Presentation
                 .AddJsonOptions(x => {
                     x.JsonSerializerOptions.PropertyNamingPolicy = new LowerCaseNamingPolicy() ;
                     x.JsonSerializerOptions.WriteIndented = true;
+                    x.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
                 });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();

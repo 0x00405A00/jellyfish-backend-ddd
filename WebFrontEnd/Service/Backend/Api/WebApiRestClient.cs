@@ -232,6 +232,7 @@ namespace WebFrontEnd.Service.Backend.Api
             }
             return System.Net.HttpStatusCode.Forbidden;
         }
+        public static JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true, DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
         public async Task<RestResponse> Request<T2>(string url, Method method, CancellationToken cancellationToken, object bodyObject = null, List<KeyValuePair<string, string>> query = null, List<KeyValuePair<string, string>> headers = null, bool donttryagain = true)
         {
             if (!IsInit)
@@ -245,7 +246,7 @@ namespace WebFrontEnd.Service.Backend.Api
             }
             if (bodyObject != null)
             {
-                body = JsonSerializer.Serialize(bodyObject);
+                body = JsonSerializer.Serialize(bodyObject, JsonSerializerOptions);
 
             }
             int retries = 0;
@@ -314,7 +315,7 @@ namespace WebFrontEnd.Service.Backend.Api
                 try
                 {
                     string responseJson = resp.Content;
-                    var apiResponseModel = JsonSerializer.Deserialize<T1>(responseJson);
+                    var apiResponseModel = JsonSerializer.Deserialize<T1>(responseJson, JsonSerializerOptions);
                     responseModel.ApiResponseDeserialized = apiResponseModel;
                 }
                 catch (Exception ex)

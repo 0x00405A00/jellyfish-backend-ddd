@@ -7,7 +7,9 @@ namespace Presentation.Modelbinding.Binder
 {
     public class SearchParamBodyModelBinder : IModelBinder
     {
-        public async Task BindModelAsync(ModelBindingContext bindingContext)
+        public static JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true, DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+    };
+    public async Task BindModelAsync(ModelBindingContext bindingContext)
         {
             if (bindingContext == null)
             {
@@ -27,18 +29,18 @@ namespace Presentation.Modelbinding.Binder
             {
                 try
                 {
-                    var jsonOpt = new JsonSerializerOptions { WriteIndented = true };
+
                     var body = await reader.ReadToEndAsync();
                     if (String.IsNullOrEmpty(body))
                     {
                         throw new ModelBindingFailedException($"body is null");
                     }
-                    data = JsonSerializer.Deserialize<SearchParamsBody>(body, jsonOpt);
+                    data = JsonSerializer.Deserialize<SearchParamsBody>(body, JsonSerializerOptions);
                     pageSizeValueStr = data.page_size.ToString();
                     pageOffSetValueStr = data.page_offset.ToString();
 
-                    var filtersStr = JsonSerializer.Serialize(data.filters);
-                    var orderByStr = JsonSerializer.Serialize(data.order_by);
+                    var filtersStr = data.filters!=null?JsonSerializer.Serialize(data.filters, JsonSerializerOptions) :null;
+                    var orderByStr = data.order_by!=null?JsonSerializer.Serialize(data.order_by, JsonSerializerOptions) : null;
                     filtersValueStr = filtersStr;
                     orderValueStr = orderByStr;
                 }
