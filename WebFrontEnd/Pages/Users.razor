@@ -20,6 +20,12 @@
             </MudPaper>
             @if (UsersList != null && UsersList.Count > 0)
             {
+                <MudSelect Class="w-25" T="int" @bind-Value=@SelectedItemsPerPage Label="Items per Page" MultiSelection=false Variant="Variant.Filled" AnchorOrigin="Origin.BottomCenter">
+                    @foreach(var item in _itemsPerPageSet)
+                    {
+                        <MudSelectItem T="int" Value="@item" />
+                    }
+                </MudSelect>
                 <MudDataGrid T="UserDTO" Items=@UsersList Filterable="false" RowClick=RowClicked SelectedItemsChanged="@SelectedItemsChanged" MultiSelection SelectedItems=@SelectedItems SortMode="@SortMode.Multiple" Groupable="false">
                      <Columns>
                          <SelectColumn T="UserDTO" />
@@ -56,7 +62,20 @@
 
 @code {
 
-    private int _selectedPage= 1;
+    private int _selectedPage = 1;
+    private int _selectedItemsPerPage = 10;
+    public int SelectedItemsPerPage
+    {
+        get
+        {
+            return _selectedItemsPerPage;
+        }
+        set
+        {
+            PageItemSelectionChanged(value);
+        }
+    }
+    private List<int> _itemsPerPageSet = new List<int> { 10,20,50,75};
     private int _maxPages = 1;
     private int _totalUsers = 1;
     private AuthDTO _token;
@@ -91,7 +110,14 @@
     {
         Dispose();
     }
+    private void PageItemSelectionChanged(int value)
+    {
+        if (value == _selectedItemsPerPage)
+            return;
+        _selectedItemsPerPage = value;
+        PageChanged(_selectedPage);
 
+    }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -110,7 +136,7 @@
         _selectedPage = page;
         SearchParamsBody searchParamsBody = new SearchParamsBody();
         searchParamsBody.page_offset = _selectedPage;
-        searchParamsBody.page_size = 20;
+        searchParamsBody.page_size = _selectedItemsPerPage;
         searchParamsBody.filters = new List<Shared.DataFilter.Infrastructure.ColumnFilterGroup> { new Shared.DataFilter.Infrastructure.ColumnFilterGroup { Group = "and", Filters = new List<Shared.DataFilter.Infrastructure.ColumnFilter> { new Shared.DataFilter.Infrastructure.ColumnFilter { field = "deleted_time", op = "eq", value = null } } } };
         var requestUsers = await WebApiClient.Request<ApiDataTransferObject<List<UserDTO>>, SearchParamsBody>("/user", RestSharp.Method.Get, cancellationToken.Token, searchParamsBody, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
 

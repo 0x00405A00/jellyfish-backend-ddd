@@ -18,7 +18,7 @@
 
              <MudTextField InputType="InputType.Email" @bind-Value=@User.Email Label="Email" ReadOnly="false" Required RequiredError="email must be setted" />
              <MudDatePicker Label="Geburstag" DisplayMonths="2" MinDate="@(Domain.Entities.User.User.MinimumBirthDayDate)" MaxDate="@(Domain.Entities.User.User.MaximumBirthDayDate)" TitleDateFormat="dd.MM.yyyy" @bind-Date=@User.DateOfBirth Required RequiredError="birthday must be setted" />
-             <MudSelect T="UserTypeDTO" MultiSelection=false Label="UserType" AnchorOrigin="Origin.BottomCenter" @bind-SelectedValues=@SelectedUserType Required RequiredError="need one user-type">
+             <MudSelect T="UserTypeDTO" MultiSelection=false Label="UserType" AnchorOrigin="Origin.BottomCenter" @bind-Value=@SelectedUserType Required RequiredError="need one user-type">
                  @foreach (var item in UserTypes)
                 {
                     <MudSelectItem T="UserTypeDTO" Value="@item">@item.Name</MudSelectItem>
@@ -55,7 +55,7 @@
     private bool success;
     private bool isEditDialog=>User!=null&&User.Uuid!=null&&User.Uuid!=Guid.Empty;
     private string[] errors = { };
-    private IEnumerable<UserTypeDTO> SelectedUserType { get; set; } = new List<UserTypeDTO>();
+    private UserTypeDTO SelectedUserType { get; set; } = new UserTypeDTO();
     private IEnumerable<RoleDTO> SelectedRoles { get; set; } = new List<RoleDTO>();
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
@@ -65,15 +65,22 @@
             _token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
             if(User.DateOfBirth==null)
             {
-                User.DateOfBirth = (Domain.Entities.User.User.MinimumBirthDayDate);
+                User.DateOfBirth = DateTime.Now;
             }
             if (User.UserTypeUuid!=null)
             {
-                SelectedUserType = new List<UserTypeDTO>() { UserTypes.Where(x => x.Uuid == User.UserTypeUuid).First() };
+                SelectedUserType = UserTypes.Where(x => x.Uuid == User.UserTypeUuid).First();
             }
             if(User.Roles!=null)
             {
-                SelectedRoles = User.Roles.ToList();
+                List<RoleDTO> roleDTOs = new List<RoleDTO>();
+                User.Roles.ToList().ForEach(x =>
+                {
+                    var fromRoles = Roles.Where(y=>y.Uuid == x.Uuid).First();
+                    roleDTOs.Add(fromRoles);
+
+                });
+                SelectedRoles = roleDTOs;
             }   
             StateHasChanged();
         }
@@ -114,7 +121,7 @@
         form.Validate();
         if (!success)
             return;
-        User.UserTypeUuid =SelectedUserType.First().Uuid;
+        User.UserTypeUuid =SelectedUserType.Uuid;
         User.Roles =SelectedRoles.ToList();
 
         if(isEditDialog)//Edit
