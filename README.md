@@ -1,5 +1,26 @@
 # jellyfish-backend-ddd
 
+Recreation of Jellyfish Backend for the Messaging Application Jellyfish for Android and iOS.
+The Backend is fully written in domain driven design with clean architecture.
+Following tech stack is used:
+
+- Backend:
+-> C#/NET 7
+-> ASP NET 
+-> MySql
+-> SignalR
+
+- Webfrontend:
+-> C#/NET
+-> Blazor Server
+-> Razor Pages
+-> Mudblazor UI Components
+
+- Messaging Mobile App (will be added soon and is part of another repo that is currently private):
+-> C#/NET 7
+-> NET MAUI
+
+
 ## Admin Panel Alpha 0.1 ##
 ![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/admin-panel-alpha-prev.jpg "Admin Panel Alpha 0.1")
 
