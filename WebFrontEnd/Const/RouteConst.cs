@@ -4,6 +4,7 @@
     {
         public struct Routes
         {
+            public const string Index = "/";
             public const string DashBoard = "dashboard";
             public const string Users = "users";
             public const string SignIn = "signin";
@@ -21,6 +22,7 @@
             public const string SecurityNews = "security-news";
             public const string ResetPasswordRequest = "password/reset/request";
             public const string ResetPassword = "password/reset/request/{base64}";
+            public const string RegisterSuccess = "register-success";
         }
     }
 }

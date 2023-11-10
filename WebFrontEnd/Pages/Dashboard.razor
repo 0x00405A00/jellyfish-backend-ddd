@@ -1,8 +1,9 @@
-﻿@implements IDisposable
-@attribute [Route(RouteConst.Routes.DashBoard)]
+﻿@attribute [Route(RouteConst.Routes.DashBoard)]
+@implements IDisposable
+@implements INavigationInvoker
 @using Microsoft.AspNetCore.Http
 @inject WebApiRestClient WebApiClient
-@inject NavigationManager NavigationManager
+@inject IExtendedNavigationManager NavigationManager
 @inject SignalRClient SignalRClient
 @inject IJSRuntime JsRuntime
 @inject IConfiguration Configuration
@@ -78,8 +79,6 @@
     }
     private void Dispose()
     {
-
-        NavigationManager.LocationChanged -= LocationChangedEvent;
         LogoutBackgroundService.OnRerenderRequested -= RequestRerender;
         cancellationToken.Cancel();
         Series.Clear();
@@ -103,6 +102,7 @@
     {
         if(firstRender)
         {
+            NavigationManager.Subscribe(this);
             if (!SignalRClient.IsBuilded)
             {
                 SignalRClient.BuildConnection();
@@ -112,7 +112,6 @@
                 SignalRClient.OpenConnection();
 
             SignalRClient.HubConnection.On<List<MessageDTO>>(nameof(SignalRClient.ReceiveMessage), ReceiveMessage);
-            NavigationManager.LocationChanged += LocationChangedEvent;
             for (int i = 0; i < XAxisLastHoursBarCount; i++)
             {
                 var dt = DateTime.Now;
@@ -126,11 +125,12 @@
             StateHasChanged();
         }
     }
-    private void LocationChangedEvent(object sender, LocationChangedEventArgs locationChangedEventArgs)
+    public void LocationChanged(object sender, LocationChangedEventArgs locationChangedEventArgs)
     {
 
         if (!locationChangedEventArgs.Location.EndsWith(RouteConst.Routes.DashBoard))
         {
+            NavigationManager.Unsubscribe(this);
             Dispose();
         }
     }

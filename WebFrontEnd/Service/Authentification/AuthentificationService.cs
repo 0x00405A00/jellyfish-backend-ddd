@@ -27,7 +27,7 @@ namespace WebFrontEnd.Service.Authentification
             AuthDTO auth = new AuthDTO();
             try
             {
-                auth = await localStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+                auth = await localStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppConst.BrowserLocalStorageItemKey.Authorization);
             }
             catch (Exception ex)
             {
@@ -43,7 +43,7 @@ namespace WebFrontEnd.Service.Authentification
             {
                 return false;
             }
-            await localStorageService.SetDeserializedJsonItemFromKey(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization, response);
+            await localStorageService.SetDeserializedJsonItemFromKey(WebAppConst.BrowserLocalStorageItemKey.Authorization, response);
             return true;
         }
 
@@ -55,7 +55,7 @@ namespace WebFrontEnd.Service.Authentification
             if (token == null)
                 return false;
 
-            await localStorageService.RemoveItem(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+            await localStorageService.RemoveItem(WebAppConst.BrowserLocalStorageItemKey.Authorization);
             var logoutResponse = await webApiRestClient.Request<object>(logoutEndpoint, RestSharp.Method.Post, cancellationToken, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
             if (!logoutResponse.IsSuccessStatusCode)
                 return false;

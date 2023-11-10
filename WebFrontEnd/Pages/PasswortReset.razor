@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Http
 @inject WebApiRestClient WebApiClient
 @inject ILocalStorageService LocalStorageService
-@inject NavigationManager NavigationManager
+@inject IExtendedNavigationManager NavigationManager
 
 <PageTitle>Passwordreset</PageTitle>
 
@@ -39,7 +39,7 @@
     {
         if (String.IsNullOrEmpty(Base64))
         {
-            NavigationManager.NavigateTo(RouteConst.Routes.Home);
+            NavigationManager.NavigationManager.NavigateTo(RouteConst.Routes.Home);
         }
         if(firstRender)
         {
@@ -52,8 +52,8 @@
         var response = await WebApiClient.ResetPassword(PasswordResetDTO, cancellationToken.Token);
         if(response.IsSuccess)
         {
-            await LocalStorageService.SetDeserializedJsonItemFromKey(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization, response);
-            NavigationManager.NavigateTo("/home");
+            await LocalStorageService.SetDeserializedJsonItemFromKey(WebAppConst.BrowserLocalStorageItemKey.Authorization, response);
+            NavigationManager.NavigationManager.NavigateTo(RouteConst.Routes.Home);
         }
     }
 }

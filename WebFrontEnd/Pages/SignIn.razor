@@ -1,5 +1,5 @@
 ﻿@attribute [Route(RouteConst.Routes.SignIn)]
-@inject NavigationManager NavigationManager
+@inject IExtendedNavigationManager NavigationManager
 @inject CustomAuthentificationStateProvider AuthentificationService
 
 <PageTitle>SignIn</PageTitle>
@@ -63,7 +63,7 @@
             var token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
             if (token.IsAuthentificated)
             {
-                NavigationManager.NavigateTo("/");
+                NavigationManager.NavigationManager.NavigateTo(RouteConst.Routes.Index);
             }
         }
     }
@@ -72,7 +72,7 @@
         var response = await AuthentificationService.Login(UserLoginDTO.Email,UserLoginDTO.Password,cancellationToken.Token);
         if(response)
         {
-            NavigationManager.NavigateTo("/dashboard");
+            NavigationManager.NavigationManager.NavigateTo(RouteConst.Routes.DashBoard);
         }
     }
     public async Task OnSubmitRegister()
@@ -81,7 +81,7 @@
         var response = await AuthentificationService.Register(RegisterUserDTO, cancellationToken.Token);
         if(response)
         {
-            NavigationManager.NavigateTo("/register-success");//page welche info über erfolgreiche registrierung gibt und infos über das weitere vorgehen
+            NavigationManager.NavigationManager.NavigateTo(RouteConst.Routes.RegisterSuccess);//page welche info über erfolgreiche registrierung gibt und infos über das weitere vorgehen
         }
     }
 }

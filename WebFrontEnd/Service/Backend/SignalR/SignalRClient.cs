@@ -33,7 +33,7 @@ namespace WebFrontEnd.Service.Backend.SignalR
 
             this.Initialize(url, async () =>
             {
-                var token = await localStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+                var token = await localStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppConst.BrowserLocalStorageItemKey.Authorization);
                 return token.Token;
             },
             SignalRTransportProtocol, SignalRTransferFormat

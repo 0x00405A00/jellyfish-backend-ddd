@@ -3,6 +3,8 @@
 @inject WebApiRestClient WebApiClient
 @inject DialogHandler DialogHandler
 @inject IConfiguration Configuration
+@inject IExtendedNavigationManager ExtNavigationManager
+@inject ISessionStorage SessionStorage
 
 <MudNavMenu Bordered Class="flex-column mt-5" Color="MudBlazor.Color.Info">
      <MudNavLink Icon="@Icons.Material.Filled.Home" IconColor="MudBlazor.Color.Info" Href="@RouteConst.Routes.Home">
@@ -55,8 +57,12 @@
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        hasLogin = await LocalStorageService.CheckIfValidTokenExists();
-        StateHasChanged();
+        if(firstRender)
+        {
+
+            hasLogin = await LocalStorageService.CheckIfValidTokenExists();
+            StateHasChanged();
+        }
     }
     public async Task ClickLogout()
     {

@@ -1,6 +1,7 @@
 ﻿@page "/"
-@inject ILocalStorageService LocalStorageService;
-@inject NavigationManager NavigationManager;
+@inject ILocalStorageService LocalStorageService
+@inject NavigationManager NavigationManager
+@inject ISessionStorage SessionStorage
 
 <PageTitle>Index</PageTitle>
 
@@ -8,80 +9,18 @@
 
 Welcome to your new app.
 
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world!</h1>
-
-<h1>Hello, world 5555555555!</h1>
-
 @code
 {
+    private SessionDTO _session;
+    private CancellationTokenSource cancellationToken = new();
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppConst.BrowserLocalStorageItemKey.Authorization);
         if (token!=null && !token.IsTokenExpired)
         {
-            NavigationManager.NavigateTo(RouteConst.Routes.DashBoard);
+            _session = await SessionStorage.GetSession(cancellationToken.Token);
+            var data = _session.General;
+            NavigationManager.NavigateTo(data.LastRoute);
         }
     }
 }

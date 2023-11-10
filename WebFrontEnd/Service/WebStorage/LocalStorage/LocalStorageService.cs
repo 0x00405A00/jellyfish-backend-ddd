@@ -88,7 +88,7 @@ namespace WebFrontEnd.Service.WebStorage.LocalStorage
             {
                 throw new InvalidKeyValuePairException("key is null");
             }
-            string str = JsonSerializer.Serialize(value);
+            string str = JsonSerializer.Serialize(value,typeof(T));
             await JsRuntime.InvokeVoidAsync("localStorage.setItem", key, str);
         }
 
@@ -96,7 +96,7 @@ namespace WebFrontEnd.Service.WebStorage.LocalStorage
         {
             try
             {
-                var value = await GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+                var value = await GetDeserializedJsonItemFromKey<AuthDTO>(WebAppConst.BrowserLocalStorageItemKey.Authorization);
                 if(value!=null)
                 {
                     return !value.IsTokenExpired;

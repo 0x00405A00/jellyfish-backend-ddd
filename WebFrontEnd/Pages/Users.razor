@@ -1,10 +1,10 @@
 ﻿@implements IDisposable
 @attribute [Route(RouteConst.Routes.Users)]
 @inject WebApiRestClient WebApiClient
-@inject NavigationManager NavigationManager
 @inject IDialogService DialogService
 @inject CustomAuthentificationStateProvider AuthentificationService
 @inject DialogHandler DialogHandler
+@inject ISessionStorage SessionStorage
 
 <CascadingAuthenticationState>
     <AuthorizeView Policy="Admin">
@@ -79,6 +79,7 @@
     private int _maxPages = 1;
     private int _totalUsers = 1;
     private AuthDTO _token;
+    private SessionDTO _session;
     private HashSet<UserDTO> SelectedItems = new HashSet<UserDTO>();
     private CancellationTokenSource cancellationToken = new();
     public List<UserDTO> UsersList = new List<UserDTO>();
@@ -110,11 +111,14 @@
     {
         Dispose();
     }
-    private void PageItemSelectionChanged(int value)
+    private async void PageItemSelectionChanged(int value)
     {
         if (value == _selectedItemsPerPage)
             return;
         _selectedItemsPerPage = value;
+        var data = _session.UsersPage;
+        data.MaxItemsPerPage = _selectedItemsPerPage;
+        SessionStorage.SetSession(_session, cancellationToken.Token);
         PageChanged(_selectedPage);
 
     }
@@ -122,6 +126,9 @@
     {
         if (firstRender)
         {
+            _session = await SessionStorage.GetSession(cancellationToken.Token);
+            var data = _session.UsersPage;
+            _selectedItemsPerPage = data.MaxItemsPerPage;
             _token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
             await GetData();
             StateHasChanged();

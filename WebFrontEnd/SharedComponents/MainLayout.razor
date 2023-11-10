@@ -2,6 +2,7 @@
 @inject IConfiguration Configuration
 @inject DialogHandler DialogHandler
 @inject CustomAuthentificationStateProvider AuthentificationService
+@inject ISessionStorage SessionStorage
 
 <PageTitle>Jellyfish</PageTitle>
 
@@ -173,7 +174,6 @@
     {
         if(firstRender)
         {
-
         }
         var token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
 

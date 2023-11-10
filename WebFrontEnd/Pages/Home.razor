@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Http
 @inject WebApiRestClient WebApiClient
 @inject ILocalStorageService LocalStorageService
-@inject NavigationManager NavigationManager
+@inject IExtendedNavigationManager NavigationManager
 @inject IJSRuntime JSRuntime;
 <MudTimeline>
     <MudVirtualize Items="@UsersList" T="UserDTO" OverscanCount="10">
@@ -61,6 +61,7 @@
             {
                 authMessage = $"{user.Identity.Name} is authenticated.";
             }
+            
         }
 
     }
@@ -75,7 +76,7 @@
     private async Task GetData()
     {
 
-        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppAuthorizationConst.BrowserLocalStorageItemKey.Authorization);
+        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppConst.BrowserLocalStorageItemKey.Authorization);
 
         var response = await WebApiClient.Request<List<UserDTO>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
         if (response.IsSuccess)

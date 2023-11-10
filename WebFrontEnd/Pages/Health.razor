@@ -3,12 +3,12 @@
 @inject WebApiRestClient WebApiClient
 @inject CustomAuthentificationStateProvider AuthentificationService
 @inject IConfiguration Configuration
-@inject NavigationManager NavigationManager
+@inject IExtendedNavigationManager NavigationManager
 
 <h3>Health</h3>
 
-<MudTabs Outlined="true">
-    <MudTabPanel Text="Database" Icon="@Icons.Material.Filled.DataArray">
+<MudTabs @ref="_mudTabs" Outlined="true" ActivePanelIndexChanged="TabChanged">
+    <MudTabPanel ID="@TabIdDatabase" Text="Database" Icon="@Icons.Material.Filled.DataArray">
         @if (HealthCheck.Checks != null && HealthCheck.Checks.mysql != null)
         {
 
@@ -18,12 +18,19 @@
         else
         {
 
-            <MudSkeleton />
-            <MudSkeleton Animation="Animation.False" />
-            <MudSkeleton Animation="Animation.Wave" />
+            @if (_showSkeleton)
+            {
+                <MudSkeleton />
+                <MudSkeleton Animation="Animation.False" />
+                <MudSkeleton Animation="Animation.Wave" />
+            }
+            else
+            {
+                <MudText>No data</MudText>
+            }
         }
     </MudTabPanel>
-    <MudTabPanel Text="Cache" Icon="@Icons.Material.Filled.Cached">
+    <MudTabPanel ID="@TabIdCache" Text="Cache" Icon="@Icons.Material.Filled.Cached">
 
         @if (HealthCheck.Checks != null && HealthCheck.Checks.cache != null)
         {
@@ -34,12 +41,19 @@
         else
         {
 
-            <MudSkeleton />
-            <MudSkeleton Animation="Animation.False" />
-            <MudSkeleton Animation="Animation.Wave" />
+            @if (_showSkeleton)
+            {
+                <MudSkeleton />
+                <MudSkeleton Animation="Animation.False" />
+                <MudSkeleton Animation="Animation.Wave" />
+            }
+            else
+            {
+                <MudText>No data</MudText>
+            }
         }
     </MudTabPanel>
-    <MudTabPanel Text="SignalR" Icon="@Icons.Material.Filled.Message">
+    <MudTabPanel ID="@TabIdSignalR" Text="SignalR" Icon="@Icons.Material.Filled.Message">
 
         @if (HealthCheck.Checks != null && HealthCheck.Checks.cache!=null)
         {
@@ -50,12 +64,19 @@
         else
         {
 
-            <MudSkeleton />
-            <MudSkeleton Animation="Animation.False" />
-            <MudSkeleton Animation="Animation.Wave" />
+            @if (_showSkeleton)
+            {
+                <MudSkeleton />
+                <MudSkeleton Animation="Animation.False" />
+                <MudSkeleton Animation="Animation.Wave" />
+            }
+            else
+            {
+                <MudText>No data</MudText>
+            }
         }
     </MudTabPanel>
-    <MudTabPanel Text="Mail Queue" Icon="@Icons.Material.Filled.Queue">
+    <MudTabPanel ID="@TabIdMailQueue" Text="Mail Queue" Icon="@Icons.Material.Filled.Queue">
 
         @if (MailQueue!=null&&MailQueue.Any())
         {
@@ -73,40 +94,68 @@
         else
         {
 
-            <MudSkeleton />
-            <MudSkeleton Animation="Animation.False" />
-            <MudSkeleton Animation="Animation.Wave" />
+            @if(_showSkeleton)
+            {
+                <MudSkeleton />
+                <MudSkeleton Animation="Animation.False" />
+                <MudSkeleton Animation="Animation.Wave" />
+            }
+            else
+            {
+                <MudText>No data</MudText>
+            }
         }
     </MudTabPanel>
 </MudTabs>
 @code {
+    private readonly string TabIdMailQueue = "tab_mailqueue_"+Guid.NewGuid().ToString();
+    private readonly string TabIdDatabase = "tab_database_" + Guid.NewGuid().ToString();
+    private readonly string TabIdCache = "tab_cache_" + Guid.NewGuid().ToString();
+    private readonly string TabIdSignalR = "tab_signalr_" + Guid.NewGuid().ToString();
+    private MudTabs _mudTabs = new MudTabs();
     private DateTime TimeFromRequestHealthCheckService = DateTime.MinValue;
     private DateTime TimeFromRequestHealthCheckMailQueue = DateTime.MinValue;
     private CancellationTokenSource cancellationToken = new();
     public HealthZDTO HealthCheck = new HealthZDTO();
     public List<MailOutboxDTO> MailQueue = new List<MailOutboxDTO>();
+    private bool _showSkeleton = true;
+    private IConfigurationSection infrastructureApiSection = null;
+    private string url = null;
+    private string urlController = null;
+    private AuthDTO token;
+    private int currentTab;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if(firstRender)
         {
-            await GetData();
+            token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
+            infrastructureApiSection = Configuration.GetSection("Infrastructure:Api");
+            url = infrastructureApiSection.GetValue<string>("HealthCheck");
+            urlController = infrastructureApiSection.GetValue<string>("HealthCheckController");
+            await GetDataHealthCheck();
             StateHasChanged();
         }
     }
-    private async Task GetData()
+    private async void TabChanged(int index)
     {
-        var infrastructureApiSection = Configuration.GetSection("Infrastructure:Api");
-        var url = infrastructureApiSection.GetValue<string>("HealthCheck");
-        var urlController = infrastructureApiSection.GetValue<string>("HealthCheckController");
-
-        var token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
-        var responseServices = await WebApiClient.Request<HealthZDTO, object>(url, RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
-        if (responseServices.IsSuccess)
+        if (index != currentTab)
         {
-            HealthCheck = responseServices.ApiResponseDeserialized;
-            TimeFromRequestHealthCheckService = DateTime.Now;
+            cancellationToken.Cancel();
+            if (_mudTabs.ActivePanel.ID.ToString() == TabIdDatabase || _mudTabs.ActivePanel.ID.ToString() == TabIdCache)
+            {
+                await GetDataHealthCheck();
+            }
+            else if (_mudTabs.ActivePanel.ID.ToString() == TabIdMailQueue)
+            {
+                await GetDataMailQueue();
+            }
+            currentTab = index;
         }
+    }
+    private async Task GetDataMailQueue()
+    {
+        _showSkeleton = true;
         urlController += "/mail-queue";
         var responseMailQueue = await WebApiClient.Request<List<MailOutboxDTO>, object>(urlController, RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
         if(responseMailQueue.IsSuccess)
@@ -114,6 +163,18 @@
             MailQueue = responseMailQueue.ApiResponseDeserialized;
             TimeFromRequestHealthCheckMailQueue = DateTime.Now;
         }
+        _showSkeleton = false;
+    }
+    private async Task GetDataHealthCheck()
+    {
+        _showSkeleton = true;
+        var responseServices = await WebApiClient.Request<HealthZDTO, object>(url, RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
+        if (responseServices.IsSuccess)
+        {
+            HealthCheck = responseServices.ApiResponseDeserialized;
+            TimeFromRequestHealthCheckService = DateTime.Now;
+        }
+        _showSkeleton = false;
     }
     private void Dispose()
     {
