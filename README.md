@@ -11,8 +11,8 @@ Backend  		| Web-Frontend			| Mobile Application
 ------------- 	| -------------		| -------------
 C#/NET 7  		| C#/NET 7 			| C#/NET 7
 ASP NET  		| Blazor Server 	| .NET MAUI
-MySql 8.0.35   	| Razor Pages 		| Content Cell
-SignalR  		| Mudblazor UI Components 	| Content Cell
+MySql 8.0.35   	| Razor Pages 		| 
+SignalR  		| Mudblazor UI Components 	| 
 Docker  		| 
 EF Core  		| 
 
@@ -50,7 +50,7 @@ Anorher **future** sight is the implementation of **artificial inteligence (AI)*
 - [x] A completed task
 
 
-# _ #
+#  #
 Stay tuned 👍. 
 
 
