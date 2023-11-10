@@ -18,6 +18,11 @@ EF Core  		|
 
 Note: Messaging Mobile App (will be added soon and is part of another repo that is currently private).
 
+## Testing ##
+Unit testing is my common way to test my methods and process flows.
+Preface: I know not every method is testet, the reason why is: you can over engeneer and you can over test. My common way is the middle of path. Critical processes and flows or methods will be tested.
+The unittest behaviour is: `arrange, act, assertion`. The common way in softwaretesting.
+
 ## Motivation ##
 The motivation for this project is to test NET MAUI on the upper named mobile platforms.
 A side effect of this project is to give everyone the oportunity to host a messaging infrastructure by your own.
@@ -32,15 +37,20 @@ Anorher **future** sight is the implementation of **artificial inteligence (AI)*
 
 ## To Do ##
 
-Backend  		|
-------------- 	|
-- [ ] An uncompleted task	|
-- [x] A completed task				|
-				|
-				|
-				|
+### Backend ###
+- [ ] An uncompleted task
+- [x] A completed task
+
+### Web Frontend ###
+- [ ] An uncompleted task
+- [x] A completed task
+- [ ] 
+### Mobile Application ###
+- [ ] An uncompleted task
+- [x] A completed task
 
 
+# _ #
 Stay tuned 👍. 
 
 
