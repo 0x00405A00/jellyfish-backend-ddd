@@ -1,17 +1,83 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.Mobile.Jellyfish\\MobileApp.csproj": {}
+    "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\MobileApp\\MobileApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.Mobile.Jellyfish\\MobileApp.csproj": {
+    "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.Mobile.Jellyfish\\MobileApp.csproj",
-        "projectName": "MobileApp",
-        "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.Mobile.Jellyfish\\MobileApp.csproj",
+        "projectUniqueName": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj",
+        "projectName": "Domain",
+        "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\Mika\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.Mobile.Jellyfish\\obj\\",
+        "outputPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Mika\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.1.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\MobileApp\\MobileApp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\MobileApp\\MobileApp.csproj",
+        "projectName": "MobileApp",
+        "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\MobileApp\\MobileApp.csproj",
+        "packagesPath": "C:\\Users\\Mika\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\MobileApp\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
@@ -255,108 +321,6 @@
         },
         "net7.0-ios16.1": {
           "targetAlias": "net7.0-ios",
-          "dependencies": {
-            "Camera.MAUI": {
-              "target": "Package",
-              "version": "[1.4.4, )"
-            },
-            "CommunityToolkit.Maui": {
-              "target": "Package",
-              "version": "[5.1.0, )"
-            },
-            "CommunityToolkit.Maui.Markup": {
-              "target": "Package",
-              "version": "[3.1.0, )"
-            },
-            "CommunityToolkit.Maui.MediaElement": {
-              "target": "Package",
-              "version": "[1.0.2, )"
-            },
-            "CommunityToolkit.Mvvm": {
-              "target": "Package",
-              "version": "[8.1.0, )"
-            },
-            "Microsoft.AspNetCore.SignalR.Client": {
-              "target": "Package",
-              "version": "[7.0.5, )"
-            },
-            "Microsoft.Extensions.Configuration": {
-              "target": "Package",
-              "version": "[7.0.0, )",
-              "autoReferenced": true
-            },
-            "Microsoft.Extensions.DependencyInjection": {
-              "target": "Package",
-              "version": "[7.0.0, )",
-              "autoReferenced": true
-            },
-            "Microsoft.Extensions.Logging": {
-              "target": "Package",
-              "version": "[7.0.0, )",
-              "autoReferenced": true
-            },
-            "Microsoft.Extensions.Logging.Debug": {
-              "target": "Package",
-              "version": "[7.0.0, )"
-            },
-            "Microsoft.Maui.Controls.Maps": {
-              "target": "Package",
-              "version": "[7.0.81, )"
-            },
-            "Microsoft.Maui.Graphics": {
-              "target": "Package",
-              "version": "[7.0.96, )",
-              "autoReferenced": true
-            },
-            "Microsoft.Maui.Maps": {
-              "target": "Package",
-              "version": "[7.0.81, )"
-            },
-            "RestSharp": {
-              "target": "Package",
-              "version": "[110.2.0, )"
-            },
-            "SQLiteNetExtensions": {
-              "target": "Package",
-              "version": "[2.1.0, )"
-            },
-            "SQLiteNetExtensions.Async": {
-              "target": "Package",
-              "version": "[2.1.0, )"
-            },
-            "SQLitePCLRaw.bundle_green": {
-              "target": "Package",
-              "version": "[2.1.4, )"
-            },
-            "SQLitePCLRaw.core": {
-              "target": "Package",
-              "version": "[2.1.4, )"
-            },
-            "SQLitePCLRaw.provider.dynamic_cdecl": {
-              "target": "Package",
-              "version": "[2.1.4, )"
-            },
-            "SQLitePCLRaw.provider.sqlite3": {
-              "target": "Package",
-              "version": "[2.1.4, )"
-            },
-            "SkiaSharp.Extended.UI.Maui": {
-              "target": "Package",
-              "version": "[2.0.0-preview.61, )"
-            },
-            "Xamarin.Essentials": {
-              "target": "Package",
-              "version": "[1.7.5, )"
-            },
-            "sqlite-net-base": {
-              "target": "Package",
-              "version": "[1.8.116, )"
-            },
-            "sqlite-net-pcl": {
-              "target": "Package",
-              "version": "[1.8.116, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -368,23 +332,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "frameworkReferences": {
-            "Microsoft.iOS": {
-              "privateAssets": "all"
-            },
-            "Microsoft.Maui.Controls": {
-              "privateAssets": "all"
-            },
-            "Microsoft.Maui.Core": {
-              "privateAssets": "all"
-            },
-            "Microsoft.Maui.Essentials": {
-              "privateAssets": "all"
-            },
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       },
@@ -403,72 +350,6 @@
         },
         "ios-arm64": {
           "#import": []
-        }
-      }
-    },
-    "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj",
-        "projectName": "Domain",
-        "projectPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\Mika\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\obj\\",
-        "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
-        "configFilePaths": [
-          "C:\\Users\\Mika\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net7.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
-          "dependencies": {
-            "MediatR": {
-              "target": "Package",
-              "version": "[12.1.1, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     },

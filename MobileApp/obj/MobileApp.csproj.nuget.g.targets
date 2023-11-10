@@ -95,9 +95,6 @@
     <Import Project="$(NuGetPackageRoot)communitytoolkit.mvvm\8.1.0\buildTransitive\netstandard2.1\CommunityToolkit.Mvvm.targets" Condition="Exists('$(NuGetPackageRoot)communitytoolkit.mvvm\8.1.0\buildTransitive\netstandard2.1\CommunityToolkit.Mvvm.targets')" />
   </ImportGroup>
   <ImportGroup Condition=" '$(TargetFramework)' == 'net7.0-ios' AND '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)system.text.json\7.0.2\buildTransitive\net6.0\System.Text.Json.targets" Condition="Exists('$(NuGetPackageRoot)system.text.json\7.0.2\buildTransitive\net6.0\System.Text.Json.targets')" />
-    <Import Project="$(NuGetPackageRoot)skiasharp.nativeassets.ios\2.88.1\buildTransitive\net6.0-ios13.6\SkiaSharp.NativeAssets.iOS.targets" Condition="Exists('$(NuGetPackageRoot)skiasharp.nativeassets.ios\2.88.1\buildTransitive\net6.0-ios13.6\SkiaSharp.NativeAssets.iOS.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.extensions.logging.abstractions\7.0.0\buildTransitive\net6.0\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.logging.abstractions\7.0.0\buildTransitive\net6.0\Microsoft.Extensions.Logging.Abstractions.targets')" />
-    <Import Project="$(NuGetPackageRoot)communitytoolkit.mvvm\8.1.0\buildTransitive\netstandard2.1\CommunityToolkit.Mvvm.targets" Condition="Exists('$(NuGetPackageRoot)communitytoolkit.mvvm\8.1.0\buildTransitive\netstandard2.1\CommunityToolkit.Mvvm.targets')" />
   </ImportGroup>
 </Project>
