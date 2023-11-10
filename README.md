@@ -26,6 +26,14 @@ Unit testing is my common way to test my methods and process flows.
 Preface: I know not every method is testet, the reason why is: you can over engeneer and you can over test. My common way is the middle of path. Critical processes and flows or methods will be tested.
 The unittest behaviour is: `arrange, act, assertion`. The common way in softwaretesting.
 
+For end to end tests I used Postman with an import of generated swagger api documentation.
+
+## Documentation ##
+Currently only EER and Swagger Documentation.
+
+## Deployment ##
+Legacy over binary or with docker container.
+
 ## Motivation ##
 The motivation for this project is to test NET MAUI on the upper named mobile platforms.
 A side effect of this project is to give everyone the oportunity to host a messaging infrastructure by your own.
