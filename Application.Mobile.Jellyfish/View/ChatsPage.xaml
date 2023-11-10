@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.View.ChatsPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converter="clr-namespace:MobileApp.Converter"
+             xmlns:selector="clr-namespace:MobileApp.DatatemplateSelector"
+             xmlns:customcontrol="clr-namespace:MobileApp.Controls"
+             xmlns:vm="clr-namespace:MobileApp.ViewModel"
+             xmlns:model="clr-namespace:MobileApp.Model"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:local="clr-namespace:MobileApp"
+             x:Name="ChatsPageView"
+             IsVisible="{Binding SelectedView}">
+    <ContentView.Resources>
+        <converter:ValueThrouthputConverter x:Key="ValueThrouthputConverter"></converter:ValueThrouthputConverter>
+        <converter:BoolInvertConverter x:Key="BoolInvertConverter"></converter:BoolInvertConverter>
+        <converter:DateTimeConvert x:Key="DateTimeConvert"></converter:DateTimeConvert>
+        <converter:ResourceDictionaryValueExtractorConverter x:Key="ResourceDictionaryValueExtractorConverter"></converter:ResourceDictionaryValueExtractorConverter>
+        <converter:LastChatMessagePreviewConverter x:Key="LastChatMessagePreviewConverter"></converter:LastChatMessagePreviewConverter>
+        <DataTemplate x:Key="EmptyChatsCollectionTemplate">
+            <Label HorizontalOptions="Center" VerticalOptions="Center" Text="No chats..."></Label>
+        </DataTemplate>
+        <DataTemplate x:Key="ChatTemplate">
+            <SwipeView>
+
+                <SwipeView.LeftItems>
+                    <SwipeItem Text="Delete" BackgroundColor="Red" Command="{Binding Source={x:Reference ChatsPageView},Path=BindingContext.DeleteChatCommand}" CommandParameter="{Binding}"></SwipeItem>
+                </SwipeView.LeftItems>
+
+
+                <Border VerticalOptions="Fill" 
+                        HorizontalOptions="Fill" 
+                        BackgroundColor="{StaticResource Primary}" 
+                        Stroke="White" 
+                        StrokeThickness="1" 
+                        Padding="5">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10,10,10,10">
+                        </RoundRectangle>
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Source={x:Reference ChatsPageView},Path=BindingContext.TabChatCommand}" CommandParameter="{Binding}"></TapGestureRecognizer>
+                    </Border.GestureRecognizers>
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="80"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <toolkit:AvatarView Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" 
+                                HeightRequest="50" 
+                                WidthRequest="50"
+                                StrokeThickness="5"
+                                Text="M.R."
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource Primary}"
+                                BackgroundColor="White"
+                                BorderWidth="0" 
+                                CornerRadius="9"/>
+                        <Label Text="{Binding Name}" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" Grid.Column="1" Grid.Row="0" FontFamily="Roboto-Bold" FontSize="{OnPlatform Android={OnIdiom Phone=14, Tablet=16}, iOS=12, UWP=12}"></Label>
+                        <Label Text="{Binding LastMessageInMessageGroup.Text,Converter={StaticResource LastChatMessagePreviewConverter}}" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" Grid.Column="1" Grid.Row="1" FontSize="{OnPlatform Android={OnIdiom Phone=14, Tablet=16}, iOS=12, UWP=12}"></Label>
+                        <Label Text="{Binding LastMessageInMessageGroup.MessageDateTime,Converter={StaticResource DateTimeConvert}}" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" Grid.Column="2" Grid.Row="0" FontSize="{OnPlatform Android={OnIdiom Phone=12, Tablet=12}, iOS=10, UWP=10}"></Label>
+
+                    </Grid>
+                </Border>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </SwipeView>
+        </DataTemplate>
+        <selector:ChatTemplateSelector x:Key="ChatTemplateSelector" OpenExistingChatTemplate="{StaticResource ChatTemplate}"></selector:ChatTemplateSelector>
+    </ContentView.Resources>
+    <ScrollView
+        VerticalOptions="Fill"
+        HorizontalOptions="Fill">
+        
+        <CollectionView 
+            
+            x:Name="Chats"
+            ItemsSource="{Binding Chats,Mode=TwoWay}" 
+            ItemTemplate="{StaticResource ChatTemplate}" 
+            SelectionMode="Single" 
+            SelectedItem="{Binding SelectedChat,Mode=TwoWay}" 
+            IsVisible="{Binding AreChatsAvailable,Mode=TwoWay}"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill"
+            CanReorderItems="False"
+            CanMixGroups="False"
+            EmptyViewTemplate="{StaticResource EmptyChatsCollectionTemplate}"
+            >
+        </CollectionView>
+    </ScrollView>
+</ContentView>

@@ -1,0 +1,179 @@
+is_global = true
+build_property.TargetFramework = net7.0-windows10.0.19041.0
+build_property.TargetPlatformMinVersion = 10.0.17763.0
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = JellyFish
+build_property.ProjectDir = F:\Helix\SignalRTestClient\SignalRTestClient\SignalRTestClientGUI\
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/App.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.App.xaml
+build_metadata.AdditionalFiles.TargetPath = App.xaml
+build_metadata.AdditionalFiles.RelativePath = App.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/AppShell.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.AppShell.xaml
+build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
+build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/Controls/MediaShareMenuItem.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.Controls.MediaShareMenuItem.xaml
+build_metadata.AdditionalFiles.TargetPath = Controls\MediaShareMenuItem.xaml
+build_metadata.AdditionalFiles.RelativePath = Controls\MediaShareMenuItem.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/Controls/MenuListViewItem.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.Controls.MenuListViewItem.xaml
+build_metadata.AdditionalFiles.TargetPath = Controls\MenuListViewItem.xaml
+build_metadata.AdditionalFiles.RelativePath = Controls\MenuListViewItem.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/Controls/ValidationEntry.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.Controls.ValidationEntry.xaml
+build_metadata.AdditionalFiles.TargetPath = Controls\ValidationEntry.xaml
+build_metadata.AdditionalFiles.RelativePath = Controls\ValidationEntry.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/Resources/Styles/Colors.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.Resources.Styles.Colors.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/Resources/Styles/Styles.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.Resources.Styles.Styles.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/Resources/Styles/Svg.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.Resources.Styles.Svg.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Svg.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Svg.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/CallsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.CallsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = View\CallsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = View\CallsPage.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/CameraHandlerPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.CameraHandlerPage.xaml
+build_metadata.AdditionalFiles.TargetPath = View\CameraHandlerPage.xaml
+build_metadata.AdditionalFiles.RelativePath = View\CameraHandlerPage.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/ChatPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.ChatPage.xaml
+build_metadata.AdditionalFiles.TargetPath = View\ChatPage.xaml
+build_metadata.AdditionalFiles.RelativePath = View\ChatPage.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/ChatsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.ChatsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = View\ChatsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = View\ChatsPage.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/ContactsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.ContactsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = View\ContactsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = View\ContactsPage.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/LoginPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.LoginPage.xaml
+build_metadata.AdditionalFiles.TargetPath = View\LoginPage.xaml
+build_metadata.AdditionalFiles.RelativePath = View\LoginPage.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/MainPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.MainPage.xaml
+build_metadata.AdditionalFiles.TargetPath = View\MainPage.xaml
+build_metadata.AdditionalFiles.RelativePath = View\MainPage.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/ProfilePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.ProfilePage.xaml
+build_metadata.AdditionalFiles.TargetPath = View\ProfilePage.xaml
+build_metadata.AdditionalFiles.RelativePath = View\ProfilePage.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/RegisterContentPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.RegisterContentPage.xaml
+build_metadata.AdditionalFiles.TargetPath = View\RegisterContentPage.xaml
+build_metadata.AdditionalFiles.RelativePath = View\RegisterContentPage.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/ResetPasswordContentPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.ResetPasswordContentPage.xaml
+build_metadata.AdditionalFiles.TargetPath = View\ResetPasswordContentPage.xaml
+build_metadata.AdditionalFiles.RelativePath = View\ResetPasswordContentPage.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/SettingsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.SettingsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = View\SettingsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = View\SettingsPage.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/SettingsSubPages/SettingsPageAvatar.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.SettingsSubPages.SettingsPageAvatar.xaml
+build_metadata.AdditionalFiles.TargetPath = View\SettingsSubPages\SettingsPageAvatar.xaml
+build_metadata.AdditionalFiles.RelativePath = View\SettingsSubPages\SettingsPageAvatar.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/SettingsSubPages/SettingsPageChats.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.SettingsSubPages.SettingsPageChats.xaml
+build_metadata.AdditionalFiles.TargetPath = View\SettingsSubPages\SettingsPageChats.xaml
+build_metadata.AdditionalFiles.RelativePath = View\SettingsSubPages\SettingsPageChats.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/SettingsSubPages/SettingsPageDatenschutz.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.SettingsSubPages.SettingsPageDatenschutz.xaml
+build_metadata.AdditionalFiles.TargetPath = View\SettingsSubPages\SettingsPageDatenschutz.xaml
+build_metadata.AdditionalFiles.RelativePath = View\SettingsSubPages\SettingsPageDatenschutz.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/SettingsSubPages/SettingsPageHelp.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.SettingsSubPages.SettingsPageHelp.xaml
+build_metadata.AdditionalFiles.TargetPath = View\SettingsSubPages\SettingsPageHelp.xaml
+build_metadata.AdditionalFiles.RelativePath = View\SettingsSubPages\SettingsPageHelp.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/SettingsSubPages/SettingsPageKonto.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.SettingsSubPages.SettingsPageKonto.xaml
+build_metadata.AdditionalFiles.TargetPath = View\SettingsSubPages\SettingsPageKonto.xaml
+build_metadata.AdditionalFiles.RelativePath = View\SettingsSubPages\SettingsPageKonto.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/SettingsSubPages/SettingsPageLanguage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.SettingsSubPages.SettingsPageLanguage.xaml
+build_metadata.AdditionalFiles.TargetPath = View\SettingsSubPages\SettingsPageLanguage.xaml
+build_metadata.AdditionalFiles.RelativePath = View\SettingsSubPages\SettingsPageLanguage.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/SettingsSubPages/SettingsPageNotifications.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.SettingsSubPages.SettingsPageNotifications.xaml
+build_metadata.AdditionalFiles.TargetPath = View\SettingsSubPages\SettingsPageNotifications.xaml
+build_metadata.AdditionalFiles.RelativePath = View\SettingsSubPages\SettingsPageNotifications.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/SettingsSubPages/SettingsPageStorageAndData.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.SettingsSubPages.SettingsPageStorageAndData.xaml
+build_metadata.AdditionalFiles.TargetPath = View\SettingsSubPages\SettingsPageStorageAndData.xaml
+build_metadata.AdditionalFiles.RelativePath = View\SettingsSubPages\SettingsPageStorageAndData.xaml
+
+[F:/Helix/SignalRTestClient/SignalRTestClient/SignalRTestClientGUI/View/StatusPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = JellyFish.View.StatusPage.xaml
+build_metadata.AdditionalFiles.TargetPath = View\StatusPage.xaml
+build_metadata.AdditionalFiles.RelativePath = View\StatusPage.xaml

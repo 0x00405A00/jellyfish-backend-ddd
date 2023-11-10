@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.View.SettingsSubPages.SettingsPageGeneric"
+             xmlns:converter="clr-namespace:MobileApp.Converter"
+             xmlns:selector="clr-namespace:MobileApp.DatatemplateSelector"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title="{Binding PageTitle,Mode=OneWay}"
+             NavigationPage.HasBackButton="False">
+    <ContentPage.Resources>
+        <converter:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"></converter:FirstValidationErrorConverter>
+        <converter:BoolInvertConverter x:Key="BoolInvertConverter"></converter:BoolInvertConverter>
+        <converter:EntryControlLayoutByBindingTypeConverter x:Key="EntryControlLayoutByBindingTypeConverter"></converter:EntryControlLayoutByBindingTypeConverter>
+        <DataTemplate x:Key="DefaultPropertyDescriptorDatatemplate">
+            <Border
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                Padding="5"
+                BackgroundColor="{StaticResource Primary}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="15,15,15,15"></RoundRectangle>
+                </Border.StrokeShape>
+                <Grid Padding="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label 
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Text="{Binding DisplayName,Mode=OneWay}" 
+                        HorizontalOptions="Center" 
+                        VerticalOptions="Center"
+                        TextColor="White"></Label>
+                    <VerticalStackLayout
+                        Grid.Row="0"
+                        Grid.Column="1">
+                        <Entry 
+                                HorizontalOptions="FillAndExpand"
+                                Text="{Binding Value.Value,Mode=TwoWay}" 
+                                HorizontalTextAlignment="Start"
+                                IsPassword="{Binding IsProtectedTextEntry}"
+                                Placeholder="{Binding EntryPlaceholderValue}"
+                                PlaceholderColor="Gray"
+                                Keyboard="{Binding Value.Value,Mode=TwoWay,Converter={StaticResource EntryControlLayoutByBindingTypeConverter}}"
+                                TextColor="White"
+                                IsReadOnly="{Binding IsReadOnly,Mode=OneWay}">
+                            <Entry.Behaviors>
+                                <toolkit:EventToCommandBehavior EventName="TextChanged" Command="{Binding Value.ValidateByValueChangeCommand}"/>
+                            </Entry.Behaviors>
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="{x:Type Entry}" Binding="{Binding Value.IsValid,Mode=OneWayToSource}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="Red" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="{x:Type Entry}" Binding="{Binding Value.IsValid,Mode=OneWayToSource}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                        <Label 
+                            Text="{Binding Value.Errors, Converter={StaticResource FirstValidationErrorConverter}}" 
+                            HorizontalOptions="FillAndExpand"/>
+
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="BooleanPropertyDescriptorDatatemplate">
+            <Border
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                Padding="5"
+                BackgroundColor="{StaticResource Primary}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="15,15,15,15"></RoundRectangle>
+                </Border.StrokeShape>
+                <Grid Padding="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label 
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Text="{Binding DisplayName,Mode=OneWay}" 
+                        HorizontalOptions="Center" 
+                        VerticalOptions="Center"
+                        TextColor="White"></Label>
+                    <Switch 
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="0,0,0,0"
+                        IsToggled="{Binding Value.Value,Mode=TwoWay}" 
+                        HorizontalOptions="Start" 
+                        VerticalOptions="Center"
+                        ThumbColor="Gray"
+                        OnColor="Green"
+                        IsEnabled="{Binding IsReadOnly,Converter={StaticResource BoolInvertConverter},Mode=OneWay}"></Switch>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="EnumPropertyDescriptorDatatemplate">
+            <Border
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                Padding="5"
+                BackgroundColor="{StaticResource Primary}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="15,15,15,15"></RoundRectangle>
+                </Border.StrokeShape>
+                <Grid Padding="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label 
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Text="{Binding DisplayName,Mode=OneWay}" 
+                        HorizontalOptions="Center" 
+                        VerticalOptions="Center"
+                        TextColor="White"></Label>
+                    <Picker 
+                        ItemsSource="{Binding EnumValues}" 
+                        SelectedItem="{Binding Value.Value,Mode=TwoWay}"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="0,0,0,0"
+                        HorizontalOptions="Fill" 
+                        VerticalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        IsEnabled="{Binding IsReadOnly,Converter={StaticResource BoolInvertConverter},Mode=OneWay}"></Picker>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="DatePropertyDescriptorDatatemplate">
+            <Border
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                Padding="5"
+                BackgroundColor="{StaticResource Primary}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="15,15,15,15"></RoundRectangle>
+                </Border.StrokeShape>
+                <Grid Padding="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label 
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Text="{Binding DisplayName,Mode=OneWay}" 
+                        HorizontalOptions="Center" 
+                        VerticalOptions="Center"
+                        TextColor="White"></Label>
+                    <HorizontalStackLayout 
+                        Spacing="5"
+                        Grid.Row="0"
+                        Grid.Column="1">
+                        <DatePicker 
+                            
+                            Date="{Binding Value.Value}"
+                            HorizontalOptions="Fill" 
+                            VerticalOptions="Center"
+                            TextColor="White"
+                            IsEnabled="{Binding IsReadOnly,Converter={StaticResource BoolInvertConverter},Mode=OneWay}"></DatePicker>
+                        <TimePicker 
+                            Time="{Binding CalcTmpValue}"
+                            HorizontalOptions="Fill" 
+                            VerticalOptions="Center"
+                            TextColor="White"
+                            IsEnabled="{Binding IsReadOnly,Converter={StaticResource BoolInvertConverter},Mode=OneWay}"></TimePicker>
+                    </HorizontalStackLayout>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="TimeOnlyPropertyDescriptorDatatemplate">
+            <Border
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                Padding="5"
+                BackgroundColor="{StaticResource Primary}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="15,15,15,15"></RoundRectangle>
+                </Border.StrokeShape>
+                <Grid Padding="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label 
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Text="{Binding DisplayName,Mode=OneWay}" 
+                        HorizontalOptions="Center" 
+                        VerticalOptions="Center"
+                        TextColor="White"></Label>
+                    <TimePicker 
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Time="{Binding Value.Value}"
+                        HorizontalOptions="Fill" 
+                        VerticalOptions="Center"
+                        TextColor="White"
+                        IsEnabled="{Binding IsReadOnly,Converter={StaticResource BoolInvertConverter},Mode=OneWay}"></TimePicker>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="DateOnlyPropertyDescriptorDatatemplate">
+            <Border
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                Padding="5"
+                BackgroundColor="{StaticResource Primary}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="15,15,15,15"></RoundRectangle>
+                </Border.StrokeShape>
+                <Grid Padding="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label 
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Text="{Binding DisplayName,Mode=OneWay}" 
+                        HorizontalOptions="Center" 
+                        VerticalOptions="Center"
+                        TextColor="White"></Label>
+                    <DatePicker 
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Date="{Binding Value.Value,FallbackValue=DateTime.Now}"
+                        HorizontalOptions="Fill" 
+                        VerticalOptions="Center"
+                        TextColor="White"
+                        IsEnabled="{Binding IsReadOnly,Converter={StaticResource BoolInvertConverter},Mode=OneWay}"></DatePicker>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <selector:SettingsTemplateSelector 
+            x:Key="SettingsTemplateSelector" 
+            DefaultSettingsTemplate="{StaticResource DefaultPropertyDescriptorDatatemplate}"
+            BooleanSettingsTemplate="{StaticResource BooleanPropertyDescriptorDatatemplate}"
+            TimeOnlySettingsTemplate="{StaticResource TimeOnlyPropertyDescriptorDatatemplate}"
+            DateOnlySettingsTemplate="{StaticResource DateOnlyPropertyDescriptorDatatemplate}"
+            DateTimeSettingsTemplate="{StaticResource DatePropertyDescriptorDatatemplate}"
+            EnumSettingsTemplate="{StaticResource EnumPropertyDescriptorDatatemplate}"></selector:SettingsTemplateSelector>
+    </ContentPage.Resources>
+    <VerticalStackLayout 
+        Spacing="5"
+        VerticalOptions="FillAndExpand">
+        <CollectionView
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            ItemsSource="{Binding PropertyValues,Mode=TwoWay}"
+            ItemTemplate="{StaticResource SettingsTemplateSelector}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout 
+                    Orientation="Vertical"
+                    ItemSpacing="1">
+
+                </LinearItemsLayout>
+            </CollectionView.ItemsLayout>
+        </CollectionView>
+        <HorizontalStackLayout 
+            VerticalOptions="End"
+            HorizontalOptions="Center"
+            Spacing="5">
+            
+            <Button
+                        IsVisible="{Binding IsDataChanged,Mode=TwoWay}"
+                        Command="{Binding SaveConfigCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        Text="Save"
+                        HorizontalOptions="Center"
+                        TextColor="White"
+                        FontSize="12"
+                        FontAttributes="Bold"></Button>
+            <Button
+                Command="{Binding RestoreDefaultsConfigCommand}"
+                BackgroundColor="{StaticResource Primary}"
+                Text="Restore Defaults"
+                HorizontalOptions="Center"
+                TextColor="White"
+                FontSize="12"
+                FontAttributes="Bold"></Button>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

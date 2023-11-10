@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Windows Machine": {
+      "commandName": "MsixPackage",
+      "nativeDebugging": false
+    },
+    "Profil \"1\"": {
+      "commandName": "Executable"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="MobileApp.Controls.MenuListViewItem">
+    
+    <Border x:Name="MenuItem" BackgroundColor="{StaticResource Primary}" StrokeThickness="1">
+
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="10,10,10,10">
+            </RoundRectangle>
+        </Border.StrokeShape>
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentView},Mode=FindAncestor},Path=TapCommand}" CommandParameter="{Binding Source={RelativeSource AncestorType={x:Type ContentView},Mode=FindAncestor},Path=TapCommandParameters}"></TapGestureRecognizer>
+        </Border.GestureRecognizers>
+        <Border.Behaviors>
+            <toolkit:AnimationBehavior>
+                <toolkit:AnimationBehavior.AnimationType>
+                    <toolkit:FadeAnimation Opacity="0.5" Easing="{x:Static Easing.BounceOut}" />
+
+                </toolkit:AnimationBehavior.AnimationType>
+            </toolkit:AnimationBehavior>
+        </Border.Behaviors>
+        <Grid HorizontalOptions="Start" Padding="5" VerticalOptions="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="50"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label 
+            Grid.Row="0"
+            Grid.Column="0"
+            HorizontalTextAlignment="Start"
+            VerticalTextAlignment="Center"
+            Text="{Binding Source={RelativeSource AncestorType={x:Type ContentView},Mode=FindAncestor},Path=Text}"
+                TextColor="{Binding Source={RelativeSource AncestorType={x:Type ContentView},Mode=FindAncestor},Path=TextColor}"></Label>
+            <Label 
+            Grid.Row="0"
+            Grid.Column="1"
+                Text=">" 
+                   FontAttributes="Bold" 
+                   HorizontalTextAlignment="End" 
+                   VerticalTextAlignment="Center" 
+                   HorizontalOptions="End" 
+                   VerticalOptions="Center"
+                TextColor="{Binding Source={RelativeSource AncestorType={x:Type ContentView},Mode=FindAncestor},Path=TextColor}"></Label>
+
+        </Grid>
+
+    </Border>
+</ContentView>

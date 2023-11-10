@@ -1,0 +1,12 @@
+F:\Helix\SignalRTestClient\SignalRTestClient\SignalRTestClientGUI\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\Jellyfish.csproj.AssemblyReference.cache
+F:\Helix\SignalRTestClient\SignalRTestClient\SignalRTestClientGUI\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\mauiimage.inputs
+F:\Helix\SignalRTestClient\SignalRTestClient\SignalRTestClientGUI\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\mauifont.inputs
+F:\Helix\SignalRTestClient\SignalRTestClient\SignalRTestClientGUI\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\mauisplash.inputs
+F:\Helix\SignalRTestClient\SignalRTestClient\SignalRTestClientGUI\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\mauimanifest.stamp
+F:\Helix\SignalRTestClient\SignalRTestClient\SignalRTestClientGUI\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\Platforms\Windows\App.g.i.cs
+F:\Helix\SignalRTestClient\SignalRTestClient\SignalRTestClientGUI\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\Platforms\Windows\App.g.cs
+F:\Helix\SignalRTestClient\SignalRTestClient\SignalRTestClientGUI\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\XamlTypeInfo.g.cs
+F:\Helix\SignalRTestClient\SignalRTestClient\SignalRTestClientGUI\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\Platforms\Windows\App.xaml
+F:\Helix\SignalRTestClient\SignalRTestClient\SignalRTestClientGUI\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\Platforms\Windows\App.xbf
+F:\Helix\SignalRTestClient\SignalRTestClient\SignalRTestClientGUI\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\XamlSaveStateFile.xml
+F:\Helix\SignalRTestClient\SignalRTestClient\SignalRTestClientGUI\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\Jellyfish.GeneratedMSBuildEditorConfig.editorconfig

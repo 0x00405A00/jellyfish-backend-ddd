@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<customcontrol:CustomContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.View.SettingsPage"
+             xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             xmlns:mauimaps="clr-namespace:Microsoft.Maui.Maps;assembly=Microsoft.Maui.Maps"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converter="clr-namespace:MobileApp.Converter"
+             xmlns:selector="clr-namespace:MobileApp.DatatemplateSelector"
+             xmlns:behaviour="clr-namespace:MobileApp.Behaviour"
+             xmlns:vm="clr-namespace:MobileApp.ViewModel"
+             xmlns:model="clr-namespace:MobileApp.Model"
+             xmlns:customcontrol="clr-namespace:MobileApp.Controls"
+             xmlns:local="clr-namespace:MobileApp" 
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False"
+             Title="SettingsPage">
+    <customcontrol:CustomContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior EventName="Loaded" Command="{Binding LoadedCommand}"></toolkit:EventToCommandBehavior>
+    </customcontrol:CustomContentPage.Behaviors>
+    <ContentPage.Resources>
+        <Color x:Key="LightBlue">#42B0FF</Color>
+        <toolkit:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter"></toolkit:ByteArrayToImageSourceConverter>
+        <converter:MessageStateColorConverter x:Key="MessageStateColorConverter"></converter:MessageStateColorConverter>
+        <converter:DateTimeConvert x:Key="DateTimeConvert"></converter:DateTimeConvert>
+        <converter:BoolInvertConverter x:Key="BoolInvertConverter"></converter:BoolInvertConverter>
+        <DataTemplate x:Key="UserFriendInviteTemplate">
+            <VerticalStackLayout >
+                <Border
+                    x:Name="BorderShape"
+                    Padding="5"
+                    BackgroundColor="{StaticResource Primary}"
+                    Stroke="{StaticResource Primary}"
+                    StrokeThickness="2">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10,10,10,10"></RoundRectangle>
+                    </Border.StrokeShape>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <HorizontalStackLayout
+                            Spacing="5"
+                            Grid.Row="0"
+                            Grid.Column="0">
+                            <Border
+                                StrokeThickness="1"
+                                Stroke="black"
+                                HeightRequest="50" 
+                                WidthRequest="50"
+                                IsVisible="{Binding HasProfilePicture}">
+                                <Image 
+                                Source="{Binding ProfilePicture,Converter={x:StaticResource ByteArrayToImageSourceConverter}}"></Image>
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="25,25,25,25"></RoundRectangle>
+                                </Border.StrokeShape>
+                            </Border>
+                            <toolkit:AvatarView
+                                IsVisible="{Binding HasProfilePicture,Converter={x:StaticResource BoolInvertConverter}}"
+                                HeightRequest="50" 
+                                WidthRequest="50"
+                                StrokeThickness="5"
+                                Text="{Binding Firstletter}"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource Primary}"
+                                BackgroundColor="White"
+                                BorderWidth="0" 
+                                CornerRadius="9">
+                            </toolkit:AvatarView>
+                            <Label 
+                                Text="{Binding NickName}"
+                                FontAttributes="Bold"
+                                TextColor="White"
+                                FontSize="14"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Start"></Label>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                                Spacing="5"
+                                Grid.Row="0"
+                                Grid.Column="2">
+                            <Button
+                                BackgroundColor="White"
+                                HeightRequest="35"
+                                HorizontalOptions="EndAndExpand"
+                                FontAttributes="Bold"
+                                FontSize="12"
+                                TextTransform="Uppercase"
+                                Text="+ADD"
+                                BorderColor="Transparent"
+                                TextColor="{StaticResource Primary}"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage},Mode=FindAncestor},Path=BindingContext.AcceptFriendshipInviteCommand}"
+                                CommandParameter="{Binding}"></Button>
+                        </HorizontalStackLayout>
+                    </Grid>
+
+
+                </Border>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </VerticalStackLayout>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <Grid x:Name="Layout">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition>
+
+            </ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" >
+
+            </RowDefinition>
+            <RowDefinition Height="*">
+
+            </RowDefinition>
+        </Grid.RowDefinitions>
+        <Border 
+            Grid.Row="0" 
+            Grid.Column="0" 
+            ZIndex="1" 
+            HeightRequest="100" 
+            MinimumHeightRequest="100" 
+            MaximumHeightRequest="100" 
+            VerticalOptions="Fill" 
+            Stroke="{StaticResource Primary}"
+            StrokeThickness="0"
+            HorizontalOptions="Fill" 
+                        
+            BackgroundColor="{StaticResource Primary}" Padding="5">
+
+            <Border.StrokeShape>
+                <RoundRectangle>
+                    <RoundRectangle.CornerRadius>
+                        0,0,0,0
+                    </RoundRectangle.CornerRadius>
+                </RoundRectangle>
+            </Border.StrokeShape>
+
+            <Grid x:Name="SettingsTitleBar" ColumnSpacing="10" Padding="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition>
+
+                    </ColumnDefinition>
+                    <ColumnDefinition>
+
+                    </ColumnDefinition>
+                    <ColumnDefinition>
+
+                    </ColumnDefinition>
+                    <ColumnDefinition>
+
+                    </ColumnDefinition>
+                    <ColumnDefinition>
+
+                    </ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackLayout
+                    Grid.Row="0" 
+                    Grid.RowSpan="5" 
+                    Grid.Column="0" >
+                    <Border
+                                StrokeThickness="1"
+                                Stroke="black"
+                                HeightRequest="80" 
+                                WidthRequest="80"
+                                IsVisible="{Binding OwnProfile.HasProfilePicture}">
+                        <Image 
+                                Source="{Binding OwnProfile.ProfilePicture,Converter={x:StaticResource ByteArrayToImageSourceConverter}}"></Image>
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="25,25,25,25"></RoundRectangle>
+                        </Border.StrokeShape>
+                    </Border>
+                    <toolkit:AvatarView
+                                IsVisible="{Binding OwnProfile.HasProfilePicture,Converter={x:StaticResource BoolInvertConverter}}"
+                                HeightRequest="80" 
+                                WidthRequest="80"
+                                StrokeThickness="5"
+                                Text="{Binding OwnProfile.Firstletter}"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource Primary}"
+                                BackgroundColor="White"
+                                BorderWidth="0" 
+                                CornerRadius="9">
+                    </toolkit:AvatarView>
+                </StackLayout>
+                
+                <VerticalStackLayout 
+                    Grid.Row="0" 
+                    Grid.RowSpan="5" 
+                    Grid.Column="1" 
+                    Grid.ColumnSpan="4" 
+                    Spacing="2" 
+                    Padding="5">
+                    <Label 
+                        VerticalOptions="Start" 
+                        HorizontalOptions="Start" 
+                        HorizontalTextAlignment="Start" 
+                        VerticalTextAlignment="Center" Text="Profile" 
+                        TextColor="White" 
+                        FontSize="20" 
+                        FontAttributes="Bold"></Label>
+                    <Label 
+                        HorizontalTextAlignment="Start" 
+                        VerticalTextAlignment="Center" 
+                        HorizontalOptions="StartAndExpand" 
+                        WidthRequest="300" 
+                        FlowDirection="LeftToRight" 
+                        LineBreakMode="WordWrap" 
+                        MaxLines="2" 
+                        Text="&quot;Mein Status&quot;" 
+                        TextColor="White" 
+                        FontSize="14" 
+                        FontAttributes="Italic"></Label>
+
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+
+        <Grid x:Name="SettingsControlsGrid" Grid.Column="0" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <VerticalStackLayout 
+                Grid.Row="0"
+                Grid.Column="0"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill"
+                >
+
+                <Border
+                    IsVisible="{Binding HasUserFriendInvites}"
+                    HorizontalOptions="Fill"
+                    Stroke="{StaticResource Primary}"
+                    StrokeThickness="0"
+                    Padding="5"
+                    BackgroundColor="{StaticResource Primary}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20,20,20,20"/>
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Spacing="5">
+
+                        <Label 
+                            Text="Friendship inquiries:"
+                            TextColor="White" 
+                            HorizontalTextAlignment="Start" 
+                            Margin="5,5,5,5"
+                            HorizontalOptions="Center" 
+                            VerticalOptions="Center" 
+                            VerticalTextAlignment="Center" 
+                            FontSize="18" 
+                            FontAttributes="Bold"></Label>
+                        <Border
+                            BackgroundColor="White">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20,20,20,20">
+                                    
+                                </RoundRectangle>
+                            </Border.StrokeShape>
+                            <CollectionView 
+                                HeightRequest="150"
+                                x:Name="UserFriendInviteCollection"
+                                IsEnabled="True" 
+                                ItemsLayout="VerticalList"
+                                ItemTemplate="{StaticResource UserFriendInviteTemplate}" 
+                                ItemsSource="{Binding UserFriendInvitesList,Mode=TwoWay}" 
+                                SelectedItem="{Binding SelectedUserInvite}" 
+                                IsGrouped="False" 
+                                CanReorderItems="False" 
+                                CanMixGroups="False" 
+                                Margin="5,5,5,5" 
+                                SelectionMode="Single" >
+                            </CollectionView>
+                        </Border>
+                        
+                    </VerticalStackLayout>
+                </Border>
+                
+            </VerticalStackLayout>
+            <CollectionView 
+                Grid.Column="0"
+                Grid.Row="1"
+                ItemsSource="{Binding SettingsPageSettingItems}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:SettingsPageSettingItem}">
+                        <Border 
+                            VerticalOptions="Fill" 
+                        HorizontalOptions="Fill" 
+                        BackgroundColor="{StaticResource Primary}" 
+                        Stroke="White" 
+                            StrokeThickness="1"
+                            Padding="5">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ExecCommand}" CommandParameter="{Binding ExecCommand}"></TapGestureRecognizer>
+                            </Border.GestureRecognizers>
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20,20,20,20">
+                                </RoundRectangle>
+                            </Border.StrokeShape>
+                            <Grid Padding="25" RowSpacing="5" ColumnSpacing="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>    
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Path Data="{Binding SvgPath}" VerticalOptions="Center" HorizontalOptions="Center" 
+                                  Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" HeightRequest="24" WidthRequest="24" Stroke="White" StrokeThickness="1.0"></Path>
+                                <VerticalStackLayout Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4">
+                                    <Label Text="{Binding Title}" TextColor="White" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="Center" VerticalTextAlignment="Center" FontSize="18" FontAttributes="Bold"></Label>
+                                    <Label Text="{Binding SubTitle}" TextColor="White" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="Center" VerticalTextAlignment="Center" WidthRequest="300" FontSize="12" FontAttributes="None"></Label>
+
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
+    </Grid>
+</customcontrol:CustomContentPage>

@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<cust:CustomContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MobileApp.View.CameraHandlerPage"
+    xmlns:cam="clr-namespace:Camera.MAUI;assembly=Camera.MAUI"
+    xmlns:vm="clr-namespace:MobileApp.ViewModel"
+    xmlns:model="clr-namespace:MobileApp.Model"
+    xmlns:converter="clr-namespace:MobileApp.Converter"
+    xmlns:cust="clr-namespace:MobileApp.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Title="CameraHandlerPage" 
+    NavigationPage.HasBackButton="False" 
+    NavigationPage.HasNavigationBar="False" 
+    BackButtonCommand="{Binding BackButtonCommand}">
+    
+    <cust:CustomContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BoolInvertConverter x:Key="BoolInvertConverter"></converter:BoolInvertConverter>
+            <converter:TimeSpanConvert x:Key="TimeSpanConvert"></converter:TimeSpanConvert>
+        </ResourceDictionary>
+    </cust:CustomContentPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <AbsoluteLayout Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" ZIndex="55">
+            <Button 
+                Text="Close" 
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                AbsoluteLayout.LayoutBounds="0.0,0.05" 
+                Command="{Binding BackButtonCommand}"
+                IsEnabled="{Binding ActiveVideoRecording,Converter={StaticResource BoolInvertConverter}}"></Button>
+            <StackLayout 
+                IsVisible="{Binding ActiveVideoRecording,Mode=TwoWay}"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                AbsoluteLayout.LayoutBounds="0.5,0.05"
+                Orientation="Vertical" 
+                HorizontalOptions="Center" 
+                VerticalOptions="Center">
+                <Label Text="{Binding RecordingElapsedTime,Mode=TwoWay,Converter={StaticResource TimeSpanConvert}}" TextColor="White" FontSize="14" FontAttributes="Bold" ZIndex="2" VerticalOptions="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
+                
+                <ProgressBar 
+                    HeightRequest="10" 
+                    WidthRequest="100" 
+                    Progress="{Binding RecordingProgressBar,Mode=TwoWay}" 
+                    ProgressColor="{StaticResource Primary}"
+                    ></ProgressBar>
+            </StackLayout>
+            <Button 
+                x:Name="FlashModeToggleButton"
+                AbsoluteLayout.LayoutFlags="PositionProportional" 
+                AbsoluteLayout.LayoutBounds="1.0,0.05" 
+                Command="{Binding ControlFlashModeCommand}"
+                IsVisible="{Binding IsPictureSelectionMode,Converter={StaticResource BoolInvertConverter},Mode=TwoWay}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding Source={RelativeSource Mode=FindAncestor,AncestorType={x:Type vm:CameraHandlerPageViewModel}},Path=FlashModeInt,Mode=TwoWay}" Value="0">
+                                <!-- Auto -->
+                                <Setter Property="Text" Value="TA"/>
+
+                            </DataTrigger>
+                            <DataTrigger TargetType="Button" Binding="{Binding Source={RelativeSource Mode=FindAncestor,AncestorType={x:Type vm:CameraHandlerPageViewModel}},Path=FlashModeInt,Mode=TwoWay}" Value="1">
+                                <!-- Enabled -->
+                                <Setter Property="Text" Value="TE"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Button" Binding="{Binding Source={RelativeSource Mode=FindAncestor,AncestorType={x:Type vm:CameraHandlerPageViewModel}},Path=FlashModeInt,Mode=TwoWay}" Value="2">
+                                <!-- Disabled -->
+                                <Setter Property="Text" Value="TD"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </AbsoluteLayout>
+        <FlexLayout 
+            Grid.Row="0" 
+            Grid.RowSpan="1" 
+            Grid.Column="0" 
+            ZIndex="0" >
+            <cam:CameraView 
+                x:Name="Camera" 
+                HorizontalOptions="FillAndExpand" 
+                VerticalOptions="FillAndExpand" 
+                ZIndex="54" 
+                BarCodeOptions="{Binding BarCodeOptions}" 
+                BarCodeResults="{Binding BarCodeResults, Mode=OneWayToSource}"
+                Cameras="{Binding Cameras, Mode=OneWayToSource}" 
+                Camera="{Binding Camera}" 
+                AutoStartPreview="{Binding AutoStartPreview}" 
+                NumCamerasDetected="{Binding NumCameras, Mode=OneWayToSource}"
+                AutoSnapShotAsImageSource="True" 
+                AutoSnapShotFormat="PNG" 
+                TakeAutoSnapShot="{Binding TakeSnapshot}" 
+                AutoSnapShotSeconds="{Binding SnapshotSeconds}"
+                Microphones="{Binding Microphones, Mode=OneWayToSource}" 
+                Microphone="{Binding Microphone}" 
+                NumMicrophonesDetected="{Binding NumMicrophones, Mode=OneWayToSource}" 
+                AutoRecordingFile="{Binding RecordingFile}" 
+                AutoStartRecording="{Binding AutoStartRecording}" 
+                CamerasLoaded="Camera_CamerasLoaded"
+                FlashMode="{Binding CameraFlashMode,Mode=TwoWay}" 
+                TorchEnabled="True" ZoomFactor="{Binding ZoomFactor}" 
+                IsVisible="{Binding IsPictureSelectionMode,Converter={StaticResource BoolInvertConverter},Mode=TwoWay}">
+                <cam:CameraView.GestureRecognizers>
+                    <PinchGestureRecognizer PinchUpdated="PinchGestureRecognizer_PinchUpdated">
+                    </PinchGestureRecognizer>
+                </cam:CameraView.GestureRecognizers>
+                <cam:CameraView.Style>
+                    <Style TargetType="cam:CameraView">
+                    </Style>
+                </cam:CameraView.Style>
+            </cam:CameraView>
+            <Image 
+                    ZIndex="0"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand"
+                    Source="{Binding SelectedMediaModel.ImageSourceFilePath,Mode=TwoWay}" 
+                    IsVisible="{Binding IsSelectedMediaAPicture,Mode=TwoWay}"></Image>
+            <toolkit:MediaElement 
+                    ZIndex="0"
+                    x:Name="VideoPlayer"
+                    ShouldAutoPlay="False"
+                    ShouldShowPlaybackControls="True"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    Source="{Binding SelectedMediaModel.VideoPathForUi,Mode=TwoWay}"
+                    IsVisible="{Binding ISelectedMediaAVideo,Mode=TwoWay}"></toolkit:MediaElement>
+        </FlexLayout>
+
+        <AbsoluteLayout Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" >
+        </AbsoluteLayout>
+        <AbsoluteLayout 
+            Grid.Row="0" 
+            Grid.Column="0" >
+
+            <VerticalStackLayout 
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                AbsoluteLayout.LayoutBounds="0.5,0.98" 
+                Spacing="5" 
+                HorizontalOptions="Center">
+
+                <HorizontalStackLayout
+                    HorizontalOptions="Center"
+                    Spacing="10"
+                    IsVisible="{Binding IsPictureSelectionMode,Converter={StaticResource BoolInvertConverter}}">
+                    <Button 
+                        x:Name="CaptureButton"
+                            Text="Capture" 
+                            Command="{Binding PickPhotoCommand}" 
+                            Clicked="Button_Clicked" 
+                            ZIndex="0">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Style.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding ActiveVideoRecording,Mode=TwoWay}" Value="True">
+                                        <Setter Property="Text" Value="Stop"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Button" Binding="{Binding ActiveVideoRecording,Mode=TwoWay}" Value="False">
+                                        <Setter Property="Text" Value="Capture"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Text="ChangeCam" Command="{Binding ChangeCameraCommand}" ></Button>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout 
+                    Spacing="5" 
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding IsPictureSelectionMode,Converter={StaticResource BoolInvertConverter}}">
+                    <VerticalStackLayout>
+
+                        <CollectionView 
+                            HorizontalOptions="Center" 
+                            ItemsSource="{Binding CameraModes}"
+                            SelectedItem="{Binding SelectedCameraMode}"
+                            SelectionMode="Single">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"></LinearItemsLayout>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type x:String}">
+                                    <Border x:Name="BorderCameraMode" BackgroundColor="Gray" Stroke="Transparent" Padding="4,4">
+                                        <Border.StrokeShape >
+                                            <RoundRectangle CornerRadius="20,20,20,20">
+                                            </RoundRectangle>
+                                        </Border.StrokeShape>
+                                        <Label x:Name="LabelCameraMode" Text="{Binding}" TextColor="White"></Label>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup Name="CommonStates">
+                                                <VisualState Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter TargetName="BorderCameraMode" Property="BackgroundColor" Value="Gray" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState Name="Selected">
+                                                    <VisualState.Setters>
+                                                        <Setter TargetName="BorderCameraMode" Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        <HorizontalStackLayout Spacing="5" VerticalOptions="Center" HorizontalOptions="Center">
+                            <HorizontalStackLayout.Resources>
+                                <Style x:Key="LabelStyleZoom" TargetType="Label">
+                                    <Setter Property="HorizontalOptions" Value="Center"></Setter>
+                                    <Setter Property="VerticalOptions" Value="Center"></Setter>
+                                    <Setter Property="HorizontalTextAlignment" Value="Center"></Setter>
+                                    <Setter Property="VerticalTextAlignment" Value="Center"></Setter>
+                                    <Setter Property="FontSize" Value="16"></Setter>
+                                    <Setter Property="FontAttributes" Value="Bold"></Setter>
+                                    <Setter Property="TextColor" Value="{StaticResource Primary}"></Setter>
+                                </Style>
+                            </HorizontalStackLayout.Resources>
+                            <Label Text="Zoom" Style="{StaticResource LabelStyleZoom}"></Label>
+                            <Label Text="{Binding ZoomFactor,Mode=TwoWay}" Style="{StaticResource LabelStyleZoom}"></Label>
+                            <Label Text="/" Style="{StaticResource LabelStyleZoom}"></Label>
+                            <Label BindingContext="{x:Reference Camera}" Text="{Binding MaxZoomFactor,Mode=TwoWay}" Style="{StaticResource LabelStyleZoom}"></Label>
+
+                        </HorizontalStackLayout>
+                        <Slider IsEnabled="True" BindingContext="{x:Reference Camera}" HeightRequest="30" WidthRequest="200" Value="{Binding ZoomFactor, FallbackValue={Binding MinZoomFactor},Mode=TwoWay}" Maximum="{Binding MaxZoomFactor,Mode=TwoWay}" ></Slider>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+                <VerticalStackLayout>
+
+                    <Editor 
+                        Text="{Binding PictureDescription,Mode=TwoWay}"
+                        IsSpellCheckEnabled="True" 
+                        Keyboard="Chat" 
+                        IsTextPredictionEnabled="True" 
+                        Placeholder="Your Message..." 
+                        IsVisible="{Binding IsPictureSelectionMode,Mode=TwoWay}" 
+                        HorizontalTextAlignment="Start" VerticalTextAlignment="Center"
+                        VerticalOptions="Fill" 
+                        HorizontalOptions="Fill"></Editor>
+
+                    <HorizontalStackLayout HorizontalOptions="Center" HeightRequest="120" Spacing="10">
+                        <CollectionView 
+                        x:Name="SnapShotCollectionView"
+                        ItemsSource="{Binding SnapShots}" 
+                        WidthRequest="200" 
+                        VerticalOptions="Center"
+                        SelectionMode="Single"
+                        SelectedItem="{Binding SelectedMediaModel,Mode=TwoWay}"
+                        HorizontalScrollBarVisibility="Always">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type model:CameraMediaModel}">
+                                    <Border BackgroundColor="Gray">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="10,10,10,10"></RoundRectangle>
+                                        </Border.StrokeShape>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Button Text="X" 
+                                                BorderWidth="0"
+                                                FontSize="10"
+                                                FontAttributes="Bold"
+                                                TextColor="White" 
+                                                WidthRequest="35" 
+                                                HeightRequest="35" 
+                                                BackgroundColor="{StaticResource Primary}" 
+                                                ZIndex="1"
+                                                HorizontalOptions="End" VerticalOptions="Start"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CameraHandlerPageViewModel}}, Path=DeleteMediaFromTakenMediaCommand}"
+                                                CommandParameter="{Binding}">
+                                            </Button>
+
+                                            <Image Grid.Row="0" Grid.Column="0" Source="{Binding ImageSource}" WidthRequest="100" HeightRequest="100" ZIndex="0"></Image>
+                                        </Grid>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup Name="CommonStates">
+                                                <VisualState Name="Normal" />
+                                                <VisualState Name="Selected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="LightBlue" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"></LinearItemsLayout>
+                            </CollectionView.ItemsLayout>
+                        </CollectionView>
+                        <AbsoluteLayout IsVisible="{Binding HasSnapShots,Mode=TwoWay}">
+                            <Button 
+                                Command="{Binding PrepeareForSendingCommand}" 
+                                Text=">" 
+                                AbsoluteLayout.LayoutFlags="PositionProportional" 
+                                AbsoluteLayout.LayoutBounds="0.0,0.5"
+                                HeightRequest="50" 
+                                WidthRequest="50" 
+                                IsEnabled="{Binding ActiveVideoRecording,Converter={StaticResource BoolInvertConverter}}"></Button>
+                            <Border 
+                                WidthRequest="30" 
+                                HeightRequest="30" 
+                                ZIndex="1"
+                                Stroke="{StaticResource Primary}"
+                                StrokeThickness="1.5" 
+                                BackgroundColor="White" 
+                                HorizontalOptions="Start" 
+                                AbsoluteLayout.LayoutFlags="PositionProportional" 
+                                AbsoluteLayout.LayoutBounds="1.8,0.25"
+                                VerticalOptions="Start">
+                                <Border.StrokeShape>
+                                    <Ellipse></Ellipse>
+                                </Border.StrokeShape>
+                                <Label 
+                                    Text="{Binding SnapShots.Count,Mode=TwoWay}" 
+                                    VerticalTextAlignment="Center" 
+                                    HorizontalTextAlignment="Center" 
+                                    TextColor="{StaticResource Primary}" 
+                                    FontSize="12" 
+                                    FontAttributes="Bold"></Label>
+                            </Border>
+                        </AbsoluteLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </AbsoluteLayout>
+    </Grid>
+</cust:CustomContentPage>
