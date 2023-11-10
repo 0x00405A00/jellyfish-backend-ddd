@@ -87,5 +87,8 @@ Stay tuned 👍.
 ![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/eer_db_screenshot1.png "EER Domain")
 ![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/eer_db_screenshot2.png "EER Domain2")
 
+## Codemetrical analysis after adding MobileApp to solution ##
+![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/20231110_codemetric.png "CodemetricAfterAddMobileAppToSolution")
+
 
 
