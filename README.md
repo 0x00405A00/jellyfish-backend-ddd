@@ -4,7 +4,7 @@
 Recreation of Jellyfish Backend for the Messaging Application Jellyfish for Android and iOS.
 The Backend is fully designed and developed in **domain driven design** with **clean architecture**.
 Communication from presentation to application over Meditr. library with command-query separation (cqs).
-Currently the application is running as monolith, but the current architecture allows it to switch very fast to microservice with api gateway (ocelot, yarp etc.),command-query responsibility segregation and background database sync processed between read/write databases and ampq communication over rabbitmq to handle events over queues or publish/subscibe behaviours.
+Currently the application is running as monolith, but the current architecture allows it to switch very fast to microservice with api gateway (ocelot, yarp etc.),command-query responsibility segregation and background database sync processed between read/write databases (optimistic locking with rowversioning) and ampq communication over rabbitmq to handle events over queues or publish/subscibe behaviours.
 
 
 
