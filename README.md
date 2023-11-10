@@ -2,7 +2,7 @@
 
 ## Intro ##
 Recreation of Jellyfish Backend for the Messaging Application Jellyfish for Android and iOS.
-The Backend is fully written in domain driven design with clean architecture.
+The Backend is fully designed and developed in **domain driven design** with **clean architecture**.
 
 
 
