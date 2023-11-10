@@ -2,7 +2,10 @@
 
 ## Intro ##
 Recreation of Jellyfish Backend for the Messaging Application Jellyfish for Android and iOS.
-The Backend is fully written in domain driven design with clean architecture.
+The Backend is fully designed and developed in **domain driven design** with **clean architecture**.
+Communication from presentation to application over Meditr. library with command-query separation (cqs).
+Currently the application is running as monolith, but the current architecture allows it to switch very fast to microservice with api gateway (ocelot, yarp etc.),command-query responsibility segregation and background database sync processed between read/write databases (optimistic locking with rowversioning) and ampq communication over rabbitmq to handle events over queues or publish/subscibe behaviours.
+
 
 
 
@@ -12,7 +15,7 @@ Backend  		| Web-Frontend			| Mobile Application
 C#/NET 7  		| C#/NET 7 			| C#/NET 7
 ASP NET  		| Blazor Server 	| .NET MAUI
 MySql 8.0.35   	| Razor Pages 		| 
-SignalR  		| Mudblazor UI Components 	| 
+SignalR  		| Mudblazor UI Components (https://mudblazor.com/) 	| 
 Docker  		| 
 EF Core  		| 
 
@@ -71,5 +74,10 @@ Stay tuned 👍.
 
 ## VIDEO: Preview Transitioning Filter from Http Request to Linq Expression and finally to MySql Query via ORM (dynamically) / THUMBNAIL PNG BELOW (HREF) ##
 [![Preview Transitioning](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/filter-data-request-transition-json-to-linq-to-mysql-query-thumbnail.png)](https://youtu.be/-IK_6MZd1MQ)
+
+## Enhanced Entity Relation Diagram ##
+![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/eer_db_screenshot1.png "EER Domain")
+![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/eer_db_screenshot2.png "EER Domain2")
+
 
 
