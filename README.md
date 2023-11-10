@@ -31,6 +31,9 @@ For end to end tests I used Postman with an import of generated swagger api docu
 ## Documentation ##
 Currently only EER and Swagger Documentation.
 
+## Deployment ##
+Legacy over binary or with docker container.
+
 ## Motivation ##
 The motivation for this project is to test NET MAUI on the upper named mobile platforms.
 A side effect of this project is to give everyone the oportunity to host a messaging infrastructure by your own.
