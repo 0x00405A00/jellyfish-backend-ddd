@@ -1,14 +1,17 @@
 # jellyfish-backend-ddd
 
+## Intro ##
 Recreation of Jellyfish Backend for the Messaging Application Jellyfish for Android and iOS.
 The Backend is fully written in domain driven design with clean architecture.
 Following tech stack is used:
 
-- Backend:
--> C#/NET 7
--> ASP NET 
--> MySql with EF Core
--> SignalR
+Backend  |
+------------- | 
+C#/NET 7  | 
+ASP NET  |
+MySql 8.0.35 with EF Core  |
+SignalR  |
+Docker  |
 
 - Webfrontend:
 -> C#/NET
@@ -24,10 +27,10 @@ The motivation for this project is to test NET MAUI on the upper named mobile pl
 A side effect of this project is to give everyone the oportunity to host a messaging infrastructure by your own.
 Without big amount of used hardware resources e.g. running the infrastructure on raspberry pi.
 
-The security aspect is important to:
+The security aspect is important too:
 The last steps before the first prod version will be the implementation of end to end encryption and the protection of privacy for each user through forgetable
 payload pattern.
-Anorher future sight is the implementation of artificial inteligence (AI) support bots with google llama or chatgpt and the opportunity to host the infrastructure in blockchain.
+Anorher **future** sight is the implementation of **artificial inteligence (AI)** support bots with google llama or chatgpt and the opportunity **to host the infrastructure in blockchain**.
 
 
 Stay tuned. 
