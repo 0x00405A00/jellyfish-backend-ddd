@@ -12,7 +12,7 @@ Backend  		| Web-Frontend			| Mobile Application
 C#/NET 7  		| C#/NET 7 			| C#/NET 7
 ASP NET  		| Blazor Server 	| .NET MAUI
 MySql 8.0.35   	| Razor Pages 		| 
-SignalR  		| Mudblazor UI Components 	| 
+SignalR  		| Mudblazor UI Components (https://mudblazor.com/) 	| 
 Docker  		| 
 EF Core  		| 
 
