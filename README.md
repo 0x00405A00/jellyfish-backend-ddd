@@ -3,9 +3,10 @@
 ## Intro ##
 Recreation of Jellyfish Backend for the Messaging Application Jellyfish for Android and iOS.
 The Backend is fully written in domain driven design with clean architecture.
-Following tech stack is used:
 
 
+
+## Technology Stack ##
 Backend  		| Web-Frontend			| Mobile Application
 ------------- 	| -------------		| -------------
 C#/NET 7  		| C#/NET 7 			| C#/NET 7
@@ -15,19 +16,32 @@ SignalR  		| Mudblazor UI Components 	| Content Cell
 Docker  		| 
 EF Core  		| 
 
-SITENOTE: Messaging Mobile App (will be added soon and is part of another repo that is currently private).
+Note: Messaging Mobile App (will be added soon and is part of another repo that is currently private).
 
+## Motivation ##
 The motivation for this project is to test NET MAUI on the upper named mobile platforms.
 A side effect of this project is to give everyone the oportunity to host a messaging infrastructure by your own.
 Without big amount of used hardware resources e.g. running the infrastructure on raspberry pi.
 
+## Future ##
 The security aspect is important too:
 The last steps before the first prod version will be the implementation of end to end encryption and the protection of privacy for each user through forgetable
 payload pattern.
 Anorher **future** sight is the implementation of **artificial inteligence (AI)** support bots with google llama or chatgpt and the opportunity **to host the infrastructure in blockchain**.
 
 
-Stay tuned. 
+## To Do ##
+
+Backend  		|
+------------- 	|
+- [ ] An uncompleted task	|
+- [x] A completed task				|
+				|
+				|
+				|
+
+
+Stay tuned 👍. 
 
 
 ## Admin Panel Alpha 0.1 ##
