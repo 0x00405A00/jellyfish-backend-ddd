@@ -5,23 +5,17 @@ Recreation of Jellyfish Backend for the Messaging Application Jellyfish for Andr
 The Backend is fully written in domain driven design with clean architecture.
 Following tech stack is used:
 
-Backend  |
-------------- | 
-C#/NET 7  | 
-ASP NET  |
-MySql 8.0.35 with EF Core  |
-SignalR  |
-Docker  |
 
-- Webfrontend:
--> C#/NET
--> Blazor Server
--> Razor Pages
--> Mudblazor UI Components
+Backend  		| Web-Frontend			| Mobile Application
+------------- 	| -------------		| -------------
+C#/NET 7  		| C#/NET 7 			| C#/NET 7
+ASP NET  		| Blazor Server 	| .NET MAUI
+MySql 8.0.35   	| Razor Pages 		| Content Cell
+SignalR  		| Mudblazor UI Components 	| Content Cell
+Docker  		| 
+EF Core  		| 
 
-- Messaging Mobile App (will be added soon and is part of another repo that is currently private):
--> C#/NET 7
--> NET MAUI
+SITENOTE: Messaging Mobile App (will be added soon and is part of another repo that is currently private).
 
 The motivation for this project is to test NET MAUI on the upper named mobile platforms.
 A side effect of this project is to give everyone the oportunity to host a messaging infrastructure by your own.
