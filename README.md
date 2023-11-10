@@ -36,7 +36,7 @@ Legacy over binary or with docker container.
 
 ## Motivation ##
 The motivation for this project is to test NET MAUI on the upper named mobile platforms.
-A side effect of this project is to give everyone the oportunity to host a messaging infrastructure by your own.
+A side effect of this project is to give everyone the opportunity to host a messaging infrastructure by your own.
 Without big amount of used hardware resources e.g. running the infrastructure on raspberry pi.
 
 ## Future ##
