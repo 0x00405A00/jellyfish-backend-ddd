@@ -1,4 +1,5 @@
 ![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/jellyfish_image.svg "Jellyfish Mobile Application")
+<img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/jellyfish_image.svg" align="right" height="220" width="210" />
 # Jellyfish Mobile Application 
 
 ## Intro ##
