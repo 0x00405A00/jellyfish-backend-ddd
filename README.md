@@ -1,4 +1,5 @@
-# jellyfish-backend-ddd
+![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/jellyfish_image.svg "Jellyfish Mobile Application")
+# Jellyfish Mobile Application 
 
 ## Intro ##
 The project focuses on recreating the Jellyfish Backend, a critical component of the Messaging Application Jellyfish designed for Android and iOS platforms. The backend is meticulously developed following the principles of domain-driven design and clean architecture. Communication within the system is orchestrated using the Meditr library, emphasizing command-query separation (CQS) for improved code clarity and separation of concerns.
