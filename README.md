@@ -63,6 +63,7 @@ Anorher **future** sight is the implementation of **artificial inteligence (AI)*
 - [ ] FluentValidation: Prepare Validators with response handling for JSONAPI error response due to validation errors. CommandHandlerValidators already implemented: ValidationPipelineBehavior; only the validation rule needs definition in constructors of each CommandValidation.
 
 **Web-Frontend:**
+- [ ] Check all http request to backend and catch all state above all errors, so http codes 4xx and 5xx
 - [ ] Icons: [MudBlazor Icons](https://mudblazor.com/features/icons#icons).
 - [ ] NavBar:
   - [ ] Features
@@ -82,7 +83,7 @@ Anorher **future** sight is the implementation of **artificial inteligence (AI)*
   - [ ] Terms of Use and Privacy Policy
   - [ ] Social Media Icons with Channels
 
-**Features:**
+***Features:***
 - [ ] Color and Blackmode (via MudBlazor Themes)
 - [ ] Snackbar for notifications (any action like edit user, get notification of service x/y, etc.)
 - [ ] SignIn Page with Password recovery function
