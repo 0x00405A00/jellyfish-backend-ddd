@@ -26,6 +26,7 @@ EF Core  		|
   <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/Logo_C_sharp.svg" height="96" width="96" />
   <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/postman-icon.svg" height="96" width="96" />
   <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/signalr.svg" height="96" width="96" />
+  <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/docker-svgrepo-com.svg" height="96" width="96" />
 </div>
 
 ## Testing ##
