@@ -19,7 +19,7 @@ SignalR  		| Mudblazor UI Components (https://mudblazor.com/) 	|
 Docker  		| 
 EF Core  		| 
 
-<div align="left">
+<div align="left" margin="5">
   <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/Microsoft_.NET_logo.svg.png" height="96" width="96" />
   <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/blazor.svg" height="96" width="96" />
   <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/MySQL_logo.svg" height="96" width="96" />
