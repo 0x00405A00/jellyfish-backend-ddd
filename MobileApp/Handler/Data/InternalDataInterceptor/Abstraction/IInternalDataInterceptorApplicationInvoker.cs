@@ -1,4 +1,6 @@
-﻿namespace MobileApp.Handler.Data.InternalDataInterceptor.Abstraction
+﻿using Shared.DataTransferObject.Messenger;
+
+namespace MobileApp.Handler.Data.InternalDataInterceptor.Abstraction
 {
     public interface IInternalDataInterceptorApplicationInvoker
     {
@@ -6,6 +8,6 @@
         Task SendMessage(params MessageDTO[] data);
         Task CreateFriendRequest(params UserFriendshipRequestDTO[] data);
         Task ReceiveFriendRequest(params UserFriendshipRequestDTO[] data);
-        Task ReceiveAcceptFriendRequest(params Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish.UserJellyfishDTO[] data);
+        Task ReceiveAcceptFriendRequest(params MessengerUserDTO[] data);
     }
 }

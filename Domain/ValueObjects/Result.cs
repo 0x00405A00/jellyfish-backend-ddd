@@ -12,10 +12,10 @@
             result.IsSuccess = true;
             return result;
         }
-        public static Result Failure(string errorMessage)
+        public static Result Failure(string errorMessage, Domain.Error.Error.ERROR_CODE errorCode = Domain.Error.Error.ERROR_CODE.BadRequest)
         {
             var result = new Result();
-            result.Error = new Domain.Error.Error(errorMessage);
+            result.Error = new Domain.Error.Error(errorMessage, errorCode);
             return result;
         }
     }
@@ -43,10 +43,10 @@
             result.Meta = meta;
             return result;
         }
-        public new static Result<T> Failure(string errorMessage)
+        public new static Result<T> Failure(string errorMessage, Domain.Error.Error.ERROR_CODE errorCode= Domain.Error.Error.ERROR_CODE.BadRequest)
         {
             var result = new Result<T>();
-            result.Error = new Domain.Error.Error(errorMessage);
+            result.Error = new Domain.Error.Error(errorMessage, errorCode);
             return result;
         }
     }

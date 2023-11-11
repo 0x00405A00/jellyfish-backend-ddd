@@ -10,7 +10,6 @@ namespace MobileApp.Data.AppConfig.ConcreteImplements
         public string Password { get; set; }
         public bool RemeberMe { get; set; }
         public string RegisterBase64Token { get; set; }
-        public AuthModel UserSession { get; set; }    
         public AccountConfig() 
         {
 

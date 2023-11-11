@@ -21,7 +21,7 @@ namespace WebFrontEnd
 
             serviceProvider.AddMudServices();
             serviceProvider.AddSingleton<ISystemClock, SystemClock>();
-            serviceProvider.AddSingleton<IExtendedNavigationManager, ExtendedNavigationManager>();
+            serviceProvider.AddScoped<IExtendedNavigationManager, ExtendedNavigationManager>();
             serviceProvider.AddScoped<ILocalStorageService, LocalStorageService>();
             serviceProvider.AddScoped<ISessionStorage, SessionStorage>();
             var sp = serviceProvider.BuildServiceProvider();

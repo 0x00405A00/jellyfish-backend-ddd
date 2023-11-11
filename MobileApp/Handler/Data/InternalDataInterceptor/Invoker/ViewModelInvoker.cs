@@ -3,13 +3,7 @@ using MobileApp.Controls;
 using MobileApp.Handler.Data.InternalDataInterceptor.Abstraction;
 using MobileApp.Model;
 using MobileApp.ViewModel;
-using Application.Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.ApiGateway;
-using Application.Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Shared.DataTransferObject.Messenger;
 
 namespace MobileApp.Handler.Data.InternalDataInterceptor.Invoker
 {
@@ -29,7 +23,7 @@ namespace MobileApp.Handler.Data.InternalDataInterceptor.Invoker
             throw new NotImplementedException();
         }
 
-        public Task ReceiveAcceptFriendRequest(params Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish.UserJellyfishDTO[] data)
+        public Task ReceiveAcceptFriendRequest(params MessengerUserDTO[] data)
         {
             throw new NotImplementedException();
         }

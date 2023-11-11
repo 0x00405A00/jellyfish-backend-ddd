@@ -26,7 +26,7 @@ namespace Application.CQS.User.Queries.GetUsers
                 return Result<List<UserDTO>>.Failure(searchFilterDto.ErrorsToString);
             }
             var count =await _userRepository.CountMaxAsync();
-            if(count< searchFilterDto.SearchParams.page_size* searchFilterDto.SearchParams.page_offset)
+            if(searchFilterDto.SearchParams.page_size>count && searchFilterDto.SearchParams.page_offset != 1)
             {
                 return Result<List<UserDTO>>.Failure("page not found");
             }

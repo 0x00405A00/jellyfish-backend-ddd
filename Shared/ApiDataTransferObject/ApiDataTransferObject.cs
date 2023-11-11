@@ -20,27 +20,35 @@ namespace Shared.ApiDataTransferObject
 
         }
 
+        public static ApiDataTransferObject<T> Error(List<ApiError> apiError)
+        {
+            return Create(null, null, apiError);
+        }
         public static ApiDataTransferObject<T> Create(Result<T> result, PaginationBase paginationBase, List<ApiError> apiError)
         {
-            var input = result.Value;
-            if(!result.IsSuccess)
+            T input = default;
+            if (result != null)
             {
-                if(apiError==null)
+                input = result.Value;
+                if (!result.IsSuccess)
                 {
-                    apiError =new List<ApiError>();
-                }
-                if(result.Error != null)
-                {
-                    var errorObj = new ApiError();
-                    errorObj.Message = result.Error.Message;
-                    apiError.Add(errorObj);
+                    if (apiError == null)
+                    {
+                        apiError = new List<ApiError>();
+                    }
+                    if (result.Error != null)
+                    {
+                        var errorObj = new ApiError();
+                        errorObj.Message = result.Error.Message;
+                        apiError.Add(errorObj);
+                    }
                 }
             }
             return Create(input,paginationBase, apiError);
         }
         public static ApiDataTransferObject<T> Create(T data, PaginationBase paginationBase, List<ApiError> apiError)
         {
-            string type = null;
+            string type = "undefined";
             bool isList = ListExtension.IsGenericList(data);
             if (isList)
             {
@@ -49,7 +57,10 @@ namespace Shared.ApiDataTransferObject
             }
             else
             {
-                type =nameof(data); 
+                if(data!= null)
+                {
+                    type = nameof(data);
+                }
             }
 
             var response = new ApiDataTransferObject<T>();
@@ -57,7 +68,7 @@ namespace Shared.ApiDataTransferObject
             response.Errors = apiError?.ToList();
             response.Meta = ApiMeta.Create();
 
-            if(isList)
+            if(isList && paginationBase!=null)
             {
                 var pagination = new Pagination();
                 pagination.TotalItems = paginationBase.TotalItems;

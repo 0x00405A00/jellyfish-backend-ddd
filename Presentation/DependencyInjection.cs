@@ -63,8 +63,8 @@ namespace Presentation
                     {
 
                         Version = "v1",
-                        Title = "Application.Mobile.Jellyfish API",
-                        Description = "API for the Application.Mobile.Jellyfish Mobile App",
+                        Title = "Jellyfish Multiplatform Mobile App (iOS/Android)",
+                        Description = "Backend for the Jellyfish App",
                         TermsOfService = new Uri("https://jellyfish.mail.net/terms"),
                         Contact = new OpenApiContact
                         {

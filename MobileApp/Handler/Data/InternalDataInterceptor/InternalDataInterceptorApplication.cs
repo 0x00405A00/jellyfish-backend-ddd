@@ -1,12 +1,12 @@
 ﻿using MobileApp.Data.WebApi;
 using MobileApp.Handler.Data.InternalDataInterceptor.Abstraction;
 using MobileApp.Handler.Data.InternalDataInterceptor.Invoker;
+using Shared.DataTransferObject.Messenger;
+using MobileApp.Model;
 #if ANDROID
 using MobileApp.Handler.Data.InternalDataInterceptor.Invoker.Notification.Android;
-using Application.Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.ApiGateway;
 #else
 using MobileApp.Handler.Data.InternalDataInterceptor.Invoker.Notification.iOS;
-using Application.Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.ApiGateway;
 #endif
 
 namespace MobileApp.Handler.Data.InternalDataInterceptor
@@ -90,12 +90,12 @@ namespace MobileApp.Handler.Data.InternalDataInterceptor
             }
             return response;
         }
-        public async Task<InternalDataInterceptorApplicationInvokeResponseModel> ReceiveAcceptFriendRequest(params Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish.UserJellyfishDTO[] data)
+        public async Task<InternalDataInterceptorApplicationInvokeResponseModel> ReceiveAcceptFriendRequest(params MessengerUserDTO[] data)
         {
             var response = new InternalDataInterceptorApplicationInvokeResponseModel(Invoker);
             foreach (var item in Invoker)
             {
-                response.ExecResponseDictionary[item] = await ExecAction<Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish.UserJellyfishDTO>(item.ReceiveAcceptFriendRequest, data);
+                response.ExecResponseDictionary[item] = await ExecAction<MessengerUserDTO>(item.ReceiveAcceptFriendRequest, data);
             }
             return response;
         }
@@ -110,9 +110,9 @@ namespace MobileApp.Handler.Data.InternalDataInterceptor
             return response;
         }
 
-        public async Task<Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish.UserJellyfishDTO> GetOwnProfile(CancellationToken cancellationToken)
+        public async Task<MessengerUserDTO> GetOwnProfile(CancellationToken cancellationToken)
         {
-            Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish.UserJellyfishDTO response = null;
+            MessengerUserDTO response = null;
             JellyfishWebApiRestClientInvoker webApiInvoker = (JellyfishWebApiRestClientInvoker)this.Get<JellyfishWebApiRestClientInvoker>();
             var requestResponse = await webApiInvoker.GetOwnProfile(cancellationToken);
             if (requestResponse.IsSuccess)
@@ -122,9 +122,9 @@ namespace MobileApp.Handler.Data.InternalDataInterceptor
             return response;
         }
 
-        public async Task<List<UserFriendshipUserModelDTO>> GetFriendshipRequests(CancellationToken cancellationToken)
+        public async Task<List<UserFriendshipRequest>> GetFriendshipRequests(CancellationToken cancellationToken)
         {
-            var response = new List<UserFriendshipUserModelDTO>();
+            var response = new List<UserFriendshipRequest>();
             JellyfishWebApiRestClientInvoker webApiInvoker = (JellyfishWebApiRestClientInvoker)this.Get<JellyfishWebApiRestClientInvoker>();
 
             var requestResponse = await webApiInvoker.GetFriendshipRequests(cancellationToken);
@@ -137,29 +137,29 @@ namespace MobileApp.Handler.Data.InternalDataInterceptor
             }
             return response;
         }
-        public async Task<WebApiHttpRequestResponseModel<Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish.UserJellyfishDTO>> GetFriends(CancellationToken cancellationToken)
+        public async Task<WebApiHttpRequestResponseModel<MessengerUserDTO>> GetFriends(CancellationToken cancellationToken)
         {
-            var response = new List<UserFriendshipUserModelDTO>();
+            var response = new List<MessengerUserDTO>();
             JellyfishWebApiRestClientInvoker webApiInvoker = (JellyfishWebApiRestClientInvoker)this.Get<JellyfishWebApiRestClientInvoker>();
 
             var requestResponse = await webApiInvoker.GetFriends(cancellationToken);
             return requestResponse;
         }
 
-        public async Task<WebApiHttpRequestResponseModel<Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish.UserJellyfishDTO>> AcceptFriendRequest(Guid requestUuid, CancellationToken cancellationToken)
+        public async Task<WebApiHttpRequestResponseModel<MessengerUserDTO>> AcceptFriendRequest(Guid requestUuid, CancellationToken cancellationToken)
         {
             JellyfishWebApiRestClientInvoker webApiInvoker = (JellyfishWebApiRestClientInvoker)this.Get<JellyfishWebApiRestClientInvoker>();
             return await webApiInvoker.AcceptFriendshipRequests(requestUuid, cancellationToken);
         }
 
-        public async Task<WebApiHttpRequestResponseModel<Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish.UserJellyfishDTO>> SearchUser(string searchUser, CancellationToken cancellationToken)
+        public async Task<WebApiHttpRequestResponseModel<MessengerUserDTO>> SearchUser(string searchUser, CancellationToken cancellationToken)
         {
             JellyfishWebApiRestClientInvoker webApiInvoker = (JellyfishWebApiRestClientInvoker)this.Get<JellyfishWebApiRestClientInvoker>();
             return await webApiInvoker.SearchUser(searchUser, cancellationToken);
         }
         public async Task<WebApiHttpRequestResponseModel<MessageDTO>> GetNackMessages(CancellationToken cancellationToken)
         {
-            var response = new List<UserFriendshipUserModelDTO>();
+            var response = new List<MessengerUserDTO>();
             JellyfishWebApiRestClientInvoker webApiInvoker = (JellyfishWebApiRestClientInvoker)this.Get<JellyfishWebApiRestClientInvoker>();
 
             var requestResponse = await webApiInvoker.GetNackMessages(cancellationToken);

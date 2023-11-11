@@ -104,6 +104,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-u2jr7lxeml
 
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/Dialog/ChangeUserPasswordDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xEaWFsb2dcQ2hhbmdlVXNlclBhc3N3b3JkRGlhbG9nLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-96ihju2all
+
 [C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/SharedComponents/Dialog/ManageUserDialog.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkQ29tcG9uZW50c1xEaWFsb2dcTWFuYWdlVXNlckRpYWxvZy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-diq7i4i4ye

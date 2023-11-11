@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using MobileApp.Data.SqlLite.Schema;
-using MobileApp.Handler.Device.Extension;
+﻿using MobileApp.Data.SqlLite.Schema;
 using MobileApp.ViewModel;
-using Application.Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish;
+using System.Text.RegularExpressions;
+using Shared.DataTransferObject.Messenger;
 
 namespace MobileApp.Model
 {

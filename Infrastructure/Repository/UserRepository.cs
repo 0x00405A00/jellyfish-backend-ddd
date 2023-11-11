@@ -2,11 +2,8 @@
 using Infrastructure.DatabaseEntity;
 using Infrastructure.Repository.Primitives;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Shared.DataFilter.Infrastructure;
-using System.Configuration;
 using System.Linq.Expressions;
-using static Dapper.SqlMapper;
 
 namespace Infrastructure.Repository
 {

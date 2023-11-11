@@ -48,8 +48,8 @@ namespace Application.CQS.Auth.Command.CreateAuth
             var rexpMin = int.Parse(config["RefreshTokenExpiresMinutes"]);
             var texpMinTimeSpan = new TimeSpan(0, texpMin, 0);
             var rexpMinTimeSpan = new TimeSpan(0, rexpMin, 0);
-            var isAdmin = user.Roles.Where(x => x.Role.Uuid == new Domain.Entities.Role.RoleId(RoleConst.AdminRoleUuid)) != null;
-            var isRoot = user.Roles.Where(x => x.Role.Uuid == new Domain.Entities.Role.RoleId(RoleConst.RootRoleUuid)) != null;
+            var isAdmin = user.Roles.Where(x => x.Role.Uuid == new Domain.Entities.Role.RoleId(RoleConst.AdminRoleUuid)).Any();
+            var isRoot = user.Roles.Where(x => x.Role.Uuid == new Domain.Entities.Role.RoleId(RoleConst.RootRoleUuid)).Any();
             var isUser = user.ActivationDateTime != null && user.ActivationDateTime != DateTime.MinValue;
             Claim[] claims = new Claim[] {
                 new Claim(AuthorizationConst.Claims.ClaimTypeIsAdmin, isAdmin.ToString()),

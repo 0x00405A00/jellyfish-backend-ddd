@@ -77,6 +77,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Backend\**" />
+    <EmbeddedResource Remove="Data\Backend\**" />
+    <MauiCss Remove="Data\Backend\**" />
+    <MauiXaml Remove="Data\Backend\**" />
+    <None Remove="Data\Backend\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\Raw\error1.json" />
     <None Remove="Resources\Raw\loading2.json" />
     <None Remove="Resources\Raw\map-routing.json" />
@@ -208,8 +216,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Backend\SignalR\" />
-    <Folder Include="Data\Backend\WebApi\" />
+    <Folder Include="Handler\Backend\Communication\" />
     <Folder Include="Handler\Device\Cache\" />
   </ItemGroup>
 

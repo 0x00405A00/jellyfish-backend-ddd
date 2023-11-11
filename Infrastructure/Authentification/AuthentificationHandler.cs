@@ -1,4 +1,7 @@
 ﻿using Application.DateTimeExtension;
+using Domain.Const;
+using Infrastructure.Abstractions;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
@@ -6,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Shared.Authentification.Jwt;
+using Shared.Const;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 
@@ -13,12 +17,20 @@ namespace Infrastructure.Authentification
 {
     public class AuthentificationHandler : AuthenticationHandler<BasicAuthenticationOptions>
     {
+        private readonly IAuthRepository authRepository;
         private readonly IOptionsMonitor<BasicAuthenticationOptions> _options;
         private readonly IConfiguration _configuration;
 
-        public AuthentificationHandler(IOptionsMonitor<BasicAuthenticationOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock,IConfiguration configuration)
+        public AuthentificationHandler(
+            IAuthRepository authRepository,
+            IOptionsMonitor<BasicAuthenticationOptions> options,
+            ILoggerFactory logger,
+            UrlEncoder encoder,
+            ISystemClock clock,
+            IConfiguration configuration)
             : base(options, logger, encoder, clock)
         {
+            this.authRepository = authRepository;
             _options = options;
             this._configuration = configuration;
         }
@@ -35,7 +47,6 @@ namespace Infrastructure.Authentification
             {
                 return AuthenticateResult.NoResult();
             }
-             
 
 
             string token = Request.Headers["Authorization"];
@@ -90,8 +101,11 @@ namespace Infrastructure.Authentification
             var audience = config["Audience"];
             var texpMin = int.Parse(config["TokenExpiresMinutes"]);
             var rexpMin = int.Parse(config["RefreshTokenExpiresMinutes"]);
+
+
             var jwtToken = JwtHandler.DecodeJwt(token, symetricKey,issuer, audience);
-            if(jwtToken==null)
+            
+            if (jwtToken==null)
             {
                 return AuthenticateResult.Fail("unauthorized");
             }
@@ -99,11 +113,40 @@ namespace Infrastructure.Authentification
             {
                 return AuthenticateResult.Fail("unauthorized");
             }
-            var claims = jwtToken.Payload.Claims.ToList();
-            if (claims != null)
+            if (jwtToken.Payload == null)
             {
-
+                return AuthenticateResult.Fail("unauthorized");
             }
+            if (!jwtToken.Payload.Claims.Any())
+            {
+                return AuthenticateResult.Fail("unauthorized");
+            }
+            var authFromDatabase = await authRepository.GetAsync(x => x.Token == token);
+            if (authFromDatabase == null)
+            {
+                return AuthenticateResult.Fail("unauthorized");
+            }
+            var claims = jwtToken.Payload.Claims.ToList();
+            var isAdminFromClaim = Shared.Authentification.Claims.Extension.GetClaims(claims, x => x.Type == AuthorizationConst.Claims.ClaimTypeIsAdmin && x.Value == bool.TrueString).Any();
+            var isRootFromClaim = Shared.Authentification.Claims.Extension.GetClaims(claims, x => x.Type == AuthorizationConst.Claims.ClaimTypeIsRoot && x.Value == bool.TrueString).Any();
+            var isUserFromClaim = Shared.Authentification.Claims.Extension.GetClaims(claims, x => x.Type == AuthorizationConst.Claims.ClaimTypeIsActivatedUser && x.Value == bool.TrueString).Any();
+            var isAdminFromDatabase = authFromDatabase.UserUu.UserRelationToRoles.Select(x=>x.RoleUu).Where(x => x.Uuid == RoleConst.AdminRoleUuid).Any();
+            var isRootFromDatabase = authFromDatabase.UserUu.UserRelationToRoles.Select(x => x.RoleUu).Where(x => x.Uuid == RoleConst.RootRoleUuid).Any();
+            var isUserFromDatabase = authFromDatabase.UserUu.ActivationDatetime != null && authFromDatabase.UserUu.ActivationDatetime != DateTime.MinValue;
+
+            if (isAdminFromClaim != isAdminFromDatabase)
+            {
+                return AuthenticateResult.Fail("unauthorized");
+            }
+            if (isRootFromClaim != isRootFromDatabase)
+            {
+                return AuthenticateResult.Fail("unauthorized");
+            }
+            if (isUserFromClaim != isUserFromDatabase)
+            {
+                return AuthenticateResult.Fail("unauthorized");
+            }
+
             var identity = new ClaimsIdentity(claims, Scheme.Name);
 
             var principal = new System.Security.Principal.GenericPrincipal(identity, null);

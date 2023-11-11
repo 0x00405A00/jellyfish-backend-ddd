@@ -18,25 +18,20 @@ namespace WebFrontEnd.Service.Navigation
         public IEnumerable<INavigationInvoker> NavigationChangedSubscriber { get; private set; } = new List<INavigationInvoker>();
 
 
-        public ExtendedNavigationManager(IServiceProvider serviceProvider) 
+        public ExtendedNavigationManager(IServiceProvider serviceProvider, NavigationManager navigationManager, ISessionStorage sessionStorage) 
         {
             this.serviceProvider = serviceProvider;
+            this._sessionStorage = sessionStorage;
+            NavigationManager = navigationManager;
         }
 
         public async void Initialize()
         {
             if (IsInitialized)
                 return;
-            using(var scope = serviceProvider.CreateScope())
-            {
-                var sessionStorage = scope.ServiceProvider.GetService<ISessionStorage>();
-                var navigationManager = scope.ServiceProvider.GetService<NavigationManager>();
-                this._sessionStorage = sessionStorage;
-                _session = await _sessionStorage.GetSession(CancellationToken.None);
-                NavigationManager = navigationManager;
-                NavigationManager.RegisterLocationChangingHandler(OnLocationChanging);
-                IsInitialized = true;
-            }
+            _session = await _sessionStorage.GetSession(CancellationToken.None);
+            NavigationManager.RegisterLocationChangingHandler(OnLocationChanging);
+            IsInitialized = true;
         }
 
         public ValueTask OnLocationChanging(LocationChangingContext context)
@@ -57,7 +52,6 @@ namespace WebFrontEnd.Service.Navigation
 
         public void Subscribe(INavigationInvoker navigationInvoker)
         {
-            Initialize();
             CheckInitializedState();
             if (NavigationChangedSubscriber.Contains(navigationInvoker))
                 return;

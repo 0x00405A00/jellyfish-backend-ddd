@@ -61,14 +61,7 @@ namespace Application.CQS.User.Commands.UpdateUser
             }
             if (request.Password != null && request.PasswordConfirm != null)
             {
-                try
-                {
-                    user.UpdatePassword(user, request.Password, request.PasswordConfirm);
-                }
-                catch (InvalidPasswordException ex)
-                {
-                    return Result<Guid>.Failure(ex.Message);
-                }
+                return Result<Guid>.Failure("you cant update the password over these method");
             }
             if (request.DateOfBirth != null)
             {
@@ -116,7 +109,7 @@ namespace Application.CQS.User.Commands.UpdateUser
             }
 
             _userRepository.Update(user);
-
+            await _unitOfWork.SaveChangesAsync();
             return Result<Guid>.Success(user.Uuid.ToGuid());
         }
     }

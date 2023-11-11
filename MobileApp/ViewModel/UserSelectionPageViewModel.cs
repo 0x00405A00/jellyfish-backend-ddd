@@ -7,7 +7,8 @@ using MobileApp.Service;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
-using Application.Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish;
+using Shared.DataTransferObject.Messenger;
+using Shared.DataTransferObject;
 
 namespace MobileApp.ViewModel
 {

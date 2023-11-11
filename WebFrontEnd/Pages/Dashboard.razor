@@ -96,13 +96,13 @@
     }
     protected override Task OnInitializedAsync()
     {
+
         return Task.CompletedTask;
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if(firstRender)
         {
-            NavigationManager.Subscribe(this);
             if (!SignalRClient.IsBuilded)
             {
                 SignalRClient.BuildConnection();
@@ -123,6 +123,7 @@
             await GetData();
             LogoutBackgroundService.OnRerenderRequested += RequestRerender;
             StateHasChanged();
+            NavigationManager.Subscribe(this);
         }
     }
     public void LocationChanged(object sender, LocationChangedEventArgs locationChangedEventArgs)

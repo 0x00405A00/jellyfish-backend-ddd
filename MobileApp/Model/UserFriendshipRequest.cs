@@ -1,6 +1,4 @@
 ﻿using MobileApp.ViewModel;
-using Application.Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish;
-using Communication = Microsoft.Maui.ApplicationModel.Communication;
 
 namespace MobileApp.Model
 {
@@ -130,7 +128,7 @@ namespace MobileApp.Model
 
         public string TargetUserRequestMessage { get; set; }
 
-        public UserFriendshipRequest(UserFriendshipUserModelDTO userDTO)
+        public UserFriendshipRequest(UserFriendshipRequest userDTO)
         {
             RequestUuid = userDTO.Uuid;
             TargetUserUuid = userDTO.TargetUserUuid;

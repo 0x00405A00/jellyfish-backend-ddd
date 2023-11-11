@@ -114,29 +114,9 @@ namespace MobileApp.Data.SqlLite.Schema
             }
         }
 
-        /*[ManyToOne(CascadeOperations = CascadeOperation.CascadeRead)]
-        public ChatEntity Chat
-        {
-            get
-            {
-                return _chat;
-            }
-            set
-            {
-                _chat= value;
-            }
-        }*/
         public MessageEntity()
         {
             
-        }
-        public MessageEntity(int chatId,int userId,MessageDTO messageDTO)
-        {
-            this.MessageUuidValue = messageDTO.Uuid;
-            this.Text = messageDTO.Text;
-            this.MessageDateTime = messageDTO.CreationDateTime;
-            this.ChatId = chatId;
-            this.UserId = userId;   
         }
     }
 }

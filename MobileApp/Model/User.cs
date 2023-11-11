@@ -1,15 +1,6 @@
-﻿using SQLite;
-using System;
-using System.Buffers.Text;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Communication = Microsoft.Maui.ApplicationModel.Communication;
+﻿using MobileApp.Data.SqlLite.Schema;
 using MobileApp.ViewModel;
-using MobileApp.Data.SqlLite.Schema;
-using Application.Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish;
-using Application.Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.ApiGateway;
+using Shared.DataTransferObject.Messenger;
 
 namespace MobileApp.Model
 {
@@ -138,11 +129,10 @@ namespace MobileApp.Model
         {
 
         }
-        public User(Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish.UserJellyfishDTO userDTO)
+        public User(MessengerUserDTO userDTO)
         {
-
             this.NickName = userDTO.User;
-           this.ProfilePicture = userDTO.Picture != null ?Convert.FromBase64String(userDTO.Picture): null;
+            this.ProfilePicture = userDTO.Picture != null ? Convert.FromBase64String(userDTO.Picture) : null;
             this.UserUuid = userDTO.Uuid;
         }
         public User(UserEntity userEntity)

@@ -44,10 +44,10 @@ namespace WebFrontEnd.Handler
             ADD,
             EDIT
         }
-        public async Task<DialogResult> ShowUserManagementDialog(MANAGEMENT_TYPE managementType, UserDTO? targetUser,List<RoleDTO> rolesList,List<UserTypeDTO> userTypesList)
+        public async Task<DialogResult> ShowUserManagementDialog(MANAGEMENT_TYPE managementType, UserDTO? targetUser, List<RoleDTO> rolesList, List<UserTypeDTO> userTypesList)
         {
             string caption = null;
-            switch(managementType)
+            switch (managementType)
             {
                 case MANAGEMENT_TYPE.ADD:
                     caption = "Benutzer hinzufügen";
@@ -60,11 +60,11 @@ namespace WebFrontEnd.Handler
                     break;
             }
             var user = targetUser;
-            var options = new DialogOptions 
+            var options = new DialogOptions
             {
                 FullScreen = true,
                 CloseButton = true,
-                CloseOnEscapeKey = true 
+                CloseOnEscapeKey = true
             };
             var parameters = new DialogParameters<ManageUserDialog> {
                 { x => x.User, user },
@@ -72,7 +72,24 @@ namespace WebFrontEnd.Handler
                 { x => x.Roles, rolesList.ToHashSet() },
                 { x => x.Text, caption }
             };
-            var dialog = await dialogService.ShowAsync<ManageUserDialog>(caption, parameters,options);
+            var dialog = await dialogService.ShowAsync<ManageUserDialog>(caption, parameters, options);
+            return await dialog.Result;
+        }
+        public async Task<DialogResult> ShowUserPasswordChangeDialog(UserDTO? targetUser)
+        {
+            string caption = $"Changing Password for {targetUser.UserName}";
+            var user = targetUser;
+            var options = new DialogOptions
+            {
+                FullScreen = true,
+                CloseButton = true,
+                CloseOnEscapeKey = true
+            };
+            var parameters = new DialogParameters<ChangeUserPasswordDialog> {
+                { x => x.User, user },
+                { x => x.Text, caption }
+            };
+            var dialog = await dialogService.ShowAsync<ChangeUserPasswordDialog>(caption, parameters, options);
             return await dialog.Result;
         }
     }

@@ -54,8 +54,6 @@ internal partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    public virtual DbSet<UserActiveView> UserActiveViews { get; set; }
-
     public virtual DbSet<UserChatInviteRequest> UserChatInviteRequests { get; set; }
 
     public virtual DbSet<UserFriend> UserFriends { get; set; }
@@ -63,8 +61,6 @@ internal partial class ApplicationDbContext : DbContext
     public virtual DbSet<UserFriendshipRequest> UserFriendshipRequests { get; set; }
 
     public virtual DbSet<UserRelationToRole> UserRelationToRoles { get; set; }
-
-    public virtual DbSet<UserRoleView> UserRoleViews { get; set; }
 
     public virtual DbSet<UserType> UserTypes { get; set; }
 
@@ -553,13 +549,6 @@ internal partial class ApplicationDbContext : DbContext
                 .HasConstraintName("fk_userToUserType");
         });
 
-        modelBuilder.Entity<UserActiveView>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("user_active_view");
-        });
-
         modelBuilder.Entity<UserChatInviteRequest>(entity =>
         {
             entity.HasKey(e => new { e.ChatUuid, e.TargetUserUuid }).HasName("PRIMARY");
@@ -724,13 +713,6 @@ internal partial class ApplicationDbContext : DbContext
                 .HasForeignKey(d => d.UserUuid)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_userRoleToUser");
-        });
-
-        modelBuilder.Entity<UserRoleView>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("user_role_view");
         });
 
         modelBuilder.Entity<UserType>(entity =>

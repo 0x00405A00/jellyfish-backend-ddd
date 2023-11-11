@@ -1,6 +1,5 @@
 ﻿using MobileApp.Handler.Data.InternalDataInterceptor.Abstraction;
-using Application.Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.ApiGateway;
-using Application.Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish;
+using Shared.DataTransferObject.Messenger;
 
 namespace MobileApp.Handler.Data.InternalDataInterceptor.Invoker.Notification
 {
@@ -11,7 +10,7 @@ namespace MobileApp.Handler.Data.InternalDataInterceptor.Invoker.Notification
             throw new NotImplementedException();
         }
 
-        public Task ReceiveAcceptFriendRequest(params Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish.UserJellyfishDTO[] data)
+        public Task ReceiveAcceptFriendRequest(params MessengerUserDTO[] data)
         {
             throw new NotImplementedException();
         }

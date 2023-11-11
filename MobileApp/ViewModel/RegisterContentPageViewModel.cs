@@ -1,20 +1,10 @@
-﻿using MobileApp.Controls;
-using MobileApp.Converter;
-using MobileApp.Handler.AppConfig;
-using MobileApp.Handler.Backend.Communication.WebApi;
-using MobileApp.Handler.Device.Notification;
+﻿using MobileApp.Handler.AppConfig;
 using MobileApp.Model;
 using MobileApp.Service;
 using MobileApp.Validation;
-using Application.Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
+using Shared.DataTransferObject;
 
 namespace MobileApp.ViewModel
 {
@@ -165,7 +155,7 @@ namespace MobileApp.ViewModel
             if (!validateCode)
                 return;
 
-            var responseFromActivation = await _webApiRestClient.Activate(ActivationToken, new Shared.Kernel.Application.Model.DataTransferObject.ConcreteImplementation.Jellyfish.UserActivationDataTransferModel { ActivationCode = (FullActivationCode) }, _webApiActionCancelationToken.Token);
+            var responseFromActivation = await _webApiRestClient.Activate(ActivationToken, new RegisterUserDTO { ActivationCode = (FullActivationCode) }, _webApiActionCancelationToken.Token);
             if (responseFromActivation.IsSuccess)
             {
 
@@ -208,7 +198,7 @@ namespace MobileApp.ViewModel
             bool validEntries = ValidateUi();
             if (validEntries)
             {
-                RegisterDataTransferModel registerDataTransferModel = new RegisterDataTransferModel();
+                RegisterUserDTO registerDataTransferModel = new RegisterUserDTO();
                 registerDataTransferModel.FirstName = Firstname.Value;
                 registerDataTransferModel.LastName =Lastname.Value;
                 registerDataTransferModel.EMail =Email.Value;

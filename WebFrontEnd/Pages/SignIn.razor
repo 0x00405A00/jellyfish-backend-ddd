@@ -72,8 +72,10 @@
         var response = await AuthentificationService.Login(UserLoginDTO.Email,UserLoginDTO.Password,cancellationToken.Token);
         if(response)
         {
+            StateHasChanged();
             NavigationManager.NavigationManager.NavigateTo(RouteConst.Routes.DashBoard);
         }
+        
     }
     public async Task OnSubmitRegister()
     {
@@ -81,6 +83,7 @@
         var response = await AuthentificationService.Register(RegisterUserDTO, cancellationToken.Token);
         if(response)
         {
+            StateHasChanged();
             NavigationManager.NavigationManager.NavigateTo(RouteConst.Routes.RegisterSuccess);//page welche info über erfolgreiche registrierung gibt und infos über das weitere vorgehen
         }
     }

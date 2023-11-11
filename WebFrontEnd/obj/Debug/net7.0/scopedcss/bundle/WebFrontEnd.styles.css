@@ -8,6 +8,22 @@ table[b-u2jr7lxeml] {
     width: 100%;
     border-collapse: collapse;
 }
+/* _content/WebFrontEnd/SharedComponents/Dialog/ChangeUserPasswordDialog.razor.rz.scp.css */
+.label-t[b-96ihju2all] {
+    color: black;
+}
+.ttt[b-96ihju2all]{
+    background: #000000;
+    height:4rem;
+    width:4rem;
+}
+table.rule1 tr td[b-96ihju2all] {
+    background-color: #ff0000;
+}
+
+.mud-input-control > .mud-input-control-input-container > .mud-input-label-inputcontrol.rule2[b-96ihju2all] {
+    color: red;
+}
 /* _content/WebFrontEnd/SharedComponents/Dialog/ManageUserDialog.razor.rz.scp.css */
 .label-t[b-diq7i4i4ye] {
     color: black;

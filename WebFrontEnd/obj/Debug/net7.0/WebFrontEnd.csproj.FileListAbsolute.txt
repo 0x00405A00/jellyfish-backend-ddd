@@ -68,3 +68,4 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\re
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\WebFrontEnd.pdb
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\WebFrontEnd.genruntimeconfig.cache
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\ref\WebFrontEnd.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\scopedcss\SharedComponents\Dialog\ChangeUserPasswordDialog.razor.rz.scp.css

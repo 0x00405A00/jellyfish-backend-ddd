@@ -37,7 +37,7 @@
                          <PropertyColumn Property="x => x.Phone" />
                          <PropertyColumn Property="x => x.CreatedTime" Format="dd.MM.yyyy" />
                          <PropertyColumn Property="x => x.LastModifiedTime" Format="dd.MM.yyyy" />
-                         <PropertyColumn Property="x => UserTypesList.Where(y=>y.Uuid==x.UserTypeUuid).First().Name" />
+                         <PropertyColumn Title="UserType" Property="x => UserTypesList.Where(y=>y.Uuid==x.UserTypeUuid).First().Name" />
                          <PropertyColumn Property="x => x.RoleStr" />
                          <TemplateColumn>
                              <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@MudBlazor.Color.Primary">Edit</MudButton>
@@ -185,6 +185,15 @@
     public async Task ResetPassword()
     {
 
+        var user = SelectedItems.First();
+        int index = UsersList.IndexOf(user);
+
+        var result = await DialogHandler.ShowUserPasswordChangeDialog(user);
+        if (!result.Cancelled)
+        {
+            UsersList[index] = ((UserDTO)result.Data);
+            StateHasChanged();
+        }
     }
     public async Task AddUser()
     {

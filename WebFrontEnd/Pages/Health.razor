@@ -142,11 +142,11 @@
         if (index != currentTab)
         {
             cancellationToken.Cancel();
-            if (_mudTabs.ActivePanel.ID.ToString() == TabIdDatabase || _mudTabs.ActivePanel.ID.ToString() == TabIdCache)
+            if (_mudTabs.ActivePanel != null && _mudTabs.ActivePanel.ID.ToString() == TabIdDatabase || _mudTabs.ActivePanel!= null&&_mudTabs.ActivePanel.ID.ToString() == TabIdCache)
             {
                 await GetDataHealthCheck();
             }
-            else if (_mudTabs.ActivePanel.ID.ToString() == TabIdMailQueue)
+            else if (_mudTabs.ActivePanel!= null&&_mudTabs.ActivePanel.ID.ToString() == TabIdMailQueue)
             {
                 await GetDataMailQueue();
             }

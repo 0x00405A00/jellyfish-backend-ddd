@@ -8,12 +8,13 @@ using Application.CQS.User.Commands.PasswordReset.Request;
 using Application.CQS.User.Commands.PasswordReset.Reset;
 using Application.CQS.User.Commands.RegisterUser.Activation;
 using Application.CQS.User.Commands.RegisterUser.Register;
+using Application.CQS.User.Commands.UpdatePassword;
 using Application.CQS.User.Commands.UpdateUser;
 using Application.CQS.User.Queries.GetUserById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Abstractions;
+using Presentation.Extension;
 using Presentation.WebResponse;
 using Shared.ApiDataTransferObject;
 using Shared.Const;
@@ -31,7 +32,10 @@ namespace Presentation.Controllers.Api.v1
 
         private readonly ILogger<UserController> _logger;
 
-        public UserController(ISender sender, IHttpContextAccessor httpContextAccessor, ILogger<UserController> logger) : base(sender, httpContextAccessor)
+        public UserController(
+            ISender sender,
+            IHttpContextAccessor httpContextAccessor,
+            ILogger<UserController> logger) : base(sender, httpContextAccessor)
         {
             _logger = logger;
         }
@@ -55,6 +59,29 @@ namespace Presentation.Controllers.Api.v1
         public async Task<IActionResult> PasswordResetRequest([FromBody] PasswordResetRequestDTO passwordResetRequestDTO, CancellationToken cancellationToken)
         {
             var command = new UserPasswordResetRequestCommand(passwordResetRequestDTO.Email);
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.PrepareResponse();
+        }
+        [Authorize]
+        [HttpPost("password/change/{id?}")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        public async Task<IActionResult> PasswordChange(Guid id,[FromBody] PasswordChangeDTO passwordChangeDTO, CancellationToken cancellationToken)
+        {
+
+            var claims = HttpContext.GetClaims(x=> x.Type == AuthorizationConst.Claims.ClaimTypeIsAdmin);
+            bool isAdmin = claims.Any();
+            if(!isAdmin)
+            {
+                var uuidFromRequest = HttpContext.GetUserUuidFromRequest();
+                if(uuidFromRequest!=id)
+                {
+                    return JsonApiResultExtension.Client.Forbidden("you are not allowed","insufficient rights");
+                }
+            }
+
+            var command = new UpdateUserPasswordCommand(id,passwordChangeDTO.Password, passwordChangeDTO.PasswordRepeat);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();

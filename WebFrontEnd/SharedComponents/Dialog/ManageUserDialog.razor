@@ -10,13 +10,16 @@
     <DialogContent>
         <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
             <MudTextField InputType="InputType.Text" @bind-Value=@User.UserName Label="UserName" Variant="Variant.Filled" ReadOnly="false" Required />
-            <MudTextField InputType="InputType.Text" @bind-Value=@User.FirstName Label="FirstName" ReadOnly="false" Required />
+             <MudTextField InputType="InputType.Text" @bind-Value=@User.FirstName Label="FirstName" ReadOnly="false" Required />
              <MudTextField @ref="lastNameTextField" InputType="InputType.Text" @bind-Value=@User.LastName Label="LastName" ReadOnly="false" Required RequiredError="Please enter a Lastname" OnKeyUp="@OnKeyUpEvent" />
+             @if (isEditDialog)
+             {
 
-             <MudTextField @ref="passwordTextField" InputType="InputType.Password" @bind-Value=@User.Password Label="Password" ReadOnly="false" Required Validation="@(new Func<string, IEnumerable<string>>(ValidatePassword))" OnKeyUp="@OnKeyUpEvent" />
-             <MudTextField @ref="passwordConfirmTextField" InputType="InputType.Password" @bind-Value=@User.PasswordConfirm Label="PasswordConfirm" ReadOnly="false" Required Validation="@(new Func<string, string>(ComparePasswords))" />
+                <MudTextField @ref="passwordTextField" InputType="InputType.Password" @bind-Value=@User.Password Label="Password" ReadOnly="false" Required=@(!isEditDialog) Validation="@(new Func<string, IEnumerable<string>>(ValidatePassword))" OnKeyUp="@OnKeyUpEvent" />
+                <MudTextField @ref="passwordConfirmTextField" InputType="InputType.Password" @bind-Value=@User.PasswordConfirm Label="PasswordConfirm" ReadOnly="false" Required=@(!isEditDialog) Validation="@(new Func<string, string>(ComparePasswords))" />
 
-             <MudTextField InputType="InputType.Email" @bind-Value=@User.Email Label="Email" ReadOnly="false" Required RequiredError="email must be setted" />
+             }
+            <MudTextField InputType="InputType.Email" @bind-Value=@User.Email Label="Email" ReadOnly="false" Required RequiredError="email must be setted" />
              <MudDatePicker Label="Geburstag" DisplayMonths="2" MinDate="@(Domain.Entities.User.User.MinimumBirthDayDate)" MaxDate="@(Domain.Entities.User.User.MaximumBirthDayDate)" TitleDateFormat="dd.MM.yyyy" @bind-Date=@User.DateOfBirth Required RequiredError="birthday must be setted" />
              <MudSelect T="UserTypeDTO" MultiSelection=false Label="UserType" AnchorOrigin="Origin.BottomCenter" @bind-Value=@SelectedUserType Required RequiredError="need one user-type">
                  @foreach (var item in UserTypes)
@@ -25,7 +28,7 @@
                 }
             </MudSelect>
             <MudSelect T="RoleDTO" MultiSelection="true" Label="Rollen" AnchorOrigin="Origin.BottomCenter" @bind-SelectedValues=@SelectedRoles Required RequiredError="need minimum one role">
-                @foreach (var item in Roles)
+                 @foreach (var item in Roles)
                 {
                     <MudSelectItem T="RoleDTO" Value="@item">@item.Name</MudSelectItem>
                 }
