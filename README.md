@@ -96,7 +96,7 @@ Legacy over binary or with docker container.
 
 ***Features:***
 - [ ] Color and Blackmode (via MudBlazor Themes)
-- [ ] Snackbar for notifications (any action like edit user, get notification of service x/y, etc.)
+- [ ] Snackbar for notifications (any action like edit user, get notification of service x/y, etc.) => https://mudblazor.com/components/snackbar#5ac08464-80c3-4c34-8cac-24f0947275e7
 - [ ] SignIn Page with Password recovery function
 - [ ] Impressum
 - [ ] GDPR:
