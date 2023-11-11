@@ -9,8 +9,6 @@ While the current deployment operates as a monolith, the architecture is inheren
 
 In anticipation of future enhancements, the architecture envisions the implementation of asynchronous communication through AMQP over RabbitMQ. This will empower the system to efficiently handle events through queues, laying the groundwork for robust publish/subscribe behaviors.
 
-
-
 ## Technology Stack ##
 Backend  		| Web-Frontend			| Mobile Application
 ------------- 	| -------------		| -------------
@@ -21,7 +19,15 @@ SignalR  		| Mudblazor UI Components (https://mudblazor.com/) 	|
 Docker  		| 
 EF Core  		| 
 
-Note: Messaging Mobile App (will be added soon and is part of another repo that is currently private).
+<div align="center">
+  <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/Microsoft_.NET_logo.svg.png" height="96" width="96" />
+  <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/jellyfish_image.svg" height="96" width="96" />
+  <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/blazor.svg" height="96" width="96" />
+  <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/MySQL_logo.svg" height="96" width="96" />
+  <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/Logo_C_sharp.svg" height="96" width="96" />
+  <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/postman-icon.svg" height="96" width="96" />
+  <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/signalr.svg" height="96" width="96" />
+</div>
 
 ## Testing ##
 - **Unit Testing Approach:**
@@ -178,14 +184,3 @@ Stay tuned 👍.
 
 ## Codemetrical analysis after adding MobileApp to solution ##
 ![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/20231110_codemetric.png "CodemetricAfterAddMobileAppToSolution")
-
-# #
-<div align="center">
-  <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/Microsoft_.NET_logo.svg.png" height="128" width="128" />
-  <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/jellyfish_image.svg" height="128" width="128" />
-  <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/blazor.svg" height="128" width="128" />
-  <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/MySQL_logo.svg" height="128" width="128" />
-  <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/Logo_C_sharp.svg" height="128" width="128" />
-  <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/postman-icon.svg" height="128" width="128" />
-  <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/signalr.svg" height="128" width="128" />
-</div>
