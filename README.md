@@ -179,5 +179,5 @@ Stay tuned 👍.
 ## Codemetrical analysis after adding MobileApp to solution ##
 ![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/20231110_codemetric.png "CodemetricAfterAddMobileAppToSolution")
 
-
-
+# #
+<div align="center"><img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/Microsoft_.NET_logo.svg.png" height="256" width="256" />   <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/jellyfish_image.svg" height="256" width="256" /></div>
