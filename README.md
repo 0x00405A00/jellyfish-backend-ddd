@@ -10,7 +10,6 @@ While the current deployment operates as a monolith, the architecture is inheren
 In anticipation of future enhancements, the architecture envisions the implementation of asynchronous communication through AMQP over RabbitMQ. This will empower the system to efficiently handle events through queues, laying the groundwork for robust publish/subscribe behaviors.
 
 ## Technology Stack ##
-<div align="center">
   Backend  		| Web-Frontend			| Mobile Application
 ------------- 	| -------------		| -------------
 C#/NET 7  		| C#/NET 7 			| C#/NET 7
@@ -19,9 +18,8 @@ MySql 8.0.35   	| Razor Pages 		|
 SignalR  		| Mudblazor UI Components (https://mudblazor.com/) 	| 
 Docker  		| 
 EF Core  		| 
-</div>
 
-<div align="center">
+<div align="left">
   <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/Microsoft_.NET_logo.svg.png" height="96" width="96" />
   <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/jellyfish_image.svg" height="96" width="96" />
   <img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/blazor.svg" height="96" width="96" />
