@@ -66,6 +66,8 @@ namespace Application.Mapper
                 .ForMember(dst => dst.Friends, dst => dst.MapFrom(x => x.Friends.Select(x => x.Friend.Uuid.ToGuid()).ToList()))
                 .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.FriendshipRequests))
                 .ForMember(dst => dst.Phone, dst => dst.MapFrom(x => x.Phone.ToString()))
+                .ForMember(dst => dst.Password, dst => dst.MapFrom(x => string.Empty))//securtiy: password shouldnt transfer over network
+                .ForMember(dst => dst.PasswordConfirm, dst => dst.MapFrom(x => string.Empty))//securtiy: password shouldnt transfer over network
                 .ForMember(dst => dst.UserTypeUuid, dst => dst.MapFrom(x => x.UserType.Uuid.ToGuid()))
                 .ForMember(dst => dst.PictureBase64, dst => dst.MapFrom(x=>x.Picture.ToString()))
                 .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Uuid.ToGuid()))

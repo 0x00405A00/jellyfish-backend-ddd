@@ -272,3 +272,5 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\r
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.pdb
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.genruntimeconfig.cache
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\ref\Presentation.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Postman\20231111\Application.Mobile.Jellyfish API.postman_collection.json
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Postman\20231111\Application.Mobile.Jellyfish ENV.postman_environment.json
