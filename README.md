@@ -1,4 +1,6 @@
-# jellyfish-backend-ddd
+<img src="https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/jellyfish_image.svg" align="right" height="256" width="256" />
+
+# Jellyfish Mobile Application
 
 ## Intro ##
 The project focuses on recreating the Jellyfish Backend, a critical component of the Messaging Application Jellyfish designed for Android and iOS platforms. The backend is meticulously developed following the principles of domain-driven design and clean architecture. Communication within the system is orchestrated using the Meditr library, emphasizing command-query separation (CQS) for improved code clarity and separation of concerns.
@@ -94,7 +96,7 @@ Legacy over binary or with docker container.
 
 ***Features:***
 - [ ] Color and Blackmode (via MudBlazor Themes)
-- [ ] Snackbar for notifications (any action like edit user, get notification of service x/y, etc.)
+- [ ] Snackbar for notifications (any action like edit user, get notification of service x/y, etc.) => https://mudblazor.com/components/snackbar#5ac08464-80c3-4c34-8cac-24f0947275e7
 - [ ] SignIn Page with Password recovery function
 - [ ] Impressum
 - [ ] GDPR:
