@@ -114,6 +114,9 @@ Anorher **future** sight is the implementation of **artificial inteligence (AI)*
   - [ ] Blog: Posts look at with Timeline with left and right order
 - [ ] Authentication: Timer in the Background that will be visible in UI when the token is only 5 minutes valid anymore, then the activation tracking will start. When the user triggers actions in UI, the token will be refreshed in the backend automatically.
 - [ ] Session store: Store the last visited URL
+- [ ] Own profil
+  - [ ] View
+  - [ ] Edit/Manage 
 
 **Mobile App:**
 - [ ] Remove old DTO and Model structure and old namespaces
