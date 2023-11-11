@@ -1,11 +1,11 @@
 # jellyfish-backend-ddd
 
 ## Intro ##
-Recreation of Jellyfish Backend for the Messaging Application Jellyfish for Android and iOS.
-The Backend is fully designed and developed in **domain driven design** with **clean architecture**.
-Communication from presentation to application over Meditr. library with command-query separation (cqs).
-Currently the application is running as monolith, but the current architecture allows it to switch very fast to microservice with api gateway (ocelot, yarp etc.),command-query responsibility segregation and background database sync processed between read/write databases (optimistic locking with rowversioning) and ampq communication over rabbitmq to handle events over queues or publish/subscibe behaviours.
+The project focuses on recreating the Jellyfish Backend, a critical component of the Messaging Application Jellyfish designed for Android and iOS platforms. The backend is meticulously developed following the principles of domain-driven design and clean architecture. Communication within the system is orchestrated using the Meditr library, emphasizing command-query separation (CQS) for improved code clarity and separation of concerns.
 
+While the current deployment operates as a monolith, the architecture is inherently flexible. It can swiftly adapt to a microservices paradigm with the incorporation of tools such as API gateways (e.g., Ocelot, YARP), command-query responsibility segregation (CQRS), and background database synchronization processes. The latter employs optimistic locking with row versioning to ensure consistency between read and write databases.
+
+In anticipation of future enhancements, the architecture envisions the implementation of asynchronous communication through AMQP over RabbitMQ. This will empower the system to efficiently handle events through queues, laying the groundwork for robust publish/subscribe behaviors.
 
 
 
@@ -22,32 +22,41 @@ EF Core  		|
 Note: Messaging Mobile App (will be added soon and is part of another repo that is currently private).
 
 ## Testing ##
-Unit testing is my common way to test my methods and process flows.
-Preface: I know not every method is testet, the reason why is: you can over engeneer and you can over test. My common way is the middle of path. Critical processes and flows or methods will be tested.
-The unittest behaviour is: `arrange, act, assertion`. The common way in softwaretesting.
+- **Unit Testing Approach:**
+  - Unit testing is a fundamental practice applied in this project to verify the correctness and functionality of methods and process flows. While it is acknowledged that not every method is individually tested, a balanced approach is adopted. The principle is to avoid over-engineering and over-testing, finding a middle ground that ensures critical processes and methods are thoroughly tested.
+  - The unit testing behavior adheres to the standard `arrange, act, assertion` methodology, which is a common and effective approach in software testing. This methodology provides a structured framework for setting up the test conditions, executing the specific action, and validating the expected outcomes.
 
-For end to end tests I used Postman with an import of generated swagger api documentation.
+- **End-to-End Testing with Postman:**
+  - End-to-end testing is conducted using Postman, leveraging the imported generated Swagger API documentation. Postman serves as a powerful tool for comprehensive API testing, allowing for the verification of the entire system's functionality. The integration of Swagger API documentation enhances the efficiency of the testing process by providing a clear and interactive interface for exploring and validating API endpoints.
 
 ## Documentation ##
-Currently only EER and Swagger Documentation.
+- **Extensive Documentation:**
+  - The project places a strong emphasis on comprehensive documentation to facilitate ease of use and understanding for all stakeholders. Currently, the documentation includes:
+    - **Entity-Relationship Diagram (EER) Documentation:**
+      - A detailed EER documentation has been prepared to provide insights into the data model and relationships within the system. This documentation serves as a valuable resource for developers, aiding in a clear understanding of the underlying database structure.
+    - **Swagger Documentation:**
+      - The project leverages Swagger Documentation to ensure detailed and interactive API documentation. Swagger provides an intuitive and user-friendly interface for exploring and understanding the available API endpoints, parameters, and responses. This documentation is essential for developers, enabling seamless integration and interaction with the provided APIs.
 
 ## Deployment ##
 Legacy over binary or with docker container.
 
-## Motivation ##
-The motivation for this project is to test NET MAUI on the upper named mobile platforms.
-A side effect of this project is to give everyone the opportunity to host a messaging infrastructure by your own.
-Without big amount of used hardware resources e.g. running the infrastructure on raspberry pi.
+## Project Motivation and Objectives ##
+- **Testing NET MAUI on Multiple Mobile Platforms:**
+  - The primary motivation behind initiating this project is to rigorously test NET MAUI on various mobile platforms. This involves comprehensive testing and optimization to ensure seamless performance and compatibility across the specified platforms, contributing valuable insights to the NET MAUI community.
+- **Empowering Users to Host Their Own Messaging Infrastructure:**
+  - One of the key objectives of this project is to empower users by providing them with the opportunity to host their messaging infrastructure independently. This aims to democratize the accessibility of messaging services, allowing users to take control of their communication environment.
+- **Optimal Resource Utilization:**
+  - A noteworthy side effect of this initiative is the focus on enabling messaging infrastructure hosting with minimal hardware resources. Specifically, the project targets efficient utilization, allowing users to run the infrastructure on accessible hardware like Raspberry Pi. This emphasis on resource efficiency aligns with the project's commitment to accessibility and sustainability.
 
-## Future ##
-The security aspect is important too:
-The last steps before the first prod version will be the implementation of end to end encryption and the protection of privacy for each user through forgetable
-payload pattern.
-Anorher **future** sight is the implementation of **artificial inteligence (AI)** support bots with google llama or chatgpt and the opportunity **to host the infrastructure in blockchain**.
-
+## Security and Future Features ##
+- **End-to-End Encryption and Privacy Protection:**
+  - Ensuring the security of user data is paramount. The upcoming steps before the release of the first production version will include the meticulous implementation of end-to-end encryption. This will provide a robust layer of protection for sensitive user information. Additionally, the adoption of the forgettable payload pattern will further enhance privacy by minimizing data retention, aligning with privacy best practices.
+- **AI Support Bots:**
+  - Embracing the future of user interaction, there are plans to integrate artificial intelligence (AI) support bots into the system. Consideration is given to leveraging advanced AI technologies such as Google Llama or ChatGPT. These AI-driven bots will enhance user engagement, streamline support processes, and contribute to an intelligent and responsive user experience.
+- **Blockchain Infrastructure:**
+  - Exploring cutting-edge technologies, there is a forward-looking vision to investigate the feasibility of hosting the system's infrastructure on the blockchain. The benefits of blockchain technology, including enhanced security, decentralization, and transparency, will be assessed. This forward-thinking approach aims to future-proof the system and align it with emerging trends in secure and decentralized architectures.
 
 ## To Do ##
-
 
 **Backend:**
 - [ ] Password Reset Endpoint: Enable password reset via the "Edit User" feature; domain logic change: UpdateUser, updateuser command+handler update.
