@@ -68,9 +68,10 @@ Legacy over binary or with docker container.
 ## To Do ##
 
 **Backend:**
-- [ ] Password Reset Endpoint: Enable password reset via the "Edit User" feature; domain logic change: UpdateUser, updateuser command+handler update.
+- [x] Password Reset Endpoint: Enable password reset via the "Edit User" feature; domain logic change: UpdateUser, updateuser command+handler update.
 - [ ] Password encrytion in database with best practise encryption method
-- [ ] Auth/Authorization: Match Jwt Data (Claims etc.) with the database, trigger events if token claims do not match roles from the database or if IP location (Geo IP for IPv4+v6 or User-Agent different from token creation) is vastly different. Notify users via email.
+- [x] Auth/Authorization: Match Jwt Data (Claims etc.) with the database
+  - [ ] trigger events if token claims do not match roles from the database or if IP location (Geo IP for IPv4+v6 or User-Agent different from token creation) is vastly different. Notify users via email.
 - [ ] File Upload / User Profile Pictures / Attachments from Jellyfish Messages or Media / Storing Strategy: Avoid storing in the database for performance reasons. Implement caching strategy, build up cache during backend start. Conduct virus checks using content and an external AI service (Azure= [link](https://azure.microsoft.com/en-us/products/ai-services/ai-content-safety), AWS) to detect uploads of violent media/pornography.
 - [ ] Domain: Implement Chat Business Logic checks.
 - [ ] Implementation of Presentation/Infrastructure/Application of Domain Entity Chat/Message/Userfriendship requests: Utilize SignalR to notify target users, etc.
@@ -96,32 +97,32 @@ Legacy over binary or with docker container.
   - [ ] Download:
     - [ ] Link to App stores
 - [ ] Footer:
-  - [ ] Jellyfish Icon
+  - [x] Jellyfish Icon
   - [ ] Copyright
   - [ ] Terms of Use and Privacy Policy
-  - [ ] Social Media Icons with Channels
+  - [x] Social Media Icons with Channels
 
 ***Features:***
 - [ ] Color and Blackmode (via MudBlazor Themes)
 - [ ] Snackbar for notifications (any action like edit user, get notification of service x/y, etc.) => https://mudblazor.com/components/snackbar#5ac08464-80c3-4c34-8cac-24f0947275e7
-- [ ] SignIn Page with Password recovery function
+- [x] SignIn Page with Password recovery function
 - [ ] Impressum
 - [ ] GDPR:
   - [ ] Cookie Disclaimer
 - [ ] Dashboard.razor:
   - [ ] Charts:
-    - [ ] Outgoing mails
-    - [ ] Registered users compared to the previous month
+    - [x] Outgoing mails
+    - [x] Registered users compared to the previous month
     - [ ] Chart background slightly gray
 - [ ] _Host.cshtml: Default Messages changing
 - [ ] App.razor:
   - [ ] PageNotFound Page
-- [ ] Signup.razor (Login + Register):
-  - [ ] Component arrangement
+- [x] Signup.razor (Login + Register):
+  - [x] Component arrangement
   - [ ] Success page after registration
 - [ ] Users.razor:
   - [ ] CRUD+Search (Search maybe with elastic search)
-  - [ ] Password Reset Action separately
+  - [x] Password Reset Action separately
   - [ ] View User Profile Picture ([MudBlazor Image](https://mudblazor.com/components/image#playground))
   - [ ] Upload User Profile Picture ([MudBlazor FileUpload](https://mudblazor.com/components/fileupload#form-validation))
   - [ ] User Edit/Delete Audit Log (all events in a separate table)
@@ -132,7 +133,7 @@ Legacy over binary or with docker container.
   - [ ] Blog: Load Posts vertically with MudBlazor vertical Progressbar (animated)
   - [ ] Blog: Posts look at with Timeline with left and right order
 - [ ] Authentication: Timer in the Background that will be visible in UI when the token is only 5 minutes valid anymore, then the activation tracking will start. When the user triggers actions in UI, the token will be refreshed in the backend automatically.
-- [ ] Session store: Store the last visited URL
+- [x] Session store: Store the last visited URL
 - [ ] Own profil
   - [ ] View
   - [ ] Edit/Manage 
