@@ -31,5 +31,9 @@ namespace Presentation.Extension
             }
             return Guid.TryParse(uuidStr, out var uuid) ? uuid : Guid.Empty;
         }
+        public static string GetAuthorizationHeader(this HttpContext context)
+        {
+            return context.Request.Headers.Authorization;
+        }
     }
 }

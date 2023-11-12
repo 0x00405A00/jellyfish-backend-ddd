@@ -1,6 +1,5 @@
-﻿using Shared.ApiDataTransferObject;
-using Shared.DataTransferObject;
-using WebFrontEnd.Service.Backend.Api;
+﻿using Shared.DataTransferObject;
+using static WebFrontEnd.Service.Backend.Api.JellyfishBackendApi;
 
 namespace WebFrontEnd.Service.Authentification
 {
@@ -9,6 +8,7 @@ namespace WebFrontEnd.Service.Authentification
         Task<bool> Login(string userName,string password,CancellationToken cancellationToken);
         Task<bool> Logout(CancellationToken cancellationToken);
         Task<AuthDTO> GetCurrentAuthentification(CancellationToken cancellationToken);
-        Task<WebApiHttpRequestResponseModel<ApiDataTransferObject<RegisterUserDTO>>> Register(RegisterUserDTO registerUserDTO,CancellationToken cancellationToken); 
+        Task<AuthDTO> RefreshLogin(string token,string refreshToken,CancellationToken cancellationToken);
+        Task<JellyfishBackendApiResponse<UserDTO>> Register(RegisterUserDTO registerUserDTO, CancellationToken cancellationToken); 
     }
 }

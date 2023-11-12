@@ -113,9 +113,9 @@
         }
         else
         {
-            if(response.HasDeserializedData)
+            if(response.HasErrors)
             {
-                RegisterErrors = response.ApiResponseDeserialized.Errors;
+                RegisterErrors = response.Errors;
             }
             else
             {

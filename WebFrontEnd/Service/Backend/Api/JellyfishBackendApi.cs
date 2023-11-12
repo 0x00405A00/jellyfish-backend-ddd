@@ -3,6 +3,7 @@ using Shared.ApiDataTransferObject;
 using Shared.ApiDataTransferObject.Object;
 using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
+using System;
 using WebFrontEnd.Authentification;
 
 namespace WebFrontEnd.Service.Backend.Api
@@ -42,6 +43,43 @@ namespace WebFrontEnd.Service.Backend.Api
             //return JellyfishBackendApiResponse<List<UserDTO>>.CreateFromWebApiResponseModel(response);
             var url = "/user";
             var response = await this.TypedRequest<SearchParamsBody, List<UserDTO>>(url, RestSharp.Method.Get, searchParamsBody, cancellationToken);
+            return response;
+        }
+        public async Task<JellyfishBackendApiResponse<UserDTO>> Activate(string base64Token, UserActivationDataTransferModel userActivationDataTransferModel, CancellationToken cancellationToken)
+        {
+            string url = RegistrationActivateEndpoint + "/" + base64Token;
+            var response = await this.TypedRequest<UserActivationDataTransferModel, UserDTO>(url, RestSharp.Method.Post, userActivationDataTransferModel, cancellationToken);
+            return response;
+        }
+        public async Task<JellyfishBackendApiResponse<UserDTO>> Register(RegisterUserDTO registerDataTransferModel, CancellationToken cancellationToken)
+        {
+            var response = await this.TypedRequest<RegisterUserDTO, UserDTO>(RegisterEndpoint, RestSharp.Method.Post, registerDataTransferModel, cancellationToken);
+            return response;
+        }
+        /// <summary>
+        /// Sends the confirmation secure code from users mail to backend to confirm the password request action
+        /// </summary>
+        /// <param name="passwordResetRequestDataTransferModel"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public async Task<JellyfishBackendApiResponse<bool>> ResetPasswordRequest(PasswordResetRequestDTO passwordResetRequestDTO, CancellationToken cancellationToken)
+        {
+            var response = await this.TypedRequest<PasswordResetRequestDTO, bool>(PasswordResetRequestDTOEndpoint, RestSharp.Method.Post, passwordResetRequestDTO, cancellationToken);
+            return response;
+        }
+        /// <summary>
+        /// Reset the password, previously the password reset must be requested and confirmed by secure code 
+        /// </summary>
+        /// <param name="passwordResetDataTransferModel"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public async Task<JellyfishBackendApiResponse<bool>> ResetPassword(PasswordResetDataTransferModel passwordResetDataTransferModel, CancellationToken cancellationToken)
+        {
+            string url = PasswordResetDataTransferModelEndpoint + passwordResetDataTransferModel.Base64Token;
+
+            var response = await this.TypedRequest<PasswordResetDataTransferModel, bool>(url, RestSharp.Method.Post, passwordResetDataTransferModel, cancellationToken);
             return response;
         }
         public async Task<JellyfishBackendApiResponse<List<UserTypeDTO>>> GetUserTypes(CancellationToken cancellationToken)

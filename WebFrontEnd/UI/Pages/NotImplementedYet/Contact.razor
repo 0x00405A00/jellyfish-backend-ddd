@@ -1,0 +1,26 @@
+﻿@attribute [Route(RouteConst.Routes.Contact)]
+@using Microsoft.AspNetCore.Http
+@inject WebApiRestClient WebApiClient
+@inject ILocalStorageService LocalStorageService
+@inject IExtendedNavigationManager NavigationManager
+
+
+
+
+@code {
+
+    private CancellationTokenSource cancellationToken = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            await GetData();
+            StateHasChanged();
+        }
+    }
+    private async Task GetData()
+    {
+        
+    }
+}

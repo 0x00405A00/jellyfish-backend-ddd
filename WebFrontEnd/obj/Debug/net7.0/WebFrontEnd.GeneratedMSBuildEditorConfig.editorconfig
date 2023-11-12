@@ -32,36 +32,48 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = VUlcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/AboutUs.razor]
-build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcQWJvdXRVcy5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/Blog.razor]
-build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcQmxvZy5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/Careerer.razor]
-build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcQ2FyZWVyZXIucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/Contact.razor]
-build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcQ29udGFjdC5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/Functions.razor]
-build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcRnVuY3Rpb25zLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/Health.razor]
 build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcSGVhbHRoLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/HelpArea.razor]
-build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcSGVscEFyZWEucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/NotImplementedYet/AboutUs.razor]
+build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcTm90SW1wbGVtZW50ZWRZZXRcQWJvdXRVcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/NotImplementedYet/Blog.razor]
+build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcTm90SW1wbGVtZW50ZWRZZXRcQmxvZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/NotImplementedYet/Careerer.razor]
+build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcTm90SW1wbGVtZW50ZWRZZXRcQ2FyZWVyZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/NotImplementedYet/Contact.razor]
+build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcTm90SW1wbGVtZW50ZWRZZXRcQ29udGFjdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/NotImplementedYet/Functions.razor]
+build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcTm90SW1wbGVtZW50ZWRZZXRcRnVuY3Rpb25zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/NotImplementedYet/HelpArea.razor]
+build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcTm90SW1wbGVtZW50ZWRZZXRcSGVscEFyZWEucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/NotImplementedYet/Privacy.razor]
+build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcTm90SW1wbGVtZW50ZWRZZXRcUHJpdmFjeS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/NotImplementedYet/Security.razor]
+build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcTm90SW1wbGVtZW50ZWRZZXRcU2VjdXJpdHkucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/NotImplementedYet/SecurityNews.razor]
+build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcTm90SW1wbGVtZW50ZWRZZXRcU2VjdXJpdHlOZXdzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/PasswortReset.razor]
@@ -72,20 +84,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcUGFzc3dvcnRSZXNldFJlcXVlc3QucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/Privacy.razor]
-build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcUHJpdmFjeS5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/RegisterSuccess.razor]
 build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcUmVnaXN0ZXJTdWNjZXNzLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/Security.razor]
-build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcU2VjdXJpdHkucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/SecurityNews.razor]
-build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcU2VjdXJpdHlOZXdzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Pages/SignIn.razor]

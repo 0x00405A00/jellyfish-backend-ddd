@@ -99,7 +99,7 @@ namespace WebFrontEnd.Service.Backend.Api
             SetCredentials(userName, password);
             var postData = new { email = userName, password };
             RestResponse resp = await Request<AuthDTO>(LoginSessionEndpoint, Method.Post, cancellationToken, postData, null, null, true);
-            if (resp != null)
+            if (resp.IsSuccessStatusCode)
             {
                 AuthDTO response;
                 response = JsonSerializer.Deserialize<AuthDTO>(resp.Content);
@@ -107,99 +107,34 @@ namespace WebFrontEnd.Service.Backend.Api
             }
             return null;
         }
-        public async Task<WebApiHttpRequestResponseModel<UserDTO>> Activate(string base64Token, UserActivationDataTransferModel userActivationDataTransferModel, CancellationToken cancellationToken)
+        public virtual async Task<AuthDTO> RefreshAuthentification(string token, string refreshToken, CancellationToken cancellationToken)
         {
             if (!IsInit)
             {
                 throw new InvalidOperationException("please initialize the handler correctly via method: " + nameof(Init) + "");
             }
-            var resp = await Request<UserDTO, object>(RegistrationActivateEndpoint + "/" + base64Token, Method.Post, cancellationToken, userActivationDataTransferModel, null, null, true);
-            if (resp != null)
+            string url = RefreshSessionEndpoint+"/" + refreshToken;
+            var headers = new List<KeyValuePair<string, string>>();
+            headers.Add(new KeyValuePair<string, string>("Authorization",token));
+            RestResponse resp = await Request<AuthDTO>(url, Method.Post, cancellationToken, null, null,headers: headers, true);
+            if (resp.IsSuccessStatusCode)
             {
-                return resp;
+                AuthDTO response;
+                response = JsonSerializer.Deserialize<AuthDTO>(resp.Content);
+                return response;
             }
             return null;
         }
-        public async Task<WebApiHttpRequestResponseModel<ApiDataTransferObject<RegisterUserDTO>>> Register(ApiDataTransferObject<RegisterUserDTO> registerDataTransferModel, CancellationToken cancellationToken)
+        public async Task<WebApiHttpRequestResponseModel<ApiDataTransferObject<UserDTO>>> Register(ApiDataTransferObject<RegisterUserDTO> registerDataTransferModel, CancellationToken cancellationToken)
         {
             if (!IsInit)
             {
                 throw new InvalidOperationException("please initialize the handler correctly via method: " + nameof(Init) + "");
             }
-            var resp = await Request<ApiDataTransferObject<RegisterUserDTO>, object>(RegisterEndpoint, Method.Post, cancellationToken, registerDataTransferModel, null, null, true);
+            var resp = await Request<ApiDataTransferObject<UserDTO>, ApiDataTransferObject<RegisterUserDTO>>(RegisterEndpoint, Method.Post, cancellationToken, registerDataTransferModel, null, null, true);
             if (resp != null)
             {
                 return resp;
-            }
-            return null;
-        }
-        /// <summary>
-        /// Sends the confirmation secure code from users mail to backend to confirm the password request action
-        /// </summary>
-        /// <param name="passwordResetRequestDataTransferModel"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
-        public async Task<WebApiHttpRequestResponseModel<PasswordResetRequestDTO>> ResetPasswordRequest(PasswordResetRequestDTO passwordResetRequestDTO, CancellationToken cancellationToken)
-        {
-            if (!IsInit)
-            {
-                throw new InvalidOperationException("please initialize the handler correctly via method: " + nameof(Init) + "");
-            }
-            var resp = await Request<PasswordResetRequestDTO, object>(PasswordResetRequestDTOEndpoint, Method.Post, cancellationToken, passwordResetRequestDTO, null, null, true);
-            if (resp != null)
-            {
-                return resp;
-            }
-            return null;
-        }
-        /// <summary>
-        /// Reset the password, previously the password reset must be requested and confirmed by secure code 
-        /// </summary>
-        /// <param name="passwordResetDataTransferModel"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
-        public async Task<WebApiHttpRequestResponseModel<PasswordResetDataTransferModel>> ResetPassword(PasswordResetDataTransferModel passwordResetDataTransferModel, CancellationToken cancellationToken)
-        {
-            if (!IsInit)
-            {
-                throw new InvalidOperationException("please initialize the handler correctly via method: " + nameof(Init) + "");
-            }
-            
-            string url = PasswordResetDataTransferModelEndpoint + passwordResetDataTransferModel.Base64Token;
-            var resp = await Request<PasswordResetDataTransferModel, object>(url, Method.Post, cancellationToken, passwordResetDataTransferModel, null, null, true);
-            if (resp != null)
-            {
-                return resp;
-            }
-            return null;
-        }
-        public string BuildRefreshTokenUrl()
-        {
-            if (!IsInit)
-            {
-                throw new InvalidOperationException("please initialize the handler correctly via method: " + nameof(Init) + "");
-            }
-            return RefreshSessionEndpoint + CurrentWebApiSession.RefreshToken;
-        }
-        public async Task<AuthDTO> RefreshToken(CancellationToken cancellationToken)
-        {
-            if (!IsInit)
-            {
-                throw new InvalidOperationException("please initialize the handler correctly via method: " + nameof(Init) + "");
-            }
-            if (string.IsNullOrEmpty(User) || string.IsNullOrEmpty(Password))
-            {
-                return null;
-            }
-            string refreshTokenUrl = BuildRefreshTokenUrl();
-            var resp = await Request<AuthDTO, object>(RefreshSessionEndpoint, Method.Post, cancellationToken, null, null, null, true);
-            if (resp != null)
-            {
-                var d = resp.ApiResponseDeserialized;
-                CurrentWebApiSession = d;
-                return d;
             }
             return null;
         }

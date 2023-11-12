@@ -3,6 +3,7 @@ using Shared.DataTransferObject;
 using WebFrontEnd.Const;
 using WebFrontEnd.Service.Backend.Api;
 using WebFrontEnd.Service.WebStorage.LocalStorage;
+using static WebFrontEnd.Service.Backend.Api.JellyfishBackendApi;
 
 namespace WebFrontEnd.Service.Authentification
 {
@@ -63,11 +64,10 @@ namespace WebFrontEnd.Service.Authentification
             return true;
         }
 
-        public async Task<WebApiHttpRequestResponseModel<ApiDataTransferObject<RegisterUserDTO>>> Register(RegisterUserDTO registerUserDTO, CancellationToken cancellationToken)
+        public async Task<JellyfishBackendApiResponse<UserDTO>> Register(RegisterUserDTO registerUserDTO, CancellationToken cancellationToken)
         {
-            ApiDataTransferObject<RegisterUserDTO> apiDataTransferObject = ApiDataTransferObject<RegisterUserDTO>.Create(registerUserDTO, null,null);
-            var response = await webApiRestClient.Register(apiDataTransferObject, cancellationToken);
-            return response;
+            var response = await webApiRestClient.Register(registerUserDTO.Create(), cancellationToken);
+            return JellyfishBackendApiResponse<UserDTO>.CreateFromWebApiResponseModel(response);
         }
 
         protected virtual void Dispose(bool disposing)
@@ -97,6 +97,18 @@ namespace WebFrontEnd.Service.Authentification
             // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        public async Task<AuthDTO> RefreshLogin(string token, string refreshToken, CancellationToken cancellationToken)
+        {
+
+            var response = await webApiRestClient.RefreshAuthentification(token, refreshToken, cancellationToken);
+            if (response == null || response.Token == null)
+            {
+                return null;
+            }
+            await localStorageService.SetDeserializedJsonItemFromKey(WebAppConst.BrowserLocalStorageItemKey.Authorization, response);
+            return response;
         }
     }
 }

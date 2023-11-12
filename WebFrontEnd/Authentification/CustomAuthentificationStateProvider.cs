@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
-using Shared.Const;
+using Shared.Authentification.Jwt;
 using Shared.DataTransferObject;
 using System.Security.Claims;
 using WebFrontEnd.Service.Authentification;
-using Shared.Authentification.Jwt;
-using WebFrontEnd.Service.Backend.Api;
-using Shared.ApiDataTransferObject;
+using static WebFrontEnd.Service.Backend.Api.JellyfishBackendApi;
 
 namespace WebFrontEnd.Authentification
 {
@@ -64,7 +62,7 @@ namespace WebFrontEnd.Authentification
             return result??new AuthDTO();
         }
 
-        public async Task<WebApiHttpRequestResponseModel<ApiDataTransferObject<RegisterUserDTO>>> Register(RegisterUserDTO registerUserDTO, CancellationToken cancellationToken)
+        public async Task<JellyfishBackendApiResponse<UserDTO>> Register(RegisterUserDTO registerUserDTO, CancellationToken cancellationToken)
         {
             var result = await authentificationService.Register(registerUserDTO,cancellationToken);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
@@ -98,6 +96,11 @@ namespace WebFrontEnd.Authentification
             // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        public Task<AuthDTO> RefreshLogin(string token, string refreshToken, CancellationToken cancellationToken)
+        {
+            return authentificationService.RefreshLogin(token, refreshToken, cancellationToken);
         }
     }
 }

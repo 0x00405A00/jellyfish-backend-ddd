@@ -15,7 +15,7 @@
                     <MudIconButton Icon="@Icons.Material.Outlined.Add" OnClick="AddUser" />
                     <MudIconButton Icon="@Icons.Material.Outlined.Edit" Disabled=@CantExecByMultipleSelection OnClick="EditUser" />
                     <MudIconButton Icon="@Icons.Material.Outlined.Remove" Disabled=@CanExecWhenMinOneUserIsSelected OnClick="RemoveUser" />
-                    <MudIconButton Icon="@Icons.Material.Outlined.Password" Disabled=@CanExecWhenMinOneUserIsSelected OnClick="ResetPassword" />
+                    <MudIconButton Icon="@Icons.Material.Outlined.Password" Disabled=@CantExecByMultipleSelection OnClick="ResetPassword" />
                 </MudToolBar>
             </MudPaper>
             @if (UsersList != null && UsersList.Count > 0)

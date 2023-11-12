@@ -2,8 +2,10 @@
 @inherits LayoutComponentBase
 @inject IConfiguration Configuration
 @inject DialogHandler DialogHandler
+@inject IDialogService DialogService
 @inject CustomAuthentificationStateProvider AuthentificationService
 @inject ISessionStorage SessionStorage
+@inject LogoutBackgroundService LogoutBackgroundService
 
 <PageTitle>Jellyfish</PageTitle>
 
@@ -22,6 +24,10 @@
 
     <main class="main">
         <div class="top-row px-4">
+            @if (LogoutTimerVisible)
+            {
+                <MudButton Variant="Variant.Filled" DisableElevation="true" Color="MudBlazor.Color.Primary" OnClick="@ClickRefreshLogin">Refresh Login (@LogoutTimer.ToString(@"mm\:ss")m)</MudButton>
+            }
             @if(IsLoggedIn)
             {
                 <MudBadge Content="100" Color="MudBlazor.Color.Info" Overlap="true" Class="mx-6 my-4">
@@ -166,8 +172,9 @@
 
             },
         };
-
-
+    private TimeSpan LogoutTimer = TimeSpan.MinValue;
+    private bool LogoutTimerVisible => LogoutTimer != TimeSpan.MinValue;
+    private AuthDTO _token;
     private bool ProfileButtonExpand = false;
     private bool IsLoggedIn = false;
     private CancellationTokenSource cancellationToken = new();
@@ -176,10 +183,10 @@
     {
         if(firstRender)
         {
+            LogoutBackgroundService.OnRerenderRequested += RequestRerender;
+            _token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
         }
-        var token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
 
-        IsLoggedIn = token!= null&&!token.IsTokenExpired;
 
     }
     public async Task ClickLogout()
@@ -190,5 +197,36 @@
     {
         ProfileButtonExpand = !ProfileButtonExpand;
         return Task.CompletedTask;
+    }
+    private async void ClickRefreshLogin()
+    {
+        var response = await AuthentificationService.RefreshLogin(_token.Token,_token.RefreshToken,cancellationToken.Token);
+        if(response==null)
+        {
+
+            bool? result = await DialogService.ShowMessageBox(
+                "Refreshlogin Error",
+                "Session cant extend, try again later!");
+            return;
+        }
+        _token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
+        LogoutTimer = TimeSpan.MinValue;
+        StateHasChanged();
+    }
+    private void RequestRerender()
+    {
+        InvokeAsync(() =>
+        {
+            if(!_token.IsTokenExpired)
+            {
+
+                var calcTime = _token.TokenExpiresIn.Value.AddMinutes(-5);
+                if (DateTime.Now>= calcTime)
+                {
+                    LogoutTimer = _token.TokenExpiresIn.Value-DateTime.Now;
+                    StateHasChanged(); // Dies löst einen Rerender der Komponente aus
+                }
+            }
+        });
     }
 }

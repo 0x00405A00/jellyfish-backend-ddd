@@ -2,16 +2,14 @@
 @implements IDisposable
 @implements INavigationInvoker
 @using Microsoft.AspNetCore.Http
-@inject WebApiRestClient WebApiClient
+@inject JellyfishBackendApi WebApiClient
 @inject IExtendedNavigationManager NavigationManager
 @inject SignalRClient SignalRClient
 @inject IJSRuntime JsRuntime
 @inject IConfiguration Configuration
-@inject LogoutBackgroundService LogoutBackgroundService
 @inject CustomAuthentificationStateProvider AuthentificationService
 
 <h3>Dashboard</h3>
-<h3>Uhrzeit: @CurTime.ToLongTimeString()</h3>
 <div class="d-flex flex-row">
     <div class="d-flex flex-column">
 
@@ -45,7 +43,6 @@
 
 
 @code {
-    private DateTime CurTime = DateTime.Now;
     private CancellationTokenSource cancellationToken = new();
     public List<MessageDTO> Messages = new List<MessageDTO>();
     public List<UserDTO> UsersList = new List<UserDTO>();
@@ -79,7 +76,6 @@
     }
     private void Dispose()
     {
-        LogoutBackgroundService.OnRerenderRequested -= RequestRerender;
         cancellationToken.Cancel();
         Series.Clear();
         Series2.Clear();
@@ -121,7 +117,6 @@
             }
 
             await GetData();
-            LogoutBackgroundService.OnRerenderRequested += RequestRerender;
             StateHasChanged();
             NavigationManager.Subscribe(this);
         }
@@ -135,24 +130,14 @@
             Dispose();
         }
     }
-    private void RequestRerender()
-    {
-        InvokeAsync(()=>
-        {
-            CurTime = DateTime.Now;
-            StateHasChanged(); // Dies löst einen Rerender der Komponente aus
-        });
-    }
     private async Task GetData()
     {
         var token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token) ;
-        var requestUsers = WebApiClient.Request < ApiDataTransferObject<List<UserDTO>>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
+        var requestUsers = await WebApiClient.GetUsers(null,cancellationToken.Token);
 
-
-        var responseUsers = await requestUsers;
-        if (responseUsers.IsSuccess)
+        if (requestUsers.IsSuccess)
         {
-            UsersList = responseUsers.ApiResponseDeserialized.Data.Value;
+            UsersList = requestUsers.Data;
             var onlyRegisteredAndNotActivated = UsersList.Where(x => x.CreatedTime.Value.Year == DateTime.Now.Year && x.ActivationDateTime==null).Select(x => x.CreatedTime).GroupBy(x => x.Value.Month);
             var newFullyRegisteredAccountThisYearCounts = UsersList.Where(x => x.ActivationDateTime != null && x.ActivationDateTime.Value.Year == DateTime.Now.Year).Select(x => x.ActivationDateTime).GroupBy(x => x.Value.Month);
             var fullyRegisteredAccountPreYearDecCount = UsersList.Where(x => x.ActivationDateTime != null&&x.ActivationDateTime.Value.Year == DateTime.Now.Year - 1 && x.ActivationDateTime.Value.Month == 12).Select(x => x.ActivationDateTime).Count();

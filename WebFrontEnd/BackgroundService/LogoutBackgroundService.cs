@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using WebFrontEnd.Pages;
 using WebFrontEnd.Service.WebStorage.LocalStorage;
 
 namespace WebFrontEnd.BackgroundService
