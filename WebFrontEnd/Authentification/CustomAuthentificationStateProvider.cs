@@ -4,6 +4,8 @@ using Shared.DataTransferObject;
 using System.Security.Claims;
 using WebFrontEnd.Service.Authentification;
 using Shared.Authentification.Jwt;
+using WebFrontEnd.Service.Backend.Api;
+using Shared.ApiDataTransferObject;
 
 namespace WebFrontEnd.Authentification
 {
@@ -62,7 +64,7 @@ namespace WebFrontEnd.Authentification
             return result??new AuthDTO();
         }
 
-        public async Task<bool> Register(RegisterUserDTO registerUserDTO, CancellationToken cancellationToken)
+        public async Task<WebApiHttpRequestResponseModel<ApiDataTransferObject<RegisterUserDTO>>> Register(RegisterUserDTO registerUserDTO, CancellationToken cancellationToken)
         {
             var result = await authentificationService.Register(registerUserDTO,cancellationToken);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());

@@ -1,4 +1,4 @@
-﻿@inject WebApiRestClient WebApiClient
+﻿@inject JellyfishBackendApi WebApiClient
 @inject CustomAuthentificationStateProvider AuthentificationService
 <MudDialog>
     <TitleContent>
@@ -127,24 +127,25 @@
         User.UserTypeUuid =SelectedUserType.Uuid;
         User.Roles =SelectedRoles.ToList();
 
+
         if(isEditDialog)//Edit
         {
-            var url = "/user/" + User.Uuid + "";
-            var updateUserRequest = await WebApiClient.Request < ApiDataTransferObject<UserDTO>, UserDTO>(url, RestSharp.Method.Put, cancellationToken.Token, User, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
-            if (updateUserRequest.IsSuccess)
+            var response = await WebApiClient.EditUser(User, cancellationToken.Token);
+            if (response.IsSuccess)
             {
-
+                User.ResetFieldsForUserInterface();
+                MudDialog.Close(DialogResult.Ok(User));
             }
         }
         else//Add
         {
-            var addUserRequest = await WebApiClient.Request < ApiDataTransferObject<UserDTO>, UserDTO>("/user", RestSharp.Method.Post, cancellationToken.Token, User, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
-            if (addUserRequest.IsSuccess)
+            var response = await WebApiClient.AddUser(User, cancellationToken.Token);
+            if (response.IsSuccess)
             {
-                
+                User.ResetFieldsForUserInterface();
+                MudDialog.Close(DialogResult.Ok(User));
             }
         }
-        MudDialog.Close(DialogResult.Ok(User));
     }
 }
 

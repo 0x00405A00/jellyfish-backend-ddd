@@ -46,15 +46,8 @@
 @code {
     private bool hasLogin = false;
 
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
     private CancellationTokenSource cancellationToken = new();
 
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if(firstRender)

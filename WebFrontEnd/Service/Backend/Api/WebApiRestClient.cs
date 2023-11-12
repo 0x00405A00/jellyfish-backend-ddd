@@ -31,6 +31,7 @@ namespace WebFrontEnd.Service.Backend.Api
             string baseUrl = infrastructureApiSection.GetValue<string>("BaseUrl");
             string loginSessionEndpoint = infrastructureApiSection.GetValue<string>("LoginEndpoint");
             string logoutSessionEndpoint = infrastructureApiSection.GetValue<string>("LogoutEndpoint");
+            string registerEndpoint = infrastructureApiSection.GetValue<string>("RegisterEndpoint");
             string validateSessionEndpoint = infrastructureApiSection.GetValue<string>("ValidateEndpoint");
             string refreshSessionEndpoint = infrastructureApiSection.GetValue<string>("RefreshSessionEndpoint");
             string connectionTestEndpoint = infrastructureApiSection.GetValue<string>("ConnectionTestEndpoint");
@@ -40,6 +41,7 @@ namespace WebFrontEnd.Service.Backend.Api
                 baseUrl,
                 loginSessionEndpoint,
                 logoutSessionEndpoint,
+                registerEndpoint,
                 validateSessionEndpoint,
                 refreshSessionEndpoint,
                 connectionTestEndpoint,
@@ -50,6 +52,7 @@ namespace WebFrontEnd.Service.Backend.Api
             string baseUrl,
             string loginSessionEndpoint,
             string logoutSessionEndpoint,
+            string registerEndpoint,
             string validateSessionEndpoint,
             string refreshSessionEndpoint,
             string connectionTestEndpoint,
@@ -59,6 +62,7 @@ namespace WebFrontEnd.Service.Backend.Api
             BaseUrl = baseUrl;
             LoginSessionEndpoint = BuildUrl(loginSessionEndpoint);
             LogoutSessionEndpoint = BuildUrl(logoutSessionEndpoint);
+            RegisterEndpoint = BuildUrl(registerEndpoint);
             RefreshSessionEndpoint = BuildUrl(refreshSessionEndpoint);
             ValidateSessionEndpoint = BuildUrl(validateSessionEndpoint);
             ConnectionTestEndpoint = BuildUrl(connectionTestEndpoint);
@@ -116,13 +120,13 @@ namespace WebFrontEnd.Service.Backend.Api
             }
             return null;
         }
-        public async Task<WebApiHttpRequestResponseModel<RegisterUserDTO>> Register(RegisterUserDTO registerDataTransferModel, CancellationToken cancellationToken)
+        public async Task<WebApiHttpRequestResponseModel<ApiDataTransferObject<RegisterUserDTO>>> Register(ApiDataTransferObject<RegisterUserDTO> registerDataTransferModel, CancellationToken cancellationToken)
         {
             if (!IsInit)
             {
                 throw new InvalidOperationException("please initialize the handler correctly via method: " + nameof(Init) + "");
             }
-            var resp = await Request<RegisterUserDTO, object>(RegisterEndpoint, Method.Post, cancellationToken, registerDataTransferModel, null, null, true);
+            var resp = await Request<ApiDataTransferObject<RegisterUserDTO>, object>(RegisterEndpoint, Method.Post, cancellationToken, registerDataTransferModel, null, null, true);
             if (resp != null)
             {
                 return resp;
@@ -298,7 +302,7 @@ namespace WebFrontEnd.Service.Backend.Api
             while (retries < MaxRequestRetries && !donttryagain && !response.IsSuccessStatusCode);
             return response;
         }
-        public async Task<WebApiHttpRequestResponseModel<T1>> Request<T1, T2>(
+        public virtual async Task<WebApiHttpRequestResponseModel<T1>> Request<T1, T2>(
             string url,
             Method method,
             CancellationToken cancellationToken,
@@ -321,6 +325,7 @@ namespace WebFrontEnd.Service.Backend.Api
                 catch (Exception ex)
                 {
 
+
                 }
             }
             return responseModel;
@@ -332,21 +337,7 @@ namespace WebFrontEnd.Service.Backend.Api
             {
                 if (disposing)
                 {
-                    CurrentWebApiSession = null;
-                    BaseUrl = null;
-                    LoginSessionEndpoint = null;
-                    LogoutSessionEndpoint = null;
-                    RefreshSessionEndpoint = null;
-                    ValidateSessionEndpoint = null;
-                    ConnectionTestEndpoint = null;
-                    RegistrationActivateEndpoint = null;
-                    RefreshLogin = false;
-                    MaxRequestRetries = 3;
-                    User = null;
-                    Password = null;
-                    RegisterEndpoint = null;
-                    PasswordResetRequestDTOEndpoint = null;
-                    PasswordResetDataTransferModelEndpoint = null;
+
                 }
 
                 // TODO: Nicht verwaltete Ressourcen (nicht verwaltete Objekte) freigeben und Finalizer überschreiben

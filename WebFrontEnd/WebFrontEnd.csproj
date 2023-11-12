@@ -13,11 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Pages\Dashboard.razor.css" />
+    <None Remove="UI\Pages\Dashboard.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Pages\Dashboard.razor.css" />
+    <Content Include="UI\Pages\Dashboard.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,7 +38,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="SharedComponents\Dialog\ChangeUserPasswordDialog.razor">
+    <Content Update="UI\Pages\RegisterSuccess.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="UI\Dialog\ChangeUserPasswordDialog.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
   </ItemGroup>

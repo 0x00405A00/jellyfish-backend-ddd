@@ -89,5 +89,11 @@ namespace Shared.DataTransferObject
         {
 
         }
+
+        public void ResetFieldsForUserInterface()
+        {
+            this.Password = null;
+            this.PasswordConfirm = null;
+        }
     }
 }

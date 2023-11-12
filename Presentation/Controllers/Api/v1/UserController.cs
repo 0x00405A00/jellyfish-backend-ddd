@@ -46,7 +46,15 @@ namespace Presentation.Controllers.Api.v1
         [Produces(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDTO registerUserDTO, CancellationToken cancellationToken)
         {
-            var command = new RegisterUserCommand(registerUserDTO.UserName, registerUserDTO.Password, registerUserDTO.PasswordRepeat, registerUserDTO.FirstName, registerUserDTO.LastName, registerUserDTO.Email, registerUserDTO.Phone, (DateTime)registerUserDTO.DateOfBirth);
+            var command = new RegisterUserCommand(
+                registerUserDTO.UserName,
+                registerUserDTO.Password,
+                registerUserDTO.PasswordRepeat,
+                registerUserDTO.FirstName,
+                registerUserDTO.LastName,
+                registerUserDTO.Email,
+                registerUserDTO.Phone,
+                (DateTime)registerUserDTO.DateOfBirth);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
@@ -93,7 +101,11 @@ namespace Presentation.Controllers.Api.v1
         [Produces(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> PasswordReset(string base64Token,[FromBody] PasswordResetDataTransferModel passwordResetDataTransferModel, CancellationToken cancellationToken)
         {
-            UserPasswordResetCommand command= new UserPasswordResetCommand(passwordResetDataTransferModel.Password,passwordResetDataTransferModel.PasswordRepeat, passwordResetDataTransferModel.PasswordResetCode, base64Token);
+            UserPasswordResetCommand command= new UserPasswordResetCommand(
+                passwordResetDataTransferModel.Password,
+                passwordResetDataTransferModel.PasswordRepeat,
+                passwordResetDataTransferModel.PasswordResetCode,
+                base64Token);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
@@ -207,7 +219,16 @@ namespace Presentation.Controllers.Api.v1
         public override async Task<IActionResult> Create([FromBody] UserDTO userDto, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new CreateUserCommand(userUuid, userDto.UserName, userDto.Password, userDto.Password, userDto.FirstName, userDto.LastName, userDto.Email, userDto.Phone, (DateTime)userDto.DateOfBirth);
+            var command = new CreateUserCommand(
+                userUuid,
+                userDto.UserName,
+                userDto.Password,
+                userDto.Password,
+                userDto.FirstName,
+                userDto.LastName,
+                userDto.Email,
+                userDto.Phone,
+                (DateTime)userDto.DateOfBirth);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
@@ -255,6 +276,7 @@ namespace Presentation.Controllers.Api.v1
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
         }
+#if DEBUG
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         [HttpPost("test2")]
@@ -263,5 +285,6 @@ namespace Presentation.Controllers.Api.v1
 
             return Ok();
         }
+#endif
     }
 }

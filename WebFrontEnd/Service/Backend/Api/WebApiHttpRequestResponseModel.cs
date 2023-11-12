@@ -13,5 +13,6 @@ namespace WebFrontEnd.Service.Backend.Api
                 return DefaultResponse != null && DefaultResponse.IsSuccessStatusCode;
             }
         }
+        public bool HasDeserializedData => ApiResponseDeserialized != null;
     }
 }

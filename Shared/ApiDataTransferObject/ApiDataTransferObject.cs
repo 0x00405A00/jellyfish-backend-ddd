@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Shared.ApiDataTransferObject
 {
-    public partial class ApiDataTransferObject<T>
+    public class ApiDataTransferObject<T>
     {
         [JsonPropertyName("data")]
         public ApiData<T>? Data { get; set; }
@@ -24,7 +24,7 @@ namespace Shared.ApiDataTransferObject
         {
             return Create(null, null, apiError);
         }
-        public static ApiDataTransferObject<T> Create(Result<T> result, PaginationBase paginationBase, List<ApiError> apiError)
+        public static ApiDataTransferObject<T> Create(Result<T> result, PaginationBase paginationBase = null, List<ApiError> apiError = null)
         {
             T input = default;
             if (result != null)
@@ -46,7 +46,7 @@ namespace Shared.ApiDataTransferObject
             }
             return Create(input,paginationBase, apiError);
         }
-        public static ApiDataTransferObject<T> Create(T data, PaginationBase paginationBase, List<ApiError> apiError)
+        public static ApiDataTransferObject<T> Create(T data, PaginationBase paginationBase = null, List<ApiError> apiError = null)
         {
             string type = "undefined";
             bool isList = ListExtension.IsGenericList(data);
@@ -59,7 +59,7 @@ namespace Shared.ApiDataTransferObject
             {
                 if(data!= null)
                 {
-                    type = nameof(data);
+                    type = typeof(T).Name;
                 }
             }
 
@@ -81,6 +81,17 @@ namespace Shared.ApiDataTransferObject
             }
 
             return response;
+        }
+    }
+    public static class ApiDataTransferObjectExtension
+    {
+        public static ApiDataTransferObject<T> Create<T>(this T data, PaginationBase paginationBase = null, List<ApiError> apiError = null)
+        {
+            return ApiDataTransferObject<T>.Create(data, paginationBase, apiError);
+        }
+        public static ApiDataTransferObject<T> Create<T>(this Result<T> result, PaginationBase paginationBase = null, List<ApiError> apiError = null)
+        {
+            return ApiDataTransferObject<T>.Create(result, paginationBase, apiError);
         }
     }
 }

@@ -18,15 +18,29 @@
 
                 <MudTextField T="string" Label="Passwort" InputType="InputType.Password" @bind-Value=@RegisterUserDTO.Password required />
 
-                <MudTextField T="string" Label="Passwort (wiederholen)" InputType="InputType.Password" @bind-Value=@RegisterUserDTO.Password required />
+                <MudTextField T="string" Label="Passwort (wiederholen)" InputType="InputType.Password" @bind-Value=@RegisterUserDTO.PasswordRepeat required />
 
                 <MudTextField T="string" Label="Email" InputType="InputType.Text" @bind-Value=@RegisterUserDTO.Email required />
 
                 <MudTextField T="string" Label="Telefon" InputType="InputType.Telephone" @bind-Value=@RegisterUserDTO.Phone required />
+                <MudDatePicker 
+                    Label="Geburstag" 
+                    DisplayMonths="2" 
+                    MinDate="@(Domain.Entities.User.User.MinimumBirthDayDate)" 
+                    MaxDate="@(Domain.Entities.User.User.MaximumBirthDayDate)" 
+                    TitleDateFormat="dd.MM.yyyy" @bind-Date=@RegisterDateTime 
+                    Required 
+                    RequiredError="birthday must be setted" />
 
-                <MudTextField T="DateTime" Label="Geburstag" InputType="InputType.Date" @bind-Value=@RegisterDateTime required />
+                 <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick=@OnSubmitRegister Color="MudBlazor.Color.Primary">Register</MudButton>
+                @if (RegisterError)
+                {
+                    foreach(var error in RegisterErrors)
+                    {
+                        <MudAlert Severity="Severity.Error">@error.Message</MudAlert>
+                    }
 
-                <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick=@OnSubmitRegister Color="MudBlazor.Color.Primary">Register</MudButton>
+                }
             </MudForm>
         </MudCardContent>
     </MudCard>
@@ -38,15 +52,24 @@
                 <MudTextField T="string" Label="Email" InputType="InputType.Text" @bind-Value=@UserLoginDTO.Email required />
 
                 <MudTextField T="string" Label="Passwort" InputType="InputType.Password" @bind-Value=@UserLoginDTO.Password required />
+
                 <MudLink Href=@RouteConst.Routes.ResetPasswordRequest>Passwort vergessen?</MudLink>
+
                 <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick=@OnSubmitLogin Color="MudBlazor.Color.Primary">Login</MudButton>
+                @if (LoginError)
+                {
+                    <MudAlert Severity="Severity.Error">username or password wrong</MudAlert>
+                }
             </MudForm>
         </MudCardContent>
     </MudCard>
 </div>
 
 @code {
-    public DateTime RegisterDateTime = DateTime.MinValue;
+    public bool RegisterError => RegisterErrors.Any();
+    public bool LoginError = false;
+    public List<ApiError> RegisterErrors = new List<ApiError>();
+    public DateTime? RegisterDateTime = DateTime.Now;
     public UserLoginDTO UserLoginDTO = new UserLoginDTO();
     public RegisterUserDTO RegisterUserDTO = new RegisterUserDTO();
 
@@ -69,23 +92,37 @@
     }
     public async Task OnSubmitLogin()
     {
+        LoginError = false;
         var response = await AuthentificationService.Login(UserLoginDTO.Email,UserLoginDTO.Password,cancellationToken.Token);
         if(response)
         {
-            StateHasChanged();
             NavigationManager.NavigationManager.NavigateTo(RouteConst.Routes.Index);
         }
-        
+        LoginError = !response;
+        StateHasChanged();
+
     }
     public async Task OnSubmitRegister()
     {
+        RegisterErrors.Clear();
         RegisterUserDTO.DateOfBirth = RegisterDateTime;
         var response = await AuthentificationService.Register(RegisterUserDTO, cancellationToken.Token);
-        if(response)
+        if(response.IsSuccess)
         {
-            StateHasChanged();
             NavigationManager.NavigationManager.NavigateTo(RouteConst.Routes.RegisterSuccess);//page welche info über erfolgreiche registrierung gibt und infos über das weitere vorgehen
         }
+        else
+        {
+            if(response.HasDeserializedData)
+            {
+                RegisterErrors = response.ApiResponseDeserialized.Errors;
+            }
+            else
+            {
+                RegisterErrors.Add(new ApiError { Title = "exception", Message="an unhandled error occured", Details="",Code=500 });
+            }
+        }
+        StateHasChanged();
     }
 }
 @functions {

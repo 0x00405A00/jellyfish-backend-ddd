@@ -105,6 +105,7 @@ namespace Infrastructure.Authentification
 
             var jwtToken = JwtHandler.DecodeJwt(token, symetricKey,issuer, audience);
             
+            //Token is null because signature is not equal than token-create-signature (clientside manipulation e.g.)
             if (jwtToken==null)
             {
                 return AuthenticateResult.Fail("unauthorized");

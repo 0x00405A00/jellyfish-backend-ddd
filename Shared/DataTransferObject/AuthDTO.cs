@@ -19,5 +19,10 @@ namespace Shared.DataTransferObject
         public bool IsTokenExpired => TokenExpiresIn != null&&TokenExpiresIn <= DateTime.Now;
         public bool IsRefreshTokenExpired => RefreshTokenExpiresIn!=null&&RefreshTokenExpiresIn <= DateTime.Now;
         public bool IsAuthentificated => TokenExpiresIn != null && TokenExpiresIn > DateTime.Now;
-    }
+
+        public List<KeyValuePair<string, string>> CreateAuthorizationHeader()
+        {
+            return new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", Token) };
+        }
+}
 }

@@ -3,7 +3,7 @@ using MudBlazor;
 using Shared.DataTransferObject;
 using WebFrontEnd.Const;
 using WebFrontEnd.Service.Authentification;
-using WebFrontEnd.SharedComponents.Dialog;
+using WebFrontEnd.UI.Dialog;
 
 namespace WebFrontEnd.Handler
 {
@@ -81,7 +81,7 @@ namespace WebFrontEnd.Handler
             var user = targetUser;
             var options = new DialogOptions
             {
-                FullScreen = true,
+                FullScreen = false,
                 CloseButton = true,
                 CloseOnEscapeKey = true
             };

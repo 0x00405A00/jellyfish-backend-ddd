@@ -1,6 +1,6 @@
 ﻿@implements IDisposable
 @attribute [Route(RouteConst.Routes.Users)]
-@inject WebApiRestClient WebApiClient
+@inject JellyfishBackendApi WebApiClient
 @inject IDialogService DialogService
 @inject CustomAuthentificationStateProvider AuthentificationService
 @inject DialogHandler DialogHandler
@@ -9,7 +9,7 @@
 <CascadingAuthenticationState>
     <AuthorizeView Policy="Admin">
         <Authorized>
-            <mud>@(_selectedPage*UsersList.Count())/@_totalUsers Users</mud>
+            <mud>@(_selectedItemsPerPage==UsersList.Count?(_selectedPage*UsersList.Count):(_totalUsers))/@_totalUsers Users</mud>
             <MudPaper Elevation="25">
                 <MudToolBar>
                     <MudIconButton Icon="@Icons.Material.Outlined.Add" OnClick="AddUser" />
@@ -102,6 +102,7 @@
         cancellationToken?.Cancel();
         SelectedItems.Clear();
         UsersList.Clear();
+
         UserTypesList.Clear();
         RoleList.Clear();
         _token = null;
@@ -145,15 +146,13 @@
         searchParamsBody.page_offset = _selectedPage;
         searchParamsBody.page_size = _selectedItemsPerPage;
         searchParamsBody.filters = new List<Shared.DataFilter.Infrastructure.ColumnFilterGroup> { new Shared.DataFilter.Infrastructure.ColumnFilterGroup { Group = "and", Filters = new List<Shared.DataFilter.Infrastructure.ColumnFilter> { new Shared.DataFilter.Infrastructure.ColumnFilter { field = "deleted_time", op = "eq", value = null } } } };
-        var requestUsers = await WebApiClient.Request<ApiDataTransferObject<List<UserDTO>>, SearchParamsBody>("/user", RestSharp.Method.Get, cancellationToken.Token, searchParamsBody, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
+        var response = await WebApiClient.GetUsers(searchParamsBody, cancellationToken.Token);
 
-
-        var responseUsers = requestUsers;
-        if (responseUsers.IsSuccess)
+        if (response.IsSuccess)
         {
-            UsersList = responseUsers.ApiResponseDeserialized.Data.Value;
-            _maxPages = responseUsers.ApiResponseDeserialized.Meta.Pagination.TotalPages;
-            _totalUsers = responseUsers.ApiResponseDeserialized.Meta.Pagination.TotalItems;
+            UsersList = response.Data;
+            _maxPages = response.DefaultResponse.ApiResponseDeserialized.Meta.Pagination.TotalPages;
+            _totalUsers = response.DefaultResponse.ApiResponseDeserialized.Meta.Pagination.TotalItems;
         }
         StateHasChanged();
     }
@@ -168,17 +167,16 @@
     {
 
 
-        var requestUserTypes = WebApiClient.Request<ApiDataTransferObject<List<UserTypeDTO>>, object>("/user/user-types", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
-        var requestRoles = WebApiClient.Request <ApiDataTransferObject<List<RoleDTO>>, object>("/role", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
-        var responseUserTypes = await requestUserTypes;
-        var responseRoles = await requestRoles;
-        if (responseUserTypes.IsSuccess)
+        var requestUserTypes = await WebApiClient.GetUserTypes(cancellationToken.Token);
+        var requestRoles = await WebApiClient.GetRoles(cancellationToken.Token);
+
+        if (requestUserTypes.IsSuccess)
         {
-            UserTypesList = responseUserTypes.ApiResponseDeserialized.Data.Value;
+            UserTypesList = requestUserTypes.Data;
         }
-        if (responseRoles.IsSuccess)
+        if (requestRoles.IsSuccess)
         {
-            RoleList = responseRoles.ApiResponseDeserialized.Data.Value;
+            RoleList = requestRoles.Data;
         }
         PageChanged(_selectedPage);
     }

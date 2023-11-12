@@ -13,7 +13,7 @@ namespace Application.CQS.User.Commands.UpdateUser.EventHandler
 
         public Task Handle(UserAssignedRoleToUserDomainEvent notification, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 }

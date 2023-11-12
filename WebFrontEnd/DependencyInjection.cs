@@ -27,14 +27,14 @@ namespace WebFrontEnd
             var sp = serviceProvider.BuildServiceProvider();
             var configuration = sp.GetService<IConfiguration>();
 
-            var infrastructureApiSection = configuration.GetSection("Infrastructure:Api");
-            var apiBaseUrl = infrastructureApiSection.GetValue<string>("BaseUrl");
-            serviceProvider.AddScoped(sp => new RestClient(new Uri(apiBaseUrl)));
-            serviceProvider.AddScoped<WebApiRestClient>();
-            serviceProvider.AddScoped<SignalRClient>();
 
             // Add services to the container.
-            serviceProvider.AddRazorPages();
+            serviceProvider.AddRazorPages(opt =>
+            {
+                string razorPagesRootDirectory = Path.Combine("/UI","");
+                opt.RootDirectory = razorPagesRootDirectory;
+
+            });
             serviceProvider.AddServerSideBlazor();
 
             serviceProvider.AddOptions();
@@ -51,8 +51,16 @@ namespace WebFrontEnd
                 options.AddPolicy(AuthorizationConst.Policy.UserPolicy, policy =>
                                   policy.RequireClaim(AuthorizationConst.Claims.ClaimTypeIsActivatedUser, bool.TrueString));
             });
+            var infrastructureApiSection = configuration.GetSection("Infrastructure:Api");
+            var apiBaseUrl = infrastructureApiSection.GetValue<string>("BaseUrl");
+            serviceProvider.AddScoped(sp => new RestClient(new Uri(apiBaseUrl)));
+            serviceProvider.AddScoped<WebApiRestClient>();
+            serviceProvider.AddScoped<SignalRClient>();
+
             serviceProvider.AddScoped<CustomAuthentificationStateProvider>();
             serviceProvider.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomAuthentificationStateProvider>());
+
+            serviceProvider.AddScoped<JellyfishBackendApi>();
 
             serviceProvider.AddScoped<DialogHandler>();
 

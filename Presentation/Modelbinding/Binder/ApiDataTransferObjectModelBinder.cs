@@ -27,7 +27,7 @@ namespace Presentation.Modelbinding.Binder
                         throw new ModelBindingFailedException($"body is null");
                     }
                     var data = JsonSerializer.Deserialize<ApiDataTransferObject<object>>(body, jsonOpt);
-                    if(data==null||String.IsNullOrEmpty(data.Data.Type))
+                    if(data==null|| data.Data != null && String.IsNullOrEmpty(data.Data.Type))
                     {
 
                         throw new ModelBindingFailedException($"{(nameof(ApiData<object>.Type))} is null or empty");
@@ -38,7 +38,7 @@ namespace Presentation.Modelbinding.Binder
                     try
                     {
                         modelType = types
-                                             .Where(x => x.IsPublic && x.GetInterfaces().Contains(typeof(IDataTransferObject)) && x.Name.ToLower() == data.Data.Type.ToLower())
+                                             .Where(x => x.IsPublic && x.GetInterfaces().Contains(typeof(IDataTransferObject)) && data.Data != null&&x.Name.ToLower() == data.Data.Type.ToLower())
                                              .First();
                     }
                     catch(Exception ex)

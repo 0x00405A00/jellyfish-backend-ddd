@@ -1,8 +1,8 @@
-.table-container[b-u2jr7lxeml] {
+.table-container[b-yr2r9akneq] {
     max-height: 200px; /* Maximale Höhe für die Tabelle */
     overflow-y: scroll; /* Vertikale Scrollleiste hinzufügen, wenn nötig */
 }
-table[b-u2jr7lxeml] {
+table[b-yr2r9akneq] {
     height: 200px;
     width: 100%;
     border-collapse: collapse;
