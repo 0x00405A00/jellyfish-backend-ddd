@@ -132,7 +132,7 @@ Legacy over binary or with docker container.
   - [ ] Embedded Media
   - [ ] Blog: Load Posts vertically with MudBlazor vertical Progressbar (animated)
   - [ ] Blog: Posts look at with Timeline with left and right order
-- [ ] Authentication: Timer in the Background that will be visible in UI when the token is only 5 minutes valid anymore, then the activation tracking will start. When the user triggers actions in UI, the token will be refreshed in the backend automatically.
+- [x] Authentication: Timer in the Background that will be visible in UI when the token is only 5 minutes valid anymore, then the activation tracking will start. When the user triggers actions in UI, the token will be refreshed in the backend automatically.
 - [x] Session store: Store the last visited URL
 - [ ] Own profil
   - [ ] View
