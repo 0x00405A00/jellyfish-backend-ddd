@@ -68,6 +68,9 @@ Legacy over binary or with docker container.
 ## To Do ##
 
 **Backend:**
+- [x] CRUD
+- [x] Json Filter from Http Request to Linq Expression to MySql Query Transition
+- [X] Cache Functionality 
 - [x] Password Reset Endpoint: Enable password reset via the "Edit User" feature; domain logic change: UpdateUser, updateuser command+handler update.
 - [ ] Password encrytion in database with best practise encryption method
 - [x] Auth/Authorization: Match Jwt Data (Claims etc.) with the database
@@ -121,7 +124,7 @@ Legacy over binary or with docker container.
   - [x] Component arrangement
   - [ ] Success page after registration
 - [ ] Users.razor:
-  - [ ] CRUD+Search (Search maybe with elastic search)
+  - [x] CRUD+Search (Search maybe with elastic search)
   - [x] Password Reset Action separately
   - [ ] View User Profile Picture ([MudBlazor Image](https://mudblazor.com/components/image#playground))
   - [ ] Upload User Profile Picture ([MudBlazor FileUpload](https://mudblazor.com/components/fileupload#form-validation))
