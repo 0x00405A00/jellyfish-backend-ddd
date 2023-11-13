@@ -10,40 +10,57 @@
     <AuthorizeView Policy="Admin">
         <Authorized>
             <mud>@(_selectedItemsPerPage==UsersList.Count?(_selectedPage*UsersList.Count):(_totalUsers))/@_totalUsers Users</mud>
-            <MudPaper Elevation="25">
-                <MudToolBar>
-                    <MudIconButton Icon="@Icons.Material.Outlined.Add" OnClick="AddUser" />
-                    <MudIconButton Icon="@Icons.Material.Outlined.Edit" Disabled=@CantExecByMultipleSelection OnClick="EditUser" />
-                    <MudIconButton Icon="@Icons.Material.Outlined.Remove" Disabled=@CanExecWhenMinOneUserIsSelected OnClick="RemoveUser" />
-                    <MudIconButton Icon="@Icons.Material.Outlined.Password" Disabled=@CantExecByMultipleSelection OnClick="ResetPassword" />
-                </MudToolBar>
-            </MudPaper>
-            @if (UsersList != null && UsersList.Count > 0)
-            {
-                <MudSelect Class="w-25" T="int" @bind-Value=@SelectedItemsPerPage Label="Items per Page" MultiSelection=false Variant="Variant.Filled" AnchorOrigin="Origin.BottomCenter">
-                    @foreach(var item in _itemsPerPageSet)
+
+            <MudToolBar>
+                <MudIconButton Icon="@Icons.Material.Outlined.Add" OnClick="AddUser" />
+                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Disabled=@CantExecByMultipleSelection OnClick="EditUser" />
+                <MudIconButton Icon="@Icons.Material.Outlined.Remove" Disabled=@CanExecWhenMinOneUserIsSelected OnClick="RemoveUser" />
+                <MudIconButton Icon="@Icons.Material.Outlined.Password" Disabled=@CantExecByMultipleSelection OnClick="ResetPassword" />
+                <MudTooltip Text="Search User. Minimum 3 chars.">
+                    <MudInput T="string" Placeholder="Searchtext..." Disabled=@IsSearching DisableUnderLine InputMode="InputMode.search" TextChanged="@SearchTextChanged"></MudInput>
+
+                 </MudTooltip>
+                 <MudSelect Class="w-25" T="int" @bind-Value=@SelectedItemsPerPage Label="Items per Page" FullWidth=false MultiSelection=false Variant="Variant.Filled" AnchorOrigin="Origin.BottomCenter">
+                     @foreach (var item in _itemsPerPageSet)
                     {
                         <MudSelectItem T="int" Value="@item" />
                     }
                 </MudSelect>
-                <MudDataGrid T="UserDTO" Items=@UsersList Filterable="false" RowClick=RowClicked SelectedItemsChanged="@SelectedItemsChanged" MultiSelection SelectedItems=@SelectedItems SortMode="@SortMode.Multiple" Groupable="false">
-                     <Columns>
-                         <SelectColumn T="UserDTO" />
-                         <PropertyColumn Property="x => x.UserName" />
-                         <PropertyColumn Property="x => x.FirstName" />
-                         <PropertyColumn Property="x => x.LastName" />
-                         <PropertyColumn Property="x => x.Email" />
-                         <PropertyColumn Property="x => x.DateOfBirth" Format="dd.MM.yyyy" />
-                         <PropertyColumn Property="x => x.Phone" />
-                         <PropertyColumn Property="x => x.CreatedTime" Format="dd.MM.yyyy" />
-                         <PropertyColumn Property="x => x.LastModifiedTime" Format="dd.MM.yyyy" />
-                         <PropertyColumn Title="UserType" Property="x => UserTypesList.Where(y=>y.Uuid==x.UserTypeUuid).First().Name" />
-                         <PropertyColumn Property="x => x.RoleStr" />
-                         <TemplateColumn>
-                             <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@MudBlazor.Color.Primary">Edit</MudButton>
-                         </TemplateColumn>
-                     </Columns>
-                 </MudDataGrid>
+            </MudToolBar>
+            @if (UsersList != null && UsersList.Count > 0)
+            {
+                <MudTable @ref=@UserListTable T="UserDTO" Items=@UsersList SelectedItemsChanged="@SelectedItemsChanged" MultiSelection SelectedItems=@SelectedItems SortMode="@SortMode.Multiple">
+                     <HeaderContent>
+                         <MudTh></MudTh>
+                         <MudTh>UserName</MudTh>
+                         <MudTh>FirstName</MudTh>
+                         <MudTh>LastName</MudTh>
+                         <MudTh>Email</MudTh>
+                         <MudTh>DateOfBirth</MudTh>
+                         <MudTh>Phone</MudTh>
+                         <MudTh>CreatedTime</MudTh>
+                         <MudTh>LastModifiedTime</MudTh>
+                         <MudTh>UserType</MudTh>
+                         <MudTh>Roles</MudTh>
+                    </HeaderContent>
+
+                     <RowTemplate Context="TableContext">
+                         <MudTd>
+                             <MudAvatar Color="MudBlazor.Color.Tertiary">@TableContext.GetInitials()</MudAvatar>
+                         </MudTd>
+                         <MudTd DataLabel="UserName">@TableContext.UserName</MudTd>
+                         <MudTd DataLabel="FirstName">@TableContext.FirstName</MudTd>
+                         <MudTd DataLabel="LastName">@TableContext.LastName</MudTd>
+                         <MudTd DataLabel="Email">@TableContext.Email</MudTd>
+                         <MudTd DataLabel="DateOfBirth">@TableContext.DateOfBirth?.ToString("dd.MM.yyyy")</MudTd>
+                         <MudTd DataLabel="Phone">@TableContext.Phone</MudTd>
+                         <MudTd DataLabel="CreatedTime">@TableContext.CreatedTime?.ToString("dd.MM.yyyy")</MudTd>
+                         <MudTd DataLabel="LastModifiedTime">@TableContext.LastModifiedTime?.ToString("dd.MM.yyyy")</MudTd>
+                         <MudTd DataLabel="UserType">@UserTypesList.Where(y=>y.Uuid==@TableContext.UserTypeUuid).First().Name</MudTd>
+                         <MudTd DataLabel="Roles">@TableContext.RoleStr</MudTd>
+                    </RowTemplate>
+                </MudTable>
+                
                 <MudPagination SelectedChanged=@PageChanged ShowFirstButton="true" BoundaryCount="2" MiddleCount="5" ShowLastButton="true" Count="@_maxPages" Class="mt-4" />
             }
             else
@@ -61,7 +78,9 @@
 </CascadingAuthenticationState>
 
 @code {
-
+    private bool IsSearching = false;
+    private MudTable<UserDTO> UserListTable;
+    private string SearchText;
     private int _selectedPage = 1;
     private int _selectedItemsPerPage = 10;
     public int SelectedItemsPerPage
@@ -112,6 +131,28 @@
     {
         Dispose();
     }
+    private bool IsRowVisible(UserDTO item)
+    {
+        return item.ActivationDateTime!=null;
+    }
+    private async void SearchTextChanged(string text)
+    {
+        SearchText = text;
+
+        bool canSearch = SearchText.Length >= 3;
+        if (canSearch)
+        {
+            IsSearching = true;
+            UsersList.Clear();
+            StateHasChanged();
+        }
+
+        var response = await GetUsers(canSearch?SearchText:null);
+
+        IsSearching = false;
+        StateHasChanged();
+
+    }
     private async void PageItemSelectionChanged(int value)
     {
         if (value == _selectedItemsPerPage)
@@ -135,17 +176,58 @@
             StateHasChanged();
         }
     }
-    private Task RowClicked(DataGridRowClickEventArgs<UserDTO> args)
-    {
-        return Task.CompletedTask;
-    }
     private async void PageChanged(int page)
     {
         _selectedPage = page;
+        var response = await GetUsers(SearchText);
+
+        StateHasChanged();
+    }
+
+    public async Task<JellyfishBackendApi.JellyfishBackendApiResponse<List<UserDTO>>> GetUsers(string searchText = null)
+    {
+
         SearchParamsBody searchParamsBody = new SearchParamsBody();
         searchParamsBody.page_offset = _selectedPage;
         searchParamsBody.page_size = _selectedItemsPerPage;
-        searchParamsBody.filters = new List<Shared.DataFilter.Infrastructure.ColumnFilterGroup> { new Shared.DataFilter.Infrastructure.ColumnFilterGroup { Group = "and", Filters = new List<Shared.DataFilter.Infrastructure.ColumnFilter> { new Shared.DataFilter.Infrastructure.ColumnFilter { field = "deleted_time", op = "eq", value = null } } } };
+        var columnFilterGroupAnd = new Shared.DataFilter.Infrastructure.ColumnFilterGroup
+            {
+                Group = "and",
+                Filters = new List<Shared.DataFilter.Infrastructure.ColumnFilter>
+                            {
+                                new Shared.DataFilter.Infrastructure.ColumnFilter
+                                {
+                                    field = "deleted_time", op = "eq", value = null
+                                }
+                            }
+            };
+        searchParamsBody.filters = new List<Shared.DataFilter.Infrastructure.ColumnFilterGroup>
+        {
+            columnFilterGroupAnd
+        };
+        if (!String.IsNullOrWhiteSpace(searchText))
+        {
+            var columnFilterGroupOr =
+                    new Shared.DataFilter.Infrastructure.ColumnFilterGroup
+                        {
+                            Group = "or",
+                            Filters = new List<Shared.DataFilter.Infrastructure.ColumnFilter>()
+                        };
+
+            var properties = typeof(UserDTO).GetProperties().Where(x => x.CanWrite && x.PropertyType == typeof(string)).Select(x => x.GetCustomAttribute<JsonPropertyNameAttribute>()).ToList();
+            foreach (var prop in properties)
+            {
+                string field = prop.Name;
+                var condition = new Shared.DataFilter.Infrastructure.ColumnFilter
+                    {
+                        field = field,
+                        op = "contains",
+                        value = searchText
+                    };
+                columnFilterGroupOr.Filters.Add(condition);
+            }
+            searchParamsBody.filters.Add(columnFilterGroupOr);
+        }
         var response = await WebApiClient.GetUsers(searchParamsBody, cancellationToken.Token);
 
         if (response.IsSuccess)
@@ -154,7 +236,7 @@
             _maxPages = response.DefaultResponse.ApiResponseDeserialized.Meta.Pagination.TotalPages;
             _totalUsers = response.DefaultResponse.ApiResponseDeserialized.Meta.Pagination.TotalItems;
         }
-        StateHasChanged();
+        return response;
     }
 
     private Task SelectedItemsChanged(HashSet<UserDTO> SelectedItems)

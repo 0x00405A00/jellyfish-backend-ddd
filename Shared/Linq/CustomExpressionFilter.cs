@@ -9,22 +9,27 @@ namespace Shared.Linq
     {
         public static Expression<Func<T, bool>> CustomFilter(List<ColumnFilterGroup> columnFilterGroup, string className)
         {
-            Expression filterExpression = null;
+            Expression filterExpressionFinal = null;
             Expression<Func<T, bool>> filters = null;
             var parameter = Expression.Parameter(typeof(T), className);
-            foreach (ColumnFilterGroup group in columnFilterGroup)
+            var properties  = typeof(T).GetProperties();
+            try
             {
-                var columnFilters = group.Filters;
-                bool isAnyInvalidOperatorIncluded = columnFilters.Any(x => x.IsInvalidOperator);
-                if (isAnyInvalidOperatorIncluded)
+                foreach (ColumnFilterGroup group in columnFilterGroup)
                 {
-                    throw new InvalidOperationException($"{group.Group} with {group.Filters.Count} conditions include some invalid filters (Op==OPERATOR.INVALID)");
-                }
-                try
-                {
+                    var columnFilters = group.Filters;
+                    bool isAnyInvalidOperatorIncluded = columnFilters.Any(x => x.IsInvalidOperator);
+                    if (isAnyInvalidOperatorIncluded)
+                    {
+                        throw new InvalidOperationException($"{group.Group} with {group.Filters.Count} conditions include some invalid filters (Op==OPERATOR.INVALID)");
+                    }
                     var expressionFilters = new List<ExpressionFilter>();
                     foreach (var item in columnFilters)
                     {
+                        if (!properties.Any(x => x.Name == item.field))
+                        {
+                            continue;
+                        }
                         expressionFilters.Add(new ExpressionFilter()
                         {
                             ColumnName = item.field,
@@ -35,6 +40,7 @@ namespace Shared.Linq
                     // Create the parameter expression for the input data
 
                     // Build the filter expression dynamically
+                    Expression filterExpression = null;
                     foreach (var filter in expressionFilters)
                     {
                         var property = Expression.Property(parameter, filter.ColumnName);
@@ -44,18 +50,19 @@ namespace Shared.Linq
 
                         filterExpression = filterExpression == null
                             ? comparison
-                            : (GetConditionGroup(filterExpression,comparison,group));
+                            : (GetConditionGroup(filterExpression, comparison, group));
 
+                        
                     }
+                    filterExpressionFinal = filterExpressionFinal == null ? filterExpression : Expression.AndAlso(filterExpressionFinal, filterExpression);
 
-                    // Create the lambda expression with the parameter and the filter expression
-                    filters = Expression.Lambda<Func<T, bool>>(filterExpression, parameter);
 
                 }
-                catch (Exception)
-                {
-                    filters = null;
-                }
+                filters = Expression.Lambda<Func<T, bool>>(filterExpressionFinal, parameter);
+            }
+            catch (Exception ex)
+            {
+                filters = null;
             }
             return filters;
         }

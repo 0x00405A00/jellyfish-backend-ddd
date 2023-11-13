@@ -95,5 +95,13 @@ namespace Shared.DataTransferObject
             this.Password = null;
             this.PasswordConfirm = null;
         }
+        public string GetInitials()
+        {
+            var firstNameFirstLetter = FirstName != null ? FirstName.Substring(0, 1) : null;
+            var lastNameFirstLetter = LastName != null ? LastName.Substring(0, 1) : null;
+            var userNameFirstLetter = UserName != null ? UserName.Substring(0, 2) : null;
+            return (firstNameFirstLetter !=null&& lastNameFirstLetter!=null)? 
+                (firstNameFirstLetter+"."+ lastNameFirstLetter+ ".").ToUpper() :(userNameFirstLetter??"u").ToUpper();//U==UKNOWN
+        }
     }
 }
