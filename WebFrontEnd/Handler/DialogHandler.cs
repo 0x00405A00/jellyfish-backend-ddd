@@ -92,5 +92,20 @@ namespace WebFrontEnd.Handler
             var dialog = await dialogService.ShowAsync<ChangeUserPasswordDialog>(caption, parameters, options);
             return await dialog.Result;
         }
+        public async Task<DialogResult> ShowUploadDialog(string uploadDesc)
+        {
+            string caption = uploadDesc;
+            var options = new DialogOptions
+            {
+                FullScreen = false,
+                CloseButton = true,
+                CloseOnEscapeKey = true
+            };
+            var parameters = new DialogParameters<UploadFileDialog> {
+                { x => x.Text, caption }
+            };
+            var dialog = await dialogService.ShowAsync<UploadFileDialog>(caption, parameters, options);
+            return await dialog.Result;
+        }
     }
 }

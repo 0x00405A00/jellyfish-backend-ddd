@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "BQ2XRC0OPTPrMmpJS5uIb1FNRU6INVyDPUFbBhnXD5rvRBjgBti6W1H3UFaVDjERlqh2Gkb1aatlPcjC/ERatA==",
+  "dgSpecHash": "qzo3m/tkA/qVnxpj1QFKWJddyjETNrJJ3EguPceGIGPgA4q3OoSRHJLOv/VQeKKbKlReDEOpcxKldiIAZMR+UQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\WebFrontEnd.csproj",
   "expectedPackageFiles": [
@@ -43,6 +43,7 @@
     "C:\\Users\\Mika\\.nuget\\packages\\microsoft.jsinterop\\7.0.5\\microsoft.jsinterop.7.0.5.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\mudblazor\\6.11.0\\mudblazor.6.11.0.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\restsharp\\110.2.0\\restsharp.110.2.0.nupkg.sha512",
+    "C:\\Users\\Mika\\.nuget\\packages\\sixlabors.imagesharp\\3.0.2\\sixlabors.imagesharp.3.0.2.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.15.1\\system.identitymodel.tokens.jwt.6.15.1.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\system.io.pipelines\\7.0.0\\system.io.pipelines.7.0.0.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\system.security.cryptography.cng\\4.5.0\\system.security.cryptography.cng.4.5.0.nupkg.sha512",

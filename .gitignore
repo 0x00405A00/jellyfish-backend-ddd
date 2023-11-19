@@ -1,0 +1,57 @@
+# Ignore Visual Studio Code directory
+.vscode/
+
+# Ignore Visual Studio project files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore the bin and obj directories
+bin/
+obj/
+
+# Ignore NuGet package directory
+packages/
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore logs and databases
+*.log
+*.sqlite
+
+# Ignore compiled Python files
+*.pyc
+
+# Ignore compiled Java classes
+*.class
+
+# Ignore compiled binaries
+*.exe
+*.dll
+*.out
+
+# Ignore macOS metadata
+.DS_Store
+
+# Ignore temporary files
+*.tmp
+*.bak
+*.swp
+
+# Ignore user-specific files
+*.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.sqlite
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.kcache
+
+# Ignore Visual Studio FileContentIndex
+.vs/JellyfishBackend/FileContentIndex/

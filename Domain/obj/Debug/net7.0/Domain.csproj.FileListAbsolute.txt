@@ -61,3 +61,4 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain\obj\Debug\net7.0\Domain.
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain\obj\Debug\net7.0\refint\Domain.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain\obj\Debug\net7.0\Domain.pdb
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain\obj\Debug\net7.0\ref\Domain.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain\obj\Debug\net7.0\Domain.sourcelink.json

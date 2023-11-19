@@ -87,3 +87,4 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\Application\obj\Debug\net7.0\Ap
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Application\obj\Debug\net7.0\refint\Application.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Application\obj\Debug\net7.0\Application.pdb
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Application\obj\Debug\net7.0\ref\Application.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Application\obj\Debug\net7.0\Application.sourcelink.json

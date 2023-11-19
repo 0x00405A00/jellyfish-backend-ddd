@@ -69,3 +69,5 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\sc
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\scopedcss\UI\MainLayout.razor.rz.scp.css
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\scopedcss\UI\SharedComponents\NavMenu.razor.rz.scp.css
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\scopedcss\UI\Pages\Dashboard.razor.rz.scp.css
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\obj\Debug\net7.0\WebFrontEnd.sourcelink.json
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\bin\Debug\net7.0\SixLabors.ImageSharp.dll

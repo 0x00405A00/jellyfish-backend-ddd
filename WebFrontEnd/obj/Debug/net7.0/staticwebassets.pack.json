@@ -53,6 +53,10 @@
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
+      "Id": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\wwwroot\\scripts\\jellyfish.js",
+      "PackagePath": "staticwebassets\\scripts\\jellyfish.js"
+    },
+    {
       "Id": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\wwwroot\\static\\media\\facebook-svgrepo-com.svg",
       "PackagePath": "staticwebassets\\static\\media\\facebook-svgrepo-com.svg"
     },

@@ -1,0 +1,119 @@
+﻿@using System.Threading;
+
+<MudDialog Style="width: 30rem;">
+    <DialogContent>
+        <MudText>@Text</MudText>
+            <MudStack Style="width: 100%">
+                <MudFileUpload T="IBrowserFile"
+                               Accept=".png, .jpg" OnFilesChanged="OnInputFileChanged" AppendMultipleFiles Hidden="false" Class="flex-1" InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20" InputStyle="opacity:0"
+                            @ondragenter="@SetDragClass" @ondragleave="@ClearDragClass" @ondragend="@ClearDragClass">
+                 <ButtonTemplate>
+                     <MudPaper Height="300px" Outlined="true" Class="@DragClass">
+                         <MudText Typo="Typo.h6">Upload your file here...</MudText>
+                         @if (file != null)
+                        {
+                            <MudChip Color="MudBlazor.Color.Dark" Text="@file.Name" />
+                        }
+                    </MudPaper>
+                </ButtonTemplate>
+            </MudFileUpload>
+            @if (!isAllowedFileSizeError)
+            {
+                <MudText Color="MudBlazor.Color.Error">Maximum Filesize is @(Math.Floor((double)MaxAllowedFileSizeMegaBytes))MB</MudText>
+            }
+            @if (!isAllowedFileExtError)
+            {
+                <MudText Color="MudBlazor.Color.Error">Only .JPG or .PNG Files</MudText>
+            }
+            @if (!isAllowedPixelSize)
+            {
+                <MudText Color="MudBlazor.Color.Error">Pixelsizes lower/or equal 1000x1000 are allowed</MudText>
+            }
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="MudBlazor.Color.Primary" Disabled="@(!isFileUploaded)" OnClick="Upload">Upload</MudButton>
+        <MudButton Color="MudBlazor.Color.Primary" Disabled="@(!isFileUploaded)" OnClick="Clear">Clear</MudButton>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public string Text { get; set; }
+    public static int MaxAllowedFileSizeMegaBytes = (MaxAllowedFileSizeBytes/(1024*1024));
+    public static int MaxAllowedFileSizeBytes = (2*1024*1024);
+    private bool isAllowedFileSizeError = false;
+    private bool isAllowedPixelSize = false;
+    private bool isAllowedFileExtError =false;
+    private static string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full z-10";
+    private string DragClass = DefaultDragClass;
+    private IBrowserFile file = null;
+    private bool isFileUploaded => file!=null&&!String.IsNullOrEmpty(file.Name);
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+
+
+        }
+        return Task.CompletedTask;
+    }
+
+    private async void Upload()
+    {
+
+        MudDialog.Close(DialogResult.Ok(file));
+    }
+    private async void OnInputFileChanged(InputFileChangeEventArgs e)
+    {
+        ClearDragClass();
+        isAllowedFileExtError = IsAllowedFileType(e.File);
+        isAllowedFileSizeError = IsAllowedFileSize(e.File);
+        isAllowedPixelSize = await IsAllowedPixelSize(e.File);
+        if (isAllowedFileExtError && isAllowedFileSizeError && isAllowedPixelSize)
+        {
+            file = e.File;
+        }
+        StateHasChanged();
+    }
+
+    private async Task Clear()
+    {
+        file = null;
+        ClearDragClass();
+        await Task.Delay(100);
+    }
+    private void SetDragClass()
+    {
+        DragClass = $"{DefaultDragClass} mud-border-primary";
+    }
+
+    private void ClearDragClass()
+    {
+        DragClass = DefaultDragClass;
+    }
+
+    private bool IsAllowedFileType(IBrowserFile file)
+    {
+        var allowedExtensions = new[] { ".png", ".jpg" };
+        var fileExtension = System.IO.Path.GetExtension(file.Name).ToLowerInvariant();
+        return allowedExtensions.Contains(fileExtension);
+    }
+    private bool IsAllowedFileSize(IBrowserFile file)
+    {
+        return file.Size <= MaxAllowedFileSizeBytes;
+    }
+    private async Task<bool> IsAllowedPixelSize(IBrowserFile browserFile)
+    {
+        byte[] fileBytes = new byte[browserFile.Size];
+        await browserFile.OpenReadStream(MaxAllowedFileSizeBytes).ReadAsync(fileBytes);
+        using var image = SixLabors.ImageSharp.Image.Load(fileBytes);
+        return image.Height <= 1000 && image.Width <= 1000;
+    }
+    void Cancel() => MudDialog.Cancel();
+}
+

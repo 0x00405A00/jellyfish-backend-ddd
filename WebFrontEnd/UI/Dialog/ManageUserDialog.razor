@@ -1,5 +1,9 @@
 ﻿@inject JellyfishBackendApi WebApiClient
 @inject CustomAuthentificationStateProvider AuthentificationService
+@inject IDialogService DialogService
+@inject DialogHandler DialogHandler
+@inject IJSRuntime JSRuntime
+
 <MudDialog>
     <TitleContent>
         <MudText Typo="Typo.h6">
@@ -8,6 +12,33 @@
         </MudText>
     </TitleContent>
     <DialogContent>
+        <MudAvatar style="height: 256px; width: 256px;font-size: 5rem;">
+            @if (uploadProfilePicture)
+            {
+                <MudOverlay Visible="true" DarkBackground="true" Absolute="true">
+                    <MudProgressCircular Color="MudBlazor.Color.Secondary" Indeterminate="true" />
+                </MudOverlay>
+            }
+            else
+            {
+                if(hasImage)
+                {
+                    <canvas id="profilePictureCanvas" width="256" height="256" style="border:1px solid #000;"></canvas>
+
+                }
+                else
+                {
+                    @User.GetInitials()
+                }
+            }
+        </MudAvatar>
+        <MudToolBar>
+            <MudIconButton OnClick=@OpenUploadPictureDialog Icon="@Icons.Material.Outlined.UploadFile" />
+            @if (!String.IsNullOrEmpty(User.PictureBase64))
+            {
+                <MudIconButton OnClick=@ClearProfilePicture Icon="@Icons.Material.Outlined.Clear" />
+            }
+        </MudToolBar>
         <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
             <MudTextField InputType="InputType.Text" @bind-Value=@User.UserName Label="UserName" Variant="Variant.Filled" ReadOnly="false" Required />
              <MudTextField InputType="InputType.Text" @bind-Value=@User.FirstName Label="FirstName" ReadOnly="false" Required />
@@ -41,7 +72,7 @@
     </DialogActions>
 </MudDialog>
 
-    @code {
+@code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
     [Parameter] public string Text { get; set; }
@@ -49,6 +80,7 @@
     [Parameter] public IEnumerable<UserTypeDTO> UserTypes { get; set; } = new HashSet<UserTypeDTO>();
     [Parameter] public IEnumerable<RoleDTO> Roles { get; set; } = new HashSet<RoleDTO>();
 
+    private bool uploadProfilePicture = false;
     private AuthDTO _token;
     private CancellationTokenSource cancellationToken = new();
     private MudForm form;
@@ -60,6 +92,8 @@
     private string[] errors = { };
     private UserTypeDTO SelectedUserType { get; set; } = new UserTypeDTO();
     private IEnumerable<RoleDTO> SelectedRoles { get; set; } = new List<RoleDTO>();
+    private bool hasImage => !String.IsNullOrEmpty(base64AsImage);
+    private string base64AsImage = null;
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
@@ -85,6 +119,10 @@
                 });
                 SelectedRoles = roleDTOs;
             }   
+            if(!String.IsNullOrEmpty(User.PictureBase64))
+            {
+                base64AsImage = $"data:image/png;base64,{User.PictureBase64}";
+            }
             StateHasChanged();
         }
 
@@ -109,6 +147,7 @@
         }
         return null;
     }
+
     private void OnKeyUpEvent(KeyboardEventArgs keyboardEventArgs)
     {
         passwordTextField.Validate();
@@ -118,6 +157,29 @@
     private void Cancel()
     {
         MudDialog.Cancel();
+    }
+    private async void ClearProfilePicture()
+    {
+        base64AsImage = null;
+        User.PictureBase64=null;
+        StateHasChanged();
+    }
+    private async void OpenUploadPictureDialog()
+    {
+        var result = await DialogHandler.ShowUploadDialog("Upload a profile Picture.");
+        if(!result.Cancelled)
+        {
+            uploadProfilePicture = true;
+            StateHasChanged();
+            var image = (IBrowserFile)result.Data;
+            byte[] fileBytes = new byte[image.Size];
+            await image.OpenReadStream((UploadFileDialog.MaxAllowedFileSizeBytes)).ReadAsync(fileBytes);
+            User.PictureBase64 = Convert.ToBase64String(fileBytes);
+            base64AsImage = $"data:image/png;base64,{User.PictureBase64}";
+            uploadProfilePicture = false;
+            StateHasChanged();
+            await JSRuntime.InvokeVoidAsync("renderImage", "profilePictureCanvas", base64AsImage);
+        }
     }
     private async void Commit()
     {

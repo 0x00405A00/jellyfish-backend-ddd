@@ -87,3 +87,4 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\Infrastructure\obj\Debug\net7.0
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Infrastructure\obj\Debug\net7.0\Infrastructure.pdb
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Infrastructure\obj\Debug\net7.0\Infrastructure.genruntimeconfig.cache
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Infrastructure\obj\Debug\net7.0\ref\Infrastructure.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Infrastructure\obj\Debug\net7.0\Infrastructure.sourcelink.json

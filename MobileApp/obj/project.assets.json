@@ -651,19 +651,6 @@
           }
         }
       },
-      "Microsoft.Maui.Graphics/7.0.96": {
-        "type": "package",
-        "compile": {
-          "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
       "Microsoft.Maui.Maps/7.0.81": {
         "type": "package",
         "dependencies": {
@@ -3986,19 +3973,6 @@
           }
         }
       },
-      "Microsoft.Maui.Graphics/7.0.96": {
-        "type": "package",
-        "compile": {
-          "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
       "Microsoft.Maui.Maps/7.0.81": {
         "type": "package",
         "dependencies": {
@@ -7291,19 +7265,6 @@
         "runtime": {
           "lib/net7.0-android33.0/Microsoft.Maui.Controls.Maps.dll": {
             "related": ".aar;.pdb;.xml"
-          }
-        }
-      },
-      "Microsoft.Maui.Graphics/7.0.96": {
-        "type": "package",
-        "compile": {
-          "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
-            "related": ".pdb;.xml"
           }
         }
       },
@@ -10602,19 +10563,6 @@
           }
         }
       },
-      "Microsoft.Maui.Graphics/7.0.96": {
-        "type": "package",
-        "compile": {
-          "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
       "Microsoft.Maui.Maps/7.0.81": {
         "type": "package",
         "dependencies": {
@@ -13910,19 +13858,6 @@
           }
         }
       },
-      "Microsoft.Maui.Graphics/7.0.96": {
-        "type": "package",
-        "compile": {
-          "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
       "Microsoft.Maui.Maps/7.0.81": {
         "type": "package",
         "dependencies": {
@@ -17215,19 +17150,6 @@
         "runtime": {
           "lib/net7.0-android33.0/Microsoft.Maui.Controls.Maps.dll": {
             "related": ".aar;.pdb;.xml"
-          }
-        }
-      },
-      "Microsoft.Maui.Graphics/7.0.96": {
-        "type": "package",
-        "compile": {
-          "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
-            "related": ".pdb;.xml"
           }
         }
       },
@@ -23232,49 +23154,6 @@
         "microsoft.maui.controls.maps.nuspec"
       ]
     },
-    "Microsoft.Maui.Graphics/7.0.96": {
-      "sha512": "KlIfq6vs7Oo12w/49pFFwx3OvyVECiBxQf8d1Asxk/1p/OjUjo+0ELL8fyskE2thRSPj9KupAxXI2/CS7ILICA==",
-      "type": "package",
-      "path": "microsoft.maui.graphics/7.0.96",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll",
-        "lib/net7.0-android33.0/Microsoft.Maui.Graphics.pdb",
-        "lib/net7.0-android33.0/Microsoft.Maui.Graphics.xml",
-        "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll",
-        "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.pdb",
-        "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.xml",
-        "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.dll",
-        "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.pdb",
-        "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.xml",
-        "lib/net7.0-macos13.0/Microsoft.Maui.Graphics.dll",
-        "lib/net7.0-macos13.0/Microsoft.Maui.Graphics.pdb",
-        "lib/net7.0-macos13.0/Microsoft.Maui.Graphics.xml",
-        "lib/net7.0-tizen7.0/Microsoft.Maui.Graphics.dll",
-        "lib/net7.0-tizen7.0/Microsoft.Maui.Graphics.pdb",
-        "lib/net7.0-tizen7.0/Microsoft.Maui.Graphics.xml",
-        "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.dll",
-        "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.pdb",
-        "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.xml",
-        "lib/net7.0-windows10.0.20348/Microsoft.Maui.Graphics.dll",
-        "lib/net7.0-windows10.0.20348/Microsoft.Maui.Graphics.pdb",
-        "lib/net7.0-windows10.0.20348/Microsoft.Maui.Graphics.xml",
-        "lib/net7.0/Microsoft.Maui.Graphics.dll",
-        "lib/net7.0/Microsoft.Maui.Graphics.pdb",
-        "lib/net7.0/Microsoft.Maui.Graphics.xml",
-        "lib/netstandard2.0/Microsoft.Maui.Graphics.dll",
-        "lib/netstandard2.0/Microsoft.Maui.Graphics.pdb",
-        "lib/netstandard2.0/Microsoft.Maui.Graphics.xml",
-        "lib/netstandard2.1/Microsoft.Maui.Graphics.dll",
-        "lib/netstandard2.1/Microsoft.Maui.Graphics.pdb",
-        "lib/netstandard2.1/Microsoft.Maui.Graphics.xml",
-        "microsoft.maui.graphics.7.0.96.nupkg.sha512",
-        "microsoft.maui.graphics.nuspec"
-      ]
-    },
     "Microsoft.Maui.Maps/7.0.81": {
       "sha512": "satGhXDrYGym5fkhAZC1JPIjRojuBvnz+ba/6Sd+4TeZ6/j4BZDSxvv5jzha6+BR5yQ/5+t9yWMvNuqCYc+V7w==",
       "type": "package",
@@ -26998,8 +26877,10 @@
       "Microsoft.Extensions.Logging >= 7.0.0",
       "Microsoft.Extensions.Logging.Debug >= 7.0.0",
       "Microsoft.Maui.Controls.Maps >= 7.0.81",
-      "Microsoft.Maui.Graphics >= 7.0.96",
+      "Microsoft.Maui.Graphics >= 7.0.101",
       "Microsoft.Maui.Maps >= 7.0.81",
+      "Microsoft.NET.ILLink.Analyzers >= 7.0.100-1.23211.1",
+      "Microsoft.NET.ILLink.Tasks >= 7.0.100-1.23211.1",
       "RestSharp >= 110.2.0",
       "SQLiteNetExtensions >= 2.1.0",
       "SQLiteNetExtensions.Async >= 2.1.0",
@@ -27138,12 +27019,24 @@
           },
           "Microsoft.Maui.Graphics": {
             "target": "Package",
-            "version": "[7.0.96, )",
+            "version": "[7.0.101, )",
             "autoReferenced": true
           },
           "Microsoft.Maui.Maps": {
             "target": "Package",
             "version": "[7.0.81, )"
+          },
+          "Microsoft.NET.ILLink.Analyzers": {
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[7.0.100-1.23211.1, )",
+            "autoReferenced": true
+          },
+          "Microsoft.NET.ILLink.Tasks": {
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[7.0.100-1.23211.1, )",
+            "autoReferenced": true
           },
           "RestSharp": {
             "target": "Package",
@@ -27264,6 +27157,52 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.Android.Ref.33",
+            "version": "[33.0.95, 33.0.95]"
+          },
+          {
+            "name": "Microsoft.Android.Runtime.33.android-arm",
+            "version": "[33.0.95, 33.0.95]"
+          },
+          {
+            "name": "Microsoft.Android.Runtime.33.android-arm64",
+            "version": "[33.0.95, 33.0.95]"
+          },
+          {
+            "name": "Microsoft.Android.Runtime.33.android-x64",
+            "version": "[33.0.95, 33.0.95]"
+          },
+          {
+            "name": "Microsoft.Android.Runtime.33.android-x86",
+            "version": "[33.0.95, 33.0.95]"
+          },
+          {
+            "name": "Microsoft.Maui.Controls.Ref.android",
+            "version": "[7.0.101, 7.0.101]"
+          },
+          {
+            "name": "Microsoft.Maui.Controls.Runtime.android",
+            "version": "[7.0.101, 7.0.101]"
+          },
+          {
+            "name": "Microsoft.Maui.Core.Ref.android",
+            "version": "[7.0.101, 7.0.101]"
+          },
+          {
+            "name": "Microsoft.Maui.Core.Runtime.android",
+            "version": "[7.0.101, 7.0.101]"
+          },
+          {
+            "name": "Microsoft.Maui.Essentials.Ref.android",
+            "version": "[7.0.101, 7.0.101]"
+          },
+          {
+            "name": "Microsoft.Maui.Essentials.Runtime.android",
+            "version": "[7.0.101, 7.0.101]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.Android": {
             "privateAssets": "all"
@@ -27281,7 +27220,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
       },
       "net7.0-ios16.1": {
         "targetAlias": "net7.0-ios",
@@ -27296,7 +27235,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
       }
     },
     "runtimes": {
@@ -27331,6 +27270,267 @@
         "net7.0-android33.0/android-x64",
         "net7.0-android33.0/android-x86",
         "net7.0-android33.0/ios-arm64"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.NET.ILLink.Analyzers (>= 7.0.100-1.23211.1)\" kann für \"net7.0-android33.0\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.NET.ILLink.Analyzers",
+      "targetGraphs": [
+        "net7.0-android33.0"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.NET.ILLink.Tasks (>= 7.0.100-1.23211.1)\" kann für \"net7.0-android33.0\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.NET.ILLink.Tasks",
+      "targetGraphs": [
+        "net7.0-android33.0"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Maui.Graphics (>= 7.0.101)\" kann für \"net7.0-android33.0\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Maui.Graphics",
+      "targetGraphs": [
+        "net7.0-android33.0"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.NET.ILLink.Analyzers (>= 7.0.100-1.23211.1)\" kann für \"net7.0-android33.0/android-arm\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.NET.ILLink.Analyzers",
+      "targetGraphs": [
+        "net7.0-android33.0/android-arm"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.NET.ILLink.Tasks (>= 7.0.100-1.23211.1)\" kann für \"net7.0-android33.0/android-arm\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.NET.ILLink.Tasks",
+      "targetGraphs": [
+        "net7.0-android33.0/android-arm"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Maui.Graphics (>= 7.0.101)\" kann für \"net7.0-android33.0/android-arm\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Maui.Graphics",
+      "targetGraphs": [
+        "net7.0-android33.0/android-arm"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.NET.ILLink.Analyzers (>= 7.0.100-1.23211.1)\" kann für \"net7.0-android33.0/android-arm64\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.NET.ILLink.Analyzers",
+      "targetGraphs": [
+        "net7.0-android33.0/android-arm64"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.NET.ILLink.Tasks (>= 7.0.100-1.23211.1)\" kann für \"net7.0-android33.0/android-arm64\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.NET.ILLink.Tasks",
+      "targetGraphs": [
+        "net7.0-android33.0/android-arm64"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Maui.Graphics (>= 7.0.101)\" kann für \"net7.0-android33.0/android-arm64\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Maui.Graphics",
+      "targetGraphs": [
+        "net7.0-android33.0/android-arm64"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.NET.ILLink.Analyzers (>= 7.0.100-1.23211.1)\" kann für \"net7.0-android33.0/android-x64\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.NET.ILLink.Analyzers",
+      "targetGraphs": [
+        "net7.0-android33.0/android-x64"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.NET.ILLink.Tasks (>= 7.0.100-1.23211.1)\" kann für \"net7.0-android33.0/android-x64\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.NET.ILLink.Tasks",
+      "targetGraphs": [
+        "net7.0-android33.0/android-x64"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Maui.Graphics (>= 7.0.101)\" kann für \"net7.0-android33.0/android-x64\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Maui.Graphics",
+      "targetGraphs": [
+        "net7.0-android33.0/android-x64"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.NET.ILLink.Analyzers (>= 7.0.100-1.23211.1)\" kann für \"net7.0-android33.0/android-x86\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.NET.ILLink.Analyzers",
+      "targetGraphs": [
+        "net7.0-android33.0/android-x86"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.NET.ILLink.Tasks (>= 7.0.100-1.23211.1)\" kann für \"net7.0-android33.0/android-x86\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.NET.ILLink.Tasks",
+      "targetGraphs": [
+        "net7.0-android33.0/android-x86"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Maui.Graphics (>= 7.0.101)\" kann für \"net7.0-android33.0/android-x86\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Maui.Graphics",
+      "targetGraphs": [
+        "net7.0-android33.0/android-x86"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.NET.ILLink.Analyzers (>= 7.0.100-1.23211.1)\" kann für \"net7.0-android33.0/ios-arm64\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.NET.ILLink.Analyzers",
+      "targetGraphs": [
+        "net7.0-android33.0/ios-arm64"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.NET.ILLink.Tasks (>= 7.0.100-1.23211.1)\" kann für \"net7.0-android33.0/ios-arm64\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.NET.ILLink.Tasks",
+      "targetGraphs": [
+        "net7.0-android33.0/ios-arm64"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Maui.Graphics (>= 7.0.101)\" kann für \"net7.0-android33.0/ios-arm64\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Maui.Graphics",
+      "targetGraphs": [
+        "net7.0-android33.0/ios-arm64"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Maui.Essentials.Ref.android (= 7.0.101)\" kann für \"net7.0-android33.0\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Maui.Essentials.Ref.android",
+      "targetGraphs": [
+        "net7.0-android33.0"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Android.Runtime.33.android-x86 (= 33.0.95)\" kann für \"net7.0-android33.0\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Android.Runtime.33.android-x86",
+      "targetGraphs": [
+        "net7.0-android33.0"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Maui.Controls.Ref.android (= 7.0.101)\" kann für \"net7.0-android33.0\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Maui.Controls.Ref.android",
+      "targetGraphs": [
+        "net7.0-android33.0"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Maui.Core.Runtime.android (= 7.0.101)\" kann für \"net7.0-android33.0\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Maui.Core.Runtime.android",
+      "targetGraphs": [
+        "net7.0-android33.0"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Android.Runtime.33.android-arm64 (= 33.0.95)\" kann für \"net7.0-android33.0\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Android.Runtime.33.android-arm64",
+      "targetGraphs": [
+        "net7.0-android33.0"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Maui.Controls.Runtime.android (= 7.0.101)\" kann für \"net7.0-android33.0\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Maui.Controls.Runtime.android",
+      "targetGraphs": [
+        "net7.0-android33.0"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Maui.Core.Ref.android (= 7.0.101)\" kann für \"net7.0-android33.0\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Maui.Core.Ref.android",
+      "targetGraphs": [
+        "net7.0-android33.0"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Android.Ref.33 (= 33.0.95)\" kann für \"net7.0-android33.0\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Android.Ref.33",
+      "targetGraphs": [
+        "net7.0-android33.0"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Android.Runtime.33.android-arm (= 33.0.95)\" kann für \"net7.0-android33.0\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Android.Runtime.33.android-arm",
+      "targetGraphs": [
+        "net7.0-android33.0"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Maui.Essentials.Runtime.android (= 7.0.101)\" kann für \"net7.0-android33.0\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Maui.Essentials.Runtime.android",
+      "targetGraphs": [
+        "net7.0-android33.0"
+      ]
+    },
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "\"Microsoft.Android.Runtime.33.android-x64 (= 33.0.95)\" kann für \"net7.0-android33.0\" nicht aufgelöst werden. PackageSourceMapping ist aktiviert. Die folgende(n) Quelle(n) wurde(n) nicht berücksichtigt: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org.",
+      "libraryId": "Microsoft.Android.Runtime.33.android-x64",
+      "targetGraphs": [
+        "net7.0-android33.0"
       ]
     }
   ]

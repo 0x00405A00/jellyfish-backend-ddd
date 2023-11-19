@@ -10,6 +10,8 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = WebFrontEnd
 build_property.RootNamespace = WebFrontEnd
 build_property.ProjectDir = C:\Users\Mika\source\repos\jellyfish-backend-ddd\WebFrontEnd\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
@@ -26,6 +28,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Dialog/LogoutDialog.razor]
 build_metadata.AdditionalFiles.TargetPath = VUlcRGlhbG9nXExvZ291dERpYWxvZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Dialog/UploadFileDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = VUlcRGlhbG9nXFVwbG9hZEZpbGVEaWFsb2cucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/Index.razor]

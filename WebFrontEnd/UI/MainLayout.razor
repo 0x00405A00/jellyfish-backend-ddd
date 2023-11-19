@@ -176,7 +176,7 @@
     private bool LogoutTimerVisible => LogoutTimer != TimeSpan.MinValue;
     private AuthDTO _token;
     private bool ProfileButtonExpand = false;
-    private bool IsLoggedIn = false;
+    private bool IsLoggedIn => _token!=null&&!_token.IsTokenExpired;
     private CancellationTokenSource cancellationToken = new();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -185,6 +185,7 @@
         {
             LogoutBackgroundService.OnRerenderRequested += RequestRerender;
             _token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
+        
         }
 
 
@@ -217,7 +218,7 @@
     {
         InvokeAsync(() =>
         {
-            if(!_token.IsTokenExpired)
+            if (!_token.IsTokenExpired && _token.TokenExpiresIn!=null)
             {
 
                 var calcTime = _token.TokenExpiresIn.Value.AddMinutes(-5);
