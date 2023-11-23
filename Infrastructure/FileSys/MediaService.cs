@@ -54,7 +54,7 @@ namespace Infrastructure.FileSys
             try
             {
                 string path = GetProfilePicturePath(chatId);
-                fileHandler.CreateFile(path, content, cancellationToken);
+                fileHandler.CreateOrUpdateFile(path, content, cancellationToken);
                 return path;
             }
             catch (Exception ex)
@@ -99,7 +99,7 @@ namespace Infrastructure.FileSys
             try
             {
                 string path = GetProfilePicturePath(userId);
-                fileHandler.CreateFile(path, content, cancellationToken);
+                fileHandler.CreateOrUpdateFile(path, content, cancellationToken);
                 return path;
             }
             catch (Exception ex)

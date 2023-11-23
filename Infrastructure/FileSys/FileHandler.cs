@@ -104,21 +104,23 @@ namespace Infrastructure.FileSys
             }
         }
 
-        async void IFileHandler.CreateFile(
+        async Task<MediaContentDTO> IFileHandler.CreateOrUpdateFile(
             string path,
             byte[] content,
             CancellationToken cancellationToken)
         {
+            MediaContentDTO mediaContentDTO =null;
             try
             {
                 var mediaContent = MediaContentDTO.Parse(content,antiVirus,azureAdultContentDetection);
-                mediaContent.CheckInadmissibleContent(antiVirus, azureAdultContentDetection, cancellationToken);
+                mediaContentDTO = await mediaContent.CheckInadmissibleContent(antiVirus, azureAdultContentDetection, cancellationToken);
                 await File.WriteAllBytesAsync(path, content, cancellationToken);
             }
             catch (Exception ex)
             {
                 throw;
             }
+            return mediaContentDTO; 
         }
         void IFileHandler.DeleteFile(string path, CancellationToken cancellationToken)
         {
