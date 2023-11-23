@@ -77,7 +77,7 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateChat
                 try
                 {
                     byte[] data = Convert.FromBase64String(request.Picture);
-                    picture = Picture.Parse(data);
+                    picture = Picture.Parse(data,request.Picture,request.PictureMimeType);
                     chat.UpdatePicture(updatedByUser, picture);
                 }
                 catch(NotValidMediaContentException ex)

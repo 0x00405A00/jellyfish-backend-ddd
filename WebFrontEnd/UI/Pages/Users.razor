@@ -5,6 +5,7 @@
 @inject CustomAuthentificationStateProvider AuthentificationService
 @inject DialogHandler DialogHandler
 @inject ISessionStorage SessionStorage
+@inject IJSRuntime JSRuntime
 
 <CascadingAuthenticationState>
     <AuthorizeView Policy="Admin">
@@ -46,7 +47,16 @@
 
                      <RowTemplate Context="TableContext">
                          <MudTd>
-                             <MudAvatar Color="MudBlazor.Color.Tertiary">@TableContext.GetInitials()</MudAvatar>
+                             <MudAvatar style="height: 32px; width: 32px;">
+                                 @if (TableContext.HasImage)
+                                {
+                                    <img src="@MimeExtension.GetImageAsMime(TableContext.PictureBase64,TableContext.PictureMimeType)" width="32" height="32" style="border:1px solid #000;"/>
+                                }
+                                else
+                                {
+                                    @TableContext.GetInitials()
+                                }
+                            </MudAvatar>
                          </MudTd>
                          <MudTd DataLabel="UserName">@TableContext.UserName</MudTd>
                          <MudTd DataLabel="FirstName">@TableContext.FirstName</MudTd>
@@ -160,6 +170,7 @@
         _selectedItemsPerPage = value;
         var data = _session.UsersPage;
         data.MaxItemsPerPage = _selectedItemsPerPage;
+        _selectedPage = 1;
         SessionStorage.SetSession(_session, cancellationToken.Token);
         PageChanged(_selectedPage);
 

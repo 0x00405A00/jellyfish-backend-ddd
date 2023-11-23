@@ -2,13 +2,13 @@
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.DatabaseEntity;
-using Microsoft.AspNetCore.Connections;
+using Infrastructure.FileSys;
 
 namespace Infrastructure.Mapper.Concrete
 {
     internal class UserMapper : AbstractMapper<Domain.Entities.User.User, User>
     {
-        public override User MapToDatabaseEntity(Domain.Entities.User.User entity, bool mapRelationObjects)
+        public override async Task<User> MapToDatabaseEntity(Domain.Entities.User.User entity, bool mapRelationObjects)
         {
             if (entity == null)
                 return null;
@@ -19,6 +19,8 @@ namespace Infrastructure.Mapper.Concrete
             user.Email = entity.Email.EmailValue;
             user.Password = entity.Password;
             user.Phone = entity.Phone.PhoneNumb;
+            user.ProfilePicturePath = entity.Picture.FilePath;
+            user.ProfilePictureFileExt = entity.Picture.FileExtension;
             user.DateOfBirth = entity.DateOfBirth.ToDateTime(new TimeOnly());
             user.ActivationDatetime = entity.ActivationDateTime;
             user.ActivationToken = entity.ActivationToken;
@@ -33,8 +35,8 @@ namespace Infrastructure.Mapper.Concrete
             user.DeletedTime = entity.DeletedTime;
             if(mapRelationObjects)
             {
-                entity.Friends.ToList().ForEach(userFriend => {
-                    var friend = userFriend.Friend.MapToDatabaseEntity<Domain.Entities.User.User, User>(false);
+                entity.Friends.ToList().ForEach(async(userFriend) => {
+                    var friend = await userFriend.Friend.MapToDatabaseEntity<Domain.Entities.User.User, User>(false);
                     Infrastructure.DatabaseEntity.UserFriend userFriendDatabaseEntity = new DatabaseEntity.UserFriend();
                     userFriendDatabaseEntity.FriendUserUuid = friend.Uuid;
                     userFriendDatabaseEntity.UserUuid =user.Uuid;
@@ -43,8 +45,8 @@ namespace Infrastructure.Mapper.Concrete
                     userFriendDatabaseEntity.LastModifiedTime = userFriend.LastModifiedTime;
                     user.UserFriendFriendUserUus.Add(userFriendDatabaseEntity);
                 });
-                entity.Roles.ToList().ForEach(userRole => {
-                    var role = userRole.Role.MapToDatabaseEntity<Domain.Entities.Role.Role, Role>(false);
+                entity.Roles.ToList().ForEach(async(userRole) => {
+                    var role = await userRole.Role.MapToDatabaseEntity<Domain.Entities.Role.Role, Role>(false);
 
                     UserRelationToRole userRelationToRoleDatabaseEntity = new UserRelationToRole();
                     userRelationToRoleDatabaseEntity.RoleUuid =role.Uuid;
@@ -54,8 +56,8 @@ namespace Infrastructure.Mapper.Concrete
                     userRelationToRoleDatabaseEntity.LastModifiedTime = userRole.LastModifiedTime;
                     user.UserRelationToRoles.Add(userRelationToRoleDatabaseEntity);
                 });
-                entity.FriendshipRequests.ToList().ForEach(friendShipRequest => {
-                    var requester = friendShipRequest.RequestUser.MapToDatabaseEntity<Domain.Entities.User.User, User>(false);
+                entity.FriendshipRequests.ToList().ForEach(async(friendShipRequest) => {
+                    var requester = await friendShipRequest.RequestUser.MapToDatabaseEntity<Domain.Entities.User.User, User>(false);
 
                     Infrastructure.DatabaseEntity.UserFriendshipRequest userFriendshipRequest = new UserFriendshipRequest();
                     userFriendshipRequest.UserUuid = requester.Uuid; 
@@ -69,14 +71,24 @@ namespace Infrastructure.Mapper.Concrete
             return user;
         }
 
-        public override Domain.Entities.User.User MapToDomainEntity(User entity,bool withRelation = false)
+        public override async Task<Domain.Entities.User.User> MapToDomainEntity(User entity,bool withRelation = false)
         {
             if (entity == null)
                 return null;
             var userId = entity.Uuid.ToIdentification<Domain.Entities.User.UserId> ();
-            var userType = entity.UserTypeUu.MapToDomainEntity<Domain.Entities.User.UserType, UserType>(false);
+            var userType = await entity.UserTypeUu.MapToDomainEntity<Domain.Entities.User.UserType, UserType>(false);
             var phone = PhoneNumber.Parse(entity.Phone);
-            var picture = Picture.Parse(entity.Picture);
+            
+            var picture = Picture.Parse(entity.ProfilePicturePath, entity.ProfilePictureFileExt);
+            try
+            {
+                var pic =await ((MediaContent)picture).LoadMediaContent(CancellationToken.None);
+                picture.SetBinary(pic); 
+            }
+            catch (Exception ex)
+            {
+
+            }
             var email = Email.Parse(entity.Email);
             var birthDayDateOnly = DateOnly.FromDateTime(entity.DateOfBirth);
 
@@ -85,11 +97,11 @@ namespace Infrastructure.Mapper.Concrete
             ICollection<FriendshipRequest> friendshipRequests = new List<FriendshipRequest>();
             if (withRelation)
             {
-                roles = entity.UserRelationToRoles.Select(role =>
+                var rolesTasks = entity.UserRelationToRoles.Select(async(role) =>
                 {
 
-                    var r = role.RoleUu.MapToDomainEntity<Domain.Entities.Role.Role, Role>(false);
-                    var u = role.UserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
+                    var r = await role.RoleUu.MapToDomainEntity<Domain.Entities.Role.Role, Role>(false);
+                    var u = await role.UserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
                     return UserRole.Create(
                         u,
                         r,
@@ -97,10 +109,11 @@ namespace Infrastructure.Mapper.Concrete
                         role.LastModifiedTime,
                         role.DeletedTime);
                 }).ToList();
-                friends = entity.UserFriendUserUus.Select(friend =>
+                roles =await Task.WhenAll(rolesTasks);
+                var friendsTasks = entity.UserFriendUserUus.Select(async(friend) =>
                 {
-                    var userFriendDomainModel = friend.FriendUserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
-                    var userDomainModel = friend.UserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
+                    var userFriendDomainModel = await friend.FriendUserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
+                    var userDomainModel = await friend.UserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
 
                     return Domain.ValueObjects.UserFriend.Create(
                         userDomainModel,
@@ -110,14 +123,16 @@ namespace Infrastructure.Mapper.Concrete
                         friend.DeletedTime,
                         null);
                 }).ToList();
-                friendshipRequests = entity.UserFriendshipRequestUserUus.Select(r =>
+                friends = await Task.WhenAll(friendsTasks);
+                var friendshipRequestsTasks = entity.UserFriendshipRequestUserUus.Select(async(r) =>
                 {
                     var targetUserRequestMessage = r.TargetUserRequestMessage;
-                    var requestUserDomainModel = r.UserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
-                    var targetUserDomainModel = r.TargetUserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
+                    var requestUserDomainModel = await r.UserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
+                    var targetUserDomainModel = await r.TargetUserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
                     return FriendshipRequest.Create(targetUserRequestMessage, requestUserDomainModel, targetUserDomainModel);
 
                 }).ToList();
+                friendshipRequests = await Task.WhenAll(friendshipRequestsTasks);   
             }
 
             return Domain.Entities.User.User.Create(

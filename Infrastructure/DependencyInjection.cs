@@ -7,6 +7,7 @@ using Infrastructure.Mail;
 using Infrastructure.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Infrastructure.FileSys;
 
 namespace Infrastructure
 {
@@ -14,6 +15,18 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
+
+            services.AddScoped<IAntiVirus, AntiVirus>();
+            services.AddScoped<IAzureAdultContentDetection, AzureAdultContentDetection>();
+
+            services.AddScoped<IFileHandler, FileHandler>();
+            services.AddScoped<MediaService>();
+
+            var serviceBuilder = services.BuildServiceProvider();   
+            var fileHandler= serviceBuilder.GetRequiredService<IFileHandler>();
+            fileHandler.CreateApplicationFolders();
+
+
             services.AddW3CLogging(x => {
                 
             });

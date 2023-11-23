@@ -1,6 +1,4 @@
 ﻿using Infrastructure.Abstractions;
-using System;
-using System.Collections.Generic;
 
 namespace Infrastructure.DatabaseEntity;
 
@@ -11,11 +9,8 @@ public partial class Chat : DatabaseEntityModel
 
     public string? Name { get; set; }
     public string? Description { get; set; }
-
-    /// <summary>
-    /// Base64 von Pic Binary
-    /// </summary>
-    public byte[]? Picture { get; set; }
+    public string? ChatPicturePath { get; set; }
+    public string? ChatPictureFileExt { get; set; }
 
     public Guid OwnerUserUuid { get; set; } = Guid.Empty;
 

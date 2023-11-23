@@ -19,7 +19,7 @@
             </MudFileUpload>
             @if (!isAllowedFileSizeError)
             {
-                <MudText Color="MudBlazor.Color.Error">Maximum Filesize is @(Math.Floor((double)MaxAllowedFileSizeMegaBytes))MB</MudText>
+                <MudText Color="MudBlazor.Color.Error">Maximum Filesize is @(((double)MaxAllowedFileSizeMegaBytes))MB</MudText>
             }
             @if (!isAllowedFileExtError)
             {
@@ -71,10 +71,8 @@
     private async void OnInputFileChanged(InputFileChangeEventArgs e)
     {
         ClearDragClass();
-        isAllowedFileExtError = IsAllowedFileType(e.File);
-        isAllowedFileSizeError = IsAllowedFileSize(e.File);
         isAllowedPixelSize = await IsAllowedPixelSize(e.File);
-        if (isAllowedFileExtError && isAllowedFileSizeError && isAllowedPixelSize)
+        if (IsAllowedFileType(e.File) && IsAllowedFileSize(e.File) && isAllowedPixelSize)
         {
             file = e.File;
         }
@@ -109,10 +107,18 @@
     }
     private async Task<bool> IsAllowedPixelSize(IBrowserFile browserFile)
     {
-        byte[] fileBytes = new byte[browserFile.Size];
-        await browserFile.OpenReadStream(MaxAllowedFileSizeBytes).ReadAsync(fileBytes);
-        using var image = SixLabors.ImageSharp.Image.Load(fileBytes);
-        return image.Height <= 1000 && image.Width <= 1000;
+        try
+        {
+
+            byte[] fileBytes = new byte[browserFile.Size];
+            await browserFile.OpenReadStream(MaxAllowedFileSizeBytes).ReadAsync(fileBytes);
+            using var image = SixLabors.ImageSharp.Image.Load(fileBytes);
+            return image.Height <= 1000 && image.Width <= 1000;
+        }
+        catch(Exception ex)
+        {
+            return false;
+        }
     }
     void Cancel() => MudDialog.Cancel();
 }

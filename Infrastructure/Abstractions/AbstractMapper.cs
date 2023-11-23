@@ -10,9 +10,9 @@ namespace Infrastructure.Abstractions
         where TDomainEntity : class
         where TDatabaseEntity : DatabaseEntityModel
     {
-        public abstract TDomainEntity MapToDomainEntity(TDatabaseEntity entity, bool withRelation);
-        public abstract TDatabaseEntity MapToDatabaseEntity(TDomainEntity entity, bool mapRelationObjects);
-        public virtual ICollection<TDomainEntity> MapToDomainEntity(ICollection<TDatabaseEntity> entity, bool withRelation)
+        public abstract Task<TDomainEntity> MapToDomainEntity(TDatabaseEntity entity, bool withRelation);
+        public abstract Task<TDatabaseEntity> MapToDatabaseEntity(TDomainEntity entity, bool mapRelationObjects);
+        public async virtual Task<ICollection<TDomainEntity>> MapToDomainEntity(ICollection<TDatabaseEntity> entity, bool withRelation)
         {
             if (entity == null)
                 return null!;
@@ -20,12 +20,12 @@ namespace Infrastructure.Abstractions
             ICollection<TDomainEntity> resp = new List<TDomainEntity>();    
             foreach(var item in entity.ToList()) {
 
-                var domainEntity = MapToDomainEntity(item, withRelation);
+                var domainEntity = await MapToDomainEntity(item, withRelation);
                 resp.Add(domainEntity);
             }
             return resp;
         }
-        public virtual ICollection<TDatabaseEntity> MapToDatabaseEntity(ICollection<TDomainEntity> entity,bool mapRelationObjects)
+        public async virtual Task<ICollection<TDatabaseEntity>> MapToDatabaseEntity(ICollection<TDomainEntity> entity,bool mapRelationObjects)
         {
             if (entity == null)
                 return null!;
@@ -34,7 +34,7 @@ namespace Infrastructure.Abstractions
             foreach (var item in entity.ToList())
             {
 
-                var dbEntity = MapToDatabaseEntity(item,mapRelationObjects);
+                var dbEntity = await MapToDatabaseEntity(item,mapRelationObjects);
                 resp.Add(dbEntity);
             }
             return resp;

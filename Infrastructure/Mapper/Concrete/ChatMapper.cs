@@ -2,12 +2,14 @@
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.DatabaseEntity;
+using Infrastructure.FileSys;
+using Shared.ApiDataTransferObject;
 
 namespace Infrastructure.Mapper.Concrete
 {
     internal class ChatMapper : AbstractMapper<Domain.Entities.Chats.Chat, Chat>
     {
-        public override Chat MapToDatabaseEntity(Domain.Entities.Chats.Chat entity, bool mapRelationObjects)
+        public override async Task<Chat> MapToDatabaseEntity(Domain.Entities.Chats.Chat entity, bool mapRelationObjects)
         {
             if (entity == null)
                 return null;
@@ -16,7 +18,6 @@ namespace Infrastructure.Mapper.Concrete
             chat.Uuid = entity.Uuid.ToGuid();
             chat.Name = entity.ChatName;
             chat.Description = entity.ChatDescription;
-            chat.Picture =null;
             chat.CreatedTime =entity.CreatedTime;
             chat.LastModifiedTime=entity.LastModifiedTime;
             chat.DeletedTime =entity.DeletedTime;
@@ -24,9 +25,9 @@ namespace Infrastructure.Mapper.Concrete
             if(mapRelationObjects)
             {
                 entity.Members.ToList()
-                              .ForEach(member =>
+                              .ForEach(async(member) =>
                               {
-                                  var memberDatabaseEntity = member.User.MapToDatabaseEntity<Domain.Entities.User.User, User>(false);
+                                  var memberDatabaseEntity = await member.User.MapToDatabaseEntity<Domain.Entities.User.User, User>(false);
 
                                   ChatRelationToUser chatRelationToUser = new ChatRelationToUser();
                                   chatRelationToUser.ChatUuid = chat.Uuid;
@@ -38,9 +39,9 @@ namespace Infrastructure.Mapper.Concrete
                                   chat.ChatRelationToUsers.Add(chatRelationToUser);
 
                               });
-                entity.Messages?.ToList().ForEach(message =>
+                entity.Messages?.ToList().ForEach(async(message) =>
                 {
-                    var messageDatabaseEntity = message.MapToDatabaseEntity<Domain.Entities.Message.Message, Message>(false);
+                    var messageDatabaseEntity = await message.MapToDatabaseEntity<Domain.Entities.Message.Message, Message>(false);
 
                     chat.Messages.Add(messageDatabaseEntity);
                 });
@@ -48,29 +49,37 @@ namespace Infrastructure.Mapper.Concrete
             return chat;    
         }
 
-        public override Domain.Entities.Chats.Chat MapToDomainEntity(Chat entity, bool withRelations)
+        public override async Task<Domain.Entities.Chats.Chat> MapToDomainEntity(Chat entity, bool withRelations)
         {
             if (entity == null)
                 return null;
             var chatId = entity.Uuid.ToIdentification<Domain.Entities.Chats.ChatId>();
-            var ownerUserEntity = entity.OwnerUserUu.MapToDomainEntity<Domain.Entities.User.User,User>(false);
-            var chatMembers = entity.ChatRelationToUsers.Select(userRelation => {
-                var user = userRelation.UserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
+            var ownerUserEntity = await entity.OwnerUserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
+            var chatMembers = entity.ChatRelationToUsers.Select(async (userRelation) => {
+                var user = await userRelation.UserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
 
                 bool isChatAdmin = Convert.ToBoolean(userRelation.IsChatAdmin);
                 return ChatMember.Create(user, isChatAdmin, userRelation.CreatedTime ?? DateTime.MinValue, userRelation.LastModifiedTime, userRelation.DeletedTime);
-            })
-                                                      .ToList();
-            var chatMessages = entity.Messages.MapToDomainEntity<Domain.Entities.Message.Message, Message>(true);
-            var picture = Picture.Parse(entity.Picture);
+            }).ToList();
+            var chatMessages = await entity.Messages.MapToDomainEntity<Domain.Entities.Message.Message, Message>(true);
+            var picture = Picture.Parse(entity.ChatPicturePath,entity.ChatPictureFileExt);
+            try
+            {
+                var pic = await ((MediaContent)picture).LoadMediaContent(CancellationToken.None);
+                picture.SetBinary(pic);
+            }
+            catch (Exception ex)
+            {
 
+            }
+            var chatMembersList = await Task.WhenAll(chatMembers);
             return Domain.Entities.Chats.Chat.Create(
                 chatId,
                 ownerUserEntity,
                 entity.Name,
                 entity.Description,
                 picture,
-                chatMembers,
+                chatMembersList,
                 chatMessages,
                 (DateTime)entity.CreatedTime!,
                 entity.LastModifiedTime,

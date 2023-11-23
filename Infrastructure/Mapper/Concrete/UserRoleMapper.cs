@@ -7,7 +7,7 @@ namespace Infrastructure.Mapper.Concrete
 {
     internal class UserRoleMapper : AbstractMapper<UserRole, UserRelationToRole>
     {
-        public override UserRelationToRole MapToDatabaseEntity(UserRole entity, bool mapRelationObjects)
+        public override async Task<UserRelationToRole> MapToDatabaseEntity(UserRole entity, bool mapRelationObjects)
         {
             if (entity == null)
                 return null;
@@ -21,12 +21,12 @@ namespace Infrastructure.Mapper.Concrete
             return role;
         }
 
-        public override UserRole MapToDomainEntity(UserRelationToRole entity, bool withRelations)
+        public override async Task<UserRole> MapToDomainEntity(UserRelationToRole entity, bool withRelations)
         {
             if (entity == null)
                 return null;
-            var userDomainEntity = entity.UserUu.MapToDomainEntity<Domain.Entities.User.User,User>(false);
-            var roleDomainEntity = entity.RoleUu.MapToDomainEntity<Domain.Entities.Role.Role, Role>(false);
+            var userDomainEntity = await entity.UserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
+            var roleDomainEntity = await entity.RoleUu.MapToDomainEntity<Domain.Entities.Role.Role, Role>(false);
             return UserRole.Create(
                 userDomainEntity,
                 roleDomainEntity,

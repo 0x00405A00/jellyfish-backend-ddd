@@ -170,16 +170,18 @@ internal partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(45)
                 .HasColumnName("name");
+            entity.Property(e => e.ChatPicturePath)
+                .HasMaxLength(255)
+                .HasColumnName("chat_picture_path");
+            entity.Property(e => e.ChatPictureFileExt)
+                .HasMaxLength(100)
+                .HasColumnName("chat_picture_fileext");
             entity.Property(e => e.Description)
                 .HasMaxLength(2048)
                 .HasColumnName("description");
             entity.Property(e => e.OwnerUserUuid)
                 .HasMaxLength(36)
                 .HasColumnName("owner_user_uuid");
-            entity.Property(e => e.Picture)
-                .HasComment("Base64 von Pic Binary")
-                .HasColumnType("blob")
-                .HasColumnName("picture");
 
             entity.HasOne(d => d.OwnerUserUu).WithMany(p => p.Chats)
                 .HasForeignKey(d => d.OwnerUserUuid)
@@ -381,9 +383,12 @@ internal partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Uuid)
                 .HasMaxLength(36)
                 .HasColumnName("uuid");
-            entity.Property(e => e.BinaryContent)
-                .HasColumnType("blob")
-                .HasColumnName("binary_content");
+            entity.Property(e => e.BinaryContentPath)
+                .HasMaxLength(255)
+                .HasColumnName("binary_content_path");
+            entity.Property(e => e.BinaryContentFileExt)
+                .HasMaxLength(100)
+                .HasColumnName("binary_content_fileext");
             entity.Property(e => e.ChatUuid)
                 .HasMaxLength(36)
                 .HasColumnName("chat_uuid");
@@ -530,15 +535,21 @@ internal partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Phone)
                 .HasMaxLength(45)
                 .HasColumnName("phone");
-            entity.Property(e => e.Picture)
-                .HasComment("Base64 von Pic Binary")
-                .HasColumnName("picture");
             entity.Property(e => e.UserName)
                 .HasMaxLength(64)
                 .HasColumnName("user_name");
             entity.Property(e => e.Email)
                 .HasMaxLength(255)
                 .HasColumnName("email");
+            entity.Property(e => e.Email)
+                .HasMaxLength(255)
+                .HasColumnName("email");
+            entity.Property(e => e.ProfilePicturePath)
+                .HasMaxLength(255)
+                .HasColumnName("profile_picture_path");
+            entity.Property(e => e.ProfilePictureFileExt)
+                .HasMaxLength(100)
+                .HasColumnName("profile_picture_fileext");
             entity.Property(e => e.UserTypeUuid)
                 .HasMaxLength(36)
                 .HasColumnName("user_type_uuid");

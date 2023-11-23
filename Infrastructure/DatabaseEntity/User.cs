@@ -28,15 +28,12 @@ public partial class User : DatabaseEntityModel
     public string? PasswordResetCode { get; set; }
 
     public string? PasswordResetToken { get; set; }
+    public string? ProfilePicturePath { get; set; }
+    public string? ProfilePictureFileExt { get; set; }
 
     public DateTime? PasswordResetExpiresIn { get; set; }
 
     public DateTime? ActivationDatetime { get; set; }
-
-    /// <summary>
-    /// Base64 von Pic Binary
-    /// </summary>
-    public byte[]? Picture { get; set; }
 
     public virtual ICollection<Auth> Auths { get; set; } = new List<Auth>();
 

@@ -3,12 +3,14 @@ using Application.CQS.Messenger.User.Command.FriendshipRequests.AcceptFriendship
 using Application.CQS.Messenger.User.Command.FriendshipRequests.CreateFriendshipRequest;
 using Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriendshipRequest;
 using Application.CQS.User.Commands.CreateUser;
+using Application.CQS.User.Commands.DeleteProfilePicture;
 using Application.CQS.User.Commands.DeleteUser;
 using Application.CQS.User.Commands.PasswordReset.Request;
 using Application.CQS.User.Commands.PasswordReset.Reset;
 using Application.CQS.User.Commands.RegisterUser.Activation;
 using Application.CQS.User.Commands.RegisterUser.Register;
 using Application.CQS.User.Commands.UpdatePassword;
+using Application.CQS.User.Commands.UpdateProfilePicture;
 using Application.CQS.User.Commands.UpdateUser;
 using Application.CQS.User.Queries.GetUserById;
 using MediatR;
@@ -263,6 +265,34 @@ namespace Presentation.Controllers.Api.v1
                                                 userDto.Email,
                                                 userDto.Phone,
                                                 userDto.DateOfBirth);
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.PrepareResponse();
+        }
+
+        [Authorize(Policy = AuthorizationConst.Policy.AdminPolicy)]
+        [HttpPut("{id}/profile-picture")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        public async Task<IActionResult> UpdateProfilePicture(Guid id, [FromBody] UserDTO userDto, CancellationToken cancellationToken)
+        {
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var command = new UploadProfilePictureCommand(
+                id,
+                userDto.PictureBase64,
+                userDto.PictureMimeType);
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.PrepareResponse();
+        }
+        [Authorize(Policy = AuthorizationConst.Policy.AdminPolicy)]
+        [HttpDelete("{id}/profile-picture")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        public async Task<IActionResult> DeleteProfilePicture(Guid id, CancellationToken cancellationToken)
+        {
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var command = new DeleteProfilePictureCommand(id);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();

@@ -4,10 +4,8 @@ using Infrastructure.Mapper;
 using Infrastructure.Repository.Primitives;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using Shared.DataFilter;
 using Shared.DataFilter.Infrastructure;
 using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
 
 namespace Infrastructure.Repository
 {
@@ -59,7 +57,7 @@ namespace Infrastructure.Repository
             var value = _dbSet.ExpressionQuery(columnSearchAggregateDTO);
             return value.ToList();
         }
-        int IGenericRepository<TDbEntity>.CountMax(Expression<Func<TDbEntity, bool>> expression = null)
+        public int CountMax(Expression<Func<TDbEntity, bool>> expression = null)
         {
             return expression==null? _dbSet.Count():_dbSet.Count(expression);
         }
@@ -119,43 +117,24 @@ namespace Infrastructure.Repository
         {
         }
         #region Sync
-        public void Add(TEntity entity)
+        public async void Add(TEntity entity)
         {
-            var dbModel = MapToDatabaseEntity(entity, true);
+            var dbModel = await MapToDatabaseEntity(entity, true);
             base.Add(dbModel);
         }
 
-        public void Update(TEntity entity)
+        public async void Update(TEntity entity)
         {
-            var dbModel = MapToDatabaseEntity(entity,false);
+            var dbModel = await MapToDatabaseEntity(entity, false);
             base.Update(dbModel);
         }
 
-        public void Remove(TEntity entity)
+        public async void Remove(TEntity entity)
         {
-            var dbModel = MapToDatabaseEntity(entity,false);
+            var dbModel = await MapToDatabaseEntity(entity,false);
             base.Remove(dbModel);
         }
 
-        public virtual TEntity Get(Expression<Func<TDbEntity, bool>> expression)
-        {
-            var value = base.Get(expression);
-
-            return this.MapToDomainEntity(value, true);
-        }
-
-        public virtual ICollection<TEntity> List(Expression<Func<TDbEntity, bool>> expression = null)
-        {
-            var value = base.List(expression);
-
-            return this.MapToDomainEntity(value, true);
-        }
-        public virtual ICollection<TEntity> List(ColumnSearchAggregateDTO columnSearchAggregateDTO)
-        {
-            var value = base.List(columnSearchAggregateDTO);
-
-            return this.MapToDomainEntity(value, true);
-        }
         public int CountMax(Expression<Func<TDbEntity, bool>> expression = null)
         {
             return expression == null ? _dbSet.Count() : _dbSet.Count(expression);
@@ -163,21 +142,21 @@ namespace Infrastructure.Repository
         #endregion
 
         #region Mapping
-        protected virtual TEntity MapToDomainEntity(TDbEntity entity, bool withRelations)
+        protected virtual async Task<TEntity> MapToDomainEntity(TDbEntity entity, bool withRelations)
         {
-            return entity.MapToDomainEntity<TEntity, TDbEntity>(withRelations);
+            return await entity.MapToDomainEntity<TEntity, TDbEntity>(withRelations);
         }
-        protected virtual TDbEntity MapToDatabaseEntity(TEntity entity, bool mapRelationObjects)
+        protected virtual async Task<TDbEntity> MapToDatabaseEntity(TEntity entity, bool mapRelationObjects)
         {
-            return entity.MapToDatabaseEntity<TEntity, TDbEntity>(mapRelationObjects);
+            return await entity.MapToDatabaseEntity<TEntity, TDbEntity>(mapRelationObjects);
         }
-        protected virtual ICollection<TEntity> MapToDomainEntity(ICollection<TDbEntity> entity, bool withRelations)
+        protected virtual async Task<ICollection<TEntity>> MapToDomainEntity(ICollection<TDbEntity> entity, bool withRelations)
         {
-            return entity.MapToDomainEntity<TEntity, TDbEntity>(withRelations);
+            return await entity.MapToDomainEntity<TEntity, TDbEntity>(withRelations);
         }
-        protected virtual ICollection<TDbEntity> MapToDatabaseEntity(ICollection<TEntity> entity, bool mapRelationObjects)
+        protected virtual async Task<ICollection<TDbEntity>> MapToDatabaseEntity(ICollection<TEntity> entity, bool mapRelationObjects)
         {
-            return entity.MapToDatabaseEntity<TEntity, TDbEntity>(mapRelationObjects);
+            return await entity.MapToDatabaseEntity<TEntity, TDbEntity>(mapRelationObjects);
         }
         #endregion
         #region Async
@@ -186,7 +165,7 @@ namespace Infrastructure.Repository
         {
             var value = await base.GetAsync(expression);
 
-            return this.MapToDomainEntity(value, true);
+            return await this.MapToDomainEntity(value, true);
         }
 
         public async virtual Task<ICollection<TEntity>> ListAsync(Expression<Func<TDbEntity, bool>> expression)
@@ -194,20 +173,20 @@ namespace Infrastructure.Repository
 
             var value = await base.ListAsync(expression);
 
-            return this.MapToDomainEntity(value, true);
+            return await this.MapToDomainEntity(value, true);
         }
         public async virtual Task<ICollection<TEntity>> ListAsync(ColumnSearchAggregateDTO? columnSearchAggregateDTO)
         {
             var value = await base.ListAsync(columnSearchAggregateDTO);
 
-            return this.MapToDomainEntity(value, true);
+            return await this.MapToDomainEntity(value, true);
         }
 
         public virtual async Task<RepositoryResponse<ICollection<TEntity>>> ListAsyncWithMeta(Expression<Func<TDbEntity, bool>> expression = null)
         {
             int count = await CountMaxAsync();
             var value = await base.ListAsync(expression);
-            var data = this.MapToDomainEntity(value, true);
+            var data = await this.MapToDomainEntity(value, true);
             var meta = new Meta { TotalItems = count };
 
             return new RepositoryResponse<ICollection<TEntity>>(data,ref meta);
@@ -217,7 +196,7 @@ namespace Infrastructure.Repository
         {
             int count = await CountMaxAsync();
             var value = await base.ListAsync(columnSearchAggregateDTO);
-            var data = this.MapToDomainEntity(value, true);
+            var data = await this.MapToDomainEntity(value, true);
             var meta = new Meta { TotalItems = count };
 
             return new RepositoryResponse<ICollection<TEntity>>(data, ref meta);
@@ -225,20 +204,60 @@ namespace Infrastructure.Repository
 
         public async Task AddAsync(TEntity entity)
         {
-            var dbModel = MapToDatabaseEntity(entity, false);
+            var dbModel = await MapToDatabaseEntity(entity, false);
             await base.AddAsync(dbModel);
         }
 
-        public void RemoveAsync(TEntity entity)
+        public async void RemoveAsync(TEntity entity)
         {
-            var dbModel = MapToDatabaseEntity(entity, false);
+            var dbModel = await MapToDatabaseEntity(entity, false);
             base.RemoveAsync(dbModel);
         }
 
-        public void UpdateAsync(TEntity entity)
+        public async void UpdateAsync(TEntity entity)
         {
-            var dbModel = MapToDatabaseEntity(entity, false);
+            var dbModel = await MapToDatabaseEntity(entity, false);
             base.UpdateAsync(dbModel);
+        }
+
+        public TDbEntity GetDbEntity(Expression<Func<TDbEntity, bool>> expression)
+        {
+            return base.Get(expression);
+        }
+
+        public ICollection<TDbEntity> ListDbEntity(Expression<Func<TDbEntity, bool>> expression = null)
+        {
+            return base.List(expression);
+        }
+
+        public ICollection<TDbEntity> ListDbEntity(ColumnSearchAggregateDTO? columnSearchAggregateDTO)
+        {
+            return base.List(columnSearchAggregateDTO);
+        }
+
+        public int CountMaxDbEntity(Expression<Func<TDbEntity, bool>> expression = null)
+        {
+            return base.CountMax(expression);
+        }
+
+        public async Task<TDbEntity> GetAsyncDbEntity(Expression<Func<TDbEntity, bool>> expression)
+        {
+            return await base.GetAsync(expression);  
+        }
+
+        public async Task<ICollection<TDbEntity>> ListAsyncDbEntity(Expression<Func<TDbEntity, bool>> expression = null)
+        {
+            return await base.ListAsync(expression);
+        }
+
+        public async Task<ICollection<TDbEntity>> ListAsyncDbEntity(ColumnSearchAggregateDTO? columnSearchAggregateDTO)
+        {
+            return await base.ListAsync(columnSearchAggregateDTO);
+        }
+
+        public async Task<int> CountMaxAsyncDbEntity(Expression<Func<TDbEntity, bool>> expression = null)
+        {
+            return await base.CountMaxAsync(expression);
         }
 
 

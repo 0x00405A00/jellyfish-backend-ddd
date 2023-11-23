@@ -16,6 +16,9 @@ namespace Shared.DataTransferObject.Messenger
         [JsonPropertyName("picture_base64")]
         public string? PictureBase64 { get; set; }
 
+        [JsonPropertyName("picture_mime_type")]
+        public string? PictureMimeType { get; set; }
+
         [JsonPropertyName("members")]
         public ICollection<Guid>? Members { get; set; }
 

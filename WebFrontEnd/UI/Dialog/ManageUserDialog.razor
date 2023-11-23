@@ -21,7 +21,7 @@
             }
             else
             {
-                if(hasImage)
+                if(User.HasImage)
                 {
                     <canvas id="profilePictureCanvas" width="256" height="256" style="border:1px solid #000;"></canvas>
 
@@ -92,8 +92,6 @@
     private string[] errors = { };
     private UserTypeDTO SelectedUserType { get; set; } = new UserTypeDTO();
     private IEnumerable<RoleDTO> SelectedRoles { get; set; } = new List<RoleDTO>();
-    private bool hasImage => !String.IsNullOrEmpty(base64AsImage);
-    private string base64AsImage = null;
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
@@ -118,15 +116,19 @@
 
                 });
                 SelectedRoles = roleDTOs;
-            }   
-            if(!String.IsNullOrEmpty(User.PictureBase64))
+            }
+            if (User.HasImage)
             {
-                base64AsImage = $"data:image/png;base64,{User.PictureBase64}";
+                await JSRuntime.InvokeVoidAsync("renderImage", "profilePictureCanvas", MimeExtension.GetImageAsMime(User.PictureBase64, User.PictureMimeType));
             }
             StateHasChanged();
         }
-
     }
+
+    protected override async Task OnInitializedAsync()
+    {
+    }
+
     private IEnumerable<string> ValidatePassword(string password)
     {
         try
@@ -160,8 +162,14 @@
     }
     private async void ClearProfilePicture()
     {
-        base64AsImage = null;
-        User.PictureBase64=null;
+        uploadProfilePicture = true;
+        StateHasChanged();
+        var responseProfilePicDelete = await WebApiClient.DeleteUserProfilePicture(User, cancellationToken.Token);
+        if (responseProfilePicDelete.IsSuccess)
+        {
+            User.PictureBase64 = null;
+            uploadProfilePicture = false;
+        }
         StateHasChanged();
     }
     private async void OpenUploadPictureDialog()
@@ -175,10 +183,18 @@
             byte[] fileBytes = new byte[image.Size];
             await image.OpenReadStream((UploadFileDialog.MaxAllowedFileSizeBytes)).ReadAsync(fileBytes);
             User.PictureBase64 = Convert.ToBase64String(fileBytes);
-            base64AsImage = $"data:image/png;base64,{User.PictureBase64}";
-            uploadProfilePicture = false;
-            StateHasChanged();
-            await JSRuntime.InvokeVoidAsync("renderImage", "profilePictureCanvas", base64AsImage);
+            User.PictureMimeType = image.ContentType;
+
+            if (User.HasImage)
+            {
+                var responseProfilePicUpload = await WebApiClient.UpdateUserProfilePicture(User, cancellationToken.Token);
+                if (responseProfilePicUpload.IsSuccess)
+                {
+                    uploadProfilePicture = false;
+                    await JSRuntime.InvokeVoidAsync("renderImage", "profilePictureCanvas", MimeExtension.GetImageAsMime(User.PictureBase64, User.PictureMimeType));
+                    StateHasChanged();
+                }
+            }
         }
     }
     private async void Commit()
@@ -192,8 +208,8 @@
 
         if(isEditDialog)//Edit
         {
-            var response = await WebApiClient.EditUser(User, cancellationToken.Token);
-            if (response.IsSuccess)
+            var responseEditUser = await WebApiClient.EditUser(User, cancellationToken.Token);
+            if (responseEditUser.IsSuccess)
             {
                 User.ResetFieldsForUserInterface();
                 MudDialog.Close(DialogResult.Ok(User));

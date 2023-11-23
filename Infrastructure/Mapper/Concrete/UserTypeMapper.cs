@@ -6,7 +6,7 @@ namespace Infrastructure.Mapper.Concrete
 {
     internal class UserTypeMapper : AbstractMapper<Domain.Entities.User.UserType, UserType>
     {
-        public override UserType MapToDatabaseEntity(Domain.Entities.User.UserType entity, bool mapRelationObjects)
+        public override async Task<UserType> MapToDatabaseEntity(Domain.Entities.User.UserType entity, bool mapRelationObjects)
         {
             if (entity == null)
                 return null;
@@ -18,7 +18,7 @@ namespace Infrastructure.Mapper.Concrete
             return  userType;
         }
 
-        public override Domain.Entities.User.UserType MapToDomainEntity(UserType entity, bool withRelations)
+        public override async Task<Domain.Entities.User.UserType> MapToDomainEntity(UserType entity, bool withRelations)
         {
             if (entity == null)
                 return null;

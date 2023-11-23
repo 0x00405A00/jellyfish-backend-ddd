@@ -4,17 +4,21 @@ using Domain.Exceptions;
 using Domain.Primitives;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
+using MediatR;
 
 namespace Application.CQS.User.Commands.DeleteUser
 {
     internal sealed class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand, Guid>
     {
+        private readonly ISender sender;
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         public DeleteUserCommandHandler(
+            ISender sender,
             IUserRepository userRepository,
             IUnitOfWork unitOfWork)
         {
+            this.sender = sender;
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
         }

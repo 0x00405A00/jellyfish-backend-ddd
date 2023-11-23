@@ -24,15 +24,17 @@ namespace Infrastructure.Repository
             var id = expression.ExtractValueFromExpression<DatabaseEntity.User,Guid?>();
             if(id != null)
             {
-                var result = await _memoryCache.GetOrCreateAsync(CacheKeys.UserKey(id ?? Guid.Empty), async (cacheEntry) => 
+                var result1 = await _memoryCache.GetOrCreateAsync(CacheKeys.UserKey(id ?? Guid.Empty), async (cacheEntry) => 
                 {
                     cacheEntry.AbsoluteExpirationRelativeToNow = UserCachePersistenceTime;
                     return await _userRepository.GetAsync(expression);
                 });
 
-                return result;
+                return result1;
             }
-            return await _userRepository.GetAsync(expression);
+            var result2 = await _userRepository.GetAsync(expression);
+
+            return result2;
         }
 
         public async override Task<ICollection<Domain.Entities.User.User>> ListAsync(Expression<Func<DatabaseEntity.User, bool>> expression)

@@ -14,10 +14,17 @@ namespace Infrastructure.SignalR
 
         public override Task OnConnectedAsync()
         {
+            logger.LogInformation($"Client connected: {Context.ConnectionId}");
             return base.OnConnectedAsync();
         }
+
         public override Task OnDisconnectedAsync(Exception? exception)
         {
+            logger.LogInformation($"Client disconnected: {Context.ConnectionId}");
+            if (exception != null)
+            {
+                logger.LogError($"Exception: {exception.Message}");
+            }
             return base.OnDisconnectedAsync(exception);
         }
     }

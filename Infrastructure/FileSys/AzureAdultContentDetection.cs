@@ -1,0 +1,35 @@
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+
+namespace Infrastructure.FileSys
+{
+    public class AzureAdultContentDetection : IAzureAdultContentDetection
+    {
+        private byte[] _binaryData = null;
+        private readonly ILogger<AzureAdultContentDetection> logger;
+        private readonly IConfiguration configuration;
+
+        public byte[] BinaryData => _binaryData;
+        public AzureAdultContentDetection(
+            ILogger<AzureAdultContentDetection> logger,
+            IConfiguration configuration)
+        {
+            this.logger = logger;
+            this.configuration = configuration;
+        }
+        public async Task<bool> CheckIfBinaryIsPornContent()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> CheckIfBinaryIsViolentContent()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetBinary(byte[] binaryData)
+        {
+            _binaryData = binaryData;
+        }
+    }
+}

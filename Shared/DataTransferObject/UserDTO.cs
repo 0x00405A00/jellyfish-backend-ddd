@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Shared.MimePart;
+using System.Text.Json.Serialization;
 
 namespace Shared.DataTransferObject
 {
@@ -30,6 +31,9 @@ namespace Shared.DataTransferObject
 
         [JsonPropertyName("picture_base64")]
         public string? PictureBase64 { get; set; }
+
+        [JsonPropertyName("picture_mime_type")]
+        public string? PictureMimeType{ get; set; }
 
         [JsonPropertyName("user_type_uuid")]
         public Guid? UserTypeUuid { get; set; }
@@ -68,7 +72,7 @@ namespace Shared.DataTransferObject
         public Guid? DeletedByUserUuid { get; set; }
 
         [JsonIgnore]
-        public string RoleStr
+        public string? RoleStr
         {
             get
             {
@@ -84,6 +88,9 @@ namespace Shared.DataTransferObject
                 return null;
             }
         }
+
+        [JsonIgnore]
+        public bool HasImage { get { return !String.IsNullOrEmpty(PictureBase64); } }
 
         public UserDTO()
         {
@@ -103,5 +110,7 @@ namespace Shared.DataTransferObject
             return (firstNameFirstLetter !=null&& lastNameFirstLetter!=null)? 
                 (firstNameFirstLetter+"."+ lastNameFirstLetter+ ".").ToUpper() :(userNameFirstLetter??"u").ToUpper();//U==UKNOWN
         }
+
+
     }
 }

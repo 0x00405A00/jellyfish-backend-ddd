@@ -18,6 +18,8 @@ namespace Shared.DataTransferObject.Messenger
 
         [JsonPropertyName("binary_content_base64")]
         public string? BinaryContentBase64 { get; set; }
+        [JsonPropertyName("binary_content_mime_type")]
+        public string? BinaryContentMimeType { get; set; }
 
         [JsonPropertyName("created_time")]
         public DateTime? CreatedTime { get; set; }

@@ -4,7 +4,6 @@ using Domain.Exceptions;
 using Domain.Primitives;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Application.CQS.User.Commands.UpdateUser
 {
@@ -27,7 +26,7 @@ namespace Application.CQS.User.Commands.UpdateUser
                 throw new InvalidOperationException($"userId is {request.UserId}");
             }
             var user = await _userRepository.GetAsync(user => user.Uuid == request.UserId);
-            if (user == null)
+            if (user is null)
                 throw new UserNotFoundException(request.UserId);
 
             if (request.Phone != null)

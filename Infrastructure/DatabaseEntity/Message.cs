@@ -14,7 +14,8 @@ public partial class Message : DatabaseEntityModel
 
     public string Text { get; set; } = null!;
 
-    public byte[]? BinaryContent { get; set; }
+    public string? BinaryContentPath { get; set; }
+    public string? BinaryContentFileExt { get; set; }
 
     public virtual Chat ChatUu { get; set; } = null!;
 

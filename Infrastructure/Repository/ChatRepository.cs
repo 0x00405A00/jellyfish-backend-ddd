@@ -25,7 +25,7 @@ namespace Infrastructure.Repository
                 .AsNoTracking()
                 .FirstOrDefaultAsync(expression);
 
-            return this.MapToDomainEntity(value, true);
+            return await this.MapToDomainEntity(value, true);
         }
     }
 }

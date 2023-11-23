@@ -36,6 +36,18 @@ namespace WebFrontEnd.Service.Backend.Api
             var response = await this.TypedRequest<UserDTO, UserDTO>(url, RestSharp.Method.Put, user, cancellationToken);
             return response;
         }
+        public async Task<JellyfishBackendApiResponse<UserDTO>> UpdateUserProfilePicture(UserDTO user, CancellationToken cancellationToken)
+        {
+            var url = "/user/" + user.Uuid + "/profile-picture";
+            var response = await this.TypedRequest<UserDTO, UserDTO>(url, RestSharp.Method.Put, user, cancellationToken);
+            return response;
+        }
+        public async Task<JellyfishBackendApiResponse<UserDTO>> DeleteUserProfilePicture(UserDTO user, CancellationToken cancellationToken)
+        {
+            var url = "/user/" + user.Uuid + "/profile-picture";
+            var response = await this.TypedRequest<UserDTO, UserDTO>(url, RestSharp.Method.Delete, null, cancellationToken);
+            return response;
+        }
         public async Task<JellyfishBackendApiResponse<List<UserDTO>>> GetUsers(SearchParamsBody searchParamsBody, CancellationToken cancellationToken)
         {
 
@@ -107,6 +119,17 @@ namespace WebFrontEnd.Service.Backend.Api
             }
             return await base.Request<T1, T2>(url, method, cancellationToken, bodyObject, query, headers, donttryagain);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T">Request Body Type</typeparam>
+        /// <typeparam name="T2">Response Type</typeparam>
+        /// <param name="url">Target Url, when <see cref="BaseUrl"</see> is already set you can request the target endpoint via path directly without write out the url complete e.g. full write out: https://mytargeturl/mytargetendpoint/1, short variant when <see cref="BaseUrl"></see>/> is set></param>
+        /// <param name="method">HTTP Method GET, POST, PUT, DELETE etc.</param>
+        /// <param name="data">Body data></param>
+        /// <param name="cancellationToken">To cancel the task</param>
+        /// <param name="paginationBase">Pagination behaviour of backend, influent the backend behaviour by evaluate the result</param>
+        /// <returns>Response Type <<see cref="T2"/></returns>
         public async Task<JellyfishBackendApiResponse<T2>> TypedRequest<T,T2>(string url, RestSharp.Method method, T data, CancellationToken cancellationToken, PaginationBase paginationBase=null)
             
         {

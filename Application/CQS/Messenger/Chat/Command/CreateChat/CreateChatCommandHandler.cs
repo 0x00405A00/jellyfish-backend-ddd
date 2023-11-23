@@ -3,6 +3,7 @@ using AutoMapper;
 using Domain.Primitives;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
+using Infrastructure.FileSys;
 using Shared.DataTransferObject.Messenger;
 
 namespace Application.CQS.Messenger.Chat.Command.CreateChat
@@ -11,29 +12,26 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
     {
         private readonly IChatRepository _chatRepository;
         private readonly IUserRepository _userRepository;
+        private readonly MediaService mediaService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         public CreateChatCommandHandler(
             IMapper mapper,
             IChatRepository chatRepository,
             IUserRepository userRepository,
+            MediaService mediaService,
             IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
             _chatRepository = chatRepository;
             this._userRepository = userRepository;
+            this.mediaService = mediaService;
             _unitOfWork = unitOfWork;
         }
 
 
         public async Task<Result<ChatDTO>> Handle(CreateChatCommand request, CancellationToken cancellationToken)
         {
-            byte[] pictureBinary = null;
-            if(!String.IsNullOrWhiteSpace(request.Picture))
-            {
-                pictureBinary = Convert.FromBase64String(request.Picture);
-            }
-            var picture = Picture.Parse(pictureBinary);
             var createdBy = await _userRepository.GetAsync(x => x.Uuid == request.ChatOwnerUuid);
             ICollection<Domain.Entities.User.User> members = null;
             ICollection<ChatMember> chatMembers = new List<ChatMember>();
@@ -47,7 +45,16 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
                     var chatMember = ChatMember.Create(x, isAdmin, DateTime.Now, x.LastModifiedTime, null);
                     chatMembers.Add(chatMember);
                 });
-                chat = Domain.Entities.Chats.Chat.Create(new Domain.Entities.Chats.ChatId(Guid.NewGuid()),
+                var id = new Domain.Entities.Chats.ChatId(Guid.NewGuid());
+                Picture? picture = null;
+                if (!String.IsNullOrWhiteSpace(request.Picture))
+                {
+                    byte[] pictureBinary = Convert.FromBase64String(request.Picture);
+                    var path = mediaService.CreateChatPicture(id.ToGuid(), pictureBinary, cancellationToken);
+                    picture = Picture.Parse(pictureBinary, path, request.PictureMimeType);
+                }
+
+                chat = Domain.Entities.Chats.Chat.Create(id,
                                                              createdBy,
                                                              request.ChatName,
                                                              request.ChatDescription,

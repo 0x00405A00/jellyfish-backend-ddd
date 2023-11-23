@@ -38,7 +38,8 @@ namespace Presentation.Controllers.Api.v1.Messenger
                                                           chatDto.ChatName,
                                                           chatDto.ChatDescription,
                                                             membersUuidList,
-                                                          chatDto.PictureBase64);
+                                                          chatDto.PictureBase64,
+                                                          chatDto.PictureMimeType);
 
             var result = await Sender.Send(commandCreateChat, cancellationToken);
             return result.PrepareResponse();
@@ -66,7 +67,8 @@ namespace Presentation.Controllers.Api.v1.Messenger
                                                 chatId,
                                                 chatDto.ChatName,
                                                 chatDto.ChatDescription,
-                                                chatDto.PictureBase64);
+                                                chatDto.PictureBase64,
+                                                          chatDto.PictureMimeType);
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
         }

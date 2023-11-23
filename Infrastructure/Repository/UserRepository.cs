@@ -24,7 +24,7 @@ namespace Infrastructure.Repository
                                     .AsNoTracking()
                                     .AsSingleQuery()
                                     .FirstOrDefaultAsync(expression);
-            return this.MapToDomainEntity(value,true);
+            return await this.MapToDomainEntity(value, true);
         }
 
         public async Task<bool> IsEmailAlreadyInUse(string email)
@@ -60,7 +60,7 @@ namespace Infrastructure.Repository
                                     .AsNoTracking()
                                     .AsSingleQuery()
                                     .ToListAsync();
-            return this.MapToDomainEntity(value, true);
+            return await this.MapToDomainEntity(value, true);
         }
         public async override Task<ICollection<Domain.Entities.User.User>> ListAsync(ColumnSearchAggregateDTO columnSearchAggregateDTO)
         {
@@ -76,7 +76,7 @@ namespace Infrastructure.Repository
                                     .ToListAsync();
 
             value = value.OrderQuery(columnSearchAggregateDTO);
-            return this.MapToDomainEntity(value, true);
+            return await this.MapToDomainEntity(value, true);
         }
         public override async Task<RepositoryResponse<ICollection<Domain.Entities.User.User>>> ListAsyncWithMeta(Expression<Func<DatabaseEntity.User, bool>> expression = null)
         {
@@ -92,7 +92,7 @@ namespace Infrastructure.Repository
                                     .AsSingleQuery()
                                     .ToListAsync();
 
-            var data = this.MapToDomainEntity(value, true);
+            var data = await this.MapToDomainEntity(value, true);
             var meta = new Meta { TotalItems = count };
 
             return new RepositoryResponse<ICollection<Domain.Entities.User.User>>(data, ref meta);
@@ -113,25 +113,10 @@ namespace Infrastructure.Repository
                                     .ToListAsync();
 
             value = value.OrderQuery(columnSearchAggregateDTO);
-            var data = this.MapToDomainEntity(value, true);
+            var data = await this.MapToDomainEntity(value, true);
             var meta = new Meta { TotalItems = count };
 
             return new RepositoryResponse<ICollection<Domain.Entities.User.User>>(data, ref meta, columnSearchAggregateDTO);
-        }
-        public override ICollection<Domain.Entities.User.User> List(ColumnSearchAggregateDTO columnSearchAggregateDTO)
-        {
-            var value = _dbSet.ExpressionQuery(columnSearchAggregateDTO)
-                                    .Include(i => i.UserTypeUu)
-                                    .Include(i => i.UserRelationToRoles)
-                                    .ThenInclude(ur => ur.RoleUu)
-                                    .Include(i => i.UserFriendUserUus)
-                                    .ThenInclude(uf => uf.FriendUserUu)
-                                    .ThenInclude(ut => ut.UserTypeUu)
-                                    .AsNoTracking()
-                                    .AsSingleQuery()
-                                    .ToList();
-
-            return this.MapToDomainEntity(value, true);
         }
     }
 }
