@@ -2,9 +2,10 @@
 using Infrastructure.Abstractions;
 using Infrastructure.Mapper;
 using Infrastructure.Repository.Primitives;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Shared.DataFilter.Infrastructure;
+using System;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repository
@@ -12,54 +13,57 @@ namespace Infrastructure.Repository
     internal abstract class GenericRepository<TDbEntity> : IGenericRepository<TDbEntity>
         where TDbEntity : DatabaseEntityModel
     {
-        protected readonly DbSet<TDbEntity> _dbSet;
-        protected readonly ApplicationDbContext _context;
+        public DbSet<TDbEntity> DbSet { get; private set; }
+        public ApplicationDbContext Context { get; private set; }
 
         protected GenericRepository(ApplicationDbContext applicationDbContext)
         {
-            _context = applicationDbContext;
-            _dbSet = _context.Set<TDbEntity>();
+            Context = applicationDbContext;
+            DbSet = Context.Set<TDbEntity>();
         }
 
         #region Sync
         public void Add(TDbEntity entity)
         {
-            _dbSet.Add(entity);
+            DbSet.Attach(entity).State = EntityState.Added;
+            DbSet.Add(entity);
         }
         public void Attach(TDbEntity entity)
         {
-            _dbSet.Attach(entity);
+            DbSet.Attach(entity);
         }
 
         public void Update(TDbEntity entity)
         {
-            _dbSet.Update(entity);
+            DbSet.Attach(entity).State = EntityState.Modified;
+            //DbSet.Update(entity);
         }
 
         public void Remove(TDbEntity entity)
         {
-            _dbSet.Remove(entity);
+            DbSet.Attach(entity).State = EntityState.Deleted;
+            DbSet.Remove(entity);
         }
 
         public virtual TDbEntity Get(Expression<Func<TDbEntity, bool>> expression)
         {
-            var value = _dbSet.AsNoTracking().FirstOrDefault(expression);
+            var value = DbSet.AsNoTracking().FirstOrDefault(expression);
             return value;
         }
 
         public virtual ICollection<TDbEntity> List(Expression<Func<TDbEntity, bool>> expression = null)
         {
-            var value = _dbSet.ExpressionQuery(expression);
+            var value = DbSet.ExpressionQuery(expression);
             return value.ToList();
         }
         public virtual ICollection<TDbEntity> List(ColumnSearchAggregateDTO columnSearchAggregateDTO)
         {
-            var value = _dbSet.ExpressionQuery(columnSearchAggregateDTO);
+            var value = DbSet.ExpressionQuery(columnSearchAggregateDTO);
             return value.ToList();
         }
         public int CountMax(Expression<Func<TDbEntity, bool>> expression = null)
         {
-            return expression==null? _dbSet.Count():_dbSet.Count(expression);
+            return expression==null? DbSet.Count():DbSet.Count(expression);
         }
 
         #endregion
@@ -68,28 +72,31 @@ namespace Infrastructure.Repository
 
         public async Task AddAsync(TDbEntity entity)
         {
-            await _dbSet.AddAsync(entity);
+            DbSet.Attach(entity).State = EntityState.Added;
+            await DbSet.AddAsync(entity);
         }
 
         public void UpdateAsync(TDbEntity entity)
         {
-            _dbSet.Update(entity);
+            DbSet.Attach(entity).State = EntityState.Modified;
+            //DbSet.Update(entity);
         }
 
         public void RemoveAsync(TDbEntity entity)
         {
-            _dbSet.Remove(entity) ;
+            DbSet.Attach(entity).State = EntityState.Deleted;
+            DbSet.Remove(entity) ;
         }
         public virtual async Task<TDbEntity> GetAsync(Expression<Func<TDbEntity, bool>> expression)
         {
-            var value = await _dbSet.AsNoTracking().FirstOrDefaultAsync(expression);
+            var value = await DbSet.AsNoTracking().FirstOrDefaultAsync(expression);
             return value!;
         }
 
         public virtual async Task<ICollection<TDbEntity>> ListAsync(Expression<Func<TDbEntity, bool>> expression=null)
         {
             var value = expression==null?
-                await _dbSet.AsNoTracking().ToListAsync() : await _dbSet.AsNoTracking().Where(expression).ToListAsync();
+                await DbSet.AsNoTracking().ToListAsync() : await DbSet.AsNoTracking().Where(expression).ToListAsync();
 
             return value;
         }
@@ -97,14 +104,14 @@ namespace Infrastructure.Repository
         public virtual async Task<ICollection<TDbEntity>> ListAsync(ColumnSearchAggregateDTO? columnSearchAggregateDTO)
         {
 
-            var value = _dbSet.ExpressionQuery(columnSearchAggregateDTO);
+            var value = DbSet.ExpressionQuery(columnSearchAggregateDTO);
 
             return await value.ToListAsync();
         }
 
         public Task<int> CountMaxAsync(Expression<Func<TDbEntity, bool>> expression = null)
         {
-            return expression==null?_dbSet.CountAsync(): _dbSet.CountAsync(expression);
+            return expression==null?DbSet.CountAsync(): DbSet.CountAsync(expression);
         }
         #endregion
     }
@@ -137,24 +144,24 @@ namespace Infrastructure.Repository
 
         public int CountMax(Expression<Func<TDbEntity, bool>> expression = null)
         {
-            return expression == null ? _dbSet.Count() : _dbSet.Count(expression);
+            return expression == null ? DbSet.Count() : DbSet.Count(expression);
         }
         #endregion
 
         #region Mapping
-        protected virtual async Task<TEntity> MapToDomainEntity(TDbEntity entity, bool withRelations)
+        public virtual async Task<TEntity> MapToDomainEntity(TDbEntity entity, bool withRelations)
         {
             return await entity.MapToDomainEntity<TEntity, TDbEntity>(withRelations);
         }
-        protected virtual async Task<TDbEntity> MapToDatabaseEntity(TEntity entity, bool mapRelationObjects)
+        public virtual async Task<TDbEntity> MapToDatabaseEntity(TEntity entity, bool mapRelationObjects)
         {
             return await entity.MapToDatabaseEntity<TEntity, TDbEntity>(mapRelationObjects);
         }
-        protected virtual async Task<ICollection<TEntity>> MapToDomainEntity(ICollection<TDbEntity> entity, bool withRelations)
+        public virtual async Task<ICollection<TEntity>> MapToDomainEntity(ICollection<TDbEntity> entity, bool withRelations)
         {
             return await entity.MapToDomainEntity<TEntity, TDbEntity>(withRelations);
         }
-        protected virtual async Task<ICollection<TDbEntity>> MapToDatabaseEntity(ICollection<TEntity> entity, bool mapRelationObjects)
+        public virtual async Task<ICollection<TDbEntity>> MapToDatabaseEntity(ICollection<TEntity> entity, bool mapRelationObjects)
         {
             return await entity.MapToDatabaseEntity<TEntity, TDbEntity>(mapRelationObjects);
         }
@@ -258,6 +265,18 @@ namespace Infrastructure.Repository
         public async Task<int> CountMaxAsyncDbEntity(Expression<Func<TDbEntity, bool>> expression = null)
         {
             return await base.CountMaxAsync(expression);
+        }
+
+        public void PublishDomainEvents(TEntity entity, IMediator mediator)
+        {
+            if(!entity.DomainEvents.Any())
+            {
+                return;
+            }
+            entity.DomainEvents.ToList().ForEach(e =>
+            {
+                mediator.Publish(e);
+            });
         }
 
 

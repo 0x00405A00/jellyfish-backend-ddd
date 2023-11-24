@@ -28,7 +28,7 @@ namespace Domain.ValueObjects
         public static bool operator !=(PhoneNumber phonelLeft, PhoneNumber phoneRight)
         {
             if (ReferenceEquals(phonelLeft, null) && ReferenceEquals(phoneRight, null)) return true;
-            if (ReferenceEquals(phonelLeft, null)) return false;
+            if (ReferenceEquals(phonelLeft, null) || ReferenceEquals(phoneRight, null)) return false;
 
             return phonelLeft.Equals(phoneRight);
         }

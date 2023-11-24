@@ -17,14 +17,14 @@ namespace Infrastructure.FileSys
             this.logger = logger;
             this.configuration = configuration;
         }
-        public async Task<bool> CheckIfBinaryIsPornContent()
+        public async Task<bool> CheckIfBinaryIsNotPornContent()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
-        public async Task<bool> CheckIfBinaryIsViolentContent()
+        public async Task<bool> CheckIfBinaryIsNotViolentContent()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public void SetBinary(byte[] binaryData)

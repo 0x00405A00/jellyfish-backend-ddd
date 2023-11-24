@@ -1,24 +1,27 @@
 ﻿using Application.Abstractions.Messaging;
 using Domain.Entities.User.Exception;
-using Domain.Exceptions;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
+using MediatR;
 using Shared.MimePart;
 
 namespace Application.CQS.User.Commands.UpdateProfilePicture
 {
     internal sealed class UploadProfilePictureCommandHandler : ICommandHandler<UploadProfilePictureCommand,bool>
     {
+        private readonly IMediator mediator;
         private readonly IUserRepository _userRepository;
         private readonly MediaService _mediaService;
         private readonly IUnitOfWork _unitOfWork;
 
         public UploadProfilePictureCommandHandler(
+            IMediator mediator,
             IUserRepository userRepository,
             MediaService mediaService,
             IUnitOfWork unitOfWork)
         {
+            this.mediator = mediator;
             this._userRepository = userRepository;
             this._mediaService = mediaService;
             this._unitOfWork = unitOfWork;
@@ -45,13 +48,13 @@ namespace Application.CQS.User.Commands.UpdateProfilePicture
 
                 var base64ByteArr = Convert.FromBase64String(request.Base64);
 
-                var filePath = _mediaService.CreateProfilePicture(request.UserId, base64ByteArr, cancellationToken);
+                var filePath = _mediaService.CreateProfilePicture(request.UserId, MimeExtension.GetFileExtension(request.MimeType), base64ByteArr, cancellationToken);
                 user.ProfilePicturePath = filePath;
                 user.ProfilePictureFileExt = request.MimeType;
                 _userRepository.Update(user);
                 await _unitOfWork.SaveChangesAsync();
             }
-            catch (NotValidPhoneNumberException ex)
+            catch (Exception ex)
             {
                 return Result<bool>.Failure(ex.Message);
             }

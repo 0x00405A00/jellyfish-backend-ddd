@@ -5,6 +5,7 @@ using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
 using Shared.DataTransferObject.Messenger;
+using Shared.MimePart;
 
 namespace Application.CQS.Messenger.Chat.Command.CreateChat
 {
@@ -50,7 +51,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
                 if (!String.IsNullOrWhiteSpace(request.Picture))
                 {
                     byte[] pictureBinary = Convert.FromBase64String(request.Picture);
-                    var path = mediaService.CreateChatPicture(id.ToGuid(), pictureBinary, cancellationToken);
+                    var path = mediaService.CreateChatPicture(id.ToGuid(),MimeExtension.GetFileExtension(request.PictureMimeType), pictureBinary, cancellationToken);
                     picture = Picture.Parse(pictureBinary, path, request.PictureMimeType);
                 }
 

@@ -15,7 +15,7 @@ namespace Application.CQS.User.Commands.UpdateUser
     /// <param name="Email">Update property 'Email'</param>
     /// <param name="Phone">Update property 'Phone'</param>
     /// <param name="DateOfBirth">Update property 'DateOfBirth'</param>
-    public record UpdateUserCommand(Guid UserId,
+    public record UpdateUserCommand(Guid UpdatedBy, Guid UserId,
                                     string? UserName,
                                     string? Password,
                                     string? PasswordConfirm,

@@ -4,6 +4,10 @@ using Domain.Exceptions;
 using Domain.Primitives;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
+using Infrastructure.DatabaseEntity;
+using Infrastructure.Mapper;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Application.CQS.User.Commands.UpdateUser
 {
@@ -58,10 +62,6 @@ namespace Application.CQS.User.Commands.UpdateUser
                     return Result<Guid>.Failure(ex.Message);
                 }
             }
-            if (request.Password != null && request.PasswordConfirm != null)
-            {
-                return Result<Guid>.Failure("you cant update the password over these method");
-            }
             if (request.DateOfBirth != null)
             {
                 try
@@ -107,7 +107,7 @@ namespace Application.CQS.User.Commands.UpdateUser
                 }
             }
 
-            _userRepository.Update(user);
+            _userRepository.UpdateAsync(user);
             await _unitOfWork.SaveChangesAsync();
             return Result<Guid>.Success(user.Uuid.ToGuid());
         }

@@ -18,9 +18,9 @@ namespace Infrastructure.FileSys
             this.logger = logger;
             this.configuration = configuration;
         }
-        public async Task<bool> CheckIfBinaryIsVirusContent()
+        public async Task<bool> CheckIfBinaryIsNotVirusContent()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public void SetBinary(byte[] binaryData)

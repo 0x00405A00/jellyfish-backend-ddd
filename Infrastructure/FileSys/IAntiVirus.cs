@@ -13,6 +13,6 @@
         /// </summary>
         /// <param name="binaryData">Binary that should be checked for virus content</param>
         /// <returns></returns>
-        Task<bool> CheckIfBinaryIsVirusContent();
+        Task<bool> CheckIfBinaryIsNotVirusContent();
     }
 }

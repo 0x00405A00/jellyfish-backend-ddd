@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "S4F26WXPWZ3ZKbNKb98e77GFU7rNWUGGyTJZOTUEGLY=",
+  "Hash": "z7Q0VX2DwKVqLSHGPJrHj8PesgTJRNA8ry3gf3re5yA=",
   "Source": "Presentation",
   "BasePath": "_content/Presentation",
   "Mode": "Default",
@@ -17,12 +17,12 @@
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\wwwroot\\users\\profile-img\\425ba310-d901-4606-8a85-305f380b5a15",
+      "Identity": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\wwwroot\\users\\profile-img\\425ba310-d901-4606-8a85-305f380b5a15.jpg",
       "SourceId": "Presentation",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\wwwroot\\",
       "BasePath": "_content/Presentation",
-      "RelativePath": "users/profile-img/425ba310-d901-4606-8a85-305f380b5a15",
+      "RelativePath": "users/profile-img/425ba310-d901-4606-8a85-305f380b5a15.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -33,15 +33,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\users\\profile-img\\425ba310-d901-4606-8a85-305f380b5a15"
+      "OriginalItemSpec": "wwwroot\\users\\profile-img\\425ba310-d901-4606-8a85-305f380b5a15.jpg"
     },
     {
-      "Identity": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\wwwroot\\users\\profile-img\\48238e89-e303-4725-9ddc-d222d1065058",
+      "Identity": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\wwwroot\\users\\profile-img\\48238e89-e303-4725-9ddc-d222d1065058.jpg",
       "SourceId": "Presentation",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\wwwroot\\",
       "BasePath": "_content/Presentation",
-      "RelativePath": "users/profile-img/48238e89-e303-4725-9ddc-d222d1065058",
+      "RelativePath": "users/profile-img/48238e89-e303-4725-9ddc-d222d1065058.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -52,15 +52,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\users\\profile-img\\48238e89-e303-4725-9ddc-d222d1065058"
+      "OriginalItemSpec": "wwwroot\\users\\profile-img\\48238e89-e303-4725-9ddc-d222d1065058.jpg"
     },
     {
-      "Identity": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\wwwroot\\users\\profile-img\\4c29d4b7-76bc-11ee-a258-7085c294413b",
+      "Identity": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\wwwroot\\users\\profile-img\\4c29d4b7-76bc-11ee-a258-7085c294413b.jpg",
       "SourceId": "Presentation",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\wwwroot\\",
       "BasePath": "_content/Presentation",
-      "RelativePath": "users/profile-img/4c29d4b7-76bc-11ee-a258-7085c294413b",
+      "RelativePath": "users/profile-img/4c29d4b7-76bc-11ee-a258-7085c294413b.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -71,26 +71,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\users\\profile-img\\4c29d4b7-76bc-11ee-a258-7085c294413b"
-    },
-    {
-      "Identity": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\wwwroot\\users\\profile-img\\d4368f8d-fd51-11ed-8f81-7085c294413b",
-      "SourceId": "Presentation",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\wwwroot\\",
-      "BasePath": "_content/Presentation",
-      "RelativePath": "users/profile-img/d4368f8d-fd51-11ed-8f81-7085c294413b",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\users\\profile-img\\d4368f8d-fd51-11ed-8f81-7085c294413b"
+      "OriginalItemSpec": "wwwroot\\users\\profile-img\\4c29d4b7-76bc-11ee-a258-7085c294413b.jpg"
     },
     {
       "Identity": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\wwwroot\\users\\profile-img\\d4368f8d-fd51-11ed-8f81-7085c294413b - Kopie.jpg",
@@ -110,6 +91,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\users\\profile-img\\d4368f8d-fd51-11ed-8f81-7085c294413b - Kopie.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\wwwroot\\users\\profile-img\\d4368f8d-fd51-11ed-8f81-7085c294413b.jpg",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "users/profile-img/d4368f8d-fd51-11ed-8f81-7085c294413b.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\users\\profile-img\\d4368f8d-fd51-11ed-8f81-7085c294413b.jpg"
     }
   ]
 }

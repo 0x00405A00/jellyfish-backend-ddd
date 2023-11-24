@@ -1,4 +1,5 @@
-﻿using Infrastructure.Abstractions;
+﻿using Domain.Primitives;
+using Infrastructure.Abstractions;
 
 namespace Infrastructure.DatabaseEntity;
 

@@ -32,7 +32,7 @@ namespace Domain.ValueObjects
         public static bool operator !=(Email emailLeft, Email emailRight)
         {
             if (ReferenceEquals(emailLeft, null) && ReferenceEquals(emailRight, null))return true;
-            if (ReferenceEquals(emailLeft, null)) return false;
+            if (ReferenceEquals(emailLeft, null) || ReferenceEquals(emailRight, null)) return false;
 
             return emailLeft.Equals(emailRight);
         }

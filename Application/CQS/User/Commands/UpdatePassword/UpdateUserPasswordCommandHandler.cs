@@ -4,18 +4,22 @@ using Domain.Exceptions;
 using Domain.Primitives;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
+using MediatR;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Application.CQS.User.Commands.UpdatePassword
 {
     internal sealed class UpdateUserPasswordCommandHandler : ICommandHandler<UpdateUserPasswordCommand, Guid>
     {
+        private readonly IMediator mediator;
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         public UpdateUserPasswordCommandHandler(
+            IMediator mediator,
             IUserRepository userRepository,
             IUnitOfWork unitOfWork)
         {
+            this.mediator = mediator;
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
         }
@@ -40,6 +44,7 @@ namespace Application.CQS.User.Commands.UpdatePassword
             }
 
             _userRepository.Update(user);
+            _userRepository.PublishDomainEvents(user, mediator);
             await _unitOfWork.SaveChangesAsync();
             return Result<Guid>.Success(user.Uuid.ToGuid());
         }

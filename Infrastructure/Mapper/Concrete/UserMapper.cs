@@ -16,6 +16,8 @@ namespace Infrastructure.Mapper.Concrete
             user.Uuid = entity.Uuid.ToGuid() ;
             user.UserTypeUuid = entity.UserType.Uuid.ToGuid();
             user.UserName = entity.UserName;
+            user.FirstName = entity.FirstName;
+            user.LastName = entity.LastName;
             user.Email = entity.Email.EmailValue;
             user.Password = entity.Password;
             user.Phone = entity.Phone.PhoneNumb;
@@ -150,9 +152,9 @@ namespace Infrastructure.Mapper.Concrete
                 email,
                 phone,
                 picture,
-                roles,
-                friends,
-                friendshipRequests,
+                roles?.ToList(),
+                friends?.ToList(),
+                friendshipRequests?.ToList(),
                 birthDayDateOnly,
                 entity.ActivationDatetime,
                 (DateTime)entity.CreatedTime!,

@@ -9,6 +9,8 @@ using Application.CQS.User.Commands.PasswordReset.Request;
 using Application.CQS.User.Commands.PasswordReset.Reset;
 using Application.CQS.User.Commands.RegisterUser.Activation;
 using Application.CQS.User.Commands.RegisterUser.Register;
+using Application.CQS.User.Commands.Roles.AssignRole;
+using Application.CQS.User.Commands.Roles.RevokeRole;
 using Application.CQS.User.Commands.UpdatePassword;
 using Application.CQS.User.Commands.UpdateProfilePicture;
 using Application.CQS.User.Commands.UpdateUser;
@@ -256,7 +258,7 @@ namespace Presentation.Controllers.Api.v1
         public override async Task<IActionResult> Update(Guid id, [FromBody] UserDTO userDto, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new UpdateUserCommand(id,
+            var command = new UpdateUserCommand(userUuid,id,
                                                 userDto.UserName,
                                                 userDto.Password,
                                                 userDto.PasswordConfirm,
@@ -285,6 +287,7 @@ namespace Presentation.Controllers.Api.v1
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
         }
+
         [Authorize(Policy = AuthorizationConst.Policy.AdminPolicy)]
         [HttpDelete("{id}/profile-picture")]
         [Consumes(MediaTypeNames.Application.Json)]
@@ -293,6 +296,34 @@ namespace Presentation.Controllers.Api.v1
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
             var command = new DeleteProfilePictureCommand(id);
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.PrepareResponse();
+        }
+
+        [Authorize(Policy = AuthorizationConst.Policy.AdminPolicy)]
+        [HttpPatch("{id}/role")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        public async Task<IActionResult> AssignRole(Guid id, [FromBody] List<RoleDTO> roleDTOs, CancellationToken cancellationToken)
+        {
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var command = new AssignRoleCommand(
+                userUuid, id, roleDTOs.DistinctBy(x => x.Uuid).Select(x => x.Uuid).ToList());
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.PrepareResponse();
+        }
+
+        [Authorize(Policy = AuthorizationConst.Policy.AdminPolicy)]
+        [HttpDelete("{id}/role")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        public async Task<IActionResult> RevokeRole(Guid id, [FromBody] List<RoleDTO> roleDTOs, CancellationToken cancellationToken)
+        {
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var command = new RevokeRoleCommand(
+                userUuid, id, roleDTOs.DistinctBy(x => x.Uuid).Select(x => x.Uuid).ToList());
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();

@@ -3,6 +3,7 @@ using Shared.ApiDataTransferObject;
 using Shared.ApiDataTransferObject.Object;
 using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
+using Shared.Reflection;
 using System;
 using WebFrontEnd.Authentification;
 
@@ -106,6 +107,18 @@ namespace WebFrontEnd.Service.Backend.Api
             var response = await this.TypedRequest<object, List<RoleDTO>>("/role", RestSharp.Method.Get, null, cancellationToken);
             return response;
         }
+        public async Task<JellyfishBackendApiResponse<List<Guid>>> AssignRoles(UserDTO user, List<RoleDTO> roleDTOs, CancellationToken cancellationToken)
+        {
+            var url = "/user/" + user.Uuid + "/role";
+            var response = await this.TypedRequest<List<RoleDTO>, List<Guid>>(url, RestSharp.Method.Patch, roleDTOs, cancellationToken);
+            return response;
+        }
+        public async Task<JellyfishBackendApiResponse<List<Guid>>> RevokeRoles(UserDTO user, List<RoleDTO> roleDTOs, CancellationToken cancellationToken)
+        {
+            var url = "/user/" + user.Uuid + "/role";
+            var response = await this.TypedRequest<List<RoleDTO>, List<Guid>>(url, RestSharp.Method.Delete, roleDTOs, cancellationToken);
+            return response;
+        }
         public override async Task<WebApiHttpRequestResponseModel<T1>> Request<T1, T2>(string url, Method method, CancellationToken cancellationToken, T2 bodyObject = default, List<KeyValuePair<string, string>> query = null, List<KeyValuePair<string, string>> headers = null, bool donttryagain = true)
         {
             if(headers==null)
@@ -133,7 +146,7 @@ namespace WebFrontEnd.Service.Backend.Api
         public async Task<JellyfishBackendApiResponse<T2>> TypedRequest<T,T2>(string url, RestSharp.Method method, T data, CancellationToken cancellationToken, PaginationBase paginationBase=null)
             
         {
-            if(data is IDataTransferObject dataTransferObject)
+            if(data is IDataTransferObject dataTransferObject || (ListReflectionExtension.IsListAndGenericTypeImplementsT<IDataTransferObject>(typeof(T))))
             {
                 var body = ApiDataTransferObject<T>.Create(data,paginationBase);
                 var response = await Request<ApiDataTransferObject<T2>, ApiDataTransferObject<T>>(url, method, cancellationToken, body);

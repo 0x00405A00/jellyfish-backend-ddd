@@ -49,10 +49,7 @@ namespace Application.CQS.User.Commands.PasswordReset.Request
             {
                 return Result<bool>.Failure(ex.Message);
             }
-            user.DomainEvents.ToList().ForEach(e =>
-            {
-                mediator.Publish(e);
-            });
+            _userRepository.PublishDomainEvents(user, mediator);
             return Result<bool>.Success(true);
         }
     }

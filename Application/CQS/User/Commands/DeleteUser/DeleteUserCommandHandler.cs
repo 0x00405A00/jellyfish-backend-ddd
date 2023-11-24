@@ -11,14 +11,17 @@ namespace Application.CQS.User.Commands.DeleteUser
     internal sealed class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand, Guid>
     {
         private readonly ISender sender;
+        private readonly IMediator mediator;
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         public DeleteUserCommandHandler(
             ISender sender,
+            IMediator mediator, 
             IUserRepository userRepository,
             IUnitOfWork unitOfWork)
         {
             this.sender = sender;
+            this.mediator = mediator;
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
         }
@@ -48,6 +51,7 @@ namespace Application.CQS.User.Commands.DeleteUser
                 return Result<Guid>.Failure(ex.Message);
             }
 
+            _userRepository.PublishDomainEvents(user, mediator);
             return Result<Guid>.Success(user.Uuid.ToGuid());
         }
     }

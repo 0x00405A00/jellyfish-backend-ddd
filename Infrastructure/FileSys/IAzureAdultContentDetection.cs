@@ -5,7 +5,7 @@
     /// </summary>
     public interface IAzureAdultContentDetection : IContentDetection
     {
-        Task<bool> CheckIfBinaryIsPornContent();
-        Task<bool> CheckIfBinaryIsViolentContent();
+        Task<bool> CheckIfBinaryIsNotPornContent();
+        Task<bool> CheckIfBinaryIsNotViolentContent();
     }
 }

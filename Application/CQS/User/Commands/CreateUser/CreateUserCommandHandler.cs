@@ -109,9 +109,7 @@ namespace Application.CQS.User.Commands.CreateUser
                     _userRepository.Add(user);
                     await transaction.CommitAsync();
 
-                    user.DomainEvents.ToList().ForEach(e => {
-                        mediator.Publish(e);
-                    });
+                    _userRepository.PublishDomainEvents(user,mediator);
                 }
                 catch (Exception ex)
                 {

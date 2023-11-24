@@ -1,8 +1,6 @@
 ﻿#define HOST_IS_WINDOWS
 using Domain.ValueObjects;
-using Infrastructure.FileSys;
 using Microsoft.Extensions.Logging;
-using System.IO;
 using System.Security.AccessControl;
 
 namespace Infrastructure.FileSys
@@ -41,7 +39,7 @@ namespace Infrastructure.FileSys
         private static readonly IDictionary<string, DirectoryExtension.FileSystemRightsExt> _createDirectories = new Dictionary<string, DirectoryExtension.FileSystemRightsExt>
     {
         { UsersMediaFolder, DirectoryExtension.FileSystemRightsExt.Read | DirectoryExtension.FileSystemRightsExt.Write },
-        { UserProfilePictures, DirectoryExtension.FileSystemRightsExt.Read | DirectoryExtension.FileSystemRightsExt.Write },
+        { UserProfilePictures, DirectoryExtension.FileSystemRightsExt.Read|DirectoryExtension.FileSystemRightsExt.Write },
         { ChatsMediaFolder, DirectoryExtension.FileSystemRightsExt.Read | DirectoryExtension.FileSystemRightsExt.Write },
         { ChatPictures, DirectoryExtension.FileSystemRightsExt.Read | DirectoryExtension.FileSystemRightsExt.Write },
         { ChatMediaContent, DirectoryExtension.FileSystemRightsExt.Read | DirectoryExtension.FileSystemRightsExt.Write }

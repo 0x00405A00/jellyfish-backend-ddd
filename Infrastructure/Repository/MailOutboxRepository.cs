@@ -14,29 +14,29 @@ namespace Infrastructure.Repository
 
         public async Task<EmailType> GetEmailType(string type)
         {
-            var result =await _context.EmailTypes.AsNoTracking().Where(x => x.Type == type)
+            var result =await Context.EmailTypes.AsNoTracking().Where(x => x.Type == type)
                 .FirstAsync();
             return result;
         }
 
         public void InsertMailAttachment(List<MailOutboxAttachment> mailOutboxAttachments)
         {
-            _context.MailOutboxAttachments.AddRange(mailOutboxAttachments);
+            Context.MailOutboxAttachments.AddRange(mailOutboxAttachments);
         }
 
         public void InsertMailRecipients(List<MailOutboxRecipient> mailOutboxRecipients)
         {
-            _context.MailOutboxRecipients.AddRange(mailOutboxRecipients);
+            Context.MailOutboxRecipients.AddRange(mailOutboxRecipients);
         }
 
         public override async Task<ICollection<MailOutbox>> ListAsync(Expression<Func<MailOutbox, bool>> expression = null)
         {
-            var result = expression==null? await _dbSet.Include(x => x.MailOutboxAttachments)
+            var result = expression==null? await DbSet.Include(x => x.MailOutboxAttachments)
                 .Include(x => x.MailOutboxRecipients)
                 .ThenInclude(x => x.EmailTypeUu)
                 .AsSingleQuery()
                 .ToListAsync():
-                await _dbSet.Include(x => x.MailOutboxAttachments)
+                await DbSet.Include(x => x.MailOutboxAttachments)
                 .Include(x => x.MailOutboxRecipients)
                 .ThenInclude(x=>x.EmailTypeUu)
                 .AsSingleQuery()

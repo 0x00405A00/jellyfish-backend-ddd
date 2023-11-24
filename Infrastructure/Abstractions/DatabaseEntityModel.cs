@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Abstractions
+﻿using Domain.Primitives;
+
+namespace Infrastructure.Abstractions
 {
     public abstract class DatabaseEntityModel
     {

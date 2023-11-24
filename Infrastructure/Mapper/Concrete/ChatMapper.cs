@@ -79,7 +79,7 @@ namespace Infrastructure.Mapper.Concrete
                 entity.Name,
                 entity.Description,
                 picture,
-                chatMembersList,
+                chatMembersList?.ToList(),
                 chatMessages,
                 (DateTime)entity.CreatedTime!,
                 entity.LastModifiedTime,

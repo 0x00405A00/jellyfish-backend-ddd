@@ -2,6 +2,7 @@
 using Presentation.Modelbinding.Binder;
 using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
+using Shared.Reflection;
 
 namespace Presentation.Modelbinding.Provider
 {
@@ -9,8 +10,12 @@ namespace Presentation.Modelbinding.Provider
     {
         public IModelBinder GetBinder(ModelBinderProviderContext context)
         {
+            var type = context.Metadata.ModelType;
+            var args = type.GetGenericArguments();
+
+
             if (context.Metadata.ModelType.GetInterfaces().Contains(typeof(IDataTransferObject)) 
-                || (context.Metadata.ModelType ==typeof(List<>) &&context.Metadata.ModelType.GetGenericArguments().Where(x=>x.GetInterfaces().Contains(typeof(IDataTransferObject))).Any()))
+                || (ListReflectionExtension. IsListAndGenericTypeImplementsT<IDataTransferObject>(type)))
             {
                 return new ApiDataTransferObjectModelBinder();
             }

@@ -41,10 +41,8 @@ namespace Application.CQS.User.Commands.RegisterUser.Activation
                     return Result<UserDTO>.Failure(ex.Message);
                 }
 
-                userRepository.Update(user);
-                user.DomainEvents.ToList().ForEach(e => {
-                    mediator.Publish(e);
-                });
+                userRepository.UpdateAsync(user);
+                userRepository.PublishDomainEvents(user, mediator);
 
                 var mapValue = mapper.Map<UserDTO>(user);
                 mapValue.Password = null;

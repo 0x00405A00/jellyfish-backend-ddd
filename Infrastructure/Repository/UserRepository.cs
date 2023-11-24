@@ -11,17 +11,16 @@ namespace Infrastructure.Repository
     {
         public UserRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext) 
         { 
-        
         }
         public async override Task<Domain.Entities.User.User> GetAsync(Expression<Func<DatabaseEntity.User, bool>> expression)
         {
-            var value = await _dbSet.Include(i => i.UserTypeUu)
+            var value = await DbSet.Include(i => i.UserTypeUu)
                                     .Include(i => i.UserRelationToRoles)
                                     .ThenInclude(ur => ur.RoleUu)
                                     .Include(i => i.UserFriendUserUus)
                                     .ThenInclude(uf => uf.FriendUserUu)
                                     .ThenInclude(ut => ut.UserTypeUu)
-                                    .AsNoTracking()
+                                    .AsNoTrackingWithIdentityResolution()
                                     .AsSingleQuery()
                                     .FirstOrDefaultAsync(expression);
             return await this.MapToDomainEntity(value, true);
@@ -29,28 +28,28 @@ namespace Infrastructure.Repository
 
         public async Task<bool> IsEmailAlreadyInUse(string email)
         {
-            return await _dbSet.AsNoTracking()
+            return await DbSet.AsNoTracking()
                          .Where(x => x.Email == email.ToLower())
                          .AnyAsync();
         }
 
         public async Task<bool> IsPhoneAlreadyInUse(string phone)
         {
-            return await _dbSet.AsNoTracking()
+            return await DbSet.AsNoTracking()
                          .Where(x => x.Phone == phone.ToLower())
                          .AnyAsync();
         }
 
         public async Task<bool> IsUserRegistered(string email)
         {
-            return await _dbSet.AsNoTracking()
+            return await DbSet.AsNoTracking()
                          .Where(x => x.Email == email.ToLower() && x.ActivationDatetime != null)
                          .AnyAsync();
         }
 
         public async override Task<ICollection<Domain.Entities.User.User>> ListAsync(Expression<Func<DatabaseEntity.User, bool>> expression)
         {
-            var value = await _dbSet.ExpressionQuery(expression)
+            var value = await DbSet.ExpressionQuery(expression)
                                     .Include(i => i.UserTypeUu)
                                     .Include(i => i.UserRelationToRoles)
                                     .ThenInclude(ur => ur.RoleUu)
@@ -64,7 +63,7 @@ namespace Infrastructure.Repository
         }
         public async override Task<ICollection<Domain.Entities.User.User>> ListAsync(ColumnSearchAggregateDTO columnSearchAggregateDTO)
         {
-            var value = await _dbSet.ExpressionQuery(columnSearchAggregateDTO)
+            var value = await DbSet.ExpressionQuery(columnSearchAggregateDTO)
                                     .Include(i => i.UserTypeUu)
                                     .Include(i => i.UserRelationToRoles)
                                     .ThenInclude(ur => ur.RoleUu)
@@ -81,7 +80,7 @@ namespace Infrastructure.Repository
         public override async Task<RepositoryResponse<ICollection<Domain.Entities.User.User>>> ListAsyncWithMeta(Expression<Func<DatabaseEntity.User, bool>> expression = null)
         {
             int count = await CountMaxAsync(expression);
-            var value = await _dbSet.ExpressionQuery(expression)
+            var value = await DbSet.ExpressionQuery(expression)
                                     .Include(i => i.UserTypeUu)
                                     .Include(i => i.UserRelationToRoles)
                                     .ThenInclude(ur => ur.RoleUu)
@@ -101,7 +100,7 @@ namespace Infrastructure.Repository
         {
             var expression = columnSearchAggregateDTO.GetExpression<User>(nameof(User));
             int count = await CountMaxAsync(expression);
-            var value = await _dbSet.ExpressionQuery(columnSearchAggregateDTO)
+            var value = await DbSet.ExpressionQuery(columnSearchAggregateDTO)
                                     .Include(i => i.UserTypeUu)
                                     .Include(i => i.UserRelationToRoles)
                                     .ThenInclude(ur => ur.RoleUu)

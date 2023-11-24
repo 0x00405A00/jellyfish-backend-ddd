@@ -43,7 +43,7 @@
             <MudTextField InputType="InputType.Text" @bind-Value=@User.UserName Label="UserName" Variant="Variant.Filled" ReadOnly="false" Required />
              <MudTextField InputType="InputType.Text" @bind-Value=@User.FirstName Label="FirstName" ReadOnly="false" Required />
              <MudTextField @ref="lastNameTextField" InputType="InputType.Text" @bind-Value=@User.LastName Label="LastName" ReadOnly="false" Required RequiredError="Please enter a Lastname" OnKeyUp="@OnKeyUpEvent" />
-             @if (isEditDialog)
+             @if (!isEditDialog)
              {
 
                 <MudTextField @ref="passwordTextField" InputType="InputType.Password" @bind-Value=@User.Password Label="Password" ReadOnly="false" Required=@(!isEditDialog) Validation="@(new Func<string, IEnumerable<string>>(ValidatePassword))" OnKeyUp="@OnKeyUpEvent" />
@@ -92,6 +92,7 @@
     private string[] errors = { };
     private UserTypeDTO SelectedUserType { get; set; } = new UserTypeDTO();
     private IEnumerable<RoleDTO> SelectedRoles { get; set; } = new List<RoleDTO>();
+    private IEnumerable<RoleDTO> InitialRoles { get; set; } = new List<RoleDTO>();
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
@@ -116,6 +117,7 @@
 
                 });
                 SelectedRoles = roleDTOs;
+                InitialRoles = SelectedRoles;
             }
             if (User.HasImage)
             {
@@ -152,6 +154,8 @@
 
     private void OnKeyUpEvent(KeyboardEventArgs keyboardEventArgs)
     {
+        if (passwordTextField is null || passwordConfirmTextField is null)
+            return; 
         passwordTextField.Validate();
         passwordConfirmTextField.Validate();
         StateHasChanged();
@@ -191,11 +195,19 @@
                 if (responseProfilePicUpload.IsSuccess)
                 {
                     uploadProfilePicture = false;
-                    await JSRuntime.InvokeVoidAsync("renderImage", "profilePictureCanvas", MimeExtension.GetImageAsMime(User.PictureBase64, User.PictureMimeType));
                     StateHasChanged();
+                    await JSRuntime.InvokeVoidAsync("renderImage", "profilePictureCanvas", MimeExtension.GetImageAsMime(User.PictureBase64, User.PictureMimeType));
                 }
             }
         }
+    }
+    private List<RoleDTO> GetRevokedRoles()
+    {
+        return InitialRoles.Where(x => !SelectedRoles.Where(y=>y.Uuid == x.Uuid).Any())?.ToList();
+    }
+    private List<RoleDTO> GetAssignedRoles()
+    {
+        return SelectedRoles.Where(x => !InitialRoles.Where(y => y.Uuid == x.Uuid).Any())?.ToList();
     }
     private async void Commit()
     {
@@ -208,8 +220,32 @@
 
         if(isEditDialog)//Edit
         {
-            var responseEditUser = await WebApiClient.EditUser(User, cancellationToken.Token);
-            if (responseEditUser.IsSuccess)
+            JellyfishBackendApi.JellyfishBackendApiResponse<UserDTO> responseEditUser = await WebApiClient.EditUser(User, cancellationToken.Token);
+            JellyfishBackendApi.JellyfishBackendApiResponse<List<Guid>> responseAssigneRoles = null;
+            JellyfishBackendApi.JellyfishBackendApiResponse<List<Guid>> responseRevokeRoles = null;
+            var revokedRoles = GetRevokedRoles();
+            var assignedRoles = GetAssignedRoles();
+
+            if(revokedRoles.Any())
+            {
+
+                responseRevokeRoles = await WebApiClient.RevokeRoles(User, revokedRoles, cancellationToken.Token);
+                if (responseRevokeRoles.IsSuccess)
+                {
+                    
+                }
+            }
+            if(assignedRoles.Any())
+            {
+
+                responseAssigneRoles = await WebApiClient.AssignRoles(User, assignedRoles, cancellationToken.Token);
+                if (responseAssigneRoles.IsSuccess)
+                {
+
+                }
+
+            }
+            if (responseEditUser.IsSuccess || ((assignedRoles.Any() && responseAssigneRoles.IsSuccess) || (revokedRoles.Any() && responseRevokeRoles.IsSuccess)))
             {
                 User.ResetFieldsForUserInterface();
                 MudDialog.Close(DialogResult.Ok(User));

@@ -13,7 +13,7 @@ namespace Infrastructure.Repository
         }
         public async override Task<Chat> GetAsync(Expression<Func<DatabaseEntity.Chat, bool>> expression)
         {
-            var value = await _dbSet
+            var value = await DbSet
                 .Include(i => i.Messages)
                 .ThenInclude(u => u.MessageOwnerNavigation)
                 .ThenInclude(ut => ut.UserTypeUu)

@@ -35,6 +35,8 @@ namespace WebApi
             {
                 app.UseExceptionHandler("/error");
             }
+            //Default wwwroot
+            app.UseStaticFiles(); // This line enables the serving of static files from the wwwroot folder.
 
             app.MapHealthChecks("/healthz", new HealthCheckOptions
             {

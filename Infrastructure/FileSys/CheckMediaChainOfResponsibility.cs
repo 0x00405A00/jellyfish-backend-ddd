@@ -27,7 +27,7 @@
             this MediaContentDTO mediaContent,
             IAntiVirus antiVirus)
         {
-            bool isNot = await antiVirus.CheckIfBinaryIsVirusContent();
+            bool isNot = await antiVirus.CheckIfBinaryIsNotVirusContent();
             mediaContent.VirusCheckProcessed(isNot);
             return mediaContent;
         }

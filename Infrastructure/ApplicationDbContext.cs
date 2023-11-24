@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace Infrastructure;
 
-internal partial class ApplicationDbContext : DbContext
+public partial class ApplicationDbContext : DbContext
 {
     public IConfiguration _configuration { get; }
     public ApplicationDbContext(

@@ -305,7 +305,7 @@ namespace Domain.Entities.User
             {
                 throw new InvalidUserNameException();
             }
-            if(UserName != userName)
+            if(UserName == userName)
             {
                 return;
             }
@@ -410,7 +410,7 @@ namespace Domain.Entities.User
             {
                 throw new InvalidFirstNameException();
             }
-            if (FirstName != firstName)
+            if (FirstName == firstName)
             {
                 return;
             }
@@ -425,22 +425,22 @@ namespace Domain.Entities.User
             {
                 throw new InvalidLastNameException();
             }
-            if (LastName != LastName)
+            if (LastName == lastName)
             {
                 return;
             }
-            LastName = LastName;
+            LastName = lastName;
             SetLastModified(modifiedUser);
             Raise(new UserUpdatedDomainEvent<User, UserId>(this, x => x.Email, lastName));
         }
 
         public void UpdateEmail(User modifiedUser, Email email)
         {
-            if(email == null)
+            if(email is null)
             {
                 throw new ArgumentNullException(nameof(email));
             }
-            if (this.Email != email)
+            if (this.Email == email)
             {
                 return;
             }
@@ -451,7 +451,7 @@ namespace Domain.Entities.User
 
         public void UpdatePhone(User modifiedUser, PhoneNumber phone)
         {
-            if (phone == null)
+            if (phone is null)
             {
                 throw new ArgumentNullException(nameof(phone));
             }

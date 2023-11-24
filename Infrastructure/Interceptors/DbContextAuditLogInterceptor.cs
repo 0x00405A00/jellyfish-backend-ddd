@@ -1,14 +1,9 @@
 ﻿using Domain.Primitives;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Interceptors
 {
-    internal class DbContextAuditLogInterceptor : SaveChangesInterceptor
+    public class DbContextAuditLogInterceptor : SaveChangesInterceptor
     {
         public DbContextAuditLogInterceptor()
         {
@@ -34,6 +29,7 @@ namespace Infrastructure.Interceptors
 
                 return base.SavingChangesAsync(eventData, result, cancellationToken);
             }
+            var changes = dbContext.ChangeTracker.Entries();
             var createdEntries = dbContext.ChangeTracker.Entries < IAuditibleCreateEntity>();
             foreach (var entry in createdEntries)
             {

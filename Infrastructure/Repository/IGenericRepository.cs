@@ -1,6 +1,8 @@
 ﻿using Domain.Primitives;
 using Infrastructure.Abstractions;
 using Infrastructure.Repository.Primitives;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Shared.DataFilter.Infrastructure;
 using System.Linq.Expressions;
 
@@ -10,6 +12,8 @@ namespace Infrastructure.Repository
         where TDbEntity : DatabaseEntityModel
 
     {
+        public DbSet<TDbEntity> DbSet {  get; } 
+        public ApplicationDbContext Context { get; }
         public void Add(TDbEntity entity);
         public void Attach(TDbEntity entity);
         public void Remove(TDbEntity entity);
@@ -34,6 +38,9 @@ namespace Infrastructure.Repository
         where TDbEntity : DatabaseEntityModel
 
     {
+        public DbSet<TDbEntity> DbSet { get; }
+        public ApplicationDbContext Context { get; }
+
         public void Add(TEntity entity);
         public void Remove(TEntity entity);
         public void Update(TEntity entity);
@@ -68,6 +75,8 @@ namespace Infrastructure.Repository
         public Task<ICollection<TDbEntity>> ListAsyncDbEntity(Expression<Func<TDbEntity, bool>> expression = null);
         public Task<ICollection<TDbEntity>> ListAsyncDbEntity(ColumnSearchAggregateDTO? columnSearchAggregateDTO);
         public Task<int> CountMaxAsyncDbEntity(Expression<Func<TDbEntity, bool>> expression = null);
+
+        public void PublishDomainEvents(TEntity entity, IMediator mediator);
 
     }
 }

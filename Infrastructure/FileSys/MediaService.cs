@@ -19,12 +19,12 @@ namespace Infrastructure.FileSys
             this.logger = logger;
             this.fileHandler = fileHandler;
         }
-        public async Task<byte[]?> GetChatPicture(Guid chatId, CancellationToken cancellationToken)
+        public async Task<byte[]?> GetChatPicture(Guid chatId, string fileExtension, CancellationToken cancellationToken)
         {
 
             try
             {
-                string path = GetProfilePicturePath(chatId);
+                string path = GetProfilePicturePath(chatId, fileExtension);
                 return await fileHandler.ReadFile(path, cancellationToken);
             }
             catch (Exception ex)
@@ -33,12 +33,12 @@ namespace Infrastructure.FileSys
             }
             return null;
         }
-        public async Task<string?> GetChatPictureBase64(Guid chatId, CancellationToken cancellationToken)
+        public async Task<string?> GetChatPictureBase64(Guid chatId, string fileExtension, CancellationToken cancellationToken)
         {
 
             try
             {
-                var result = await this.GetChatPicture(chatId, cancellationToken);
+                var result = await this.GetChatPicture(chatId,fileExtension, cancellationToken);
                 var base64 = Convert.ToBase64String(result);
                 return base64;
             }
@@ -48,14 +48,14 @@ namespace Infrastructure.FileSys
             }
             return null;
         }
-        public string? CreateChatPicture(Guid chatId, byte[] content, CancellationToken cancellationToken)
+        public string? CreateChatPicture(Guid chatId, string fileExtension, byte[] content, CancellationToken cancellationToken)
         {
 
             try
             {
-                string path = GetProfilePicturePath(chatId);
+                string path = GetProfilePicturePath(chatId, fileExtension);
                 fileHandler.CreateOrUpdateFile(path, content, cancellationToken);
-                return path;
+                return path.Replace(FileHandler.WebRoot,"");
             }
             catch (Exception ex)
             {
@@ -64,12 +64,12 @@ namespace Infrastructure.FileSys
             return null;
 
         }
-        public async Task<byte[]?> GetProfilePicture(Guid userId, CancellationToken cancellationToken)
+        public async Task<byte[]?> GetProfilePicture(Guid userId, string fileExtension, CancellationToken cancellationToken)
         {
 
             try
             {
-                string path = GetProfilePicturePath(userId);
+                string path = GetProfilePicturePath(userId, fileExtension);
                 return await fileHandler.ReadFile(path, cancellationToken);
             }
             catch (Exception ex)
@@ -78,12 +78,12 @@ namespace Infrastructure.FileSys
             }
             return null;
         }
-        public async Task<string?> GetProfilePictureBase64(Guid userId, CancellationToken cancellationToken)
+        public async Task<string?> GetProfilePictureBase64(Guid userId, string fileExtension, CancellationToken cancellationToken)
         {
 
             try
             {
-                var result = await this.GetProfilePicture(userId,cancellationToken);
+                var result = await this.GetProfilePicture(userId,fileExtension,cancellationToken);
                 var base64 = Convert.ToBase64String(result);
                 return base64;
             }
@@ -93,14 +93,14 @@ namespace Infrastructure.FileSys
             }
             return null;
         }
-        public string? CreateProfilePicture(Guid userId, byte[] content, CancellationToken cancellationToken)
+        public string? CreateProfilePicture(Guid userId, string fileExtension, byte[] content, CancellationToken cancellationToken)
         {
 
             try
             {
-                string path = GetProfilePicturePath(userId);
+                string path = GetProfilePicturePath(userId, fileExtension);
                 fileHandler.CreateOrUpdateFile(path, content, cancellationToken);
-                return path;
+                return path.Replace(FileHandler.WebRoot, "");
             }
             catch (Exception ex)
             {
@@ -109,12 +109,12 @@ namespace Infrastructure.FileSys
             return null;
 
         }
-        public string? DeleteProfilePicture(Guid userId, CancellationToken cancellationToken)
+        public string? DeleteProfilePicture(Guid userId, string fileExtension, CancellationToken cancellationToken)
         {
 
             try
             {
-                string path = GetProfilePicturePath(userId);
+                string path = GetProfilePicturePath(userId, fileExtension);
                 fileHandler.DeleteFile(path, cancellationToken);
                 return path;
             }
@@ -125,13 +125,13 @@ namespace Infrastructure.FileSys
             return null;
 
         }
-        public string GetProfilePicturePath(Guid userId)
+        public string GetProfilePicturePath(Guid userId,string fileExtension)
         {
-            return Path.Combine(FileHandler.UserProfilePictures, userId.ToString());
+            return Path.Combine(FileHandler.UserProfilePictures, userId.ToString()+ fileExtension);
         }
-        public string GetChatPicturePath(Guid chatId)
+        public string GetChatPicturePath(Guid chatId, string fileExtension)
         {
-            return Path.Combine(FileHandler.ChatPictures, chatId.ToString());
+            return Path.Combine(FileHandler.ChatPictures, chatId.ToString()+ fileExtension);
         }
     }
 }

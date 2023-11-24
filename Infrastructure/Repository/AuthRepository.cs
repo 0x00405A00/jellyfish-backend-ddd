@@ -14,7 +14,7 @@ namespace Infrastructure.Repository
 
         public override async Task<Auth> GetAsync(Expression<Func<Auth, bool>> expression)
         {
-            var result = await _dbSet.AsNoTracking()
+            var result = await DbSet.AsNoTracking()
                                      .Include(x => x.UserUu)
                                      .ThenInclude(x => x.UserRelationToRoles)
                                      .ThenInclude(x => x.RoleUu)
