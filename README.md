@@ -14,7 +14,7 @@ In anticipation of future enhancements, the architecture envisions the implement
 ------------- 	| -------------		| -------------
 C#/NET 7  		| C#/NET 7 			| C#/NET 7
 ASP NET  		| Blazor Server 	| .NET MAUI
-MySql 8.0.35   	| Razor Pages 		| 
+MySql 8.0.35   	| Razor Components 		| 
 SignalR  		| Mudblazor UI Components (https://mudblazor.com/) 	| 
 Docker  		| 
 EF Core  		| 
