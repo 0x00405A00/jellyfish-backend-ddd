@@ -1,16 +1,19 @@
 ﻿using AutoMapper;
 using Domain.Primitives;
 using Domain.ValueObjects;
+using Microsoft.Extensions.Configuration;
 using Shared.DataTransferObject;
 using Shared.DataTransferObject.Messenger;
-using System.Security.Cryptography;
 
 namespace Application.Mapper
 {
     public class DomainModelToDTOMappingProfile : Profile
     {
-        public DomainModelToDTOMappingProfile()
+        public DomainModelToDTOMappingProfile(IConfiguration configuration)
         {
+            var contentDeliverySection = configuration.GetSection("Infrastructure:ContentDelivery");
+            var contentDeliveryUrl = contentDeliverySection.GetValue<string>("DeliveryUrl");
+
             CreateMap<DateOnly, DateTime>()
                 .ConvertUsing(dst => new DateTime(dst.Year, dst.Month, dst.Day));
             CreateMap<DateTime, DateOnly>()
@@ -73,7 +76,7 @@ namespace Application.Mapper
                 .ForMember(dst => dst.Password, dst => dst.MapFrom(x => string.Empty))//securtiy: password shouldnt transfer over network
                 .ForMember(dst => dst.PasswordConfirm, dst => dst.MapFrom(x => string.Empty))//securtiy: password shouldnt transfer over network
                 .ForMember(dst => dst.UserTypeUuid, dst => dst.MapFrom(x => x.UserType.Uuid.ToGuid()))
-                .ForMember(dst => dst.PictureBase64, dst => dst.MapFrom(x => x.Picture.ToString()))
+                .ForMember(dst => dst.PictureUrl, dst => dst.MapFrom(x => contentDeliveryUrl+x.Picture.FilePath.ToString()))
                 .ForMember(dst => dst.PictureMimeType, dst => dst.MapFrom(x => x.Picture.FileExtension))
                 .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Uuid.ToGuid()))
                 .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Uuid.ToGuid()))

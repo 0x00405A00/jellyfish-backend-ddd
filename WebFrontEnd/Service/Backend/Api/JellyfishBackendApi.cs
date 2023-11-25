@@ -1,11 +1,15 @@
-﻿using RestSharp;
+﻿using Microsoft.AspNetCore.Components.Authorization;
+using RestSharp;
 using Shared.ApiDataTransferObject;
 using Shared.ApiDataTransferObject.Object;
+using Shared.Authentification.Claims;
+using Shared.Const;
 using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
 using Shared.Reflection;
 using System;
 using WebFrontEnd.Authentification;
+using WebFrontEnd.Service.Authentification;
 
 namespace WebFrontEnd.Service.Backend.Api
 {
@@ -43,9 +47,9 @@ namespace WebFrontEnd.Service.Backend.Api
             var response = await this.TypedRequest<UserDTO, UserDTO>(url, RestSharp.Method.Put, user, cancellationToken);
             return response;
         }
-        public async Task<JellyfishBackendApiResponse<UserDTO>> DeleteUserProfilePicture(UserDTO user, CancellationToken cancellationToken)
+        public async Task<JellyfishBackendApiResponse<UserDTO>> DeleteUserProfilePicture(UserDTO userDTO, CancellationToken cancellationToken)
         {
-            var url = "/user/" + user.Uuid + "/profile-picture";
+            var url = "/user/" + userDTO.Uuid + "/profile-picture";
             var response = await this.TypedRequest<UserDTO, UserDTO>(url, RestSharp.Method.Delete, null, cancellationToken);
             return response;
         }
@@ -56,6 +60,13 @@ namespace WebFrontEnd.Service.Backend.Api
             //return JellyfishBackendApiResponse<List<UserDTO>>.CreateFromWebApiResponseModel(response);
             var url = "/user";
             var response = await this.TypedRequest<SearchParamsBody, List<UserDTO>>(url, RestSharp.Method.Get, searchParamsBody, cancellationToken);
+            return response;
+        }
+        public async Task<JellyfishBackendApiResponse<UserDTO>> GetUser(Guid userId, CancellationToken cancellationToken)
+        {
+
+            var url = "/user/" + userId + "";
+            var response = await this.TypedRequest<SearchParamsBody, UserDTO>(url, RestSharp.Method.Get, null, cancellationToken);
             return response;
         }
         public async Task<JellyfishBackendApiResponse<UserDTO>> Activate(string base64Token, UserActivationDataTransferModel userActivationDataTransferModel, CancellationToken cancellationToken)
@@ -118,6 +129,18 @@ namespace WebFrontEnd.Service.Backend.Api
             var url = "/user/" + user.Uuid + "/role";
             var response = await this.TypedRequest<List<RoleDTO>, List<Guid>>(url, RestSharp.Method.Delete, roleDTOs, cancellationToken);
             return response;
+        }
+        public async Task<UserDTO?> GetCurrentUser(AuthenticationState authenticationState, CancellationToken cancellationToken)
+        {
+            if (authenticationState is null)
+                return null;
+            if (authenticationState.User is null)
+                return null;
+            if (!authenticationState.User .Claims.Any())
+                return null;
+            var userUuid = authenticationState.User.Claims.GetClaims(x => x.Type == AuthorizationConst.Claims.ClaimTypeUserUuid)?.First();
+            var userProfile = await this.GetUser(Guid.Parse(userUuid.Value), cancellationToken);
+            return userProfile.IsSuccess ? userProfile.Data : null;
         }
         public override async Task<WebApiHttpRequestResponseModel<T1>> Request<T1, T2>(string url, Method method, CancellationToken cancellationToken, T2 bodyObject = default, List<KeyValuePair<string, string>> query = null, List<KeyValuePair<string, string>> headers = null, bool donttryagain = true)
         {

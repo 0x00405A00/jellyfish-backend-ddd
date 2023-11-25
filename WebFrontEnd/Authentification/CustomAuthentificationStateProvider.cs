@@ -24,6 +24,10 @@ namespace WebFrontEnd.Authentification
             {
                 return new AuthenticationState(new ClaimsPrincipal());
             }
+            if(auth.IsTokenExpired)
+            {
+                return new AuthenticationState(new ClaimsPrincipal());
+            }
             var jwtDecoded = JwtHandler.DecodeJwt(auth.Token,null,null,null);
             if (jwtDecoded == null) 
             {
@@ -102,5 +106,6 @@ namespace WebFrontEnd.Authentification
         {
             return authentificationService.RefreshLogin(token, refreshToken, cancellationToken);
         }
+
     }
 }

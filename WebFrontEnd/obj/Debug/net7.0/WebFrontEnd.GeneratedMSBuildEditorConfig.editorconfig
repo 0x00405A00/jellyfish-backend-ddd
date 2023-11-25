@@ -102,6 +102,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = VUlcUGFnZXNcVXNlcnMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/SharedComponents/ProfileAvatar.razor]
+build_metadata.AdditionalFiles.TargetPath = VUlcU2hhcmVkQ29tcG9uZW50c1xQcm9maWxlQXZhdGFyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Mika/source/repos/jellyfish-backend-ddd/WebFrontEnd/UI/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = VUlcX0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 

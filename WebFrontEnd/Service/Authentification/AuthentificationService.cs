@@ -46,6 +46,8 @@ namespace WebFrontEnd.Service.Authentification
                 return false;
             }
             await localStorageService.SetDeserializedJsonItemFromKey(WebAppConst.BrowserLocalStorageItemKey.Authorization, response);
+            
+
             return true;
         }
 
@@ -110,5 +112,6 @@ namespace WebFrontEnd.Service.Authentification
             await localStorageService.SetDeserializedJsonItemFromKey(WebAppConst.BrowserLocalStorageItemKey.Authorization, response);
             return response;
         }
+
     }
 }

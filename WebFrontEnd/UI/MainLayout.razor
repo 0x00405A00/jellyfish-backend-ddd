@@ -3,8 +3,10 @@
 @inject IConfiguration Configuration
 @inject DialogHandler DialogHandler
 @inject IDialogService DialogService
+@inject NavigationManager NavigationManager
 @inject CustomAuthentificationStateProvider AuthentificationService
 @inject ISessionStorage SessionStorage
+@inject JellyfishBackendApi WebApiClient
 @inject LogoutBackgroundService LogoutBackgroundService
 
 <PageTitle>Jellyfish</PageTitle>
@@ -26,27 +28,31 @@
         <div class="top-row px-4">
             @if (LogoutTimerVisible)
             {
-                <MudButton Variant="Variant.Filled" DisableElevation="true" Color="MudBlazor.Color.Primary" OnClick="@ClickRefreshLogin">Refresh Login (@LogoutTimer.ToString(@"mm\:ss")m)</MudButton>
+                <MudButton Class="mr-2" Variant="Variant.Filled" DisableElevation="true" Color="MudBlazor.Color.Primary" OnClick="@ClickRefreshLogin">Refresh Login (@LogoutTimer.ToString(@"mm\:ss")m)</MudButton>
             }
-            @if(IsLoggedIn)
+            @if(IsLoggedIn) 
             {
-                <MudBadge Content="100" Color="MudBlazor.Color.Info" Overlap="true" Class="mx-6 my-4">
-                    <MudIcon Icon="@Icons.Material.Filled.Email" Color="MudBlazor.Color.Info" />
-                </MudBadge>
-            }
-            <MudMenu Icon="@Icons.Material.Filled.PeopleAlt" IconColor="MudBlazor.Color.Info">
-                <MudMenuItem >Profile</MudMenuItem>
-                <MudDivider></MudDivider>
+                <MudMenu AnchorOrigin="MudBlazor.Origin.BottomLeft">
 
-                @if (IsLoggedIn)
-                {
-                    <MudMenuItem OnClick="@ClickLogout">Logout</MudMenuItem>
-                }
-                else
-                {
-                    <MudMenuItem Href="@RouteConst.Routes.SignIn">Login</MudMenuItem>
-                }
-            </MudMenu>
+                 <ActivatorContent>
+                        <ProfileAvatar User="@CurrentUser" Loading="@Loading" HeightInPx="32" WidthInPx="32"></ProfileAvatar>
+                    </ActivatorContent>
+                    <ChildContent>
+                     <MudMenuItem>Profile</MudMenuItem>
+                     <MudDivider></MudDivider>
+
+                     @if (IsLoggedIn)
+                        {
+                            <MudMenuItem OnClick="@ClickLogout">Logout</MudMenuItem>
+                        }
+                        else
+                        {
+                            <MudMenuItem Href="@RouteConst.Routes.SignIn">Login</MudMenuItem>
+                        }
+                    </ChildContent>
+                    
+                </MudMenu>
+            }
         </div>
 
         <article class="content px-4">
@@ -174,7 +180,9 @@
         };
     private TimeSpan LogoutTimer = TimeSpan.MinValue;
     private bool LogoutTimerVisible => LogoutTimer != TimeSpan.MinValue;
+    public bool Loading => CurrentUser is null;
     private AuthDTO _token;
+    public UserDTO CurrentUser;
     private bool ProfileButtonExpand = false;
     private bool IsLoggedIn => _token!=null&&!_token.IsTokenExpired;
     private CancellationTokenSource cancellationToken = new();
@@ -185,7 +193,9 @@
         {
             LogoutBackgroundService.OnRerenderRequested += RequestRerender;
             _token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
-        
+            var authState = await AuthentificationService.GetAuthenticationStateAsync();
+            CurrentUser = await WebApiClient.GetCurrentUser(authState, cancellationToken.Token);
+            StateHasChanged();
         }
 
 
@@ -216,7 +226,7 @@
     }
     private void RequestRerender()
     {
-        InvokeAsync(() =>
+        InvokeAsync(async() =>
         {
             if (!_token.IsTokenExpired && _token.TokenExpiresIn!=null)
             {
@@ -224,8 +234,11 @@
                 var calcTime = _token.TokenExpiresIn.Value.AddMinutes(-5);
                 if (DateTime.Now>= calcTime)
                 {
+                    
                     LogoutTimer = _token.TokenExpiresIn.Value-DateTime.Now;
                     StateHasChanged(); // Dies löst einen Rerender der Komponente aus
+                    NavigationManager.NavigateTo(RouteConst.Routes.SignIn);
+                    await AuthentificationService.Logout(cancellationToken.Token);
                 }
             }
         });

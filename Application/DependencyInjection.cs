@@ -1,7 +1,9 @@
 ﻿using Application.Behaviour;
 using Application.Mapper;
+using AutoMapper;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -11,7 +13,12 @@ namespace Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, Assembly[] assemblies)
         {
-            services.AddAutoMapper(typeof(DomainModelToDTOMappingProfile));
+            //services.AddAutoMapper(typeof(DomainModelToDTOMappingProfile));
+
+            services.AddSingleton(provider => new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new DomainModelToDTOMappingProfile(provider.GetService<IConfiguration>()));
+            }).CreateMapper());
 
             services.AddMediatR(config =>
             {

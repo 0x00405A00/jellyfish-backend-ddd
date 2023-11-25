@@ -1,0 +1,52 @@
+﻿@inject IJSRuntime JSRuntime;
+
+<MudAvatar id="@ComponentId">
+    @if(Loading)
+    {
+        <MudOverlay Visible="true" DarkBackground="true" Absolute="true">
+            <MudProgressCircular Color="MudBlazor.Color.Secondary" Indeterminate="true" />
+        </MudOverlay>
+    }
+    else
+    {
+        @if (User.HasImage)
+        {
+            <canvas id="@ImgElemId" height="@HeightInPx" width="@WidthInPx"></canvas>
+        }
+        else
+        {
+            @User.GetInitials() 
+        }
+    }
+</MudAvatar>
+
+@code {
+
+    public string ComponentId;
+    public string ImgElemId;
+
+    [Parameter] public UserDTO User { get; set; } = new UserDTO();
+    [Parameter] public int HeightInPx { get; set; } = 32;
+    [Parameter] public int WidthInPx { get; set; } = 32;
+    [Parameter] public bool Loading { get; set; } = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+        }
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+
+        if (User is not null && User.HasImage)
+        {
+            ComponentId = $"avatar-{User.Uuid}";
+            ImgElemId = $"avatar-img-{User.Uuid}";
+            string style = $"height: {HeightInPx}px; width: {WidthInPx}px;border:1px solid #000;";
+            await JSRuntime.InvokeVoidAsync("setStyle", ImgElemId, style);
+            await JSRuntime.InvokeVoidAsync("setStyle", ComponentId, style);
+            await JSRuntime.InvokeVoidAsync("renderImage", ImgElemId, User.PictureUrl, HeightInPx,WidthInPx);
+        }
+    }
+}

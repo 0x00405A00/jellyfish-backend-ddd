@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.Extensions.DependencyInjection;
 using WebFrontEnd.DataTransferObject.SessionStorage;
 using WebFrontEnd.Service.WebStorage;
 

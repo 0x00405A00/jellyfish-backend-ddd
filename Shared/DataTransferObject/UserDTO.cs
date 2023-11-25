@@ -31,6 +31,8 @@ namespace Shared.DataTransferObject
 
         [JsonPropertyName("picture_base64")]
         public string? PictureBase64 { get; set; }
+        [JsonPropertyName("picture_url")]
+        public string? PictureUrl { get; set; }
 
         [JsonPropertyName("picture_mime_type")]
         public string? PictureMimeType{ get; set; }
@@ -90,7 +92,7 @@ namespace Shared.DataTransferObject
         }
 
         [JsonIgnore]
-        public bool HasImage { get { return !String.IsNullOrEmpty(PictureBase64); } }
+        public bool HasImage { get { return !String.IsNullOrEmpty(PictureUrl); } }
 
         public UserDTO()
         {

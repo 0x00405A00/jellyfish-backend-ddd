@@ -10,7 +10,7 @@
 <CascadingAuthenticationState>
     <AuthorizeView Policy="Admin">
         <Authorized>
-            <MudText Typo="Typo.h6">@(_selectedItemsPerPage == UsersList.Count ? (_selectedPage * UsersList.Count) : (_totalUsers))/@_totalUsers Users</MudText>
+            <MudText Typo="Typo.h5">@(_selectedItemsPerPage == UsersList.Count ? (_selectedPage * UsersList.Count) : (_totalUsers))/@_totalUsers Users</MudText>
 
             <MudToolBar Class="d-flex flex-wrap align-content-around w-100 m-0">
                 <MudIconButton Icon="@Icons.Material.Outlined.Add" OnClick="AddUser" />
@@ -47,16 +47,7 @@
 
                      <RowTemplate Context="TableContext">
                          <MudTd>
-                             <MudAvatar style="height: 32px; width: 32px;">
-                                 @if (TableContext.HasImage)
-                                {
-                                    <img src="@MimeExtension.GetImageAsMime(TableContext.PictureBase64,TableContext.PictureMimeType)" width="32" height="32" style="border:1px solid #000;"/>
-                                }
-                                else
-                                {
-                                    @TableContext.GetInitials()
-                                }
-                            </MudAvatar>
+                            <ProfileAvatar User="@TableContext" HeightInPx="32" WidthInPx="32"></ProfileAvatar>
                          </MudTd>
                          <MudTd DataLabel="UserName">@TableContext.UserName</MudTd>
                          <MudTd DataLabel="FirstName">@TableContext.FirstName</MudTd>

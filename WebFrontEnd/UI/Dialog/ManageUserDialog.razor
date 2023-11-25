@@ -2,7 +2,6 @@
 @inject CustomAuthentificationStateProvider AuthentificationService
 @inject IDialogService DialogService
 @inject DialogHandler DialogHandler
-@inject IJSRuntime JSRuntime
 
 <MudDialog>
     <TitleContent>
@@ -12,29 +11,10 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudAvatar style="height: 256px; width: 256px;font-size: 5rem;">
-            @if (uploadProfilePicture)
-            {
-                <MudOverlay Visible="true" DarkBackground="true" Absolute="true">
-                    <MudProgressCircular Color="MudBlazor.Color.Secondary" Indeterminate="true" />
-                </MudOverlay>
-            }
-            else
-            {
-                if(User.HasImage)
-                {
-                    <canvas id="profilePictureCanvas" width="256" height="256" style="border:1px solid #000;"></canvas>
-
-                }
-                else
-                {
-                    @User.GetInitials()
-                }
-            }
-        </MudAvatar>
+        <ProfileAvatar User="@User" Loading="@uploadProfilePicture" HeightInPx="256" WidthInPx="256"></ProfileAvatar>
         <MudToolBar>
             <MudIconButton OnClick=@OpenUploadPictureDialog Icon="@Icons.Material.Outlined.UploadFile" />
-            @if (!String.IsNullOrEmpty(User.PictureBase64))
+            @if (!String.IsNullOrEmpty(User.PictureUrl))
             {
                 <MudIconButton OnClick=@ClearProfilePicture Icon="@Icons.Material.Outlined.Clear" />
             }
@@ -121,10 +101,6 @@
                 SelectedRoles = roleDTOs;
                 InitialRoles = SelectedRoles;
             }
-            if (User.HasImage)
-            {
-                await JSRuntime.InvokeVoidAsync("renderImage", "profilePictureCanvas", MimeExtension.GetImageAsMime(User.PictureBase64, User.PictureMimeType));
-            }
             StateHasChanged();
         }
     }
@@ -173,7 +149,7 @@
         var responseProfilePicDelete = await WebApiClient.DeleteUserProfilePicture(User, cancellationToken.Token);
         if (responseProfilePicDelete.IsSuccess)
         {
-            User.PictureBase64 = null;
+            User.PictureUrl = null;
             uploadProfilePicture = false;
         }
         StateHasChanged();
@@ -198,7 +174,6 @@
                 {
                     uploadProfilePicture = false;
                     StateHasChanged();
-                    await JSRuntime.InvokeVoidAsync("renderImage", "profilePictureCanvas", MimeExtension.GetImageAsMime(User.PictureBase64, User.PictureMimeType));
                 }
             }
         }
