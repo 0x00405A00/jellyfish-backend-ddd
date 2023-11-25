@@ -84,12 +84,14 @@
     private AuthDTO _token;
     private CancellationTokenSource cancellationToken = new();
     private MudForm form;
+    private MudTextField<string> userNameTextField;
+    private MudTextField<string> firstNameTextField;
     private MudTextField<string> lastNameTextField;
     private MudTextField<string> passwordTextField;
     private MudTextField<string> passwordConfirmTextField;
     private bool success;
-    private bool isEditDialog=>User!=null&&User.Uuid!=null&&User.Uuid!=Guid.Empty;
     private string[] errors = { };
+    private bool isEditDialog=>User!=null&&User.Uuid!=null&&User.Uuid!=Guid.Empty;
     private UserTypeDTO SelectedUserType { get; set; } = new UserTypeDTO();
     private IEnumerable<RoleDTO> SelectedRoles { get; set; } = new List<RoleDTO>();
     private IEnumerable<RoleDTO> InitialRoles { get; set; } = new List<RoleDTO>();

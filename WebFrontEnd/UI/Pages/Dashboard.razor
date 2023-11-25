@@ -9,24 +9,47 @@
 @inject IConfiguration Configuration
 @inject CustomAuthentificationStateProvider AuthentificationService
 
-<h3>Dashboard</h3>
-<div class="d-flex flex-row">
-    <div class="d-flex flex-column">
+<MudText Typo="Typo.h5" >Dashboard</MudText>
+<div class="container ml-0 mt-2">
+    <div class="row flex-wrap mb-3">
+        <div class="col-md-6">
+            <MudCard Outlined="true">
+                <MudCardHeader>
+                    <MudText Typo="Typo.h6">Diagram for new Registrations</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudChart ChartType="ChartType.Bar" onmouseover="@HoverChart" ChartSeries="@Series" XAxisLabels="@XAxisLabelsSeries" Width="100%" Height="350px"></MudChart>
 
-        <div>
-
-            <MudChart ChartType="ChartType.Bar" onmouseover="@HoverChart" ChartSeries="@Series" XAxisLabels="@XAxisLabelsSeries" Width="100%" Height="350px"></MudChart>
+                </MudCardContent>
+            </MudCard>
         </div>
-        <div>
+        <div class="col-md-6">
+            <MudCard Outlined="true">
 
-            <MudChart ChartType="ChartType.Line" ChartSeries="@Series2" XAxisLabels="@XAxisLabelsSeries2" Width="100%" Height="350px"></MudChart>
+                <MudCardHeader>
+                    <MudText Typo="Typo.h6">Diagram for new Registrations with Activations</MudText>
+
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudChart ChartType="ChartType.Line" ChartSeries="@Series2" XAxisLabels="@XAxisLabelsSeries2" Width="100%" Height="350px"></MudChart>
+
+                </MudCardContent>
+            </MudCard>
         </div>
     </div>
-    <div>
+    <div class="row flex-wrap">
+        <div class="col-md-6">
+            <MudCard Outlined="true">
 
-        <div>
+                <MudCardHeader>
+                    <MudText Typo="Typo.h6">Diagram for outgoing Mails</MudText>
 
-            <MudChart ChartType="ChartType.Line" ChartSeries="@Series3" XAxisLabels="@XAxisLastHours" Width="100%" Height="350px"></MudChart>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudChart ChartType="ChartType.Line" ChartSeries="@Series3" XAxisLabels="@XAxisLastHours" Width="100%" Height="350px"></MudChart>
+
+                </MudCardContent>
+            </MudCard>
         </div>
     </div>
 </div>

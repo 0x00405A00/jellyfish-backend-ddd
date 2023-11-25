@@ -10,18 +10,18 @@
 <CascadingAuthenticationState>
     <AuthorizeView Policy="Admin">
         <Authorized>
-            <mud>@(_selectedItemsPerPage==UsersList.Count?(_selectedPage*UsersList.Count):(_totalUsers))/@_totalUsers Users</mud>
+            <MudText Typo="Typo.h6">@(_selectedItemsPerPage == UsersList.Count ? (_selectedPage * UsersList.Count) : (_totalUsers))/@_totalUsers Users</MudText>
 
-            <MudToolBar>
+            <MudToolBar Class="d-flex flex-wrap align-content-around w-100 m-0">
                 <MudIconButton Icon="@Icons.Material.Outlined.Add" OnClick="AddUser" />
-                <MudIconButton Icon="@Icons.Material.Outlined.Edit" Disabled=@CantExecByMultipleSelection OnClick="EditUser" />
-                <MudIconButton Icon="@Icons.Material.Outlined.Remove" Disabled=@CanExecWhenMinOneUserIsSelected OnClick="RemoveUser" />
-                <MudIconButton Icon="@Icons.Material.Outlined.Password" Disabled=@CantExecByMultipleSelection OnClick="ResetPassword" />
+                <MudIconButton Class="ml-1" Icon="@Icons.Material.Outlined.Edit" Disabled=@CantExecByMultipleSelection OnClick="EditUser" />
+                <MudIconButton Class="ml-1" Icon="@Icons.Material.Outlined.Remove" Disabled=@CanExecWhenMinOneUserIsSelected OnClick="RemoveUser" />
+                <MudIconButton Class="ml-1" Icon="@Icons.Material.Outlined.Password" Disabled=@CantExecByMultipleSelection OnClick="ResetPassword" />
                 <MudTooltip Text="Search User. Minimum 3 chars.">
-                    <MudInput T="string" Placeholder="Searchtext..." Disabled=@IsSearching DisableUnderLine InputMode="InputMode.search" TextChanged="@SearchTextChanged"></MudInput>
+                    <MudInput Class="ml-5" T="string" Variant="Variant.Outlined" Placeholder="Searchtext..." Disabled=@IsSearching DisableUnderLine InputMode="InputMode.search" TextChanged="@SearchTextChanged"></MudInput>
 
                  </MudTooltip>
-                 <MudSelect Class="w-25" T="int" @bind-Value=@SelectedItemsPerPage Label="Items per Page" FullWidth=false MultiSelection=false Variant="Variant.Filled" AnchorOrigin="Origin.BottomCenter">
+                 <MudSelect Class="ml-1 mr-0 w-100 mb-2 mt-2" T="int" @bind-Value=@SelectedItemsPerPage Label="Items per Page" FullWidth=false MultiSelection=false Variant="Variant.Filled" AnchorOrigin="Origin.BottomCenter">
                      @foreach (var item in _itemsPerPageSet)
                     {
                         <MudSelectItem T="int" Value="@item" />
@@ -71,7 +71,7 @@
                     </RowTemplate>
                 </MudTable>
                 
-                <MudPagination SelectedChanged=@PageChanged ShowFirstButton="true" BoundaryCount="2" MiddleCount="5" ShowLastButton="true" Count="@_maxPages" Class="mt-4" />
+                <MudPagination SelectedChanged=@PageChanged ShowFirstButton="true" BoundaryCount="2" MiddleCount="5" ShowLastButton="true" Count="@_maxPages" Class="align-self-center mt-5 mb-5" />
             }
             else
             {

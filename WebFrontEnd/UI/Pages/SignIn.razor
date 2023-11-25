@@ -5,24 +5,25 @@
 <PageTitle>SignIn</PageTitle>
 
 <div class="sign-in-container">
-    <MudCard>
-        <MudText Typo="Typo.h6">Register</MudText>
+    <MudCard Class="m-5">
+        <MudCardHeader Class="m-10">
+            <MudText Typo="Typo.h5">Register</MudText>
+        </MudCardHeader>
+        <MudCardContent Class="ml-5 mt-2 mb-2 mr-5">
+            <MudForm @ref="formRegister" @bind-IsValid="@successValidationRegisterForm" @bind-Errors="@errorsRegisterForm">
+                <MudTextField @ref="userNameTextField" T="string" Label="Username" InputType="InputType.Text" @bind-Value=@RegisterUserDTO.UserName Required />
 
-        <MudCardContent>
-            <MudForm>
-                <MudTextField T="string" Label="Username" InputType="InputType.Text" @bind-Value=@RegisterUserDTO.UserName required />
+                 <MudTextField @ref="firstNameTextField" T="string" Label="Vorname" InputType="InputType.Text" @bind-Value=@RegisterUserDTO.FirstName Required />
 
-                <MudTextField T="string" Label="Vorname" InputType="InputType.Text" @bind-Value=@RegisterUserDTO.FirstName required />
+                 <MudTextField @ref="lastNameTextField" T="string" Label="Nachname" InputType="InputType.Text" @bind-Value=@RegisterUserDTO.LastName Required />
 
-                <MudTextField T="string" Label="Nachname" InputType="InputType.Text" @bind-Value=@RegisterUserDTO.LastName required />
+                 <MudTextField @ref="passwordTextField" T="string" Label="Passwort" InputType="InputType.Password" @bind-Value=@RegisterUserDTO.Password Required />
 
-                <MudTextField T="string" Label="Passwort" InputType="InputType.Password" @bind-Value=@RegisterUserDTO.Password required />
+                 <MudTextField @ref="passwordConfirmTextField" T="string" Label="Passwort (wiederholen)" InputType="InputType.Password" @bind-Value=@RegisterUserDTO.PasswordRepeat Required />
 
-                <MudTextField T="string" Label="Passwort (wiederholen)" InputType="InputType.Password" @bind-Value=@RegisterUserDTO.PasswordRepeat required />
+                 <MudTextField T="string" Label="Email" InputType="InputType.Text" @bind-Value=@RegisterUserDTO.Email Required />
 
-                <MudTextField T="string" Label="Email" InputType="InputType.Text" @bind-Value=@RegisterUserDTO.Email required />
-
-                <MudTextField T="string" Label="Telefon" InputType="InputType.Telephone" @bind-Value=@RegisterUserDTO.Phone required />
+                 <MudTextField T="string" Label="Telefon" InputType="InputType.Telephone" @bind-Value=@RegisterUserDTO.Phone Required />
                 <MudDatePicker 
                     Label="Geburstag" 
                     DisplayMonths="2" 
@@ -32,33 +33,44 @@
                     Required 
                     RequiredError="birthday must be setted" />
 
-                 <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick=@OnSubmitRegister Color="MudBlazor.Color.Primary">Register</MudButton>
+                 <MudButton Class="mt-5" Variant="Variant.Filled" DisableElevation="true" OnClick=@OnSubmitRegister Color="MudBlazor.Color.Primary">Register</MudButton>
                 @if (RegisterError)
                 {
-                    foreach(var error in RegisterErrors)
+                    foreach (var error in RegisterErrors)
                     {
                         <MudAlert Severity="Severity.Error">@error.Message</MudAlert>
+                    }
+                    foreach (var error in errorsRegisterForm)
+                    {
+                        <MudAlert Severity="Severity.Error">@error</MudAlert>
                     }
 
                 }
             </MudForm>
         </MudCardContent>
     </MudCard>
-    <MudSpacer></MudSpacer>
-    <MudCard>
-        <MudCardHeader>Login</MudCardHeader>
-        <MudCardContent>
-            <MudForm>
-                <MudTextField T="string" Label="Email" InputType="InputType.Text" @bind-Value=@UserLoginDTO.Email required />
 
-                <MudTextField T="string" Label="Passwort" InputType="InputType.Password" @bind-Value=@UserLoginDTO.Password required />
+    <MudCard Class="m-5">
+        <MudCardHeader Class="m-10">
+            <MudText Typo="Typo.h5">Login</MudText>
+        </MudCardHeader>
+        <MudCardContent Class="ml-5 mt-2 mb-2 mr-5">
+            <MudForm @ref="formLogin" @bind-IsValid="@successValidationLoginForm" @bind-Errors="@errorsLoginForm">
+                <MudTextField T="string" Label="Email" InputType="InputType.Text" @bind-Value=@UserLoginDTO.Email Required />
 
-                <MudLink Href=@RouteConst.Routes.ResetPasswordRequest>Passwort vergessen?</MudLink>
+                 <MudTextField T="string" Label="Passwort" InputType="InputType.Password" @bind-Value=@UserLoginDTO.Password Required />
+                <div class="pt-5">
+                     <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick=@OnSubmitLogin Color="MudBlazor.Color.Primary">Login</MudButton>
+                     <MudLink Class="ml-2" Href=@RouteConst.Routes.ResetPasswordRequest>Passwort vergessen?</MudLink>
 
-                <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick=@OnSubmitLogin Color="MudBlazor.Color.Primary">Login</MudButton>
+                </div>
                 @if (LoginError)
                 {
                     <MudAlert Severity="Severity.Error">username or password wrong</MudAlert>
+                    foreach (var error in errorsLoginForm)
+                    {
+                        <MudAlert Severity="Severity.Error">@error</MudAlert>
+                    }
                 }
             </MudForm>
         </MudCardContent>
@@ -72,6 +84,17 @@
     public DateTime? RegisterDateTime = DateTime.Now;
     public UserLoginDTO UserLoginDTO = new UserLoginDTO();
     public RegisterUserDTO RegisterUserDTO = new RegisterUserDTO();
+    private MudTextField<string> userNameTextField;
+    private MudTextField<string> firstNameTextField;
+    private MudTextField<string> lastNameTextField;
+    private MudTextField<string> passwordTextField;
+    private MudTextField<string> passwordConfirmTextField;
+    private MudForm formRegister;
+    private MudForm formLogin;
+    private bool successValidationLoginForm;
+    private string[] errorsLoginForm = { };
+    private bool successValidationRegisterForm;
+    private string[] errorsRegisterForm = { };
 
     private CancellationTokenSource cancellationToken = new();
 
@@ -92,6 +115,9 @@
     }
     public async Task OnSubmitLogin()
     {
+        formLogin.Validate();
+        if (!successValidationLoginForm)
+            return;
         LoginError = false;
         var response = await AuthentificationService.Login(UserLoginDTO.Email,UserLoginDTO.Password,cancellationToken.Token);
         if(response)
@@ -104,6 +130,9 @@
     }
     public async Task OnSubmitRegister()
     {
+        formLogin.Validate();
+        if (!successValidationRegisterForm)
+            return;
         RegisterErrors.Clear();
         RegisterUserDTO.DateOfBirth = RegisterDateTime;
         var response = await AuthentificationService.Register(RegisterUserDTO, cancellationToken.Token);

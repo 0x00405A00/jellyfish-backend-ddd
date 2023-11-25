@@ -13,7 +13,7 @@ namespace Infrastructure.Repository
 
     {
         public DbSet<TDbEntity> DbSet {  get; } 
-        public ApplicationDbContext Context { get; }
+        protected ApplicationDbContext Context { get; }
         public void Add(TDbEntity entity);
         public void Attach(TDbEntity entity);
         public void Remove(TDbEntity entity);
@@ -39,7 +39,7 @@ namespace Infrastructure.Repository
 
     {
         public DbSet<TDbEntity> DbSet { get; }
-        public ApplicationDbContext Context { get; }
+        protected ApplicationDbContext Context { get; }
 
         public void Add(TEntity entity);
         public void Remove(TEntity entity);
