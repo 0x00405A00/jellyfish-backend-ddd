@@ -20,7 +20,7 @@ namespace Infrastructure.Repository
                                     .Include(i => i.UserFriendUserUus)
                                     .ThenInclude(uf => uf.FriendUserUu)
                                     .ThenInclude(ut => ut.UserTypeUu)
-                                    .AsNoTrackingWithIdentityResolution()
+                                    .AsNoTracking()
                                     .AsSingleQuery()
                                     .FirstOrDefaultAsync(expression);
             return await this.MapToDomainEntity(value, true);

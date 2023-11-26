@@ -12,9 +12,9 @@ namespace Application.CQS.User.Commands.UpdateUser.EventHandler
 
         }
 
-        public Task Handle(UserUpdatedDomainEvent<Domain.Entities.User.User, UserId> notification, CancellationToken cancellationToken)
+        public async Task Handle(UserUpdatedDomainEvent<Domain.Entities.User.User, UserId> notification, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

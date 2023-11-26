@@ -1,64 +1,72 @@
 ﻿using Application.Abstractions.Messaging;
+using AutoMapper;
 using Domain.Entities.User.Exception;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
 using MediatR;
+using Shared.DataTransferObject;
 using Shared.MimePart;
 
 namespace Application.CQS.User.Commands.UpdateProfilePicture
 {
-    internal sealed class UploadProfilePictureCommandHandler : ICommandHandler<UploadProfilePictureCommand,bool>
+    internal sealed class UploadProfilePictureCommandHandler : ICommandHandler<UploadProfilePictureCommand, UserDTO>
     {
+        private readonly IMapper _mapper;
         private readonly IMediator mediator;
         private readonly IUserRepository _userRepository;
         private readonly MediaService _mediaService;
         private readonly IUnitOfWork _unitOfWork;
 
         public UploadProfilePictureCommandHandler(
+            IMapper mapper,
             IMediator mediator,
             IUserRepository userRepository,
             MediaService mediaService,
             IUnitOfWork unitOfWork)
         {
+            _mapper = mapper;
             this.mediator = mediator;
             this._userRepository = userRepository;
             this._mediaService = mediaService;
             this._unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<bool>> Handle(UploadProfilePictureCommand request, CancellationToken cancellationToken)
+        public async Task<Result<UserDTO>> Handle(UploadProfilePictureCommand request, CancellationToken cancellationToken)
         {
             if (request.UserId == null)
             {
                 throw new InvalidOperationException($"userId is {request.UserId}");
             }
-            var user = await _userRepository.GetAsyncDbEntity(user => user.Uuid == request.UserId);
+            var user = await _userRepository.GetAsync(user => user.Uuid == request.UserId);
             if (user is null)
                 throw new UserNotFoundException(request.UserId);
 
-            if(!MimeExtension.IsValidMimeTypeForMediaContent(request.MimeType))
+            var updatedByUser = await _userRepository.GetAsync(x => x.Uuid == request.UpdatedBy);
+            if (!MimeExtension.IsValidMimeTypeForMediaContent(request.MimeType))
             {
-                return Result<bool>.Failure("not supported mime-type");
+                return Result<UserDTO>.Failure("not supported mime-type");
             }
             Picture picture = null!;
             try
             {
-
-
                 var base64ByteArr = Convert.FromBase64String(request.Base64);
 
                 var filePath = _mediaService.CreateProfilePicture(request.UserId, MimeExtension.GetFileExtension(request.MimeType), base64ByteArr, cancellationToken);
-                user.ProfilePicturePath = filePath;
-                user.ProfilePictureFileExt = request.MimeType;
-                _userRepository.Update(user);
+                picture = Picture.Parse(filePath, request.MimeType);
+                user.UpdatePicture(updatedByUser, picture);
+                _userRepository.UpdateAsync(user);
                 await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                return Result<bool>.Failure(ex.Message);
+                return Result<UserDTO>.Failure(ex.Message);
             }
-            return Result<bool>.Success(true);
+
+            var mapValue = _mapper.Map<UserDTO>(user);
+            mapValue.Password = null;
+            _userRepository.PublishDomainEvents(user,mediator);
+            return Result<UserDTO>.Success(mapValue);
         }
     }
 }

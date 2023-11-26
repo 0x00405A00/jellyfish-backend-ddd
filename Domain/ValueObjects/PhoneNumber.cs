@@ -13,6 +13,10 @@ namespace Domain.ValueObjects
         }
         public static PhoneNumber Parse(string value)
         {
+            if(String.IsNullOrEmpty(value))
+            {
+                throw new NotValidPhoneNumberException("given value is null or empty");
+            }
             var result = PhoneNumberRegex.Match(value);
             if(!result.Success) {
                 throw new NotValidPhoneNumberException(value);

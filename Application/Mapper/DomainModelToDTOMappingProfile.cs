@@ -2,6 +2,7 @@
 using Domain.Primitives;
 using Domain.ValueObjects;
 using Microsoft.Extensions.Configuration;
+using Shared.Authentification.Claims;
 using Shared.DataTransferObject;
 using Shared.DataTransferObject.Messenger;
 
@@ -76,7 +77,7 @@ namespace Application.Mapper
                 .ForMember(dst => dst.Password, dst => dst.MapFrom(x => string.Empty))//securtiy: password shouldnt transfer over network
                 .ForMember(dst => dst.PasswordConfirm, dst => dst.MapFrom(x => string.Empty))//securtiy: password shouldnt transfer over network
                 .ForMember(dst => dst.UserTypeUuid, dst => dst.MapFrom(x => x.UserType.Uuid.ToGuid()))
-                .ForMember(dst => dst.PictureUrl, dst => dst.MapFrom(x => contentDeliveryUrl+x.Picture.FilePath.ToString()))
+                .ForMember(dst => dst.PictureUrl, dst => dst.MapFrom(x => Shared.Http.Extension.Create(contentDeliveryUrl + x.Picture.FilePath.ToString().Replace(@"\","/"))??null))
                 .ForMember(dst => dst.PictureMimeType, dst => dst.MapFrom(x => x.Picture.FileExtension))
                 .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Uuid.ToGuid()))
                 .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Uuid.ToGuid()))

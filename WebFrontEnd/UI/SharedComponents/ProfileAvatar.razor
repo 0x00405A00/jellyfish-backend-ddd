@@ -1,6 +1,6 @@
 ﻿@inject IJSRuntime JSRuntime;
 
-<MudAvatar id="@ComponentId">
+<MudAvatar id="@ComponentId" Style="@Style">
     @if(Loading)
     {
         <MudOverlay Visible="true" DarkBackground="true" Absolute="true">
@@ -22,13 +22,15 @@
 
 @code {
 
-    public string ComponentId;
+    public string ComponentId ;
     public string ImgElemId;
 
     [Parameter] public UserDTO User { get; set; } = new UserDTO();
     [Parameter] public int HeightInPx { get; set; } = 32;
     [Parameter] public int WidthInPx { get; set; } = 32;
     [Parameter] public bool Loading { get; set; } = false;
+
+    private string Style => $"height: {HeightInPx}px; width: {WidthInPx}px;";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -38,15 +40,14 @@
     }
     protected override async Task OnParametersSetAsync()
     {
-
+        ComponentId = $"avatar-{Guid.NewGuid()}";
         if (User is not null && User.HasImage)
         {
-            ComponentId = $"avatar-{User.Uuid}";
-            ImgElemId = $"avatar-img-{User.Uuid}";
-            string style = $"height: {HeightInPx}px; width: {WidthInPx}px;border:1px solid #000;";
-            await JSRuntime.InvokeVoidAsync("setStyle", ImgElemId, style);
-            await JSRuntime.InvokeVoidAsync("setStyle", ComponentId, style);
-            await JSRuntime.InvokeVoidAsync("renderImage", ImgElemId, User.PictureUrl, HeightInPx,WidthInPx);
+            ImgElemId = $"avatar-img-{Guid.NewGuid()}";
+            StateHasChanged();
+            await JSRuntime.InvokeVoidAsync("setStyle", ImgElemId, Style);
+            await JSRuntime.InvokeVoidAsync("renderImage", ImgElemId, User.PictureUrl ?? MimeExtension.GetImageAsMime(User.PictureBase64, User.PictureMimeType), HeightInPx, WidthInPx);
         }
+        await JSRuntime.InvokeVoidAsync("setStyle", ComponentId, Style);
     }
 }

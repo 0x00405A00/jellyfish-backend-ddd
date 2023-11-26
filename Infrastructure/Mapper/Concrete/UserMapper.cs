@@ -21,8 +21,8 @@ namespace Infrastructure.Mapper.Concrete
             user.Email = entity.Email.EmailValue;
             user.Password = entity.Password;
             user.Phone = entity.Phone.PhoneNumb;
-            user.ProfilePicturePath = entity.Picture.FilePath;
-            user.ProfilePictureFileExt = entity.Picture.FileExtension;
+            user.ProfilePicturePath = entity.Picture?.FilePath;
+            user.ProfilePictureFileExt = entity.Picture?.FileExtension;
             user.DateOfBirth = entity.DateOfBirth.ToDateTime(new TimeOnly());
             user.ActivationDatetime = entity.ActivationDateTime;
             user.ActivationToken = entity.ActivationToken;

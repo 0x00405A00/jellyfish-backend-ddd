@@ -11,10 +11,10 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <ProfileAvatar User="@User" Loading="@uploadProfilePicture" HeightInPx="256" WidthInPx="256"></ProfileAvatar>
+        <ProfileAvatar User="@User" Loading="@uploadProfilePicture" HeightInPx=256 WidthInPx=256></ProfileAvatar>
         <MudToolBar>
             <MudIconButton OnClick=@OpenUploadPictureDialog Icon="@Icons.Material.Outlined.UploadFile" />
-            @if (!String.IsNullOrEmpty(User.PictureUrl))
+            @if (User.HasImage)
             {
                 <MudIconButton OnClick=@ClearProfilePicture Icon="@Icons.Material.Outlined.Clear" />
             }
@@ -22,7 +22,7 @@
         <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
             <MudTextField InputType="InputType.Text" @bind-Value=@User.UserName Label="UserName" Variant="Variant.Filled" ReadOnly="false" Required />
              <MudTextField InputType="InputType.Text" @bind-Value=@User.FirstName Label="FirstName" ReadOnly="false" Required />
-             <MudTextField @ref="lastNameTextField" InputType="InputType.Text" @bind-Value=@User.LastName Label="LastName" ReadOnly="false" Required RequiredError="Please enter a Lastname" OnKeyUp="@OnKeyUpEvent" />
+             <MudTextField @ref="lastNameTextField" InputType="InputType.Text" @bind-Value=@User.LastName Label="LastName" ReadOnly="false" Required RequiredError="Please enter a Lastname" />
              @if (!isEditDialog)
              {
 
@@ -31,6 +31,7 @@
 
              }
             <MudTextField InputType="InputType.Email" @bind-Value=@User.Email Label="Email" ReadOnly="false" Required RequiredError="email must be setted" />
+             <MudTextField InputType="InputType.Telephone" @bind-Value=@User.Phone Label="Phone" ReadOnly="false" Required RequiredError="phonenumber must be setted" />
              <MudDatePicker Label="Geburstag" DisplayMonths="2" MinDate="@(Domain.Entities.User.User.MinimumBirthDayDate)" MaxDate="@(Domain.Entities.User.User.MaximumBirthDayDate)" TitleDateFormat="dd.MM.yyyy" @bind-Date=@User.DateOfBirth Required RequiredError="birthday must be setted" />
              <MudSelect T="UserTypeDTO" MultiSelection=false Label="UserType" AnchorOrigin="Origin.BottomCenter" @bind-Value=@SelectedUserType Required RequiredError="need one user-type">
                  @foreach (var item in UserTypes)
@@ -60,6 +61,7 @@
     [Parameter] public IEnumerable<UserTypeDTO> UserTypes { get; set; } = new HashSet<UserTypeDTO>();
     [Parameter] public IEnumerable<RoleDTO> Roles { get; set; } = new HashSet<RoleDTO>();
 
+    private UserDTO UserBeforeSaving;
     private bool uploadProfilePicture = false;
     private AuthDTO _token;
     private CancellationTokenSource cancellationToken = new();
@@ -76,6 +78,10 @@
     private IEnumerable<RoleDTO> SelectedRoles { get; set; } = new List<RoleDTO>();
     private IEnumerable<RoleDTO> InitialRoles { get; set; } = new List<RoleDTO>();
 
+    protected override async Task OnParametersSetAsync()
+    {
+        UserBeforeSaving = (UserDTO)User.Clone();
+    }
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
         if(firstRender)
@@ -113,17 +119,17 @@
     {
         try
         {
-            Domain.Entities.User.User.CheckPasswordWithPolicy(password, passwordConfirmTextField.Text);
+            Domain.Entities.User.User.CheckPasswordWithPolicy(password, passwordConfirmTextField.Value);
         }
         catch (Domain.Entities.User.Exception.InvalidPasswordException ex)
         {
             return ex.Errors.ToList();
         }
-        return null;
+        return new List<string>();
     }
     private string ComparePasswords(string input)
     {
-        if (passwordConfirmTextField.Text!=input)
+        if (passwordConfirmTextField.Value!=input)
         {
             return "passwords are not identical";
         }
@@ -149,6 +155,7 @@
         var responseProfilePicDelete = await WebApiClient.DeleteUserProfilePicture(User, cancellationToken.Token);
         if (responseProfilePicDelete.IsSuccess)
         {
+            User.PictureBase64 = null;
             User.PictureUrl = null;
             uploadProfilePicture = false;
         }
@@ -159,7 +166,6 @@
         var result = await DialogHandler.ShowUploadDialog("Upload a profile Picture.");
         if(!result.Cancelled)
         {
-            uploadProfilePicture = true;
             StateHasChanged();
             var image = (IBrowserFile)result.Data;
             byte[] fileBytes = new byte[image.Size];
@@ -167,14 +173,16 @@
             User.PictureBase64 = Convert.ToBase64String(fileBytes);
             User.PictureMimeType = image.ContentType;
 
-            if (User.HasImage)
+            StateHasChanged();
+            uploadProfilePicture = true;
+            var responseProfilePicUpload = await WebApiClient.UpdateUserProfilePicture(User, cancellationToken.Token);
+            if (responseProfilePicUpload.IsSuccess)
             {
-                var responseProfilePicUpload = await WebApiClient.UpdateUserProfilePicture(User, cancellationToken.Token);
-                if (responseProfilePicUpload.IsSuccess)
-                {
-                    uploadProfilePicture = false;
-                    StateHasChanged();
-                }
+                uploadProfilePicture = false;
+                User.PictureBase64 = null;
+                User.PictureUrl = responseProfilePicUpload.Data.PictureUrl;
+                StateHasChanged();
+
             }
         }
     }
@@ -186,6 +194,7 @@
     {
         return SelectedRoles.Where(x => !InitialRoles.Where(y => y.Uuid == x.Uuid).Any())?.ToList();
     }
+
     private async void Commit()
     {
         form.Validate();
@@ -193,7 +202,6 @@
             return;
         User.UserTypeUuid =SelectedUserType.Uuid;
         User.Roles =SelectedRoles.ToList();
-
 
         if(isEditDialog)//Edit
         {

@@ -4,6 +4,9 @@ function renderImage(canvasId, imageSource, renderSizeHeight, renderSizeWidth) {
     image.src = imageSource;
 
     var canvas = document.getElementById(canvasId);
+    if (canvas == null) {
+        return;
+    }
     var ctx = canvas.getContext('2d');
 
     image.onload = function () {

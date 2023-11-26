@@ -22,7 +22,7 @@
 
                  </MudTooltip>
                  <MudSelect Class="ml-1 mr-0 w-100 mb-2 mt-2" T="int" @bind-Value=@SelectedItemsPerPage Label="Items per Page" FullWidth=false MultiSelection=false Variant="Variant.Filled" AnchorOrigin="Origin.BottomCenter">
-                     @foreach (var item in _itemsPerPageSet)
+                    @foreach (var item in _itemsPerPageSet)
                     {
                         <MudSelectItem T="int" Value="@item" />
                     }
@@ -32,6 +32,7 @@
             {
                 <MudTable @ref=@UserListTable T="UserDTO" Items=@UsersList SelectedItemsChanged="@SelectedItemsChanged" MultiSelection SelectedItems=@SelectedItems SortMode="@SortMode.Multiple">
                      <HeaderContent>
+                         <MudTh></MudTh>
                          <MudTh></MudTh>
                          <MudTh>UserName</MudTh>
                          <MudTh>FirstName</MudTh>
@@ -47,7 +48,10 @@
 
                      <RowTemplate Context="TableContext">
                          <MudTd>
-                            <ProfileAvatar User="@TableContext" HeightInPx="32" WidthInPx="32"></ProfileAvatar>
+                             <MudText>#@(((_selectedPage-1) * _selectedItemsPerPage) + (UsersList.IndexOf(TableContext)+1))</MudText>
+                         </MudTd>
+                         <MudTd>
+                            <ProfileAvatar User="@TableContext" HeightInPx=45 WidthInPx=45></ProfileAvatar>
                          </MudTd>
                          <MudTd DataLabel="UserName">@TableContext.UserName</MudTd>
                          <MudTd DataLabel="FirstName">@TableContext.FirstName</MudTd>
@@ -95,7 +99,7 @@
             PageItemSelectionChanged(value);
         }
     }
-    private List<int> _itemsPerPageSet = new List<int> { 10,20,50,75};
+    private List<int> _itemsPerPageSet = new List<int> { 10, 20, 50, 75 };
     private int _maxPages = 1;
     private int _totalUsers = 1;
     private AuthDTO _token;
@@ -285,7 +289,7 @@
         {
             UsersList.Add((UserDTO)result.Data);
             StateHasChanged();
-        }
+        } 
 
     }
     public async Task EditUser()
@@ -297,8 +301,8 @@
         if (!result.Cancelled)
         {
             UsersList[index] = ((UserDTO)result.Data);
-            StateHasChanged();
         }
+        StateHasChanged();
     }
     public async Task RemoveUser()
     {

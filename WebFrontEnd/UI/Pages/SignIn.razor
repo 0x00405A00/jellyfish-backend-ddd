@@ -122,7 +122,8 @@
         var response = await AuthentificationService.Login(UserLoginDTO.Email,UserLoginDTO.Password,cancellationToken.Token);
         if(response)
         {
-            NavigationManager.NavigationManager.NavigateTo(RouteConst.Routes.Index);
+            StateHasChanged();
+            NavigationManager.NavigationManager.NavigateTo(RouteConst.Routes.Index, true);
         }
         LoginError = !response;
         StateHasChanged();
@@ -138,7 +139,7 @@
         var response = await AuthentificationService.Register(RegisterUserDTO, cancellationToken.Token);
         if(response.IsSuccess)
         {
-            NavigationManager.NavigationManager.NavigateTo(RouteConst.Routes.RegisterSuccess);//page welche info über erfolgreiche registrierung gibt und infos über das weitere vorgehen
+            NavigationManager.NavigationManager.NavigateTo(RouteConst.Routes.RegisterSuccess, true);//page welche info über erfolgreiche registrierung gibt und infos über das weitere vorgehen
         }
         else
         {

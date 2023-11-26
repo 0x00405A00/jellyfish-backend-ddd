@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "z7Q0VX2DwKVqLSHGPJrHj8PesgTJRNA8ry3gf3re5yA=",
+  "Hash": "WWTv+tjQX0VaUKNYV5b6qZdMgeoEEx0O9scHJfATmdo=",
   "Source": "Presentation",
   "BasePath": "_content/Presentation",
   "Mode": "Default",
@@ -110,6 +110,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\users\\profile-img\\d4368f8d-fd51-11ed-8f81-7085c294413b.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\wwwroot\\users\\profile-img\\d758e19a-3098-45ef-a13d-6c384b3cd89d.jpg",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "users/profile-img/d758e19a-3098-45ef-a13d-6c384b3cd89d.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\users\\profile-img\\d758e19a-3098-45ef-a13d-6c384b3cd89d.jpg"
     }
   ]
 }

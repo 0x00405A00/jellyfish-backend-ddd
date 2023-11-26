@@ -1,6 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
-using Domain.Entities.User;
-using Domain.ValueObjects;
+using Shared.DataTransferObject;
 
 namespace Application.CQS.User.Commands.UpdateUser
 {
@@ -23,5 +22,5 @@ namespace Application.CQS.User.Commands.UpdateUser
                                     string? LastName,
                                     string? Email,
                                     string? Phone,
-                                    DateTime? DateOfBirth) : ICommand<Guid>;
+                                    DateTime? DateOfBirth) : ICommand<UserDTO>;
 }

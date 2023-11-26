@@ -7,9 +7,8 @@ html, body {
 h1:focus {
     outline: none;
 }
-
-a, .btn-link {
-    color: #0071c1;
+a {
+    color: #fff;
 }
 
 .btn-primary {

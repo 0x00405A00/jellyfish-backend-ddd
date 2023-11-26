@@ -184,18 +184,23 @@
     private AuthDTO _token;
     public UserDTO CurrentUser;
     private bool ProfileButtonExpand = false;
-    private bool IsLoggedIn => _token!=null&&!_token.IsTokenExpired;
+    private bool IsLoggedIn => _token!=null&& _token.IsAuthentificated;
     private CancellationTokenSource cancellationToken = new();
-
+    protected override async Task OnInitializedAsync()
+    {
+    }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if(firstRender)
         {
-            LogoutBackgroundService.OnRerenderRequested += RequestRerender;
             _token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
             var authState = await AuthentificationService.GetAuthenticationStateAsync();
             CurrentUser = await WebApiClient.GetCurrentUser(authState, cancellationToken.Token);
             StateHasChanged();
+            if (_token is not null)
+            {
+                LogoutBackgroundService.OnRerenderRequested += RequestRerender;
+            }
         }
 
 
@@ -228,17 +233,27 @@
     {
         InvokeAsync(async() =>
         {
-            if (!_token.IsTokenExpired && _token.TokenExpiresIn!=null)
+            if (_token is not null)
             {
-
-                var calcTime = _token.TokenExpiresIn.Value.AddMinutes(-5);
-                if (DateTime.Now>= calcTime)
+                if (_token.TokenExpiresIn is not null)
                 {
-                    
-                    LogoutTimer = _token.TokenExpiresIn.Value-DateTime.Now;
-                    StateHasChanged(); // Dies löst einen Rerender der Komponente aus
-                    NavigationManager.NavigateTo(RouteConst.Routes.SignIn);
-                    await AuthentificationService.Logout(cancellationToken.Token);
+                    if (!_token.IsTokenExpired)
+                    {
+
+                        var calcTime = _token.TokenExpiresIn.Value.AddMinutes(-5);
+                        if (DateTime.Now >= calcTime)
+                        {
+
+                            LogoutTimer = _token.TokenExpiresIn.Value - DateTime.Now;
+                            StateHasChanged(); // Dies löst einen Rerender der Komponente aus
+
+                        }
+                    }
+                    else if (_token.IsTokenExpired)
+                    {
+                        await AuthentificationService.Logout(cancellationToken.Token);
+                        NavigationManager.NavigateTo(RouteConst.Routes.SignIn);
+                    }
                 }
             }
         });

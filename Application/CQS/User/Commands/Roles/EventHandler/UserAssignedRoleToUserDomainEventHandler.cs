@@ -11,9 +11,8 @@ namespace Application.CQS.User.Commands.Roles.EventHandler
 
         }
 
-        public Task Handle(UserAssignedRoleToUserDomainEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(UserAssignedRoleToUserDomainEvent notification, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
         }
     }
 }

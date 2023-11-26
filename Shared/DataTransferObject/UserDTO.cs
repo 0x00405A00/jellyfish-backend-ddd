@@ -1,9 +1,10 @@
 ﻿using Shared.MimePart;
+using Shared.Http;
 using System.Text.Json.Serialization;
 
 namespace Shared.DataTransferObject
 {
-    public class UserDTO : AbstractUserDTO
+    public class UserDTO : AbstractUserDTO, ICloneable
     {
         [JsonPropertyName("uuid")]
         public Guid Uuid { get; set; }
@@ -92,7 +93,7 @@ namespace Shared.DataTransferObject
         }
 
         [JsonIgnore]
-        public bool HasImage { get { return !String.IsNullOrEmpty(PictureUrl); } }
+        public bool HasImage { get { return (!String.IsNullOrEmpty(PictureUrl) && Extension.IsValidUrl(PictureUrl) || (!String.IsNullOrEmpty(PictureBase64) && !String.IsNullOrEmpty(PictureMimeType))); } }
 
         public UserDTO()
         {
@@ -110,9 +111,13 @@ namespace Shared.DataTransferObject
             var lastNameFirstLetter = LastName != null ? LastName.Substring(0, 1) : null;
             var userNameFirstLetter = UserName != null ? UserName.Substring(0, 2) : null;
             return (firstNameFirstLetter !=null&& lastNameFirstLetter!=null)? 
-                (firstNameFirstLetter+"."+ lastNameFirstLetter+ ".").ToUpper() :(userNameFirstLetter??"u").ToUpper();//U==UKNOWN
+                (firstNameFirstLetter+""+ lastNameFirstLetter+ "").ToUpper() :(userNameFirstLetter??"u").ToUpper();//U==UKNOWN
         }
 
+        public object Clone()
+        {
 
+            return this.MemberwiseClone();
+        }
     }
 }

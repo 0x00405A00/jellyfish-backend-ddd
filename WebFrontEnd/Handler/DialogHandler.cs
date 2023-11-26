@@ -35,7 +35,7 @@ namespace WebFrontEnd.Handler
                 var response = await authentificationService.Logout(cancellationToken);
                 if (response)
                 {
-                    navigationManager.NavigateTo(RouteConst.Routes.SignIn);
+                    navigationManager.NavigateTo(RouteConst.Routes.SignIn, true);
                 }
             }
         }

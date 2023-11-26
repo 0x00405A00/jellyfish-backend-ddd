@@ -81,19 +81,18 @@ namespace Presentation.Controllers.Api.v1
         [Produces(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> PasswordChange(Guid id,[FromBody] PasswordChangeDTO passwordChangeDTO, CancellationToken cancellationToken)
         {
-
             var claims = HttpContext.GetClaims(x=> x.Type == AuthorizationConst.Claims.ClaimTypeIsAdmin);
             bool isAdmin = claims.Any();
-            if(!isAdmin)
+            var uuidFromRequest = HttpContext.GetUserUuidFromRequest();
+            if (!isAdmin)
             {
-                var uuidFromRequest = HttpContext.GetUserUuidFromRequest();
                 if(uuidFromRequest!=id)
                 {
                     return JsonApiResultExtension.Client.Forbidden("you are not allowed","insufficient rights");
                 }
             }
 
-            var command = new UpdateUserPasswordCommand(id,passwordChangeDTO.Password, passwordChangeDTO.PasswordRepeat);
+            var command = new UpdateUserPasswordCommand(uuidFromRequest, id,passwordChangeDTO.Password, passwordChangeDTO.PasswordRepeat);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
@@ -278,8 +277,18 @@ namespace Presentation.Controllers.Api.v1
         [Produces(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> UpdateProfilePicture(Guid id, [FromBody] UserDTO userDto, CancellationToken cancellationToken)
         {
-            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var claims = HttpContext.GetClaims(x => x.Type == AuthorizationConst.Claims.ClaimTypeIsAdmin);
+            bool isAdmin = claims.Any();
+            var uuidFromRequest = HttpContext.GetUserUuidFromRequest();
+            if (!isAdmin)
+            {
+                if (uuidFromRequest != id)
+                {
+                    return JsonApiResultExtension.Client.Forbidden("you are not allowed", "insufficient rights");
+                }
+            }
             var command = new UploadProfilePictureCommand(
+                uuidFromRequest,
                 id,
                 userDto.PictureBase64,
                 userDto.PictureMimeType);
@@ -294,8 +303,17 @@ namespace Presentation.Controllers.Api.v1
         [Produces(MediaTypeNames.Application.Json)]
         public async Task<IActionResult> DeleteProfilePicture(Guid id, CancellationToken cancellationToken)
         {
-            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new DeleteProfilePictureCommand(id);
+            var claims = HttpContext.GetClaims(x => x.Type == AuthorizationConst.Claims.ClaimTypeIsAdmin);
+            bool isAdmin = claims.Any();
+            var uuidFromRequest = HttpContext.GetUserUuidFromRequest();
+            if (!isAdmin)
+            {
+                if (uuidFromRequest != id)
+                {
+                    return JsonApiResultExtension.Client.Forbidden("you are not allowed", "insufficient rights");
+                }
+            }
+            var command = new DeleteProfilePictureCommand(uuidFromRequest,id);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();

@@ -6,25 +6,43 @@
 @inject IExtendedNavigationManager ExtNavigationManager
 @inject ISessionStorage SessionStorage
 
-<MudNavMenu Bordered Class="flex-column mt-5" Color="MudBlazor.Color.Info">
-     <MudNavLink Icon="@Icons.Material.Filled.Home" IconColor="MudBlazor.Color.Info" Href="@RouteConst.Routes.Home">
-         Home
+<MudNavMenu Bordered=false Class="ml-5 mr-5" Color="MudBlazor.Color.Info">
+     <MudNavLink Href="@RouteConst.Routes.Home">
+         <div style="color: #fff;">
+             <MudIcon Icon="@Icons.Material.Outlined.Dashboard" />
+             <span>Home</span>
+         </div>
      </MudNavLink>
      <CascadingAuthenticationState>
          <AuthorizeView Policy="Admin">
              @if (hasLogin)
             {
-                <MudNavGroup Expanded Icon="@Icons.Material.Filled.AdminPanelSettings" IconColor="MudBlazor.Color.Info" Title="Administration">
+                <MudNavGroup Expanded Style="">
+                 <div style="color: #fff;">
+                     <MudIcon Icon="@Icons.Material.Outlined.AdminPanelSettings" />
+                     <span>Administration</span>
+                 </div>
+                     <MudNavLink Href="@RouteConst.Routes.DashBoard">
+                         <div style="color: #fff;">
+                         <MudIcon Icon="@Icons.Material.Outlined.Dashboard" />
+                             <span>Dashboard</span>
+                         </div>
+                     </MudNavLink>
 
-                     <MudNavLink Icon="@Icons.Material.Filled.Dashboard" IconColor="MudBlazor.Color.Info" Href="@RouteConst.Routes.DashBoard">
-                         <a>Dashboard</a>
+                     <MudNavLink Href="@RouteConst.Routes.BackendHealth">
+                         <div style="color: #fff;">
+                         <MudIcon Icon="@Icons.Material.Outlined.HealthAndSafety" />
+                             <span>Health</span>
+                         </div>
                      </MudNavLink>
-                     <MudNavLink Icon="@Icons.Material.Filled.HealthAndSafety" IconColor="MudBlazor.Color.Info" Href="@RouteConst.Routes.BackendHealth">
-                         <a>Health</a>
+
+                     <MudNavLink Href="@RouteConst.Routes.Users">
+                         <div style="color: #fff;">
+                             <MudIcon Icon="@Icons.Material.Outlined.People" />
+                         <span>Users</span>
+                         </div>
                      </MudNavLink>
-                     <MudNavLink Icon="@Icons.Material.Filled.People" IconColor="MudBlazor.Color.Info" Href="@RouteConst.Routes.Users">
-                         <a>Users</a>
-                     </MudNavLink>
+
                  </MudNavGroup>
             }
          </AuthorizeView>

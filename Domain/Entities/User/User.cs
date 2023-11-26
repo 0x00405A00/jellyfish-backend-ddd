@@ -64,6 +64,8 @@ namespace Domain.Entities.User
         public User? LastModifiedByUser { get;private set; }
         public User? DeletedByUser { get;private set; }
 
+        public bool HasUserProfilePicture=> Picture!=null && Picture.FilePath!=null;
+
         private User()
         {
             
