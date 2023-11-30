@@ -19,12 +19,16 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Extension;
+using Presentation.Swagger.Attribute;
+using Presentation.Swagger.ExampleProvider;
 using Presentation.WebResponse;
 using Shared.ApiDataTransferObject;
 using Shared.Const;
 using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
 using Shared.DataTransferObject.Messenger;
+using Swashbuckle.AspNetCore.Filters;
+using System.Net;
 using System.Net.Mime;
 using WebApi.Abstractions;
 
@@ -219,6 +223,8 @@ namespace Presentation.Controllers.Api.v1
             return result.PrepareResponse();
         }
 
+        [SwaggerRequestExample(typeof(ApiDataTransferObject<UserDTO>),typeof(UserDTOExampleProvider))]
+        [SwaggerResponseExampleAttributeExtended(HttpStatusCode.OK, typeof(UserDTOExampleProvider))]
         public override async Task<IActionResult> Create([FromBody] UserDTO userDto, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();

@@ -13,10 +13,26 @@
             <MudText Typo="Typo.h5">@(_selectedItemsPerPage == UsersList.Count ? (_selectedPage * UsersList.Count) : (_totalUsers))/@_totalUsers Users</MudText>
 
             <MudToolBar Class="d-flex flex-wrap align-content-around w-100 m-0">
-                <MudIconButton Icon="@Icons.Material.Outlined.Add" OnClick="AddUser" />
-                <MudIconButton Class="ml-1" Icon="@Icons.Material.Outlined.Edit" Disabled=@CantExecByMultipleSelection OnClick="EditUser" />
-                <MudIconButton Class="ml-1" Icon="@Icons.Material.Outlined.Remove" Disabled=@CanExecWhenMinOneUserIsSelected OnClick="RemoveUser" />
-                <MudIconButton Class="ml-1" Icon="@Icons.Material.Outlined.Password" Disabled=@CantExecByMultipleSelection OnClick="ResetPassword" />
+                <MudButton OnClick="AddUser">
+                    <div style="color: #000;">
+                        <MudIcon Icon="@Icons.Material.Outlined.Add"></MudIcon>
+                    </div>
+                </MudButton>
+                <MudButton Class="ml-1" Disabled=@CantExecByMultipleSelection OnClick="EditUser">
+                    <div style="color: #000;">
+                        <MudIcon Icon="@Icons.Material.Outlined.Edit"></MudIcon>
+                    </div>
+                </MudButton>
+                <MudButton Class="ml-1" Disabled=@CanExecWhenMinOneUserIsSelected OnClick="RemoveUser">
+                    <div style="color: #000;">
+                        <MudIcon Icon="@Icons.Material.Outlined.Remove"></MudIcon>
+                    </div>
+                </MudButton>
+                <MudButton Class="ml-1" Disabled=@CantExecByMultipleSelection OnClick="ResetPassword">
+                    <div style="color: #000;">
+                        <MudIcon Icon="@Icons.Material.Outlined.Password"></MudIcon>
+                    </div>
+                </MudButton>
                 <MudTooltip Text="Search User. Minimum 3 chars.">
                     <MudInput Class="ml-5" T="string" Variant="Variant.Outlined" Placeholder="Searchtext..." Disabled=@IsSearching DisableUnderLine InputMode="InputMode.search" TextChanged="@SearchTextChanged"></MudInput>
 

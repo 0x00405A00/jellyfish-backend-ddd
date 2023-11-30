@@ -1,6 +1,7 @@
 ﻿using Shared.MimePart;
 using Shared.Http;
 using System.Text.Json.Serialization;
+using Shared.DataTransferObject.Abstraction;
 
 namespace Shared.DataTransferObject
 {

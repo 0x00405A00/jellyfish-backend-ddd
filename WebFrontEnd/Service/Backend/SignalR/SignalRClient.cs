@@ -1,5 +1,5 @@
 ﻿
-using Infrastructure.SignalR;
+using Shared.Infrastructure.SignalR;
 using Microsoft.AspNetCore.SignalR.Client;
 using Shared.DataTransferObject;
 using Shared.DataTransferObject.Messenger;

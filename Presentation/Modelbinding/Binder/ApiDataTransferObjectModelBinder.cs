@@ -2,7 +2,7 @@
 using Shared.ApiDataTransferObject;
 using Shared.ApiDataTransferObject.Object;
 using Shared.CustomException;
-using Shared.DataTransferObject;
+using Shared.DataTransferObject.Abstraction;
 using System.Reflection;
 using System.Text.Json;
 
@@ -32,7 +32,7 @@ namespace Presentation.Modelbinding.Binder
 
                         throw new ModelBindingFailedException($"{(nameof(ApiData<object>.Type))} is null or empty");
                     }
-                    var types = Assembly.GetAssembly(typeof(Shared.DataTransferObject.IDataTransferObject))
+                    var types = Assembly.GetAssembly(typeof(IDataTransferObject))
                                              .GetTypes();
                     Type modelType = null;
                     try

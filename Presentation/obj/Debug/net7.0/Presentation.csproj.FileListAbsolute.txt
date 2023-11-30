@@ -172,6 +172,9 @@ C:\Users\Mika\Desktop\Projekte\jellyfish-backend-ddd\backend\Presentation\obj\De
 C:\Users\Mika\Desktop\Projekte\jellyfish-backend-ddd\backend\Presentation\obj\Debug\net7.0\ref\Presentation.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\appsettings.Development.json
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\appsettings.json
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Postman\20231111\Application.Mobile.Jellyfish API.postman_collection.json
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Postman\20231111\Application.Mobile.Jellyfish ENV.postman_environment.json
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Presentation.staticwebassets.runtime.json
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Presentation.exe
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Presentation.deps.json
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Presentation.runtimeconfig.json
@@ -219,8 +222,9 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\M
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\MySql.EntityFrameworkCore.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Newtonsoft.Json.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Owin.dll
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\BouncyCastle.Crypto.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Scrutor.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.dll
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -258,13 +262,14 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\P
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.csproj.CoreCompileInputs.cache
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.sourcelink.json
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\staticwebassets.development.json
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\staticwebassets\msbuild.Presentation.Microsoft.AspNetCore.StaticWebAssets.props
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\staticwebassets\msbuild.build.Presentation.props
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.Presentation.props
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.Presentation.props
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\staticwebassets.pack.json
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\staticwebassets.build.json
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\staticwebassets.development.json
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\scopedcss\bundle\Presentation.styles.css
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.csproj.CopyComplete
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.dll
@@ -272,7 +277,3 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\r
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.pdb
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.genruntimeconfig.cache
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\ref\Presentation.dll
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Postman\20231111\Application.Mobile.Jellyfish API.postman_collection.json
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Postman\20231111\Application.Mobile.Jellyfish ENV.postman_environment.json
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\obj\Debug\net7.0\Presentation.sourcelink.json
-C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation\bin\Debug\net7.0\Presentation.staticwebassets.runtime.json

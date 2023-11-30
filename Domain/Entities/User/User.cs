@@ -117,24 +117,33 @@ namespace Domain.Entities.User
             PasswordResetExpiresIn = passwordResetExpiresIn;
             PasswordResetToken = passwordResetToken;
         }
-
         /// <summary>
-        /// Factory Method for creating a User
+        /// Factory Method for creating a User instance with specified attributes.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="userType"></param>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <param name="firstName"></param>
-        /// <param name="lastName"></param>
-        /// <param name="email"></param>
-        /// <param name="phone"></param>
-        /// <param name="dateOfBirth"></param>
-        /// <param name="activationDateTime"></param>
-        /// <param name="createdTime"></param>
-        /// <param name="lastModifiedTime"></param>
-        /// <param name="deletedTime"></param>
-        /// <returns></returns>
+        /// <param name="id">The unique identifier for the user.</param>
+        /// <param name="userType">The type of the user (e.g., admin, regular).</param>
+        /// <param name="userName">The username chosen by the user.</param>
+        /// <param name="password">The user's password.</param>
+        /// <param name="firstName">The user's first name.</param>
+        /// <param name="lastName">The user's last name.</param>
+        /// <param name="activationToken">Token for account activation.</param>
+        /// <param name="activationCode">Activation code for the account.</param>
+        /// <param name="passwordResetCode">Code for password reset.</param>
+        /// <param name="passwordResetToken">Token for password reset.</param>
+        /// <param name="passwordResetExpiresIn">Expiration time for password reset.</param>
+        /// <param name="email">The user's email address.</param>
+        /// <param name="phone">The user's phone number.</param>
+        /// <param name="picture">User's profile picture.</param>
+        /// <param name="roles">Collection of user roles.</param>
+        /// <param name="friends">Collection of user's friends.</param>
+        /// <param name="friendshipRequests">Collection of friendship requests.</param>
+        /// <param name="dateOfBirth">The user's date of birth.</param>
+        /// <param name="activationDateTime">Date and time of account activation.</param>
+        /// <param name="createdTime">Date and time when the user was created.</param>
+        /// <param name="lastModifiedTime">Date and time when the user was last modified.</param>
+        /// <param name="deletedTime">Date and time when the user was deleted.</param>
+        /// <param name="createdBy">User who created this user instance.</param>
+        /// <returns>A newly created User instance.</returns>
         public static User Create(
             UserId id,
             UserType userType,

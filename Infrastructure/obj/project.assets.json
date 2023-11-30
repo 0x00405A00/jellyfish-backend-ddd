@@ -723,12 +723,12 @@
           "lib/netstandard2.0/Mono.TextTemplating.dll": {}
         }
       },
-      "MySql.Data/8.1.0": {
+      "MySql.Data/8.2.0": {
         "type": "package",
         "dependencies": {
+          "BouncyCastle.Cryptography": "2.2.1",
           "Google.Protobuf": "3.21.9",
           "K4os.Compression.LZ4.Streams": "1.3.5",
-          "Portable.BouncyCastle": "1.9.0",
           "System.Buffers": "4.5.1",
           "System.Configuration.ConfigurationManager": "4.4.1",
           "System.Diagnostics.DiagnosticSource": "7.0.2",
@@ -811,19 +811,6 @@
         },
         "runtime": {
           "lib/net40/Owin.dll": {}
-        }
-      },
-      "Portable.BouncyCastle/1.9.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
-            "related": ".xml"
-          }
         }
       },
       "Scrutor/4.2.2": {
@@ -2375,10 +2362,10 @@
         "mono.texttemplating.nuspec"
       ]
     },
-    "MySql.Data/8.1.0": {
-      "sha512": "7kEJLyty7HcqJD0lnfs+2fdMrvCl0RY5oykvZThbmg6QVLT55dwygI69Eqxl0M6IThP9woyjpsezT6m7gKRrLA==",
+    "MySql.Data/8.2.0": {
+      "sha512": "p62lWlKvJJ5UnBNvtal3JM9SOyQaaIA4C6E5LO2TOlO8CF5BDX0I8HsihbzP8wOELZhD4I3vpferDRv7uBNkOg==",
       "type": "package",
-      "path": "mysql.data/8.1.0",
+      "path": "mysql.data/8.2.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2390,12 +2377,14 @@
         "lib/net6.0/MySql.Data.xml",
         "lib/net7.0/MySql.Data.dll",
         "lib/net7.0/MySql.Data.xml",
+        "lib/net8.0/MySql.Data.dll",
+        "lib/net8.0/MySql.Data.xml",
         "lib/netstandard2.0/MySql.Data.dll",
         "lib/netstandard2.0/MySql.Data.xml",
         "lib/netstandard2.1/MySql.Data.dll",
         "lib/netstandard2.1/MySql.Data.xml",
         "logo-mysql-170x115.png",
-        "mysql.data.8.1.0.nupkg.sha512",
+        "mysql.data.8.2.0.nupkg.sha512",
         "mysql.data.nuspec",
         "runtimes/win-x64/native/comerr64.dll",
         "runtimes/win-x64/native/gssapi64.dll",
@@ -2456,21 +2445,6 @@
         "lib/net40/Owin.dll",
         "owin.1.0.0.nupkg.sha512",
         "owin.nuspec"
-      ]
-    },
-    "Portable.BouncyCastle/1.9.0": {
-      "sha512": "eZZBCABzVOek+id9Xy04HhmgykF0wZg9wpByzrWN7q8qEI0Qen9b7tfd7w8VA3dOeesumMG7C5ZPy0jk7PSRHw==",
-      "type": "package",
-      "path": "portable.bouncycastle/1.9.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net40/BouncyCastle.Crypto.dll",
-        "lib/net40/BouncyCastle.Crypto.xml",
-        "lib/netstandard2.0/BouncyCastle.Crypto.dll",
-        "lib/netstandard2.0/BouncyCastle.Crypto.xml",
-        "portable.bouncycastle.1.9.0.nupkg.sha512",
-        "portable.bouncycastle.nuspec"
       ]
     },
     "Scrutor/4.2.2": {
@@ -3713,7 +3687,7 @@
       "Microsoft.AspNetCore.SignalR.Protocols.Json >= 7.0.13",
       "Microsoft.EntityFrameworkCore.Relational >= 7.0.10",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.10",
-      "MySql.Data >= 8.0.33",
+      "MySql.Data >= 8.2.0",
       "MySql.EntityFrameworkCore >= 7.0.5",
       "Scrutor >= 4.2.2",
       "Shared >= 1.0.0"
@@ -3807,7 +3781,7 @@
           },
           "MySql.Data": {
             "target": "Package",
-            "version": "[8.0.33, )"
+            "version": "[8.2.0, )"
           },
           "MySql.EntityFrameworkCore": {
             "target": "Package",
@@ -3839,16 +3813,6 @@
     }
   },
   "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "\"Infrastructure\" ist von \"MySql.Data (>= 8.0.33)\" abhängig, \"MySql.Data 8.0.33\" wurde jedoch nicht gefunden. Die ungefähre höchste Übereinstimmung von \"MySql.Data 8.1.0\" wurde aufgelöst.",
-      "libraryId": "MySql.Data",
-      "targetGraphs": [
-        "net7.0"
-      ]
-    },
     {
       "code": "NU1701",
       "level": "Warning",

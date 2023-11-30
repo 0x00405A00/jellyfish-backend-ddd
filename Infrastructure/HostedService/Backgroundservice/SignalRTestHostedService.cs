@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MimeKit;
+using Shared.Infrastructure.SignalR;
 using System.Text;
 
 namespace Infrastructure.HostedService.Backgroundservice

@@ -4,14 +4,18 @@ using Presentation.Filter;
 using Presentation.Modelbinding.Provider;
 using Presentation.Modelbinding.Provider.HttpQuery;
 using Presentation.Swagger.OperationFilter;
+using Presentation.Swagger.Options;
 using Presentation.Swagger.SignalR;
 using Shared.Const;
+using Shared.DataTransferObject.Abstraction;
 using Shared.Json;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace Presentation
 {
     public static class DependencyInjection
     {
+
         public static IServiceCollection AddPresentation(this IServiceCollection services)
         {
             services.AddApiVersioning(o =>
@@ -20,8 +24,7 @@ namespace Presentation
                 o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
                 o.ReportApiVersions = true;
             });
-            services.AddVersionedApiExplorer(
-            options =>
+            services.AddVersionedApiExplorer(options =>
             {
                 options.GroupNameFormat = "'v'VVV";
                 options.SubstituteApiVersionInUrl = true;
@@ -103,10 +106,15 @@ namespace Presentation
                     };
                     options.AddSecurityRequirement(requirement);
                     #endregion
+                    options.ExampleFilters();
                     options.OperationFilter<OpenApiIgnoreMethodParameterOperationFilter>();
                     options.DocumentFilter<SignalRDocumentationFilter>();
+
+                    options.GenerateCustomRequestBodyForApiDataTransferObject();//Wraps the ApiDataTransferObject<T> around each IDataTransferObject concrete Model like Share.DataTransferObject.UserDTO
+                    
                 }
-            );
+            ); 
+            services.AddSwaggerExamples();
             return services;
         }
     }

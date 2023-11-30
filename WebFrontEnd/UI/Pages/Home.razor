@@ -76,13 +76,6 @@
     private async Task GetData()
     {
 
-        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppConst.BrowserLocalStorageItemKey.Authorization);
-
-        var response = await WebApiClient.Request<List<UserDTO>, object>("/user", RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
-        if (response.IsSuccess)
-        {
-            UsersList = response.ApiResponseDeserialized;
-        }
     }
     public async Task OnScroll(EventArgs e)
     {

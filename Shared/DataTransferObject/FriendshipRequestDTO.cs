@@ -1,4 +1,6 @@
-﻿namespace Shared.DataTransferObject
+﻿using Shared.DataTransferObject.Abstraction;
+
+namespace Shared.DataTransferObject
 {
     public class FriendshipRequestDTO : IDataTransferObject
     {

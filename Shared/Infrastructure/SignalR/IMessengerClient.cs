@@ -1,7 +1,7 @@
 ﻿using Shared.DataTransferObject;
 using Shared.DataTransferObject.Messenger;
 
-namespace Infrastructure.SignalR
+namespace Shared.Infrastructure.SignalR
 {
     /// <summary>
     /// Defines Methods that should invoked to client

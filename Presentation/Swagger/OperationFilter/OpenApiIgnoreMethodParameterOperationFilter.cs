@@ -31,9 +31,15 @@ namespace Presentation.Swagger.OperationFilter
 
         private static bool ParameterHasIgnoreAttribute(Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription parameterDescription)
         {
-            if (parameterDescription.ModelMetadata is Microsoft.AspNetCore.Mvc.ModelBinding.Metadata.DefaultModelMetadata metadata)
+            if (parameterDescription.ModelMetadata is Microsoft.AspNetCore.Mvc.ModelBinding.Metadata.DefaultModelMetadata metadata && metadata is not null)
             {
-                return metadata.Attributes.ParameterAttributes.Any(attribute => attribute.GetType() == typeof(OpenApiIgnoreMethodParameter));
+                if(metadata.Attributes is not null)
+                {
+                    if(metadata.Attributes.ParameterAttributes is not null)
+                    {
+                        return metadata.Attributes.ParameterAttributes.Any(attribute => attribute.GetType() == typeof(OpenApiIgnoreMethodParameter));
+                    }
+                }
             }
 
             return false;

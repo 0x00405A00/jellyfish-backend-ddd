@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using Shared.Infrastructure.SignalR;
 
 namespace Infrastructure.SignalR
 {
@@ -14,6 +15,7 @@ namespace Infrastructure.SignalR
 
         public override Task OnConnectedAsync()
         {
+
             logger.LogInformation($"Client connected: {Context.ConnectionId}");
             return base.OnConnectedAsync();
         }

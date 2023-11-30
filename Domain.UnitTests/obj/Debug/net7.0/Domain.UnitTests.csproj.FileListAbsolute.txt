@@ -111,3 +111,4 @@ C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain.UnitTests\obj\Debug\net7
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain.UnitTests\obj\Debug\net7.0\Domain.UnitTests.AssemblyInfoInputs.cache
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain.UnitTests\obj\Debug\net7.0\Domain.UnitTests.AssemblyInfo.cs
 C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain.UnitTests\obj\Debug\net7.0\Domain.UnitTests.csproj.CoreCompileInputs.cache
+C:\Users\Mika\source\repos\jellyfish-backend-ddd\Domain.UnitTests\obj\Debug\net7.0\Domain.UnitTests.sourcelink.json

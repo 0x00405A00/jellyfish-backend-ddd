@@ -17,13 +17,7 @@ ExoPlayer.Transformer.dll
 ExoPlayer.UI.dll
 GoogleGson.dll
 Jsr305Binding.dll
-Microsoft.Maui.Controls.Compatibility.dll
-Microsoft.Maui.Controls.dll
 Microsoft.Maui.Controls.Maps.dll
-Microsoft.Maui.Controls.Xaml.dll
-Microsoft.Maui.dll
-Microsoft.Maui.Essentials.dll
-Microsoft.Maui.Graphics.dll
 Microsoft.Maui.Maps.dll
 SkiaSharp.dll
 SkiaSharp.Extended.UI.dll
@@ -215,12 +209,7 @@ exoplayer-ui-2.18.2.aar
 ExoPlayer.UI.aar
 GoogleGson.aar
 Jsr305Binding.aar
-Microsoft.Maui.Controls.aar
-Microsoft.Maui.Controls.Compatibility.aar
 Microsoft.Maui.Controls.Maps.aar
-maui.aar
-Microsoft.Maui.aar
-Microsoft.Maui.Essentials.aar
 Microsoft.Maui.Maps.aar
 SQLitePCLRaw.lib.e_sqlite3.android.aar
 Xamarin.Google.Crypto.Tink.Android.aar

@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Text.Json;
 
 namespace Presentation.Swagger.SignalR
 {
@@ -14,6 +15,7 @@ namespace Presentation.Swagger.SignalR
         }
         public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
         {
+
             var endpoints = _endpoints.SelectMany(es => es.Endpoints).OfType<RouteEndpoint>().ToList();
             /*foreach (var item in endpoints)
             {

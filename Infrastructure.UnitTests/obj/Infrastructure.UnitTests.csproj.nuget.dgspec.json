@@ -247,7 +247,7 @@
             },
             "MySql.Data": {
               "target": "Package",
-              "version": "[8.0.33, )"
+              "version": "[8.2.0, )"
             },
             "MySql.EntityFrameworkCore": {
               "target": "Package",

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Presentation.Modelbinding.Binder;
 using Shared.DataFilter.Presentation;
-using Shared.DataTransferObject;
+using Shared.DataTransferObject.Abstraction;
 using Shared.Reflection;
 
 namespace Presentation.Modelbinding.Provider

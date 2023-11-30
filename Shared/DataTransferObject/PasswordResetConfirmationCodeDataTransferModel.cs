@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Shared.DataTransferObject.Abstraction;
 
 namespace Shared.DataTransferObject
 {

@@ -6,6 +6,7 @@ using Shared.Authentification.Claims;
 using Shared.Const;
 using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
+using Shared.DataTransferObject.Abstraction;
 using Shared.Reflection;
 using System;
 using WebFrontEnd.Authentification;
