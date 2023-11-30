@@ -83,6 +83,405 @@ Legacy over binary or with docker container.
 - [ ] SSL Encryption for Backend.
 - [ ] Rewrite some default ASP.NET Core response messages with a filter: e.g., HTTP error 422 or unauthorized response -> rewrite to JSONAPI error response ----------> Presentation.Extension.JsonApiResultExtension.
 - [ ] FluentValidation: Prepare Validators with response handling for JSONAPI error response due to validation errors. CommandHandlerValidators already implemented: ValidationPipelineBehavior; only the validation rule needs definition in constructors of each CommandValidation.
+- [ ] Chat Bounding Context implementations:
+    - [x] POST: /api/v1/chat, Create chat
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] GET: /api/v1/chat/{chatId}, Gets the chat
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] PUT: /api/v1/chat/{chatId}, Update chat informations such as description, name
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] DELETE: /api/v1/chat/{chatId}, Delete chat
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [ ] PUT: /api/v1/chat/{chatId}/picture/{messageId}, Sets the chat picture
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [ ] POST: /api/v1/chat/{chatId}/member, Add user to chat (new member)
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [ ] DELETE: /api/v1/chat/{chatId}/member/{userId}, Remove member from chat
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [ ] POST: /api/v1/chat/{chatId}/admin, Assign admin action
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [ ] DELETE: /api/v1/chat/{chatId}/admin/{userId}, Revoke admin action
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [ ] POST: /api/v1/chat/message, Message create action
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [ ] PATCH: /api/v1/chat/message/{messageId}, Message update action
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [ ] DELETE: /api/v1/chat/message/{messageId}, Message delete action
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+- [ ] User Bounding Context implementations:
+    - [x] POST: /api/v1/user/register, Register user
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] POST: /api/v1/user/password/reset/request, Creates a password reset requests
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] POST: /api/v1/user/password/change/{id?}, Change password endpoint for admin UI
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] POST: /api/v1/user/password/reset/{base64Token}, Resets password with user received password reset url (link from mail)
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] POST: /api/v1/user/activation/{base64Token}, Activate user with them received activation url (link from mail)
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] GET: /api/v1/user/user-types, Get all available user types
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] GET: /api/v1/user/messenger/{guid}, Get messenger profile from user (less information than default user profile)
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] POST: /api/v1/user/friend/request, Create friendship request
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] DELETE: /api/v1/user/friend/request, Remove friendship request
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] GET: /api/v1/user/friend/request, Get friendship requests
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] POST: /api/v1/user/friend/request/accept, Accept friendship request
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] GET: /api/v1/user/friend, Get Friends
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] DELETE: /api/v1/user/friend, Remove friend 
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] PUT: /api/v1/user/{id}/profile-picture, Add profile picture
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] DELETE: /api/v1/user/{id}/profile-picture, Remove profile picture
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] PATCH: /api/v1/user/{id}/role, Assign role to user
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] DELETE: /api/v1/user/{id}/role, Revoke role from user
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] POST: /api/v1/user/, Create a user
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] GET: /api/v1/user/{id}, Get a user
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] PUT: /api/v1/user/{id}, Update a user
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] DELETE: /api/v1/user/{id}, Delete a user
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Infrastructure
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Implementation
+      - [ ] Domain
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
+  
 
 **Web-Frontend:**
 - [ ] Check all http request to backend and catch all state above all errors, so http codes 4xx and 5xx
