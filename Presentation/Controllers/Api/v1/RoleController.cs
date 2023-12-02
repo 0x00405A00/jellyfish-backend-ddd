@@ -2,9 +2,9 @@ using Application.CQS.Role.Commands.CreateRole;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Abstractions;
 using Presentation.Extension;
 using Presentation.WebResponse;
+using Shared.ApiDataTransferObject;
 using Shared.Const;
 using Shared.DataTransferObject;
 using System.Net.Mime;
@@ -23,11 +23,13 @@ namespace Presentation.Controllers.Api.v1
             _logger = logger;
         }
 
-        
-        [HttpPost()]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> CreateUser([FromBody] RoleDTO RoleDTO, CancellationToken cancellationToken)
+        [ProducesResponseType(typeof(ApiDataTransferObject<RoleDTO>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 401)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 404)]
+        [HttpPost()]
+        public async Task<IActionResult> CreateRole([FromBody] RoleDTO RoleDTO, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
             var command = new CreateRoleCommand(userUuid, RoleDTO.Name, RoleDTO.Description);
@@ -36,10 +38,12 @@ namespace Presentation.Controllers.Api.v1
             return result.PrepareResponse();
         }
 
-        [HttpGet("{guid}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> GetUser(Guid guid, CancellationToken cancellationToken)
+        [ProducesResponseType(typeof(ApiDataTransferObject<RoleDTO>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 401)]
+        [HttpGet("{guid}")]
+        public async Task<IActionResult> GetRole(Guid guid, CancellationToken cancellationToken)
         {
             var command = new Application.CQS.Role.Queries.GetRoleById.GetRoleByIdQuery(guid);
 
@@ -47,10 +51,12 @@ namespace Presentation.Controllers.Api.v1
             return result.PrepareResponse();
         }
 
-        [HttpGet()]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> GetUsers(CancellationToken cancellationToken)
+        [ProducesResponseType(typeof(ApiDataTransferObject<List<RoleDTO>>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 401)]
+        [HttpGet()]
+        public async Task<IActionResult> GetRoles(CancellationToken cancellationToken)
         {
             var command = new Application.CQS.Role.Queries.GetRoles.GetRolesQuery();
 

@@ -11,6 +11,8 @@ namespace Presentation.Controllers
     [ApiExplorerSettings(IgnoreApi = false)]
     [Authorize(Policy = AuthorizationConst.Policy.AdminPolicy)]
     [Route("health")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
     public class HealthController : ControllerBase
     {
         private readonly HealthCheckService _healthCheckService;

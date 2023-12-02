@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
+using Shared.DataTransferObject;
 
 namespace Application.CQS.Messenger.User.Command.FriendshipRequests.CreateFriendshipRequest
 {
@@ -7,5 +8,5 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.CreateFriend
     /// </summary>
     /// <param name="RequesterUserId">The user that request the friendship invitation to PossibleNewFriendUuid</param>
     /// <param name="PossibleNewFriendId">The target id</param>
-    public record CreateFriendshipRequestCommand(Guid RequesterUserId,Guid PossibleNewFriendId) : ICommand<bool>;
+    public record CreateFriendshipRequestCommand(Guid RequesterUserId,Guid PossibleNewFriendId) : ICommand<FriendshipRequestDTO>;
 }

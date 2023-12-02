@@ -15,7 +15,6 @@ namespace Presentation.Swagger.ExampleProvider
                 Email = "Test@web.de",
             };
 
-            automatische generierung von testeinträgen über reflection (postman random funktionen like), generierung von emails etc. mit berücksichtigung welche felder mandantoy sind oder nicht (über optional operator ? oder DataAnnotation Attributes)
             return ApiDataTransferObject<UserDTO>.Create(dto);
         }
     }

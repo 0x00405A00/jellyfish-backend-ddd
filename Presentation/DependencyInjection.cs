@@ -3,11 +3,15 @@ using Microsoft.OpenApi.Models;
 using Presentation.Filter;
 using Presentation.Modelbinding.Provider;
 using Presentation.Modelbinding.Provider.HttpQuery;
+using Presentation.Swagger.DocumentFilter;
 using Presentation.Swagger.OperationFilter;
 using Presentation.Swagger.Options;
 using Presentation.Swagger.SignalR;
+using Shared.ApiDataTransferObject;
+using Shared.ApiDataTransferObject.Object;
 using Shared.Const;
-using Shared.DataTransferObject.Abstraction;
+using Shared.DataTransferObject;
+using Shared.DataTransferObject.Messenger;
 using Shared.Json;
 using Swashbuckle.AspNetCore.Filters;
 
@@ -109,7 +113,15 @@ namespace Presentation
                     options.ExampleFilters();
                     options.OperationFilter<OpenApiIgnoreMethodParameterOperationFilter>();
                     options.DocumentFilter<SignalRDocumentationFilter>();
-
+                    options.DocumentFilter<PolymorphismDocumentFilter<ApiDataTransferObject<object>>>();
+                    options.DocumentFilter<PolymorphismDocumentFilter<ApiDataTransferObject<UserDTO>>>();
+                    options.DocumentFilter<PolymorphismDocumentFilter<ApiDataTransferObject<List<UserDTO>>>>();
+                    options.DocumentFilter<PolymorphismDocumentFilter<ApiDataTransferObject<ChatDTO>>>();
+                    options.DocumentFilter<PolymorphismDocumentFilter<ApiDataTransferObject<RoleDTO>>>();
+                    options.DocumentFilter<PolymorphismDocumentFilter<ApiData<object>>>();
+                    options.DocumentFilter<PolymorphismDocumentFilter<ApiError>>();
+                    options.DocumentFilter<PolymorphismDocumentFilter<List<ApiError>>>();
+                    options.DocumentFilter<PolymorphismDocumentFilter<ApiMeta>>();
                     options.GenerateCustomRequestBodyForApiDataTransferObject();//Wraps the ApiDataTransferObject<T> around each IDataTransferObject concrete Model like Share.DataTransferObject.UserDTO
                     
                 }

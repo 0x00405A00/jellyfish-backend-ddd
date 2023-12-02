@@ -170,7 +170,7 @@ namespace WebFrontEnd.Service.Backend.Api
         public async Task<JellyfishBackendApiResponse<T2>> TypedRequest<T,T2>(string url, RestSharp.Method method, T data, CancellationToken cancellationToken, PaginationBase paginationBase=null)
             
         {
-            if(data is IDataTransferObject dataTransferObject || (ListReflectionExtension.IsListAndGenericTypeImplementsT<IDataTransferObject>(typeof(T))))
+            if(data is IDataTransferObject dataTransferObject || (ReflectionExtension.IsListAndGenericTypeImplementsT<IDataTransferObject>(typeof(T))))
             {
                 var body = ApiDataTransferObject<T>.Create(data,paginationBase);
                 var response = await Request<ApiDataTransferObject<T2>, ApiDataTransferObject<T>>(url, method, cancellationToken, body);

@@ -2,10 +2,11 @@
 using AutoMapper;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
+using Shared.DataTransferObject;
 
 namespace Application.CQS.Messenger.User.Command.FriendshipRequests.CreateFriendshipRequest
 {
-    internal sealed class CreateFriendshipRequestCommandHandler : ICommandHandler<CreateFriendshipRequestCommand, bool>
+    internal sealed class CreateFriendshipRequestCommandHandler : ICommandHandler<CreateFriendshipRequestCommand, FriendshipRequestDTO>
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -20,7 +21,7 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.CreateFriend
             _unitOfWork = unitOfWork;
         }
 
-        public Task<Result<bool>> Handle(CreateFriendshipRequestCommand request, CancellationToken cancellationToken)
+        public Task<Result<FriendshipRequestDTO>> Handle(CreateFriendshipRequestCommand request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

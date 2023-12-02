@@ -1,0 +1,28 @@
+﻿using Application.Abstractions.Messaging;
+using AutoMapper;
+using Domain.ValueObjects;
+using Infrastructure.Abstractions;
+using Shared.DataTransferObject.Messenger;
+
+namespace Application.CQS.Messenger.User.Queries.GetFriends
+{
+    internal sealed class GetFriendsQueryHandler : IQueryHandler<GetFriendsQuery, List<MessengerUserDTO>>
+    {
+        private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        public GetFriendsQueryHandler(
+            IMapper mapper,
+            IUserRepository userRepository,
+            IUnitOfWork unitOfWork)
+        {
+            _mapper = mapper;
+            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
+        }
+        public async Task<Result<List<MessengerUserDTO>>> Handle(GetFriendsQuery request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

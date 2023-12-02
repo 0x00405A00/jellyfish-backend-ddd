@@ -28,25 +28,29 @@ namespace Presentation.Swagger.Options
             var methodParams = method.GetParameters();
 
 
-            var extensionTypeExampleProvider = typeof(DependencyInjection);
+            var extensionTypeExampleProvider = typeof(ExampleDataProviderExtension);
             var methodsExampleProvider = extensionTypeExampleProvider
-                            .GetMethods().Where(x => x.Name == nameof(ExampleDataProviderExtension.GetExampleProviderObjects) && x.IsGenericMethod).Single();
-
+                            .GetMethods().Where(x => x.Name == nameof(ExampleDataProviderExtension.GetExampleProviderObjects) && x.IsGenericMethod)?.Single();
+            if (methodsExampleProvider is null)
+                return null;
             var methodExampleProvider = methodsExampleProvider
                                             .MakeGenericMethod(type);
             var exampleProvider = methodExampleProvider.Invoke(null, new object[] { });
             if (exampleProvider is null)
                 return null;
+
+            #region Example Request
             var exampleRequestMethod = exampleProvider.GetType().GetMethod("GetRequestExample");
             var exampleRequest = exampleRequestMethod.Invoke(exampleProvider, new object[] { });
             var exampleRequestJson = JsonSerializer.Serialize(exampleRequest, exampleRequest.GetType(), jsonSerializerOptions??JsonSerializerOptions);
-
 
             var schemaFunc = new Func<OpenApiSchema>(() => new Microsoft.OpenApi.Models.OpenApiSchema
             {
                 Type = "object",
                 Example = new OpenApiString(exampleRequestJson)
             });
+            #endregion
+
             method.Invoke(swaggerGenOptions, new object[] { swaggerGenOptions, schemaFunc });
             return swaggerGenOptions;
         }

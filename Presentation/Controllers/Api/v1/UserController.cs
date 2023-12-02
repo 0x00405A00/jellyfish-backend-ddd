@@ -2,6 +2,8 @@ using Application.CQS.Messenger.User.Command.Friends.RemoveFriend;
 using Application.CQS.Messenger.User.Command.FriendshipRequests.AcceptFriendshipRequest;
 using Application.CQS.Messenger.User.Command.FriendshipRequests.CreateFriendshipRequest;
 using Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriendshipRequest;
+using Application.CQS.Messenger.User.Queries.GetFriends;
+using Application.CQS.Messenger.User.Queries.GetFriendshipRequests;
 using Application.CQS.User.Commands.CreateUser;
 using Application.CQS.User.Commands.DeleteProfilePicture;
 using Application.CQS.User.Commands.DeleteUser;
@@ -49,9 +51,11 @@ namespace Presentation.Controllers.Api.v1
         }
 
         [AllowAnonymous]
-        [HttpPost("register")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<UserDTO>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
+        [HttpPost("register")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDTO registerUserDTO, CancellationToken cancellationToken)
         {
             var command = new RegisterUserCommand(
@@ -69,9 +73,11 @@ namespace Presentation.Controllers.Api.v1
         }
 
         [AllowAnonymous]
-        [HttpPost("password/reset/request")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<bool>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<bool>), 400)]
+        [HttpPost("password/reset/request")]
         public async Task<IActionResult> PasswordResetRequest([FromBody] PasswordResetRequestDTO passwordResetRequestDTO, CancellationToken cancellationToken)
         {
             var command = new UserPasswordResetRequestCommand(passwordResetRequestDTO.Email);
@@ -79,10 +85,13 @@ namespace Presentation.Controllers.Api.v1
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
         }
+        
         [Authorize]
-        [HttpPost("password/change/{id?}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<Guid>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
+        [HttpPost("password/change/{id?}")]
         public async Task<IActionResult> PasswordChange(Guid id,[FromBody] PasswordChangeDTO passwordChangeDTO, CancellationToken cancellationToken)
         {
             var claims = HttpContext.GetClaims(x=> x.Type == AuthorizationConst.Claims.ClaimTypeIsAdmin);
@@ -103,9 +112,11 @@ namespace Presentation.Controllers.Api.v1
         }
 
         [AllowAnonymous]
-        [HttpPost("password/reset/{base64Token}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<bool>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<bool>), 400)]
+        [HttpPost("password/reset/{base64Token}")]
         public async Task<IActionResult> PasswordReset(string base64Token,[FromBody] PasswordResetDataTransferModel passwordResetDataTransferModel, CancellationToken cancellationToken)
         {
             UserPasswordResetCommand command= new UserPasswordResetCommand(
@@ -119,9 +130,11 @@ namespace Presentation.Controllers.Api.v1
         }
 
         [AllowAnonymous]
-        [HttpPost("activation/{base64Token}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<UserDTO>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
+        [HttpPost("activation/{base64Token}")]
         public async Task<IActionResult> ActivateUser(string base64Token, [FromBody] UserActivationDataTransferModel userActivationDataTransferModel, CancellationToken cancellationToken)
         {
             var command = new UserActivationCommand(base64Token,userActivationDataTransferModel.ActivationCode);
@@ -130,9 +143,11 @@ namespace Presentation.Controllers.Api.v1
             return result.PrepareResponse();
         }
 
-        [HttpGet("user-types")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<UserTypeDTO>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
+        [HttpGet("user-types")]
         public async Task<IActionResult> GetUserTypes(CancellationToken cancellationToken)
         {
             var command = new Application.CQS.User.Queries.GetUserType.GetUserTypeQuery();
@@ -142,6 +157,8 @@ namespace Presentation.Controllers.Api.v1
         }
 
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<MessengerUserDTO>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         [HttpGet("messenger/{guid}")]
         public async Task<IActionResult> GetChatUser(Guid guid, CancellationToken cancellationToken)
         {
@@ -151,9 +168,10 @@ namespace Presentation.Controllers.Api.v1
             return result.PrepareResponse();
         }
 
-
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<FriendshipRequestDTO>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         [HttpPost("friend/request")]
         public async Task<IActionResult> CreateFriendshipRequest([FromBody] UserFriendshipRequestDTO userFriendshipRequestDTO, CancellationToken cancellationToken)
         {
@@ -166,6 +184,8 @@ namespace Presentation.Controllers.Api.v1
 
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<Guid>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         [HttpDelete("friend/request")]
         public async Task<IActionResult> RemoveFriendshipRequest([FromBody] UserFriendshipRequestDTO userFriendshipRequestDTO, CancellationToken cancellationToken)
         {
@@ -178,11 +198,13 @@ namespace Presentation.Controllers.Api.v1
 
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         [HttpGet("friend/request")]
         public async Task<IActionResult> GetFriendshipRequests(CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new GetUserByIdQuery(userUuid);
+            var command = new GetFriendshipRequestsQuery(userUuid);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
@@ -190,6 +212,8 @@ namespace Presentation.Controllers.Api.v1
 
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<bool>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<bool>), 400)]
         [HttpPost("friend/request/accept")]
         public async Task<IActionResult> AcceptFriendshipRequest([FromBody] UserFriendshipRequestDTO userFriendshipRequestDTO, CancellationToken cancellationToken)
         {
@@ -202,11 +226,13 @@ namespace Presentation.Controllers.Api.v1
 
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         [HttpGet("friend")]
         public async Task<IActionResult> GetFriends(CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new GetUserByIdQuery(userUuid);
+            var command = new GetFriendsQuery(userUuid);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
@@ -214,6 +240,8 @@ namespace Presentation.Controllers.Api.v1
 
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<Guid>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         [HttpDelete("friend")]
         public async Task<IActionResult> RemoveFriend([FromBody] UserDTO friend, CancellationToken cancellationToken)
         {
@@ -243,6 +271,10 @@ namespace Presentation.Controllers.Api.v1
             return result.PrepareResponse();
         }
 
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<UserDTO>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         public override async Task<IActionResult> Read(Guid id, CancellationToken cancellationToken)
         {
             var command = new Application.CQS.User.Queries.GetUserById.GetUserByIdQuery(id);
@@ -251,6 +283,10 @@ namespace Presentation.Controllers.Api.v1
             return result.PrepareResponse();
         }
 
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<List<UserDTO>>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         public override async Task<IActionResult> ReadAll([FromQuery] SearchParams? searchParamsFromQuery, [FromBody] SearchParamsBody? searchParamsFromBody, CancellationToken cancellationToken)
         {
 
@@ -260,6 +296,10 @@ namespace Presentation.Controllers.Api.v1
             return result.PrepareResponse();
         }
 
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<UserDTO>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         public override async Task<IActionResult> Update(Guid id, [FromBody] UserDTO userDto, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
@@ -281,6 +321,8 @@ namespace Presentation.Controllers.Api.v1
         [HttpPut("{id}/profile-picture")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<UserDTO>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         public async Task<IActionResult> UpdateProfilePicture(Guid id, [FromBody] UserDTO userDto, CancellationToken cancellationToken)
         {
             var claims = HttpContext.GetClaims(x => x.Type == AuthorizationConst.Claims.ClaimTypeIsAdmin);
@@ -307,6 +349,8 @@ namespace Presentation.Controllers.Api.v1
         [HttpDelete("{id}/profile-picture")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<bool>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         public async Task<IActionResult> DeleteProfilePicture(Guid id, CancellationToken cancellationToken)
         {
             var claims = HttpContext.GetClaims(x => x.Type == AuthorizationConst.Claims.ClaimTypeIsAdmin);
@@ -329,6 +373,8 @@ namespace Presentation.Controllers.Api.v1
         [HttpPatch("{id}/role")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<List<Guid>>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         public async Task<IActionResult> AssignRole(Guid id, [FromBody] List<RoleDTO> roleDTOs, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
@@ -343,6 +389,8 @@ namespace Presentation.Controllers.Api.v1
         [HttpDelete("{id}/role")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<List<Guid>>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         public async Task<IActionResult> RevokeRole(Guid id, [FromBody] List<RoleDTO> roleDTOs, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
@@ -353,6 +401,10 @@ namespace Presentation.Controllers.Api.v1
             return result.PrepareResponse();
         }
 
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<Guid>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         public override async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
@@ -364,6 +416,8 @@ namespace Presentation.Controllers.Api.v1
 #if DEBUG
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         [HttpPost("test2")]
         public async Task<IActionResult> Test2([FromBody] UserDTO user)
         {

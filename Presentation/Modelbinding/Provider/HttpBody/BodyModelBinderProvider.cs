@@ -15,7 +15,7 @@ namespace Presentation.Modelbinding.Provider
 
 
             if (context.Metadata.ModelType.GetInterfaces().Contains(typeof(IDataTransferObject)) 
-                || (ListReflectionExtension. IsListAndGenericTypeImplementsT<IDataTransferObject>(type)))
+                || (ReflectionExtension. IsListAndGenericTypeImplementsT<IDataTransferObject>(type)))
             {
                 return new ApiDataTransferObjectModelBinder();
             }

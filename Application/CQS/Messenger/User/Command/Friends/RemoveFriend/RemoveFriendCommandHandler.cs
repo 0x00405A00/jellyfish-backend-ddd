@@ -5,7 +5,7 @@ using Infrastructure.Abstractions;
 
 namespace Application.CQS.Messenger.User.Command.Friends.RemoveFriend
 {
-    internal sealed class RemoveFriendCommandHandler : ICommandHandler<RemoveFriendCommand, bool>
+    internal sealed class RemoveFriendCommandHandler : ICommandHandler<RemoveFriendCommand, Guid>
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -20,7 +20,7 @@ namespace Application.CQS.Messenger.User.Command.Friends.RemoveFriend
             _unitOfWork = unitOfWork;
         }
 
-        public Task<Result<bool>> Handle(RemoveFriendCommand request, CancellationToken cancellationToken)
+        public Task<Result<Guid>> Handle(RemoveFriendCommand request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

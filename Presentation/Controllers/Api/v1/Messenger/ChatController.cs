@@ -5,9 +5,9 @@ using Application.CQS.Messenger.Chat.Queries.GetChatById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Abstractions;
 using Presentation.Extension;
 using Presentation.WebResponse;
+using Shared.ApiDataTransferObject;
 using Shared.Const;
 using Shared.DataTransferObject.Messenger;
 using System.Net.Mime;
@@ -28,6 +28,8 @@ namespace Presentation.Controllers.Api.v1.Messenger
 
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<ChatDTO>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         [HttpPost()]
         public async Task<IActionResult> CreateChat([FromBody] ChatDTO chatDto, CancellationToken cancellationToken)
         {
@@ -47,6 +49,8 @@ namespace Presentation.Controllers.Api.v1.Messenger
 
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<ChatDTO>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         [HttpGet("{chatId}")]
         public async Task<IActionResult> GetChat(Guid chatId, CancellationToken cancellationToken)
         {
@@ -58,6 +62,8 @@ namespace Presentation.Controllers.Api.v1.Messenger
 
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<Guid>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         [HttpPut("{chatId}")]
         public async Task<IActionResult> UpdateChat(Guid chatId, [FromBody] ChatDTO chatDto, CancellationToken cancellationToken)
         {
@@ -74,6 +80,8 @@ namespace Presentation.Controllers.Api.v1.Messenger
         }
 
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<Guid>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         [HttpDelete("{chatId}")]
         public async Task<IActionResult> DeleteChat(Guid chatId, CancellationToken cancellationToken)
         {

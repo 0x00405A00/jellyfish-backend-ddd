@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Extension;
+using Shared.ApiDataTransferObject;
 using Shared.DataTransferObject;
 using System.Net.Mime;
 using WebApi.Abstractions;
@@ -25,9 +26,13 @@ namespace Presentation.Controllers.Api.v1
             this._sender = sender;
             _logger = logger;
         }
+
         [AllowAnonymous]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(AuthDTO), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDTO userLoginDTO)
         {
@@ -38,6 +43,9 @@ namespace Presentation.Controllers.Api.v1
         }
         [AllowAnonymous]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(AuthDTO), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [HttpPost("refresh/{refreshToken}")]
         public async Task<IActionResult> Refresh(string refreshToken)
         {
@@ -48,6 +56,9 @@ namespace Presentation.Controllers.Api.v1
         }
         [Authorize]
         [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(Guid), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
