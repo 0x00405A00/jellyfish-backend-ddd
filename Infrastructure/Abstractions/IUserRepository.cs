@@ -1,5 +1,7 @@
-﻿using Infrastructure.DatabaseEntity;
+﻿using Domain.ValueObjects;
+using Infrastructure.DatabaseEntity;
 using Infrastructure.Repository;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Abstractions
 {
@@ -24,5 +26,11 @@ namespace Infrastructure.Abstractions
         /// <param name="phone"></param>
         /// <returns></returns>
         public Task<bool> IsPhoneAlreadyInUse(string phone);
+
+        /// <summary>
+        /// Get requested and received friendship requests
+        /// </summary>
+        /// <returns></returns>
+        public Task<List<FriendshipRequest>> GetAllFriendshipRequests(Expression<Func<DatabaseEntity.User, bool>> expression);
     }
 }

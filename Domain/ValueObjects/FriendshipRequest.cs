@@ -3,6 +3,9 @@ using Domain.Primitives;
 
 namespace Domain.ValueObjects
 {
+    /// <summary>
+    /// Primary Key for a FriendshipRequest are RequestUser.Uuid and TargetUser.Uuid
+    /// </summary>
     public class FriendshipRequest : IAuditibleCreateEntity
     {
         public User RequestUser { get; private set; }
@@ -31,6 +34,35 @@ namespace Domain.ValueObjects
             return new FriendshipRequest(targetUserRequestMessage,
                                          requestUser,
                                          targetUser);
+        }
+
+        /// <summary>
+        /// Check if the given <see cref="user"/> is the initiator of the request
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>true if user is creator/initiator of the friendship request otherwise false</returns>
+        /// <exception cref="ArgumentException"></exception>
+        public bool AmIRequester(User user)
+        {
+            if (user is null)
+            {
+                throw new ArgumentException(nameof(user));
+            }
+            return this.RequestUser == user;
+        }
+        /// <summary>
+        /// Check if the given <see cref="user"/> is the receiver of the request
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>true if user is receiver of the friendship request otherwise false</returns>
+        /// <exception cref="ArgumentException"></exception>
+        public bool AmIReceiver(User user)
+        {
+            if (user is null)
+            {
+                throw new ArgumentException(nameof(user));
+            }
+            return this.TargetUser == user;
         }
 
         public void SetCreated(User createdBy)

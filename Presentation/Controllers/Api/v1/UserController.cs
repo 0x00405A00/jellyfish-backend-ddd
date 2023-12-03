@@ -176,7 +176,7 @@ namespace Presentation.Controllers.Api.v1
         public async Task<IActionResult> CreateFriendshipRequest([FromBody] UserFriendshipRequestDTO userFriendshipRequestDTO, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new CreateFriendshipRequestCommand(userUuid, userFriendshipRequestDTO.UserUuid);
+            var command = new CreateFriendshipRequestCommand(userUuid, userFriendshipRequestDTO.UserUuid, userFriendshipRequestDTO.Message);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
@@ -187,10 +187,10 @@ namespace Presentation.Controllers.Api.v1
         [ProducesResponseType(typeof(ApiDataTransferObject<Guid>), 200)]
         [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         [HttpDelete("friend/request")]
-        public async Task<IActionResult> RemoveFriendshipRequest([FromBody] UserFriendshipRequestDTO userFriendshipRequestDTO, CancellationToken cancellationToken)
+        public async Task<IActionResult> RemoveFriendshipRequest([FromBody] RemoveFriendshipRequestDTO removeFriendshipRequestDTO, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new RemoveFriendshipRequestCommand(userUuid, userFriendshipRequestDTO.UserUuid);
+            var command = new RemoveFriendshipRequestCommand(userUuid, removeFriendshipRequestDTO.RequestUserUuid, removeFriendshipRequestDTO.TargetUserUuid);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
@@ -215,10 +215,10 @@ namespace Presentation.Controllers.Api.v1
         [ProducesResponseType(typeof(ApiDataTransferObject<bool>), 200)]
         [ProducesResponseType(typeof(ApiDataTransferObject<bool>), 400)]
         [HttpPost("friend/request/accept")]
-        public async Task<IActionResult> AcceptFriendshipRequest([FromBody] UserFriendshipRequestDTO userFriendshipRequestDTO, CancellationToken cancellationToken)
+        public async Task<IActionResult> AcceptFriendshipRequest([FromBody] AcceptFriendshipRequestDTO acceptFriendshipRequestDTO, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new AcceptFriendshipRequestCommand(userUuid, userFriendshipRequestDTO.UserUuid);
+            var command = new AcceptFriendshipRequestCommand(userUuid, acceptFriendshipRequestDTO.RequestUserUuid, acceptFriendshipRequestDTO.TargetUserUuid);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
@@ -421,7 +421,6 @@ namespace Presentation.Controllers.Api.v1
         [HttpPost("test2")]
         public async Task<IActionResult> Test2([FromBody] UserDTO user)
         {
-
             return Ok();
         }
 #endif

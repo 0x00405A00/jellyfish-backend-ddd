@@ -126,7 +126,7 @@ namespace Infrastructure.Mapper.Concrete
                         null);
                 }).ToList();
                 friends = await Task.WhenAll(friendsTasks);
-                var friendshipRequestsTasks = entity.UserFriendshipRequestUserUus.Select(async(r) =>
+                var friendshipRequestsWhereIamCreatorTasks = entity.UserFriendshipRequestUserUus.Select(async (r) =>
                 {
                     var targetUserRequestMessage = r.TargetUserRequestMessage;
                     var requestUserDomainModel = await r.UserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
@@ -134,7 +134,16 @@ namespace Infrastructure.Mapper.Concrete
                     return FriendshipRequest.Create(targetUserRequestMessage, requestUserDomainModel, targetUserDomainModel);
 
                 }).ToList();
-                friendshipRequests = await Task.WhenAll(friendshipRequestsTasks);   
+                var friendshipRequestsWhereIamTargetTasks = entity.UserFriendshipRequestTargetUserUus.Select(async (r) =>
+                {
+                    var targetUserRequestMessage = r.TargetUserRequestMessage;
+                    var requestUserDomainModel = await r.UserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
+                    var targetUserDomainModel = await r.TargetUserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
+                    return FriendshipRequest.Create(targetUserRequestMessage, requestUserDomainModel, targetUserDomainModel);
+
+                }).ToList();
+                friendshipRequestsWhereIamCreatorTasks.AddRange(friendshipRequestsWhereIamTargetTasks);
+                friendshipRequests = await Task.WhenAll(friendshipRequestsWhereIamCreatorTasks);   
             }
 
             return Domain.Entities.User.User.Create(

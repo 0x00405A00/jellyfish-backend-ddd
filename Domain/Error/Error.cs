@@ -5,8 +5,11 @@
         public enum ERROR_CODE : int
         {
             BadRequest,
+            Forbidden,
             UnproccesableEntity,
             Unauthorized,
+            NotFound,
+            Exception,
 
         }
         public string Message { get; private set; }

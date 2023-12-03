@@ -22,7 +22,15 @@ namespace Application.CQS.Messenger.User.Queries.GetFriends
         }
         public async Task<Result<List<MessengerUserDTO>>> Handle(GetFriendsQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var user = await _userRepository.GetAsync(x=> x.Uuid == request.UserId);
+            if(!user.HasFriends())
+            {
+                return Result<List<MessengerUserDTO>>.Failure("you have no friends", Domain.Error.Error.ERROR_CODE.NotFound);
+            }
+            var friends = user.Friends.ToList();
+
+            var dto = _mapper.Map<List<MessengerUserDTO>>(friends);
+            return Result<List<MessengerUserDTO>>.Success(dto);
         }
     }
 }

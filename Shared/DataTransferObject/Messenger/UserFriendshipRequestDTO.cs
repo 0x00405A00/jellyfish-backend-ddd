@@ -7,5 +7,8 @@ namespace Shared.DataTransferObject.Messenger
     {
         [JsonPropertyName("user_uuid")]
         public Guid UserUuid { get; set; }
+
+        [JsonPropertyName("message")]
+        public string? Message { get; set; }
     }
 }

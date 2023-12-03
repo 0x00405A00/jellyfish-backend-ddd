@@ -8,5 +8,5 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.CreateFriend
     /// </summary>
     /// <param name="RequesterUserId">The user that request the friendship invitation to PossibleNewFriendUuid</param>
     /// <param name="PossibleNewFriendId">The target id</param>
-    public record CreateFriendshipRequestCommand(Guid RequesterUserId,Guid PossibleNewFriendId) : ICommand<FriendshipRequestDTO>;
+    public record CreateFriendshipRequestCommand(Guid RequesterUserId,Guid PossibleNewFriendId,string? Message) : ICommand<FriendshipRequestDTO>;
 }

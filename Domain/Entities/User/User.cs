@@ -613,6 +613,40 @@ namespace Domain.Entities.User
         {
             return this.DateOfBirth == DateOnly.FromDateTime(DateTime.Now);
         }
+        public bool HasFriends()
+        {
+            return this.Friends.Any();
+        }
+        public bool IsFriend(User user)
+        {
+            if(user is null)
+            {
+                throw new ArgumentNullException(nameof(user));    
+            }
+            return this.Friends.Any(x=>x.Friend == user);
+        }
+        /// <summary>
+        /// Gets all own requested friendship invites (direction: u to other user)
+        /// </summary>
+        /// <returns></returns>
+        public List<FriendshipRequest> GetRequestedFriendshipRequests()
+        {
+            return this.FriendshipRequests.Where(x => x.AmIRequester(this))
+                                          .ToList();
+        }
+        /// <summary>
+        /// Gets all received friendship requests (direction: other user to u)
+        /// </summary>
+        /// <returns></returns>
+        public List<FriendshipRequest> GetReceivedFriendshipRequests()
+        {
+            return this.FriendshipRequests.Where(x => x.AmIReceiver(this))
+                                          .ToList();
+        }
+        public bool HasFriendshipRequests()
+        {
+            return this.FriendshipRequests.Any();
+        }
         public bool IsDeleted() => this.DeletedTime != null;
     }
 }

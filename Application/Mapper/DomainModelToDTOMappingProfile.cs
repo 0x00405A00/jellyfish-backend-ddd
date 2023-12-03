@@ -88,15 +88,9 @@ namespace Application.Mapper
                 .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.FriendshipRequests))
                 .ForMember(dst => dst.PictureBase64, dst => dst.MapFrom(x => x.Picture.ToString()));
 
-            /*CreateMap<Domain.ValueObjects.UserRole, RoleDTO>()
-                .ForMember(src => src, dst => dst.MapFrom(x => x.Role));
-            CreateMap<Domain.ValueObjects.FriendshipRequest, UserFriendshipRequestDTO>();
-            CreateMap<Domain.ValueObjects.UserFriend, UserDTO>();*/
-
-            CreateMap<UserFriendshipRequestDTO, Domain.ValueObjects.FriendshipRequest>();
+            CreateMap<Domain.ValueObjects.FriendshipRequest, FriendshipRequestDTO>();
             CreateMap<RoleDTO, Domain.ValueObjects.UserRole>();
             CreateMap<UserDTO, Domain.ValueObjects.UserFriend>();
-
 
             CreateMap<Infrastructure.DatabaseEntity.MailOutbox, MailOutboxDTO>();
             CreateMap<Infrastructure.DatabaseEntity.MailOutboxAttachment, MailOutboxAttachmentDTO>();
