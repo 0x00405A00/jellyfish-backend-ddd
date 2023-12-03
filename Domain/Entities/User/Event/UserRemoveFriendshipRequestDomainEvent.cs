@@ -8,10 +8,10 @@ namespace Domain.Entities.User.Event
         private User user;
         private FriendshipRequest request;
 
-        public UserRemoveFriendshipRequestDomainEvent(User user, FriendshipRequest request) : base(user)
+        public UserRemoveFriendshipRequestDomainEvent(User User, FriendshipRequest Request) : base(User)
         {
-            this.user = user;
-            this.request = request;
+            this.user = User;
+            this.request = Request;
         }
     }
 }

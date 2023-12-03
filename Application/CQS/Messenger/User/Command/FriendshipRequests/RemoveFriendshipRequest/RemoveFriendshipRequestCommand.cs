@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
+using Shared.DataTransferObject.Messenger;
 
 namespace Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriendshipRequest
 {
@@ -9,5 +10,5 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriend
     /// <param name="ExecutorUserId">The user that perform the RemoveFriendshipRequestCommand</param>
     /// <param name="RequestUserId">The request user of friendship request</param>
     /// <param name="TargetUserId">The target user of friendship request</param>
-    public record RemoveFriendshipRequestCommand(Guid ExecutorUserId,Guid RequestUserId,Guid TargetUserId) : ICommand<Guid>;
+    public record RemoveFriendshipRequestCommand(Guid ExecutorUserId,Guid RequestUserId,Guid TargetUserId) : ICommand<RemoveFriendshipRequestDTO>;
 }

@@ -184,7 +184,7 @@ namespace Presentation.Controllers.Api.v1
 
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(ApiDataTransferObject<Guid>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<RemoveFriendshipRequestDTO>), 200)]
         [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         [HttpDelete("friend/request")]
         public async Task<IActionResult> RemoveFriendshipRequest([FromBody] RemoveFriendshipRequestDTO removeFriendshipRequestDTO, CancellationToken cancellationToken)
