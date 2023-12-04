@@ -1,7 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using Domain.Const;
 using Domain.Exceptions;
-using Domain.Primitives;
+using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.Authentification;

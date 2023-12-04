@@ -43,10 +43,6 @@ namespace Application.CQS.User.Commands.UpdateProfilePicture
                 throw new UserNotFoundException(request.UserId);
 
             var updatedByUser = await _userRepository.GetAsync(x => x.Uuid == request.UpdatedBy);
-            if (!MimeExtension.IsValidMimeTypeForMediaContent(request.MimeType))
-            {
-                return Result<UserDTO>.Failure("not supported mime-type");
-            }
             Picture picture = null!;
             try
             {

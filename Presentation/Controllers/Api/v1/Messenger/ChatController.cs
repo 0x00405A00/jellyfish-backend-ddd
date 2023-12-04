@@ -1,6 +1,9 @@
 using Application.CQS.Messenger.Chat.Command.CreateChat;
+using Application.CQS.Messenger.Chat.Command.CreateMessage;
 using Application.CQS.Messenger.Chat.Command.DeleteChat;
+using Application.CQS.Messenger.Chat.Command.DeleteMessage;
 using Application.CQS.Messenger.Chat.Command.UpdateChat;
+using Application.CQS.Messenger.Chat.Command.UpdateMessage;
 using Application.CQS.Messenger.Chat.Queries.GetChatById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +28,7 @@ namespace Presentation.Controllers.Api.v1.Messenger
         {
             _logger = logger;
         }
+        #region Chat
 
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
@@ -91,6 +95,52 @@ namespace Presentation.Controllers.Api.v1.Messenger
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
         }
+
+        #endregion
+        #region Message
+
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<List<MessageDTO>>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
+        [HttpPost("{chatId}/message")]
+        public async Task<IActionResult> CreateMessage(Guid chatId, [FromBody] List<MessageDTO> messageDTOs, CancellationToken cancellationToken)
+        {
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var commandCreateChat = new CreateMessageCommand(chatId,userUuid,messageDTOs);
+
+            var result = await Sender.Send(commandCreateChat, cancellationToken);
+            return result.PrepareResponse();
+        }
+
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<MessageDTO>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
+        [HttpPut("{chatId}/message/{messageId}")]
+        public async Task<IActionResult> UpdateMessage(Guid chatId, Guid messageId, [FromBody] MessageDTO messageDTOs, CancellationToken cancellationToken)
+        {
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var commandCreateChat = new UpdateMessageCommand();
+
+            var result = await Sender.Send(commandCreateChat, cancellationToken);
+            return result.PrepareResponse();
+        }
+
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<MessageDTO>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
+        [HttpDelete("{chatId}/message/{messageId}")]
+        public async Task<IActionResult> DeleteMessage(Guid chatId, Guid messageId, [FromBody] MessageDTO messageDTOs, CancellationToken cancellationToken)
+        {
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var commandCreateChat = new DeleteMessageCommand();
+
+            var result = await Sender.Send(commandCreateChat, cancellationToken);
+            return result.PrepareResponse();
+        }
+        #endregion
 
     }
 }

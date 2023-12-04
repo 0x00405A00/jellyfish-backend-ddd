@@ -19,51 +19,7 @@ namespace Infrastructure.FileSys
             this.logger = logger;
             this.fileHandler = fileHandler;
         }
-        public async Task<byte[]?> GetChatPicture(Guid chatId, string fileExtension, CancellationToken cancellationToken)
-        {
-
-            try
-            {
-                string path = GetProfilePicturePath(chatId, fileExtension);
-                return await fileHandler.ReadFile(path, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return null;
-        }
-        public async Task<string?> GetChatPictureBase64(Guid chatId, string fileExtension, CancellationToken cancellationToken)
-        {
-
-            try
-            {
-                var result = await this.GetChatPicture(chatId,fileExtension, cancellationToken);
-                var base64 = Convert.ToBase64String(result);
-                return base64;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return null;
-        }
-        public string? CreateChatPicture(Guid chatId, string fileExtension, byte[] content, CancellationToken cancellationToken)
-        {
-
-            try
-            {
-                string path = GetProfilePicturePath(chatId, fileExtension);
-                fileHandler.CreateOrUpdateFile(path, content, cancellationToken);
-                return path.Replace(FileHandler.WebRoot,"");
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return null;
-
-        }
+        #region User Profile Picture
         public async Task<byte[]?> GetProfilePicture(Guid userId, string fileExtension, CancellationToken cancellationToken)
         {
 
@@ -131,7 +87,106 @@ namespace Infrastructure.FileSys
         }
         public string GetChatPicturePath(Guid chatId, string fileExtension)
         {
-            return Path.Combine(FileHandler.ChatPictures, chatId.ToString()+ fileExtension);
+            return Path.Combine(FileHandler.ChatPictures, chatId.ToString() + fileExtension);
         }
+        #endregion
+        #region Chat Picture
+
+        public async Task<byte[]?> GetChatPicture(Guid chatId, string fileExtension, CancellationToken cancellationToken)
+        {
+
+            try
+            {
+                string path = GetProfilePicturePath(chatId, fileExtension);
+                return await fileHandler.ReadFile(path, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return null;
+        }
+        public async Task<string?> GetChatPictureBase64(Guid chatId, string fileExtension, CancellationToken cancellationToken)
+        {
+
+            try
+            {
+                var result = await this.GetChatPicture(chatId, fileExtension, cancellationToken);
+                var base64 = Convert.ToBase64String(result);
+                return base64;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return null;
+        }
+        public string? CreateChatPicture(Guid chatId, string fileExtension, byte[] content, CancellationToken cancellationToken)
+        {
+
+            try
+            {
+                string path = GetProfilePicturePath(chatId, fileExtension);
+                fileHandler.CreateOrUpdateFile(path, content, cancellationToken);
+                return path.Replace(FileHandler.WebRoot, "");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return null;
+
+        }
+        #endregion
+        #region Chat Messages
+        public string GetChatMediaContentPath(Guid chatId, Guid messageId, string fileExtension)
+        {
+            return Path.Combine(FileHandler.ChatPictures, chatId.ToString(), messageId.ToString() + fileExtension);
+        }
+
+        public string CreateChatMessageAttachment(Guid chatId, Guid messageId, string fileExtension, byte[] content, CancellationToken cancellationToken)
+        {
+            try
+            {
+                string path = GetChatMediaContentPath(chatId, messageId, fileExtension);
+                fileHandler.CreateOrUpdateFile(path, content, cancellationToken);
+                return path.Replace(FileHandler.WebRoot, "");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return null;
+        }
+        public async Task<byte[]?> GetChatMessageAttachment(Guid chatId, Guid messageId, string fileExtension, CancellationToken cancellationToken)
+        {
+
+            try
+            {
+                string path = GetChatMediaContentPath(chatId,messageId, fileExtension);
+                return await fileHandler.ReadFile(path, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return null;
+        }
+        public async Task<string?> GetChatMessageAttachmentBase64(Guid chatId, Guid messageId, string fileExtension, CancellationToken cancellationToken)
+        {
+
+            try
+            {
+                var result = await this.GetChatMessageAttachment(chatId,messageId, fileExtension, cancellationToken);
+                var base64 = Convert.ToBase64String(result);
+                return base64;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return null;
+        }
+        #endregion
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
-using Domain.Primitives;
+using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
@@ -73,8 +73,8 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
             }
 
             _chatRepository.Add(chat);
-            var mapValue = _mapper.Map<ChatDTO>(chat);
-            return Result<ChatDTO>.Success(mapValue);
+            var dto = _mapper.Map<ChatDTO>(chat);
+            return Result<ChatDTO>.Success(dto);
         }
 
     }

@@ -1,4 +1,4 @@
-﻿using Domain.Primitives;
+﻿using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.DatabaseEntity;

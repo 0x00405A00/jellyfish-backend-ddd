@@ -1,7 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using Application.CQS.User.Commands.CreateUser;
 using AutoMapper;
-using Domain.Primitives;
+using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Domain.Primitives;
+using Domain.Extension;
 using Domain.ValueObjects;
 using Microsoft.Extensions.Configuration;
 using Shared.Authentification.Claims;

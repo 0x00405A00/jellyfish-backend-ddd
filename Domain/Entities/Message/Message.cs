@@ -2,6 +2,7 @@
 using Domain.Entities.Message.Event;
 using Domain.Entities.Message.Exception;
 using Domain.Exceptions;
+using Domain.Extension;
 using Domain.Primitives;
 using Domain.ValueObjects;
 using static System.Net.Mime.MediaTypeNames;

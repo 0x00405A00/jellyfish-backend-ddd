@@ -1,6 +1,6 @@
 using Domain.Entities.Role;
 using Domain.Entities.User;
-using Domain.Primitives;
+using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure;
 using Infrastructure.Abstractions;

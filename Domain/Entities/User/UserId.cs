@@ -1,4 +1,5 @@
-﻿using Domain.Primitives;
+﻿using Domain.Extension;
+using Domain.Primitives;
 
 namespace Domain.Entities.User
 {
@@ -10,6 +11,7 @@ namespace Domain.Entities.User
         }
         public UserId(Guid guid) : base(guid)
         {
+
         }
     }
 }

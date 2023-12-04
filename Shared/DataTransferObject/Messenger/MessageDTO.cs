@@ -9,7 +9,7 @@ namespace Shared.DataTransferObject.Messenger
         public Guid? Uuid { get; set; }
 
         [JsonPropertyName("chat_uuid")]
-        public Guid ChatId { get; set; }
+        public Guid? ChatId { get; set; }
 
         [JsonPropertyName("owner_uuid")]
         public Guid OwnerUuid { get; set; }
@@ -39,5 +39,8 @@ namespace Shared.DataTransferObject.Messenger
 
         [JsonPropertyName("deleted_by_user_uuid")]
         public Guid? DeletedByUserUuid { get; set; }
+
+        [JsonIgnore]
+        public bool HasBase64ContentSet => !String.IsNullOrEmpty(this.BinaryContentBase64);
     }
 }

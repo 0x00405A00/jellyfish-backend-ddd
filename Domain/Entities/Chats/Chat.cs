@@ -332,11 +332,23 @@ namespace Domain.Entities.Chats
             var result = user != null && _members.Any() && _members.Where(x => x.User.Uuid == user.Uuid).Count() != 0;
             return result;
         }
+        public bool IsChatMember(User.UserId userId)
+        {
+            var member = GetChatMemberById(userId);
+            return IsChatMember(member?.User);
+        }
         public bool IsChatAdmin(User.User user)
         {
             var result = user != null && _members.Any() && _members.Where(x => x.User.Uuid == user.Uuid && x.IsAdmin).Count() != 0;
             return result;
         }
+        public bool IsChatAdmin(User.UserId userId)
+        {
+            var member = GetChatMemberById(userId);
+            return IsChatAdmin(member?.User);
+        }
+        public ChatMember GetChatMemberById(User.UserId userId) => _members.Where(x=>x.User.Uuid == userId).Single();
+
         public void SetLastModified(User.User modifiedBy)
         {
             this.LastModifiedTime = DateTime.Now;
