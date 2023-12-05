@@ -68,8 +68,7 @@ Legacy over binary or with docker container.
 ## To Do ##
 
 **Backend:**
-- [x] CRUD
-- [x] Json Filter from Http Request to Linq Expression to MySql Query Transition
+- [x] CRUD + Search Filter (Transition from http request (json) to dto filter model to linq expression to sql)
 - [X] Cache Functionality 
 - [x] Password Reset Endpoint: Enable password reset via the "Edit User" feature; domain logic change: UpdateUser, updateuser command+handler update.
 - [ ] Password encrytion in database with best practise encryption method
@@ -81,6 +80,7 @@ Legacy over binary or with docker container.
 - [ ] Forgettable Payload -> GDPR (German: DSGVO).
 - [ ] End-to-End encryption for Jellyfish users.
 - [ ] SSL Encryption for Backend.
+- [x] Swagger Documentation
 - [x] Rewrite some default ASP.NET Core response messages with a filter: e.g., HTTP error 422 or unauthorized response -> rewrite to JSONAPI error response ----------> Presentation.Extension.JsonApiResultExtension.
 - [x] FluentValidation: Prepare Validators with response handling for JSONAPI error response due to validation errors. CommandHandlerValidators already implemented: ValidationPipelineBehavior; only the validation rule needs definition in constructors of each CommandValidation.
 - [ ] Chat Bounding Context implementations:
@@ -91,8 +91,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -103,8 +106,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -115,8 +121,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -127,32 +136,41 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
-    - [x] PUT: /api/v1/chat/{chatId}/picture/{messageId}, Sets the chat picture
+    - [ ] PUT: /api/v1/chat/{chatId}/picture/{messageId}, Sets the chat picture
+      - [ ] Presentation
+        - [ ] Implementation
+        - [ ] Test (Grey Box Test)
+      - [x] Infrastructure
+        - [x] Implementation
+        - [ ] Test (Grey Box Test)
+      - [ ] Application
+        - [ ] Command/Query
+        - [ ] Validation (Fluentvalidation)
+        - [ ] Handler
+        - [ ] EventHandling
+      - [x] Domain
+        - [x] Implementation
+        - [ ] Test (Unit-Test)
+    - [x] PUT: /api/v1/chat/{chatId}/member/{userId}, Add user to chat (new member)
       - [x] Presentation
         - [x] Implementation
         - [ ] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
-      - [x] Domain
-        - [x] Implementation
-        - [ ] Test (Unit-Test)
-    - [x] PUT: /api/v1/chat/{chatId}/member, Add user to chat (new member)
-      - [x] Presentation
-        - [x] Implementation
-        - [ ] Test (Grey Box Test)
-      - [ ] Infrastructure
-        - [ ] Implementation
-        - [ ] Test (Grey Box Test)
       - [ ] Application
-        - [ ] Implementation
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -160,15 +178,18 @@ Legacy over binary or with docker container.
       - [x] Presentation
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [ ] Infrastructure
-        - [ ] Implementation
+      - [x] Infrastructure
+        - [x] Implementation
         - [ ] Test (Grey Box Test)
       - [ ] Application
-        - [ ] Implementation
+        - [ ] Command/Query
+        - [ ] Validation (Fluentvalidation)
+        - [ ] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
-    - [x] PUT: /api/v1/chat/{chatId}/admin, Assign admin action
+    - [x] PUT: /api/v1/chat/{chatId}/admin/{userId}, Assign admin action
       - [x] Presentation
         - [x] Implementation
         - [ ] Test (Grey Box Test)
@@ -176,7 +197,10 @@ Legacy over binary or with docker container.
         - [ ] Implementation
         - [ ] Test (Grey Box Test)
       - [ ] Application
-        - [ ] Implementation
+        - [ ] Command/Query
+        - [ ] Validation (Fluentvalidation)
+        - [ ] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -188,7 +212,10 @@ Legacy over binary or with docker container.
         - [ ] Implementation
         - [ ] Test (Grey Box Test)
       - [ ] Application
-        - [ ] Implementation
+        - [ ] Command/Query
+        - [ ] Validation (Fluentvalidation)
+        - [ ] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -199,8 +226,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [ ] Command/Query
+        - [ ] Validation (Fluentvalidation)
+        - [ ] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -211,8 +241,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -223,8 +256,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [ ] Command/Query
+        - [ ] Validation (Fluentvalidation)
+        - [ ] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -236,8 +272,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -248,8 +287,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -260,8 +302,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -272,8 +317,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -284,8 +332,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -296,8 +347,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -308,8 +362,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -320,8 +377,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -332,8 +392,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -344,8 +407,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -356,8 +422,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -368,8 +437,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -380,8 +452,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -392,8 +467,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -404,8 +482,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -416,8 +497,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -428,8 +512,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -440,8 +527,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -452,8 +542,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [ ] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -464,8 +557,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
@@ -476,8 +572,11 @@ Legacy over binary or with docker container.
       - [x] Infrastructure
         - [x] Implementation
         - [ ] Test (Grey Box Test)
-      - [x] Application
-        - [x] Implementation
+      - [ ] Application
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
+        - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
         - [ ] Test (Unit-Test)
