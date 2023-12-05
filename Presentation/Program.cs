@@ -1,10 +1,14 @@
 using Application;
 using Infrastructure;
+using Infrastructure.Authentification;
 using Infrastructure.Healthcheck.Response;
 using Infrastructure.SignalR;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.FileProviders;
 using Presentation;
+using Presentation.Middleware;
+using Shared.Authentification.Service;
 using Shared.Const;
 
 namespace WebApi
@@ -22,6 +26,7 @@ namespace WebApi
             var app = builder.Build();
 
             app.UseRouting();
+            app.UseOverrideDefaultAspNetResponseMiddleware();
             app.UseAuthentication();
             app.UseAuthorization();
             // Configure the HTTP request pipeline.
@@ -35,8 +40,16 @@ namespace WebApi
             {
                 app.UseExceptionHandler("/error");
             }
+
+            var sp = builder.Services.BuildServiceProvider();
             //Default wwwroot
-            app.UseStaticFiles(); // This line enables the serving of static files from the wwwroot folder.
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
+                RequestPath = "/wwwroot",
+                OnPrepareResponse = sp.GetRequiredService<IFilePermissionService>().SetFilePermissions
+            }); // This line enables the serving of static files from the wwwroot folder.
 
             app.MapHealthChecks("/healthz", new HealthCheckOptions
             {

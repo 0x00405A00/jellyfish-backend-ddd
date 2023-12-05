@@ -37,13 +37,11 @@ namespace Presentation.Controllers.Api.v1.Messenger
         [HttpPost()]
         public async Task<IActionResult> CreateChat([FromBody] ChatDTO chatDto, CancellationToken cancellationToken)
         {
-            var membersUuidList = chatDto.Members.ToList();
-            var adminsUuidList = chatDto.Members.ToList();
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
             var commandCreateChat = new CreateChatCommand(userUuid,
                                                           chatDto.ChatName,
                                                           chatDto.ChatDescription,
-                                                            membersUuidList,
+                                                          chatDto.Members,
                                                           chatDto.PictureBase64,
                                                           chatDto.PictureMimeType);
 
@@ -118,10 +116,10 @@ namespace Presentation.Controllers.Api.v1.Messenger
         [ProducesResponseType(typeof(ApiDataTransferObject<MessageDTO>), 200)]
         [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         [HttpPut("{chatId}/message/{messageId}")]
-        public async Task<IActionResult> UpdateMessage(Guid chatId, Guid messageId, [FromBody] MessageDTO messageDTOs, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateMessage(Guid chatId, Guid messageId, [FromBody] MessageDTO messageDTO, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var commandCreateChat = new UpdateMessageCommand();
+            var commandCreateChat = new UpdateMessageCommand(userUuid,chatId,messageId, messageDTO);
 
             var result = await Sender.Send(commandCreateChat, cancellationToken);
             return result.PrepareResponse();
@@ -129,17 +127,79 @@ namespace Presentation.Controllers.Api.v1.Messenger
 
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(ApiDataTransferObject<MessageDTO>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<Guid>), 200)]
         [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         [HttpDelete("{chatId}/message/{messageId}")]
-        public async Task<IActionResult> DeleteMessage(Guid chatId, Guid messageId, [FromBody] MessageDTO messageDTOs, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteMessage(Guid chatId, Guid messageId, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var commandCreateChat = new DeleteMessageCommand();
+            var commandCreateChat = new DeleteMessageCommand(userUuid, chatId, messageId);
 
             var result = await Sender.Send(commandCreateChat, cancellationToken);
             return result.PrepareResponse();
         }
+
+        #endregion
+
+        #region Chat Member Actions
+
+        /*[Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<Guid>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
+        [HttpPut("{chatId}/member/{userId}")]
+        public async Task<IActionResult> AddMember(Guid chatId, Guid userId, CancellationToken cancellationToken)
+        {
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var commandCreateChat = new AddChatMemberCommand(userUuid, chatId, userId);
+
+            var result = await Sender.Send(commandCreateChat, cancellationToken);
+            return result.PrepareResponse();
+        }
+
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<Guid>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
+        [HttpDelete("{chatId}/member/{userId}")]
+        public async Task<IActionResult> RemoveMember(Guid chatId, Guid userId, CancellationToken cancellationToken)
+        {
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var commandCreateChat = new RemoveChatMemberCommand(userUuid, chatId, userId);
+
+            var result = await Sender.Send(commandCreateChat, cancellationToken);
+            return result.PrepareResponse();
+        }
+        #endregion
+        #region Chat Admin Actions
+
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<Guid>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
+        [HttpPut("{chatId}/admin/{userId}")]
+        public async Task<IActionResult> AssignAdmin(Guid chatId, Guid userId, CancellationToken cancellationToken)
+        {
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var commandCreateChat = new AssignChatAdminCommand(userUuid, chatId, userId);
+
+            var result = await Sender.Send(commandCreateChat, cancellationToken);
+            return result.PrepareResponse();
+        }
+
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<Guid>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
+        [HttpDelete("{chatId}/admin/{userId}")]
+        public async Task<IActionResult> RevokeAdmin(Guid chatId, Guid userId, CancellationToken cancellationToken)
+        {
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var commandCreateChat = new RevokeChatAdminCommand(userUuid, chatId, userId);
+
+            var result = await Sender.Send(commandCreateChat, cancellationToken);
+            return result.PrepareResponse();
+        }*/
         #endregion
 
     }

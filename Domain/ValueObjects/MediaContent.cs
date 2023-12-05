@@ -21,6 +21,10 @@
         {
             return new MediaContent(data, filePath, fileExtension);
         }
+        public static MediaContent Parse(byte[] data,string mimeType)
+        {
+            return new MediaContent(data, null, mimeType);
+        }
         public static MediaContent Parse(string filePath, string fileExtension)
         {
             return new MediaContent(filePath, fileExtension);

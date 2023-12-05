@@ -2,11 +2,12 @@
 
 namespace Application.CQS.User.Commands.DeleteUser
 {
-    internal class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
+    public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
     {
         public DeleteUserCommandValidator()
         {
-            //RuleFor(x => x.priv);
+            RuleFor(command => command.DeletedByUserId).NotEmpty().WithMessage("DeletedByUserId must not be empty.");
+            RuleFor(command => command.UserId).NotEmpty().WithMessage("UserId must not be empty.");
         }
     }
 }

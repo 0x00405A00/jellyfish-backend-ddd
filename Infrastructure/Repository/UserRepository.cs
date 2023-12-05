@@ -152,12 +152,6 @@ EF.CompileQuery((ApplicationDbContext context, Expression<Func<DatabaseEntity.Us
                                     .Include(i => i.UserFriendUserUus)
                                         .ThenInclude(uf => uf.FriendUserUu)
                                         .ThenInclude(ut => ut.UserTypeUu)
-                                    .Include(i => i.UserFriendshipRequestTargetUserUus)//all request that user received from other users
-                                        .ThenInclude(ru => ru.UserUu)
-                                        .ThenInclude(ut => ut.UserTypeUu)
-                                    .Include(i => i.UserFriendshipRequestUserUus)//all request that user requested to other users
-                                        .ThenInclude(tu => tu.TargetUserUu)
-                                        .ThenInclude(ut => ut.UserTypeUu)
                                     .AsNoTracking()
                                     .AsSingleQuery()
                                     .ToListAsync();

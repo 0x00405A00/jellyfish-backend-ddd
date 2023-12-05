@@ -3,7 +3,7 @@ using Shared.DataTransferObject;
 
 namespace Application.CQS.User.Commands.RegisterUser.Register
 {
-    public class RegisterUserCommand : ICommand<UserDTO>
+    public record RegisterUserCommand : ICommand<UserDTO>
     {
         public readonly string? UserName;
         public readonly string? Password;

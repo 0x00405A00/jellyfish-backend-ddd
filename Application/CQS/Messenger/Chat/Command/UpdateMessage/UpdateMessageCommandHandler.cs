@@ -8,7 +8,7 @@ using Shared.DataTransferObject.Messenger;
 
 namespace Application.CQS.Messenger.Chat.Command.UpdateMessage
 {
-    internal sealed class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageCommand, ChatDTO>
+    internal sealed class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageCommand, MessageDTO>
     {
         private readonly IChatRepository _chatRepository;
         private readonly IUserRepository _userRepository;
@@ -33,7 +33,7 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateMessage
         }
 
 
-        public async Task<Result<ChatDTO>> Handle(UpdateMessageCommand request, CancellationToken cancellationToken)
+        public async Task<Result<MessageDTO>> Handle(UpdateMessageCommand request, CancellationToken cancellationToken)
         {
            throw new NotImplementedException(); 
         }

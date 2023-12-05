@@ -1,5 +1,4 @@
 ﻿using Application.Abstractions.Messaging;
-using Shared.DataTransferObject;
 
 namespace Application.CQS.User.Commands.Roles.RevokeRole
 {

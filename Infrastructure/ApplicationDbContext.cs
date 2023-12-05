@@ -388,6 +388,11 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.BinaryContentFileExt)
                 .HasMaxLength(100)
                 .HasColumnName("binary_content_fileext");
+            entity.Property(e => e.BinaryContentBase64)
+                .HasColumnName("binary_content_base64");
+            entity.Property(e => e.BinaryContentMimeType)
+                .HasMaxLength(100)
+                .HasColumnName("binary_content_mimetype");
             entity.Property(e => e.ChatUuid)
                 .HasMaxLength(36)
                 .HasColumnName("chat_uuid");

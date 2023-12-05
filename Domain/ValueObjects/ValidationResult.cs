@@ -1,5 +1,4 @@
-﻿using Domain.Error;
-using Domain.Primitives;
+﻿using Domain.Primitives;
 
 namespace Domain.ValueObjects
 {

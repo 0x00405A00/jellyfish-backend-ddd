@@ -203,17 +203,23 @@ namespace Domain.Entities.Chats
         }
         public Message.Message AddMessage(User.User messageOwner, string text, MediaContent? mediaContent)
         {
-            if(messageOwner == null) 
-            { 
-                throw new ArgumentNullException(); 
+            if (messageOwner == null)
+            {
+                throw new ArgumentNullException();
             }
-            if(String.IsNullOrWhiteSpace(text) && mediaContent == null)
+            if (String.IsNullOrWhiteSpace(text) && mediaContent == null)
             {
                 throw new NotValidMessageException();
             }
             var message = Message.Message.Create(new Message.MessageId(Guid.NewGuid()), this.Uuid, messageOwner, text, mediaContent, DateTime.Now, null, null);
             this._messages.Add(message);
-            Raise(new ChatAppendMessageDomainEvent(this, messageOwner, message));
+            Raise(new ChatAppendMessageDomainEvent(this, message.Owner, message));
+            return message;
+        }
+        public Message.Message AddMessage(Message.Message message)
+        {
+            this._messages.Add(message);
+            Raise(new ChatAppendMessageDomainEvent(this, message.Owner, message));
             return message;
         }
         public void RemoveMessage(User.User deletedByUser, Message.MessageId messageId)

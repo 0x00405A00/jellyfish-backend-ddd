@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Shared.ApiDataTransferObject;
 
 namespace Application.Behaviour
 {

@@ -5,9 +5,9 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
 {
     public record CreateChatCommand(
         Guid ChatOwnerUuid,
-        string ChatName,
+        string? ChatName,
         string? ChatDescription,
-        List<Guid> Members,
+        ICollection<Guid> Members,
         string? Picture,
         string? PictureMimeType) : ICommand<ChatDTO>;
 }

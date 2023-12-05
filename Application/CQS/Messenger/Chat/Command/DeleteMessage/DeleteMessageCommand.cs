@@ -2,5 +2,5 @@
 
 namespace Application.CQS.Messenger.Chat.Command.DeleteMessage
 {
-    public record DeleteMessageCommand() : ICommand<Guid>;
+    public record DeleteMessageCommand(Guid DeletedById, Guid ChatId, Guid MessageId) : ICommand<Guid>;
 }

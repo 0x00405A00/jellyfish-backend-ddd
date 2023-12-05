@@ -23,6 +23,7 @@ namespace Application
             services.AddMediatR(config =>
             {
                 config.RegisterServicesFromAssemblies(assemblies);
+                config.AddOpenBehavior(typeof(ValidationPipelingBehaviour<,>));
                 config.AddOpenBehavior(typeof(PrepareResponseForPresentationPipelingBehaviour<,>));
                 config.AddOpenBehavior(typeof(UnitOfWorkBehaviour<,>));
                 config.AddOpenBehavior(typeof(LoggingBehaviour<,>));

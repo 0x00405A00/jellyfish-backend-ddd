@@ -2,11 +2,11 @@
 
 namespace Application.CQS.Auth.Command.RemoveAuth
 {
-    internal class RemoveAuthCommandValidator : AbstractValidator<RemoveAuthCommand>
+    public class RemoveAuthCommandValidator : AbstractValidator<RemoveAuthCommand>
     {
         public RemoveAuthCommandValidator()
         {
-            //RuleFor(x => x.priv);
+            RuleFor(command => command.JwtBearer).NotEmpty().WithMessage("JwtBearer must not be empty.");
         }
     }
 }

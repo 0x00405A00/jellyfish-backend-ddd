@@ -2,11 +2,11 @@
 
 namespace Application.CQS.User.Commands.PasswordReset.Request
 {
-    internal class UserPasswordResetRequestCommandValidator : AbstractValidator<UserPasswordResetRequestCommand>
+    public class UserPasswordResetRequestCommandValidator : AbstractValidator<UserPasswordResetRequestCommand>
     {
         public UserPasswordResetRequestCommandValidator()
         {
-            //RuleFor(x => x.priv);
+            RuleFor(command => command.Email).NotEmpty().EmailAddress().WithMessage("Invalid or empty email address.");
         }
     }
 }

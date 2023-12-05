@@ -1,4 +1,5 @@
-﻿using Domain.ValueObjects;
+﻿using Domain.Primitives;
+using Domain.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Shared.ApiDataTransferObject;
@@ -11,27 +12,18 @@ namespace Presentation.Filter
         public void OnActionExecuted(ActionExecutedContext context)
         {
             var currentResponse = context.Result;
+
             if (currentResponse is ObjectResult)
             {
-
                 var currentResult = ((ObjectResult)currentResponse).Value;
-                if(currentResult is Result result)
+
+                if (currentResult is IValidationResult result)
                 {
-                    var currentResultType = currentResult.GetType();
-
-                    var apiResponseTypeUnspecificGenericType = typeof(ApiDataTransferObject<>);
-                    var genericArgs = currentResultType.GetGenericArguments();
-                    var apiResponseTypeGeneric = apiResponseTypeUnspecificGenericType.MakeGenericType(genericArgs);
-                    var apiResponseTypeGenericInstance = Activator.CreateInstance(apiResponseTypeGeneric);
-                    var createMethode = apiResponseTypeGeneric.GetMethods().Where(x => x.Name == "Create" && x.GetParameters().First().Name == "result").First();
-
-                    var paginationBase = new PaginationBase(result.Meta);
-
-                    var responseFromMethod = createMethode.Invoke(apiResponseTypeGenericInstance, new object[] { currentResult, paginationBase, null });
-                    var hasErrorsProp = responseFromMethod.GetType().GetProperties().Where(x => x.Name == "HasErrors").First();
-                    bool hasErrorsPropValue = (bool)hasErrorsProp.GetValue(responseFromMethod);
-
-                    context.Result = !hasErrorsPropValue ? new OkObjectResult(responseFromMethod) : new BadRequestObjectResult(responseFromMethod);
+                    HandleValidationResult(context, result);
+                }
+                else if (currentResult is Result result2)
+                {
+                    HandleDefaultResult(context, result2);
                 }
             }
         }
@@ -41,6 +33,52 @@ namespace Presentation.Filter
 
         }
 
+        #region Methods
+
+        private void HandleValidationResult(ActionExecutedContext context, IValidationResult result)
+        {
+            var apiResponseTypeGeneric = CreateApiResponseTypeGeneric(result.GetType());
+
+            var createMethod = apiResponseTypeGeneric.GetMethod("ValidationResult");
+            var responseFromMethod = createMethod.Invoke(Activator.CreateInstance(apiResponseTypeGeneric), new object[] { result });
+
+            HandleApiResponse(context, responseFromMethod);
+        }
+
+        private void HandleDefaultResult(ActionExecutedContext context, Result result)
+        {
+            var apiResponseTypeGeneric = CreateApiResponseTypeGeneric(result.GetType());
+
+            var createMethod = apiResponseTypeGeneric.GetMethods()
+                .FirstOrDefault(x => x.Name == "Create" && x.GetParameters().First().Name == "result");
+
+            if (createMethod != null)
+            {
+                var paginationBase = new PaginationBase(result.Meta);
+                var responseFromMethod = createMethod.Invoke(Activator.CreateInstance(apiResponseTypeGeneric), new object[] { result, paginationBase, null });
+
+                HandleApiResponse(context, responseFromMethod);
+            }
+        }
+
+        private Type CreateApiResponseTypeGeneric(Type currentResultType)
+        {
+            var apiResponseTypeUnspecificGenericType = typeof(ApiDataTransferObject<>);
+            var genericArgs = currentResultType.GetGenericArguments();
+            return apiResponseTypeUnspecificGenericType.MakeGenericType(genericArgs);
+        }
+
+        private void HandleApiResponse(ActionExecutedContext context, object response)
+        {
+            var hasErrorsProp = response.GetType().GetProperty("HasErrors");
+            var propValue = hasErrorsProp?.GetValue(response);
+            bool hasErrorsPropValue = (bool)(propValue != null ? false : propValue);
+
+            context.Result = !hasErrorsPropValue
+                ? new OkObjectResult(response)
+                : new BadRequestObjectResult(response);
+        }
+        #endregion
 
     }
 }

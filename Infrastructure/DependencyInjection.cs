@@ -8,6 +8,8 @@ using Infrastructure.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.FileSys;
+using Infrastructure.Authentification;
+using Shared.Authentification.Service;
 
 namespace Infrastructure
 {
@@ -20,6 +22,7 @@ namespace Infrastructure
             services.AddScoped<IAzureAdultContentDetection, AzureAdultContentDetection>();
 
             services.AddScoped<IFileHandler, FileHandler>();
+            services.AddSingleton<IFilePermissionService, FilePermissionService>();
             services.AddScoped<MediaService>();
 
             var serviceBuilder = services.BuildServiceProvider();   

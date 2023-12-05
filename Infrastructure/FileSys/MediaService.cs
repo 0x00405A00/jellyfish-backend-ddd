@@ -1,5 +1,7 @@
 ﻿using Domain.Entities.Chats;
+using Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
+using System.Threading;
 
 namespace Infrastructure.FileSys
 {
@@ -11,13 +13,19 @@ namespace Infrastructure.FileSys
     {
         private readonly ILogger<MediaService> logger;
         private readonly IFileHandler fileHandler;
+        private readonly IAntiVirus antiVirus;
+        private readonly IAzureAdultContentDetection azureAdultContentDetection;
 
         public MediaService(
             ILogger<MediaService> logger,
-            IFileHandler fileHandler)
+            IFileHandler fileHandler, 
+            IAntiVirus antiVirus,
+            IAzureAdultContentDetection azureAdultContentDetection)
         {
             this.logger = logger;
             this.fileHandler = fileHandler;
+            this.antiVirus = antiVirus;
+            this.azureAdultContentDetection = azureAdultContentDetection;
         }
         #region User Profile Picture
         public async Task<byte[]?> GetProfilePicture(Guid userId, string fileExtension, CancellationToken cancellationToken)
@@ -137,56 +145,12 @@ namespace Infrastructure.FileSys
             return null;
 
         }
+
         #endregion
-        #region Chat Messages
-        public string GetChatMediaContentPath(Guid chatId, Guid messageId, string fileExtension)
+        
+        public async Task<MediaContentDTO> CheckContent(MediaContentDTO mediaContentDTO,CancellationToken cancellationToken)
         {
-            return Path.Combine(FileHandler.ChatPictures, chatId.ToString(), messageId.ToString() + fileExtension);
+            return await mediaContentDTO.CheckInadmissibleContent(antiVirus, azureAdultContentDetection, cancellationToken);
         }
-
-        public string CreateChatMessageAttachment(Guid chatId, Guid messageId, string fileExtension, byte[] content, CancellationToken cancellationToken)
-        {
-            try
-            {
-                string path = GetChatMediaContentPath(chatId, messageId, fileExtension);
-                fileHandler.CreateOrUpdateFile(path, content, cancellationToken);
-                return path.Replace(FileHandler.WebRoot, "");
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return null;
-        }
-        public async Task<byte[]?> GetChatMessageAttachment(Guid chatId, Guid messageId, string fileExtension, CancellationToken cancellationToken)
-        {
-
-            try
-            {
-                string path = GetChatMediaContentPath(chatId,messageId, fileExtension);
-                return await fileHandler.ReadFile(path, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return null;
-        }
-        public async Task<string?> GetChatMessageAttachmentBase64(Guid chatId, Guid messageId, string fileExtension, CancellationToken cancellationToken)
-        {
-
-            try
-            {
-                var result = await this.GetChatMessageAttachment(chatId,messageId, fileExtension, cancellationToken);
-                var base64 = Convert.ToBase64String(result);
-                return base64;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return null;
-        }
-        #endregion
     }
 }

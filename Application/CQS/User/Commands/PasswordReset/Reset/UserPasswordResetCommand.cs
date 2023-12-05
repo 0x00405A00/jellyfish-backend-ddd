@@ -2,7 +2,7 @@
 
 namespace Application.CQS.User.Commands.PasswordReset.Reset
 {
-    public class UserPasswordResetCommand : ICommand<bool>
+    public record UserPasswordResetCommand : ICommand<bool>
     {
         public string PasswordResetBase64Token { get; }
         public string Password { get; }

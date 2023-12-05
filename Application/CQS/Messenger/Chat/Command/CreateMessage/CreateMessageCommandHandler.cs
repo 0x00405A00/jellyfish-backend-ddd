@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
 using Domain.Entities.User;
+using Domain.Error;
 using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
@@ -8,8 +9,6 @@ using Infrastructure.FileSys;
 using MediatR;
 using Shared.DataTransferObject.Messenger;
 using Shared.MimePart;
-using System.Buffers.Text;
-using System.Text;
 
 namespace Application.CQS.Messenger.Chat.Command.CreateMessage
 {
@@ -21,9 +20,14 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator mediator;
         private readonly IMapper _mapper;
+        private readonly IAntiVirus antiVirus;
+        private readonly IAzureAdultContentDetection azureAdultContentDetection;
+
         public CreateMessageCommandHandler(
             IMediator mediator,
             IMapper mapper,
+            IAntiVirus antiVirus,
+            IAzureAdultContentDetection azureAdultContentDetection,
             IChatRepository chatRepository,
             IUserRepository userRepository,
             MediaService mediaService,
@@ -31,6 +35,8 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
         {
             this.mediator = mediator;
             _mapper = mapper;
+            this.antiVirus = antiVirus;
+            this.azureAdultContentDetection = azureAdultContentDetection;
             _chatRepository = chatRepository;
             _userRepository = userRepository;
             this.mediaService = mediaService;
@@ -50,30 +56,60 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
             {
                 return Result<List<MessageDTO>>.Failure("you are not a member of the chat", Domain.Error.Error.ERROR_CODE.NotFound);
             }
+            List<Domain.Error.Error> errors = new List<Domain.Error.Error>();
             var chatMember = chat.GetChatMemberById(userId);
             try
             {
                 foreach(var message in request.Messages)
                 {
-                    var text = message.Text;
-                    var mimeType = message.BinaryContentMimeType;
-                    var base64Content = message.BinaryContentBase64;
-                    byte[] binaryData = Convert.FromBase64String(base64Content);
+                    try
+                    {
+                        var text = message.Text;
 
-                    var filePath = mediaService.CreateChatMessageAttachment(request.ChatId,, MimeExtension.GetFileExtension(mimeType), binaryData, cancellationToken);
-                    var mediaContent = MediaContent.Parse(binaryData, filePath, mimeType);
+                        //Prüfung des Content in 'UploadProfilePictureCommandValidator'
+                        MediaContent mediaContent = null;
+                        var messageId = new Domain.Entities.Message.MessageId(Guid.NewGuid());
+                        if (message.HasBase64ContentSet)
+                        {
+                            var mimeType = message.BinaryContentMimeType;
+                            var base64Content = message.BinaryContentBase64;
+                            byte[] binaryData = Convert.FromBase64String(base64Content);
 
-                    var messageEntity = chat.AddMessage(chatMember.User, text, mediaContent);
+                            MediaContentDTO mediaContentDTO = MediaContentDTO.Parse(binaryData, antiVirus,azureAdultContentDetection);
+                            var filePath = mediaService.CheckContent(mediaContentDTO, cancellationToken);
+                            mediaContent = MediaContent.Parse(binaryData, mimeType);
+                        }
+
+                        Domain.Entities.Message.Message messageEntity = Domain.Entities.Message.Message.Create(
+                            messageId,
+                            chat.Uuid,
+                            chatMember.User,
+                            text,
+                            mediaContent,
+                            message.CreatedTime ?? DateTime.Now,//Prüfung des CreatedTime auf null-Wert in 'UploadProfilePictureCommandValidator'
+                            null,
+                            null);
+                        var createMessageEntity = chat.AddMessage(messageEntity);
+                    }
+                    catch(Exception ex)
+                    {
+                        errors.Add(new Error(ex.Message, Error.ERROR_CODE.UnproccesableEntity));
+                    }
+
                 }
+                //save nur wenn errs collected is empty
                 _chatRepository.UpdateAsync(chat);
+                _chatRepository.PublishDomainEvents(chat, mediator);
             }
             catch (Exception ex)
             {
-
+                return Result<List<MessageDTO>>.Failure("cant save messages to chat", Domain.Error.Error.ERROR_CODE.Exception);
             }
 
             var dto = _mapper.Map<List<MessageDTO>>(null);
-            return Result<List<MessageDTO>>.Success(dto);
+            var result = Result<List<MessageDTO>>.Success(dto);
+            result.Error = errors.Any()?errors.First():null;  
+            return result;
         }
 
     }

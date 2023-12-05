@@ -1,4 +1,5 @@
-﻿using Domain.ValueObjects;
+﻿using Domain.Primitives;
+using Domain.ValueObjects;
 using Shared.ApiDataTransferObject.Object;
 using Shared.Linq;
 using System.Text.Json.Serialization;
@@ -44,7 +45,22 @@ namespace Shared.ApiDataTransferObject
                     }
                 }
             }
-            return Create(input,paginationBase, apiError);
+            return Create(input, paginationBase, apiError);
+        }
+        public static ApiDataTransferObject<T> ValidationResult(IValidationResult result)
+        {
+
+            var apiError = new List<ApiError>();
+            if (result.Errors != null)
+            {
+                foreach (var err in result.Errors)
+                {
+                    var errorObj = new ApiError();
+                    errorObj.Message = err.Message;
+                    apiError.Add(errorObj);
+                }
+            }
+            return Create(null, null, apiError);
         }
         public static ApiDataTransferObject<T> Create(T data, PaginationBase paginationBase = null, List<ApiError> apiError = null)
         {
@@ -57,10 +73,8 @@ namespace Shared.ApiDataTransferObject
             }
             else
             {
-                if(data!= null)
-                {
-                    type = typeof(T).Name;
-                }
+
+                type = typeof(T).Name;
             }
 
             var response = new ApiDataTransferObject<T>();

@@ -34,6 +34,7 @@ namespace Application.CQS.User.Commands.UpdateProfilePicture
 
         public async Task<Result<UserDTO>> Handle(UploadProfilePictureCommand request, CancellationToken cancellationToken)
         {
+            //Prüfung des Content in 'UploadProfilePictureCommandValidator'
             if (request.UserId == null)
             {
                 throw new InvalidOperationException($"userId is {request.UserId}");

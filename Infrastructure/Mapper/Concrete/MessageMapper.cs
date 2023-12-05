@@ -3,6 +3,7 @@ using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.DatabaseEntity;
 using Infrastructure.FileSys;
+using System.Text;
 
 namespace Infrastructure.Mapper.Concrete
 {
@@ -16,6 +17,8 @@ namespace Infrastructure.Mapper.Concrete
             message.Text = entity.Text;
             message.BinaryContentPath = entity.MediaContent?.FilePath;
             message.BinaryContentFileExt = entity.MediaContent?.FileExtension;
+            message.BinaryContentBase64 = entity.MediaContent?.ToString();
+            message.BinaryContentMimeType = entity.MediaContent?.FileExtension;
             message.CreatedTime = entity.CreatedTime;
             message.LastModifiedTime = entity.LastModifiedTime;
             message.DeletedTime = entity.DeletedTime;
@@ -35,15 +38,24 @@ namespace Infrastructure.Mapper.Concrete
                 chatId = new Domain.Entities.Chats.ChatId(entity.ChatUu.Uuid);
                 user = await entity.MessageOwnerNavigation.MapToDomainEntity<Domain.Entities.User.User, User>(false);
             }
-            var mediaContent = MediaContent.Parse(entity.BinaryContentPath,entity.BinaryContentFileExt);
-            try
+            MediaContent mediaContent = null;
+            if(entity.BinaryContentPath is not null)
             {
-                var pic = await mediaContent.LoadMediaContent(CancellationToken.None);
-                mediaContent.SetBinary(pic);
-            }
-            catch (Exception ex)
-            {
+                mediaContent = MediaContent.Parse(entity.BinaryContentPath, entity.BinaryContentFileExt);
+                try
+                {
+                    var pic = await mediaContent.LoadMediaContent(CancellationToken.None);
+                    mediaContent.SetBinary(pic);
+                }
+                catch (Exception ex)
+                {
 
+                }
+            }
+            else
+            {
+                byte[] data = Convert.FromBase64String(entity.BinaryContentBase64);
+                mediaContent = MediaContent.Parse(data, entity.BinaryContentMimeType);
             }
 
             return Domain.Entities.Message.Message.Create(

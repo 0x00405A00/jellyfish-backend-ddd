@@ -50,7 +50,6 @@ namespace Presentation
             });
             services.AddControllers(x => {
                 //Filters
-                x.Filters.Add<PrepareResponseFailoverFilter>(int.MinValue+1);//wandelt ObjectResult von Action in Ziel Json Struktur (ApiResponse<T>)
                 x.Filters.Add<PrepareResponseFilter>(int.MinValue);//wandelt ObjectResult von Action in Ziel Json Struktur (ApiResponse<T>)
                 //ModelBinder
                 x.ModelBinderProviders.Insert(0, new QueryParametersModelBinderProvider());//Für Query Param falls gesetzt

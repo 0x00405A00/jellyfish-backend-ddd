@@ -2,7 +2,7 @@
 
 namespace Application.CQS.User.Commands.PasswordReset.Request
 {
-    public class UserPasswordResetRequestCommand : ICommand<bool>
+    public record UserPasswordResetRequestCommand : ICommand<bool>
     {
         public string Email { get; }
 
