@@ -68,8 +68,10 @@ Legacy over binary or with docker container.
 ## To Do ##
 
 **Backend:**
+- [x] RateLimiter for specific actions
+- [X] IModelBinder+IModelBinderProvider for HttpQuery and HttpBody to resolve and validate data that is inside of 'ApiDataTransferObject<T>'
 - [x] CRUD + Search Filter (Transition from http request (json) to dto filter model to linq expression to sql)
-- [X] Cache Functionality 
+- [X] Cache Functionality (currently IMemoryCache)
 - [x] Password Reset Endpoint: Enable password reset via the "Edit User" feature; domain logic change: UpdateUser, updateuser command+handler update.
 - [ ] Password encrytion in database with best practise encryption method
 - [x] Auth/Authorization: Match Jwt Data (Claims etc.) with the database
@@ -77,9 +79,10 @@ Legacy over binary or with docker container.
 - [ ] File Upload / User Profile Pictures / Attachments from Jellyfish Messages or Media / Storing Strategy: Avoid storing in the database for performance reasons. Implement caching strategy, build up cache during backend start. Conduct virus checks using content and an external AI service (Azure= [link](https://azure.microsoft.com/en-us/products/ai-services/ai-content-safety), AWS) to detect uploads of violent media/pornography.
   - [x] Chain Of Responsibility for virus and inadmissible/violent content (abstraction implemented)
 - [x] Domain: Implement Chat Business Logic checks.
-- [ ] Implementation of Presentation/Infrastructure/Application of Domain Entity Chat/Message/Userfriendship requests: Utilize SignalR to notify target users, etc.
+- [ ] Implementation of Presentation/Infrastructure/Application of Domain Entity Chat/Message/Userfriendship requests: Utilize SignalR to notify target users, etc. -> Event Handler
 - [ ] Forgettable Payload -> GDPR (German: DSGVO).
 - [ ] End-to-End encryption for Jellyfish users.
+  - [ ] Delete messages that are successfully delivered to target
 - [ ] SSL Encryption for Backend.
 - [x] Swagger Documentation
 - [x] Rewrite some default ASP.NET Core response messages with a filter: e.g., HTTP error 422 or unauthorized response -> rewrite to JSONAPI error response ----------> Presentation.Extension.JsonApiResultExtension.
@@ -604,7 +607,7 @@ Legacy over binary or with docker container.
   - [ ] Terms of Use and Privacy Policy
   - [x] Social Media Icons with Channels
 
-***Features:***
+***Features (from Web-Frontend):***
 - [ ] Color and Blackmode (via MudBlazor Themes)
 - [ ] Snackbar for notifications (any action like edit user, get notification of service x/y, etc.) => https://mudblazor.com/components/snackbar#5ac08464-80c3-4c34-8cac-24f0947275e7
 - [x] SignIn Page with Password recovery function
@@ -629,6 +632,8 @@ Legacy over binary or with docker container.
   - [ ] Upload User Profile Picture ([MudBlazor FileUpload](https://mudblazor.com/components/fileupload#form-validation))
   - [ ] User Edit/Delete Audit Log (all events in a separate table)
   - [ ] View users' friends/friendship requests in-outcoming
+- [ ] Health.razor:
+  - [ ] Prettify the healthcheck view (currently default healthcheck view as presentation)
 - [ ] Blog:
   - [ ] CRUD Posts
   - [ ] Embedded Media
@@ -639,6 +644,7 @@ Legacy over binary or with docker container.
 - [ ] Own profil
   - [ ] View
   - [ ] Edit/Manage 
+
 
 **Mobile App:**
 - [ ] Remove old DTO and Model structure and old namespaces
@@ -651,6 +657,7 @@ Legacy over binary or with docker container.
 - [ ] Chat: Messaging (UI+App backend)
 - [ ] Chat+Friendlist: See profile
 - [ ] Chat: Messaging (send attachments)
+
 
 **General:**
 - [ ] DNS Preconf, Windows hosts-file equal names like Docker
@@ -668,10 +675,11 @@ Stay tuned 👍.
 ![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/admin-panel-alpha-prev.jpg "Admin Panel Alpha 0.1")
 
 ## Dashboard ##
-![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/dashboard-preview.png "Dashboard")
+![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/dashboard-preview-updated.png "Dashboard")
 
-## User Management (Users.razor) w/ Pagination ##
-![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/pagination-preview.png "User Management")
+## User Management (Users.razor) w/ Pagination and Search ##
+![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/admin-ui-users-list-new.png "User Management")
+![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/admin-ui-users-list-new-search.png "User Search")
 
 ## User Management (Users.razor) - Add/Edit ##
 ![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/add-user-preview.png "Add/Edit User")
