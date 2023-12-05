@@ -143,7 +143,7 @@ namespace Presentation.Controllers.Api.v1.Messenger
 
         #region Chat Member Actions
 
-        /*[Consumes(MediaTypeNames.Application.Json)]
+        [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(ApiDataTransferObject<Guid>), 200)]
         [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
@@ -199,7 +199,7 @@ namespace Presentation.Controllers.Api.v1.Messenger
 
             var result = await Sender.Send(commandCreateChat, cancellationToken);
             return result.PrepareResponse();
-        }*/
+        }
         #endregion
 
     }
