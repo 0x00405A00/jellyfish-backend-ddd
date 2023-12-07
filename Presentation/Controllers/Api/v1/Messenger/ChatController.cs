@@ -1,7 +1,11 @@
+using Application.CQS.Messenger.Chat.Command.AddChatMember;
+using Application.CQS.Messenger.Chat.Command.AssignChatAdmin;
 using Application.CQS.Messenger.Chat.Command.CreateChat;
 using Application.CQS.Messenger.Chat.Command.CreateMessage;
 using Application.CQS.Messenger.Chat.Command.DeleteChat;
 using Application.CQS.Messenger.Chat.Command.DeleteMessage;
+using Application.CQS.Messenger.Chat.Command.RemoveChatMember;
+using Application.CQS.Messenger.Chat.Command.RevokeChatAdmin;
 using Application.CQS.Messenger.Chat.Command.UpdateChat;
 using Application.CQS.Messenger.Chat.Command.UpdateMessage;
 using Application.CQS.Messenger.Chat.Queries.GetChatById;
