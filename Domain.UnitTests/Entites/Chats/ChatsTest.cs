@@ -381,6 +381,9 @@ namespace Domain.UnitTests.Entites.Chats
             Assert.NotEmpty(chat.Messages);
         }
 
+        public static string ValidMimeType = "image/jpeg";
+        public static string InvalidMimeType = "images/jpeg";
+
         [Fact]
         public void AddMessage_ValidOwnerAndMediaContent_AddsMessage()
         {
@@ -388,7 +391,7 @@ namespace Domain.UnitTests.Entites.Chats
             var adminUser = User.InstancingHelper.GetUserInstance();
             var chat = InstancingHelper.GetChatInstance(adminUser);
             var messageOwner = User.InstancingHelper.GetUserInstance();
-            var mediaContent = MediaContent.Parse(new byte[8] {0,1,1,0,1,1,1,0 });
+            var mediaContent = MediaContent.Parse(new byte[8] {0,1,1,0,1,1,1,0 }, ValidMimeType);
             var text = "Test message with media";
 
             // Act
@@ -476,7 +479,7 @@ namespace Domain.UnitTests.Entites.Chats
             var messageOwner = User.InstancingHelper.GetUserInstance();
             var message = chat.AddMessage(messageOwner, "Test message", null); 
             var newText = "Updated text";
-            var newMediaContent = MediaContent.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 });
+            var newMediaContent = MediaContent.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 }, ValidMimeType);
 
             // Act
             chat.UpdateMessage(messageOwner, message.Uuid, newText, newMediaContent);
@@ -526,7 +529,7 @@ namespace Domain.UnitTests.Entites.Chats
             var chat = InstancingHelper.GetChatInstance(adminUser);
             var messageOwner = User.InstancingHelper.GetUserInstance();
             var message = chat.AddMessage(messageOwner, "Test message", null); 
-            var newMediaContent = MediaContent.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 });
+            var newMediaContent = MediaContent.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 }, ValidMimeType);
 
             // Act
             chat.UpdateMessage(messageOwner, message.Uuid, null, newMediaContent);
@@ -553,7 +556,7 @@ namespace Domain.UnitTests.Entites.Chats
             // Arrange
             var adminUser = User.InstancingHelper.GetUserInstance();
             var chat = InstancingHelper.GetChatInstance(adminUser);
-            var newPicture = Picture.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 });
+            var newPicture = Picture.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 }, ValidMimeType);
 
             // Act
             chat.UpdatePicture(adminUser, newPicture);
@@ -569,10 +572,10 @@ namespace Domain.UnitTests.Entites.Chats
             var adminUser = User.InstancingHelper.GetUserInstance();
             var chat = InstancingHelper.GetChatInstance(adminUser);
             var nonAdminUser = User.InstancingHelper.GetUserInstance();
-            var newPicture = Picture.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 });
+            var newPicture = Picture.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 }, ValidMimeType);
 
             // Act and Assert
-            var exception = Assert.Throws<UserIsNoAdminInChatException>(() => chat.UpdatePicture(nonAdminUser, newPicture));
+            var exception = Assert.Throws<UserIsNoAdminInChatException>(() => chat.UpdatePicture(nonAdminUser, (Picture)newPicture));
             Assert.NotNull(exception);
         }
 
@@ -582,7 +585,7 @@ namespace Domain.UnitTests.Entites.Chats
             // Arrange
             var adminUser = User.InstancingHelper.GetUserInstance();
             var chat = InstancingHelper.GetChatInstance(adminUser);
-            var newPicture = Picture.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 });
+            var newPicture = Picture.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 }, ValidMimeType);
 
             // Act and Assert
             var exception = Assert.Throws<ArgumentNullException>(() => chat.UpdatePicture(null, newPicture));

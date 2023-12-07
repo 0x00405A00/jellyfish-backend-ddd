@@ -1,20 +1,71 @@
-﻿
-using Domain.Entities.Role;
-using Domain.Entities.User;
-using Domain.Entities.User.Event;
+﻿using Domain.Entities.User;
 using Domain.Entities.User.Exception;
 using Domain.ValueObjects;
-using System;
 
 namespace Domain.UnitTests.Entites.User
 {
     public class UserTest
     {
+        public static Domain.Entities.User.User CreatedBy = InstancingHelper.GetUserInstance();
+        public static Domain.Entities.User.User ModifiedBy = InstancingHelper.GetUserInstance();
+        public static Domain.Entities.User.UserType UserType = InstancingHelper.GetUserTypeInstance();
+
         public UserTest()
         {
             
         }
-        
+        [Fact]
+
+        public void Create_ValidParameters_ReturnsUserInstance()
+        {
+            // Arrange
+            var id = new UserId(Guid.NewGuid());
+            var userName = "sampleUser";
+            var password = "samplePassword";
+            var firstName = "John";
+            var lastName = "Doe";
+            var email = Email.Parse("johndoe@example.com");
+            var phone = PhoneNumber.Parse("1234567890");
+            var dateOfBirth = new DateOnly(1990, 1, 1);
+            var createdTime = DateTime.UtcNow;
+
+            var role = InstancingHelper.GetRoleInstance();
+            var userRole = InstancingHelper.GetUserRoleInstance(role);
+            ICollection<UserRole> userRoles = new List<UserRole>() { userRole };
+
+            //Act
+            var result = Entities.User.User.Create(
+                id,
+                UserType,
+                userName,
+                password,
+                firstName,
+                lastName,
+                null,//Optional: activationToken
+                null,//Optional: activationCode
+                null,//Optional: passwordResetCode
+                null,//Optional: passwordResetToken
+                null,//Optional: passwordResetExpiresIn
+                email,
+                phone,
+                null, // Optional: picture
+                userRoles, // Optional: roles
+                null, // Optional: friends
+                null, // Optional: friendshipRequests
+                dateOfBirth,
+                null, // Optional: activationDateTime
+                createdTime,
+                null, // Optional: lastModifiedTime
+                null, // Optional: deletedTime
+                null); // Optional: createdBy
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(id, result.Uuid);
+            Assert.Equal(UserType, result.UserType);
+            Assert.Equal(userName, result.UserName);
+            // Add more assertions based on your object properties
+        }
 
         [Fact]
         public void UpdateUserType_ValidUserType_UpdatesUserType()

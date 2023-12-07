@@ -105,7 +105,6 @@ namespace Infrastructure.Mapper.Concrete
                     var r = await role.RoleUu.MapToDomainEntity<Domain.Entities.Role.Role, Role>(false);
                     var u = await role.UserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
                     return UserRole.Create(
-                        u,
                         r,
                         role.CreatedTime ?? DateTime.MinValue,
                         role.LastModifiedTime,

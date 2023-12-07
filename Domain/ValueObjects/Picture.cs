@@ -16,5 +16,9 @@
         {
             return new Picture(filePath, fileExtension);
         }
+        public static new Picture Parse(byte[] data, string mimeType)
+        {
+            return new Picture(data, null, mimeType);
+        }
     }
 }

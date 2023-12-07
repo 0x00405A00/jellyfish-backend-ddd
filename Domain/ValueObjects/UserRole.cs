@@ -6,7 +6,6 @@ namespace Domain.ValueObjects
 {
     public sealed class UserRole : IAuditibleCreateEntity, IAuditibleModifiedEntity, IAuditibleDeleteEntity
     {
-        public User User { get; private set; }
         public Role Role { get; private set; }
 
         public DateTime? CreatedTime { get; set; }
@@ -21,13 +20,11 @@ namespace Domain.ValueObjects
 
         }
         private UserRole(
-            User user,
             Role role,
             DateTime? createdTime,
             DateTime? lastModifiedTime,
             DateTime? deletedTime) 
         {
-            User = user;
             Role = role;
             CreatedTime = createdTime;
             LastModifiedTime = lastModifiedTime;
@@ -35,14 +32,12 @@ namespace Domain.ValueObjects
         }
 
         public static UserRole Create(
-            User user,
             Role role,
             DateTime createdTime,
             DateTime? lastModifiedTime,
             DateTime? deletedTime)
         {
             UserRole userRole = new UserRole(
-                user,
                 role,
                 createdTime,
                 lastModifiedTime,

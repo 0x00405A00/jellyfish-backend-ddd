@@ -38,7 +38,7 @@ namespace Domain.ValueObjects
         }
         public static bool operator ==(Email emailLeft, Email emailRight)
         {
-            return !(emailLeft!=emailRight);
+            return (emailLeft!=emailRight);
         }
 
         public bool Equals(Email? other)

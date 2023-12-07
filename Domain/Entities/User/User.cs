@@ -539,8 +539,8 @@ namespace Domain.Entities.User
             {
                 throw new RemoveFriendException("you have no friends");
             }
-            var foundFriend = _friends.Where(x => x.Friend == friend).First();
-            if (foundFriend == null)
+            var foundFriend = _friends.Where(x => x.Friend == friend).FirstOrDefault();
+            if (foundFriend is null)
             {
                 throw new RemoveFriendException("you arent be friends");
             }
@@ -554,7 +554,7 @@ namespace Domain.Entities.User
             {
                 throw new AddRoleException("role already assigned");
             }
-            var userRole = UserRole.Create(this,role, DateTime.Now, null, null);
+            var userRole = UserRole.Create(role, DateTime.Now, null, null);
             _roles.Add(userRole);
             SetLastModified(assignerUser);
             Raise(new UserAssignedRoleToUserDomainEvent(assignerUser,this,role));
@@ -566,8 +566,9 @@ namespace Domain.Entities.User
             {
                 throw new RemoveRoleException("you have no roles assigned");
             }
-            var foundUserRole = _roles.Where(x => x.Role == role).First();  
-            if (foundUserRole==null)
+            var foundUserRole = _roles.Where(x => x.Role == role)
+                .FirstOrDefault();  
+            if (foundUserRole is null)
             {
                 throw new RemoveRoleException("role already revoked or is not assigned");
             }

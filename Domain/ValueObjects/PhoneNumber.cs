@@ -38,7 +38,7 @@ namespace Domain.ValueObjects
         }
         public static bool operator ==(PhoneNumber phoneLeft, PhoneNumber phoneRight)
         {
-            return !(phoneLeft != phoneRight);
+            return (phoneLeft != phoneRight);
         }
 
         public bool Equals(PhoneNumber? other)

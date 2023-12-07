@@ -9,6 +9,7 @@
       "Domain.UnitTests/1.0.0": {
         "dependencies": {
           "Domain": "1.0.0",
+          "FluentAssertions": "6.12.0",
           "Microsoft.NET.Test.Sdk": "17.5.0",
           "coverlet.collector": "3.2.0",
           "xunit": "2.4.2",
@@ -19,6 +20,17 @@
         }
       },
       "coverlet.collector/3.2.0": {},
+      "FluentAssertions/6.12.0": {
+        "dependencies": {
+          "System.Configuration.ConfigurationManager": "4.4.0"
+        },
+        "runtime": {
+          "lib/net6.0/FluentAssertions.dll": {
+            "assemblyVersion": "6.12.0.0",
+            "fileVersion": "6.12.0.0"
+          }
+        }
+      },
       "MediatR/12.1.1": {
         "dependencies": {
           "MediatR.Contracts": "2.0.1",
@@ -464,6 +476,17 @@
           "System.Threading.Tasks": "4.3.0"
         }
       },
+      "System.Configuration.ConfigurationManager/4.4.0": {
+        "dependencies": {
+          "System.Security.Cryptography.ProtectedData": "4.4.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Configuration.ConfigurationManager.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.6.25519.3"
+          }
+        }
+      },
       "System.Console/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -880,6 +903,22 @@
           "System.Threading.Tasks": "4.3.0"
         }
       },
+      "System.Security.Cryptography.ProtectedData/4.4.0": {
+        "runtime": {
+          "lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll": {
+            "assemblyVersion": "4.0.2.0",
+            "fileVersion": "4.6.25519.3"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "4.0.2.0",
+            "fileVersion": "4.6.25519.3"
+          }
+        }
+      },
       "System.Security.Cryptography.X509Certificates/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -1051,16 +1090,10 @@
       "xunit.runner.visualstudio/2.4.5": {},
       "Domain/1.0.0": {
         "dependencies": {
-          "MediatR": "12.1.1",
-          "Shared": "1.0.0"
+          "MediatR": "12.1.1"
         },
         "runtime": {
           "Domain.dll": {}
-        }
-      },
-      "Shared/1.0.0": {
-        "runtime": {
-          "Shared.dll": {}
         }
       }
     }
@@ -1077,6 +1110,13 @@
       "sha512": "sha512-xjY8xBigSeWIYs4I7DgUHqSNoGqnHi7Fv7/7RZD02rvZyG3hlsjnQKiVKVWKgr9kRKgmV+dEfu8KScvysiC0Wg==",
       "path": "coverlet.collector/3.2.0",
       "hashPath": "coverlet.collector.3.2.0.nupkg.sha512"
+    },
+    "FluentAssertions/6.12.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZXhHT2YwP9lajrwSKbLlFqsmCCvFJMoRSK9t7sImfnCyd0OB3MhgxdoMcVqxbq1iyxD6mD2fiackWmBb7ayiXQ==",
+      "path": "fluentassertions/6.12.0",
+      "hashPath": "fluentassertions.6.12.0.nupkg.sha512"
     },
     "MediatR/12.1.1": {
       "type": "package",
@@ -1308,6 +1348,13 @@
       "sha512": "sha512-ztl69Xp0Y/UXCL+3v3tEU+lIy+bvjKNUmopn1wep/a291pVPK7dxBd6T7WnlQqRog+d1a/hSsgRsmFnIBKTPLQ==",
       "path": "system.collections.concurrent/4.3.0",
       "hashPath": "system.collections.concurrent.4.3.0.nupkg.sha512"
+    },
+    "System.Configuration.ConfigurationManager/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gWwQv/Ug1qWJmHCmN17nAbxJYmQBM/E94QxKLksvUiiKB1Ld3Sc/eK1lgmbSjDFxkQhVuayI/cGFZhpBSodLrg==",
+      "path": "system.configuration.configurationmanager/4.4.0",
+      "hashPath": "system.configuration.configurationmanager.4.4.0.nupkg.sha512"
     },
     "System.Console/4.3.0": {
       "type": "package",
@@ -1589,6 +1636,13 @@
       "path": "system.security.cryptography.primitives/4.3.0",
       "hashPath": "system.security.cryptography.primitives.4.3.0.nupkg.sha512"
     },
+    "System.Security.Cryptography.ProtectedData/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cJV7ScGW7EhatRsjehfvvYVBvtiSMKgN8bOVI0bQhnF5bU7vnHVIsH49Kva7i7GWaWYvmEzkYVk1TC+gZYBEog==",
+      "path": "system.security.cryptography.protecteddata/4.4.0",
+      "hashPath": "system.security.cryptography.protecteddata.4.4.0.nupkg.sha512"
+    },
     "System.Security.Cryptography.X509Certificates/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -1716,11 +1770,6 @@
       "hashPath": "xunit.runner.visualstudio.2.4.5.nupkg.sha512"
     },
     "Domain/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Shared/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

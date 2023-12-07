@@ -23,6 +23,10 @@ namespace Domain.UnitTests.Entites.User
             var dateOfBirth = new DateOnly(1990, 1, 1);
             var createdTime = DateTime.UtcNow;
 
+            var role = InstancingHelper.GetRoleInstance();
+            var userRole = InstancingHelper.GetUserRoleInstance(role);
+            ICollection<UserRole> userRoles = new List<UserRole>() { userRole };
+
             var user = Entities.User.User.Create(
                 id,
                 userType,
@@ -30,26 +34,31 @@ namespace Domain.UnitTests.Entites.User
                 password,
                 firstName,
                 lastName,
+                null,//Optional: activationToken
+                null,//Optional: activationCode
+                null,//Optional: passwordResetCode
+                null,//Optional: passwordResetToken
+                null,//Optional: passwordResetExpiresIn
                 email,
                 phone,
-                null, // Optional: Picture
-                null, // Optional: Roles
-                null, // Optional: Friends
-                null, // Optional: FriendshipRequests
+                null, // Optional: picture
+                userRoles, // Optional: roles
+                null, // Optional: friends
+                null, // Optional: friendshipRequests
                 dateOfBirth,
-                null, // Optional: ActivationDateTime
+                null, // Optional: activationDateTime
                 createdTime,
-                null, // Optional: LastModifiedTime
-                null, // Optional: DeletedTime
-                null); // Optional: CreatedBy
+                null, // Optional: lastModifiedTime
+                null, // Optional: deletedTime
+                null); // Optional: createdBy
 
             return user;
         }
 
-        public static UserType GetUserTypeInstance()
+        public static UserType GetUserTypeInstance(string typeName="User")
         {
             return UserType.Create(new UserTypeId(Guid.NewGuid()),
-                                           "testtype",
+                                           typeName,
                                            DateTime.Now,
                                            null,
                                            null);
@@ -60,9 +69,13 @@ namespace Domain.UnitTests.Entites.User
             return FriendshipRequest.Create("be my new friend", fromUser, toUser);
         }
 
-        public static Role GetRoleInstance()
+        public static Role GetRoleInstance(string roleName = "User")
         {
-            return Role.Create(new RoleId(Guid.NewGuid()), "role", null, DateTime.Now, null, null);
+            return Role.Create(new RoleId(Guid.NewGuid()), roleName, null, DateTime.Now, null, null);
+        }
+        public static UserRole GetUserRoleInstance(Role role)
+        {
+            return UserRole.Create(role, DateTime.Now, null, null);
         }
     }
 }
