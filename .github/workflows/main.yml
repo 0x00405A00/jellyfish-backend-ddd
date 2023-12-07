@@ -24,10 +24,10 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
     - name: Restore Dependencies
-      run: dotnet restore ./JellyfishBackend.sln
+      run: dotnet restore ./JellyfishBackend.sln 
 
     - name: Build
-      run: dotnet build ./JellyfishBackend.sln --configuration Release --no-restore
+      run: dotnet build ./JellyfishBackend.sln --configuration Backend --no-restore
 
     - name: Test
-      run: dotnet test ./JellyfishBackend.sln --configuration Release --no-restore --no-build
+      run: dotnet test ./JellyfishBackend.sln --configuration Backend --no-restore --no-build
