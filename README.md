@@ -102,7 +102,7 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] GET: /api/v1/chat/{chatId}, Gets the chat
       - [x] Presentation
         - [x] Implementation
@@ -117,7 +117,7 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] PUT: /api/v1/chat/{chatId}, Update chat informations such as description, name
       - [x] Presentation
         - [x] Implementation
@@ -132,7 +132,7 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] DELETE: /api/v1/chat/{chatId}, Delete chat
       - [x] Presentation
         - [x] Implementation
@@ -147,7 +147,7 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [ ] PUT: /api/v1/chat/{chatId}/picture/{messageId}, Sets the chat picture
       - [ ] Presentation
         - [ ] Implementation
@@ -162,7 +162,7 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] PUT: /api/v1/chat/{chatId}/member/{userId}, Add user to chat (new member)
       - [x] Presentation
         - [x] Implementation
@@ -177,7 +177,7 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] DELETE: /api/v1/chat/{chatId}/member/{userId}, Remove member from chat
       - [x] Presentation
         - [x] Implementation
@@ -192,7 +192,7 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] PUT: /api/v1/chat/{chatId}/admin/{userId}, Assign admin action
       - [x] Presentation
         - [x] Implementation
@@ -207,7 +207,7 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] DELETE: /api/v1/chat/{chatId}/admin/{userId}, Revoke admin action
       - [x] Presentation
         - [x] Implementation
@@ -222,7 +222,7 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] POST: /api/v1/chat/{chatId}/message, Message create action
       - [x] Presentation
         - [x] Implementation
@@ -237,7 +237,7 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] PUT: /api/v1/chat/{chatId}/message/{messageId}, Message update action
       - [x] Presentation
         - [x] Implementation
@@ -252,7 +252,7 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] DELETE: /api/v1/chat/{chatId}/message/{messageId}, Message delete action
       - [x] Presentation
         - [x] Implementation
@@ -267,15 +267,15 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
 - [x] User Bounding Context implementations:
     - [x] POST: /api/v1/user/register, Register user
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -283,14 +283,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] POST: /api/v1/user/password/reset/request, Creates a password reset requests
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -298,14 +298,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] POST: /api/v1/user/password/change/{id?}, Change password endpoint for admin UI
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -313,14 +313,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] POST: /api/v1/user/password/reset/{base64Token}, Resets password with user received password reset url (link from mail)
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -328,14 +328,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] POST: /api/v1/user/activation/{base64Token}, Activate user with them received activation url (link from mail)
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -343,14 +343,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] GET: /api/v1/user/user-types, Get all available user types
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -358,14 +358,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] GET: /api/v1/user/messenger/{guid}, Get messenger profile from user (less information than default user profile)
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -373,14 +373,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] POST: /api/v1/user/friend/request, Create friendship request
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -388,14 +388,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] DELETE: /api/v1/user/friend/request, Remove friendship request
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -403,14 +403,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] GET: /api/v1/user/friend/request, Get friendship requests
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -418,14 +418,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] POST: /api/v1/user/friend/request/accept, Accept friendship request
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -433,14 +433,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] GET: /api/v1/user/friend, Get Friends
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -448,14 +448,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] DELETE: /api/v1/user/friend, Remove friend 
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -463,14 +463,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] PUT: /api/v1/user/{id}/profile-picture, Add profile picture
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -478,14 +478,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] DELETE: /api/v1/user/{id}/profile-picture, Remove profile picture
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -493,14 +493,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] PATCH: /api/v1/user/{id}/role, Assign role to user
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -508,14 +508,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] DELETE: /api/v1/user/{id}/role, Revoke role from user
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -523,14 +523,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] POST: /api/v1/user/, Create a user
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -538,14 +538,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] GET: /api/v1/user/{id}, Get a user
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -553,14 +553,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] PUT: /api/v1/user/{id}, Update a user
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -568,14 +568,14 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
     - [x] DELETE: /api/v1/user/{id}, Delete a user
       - [x] Presentation
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [x] Infrastructure
         - [x] Implementation
-        - [ ] Test (Grey Box Test)
+        - [x] Test (Grey Box Test)
       - [ ] Application
         - [x] Command/Query
         - [x] Validation (Fluentvalidation)
@@ -583,7 +583,7 @@ Legacy over binary or with docker container.
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
-        - [ ] Test (Unit-Test)
+        - [x] Test (Unit-Test)
   
 
 **Web-Frontend:**
