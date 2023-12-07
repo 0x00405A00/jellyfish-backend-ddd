@@ -26,6 +26,7 @@
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
     <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+    <Configurations>Debug;Release;Backend</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
@@ -34,6 +35,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
+    <ApplicationTitle>Jellyfish</ApplicationTitle>
+    <ApplicationId>net.roos-it.jellyfish</ApplicationId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Backend|net7.0-ios|AnyCPU'">
     <ApplicationTitle>Jellyfish</ApplicationTitle>
     <ApplicationId>net.roos-it.jellyfish</ApplicationId>
   </PropertyGroup>
@@ -48,12 +54,22 @@
     <ApplicationId>net.roos-it.jellyfish</ApplicationId>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Backend|net7.0-android33.0|AnyCPU'">
+    <ApplicationTitle>Jellyfish</ApplicationTitle>
+    <ApplicationId>net.roos-it.jellyfish</ApplicationId>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
     <ApplicationTitle>Jellyfish</ApplicationTitle>
     <ApplicationId>net.roos-it.jellyfish</ApplicationId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|AnyCPU'">
+    <ApplicationTitle>Jellyfish</ApplicationTitle>
+    <ApplicationId>net.roos-it.jellyfish</ApplicationId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Backend|net7.0-windows10.0.19041.0|AnyCPU'">
     <ApplicationTitle>Jellyfish</ApplicationTitle>
     <ApplicationId>net.roos-it.jellyfish</ApplicationId>
   </PropertyGroup>
