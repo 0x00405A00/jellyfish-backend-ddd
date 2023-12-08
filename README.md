@@ -696,3 +696,10 @@ Stay tuned 👍.
 
 ## Codemetrical analysis after adding MobileApp to solution ##
 ![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/20231110_codemetric.png "CodemetricAfterAddMobileAppToSolution")
+
+
+## Continious Integration workflow with Github Action ##
+![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/github-action-continous-integration.png "CI")
+
+## Testing from Core (Use cases & Domain) ##
+![Alt text](https://github.com/0x00405A00/jellyfish-backend-ddd/blob/main/Presentation/Preview-Media/unit-tests-approach.png "TestApproachUnitTestForCore")
