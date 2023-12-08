@@ -2,17 +2,17 @@
 using Domain.Entities.User;
 using Domain.ValueObjects;
 
-namespace Domain.UnitTests.Entites.User
+namespace SharedTest.DomainTestInstance.Entity.User
 {
     public static class InstancingHelper
     {
 
-        public static Entities.User.User GetUserInstance()
+        public static Domain.Entities.User.User GetUserInstance(Guid? uuid = null, UserRole? adminRole = null)
         {
 
             // Arrange
 
-            var id = new UserId(Guid.NewGuid());
+            var id = new UserId(uuid??Guid.NewGuid());
             UserType userType = GetUserTypeInstance();
             var userName = "sampleUser";
             var password = "samplePassword";
@@ -23,11 +23,15 @@ namespace Domain.UnitTests.Entites.User
             var dateOfBirth = new DateOnly(1990, 1, 1);
             var createdTime = DateTime.UtcNow;
 
-            var role = InstancingHelper.GetRoleInstance();
-            var userRole = InstancingHelper.GetUserRoleInstance(role);
+            var role = GetRoleInstance();
+            var userRole = GetUserRoleInstance(role);
             ICollection<UserRole> userRoles = new List<UserRole>() { userRole };
+            if(adminRole is not null)
+            {
+                userRoles.Add(adminRole);
+            }
 
-            var user = Entities.User.User.Create(
+            var user = Domain.Entities.User.User.Create(
                 id,
                 userType,
                 userName,
@@ -55,7 +59,7 @@ namespace Domain.UnitTests.Entites.User
             return user;
         }
 
-        public static UserType GetUserTypeInstance(string typeName="User")
+        public static UserType GetUserTypeInstance(string typeName = "User")
         {
             return UserType.Create(new UserTypeId(Guid.NewGuid()),
                                            typeName,
@@ -64,7 +68,7 @@ namespace Domain.UnitTests.Entites.User
                                            null);
         }
 
-        public static FriendshipRequest GetFriendshipRequest(Entities.User.User fromUser, Entities.User.User toUser)
+        public static FriendshipRequest GetFriendshipRequest(Domain.Entities.User.User fromUser, Domain.Entities.User.User toUser)
         {
             return FriendshipRequest.Create("be my new friend", fromUser, toUser);
         }

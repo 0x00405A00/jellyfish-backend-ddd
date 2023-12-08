@@ -8,16 +8,16 @@ namespace Application.CQS.Messenger.Chat.Command.AssignChatAdmin
 {
     internal sealed class AssignChatAdminCommandHandler : ICommandHandler<AssignChatAdminCommand, bool>
     {
-        private readonly IChatRepository _chatRepository;
+        private readonly IUserTypeRepository _chatRepository;
         private readonly IUserRepository _userRepository;
-        private readonly MediaService mediaService;
+        private readonly IMediaService mediaService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         public AssignChatAdminCommandHandler(
             IMapper mapper,
-            IChatRepository chatRepository,
+            IUserTypeRepository chatRepository,
             IUserRepository userRepository,
-            MediaService mediaService,
+            IMediaService mediaService,
             IUnitOfWork unitOfWork)
         {
             _mapper = mapper;

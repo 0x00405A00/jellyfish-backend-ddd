@@ -8,16 +8,16 @@ namespace Application.CQS.Messenger.Chat.Command.AddChatMember
 {
     internal sealed class AddChatMemberCommandHandler : ICommandHandler<AddChatMemberCommand, bool>
     {
-        private readonly IChatRepository _chatRepository;
+        private readonly IUserTypeRepository _chatRepository;
         private readonly IUserRepository _userRepository;
-        private readonly MediaService mediaService;
+        private readonly IMediaService mediaService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         public AddChatMemberCommandHandler(
             IMapper mapper,
-            IChatRepository chatRepository,
+            IUserTypeRepository chatRepository,
             IUserRepository userRepository,
-            MediaService mediaService,
+            IMediaService mediaService,
             IUnitOfWork unitOfWork)
         {
             _mapper = mapper;

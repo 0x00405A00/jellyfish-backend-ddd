@@ -51,5 +51,6 @@ namespace Application.CQS.User.Commands.RegisterUser.Register
             return result;
 
         }
+
     }
 }

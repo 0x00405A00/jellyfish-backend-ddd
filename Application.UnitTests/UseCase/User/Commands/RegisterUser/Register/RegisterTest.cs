@@ -1,16 +1,17 @@
 ﻿using Application.CQS.User.Commands.CreateUser;
+using Application.CQS.User.Commands.RegisterUser.Register;
 using AutoMapper;
-using FluentAssertions;
+using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
 using Shared.DataTransferObject;
 
-namespace Application.UnitTests.UseCase.User.CreateUser
+namespace Application.UnitTests.UseCase.User.Commands.RegisterUser.Register
 {
-    public class CreateUserTest
+    public class RegisterTest
     {
-        private static readonly CreateUserCommand Command = new CreateUserCommand(
-                                                                            CreatedBy: Guid.NewGuid(),
+
+        private static readonly RegisterUserCommand Command = new RegisterUserCommand(
                                                                             UserName: "john_doe",
                                                                             Password: "password123",
                                                                             PasswordRepeat: "password123",
@@ -18,11 +19,11 @@ namespace Application.UnitTests.UseCase.User.CreateUser
                                                                             LastName: "Doe",
                                                                             Email: "john.doe@example.com",
                                                                             Phone: "1234567890",
-                                                                            DateOfBirth: new DateTime(1990, 1, 1)
-                                                                        );
+                                                                            DateOfBirth: new DateTime(1990, 1, 1));
 
-        private readonly CreateUserCommandHandler _handler;
+        private readonly RegisterUserCommandHandler _handler;
 
+        private readonly ISender _sender;
         private readonly IMapper _mapperMock;
         private readonly IUserRepository _userRepositoryMock;
         private readonly IUserTypeRepository _userTypeRepositoryMock;
@@ -30,8 +31,9 @@ namespace Application.UnitTests.UseCase.User.CreateUser
         private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
 
-        public CreateUserTest()
+        public RegisterTest()
         {
+            _sender = Substitute.For<ISender>();
             _mapperMock = Substitute.For<IMapper>();
             _userRepositoryMock = Substitute.For<IUserRepository>();
             _userTypeRepositoryMock = Substitute.For<IUserTypeRepository>();
@@ -39,27 +41,40 @@ namespace Application.UnitTests.UseCase.User.CreateUser
             _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _mediatorMock = Substitute.For<IMediator>();
 
-            _handler = new CQS.User.Commands.CreateUser.CreateUserCommandHandler(
+            _handler = new RegisterUserCommandHandler(
                 _mapperMock,
                 _userRepositoryMock,
                 _userTypeRepositoryMock,
                 _roleRepositoryMock,
                 _unitOfWorkMock,
-                _mediatorMock);
+                _sender) ;
+        }
+        [Fact]
+        public async Task Handle_ValidCommand_ReturnsSuccess()
+        {
+            // Arrange
+            _sender.Send(Arg.Any<CreateUserCommand>()).Returns(Result<UserDTO>.Success(new UserDTO()));
+
+            // Act
+            var result = await _handler.Handle(Command, CancellationToken.None);
+
+            // Assert
+            Assert.True(result.IsSuccess);
+            Assert.NotNull(result.Value);
         }
 
         [Fact]
-        public async Task Handle_Should_ReturnFailure_WhenEmailIsInvalid()
+        public async Task Handle_CreateUserFails_ReturnsFailure()
         {
-            //Arrange
-            CreateUserCommand invalidCommand = Command with { Email = "blabla@xyz" };
+            // Arrange
+            _sender.Send(Arg.Any<CreateUserCommand>()).Returns(Result<UserDTO>.Failure("User creation failed"));
 
-            //Act
-            Domain.ValueObjects.Result<UserDTO> result = await _handler.Handle(invalidCommand,default);
+            // Act
+            var result = await _handler.Handle(Command, CancellationToken.None);
 
-            //Assert
-            result.Error.Should().NotBeNull();
+            // Assert
+            Assert.False(result.IsSuccess);
+            Assert.Equal("User creation failed", result.Error.Message);
         }
-
     }
 }

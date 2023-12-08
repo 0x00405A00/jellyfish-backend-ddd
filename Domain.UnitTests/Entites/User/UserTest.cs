@@ -6,9 +6,9 @@ namespace Domain.UnitTests.Entites.User
 {
     public class UserTest
     {
-        public static Domain.Entities.User.User CreatedBy = InstancingHelper.GetUserInstance();
-        public static Domain.Entities.User.User ModifiedBy = InstancingHelper.GetUserInstance();
-        public static Domain.Entities.User.UserType UserType = InstancingHelper.GetUserTypeInstance();
+        public static Domain.Entities.User.User CreatedBy = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+        public static Domain.Entities.User.User ModifiedBy = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+        public static Domain.Entities.User.UserType UserType = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserTypeInstance();
 
         public UserTest()
         {
@@ -29,8 +29,8 @@ namespace Domain.UnitTests.Entites.User
             var dateOfBirth = new DateOnly(1990, 1, 1);
             var createdTime = DateTime.UtcNow;
 
-            var role = InstancingHelper.GetRoleInstance();
-            var userRole = InstancingHelper.GetUserRoleInstance(role);
+            var role = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance();
+            var userRole = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserRoleInstance(role);
             ICollection<UserRole> userRoles = new List<UserRole>() { userRole };
 
             //Act
@@ -71,9 +71,9 @@ namespace Domain.UnitTests.Entites.User
         public void UpdateUserType_ValidUserType_UpdatesUserType()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var modifiedUser = InstancingHelper.GetUserInstance();
-            var newUserType = InstancingHelper.GetUserTypeInstance(); // Hier einen gültigen UserType einsetzen
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var modifiedUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var newUserType = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserTypeInstance(); // Hier einen gültigen UserType einsetzen
 
             // Act
             user.UpdateUserType(modifiedUser, newUserType);
@@ -86,8 +86,8 @@ namespace Domain.UnitTests.Entites.User
         public void UpdateUserType_NullUserType_ThrowsArgumentNullException()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var modifiedUser = InstancingHelper.GetUserInstance();
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var modifiedUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             UserType invalidUserType = null;
 
             // Act and Assert
@@ -99,8 +99,8 @@ namespace Domain.UnitTests.Entites.User
         public void UpdateUserName_ValidUserName_UpdatesUserName()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var modifiedUser = InstancingHelper.GetUserInstance();
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var modifiedUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var newUserName = "newUserName"; // Hier einen gültigen Benutzernamen einsetzen
 
             // Act
@@ -114,8 +114,8 @@ namespace Domain.UnitTests.Entites.User
         public void UpdateUserName_InvalidUserName_ThrowsInvalidUserNameException()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var modifiedUser = InstancingHelper.GetUserInstance();
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var modifiedUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             string invalidUserName = null;
 
             // Act and Assert
@@ -126,8 +126,8 @@ namespace Domain.UnitTests.Entites.User
         public void UpdateFirstName_ValidFirstName_UpdatesFirstName()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var modifiedUser = InstancingHelper.GetUserInstance();
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var modifiedUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var newFirstName = "John";
 
             // Act
@@ -141,8 +141,8 @@ namespace Domain.UnitTests.Entites.User
         public void UpdateFirstName_InvalidFirstName_ThrowsInvalidFirstNameException()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var modifiedUser = InstancingHelper.GetUserInstance();
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var modifiedUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             string invalidFirstName = null;
 
             // Act and Assert
@@ -154,8 +154,8 @@ namespace Domain.UnitTests.Entites.User
         public void UpdateEmail_ValidEmail_UpdatesEmail()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var modifiedUser = InstancingHelper.GetUserInstance();
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var modifiedUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var newEmail = Email.Parse("new@example.com");
 
             // Act
@@ -169,8 +169,8 @@ namespace Domain.UnitTests.Entites.User
         public void UpdateEmail_NullEmail_ThrowsArgumentNullException()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var modifiedUser = InstancingHelper.GetUserInstance();
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var modifiedUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             Email invalidEmail = null;
 
             // Act and Assert
@@ -182,8 +182,8 @@ namespace Domain.UnitTests.Entites.User
         public void UpdatePhone_ValidPhone_UpdatesPhone()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var modifiedUser = InstancingHelper.GetUserInstance();
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var modifiedUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var newPhone = PhoneNumber.Parse("(123)-456-7890");
 
             // Act
@@ -197,8 +197,8 @@ namespace Domain.UnitTests.Entites.User
         public void UpdatePhone_NullPhone_ThrowsArgumentNullException()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var modifiedUser =  InstancingHelper.GetUserInstance();
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var modifiedUser =  SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             PhoneNumber invalidPhone = null;
 
             // Act and Assert
@@ -209,10 +209,10 @@ namespace Domain.UnitTests.Entites.User
         public void AddFriendshipRequest_ValidFriendshipRequest_AddsFriendshipRequest()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var fromUser = InstancingHelper.GetUserInstance(); // Erstelle gültige Benutzer
-            var toUser = InstancingHelper.GetUserInstance(); // Erstelle gültige Benutzer
-            var friendRequest = InstancingHelper.GetFriendshipRequest(fromUser, toUser);
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var fromUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(); // Erstelle gültige Benutzer
+            var toUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(); // Erstelle gültige Benutzer
+            var friendRequest = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetFriendshipRequest(fromUser, toUser);
 
             // Act
             user.AddFriendshipRequest(friendRequest);
@@ -225,10 +225,10 @@ namespace Domain.UnitTests.Entites.User
         public void AddFriendshipRequest_DuplicateFriendshipRequest_ThrowsAddFriendshipRequestException()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var fromUser = InstancingHelper.GetUserInstance(); // Erstelle gültige Benutzer
-            var toUser = InstancingHelper.GetUserInstance(); // Erstelle gültige Benutzer
-            var friendRequest = InstancingHelper.GetFriendshipRequest(fromUser, toUser);
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var fromUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(); // Erstelle gültige Benutzer
+            var toUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(); // Erstelle gültige Benutzer
+            var friendRequest = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetFriendshipRequest(fromUser, toUser);
             user.AddFriendshipRequest(friendRequest);
 
             // Act and Assert
@@ -240,10 +240,10 @@ namespace Domain.UnitTests.Entites.User
         public void RemoveFriendshipRequest_ValidFriendshipRequest_RemovesFriendshipRequest()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var fromUser = InstancingHelper.GetUserInstance(); // Erstelle gültige Benutzer
-            var toUser = InstancingHelper.GetUserInstance(); // Erstelle gültige Benutzer
-            var friendRequest = InstancingHelper.GetFriendshipRequest(fromUser, toUser);
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var fromUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(); // Erstelle gültige Benutzer
+            var toUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(); // Erstelle gültige Benutzer
+            var friendRequest = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetFriendshipRequest(fromUser, toUser);
             user.AddFriendshipRequest(friendRequest);
 
             // Act
@@ -257,10 +257,10 @@ namespace Domain.UnitTests.Entites.User
         public void RemoveFriendshipRequest_NonExistentFriendshipRequest_ThrowsRemoveFriendshipRequestException()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var fromUser = InstancingHelper.GetUserInstance(); // Erstelle gültige Benutzer
-            var toUser = InstancingHelper.GetUserInstance(); // Erstelle gültige Benutzer
-            var friendRequest = InstancingHelper.GetFriendshipRequest(fromUser, toUser);
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var fromUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(); // Erstelle gültige Benutzer
+            var toUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(); // Erstelle gültige Benutzer
+            var friendRequest = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetFriendshipRequest(fromUser, toUser);
 
             // Act and Assert
             var exception = Assert.Throws<RemoveFriendshipRequestException>(() => user.RemoveFriendshipRequest(friendRequest));
@@ -270,8 +270,8 @@ namespace Domain.UnitTests.Entites.User
         public void AcceptFriendshipRequest_ValidFriendshipRequest_AcceptsFriendship()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var friendRequest = InstancingHelper.GetFriendshipRequest(user, InstancingHelper.GetUserInstance()); // Erstelle gültige FriendshipRequest
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var friendRequest = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetFriendshipRequest(user, SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance()); // Erstelle gültige FriendshipRequest
 
             // Act
             user.AddFriendshipRequest(friendRequest);
@@ -286,8 +286,8 @@ namespace Domain.UnitTests.Entites.User
         public void AcceptFriendshipRequest_NonExistentFriendshipRequest_ThrowsAcceptFriendshipException()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var friendRequest = InstancingHelper.GetFriendshipRequest(user, InstancingHelper.GetUserInstance()); // Erstelle gültige FriendshipRequest, aber akzeptiere sie nicht zuerst
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var friendRequest = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetFriendshipRequest(user, SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance()); // Erstelle gültige FriendshipRequest, aber akzeptiere sie nicht zuerst
 
             // Act and Assert
             var exception = Assert.Throws<AcceptFriendshipException>(() => user.AcceptFriendshipRequest(friendRequest));
@@ -298,10 +298,10 @@ namespace Domain.UnitTests.Entites.User
         public void AcceptFriendshipRequest_AlreadyFriends_ThrowsAcceptFriendshipException()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var friend = InstancingHelper.GetUserInstance(); // Erstelle einen Freund
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var friend = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(); // Erstelle einen Freund
             user.AddFriend(user, friend); // Füge den Freund hinzu
-            var friendRequest = InstancingHelper.GetFriendshipRequest(user, friend); // Erstelle gültige FriendshipRequest
+            var friendRequest = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetFriendshipRequest(user, friend); // Erstelle gültige FriendshipRequest
 
             // Act and Assert
             var exception = Assert.Throws<AcceptFriendshipException>(() => user.AcceptFriendshipRequest(friendRequest));
@@ -311,8 +311,8 @@ namespace Domain.UnitTests.Entites.User
         public void AddFriend_ValidFriend_AddsFriend()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var friend = InstancingHelper.GetUserInstance(); // Erstelle einen gültigen Freund
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var friend = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(); // Erstelle einen gültigen Freund
 
             // Act
             user.AddFriend(user,friend);
@@ -325,8 +325,8 @@ namespace Domain.UnitTests.Entites.User
         public void AddFriend_AlreadyFriends_ThrowsAddFriendException()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var friend = InstancingHelper.GetUserInstance(); // Erstelle einen gültigen Freund
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var friend = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(); // Erstelle einen gültigen Freund
             user.AddFriend(user, friend); // Füge den Freund hinzu
 
             // Act and Assert
@@ -337,8 +337,8 @@ namespace Domain.UnitTests.Entites.User
         public void RemoveFriend_ValidFriend_RemovesFriend()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var friend = InstancingHelper.GetUserInstance(); // Erstelle einen gültigen Freund
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var friend = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(); // Erstelle einen gültigen Freund
             user.AddFriend(user,friend); // Füge den Freund hinzu
 
             // Act
@@ -352,8 +352,8 @@ namespace Domain.UnitTests.Entites.User
         public void RemoveFriend_NonExistentFriend_ThrowsRemoveFriendException()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var friend = InstancingHelper.GetUserInstance(); // Erstelle einen gültigen Freund
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var friend = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(); // Erstelle einen gültigen Freund
 
             // Act and Assert
             var exception = Assert.Throws<RemoveFriendException>(() => user.RemoveFriend(user, friend));
@@ -363,9 +363,9 @@ namespace Domain.UnitTests.Entites.User
         public void AddRole_ValidRole_AddsRole()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var assignerUser = InstancingHelper.GetUserInstance();
-            var role = InstancingHelper.GetRoleInstance(); // Erstelle eine gültige Rolle
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var assignerUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var role = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance(); // Erstelle eine gültige Rolle
 
             // Act
             user.AddRole(assignerUser, role);
@@ -378,9 +378,9 @@ namespace Domain.UnitTests.Entites.User
         public void AddRole_AlreadyAssignedRole_ThrowsAddRoleException()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var assignerUser = InstancingHelper.GetUserInstance();
-            var role = InstancingHelper.GetRoleInstance(); // Erstelle eine gültige Rolle
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var assignerUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var role = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance(); // Erstelle eine gültige Rolle
             user.AddRole(assignerUser, role); // Weise die Rolle bereits zu
 
             // Act and Assert
@@ -391,9 +391,9 @@ namespace Domain.UnitTests.Entites.User
         public void RemoveRole_ValidRole_RemovesRole()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var revokerUser = InstancingHelper.GetUserInstance();
-            var role = InstancingHelper.GetRoleInstance(); // Erstelle eine gültige Rolle
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var revokerUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var role = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance(); // Erstelle eine gültige Rolle
             user.AddRole(revokerUser, role); // Weise die Rolle zu
 
             // Act
@@ -407,9 +407,9 @@ namespace Domain.UnitTests.Entites.User
         public void RemoveRole_RoleNotAssigned_ThrowsRemoveRoleException()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var revokerUser = InstancingHelper.GetUserInstance();
-            var role = InstancingHelper.GetRoleInstance(); // Erstelle eine gültige Rolle
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var revokerUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var role = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance(); // Erstelle eine gültige Rolle
 
             // Act and Assert
             var exception = Assert.Throws<RemoveRoleException>(() => user.RemoveRole(revokerUser, role));
@@ -419,8 +419,8 @@ namespace Domain.UnitTests.Entites.User
         public void Remove_UserNotAlreadyDeleted_RemovesUser()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var deletedByUser = InstancingHelper.GetUserInstance();
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var deletedByUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
 
             // Act
             user.Remove(deletedByUser);
@@ -433,8 +433,8 @@ namespace Domain.UnitTests.Entites.User
         public void Remove_UserAlreadyDeleted_ThrowsUserAlreadyDeletedException()
         {
             // Arrange
-            var user = InstancingHelper.GetUserInstance();
-            var deletedByUser = InstancingHelper.GetUserInstance();
+            var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var deletedByUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             user.Remove(deletedByUser); // Markiere den Benutzer als gelöscht
 
             // Act and Assert

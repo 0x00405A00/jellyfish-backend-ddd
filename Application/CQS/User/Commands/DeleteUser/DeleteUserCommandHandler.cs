@@ -1,6 +1,4 @@
 ﻿using Application.Abstractions.Messaging;
-using Domain.Entities.User.Exception;
-using Domain.Exceptions;
 using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;

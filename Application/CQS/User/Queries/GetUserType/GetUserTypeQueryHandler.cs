@@ -1,6 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
-using Domain.Entities.User;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Shared.DataTransferObject;

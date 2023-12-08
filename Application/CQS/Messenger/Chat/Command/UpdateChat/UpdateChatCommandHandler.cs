@@ -2,7 +2,6 @@
 using AutoMapper;
 using Domain.Entities.Chats.Exception;
 using Domain.Exceptions;
-using Domain.Primitives;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Shared.DataTransferObject.Messenger;

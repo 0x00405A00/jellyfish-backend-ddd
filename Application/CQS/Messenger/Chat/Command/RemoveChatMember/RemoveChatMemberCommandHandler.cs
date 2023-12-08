@@ -10,14 +10,14 @@ namespace Application.CQS.Messenger.Chat.Command.RemoveChatMember
     {
         private readonly IChatRepository _chatRepository;
         private readonly IUserRepository _userRepository;
-        private readonly MediaService mediaService;
+        private readonly IMediaService mediaService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         public RemoveChatMemberCommandHandler(
             IMapper mapper,
             IChatRepository chatRepository,
             IUserRepository userRepository,
-            MediaService mediaService,
+            IMediaService mediaService,
             IUnitOfWork unitOfWork)
         {
             _mapper = mapper;

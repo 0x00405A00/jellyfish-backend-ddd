@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.Repository
 {
-    internal class ChatRepository : GenericRepository<Domain.Entities.Chats.Chat, Infrastructure.DatabaseEntity.Chat>,IChatRepository
+    internal class ChatRepository : GenericRepository<Domain.Entities.Chats.Chat, Infrastructure.DatabaseEntity.Chat>, IChatRepository
     {
         public ChatRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext) 
         { 

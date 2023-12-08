@@ -1,6 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
-using Domain.Entities.User.Exception;
 using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
@@ -34,11 +33,13 @@ namespace Application.CQS.User.Commands.Roles.AssignRole
         {
             if (request.UserId == null)
             {
-                throw new InvalidOperationException($"userId is {request.UserId}");
+                return Result<List<Guid>>.Failure("user not found");
             }
             var user = await _userRepository.GetAsync(user => user.Uuid == request.UserId);
             if (user is null)
-                throw new UserNotFoundException(request.UserId);
+            {
+                return Result<List<Guid>>.Failure("user not found");
+            }
 
             var assignedByUser = await _userRepository.GetAsync(x => x.Uuid == request.AssignerId);
 

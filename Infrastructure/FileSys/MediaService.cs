@@ -1,7 +1,4 @@
-﻿using Domain.Entities.Chats;
-using Domain.ValueObjects;
-using Microsoft.Extensions.Logging;
-using System.Threading;
+﻿using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.FileSys
 {
@@ -9,7 +6,7 @@ namespace Infrastructure.FileSys
     /// Abstraction class to replace the IFileHandler in future with AzureBlob Storage to increase the performance
     /// That means that functions like GetProfilePicture or CreateProfilePicture will get/put their data to cloud instead of IFileHandler (on local filesystem)
     /// </summary>
-    public class MediaService
+    public class MediaService : IMediaService
     {
         private readonly ILogger<MediaService> logger;
         private readonly IFileHandler fileHandler;
@@ -18,7 +15,7 @@ namespace Infrastructure.FileSys
 
         public MediaService(
             ILogger<MediaService> logger,
-            IFileHandler fileHandler, 
+            IFileHandler fileHandler,
             IAntiVirus antiVirus,
             IAzureAdultContentDetection azureAdultContentDetection)
         {
@@ -47,7 +44,7 @@ namespace Infrastructure.FileSys
 
             try
             {
-                var result = await this.GetProfilePicture(userId,fileExtension,cancellationToken);
+                var result = await this.GetProfilePicture(userId, fileExtension, cancellationToken);
                 var base64 = Convert.ToBase64String(result);
                 return base64;
             }
@@ -89,9 +86,9 @@ namespace Infrastructure.FileSys
             return null;
 
         }
-        public string GetProfilePicturePath(Guid userId,string fileExtension)
+        public string GetProfilePicturePath(Guid userId, string fileExtension)
         {
-            return Path.Combine(FileHandler.UserProfilePictures, userId.ToString()+ fileExtension);
+            return Path.Combine(FileHandler.UserProfilePictures, userId.ToString() + fileExtension);
         }
         public string GetChatPicturePath(Guid chatId, string fileExtension)
         {
@@ -147,8 +144,8 @@ namespace Infrastructure.FileSys
         }
 
         #endregion
-        
-        public async Task<MediaContentDTO> CheckContent(MediaContentDTO mediaContentDTO,CancellationToken cancellationToken)
+
+        public async Task<MediaContentDTO> CheckContent(MediaContentDTO mediaContentDTO, CancellationToken cancellationToken)
         {
             return await mediaContentDTO.CheckInadmissibleContent(antiVirus, azureAdultContentDetection, cancellationToken);
         }

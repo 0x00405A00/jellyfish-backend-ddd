@@ -8,7 +8,6 @@ using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
 using MediatR;
 using Shared.DataTransferObject.Messenger;
-using Shared.MimePart;
 
 namespace Application.CQS.Messenger.Chat.Command.CreateMessage
 {
@@ -16,7 +15,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
     {
         private readonly IChatRepository _chatRepository;
         private readonly IUserRepository _userRepository;
-        private readonly MediaService mediaService;
+        private readonly IMediaService mediaService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator mediator;
         private readonly IMapper _mapper;
@@ -30,7 +29,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
             IAzureAdultContentDetection azureAdultContentDetection,
             IChatRepository chatRepository,
             IUserRepository userRepository,
-            MediaService mediaService,
+            IMediaService mediaService,
             IUnitOfWork unitOfWork)
         {
             this.mediator = mediator;
@@ -46,7 +45,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
 
         public async Task<Result<List<MessageDTO>>> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
         {
-            var chat = await _chatRepository.GetAsync(x=>x.Uuid == request.ChatId);
+            Domain.Entities.Chats.Chat chat = await _chatRepository.GetAsync(x=>x.Uuid == request.ChatId);
             if(chat is null)
             {
                 return Result<List<MessageDTO>>.Failure("chat is not existing", Domain.Error.Error.ERROR_CODE.NotFound);

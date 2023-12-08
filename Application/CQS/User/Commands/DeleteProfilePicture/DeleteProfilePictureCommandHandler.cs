@@ -13,13 +13,13 @@ namespace Application.CQS.User.Commands.DeleteProfilePicture
     {
         private readonly IMediator mediator;
         private readonly IUserRepository _userRepository;
-        private readonly MediaService _mediaService;
+        private readonly IMediaService _mediaService;
         private readonly IUnitOfWork _unitOfWork;
 
         public DeleteProfilePictureCommandHandler(
             IMediator mediator,
             IUserRepository userRepository,
-            MediaService mediaService,
+            IMediaService mediaService,
             IUnitOfWork unitOfWork)
         {
             this.mediator = mediator;
@@ -32,15 +32,17 @@ namespace Application.CQS.User.Commands.DeleteProfilePicture
         {
             if (request.UserId == null)
             {
-                throw new InvalidOperationException($"userId is {request.UserId}");
+                return Result<bool>.Failure($"user not found");
             }
             var user = await _userRepository.GetAsync(user => user.Uuid == request.UserId);
             if (user is null)
-                throw new UserNotFoundException(request.UserId);
+            {
+                return Result<bool>.Failure($"user not found");
+            }
 
             if (!user.HasUserProfilePicture)
             {
-                throw new FileNotFoundException($"profile picture is not set");
+                return Result<bool>.Failure($"profile picture is not set");
             }
             var deletedByUser = await _userRepository.GetAsync(x => x.Uuid == request.DeletedBy);
 
@@ -59,5 +61,7 @@ namespace Application.CQS.User.Commands.DeleteProfilePicture
             _userRepository.PublishDomainEvents(user, mediator);
             return Result<bool>.Success(true);
         }
+
+
     }
 }

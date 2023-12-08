@@ -2,27 +2,26 @@
 using AutoMapper;
 using Domain.Entities.User.Exception;
 using Domain.Exceptions;
-using Domain.Primitives;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
-using Infrastructure.DatabaseEntity;
-using Infrastructure.Mapper;
-using Microsoft.EntityFrameworkCore;
+using MediatR;
 using Shared.DataTransferObject;
-using System.Linq.Expressions;
 
 namespace Application.CQS.User.Commands.UpdateUser
 {
     internal sealed class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand, UserDTO>
     {
+        private readonly IMediator mediator;
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         public UpdateUserCommandHandler(
+            IMediator mediator,
             IMapper mapper,
             IUserRepository userRepository,
             IUnitOfWork unitOfWork)
         {
+            this.mediator = mediator;
             this._mapper = mapper;
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
@@ -32,11 +31,13 @@ namespace Application.CQS.User.Commands.UpdateUser
         {
             if (request.UserId == null)
             {
-                throw new InvalidOperationException($"userId is {request.UserId}");
+                return Result<UserDTO>.Failure("user not found");
             }
             var user = await _userRepository.GetAsync(user => user.Uuid == request.UserId);
             if (user is null)
-                throw new UserNotFoundException(request.UserId);
+            {
+                return Result<UserDTO>.Failure("user not found");
+            }
 
             var updatedByUser = await _userRepository.GetAsync(x => x.Uuid == request.UpdatedBy);
 
@@ -117,8 +118,9 @@ namespace Application.CQS.User.Commands.UpdateUser
             _userRepository.UpdateAsync(user);
             await _unitOfWork.SaveChangesAsync();
 
+            _userRepository.PublishDomainEvents(user,mediator);
+
             var mapValue = _mapper.Map<UserDTO>(user);
-            mapValue.Password = null;
             return Result<UserDTO>.Success(mapValue);
         }
     }

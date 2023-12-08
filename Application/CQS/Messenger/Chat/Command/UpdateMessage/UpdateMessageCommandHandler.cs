@@ -12,7 +12,7 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateMessage
     {
         private readonly IChatRepository _chatRepository;
         private readonly IUserRepository _userRepository;
-        private readonly MediaService mediaService;
+        private readonly IMediaService mediaService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator mediator;
         private readonly IMapper _mapper;
@@ -21,7 +21,7 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateMessage
             IMapper mapper,
             IChatRepository chatRepository,
             IUserRepository userRepository,
-            MediaService mediaService,
+            IMediaService mediaService,
             IUnitOfWork unitOfWork)
         {
             this.mediator = mediator;

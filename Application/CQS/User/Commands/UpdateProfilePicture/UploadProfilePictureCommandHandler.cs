@@ -15,14 +15,14 @@ namespace Application.CQS.User.Commands.UpdateProfilePicture
         private readonly IMapper _mapper;
         private readonly IMediator mediator;
         private readonly IUserRepository _userRepository;
-        private readonly MediaService _mediaService;
+        private readonly IMediaService _mediaService;
         private readonly IUnitOfWork _unitOfWork;
 
         public UploadProfilePictureCommandHandler(
             IMapper mapper,
             IMediator mediator,
             IUserRepository userRepository,
-            MediaService mediaService,
+            IMediaService mediaService,
             IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
@@ -37,11 +37,13 @@ namespace Application.CQS.User.Commands.UpdateProfilePicture
             //Prüfung des Content in 'UploadProfilePictureCommandValidator'
             if (request.UserId == null)
             {
-                throw new InvalidOperationException($"userId is {request.UserId}");
+                return Result<UserDTO>.Failure("user not found");
             }
             var user = await _userRepository.GetAsync(user => user.Uuid == request.UserId);
             if (user is null)
-                throw new UserNotFoundException(request.UserId);
+            {
+                return Result<UserDTO>.Failure("user not found");
+            }
 
             var updatedByUser = await _userRepository.GetAsync(x => x.Uuid == request.UpdatedBy);
             Picture picture = null!;
@@ -61,7 +63,6 @@ namespace Application.CQS.User.Commands.UpdateProfilePicture
             }
 
             var mapValue = _mapper.Map<UserDTO>(user);
-            mapValue.Password = null;
             _userRepository.PublishDomainEvents(user,mediator);
             return Result<UserDTO>.Success(mapValue);
         }

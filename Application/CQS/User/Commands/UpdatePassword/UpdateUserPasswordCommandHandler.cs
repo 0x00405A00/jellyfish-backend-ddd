@@ -1,11 +1,9 @@
 ﻿using Application.Abstractions.Messaging;
 using Domain.Entities.User.Exception;
-using Domain.Exceptions;
 using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Application.CQS.User.Commands.UpdatePassword
 {
@@ -28,11 +26,13 @@ namespace Application.CQS.User.Commands.UpdatePassword
         {
             if (request.UserId == null)
             {
-                throw new InvalidOperationException($"userId is {request.UserId}");
+                return Result<Guid>.Failure("user not found");
             }
             var user = await _userRepository.GetAsync(user => user.Uuid == request.UserId);
             if (user == null)
-                throw new UserNotFoundException(request.UserId);
+            {
+                return Result<Guid>.Failure("user not found");
+            }
 
             try
             {

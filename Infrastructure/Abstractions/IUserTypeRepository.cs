@@ -5,5 +5,6 @@ namespace Infrastructure.Abstractions
 {
     public interface IUserTypeRepository : IGenericRepository<Domain.Entities.User.UserType, UserType>
     {
+
     }
 }

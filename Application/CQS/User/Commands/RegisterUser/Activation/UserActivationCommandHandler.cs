@@ -28,7 +28,7 @@ namespace Application.CQS.User.Commands.RegisterUser.Activation
                 var mediator = scope.ServiceProvider.GetService<IMediator>();
                 var mapper = scope.ServiceProvider.GetService<IMapper>();
 
-                var user = await userRepository.GetAsync(user => user.ActivationToken == request.Base64Token);
+                var user = await userRepository.GetAsync(u => u.ActivationToken == request.Base64Token);
                 if (user == null)
                     throw new UserNotFoundException(request.Base64Token);
 
@@ -45,7 +45,6 @@ namespace Application.CQS.User.Commands.RegisterUser.Activation
                 userRepository.PublishDomainEvents(user, mediator);
 
                 var mapValue = mapper.Map<UserDTO>(user);
-                mapValue.Password = null;
                 return Result<UserDTO>.Success(mapValue);
             }
         }

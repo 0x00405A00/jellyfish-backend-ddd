@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
+using AutoMapper.Execution;
 using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
@@ -13,14 +14,14 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
     {
         private readonly IChatRepository _chatRepository;
         private readonly IUserRepository _userRepository;
-        private readonly MediaService mediaService;
+        private readonly IMediaService mediaService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         public CreateChatCommandHandler(
             IMapper mapper,
             IChatRepository chatRepository,
             IUserRepository userRepository,
-            MediaService mediaService,
+            IMediaService mediaService,
             IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
@@ -41,11 +42,12 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
             Domain.Entities.Chats.Chat chat = null;
             try
             {
-                members.ToList().ForEach(x => {
-                    bool isAdmin = request.ChatOwnerUuid == x.Uuid.ToGuid();
-                    var chatMember = ChatMember.Create(x, isAdmin, DateTime.Now, x.LastModifiedTime, null);
+                foreach(var member in members)
+                {
+                    bool isAdmin = request.ChatOwnerUuid == member.Uuid.ToGuid();
+                    var chatMember = ChatMember.Create(member, isAdmin, DateTime.Now, null, null);
                     chatMembers.Add(chatMember);
-                });
+                }
                 var id = new Domain.Entities.Chats.ChatId(Guid.NewGuid());
                 Picture? picture = null;
                 if (!String.IsNullOrWhiteSpace(request.Picture))

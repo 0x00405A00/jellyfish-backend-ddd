@@ -13,14 +13,14 @@ namespace Domain.UnitTests.Entites.Chats
         {
             // Arrange
             var chatId = new ChatId(Guid.NewGuid());
-            var createdByUser = User.InstancingHelper.GetUserInstance();
+            var createdByUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var chatName = "Test Chat";
             var chatDescription = "This is a test chat";
             Picture picture = null; // Setze das Bild, falls benötigt
             var members = new List<ChatMember>
             {
-                ChatMember.Create(User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
-                ChatMember.Create(User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
+                ChatMember.Create(SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
+                ChatMember.Create(SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
                 ChatMember.Create(createdByUser,true,DateTime.Now,null,null),
             };
             var messages = new List<Domain.Entities.Message.Message>();
@@ -40,7 +40,7 @@ namespace Domain.UnitTests.Entites.Chats
         {
             // Arrange
             var chatId = new ChatId(Guid.NewGuid());
-            var createdByUser = User.InstancingHelper.GetUserInstance();
+            var createdByUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var chatName = "Test Chat";
             List<ChatMember> members = null; // Keine Mitglieder
 
@@ -54,12 +54,12 @@ namespace Domain.UnitTests.Entites.Chats
         {
             // Arrange
             var chatId = new ChatId(Guid.NewGuid());
-            var createdByUser = User.InstancingHelper.GetUserInstance();
+            var createdByUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var chatName = "Test Chat";
             List<ChatMember> members = new List<ChatMember>()
             { 
-                ChatMember.Create(User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
-                ChatMember.Create(User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
+                ChatMember.Create(SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
+                ChatMember.Create(SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
                 null
             };
 
@@ -73,12 +73,12 @@ namespace Domain.UnitTests.Entites.Chats
         {
             // Arrange
             var chatId = new ChatId(Guid.NewGuid());
-            var createdByUser = User.InstancingHelper.GetUserInstance();
+            var createdByUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var chatName = "Test Chat";
             List<ChatMember> members = new List<ChatMember>()
             {
-                ChatMember.Create(User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
-                ChatMember.Create(User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
+                ChatMember.Create(SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
+                ChatMember.Create(SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
                 ChatMember.Create(createdByUser,false,DateTime.Now,null,null),
             };
             List<Entities.User.User> admins = null; // Admins sind null
@@ -92,11 +92,11 @@ namespace Domain.UnitTests.Entites.Chats
         public void AddMember_ValidInput_AddsMemberToChat()
         {
             // Arrange
-            var chatMemberUser = User.InstancingHelper.GetUserInstance();
+            var chatMemberUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var chatMember = ChatMember.Create(chatMemberUser, false, DateTime.Now, null, null);
-            var adminUser = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var adminChatMember = ChatMember.Create(adminUser, true, DateTime.Now, null, null);
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
 
             // Act
             chat.AddMember(adminUser, chatMemberUser);
@@ -109,8 +109,8 @@ namespace Domain.UnitTests.Entites.Chats
         public void AddMember_NullUser_ThrowsArgumentNullException()
         {
             // Arrange
-            var adminUser = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
 
             // Act and Assert
             var exception = Assert.Throws<ArgumentNullException>(() => chat.AddMember(adminUser, null));
@@ -121,10 +121,10 @@ namespace Domain.UnitTests.Entites.Chats
         public void AddMember_NotAdmin_ThrowsUserIsNoAdminInChatException()
         {
             // Arrange
-            var adminUser = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
-            var memberUser = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
-            var nonAdminUser = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var memberUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var nonAdminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
 
             // Act
             var act = () => chat.AddMember(nonAdminUser, memberUser);
@@ -137,9 +137,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void AddMember_AlreadyMember_ThrowsUserAlreadyMemberInChatException()
         {
             // Arrange
-            var memberUser = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
-            var adminUser = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var memberUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
 
             // Act
             chat.AddMember(adminUser, memberUser); // Member already added
@@ -154,11 +154,11 @@ namespace Domain.UnitTests.Entites.Chats
         public void RemoveMember_ValidInput_RemovesMemberFromChat()
         {
             // Arrange
-            var chatMemberUser = User.InstancingHelper.GetUserInstance();
+            var chatMemberUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var chatMember = ChatMember.Create(chatMemberUser, false, DateTime.Now, null, null);
-            var adminUser = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var adminChatMember = ChatMember.Create(adminUser, true, DateTime.Now, null, null);
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
 
 
             // Act
@@ -173,8 +173,8 @@ namespace Domain.UnitTests.Entites.Chats
         public void RemoveMember_NullUser_ThrowsArgumentNullException()
         {
             // Arrange
-            var adminUser = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
 
             // Act
             var act = () => chat.RemoveMember(adminUser, null);
@@ -188,11 +188,11 @@ namespace Domain.UnitTests.Entites.Chats
         public void RemoveMember_NotAdmin_ThrowsUserIsNoAdminInChatException()
         {
             // Arrange
-            var memberUser = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
-            var nonAdminUser = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
+            var memberUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var nonAdminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
 
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
 
             // Act
             var act = () => chat.RemoveMember(nonAdminUser, memberUser);
@@ -206,10 +206,10 @@ namespace Domain.UnitTests.Entites.Chats
         public void RemoveMember_NotMember_ThrowsUserIsNoMemberInChatException()
         {
             // Arrange
-            var nonMemberUser = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
-            var adminUser = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
+            var nonMemberUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
 
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
 
             // Act
             var act = () => chat.RemoveMember(adminUser, nonMemberUser);
@@ -221,11 +221,11 @@ namespace Domain.UnitTests.Entites.Chats
         public void AssignAdmin_ValidUserAndAdminUser_AssignsAdmin()
         {
             // Arrange
-            var chatMemberUser = User.InstancingHelper.GetUserInstance();
+            var chatMemberUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var chatMember = ChatMember.Create(chatMemberUser, false, DateTime.Now, null, null);
-            var adminUser = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var adminChatMember = ChatMember.Create(adminUser, true, DateTime.Now, null, null);
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
 
             // Act
             chat.AddMember(adminUser, chatMemberUser);
@@ -239,9 +239,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void AssignAdmin_NullCommandExecUser_ThrowsArgumentNullException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var member = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var member = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
 
             // Act and Assert
             var exception = Assert.Throws<ArgumentNullException>(() => chat.AssignAdmin(null, member));
@@ -252,8 +252,8 @@ namespace Domain.UnitTests.Entites.Chats
         public void AssignAdmin_NullMember_ThrowsArgumentNullException()
         {
             // Arrange
-            var commandExecUser = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(commandExecUser);
+            var commandExecUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(commandExecUser);
 
             // Act and Assert
             var exception = Assert.Throws<ArgumentNullException>(() => chat.AssignAdmin(commandExecUser, null));
@@ -264,10 +264,10 @@ namespace Domain.UnitTests.Entites.Chats
         public void AssignAdmin_CommandExecUserNotAdmin_ThrowsUserIsNoAdminInChatException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var member = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
-            var otherUser = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var member = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var otherUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
 
             // Act and Assert
             chat.AddMember(adminUser, member);
@@ -282,9 +282,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void AssignAdmin_MemberIsChatMember_ThrowsUserAlreadyMemberInChatException()
         {
             // Arrange
-            var commandExecUser = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(commandExecUser);
-            var member = Domain.UnitTests.Entites.User.InstancingHelper.GetUserInstance();
+            var commandExecUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(commandExecUser);
+            var member = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             // Act and Assert
             chat.AddMember(commandExecUser, member); // Füge das Mitglied dem Chat hinzu
             chat.AssignAdmin(commandExecUser, member);
@@ -298,11 +298,11 @@ namespace Domain.UnitTests.Entites.Chats
         {
             // Arrange
 
-            var chatMemberUser = User.InstancingHelper.GetUserInstance();
+            var chatMemberUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var chatMember = ChatMember.Create(chatMemberUser, false, DateTime.Now, null, null);
-            var adminUser = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var adminChatMember = ChatMember.Create(adminUser, true, DateTime.Now, null, null);
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
 
             // Act
             chat.AddMember(adminUser, chatMemberUser);
@@ -317,9 +317,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void RevokeAdmin_NullCommandExecUser_ThrowsArgumentNullException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var member = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var member = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
 
             // Act and Assert
             ArgumentNullException exception = Assert.Throws<ArgumentNullException>(() => chat.RevokeAdmin(null, member));
@@ -330,8 +330,8 @@ namespace Domain.UnitTests.Entites.Chats
         public void RevokeAdmin_NullMember_ThrowsArgumentNullException()
         {
             // Arrange
-            var commandExecUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(commandExecUser);
+            var commandExecUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(commandExecUser);
 
             // Act and Assert
             var exception = Assert.Throws<ArgumentNullException>(() => chat.RevokeAdmin(commandExecUser, null));
@@ -342,10 +342,10 @@ namespace Domain.UnitTests.Entites.Chats
         public void RevokeAdmin_CommandExecUserNotAdmin_ThrowsUserIsNoAdminInChatException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var commandExecUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var member = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var commandExecUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var member = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             chat.AddMember(adminUser, member); // Füge das Mitglied dem Chat hinzu
 
             // Act and Assert
@@ -357,9 +357,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void RevokeAdmin_MemberIsNotChatMember_ThrowsUserIsNoMemberInChatException()
         {
             // Arrange
-            var commandExecUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(commandExecUser);
-            var member = User.InstancingHelper.GetUserInstance();
+            var commandExecUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(commandExecUser);
+            var member = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
 
             // Act and Assert
             var exception = Assert.Throws<UserIsNoMemberInChatException>(() => chat.RevokeAdmin(commandExecUser, member));
@@ -369,9 +369,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void AddMessage_ValidOwnerAndText_AddsMessage()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var messageOwner = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var messageOwner = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var text = "Test message";
 
             // Act
@@ -388,9 +388,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void AddMessage_ValidOwnerAndMediaContent_AddsMessage()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var messageOwner = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var messageOwner = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var mediaContent = MediaContent.Parse(new byte[8] {0,1,1,0,1,1,1,0 }, ValidMimeType);
             var text = "Test message with media";
 
@@ -405,8 +405,8 @@ namespace Domain.UnitTests.Entites.Chats
         public void AddMessage_NullOwner_ThrowsArgumentNullException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
             var text = "Test message";
 
             // Act and Assert
@@ -418,9 +418,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void AddMessage_EmptyTextAndNullMediaContent_ThrowsNotValidMessageException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var messageOwner = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var messageOwner = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var text = string.Empty;
 
             // Act and Assert
@@ -431,11 +431,11 @@ namespace Domain.UnitTests.Entites.Chats
         public void RemoveMessage_ValidDeletedByUserAndMessageId_RemovesMessage()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var messageOwner = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var messageOwner = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var message = chat.AddMessage(messageOwner, "Test message", null); 
-            var deletedByUser = User.InstancingHelper.GetUserInstance();
+            var deletedByUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
 
             // Act
             chat.RemoveMessage(deletedByUser, message.Uuid);
@@ -448,9 +448,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void RemoveMessage_MessageNotFound_ThrowsMessageNotFoundException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var deletedByUser = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var deletedByUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var invalidMessageId = new Domain.Entities.Message.MessageId(Guid.NewGuid());
 
             // Act and Assert
@@ -462,9 +462,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void RemoveMessage_NullDeletedByUser_ThrowsArgumentNullException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var messageOwner = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var messageOwner = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var message = chat.AddMessage(messageOwner, "Test message",null);
             // Act and Assert
             var exception = Assert.Throws<ArgumentNullException>(() => chat.RemoveMessage(null, message.Uuid));
@@ -474,9 +474,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void UpdateMessage_ValidModifiedByUserAndMessageId_UpdatesTextAndMediaContent()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var messageOwner = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var messageOwner = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var message = chat.AddMessage(messageOwner, "Test message", null); 
             var newText = "Updated text";
             var newMediaContent = MediaContent.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 }, ValidMimeType);
@@ -493,9 +493,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void UpdateMessage_MessageNotFound_ThrowsMessageNotFoundException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var modifiedByUser = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var modifiedByUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var invalidMessageId = new Domain.Entities.Message.MessageId(Guid.NewGuid());
 
             // Act and Assert
@@ -507,9 +507,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void UpdateMessage_ValidModifiedByUserAndMessageId_UpdatesText()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var messageOwner = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var messageOwner = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var message = chat.AddMessage(messageOwner, "Test message", null); 
             var newText = "Updated text";
 
@@ -525,9 +525,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void UpdateMessage_ValidModifiedByUserAndMessageId_UpdatesMediaContent()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var messageOwner = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var messageOwner = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var message = chat.AddMessage(messageOwner, "Test message", null); 
             var newMediaContent = MediaContent.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 }, ValidMimeType);
 
@@ -542,9 +542,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void UpdateMessage_NullModifiedByUser_ThrowsArgumentNullException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var messageOwner = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var messageOwner = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var message = chat.AddMessage(messageOwner, "Test message", null);
             // Act and Assert
             var exception = Assert.Throws<ArgumentNullException>(() => chat.UpdateMessage(null, message.Uuid, "New text", null));
@@ -554,8 +554,8 @@ namespace Domain.UnitTests.Entites.Chats
         public void UpdatePicture_ValidAdminUser_UpdatesPicture()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
             var newPicture = Picture.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 }, ValidMimeType);
 
             // Act
@@ -569,9 +569,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void UpdatePicture_NonAdminUser_ThrowsUserIsNoAdminInChatException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var nonAdminUser = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var nonAdminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var newPicture = Picture.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 }, ValidMimeType);
 
             // Act and Assert
@@ -583,8 +583,8 @@ namespace Domain.UnitTests.Entites.Chats
         public void UpdatePicture_NullAdminUser_ThrowsArgumentNullException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
             var newPicture = Picture.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 }, ValidMimeType);
 
             // Act and Assert
@@ -595,8 +595,8 @@ namespace Domain.UnitTests.Entites.Chats
         public void UpdateName_ValidAdminUserAndNonEmptyName_UpdatesChatName()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
             var newName = "NewChatName";
 
             // Act
@@ -610,9 +610,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void UpdateName_NonAdminUser_ThrowsUserIsNoAdminInChatException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var nonAdminUser = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var nonAdminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var newName = "NewChatName";
 
             // Act and Assert
@@ -624,8 +624,8 @@ namespace Domain.UnitTests.Entites.Chats
         public void UpdateName_NullAdminUser_ThrowsArgumentNullException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
             var newName = "NewChatName";
 
             // Act and Assert
@@ -637,8 +637,8 @@ namespace Domain.UnitTests.Entites.Chats
         public void UpdateName_ValidAdminUserAndEmptyName_ThrowsNotValidChatDescriptionException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
             var emptyName = string.Empty;
 
             // Act and Assert
@@ -649,8 +649,8 @@ namespace Domain.UnitTests.Entites.Chats
         public void UpdateDescription_ValidAdminUserAndNonEmptyDescription_UpdatesChatDescription()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
             var newDescription = "NewChatDescription";
 
             // Act
@@ -664,9 +664,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void UpdateDescription_NonAdminUser_ThrowsUserIsNoAdminInChatException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var nonAdminUser = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var nonAdminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var newDescription = "NewChatDescription";
 
             // Act and Assert
@@ -678,8 +678,8 @@ namespace Domain.UnitTests.Entites.Chats
         public void UpdateDescription_NullAdminUser_ThrowsArgumentNullException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
             var newDescription = "NewChatDescription";
 
             // Act and Assert
@@ -691,8 +691,8 @@ namespace Domain.UnitTests.Entites.Chats
         public void UpdateDescription_ValidAdminUserAndEmptyDescription_ThrowsNotValidChatDescriptionException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
             var emptyDescription = string.Empty;
 
             // Act and Assert
@@ -703,8 +703,8 @@ namespace Domain.UnitTests.Entites.Chats
         public void Remove_ValidAdminUserAndNotDeleted_ChatIsDeleted()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
 
             // Act
             chat.Remove(adminUser);
@@ -717,9 +717,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void Remove_AlreadyDeleted_ThrowsChatAlreadyDeletedException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            chat.SetDeleted(User.InstancingHelper.GetUserInstance());
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            chat.SetDeleted(SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance());
 
             // Act and Assert
             var exception = Assert.Throws<ChatAlreadyDeletedException>(() => chat.Remove(adminUser));
@@ -730,9 +730,9 @@ namespace Domain.UnitTests.Entites.Chats
         public void Remove_NonAdminUser_ThrowsUserIsNoAdminInChatException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
-            var nonAdminUser = User.InstancingHelper.GetUserInstance();
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
+            var nonAdminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
 
             // Act and Assert
             var exception = Assert.Throws<UserIsNoAdminInChatException>(() => chat.Remove(nonAdminUser));
@@ -743,8 +743,8 @@ namespace Domain.UnitTests.Entites.Chats
         public void Remove_NullAdminUser_ThrowsArgumentNullException()
         {
             // Arrange
-            var adminUser = User.InstancingHelper.GetUserInstance();
-            var chat = InstancingHelper.GetChatInstance(adminUser);
+            var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
 
             // Act and Assert
             var exception = Assert.Throws<ArgumentNullException>(() => chat.Remove(null)); 

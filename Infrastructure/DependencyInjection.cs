@@ -23,7 +23,7 @@ namespace Infrastructure
 
             services.AddScoped<IFileHandler, FileHandler>();
             services.AddSingleton<IFilePermissionService, FilePermissionService>();
-            services.AddScoped<MediaService>();
+            services.AddScoped<IMediaService,MediaService>();
 
             var serviceBuilder = services.BuildServiceProvider();   
             var fileHandler= serviceBuilder.GetRequiredService<IFileHandler>();

@@ -528,6 +528,10 @@ namespace Domain.Entities.User
             {
                 throw new AddFriendException("you already friends");
             }
+            if (friend == this)
+            {
+                throw new AddFriendException("you cant add yourself to friends");
+            }
             var userFriend = UserFriend.Create(this,friend, DateTime.Now, null, null, execUser);
             _friends.Add(userFriend);
             Raise(new UserAddFriendDomainEvent(this, friend));
@@ -557,7 +561,7 @@ namespace Domain.Entities.User
             var userRole = UserRole.Create(role, DateTime.Now, null, null);
             _roles.Add(userRole);
             SetLastModified(assignerUser);
-            Raise(new UserAssignedRoleToUserDomainEvent(assignerUser,this,role));
+            Raise(new UserAssignedRoleToUserDomainEvent(assignerUser, this, role));
         }
 
         public void RemoveRole(User revokerUser, Role.Role role)
