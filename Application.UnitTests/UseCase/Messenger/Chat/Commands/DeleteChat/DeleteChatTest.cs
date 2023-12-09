@@ -1,13 +1,6 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Application.CQS.Messenger.Chat.Command.DeleteChat;
-using Domain.Entities.Chats;
-using Domain.Entities.Chats.Exception;
+﻿using Application.CQS.Messenger.Chat.Command.DeleteChat;
 using Infrastructure.Abstractions;
-using NSubstitute;
-using Xunit;
+using System.Linq.Expressions;
 
 namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteChat
 {
@@ -27,7 +20,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteChat
 
         private static readonly Domain.Entities.User.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
         private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
-        private static readonly Domain.Entities.Chats.Chat ChatInstance = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(UserAdminInstance);
+        private readonly Domain.Entities.Chats.Chat ChatInstance = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(UserAdminInstance);
 
         public DeleteChatTest()
         {
