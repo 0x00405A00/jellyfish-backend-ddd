@@ -96,8 +96,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteChat
             _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
                 .Returns(Task.FromResult(ChatInstance));
 
-            _chatRepositoryMock.Remove(Arg.Any<Domain.Entities.Chats.Chat>());
-
             // Act
             var result = await _handler.Handle(ValidCommand, CancellationToken.None);
 
