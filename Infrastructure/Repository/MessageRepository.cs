@@ -19,6 +19,7 @@ namespace Infrastructure.Repository
                 .Where(expression)
                 .FirstOrDefaultAsync();
 
+
             return await this.MapToDomainEntity(value, true);
         }
 
