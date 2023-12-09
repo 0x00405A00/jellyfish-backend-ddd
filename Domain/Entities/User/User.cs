@@ -509,7 +509,7 @@ namespace Domain.Entities.User
         {
             if (!_friendshipRequests.Where(x => x.TargetUser == friendRequest.TargetUser && x.RequestUser == friendRequest.RequestUser).Any())
             {
-                throw new AcceptFriendshipException("friendship doesnt exists");
+                throw new AcceptFriendshipException("friendship request doesnt exists");
             }
             if (_friends.Where(x => x.Friend == friendRequest.RequestUser).Any())
             {

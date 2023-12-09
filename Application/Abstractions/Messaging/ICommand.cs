@@ -1,5 +1,6 @@
 ﻿using Domain.ValueObjects;
 using MediatR;
+using System.Reflection;
 
 namespace Application.Abstractions.Messaging
 {

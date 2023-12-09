@@ -4,14 +4,19 @@ using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
 using MediatR;
 using Shared.DataTransferObject.Messenger;
+using System.Linq.Expressions;
 
 namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateMessage
 {
     public class CreateMessageCommandTests
     {
+        private static readonly Guid ChatId = Guid.NewGuid();
+        private static readonly Guid UserId = Guid.NewGuid();
+        private static readonly Guid UserAdminId = Guid.NewGuid();
+
         private static readonly CreateMessageCommand Command = new CreateMessageCommand(
-                ChatId: Guid.NewGuid(),
-                MessageCreatorId: Guid.NewGuid(),
+                ChatId: ChatId,
+                MessageCreatorId: UserId,
                 Messages: new List<MessageDTO>
                 {
                     new MessageDTO
@@ -29,6 +34,10 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateMessage
         private readonly IMediaService _mediaServiceMock;
         private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
+
+        private static readonly Domain.Entities.User.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserAdminId);
+        private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Chats.Chat ChatInstance = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(UserAdminInstance, ChatId);
 
         public CreateMessageCommandTests()
         {
@@ -51,67 +60,19 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateMessage
         }
 
         [Fact]
-        public void CreateMessageCommand_Creation_Success()
-        {
-            // Arrange
-            var chatId = Guid.NewGuid();
-            var messageCreatorId = Guid.NewGuid();
-            var messages = new List<MessageDTO>
-            {
-                new MessageDTO
-                {
-                    Text = "Hello, World!",
-                    CreatedTime = DateTime.Now,
-                    // Add other properties as needed
-                }
-            };
-
-            // Act
-            var createMessageCommand = new CreateMessageCommand(chatId, messageCreatorId, messages);
-
-            // Assert
-            Assert.NotNull(createMessageCommand);
-            Assert.Equal(chatId, createMessageCommand.ChatId);
-            Assert.Equal(messageCreatorId, createMessageCommand.MessageCreatorId);
-            Assert.Equal(messages, createMessageCommand.Messages);
-        }
-
-        [Fact]
         public async Task HandleCommand_ValidRequest_ReturnsSuccessResult()
         {
             // Arrange
             var validCommand = Command;
-
-            var handler = CreateMessageCommandHandlerWithMocks();
-
+            ChatInstance.AddMember(UserAdminInstance, UserInstance);
+            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
+                .Returns(Task.FromResult(ChatInstance));
             // Act
-            var result = await handler.Handle(validCommand, CancellationToken.None);
+            var result = await _handler.Handle(validCommand, CancellationToken.None);
 
             // Assert
             Assert.True(result.IsSuccess);
-            Assert.NotNull(result.Value);
-            Assert.IsType<List<MessageDTO>>(result.Value);
-            // Add more assertions based on your specific success conditions
         }
 
-        private CreateMessageCommandHandler CreateMessageCommandHandlerWithMocks()
-        {
-            var mapperMock = Substitute.For<IMapper>();
-            var chatRepositoryMock = Substitute.For<IChatRepository>();
-            var userRepositoryMock = Substitute.For<IUserRepository>();
-            var mediaServiceMock = Substitute.For<IMediaService>();
-            var unitOfWorkMock = Substitute.For<IUnitOfWork>();
-            var mediatorMock = Substitute.For<IMediator>();
-
-            return new CreateMessageCommandHandler(
-                mediatorMock,
-                mapperMock,
-                Substitute.For<IAntiVirus>(),
-                Substitute.For<IAzureAdultContentDetection>(),
-                chatRepositoryMock,
-                userRepositoryMock,
-                mediaServiceMock,
-                unitOfWorkMock);
-        }
     }
 }

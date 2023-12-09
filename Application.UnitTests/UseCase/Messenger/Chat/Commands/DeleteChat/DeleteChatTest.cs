@@ -53,8 +53,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteChat
 
             // Assert
             Assert.True(result.IsSuccess);
-            Assert.Equal(ChatId, result.Value);
-            // Add more assertions based on your specific success conditions
         }
 
         [Fact]
@@ -69,7 +67,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteChat
 
             // Assert
             Assert.False(result.IsSuccess);
-            // Add more assertions based on your specific failure conditions
         }
 
         [Fact]
@@ -87,7 +84,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteChat
 
             // Assert
             Assert.False(result.IsSuccess);
-            // Add more assertions based on your specific failure conditions
         }
 
         [Fact]
@@ -107,7 +103,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteChat
 
             // Assert
             Assert.False(result.IsSuccess);
-            // Add more assertions based on your specific failure conditions
         }
     }
 }

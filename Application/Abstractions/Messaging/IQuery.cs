@@ -1,8 +1,5 @@
 ﻿using Domain.ValueObjects;
 using MediatR;
-using Microsoft.AspNet.SignalR.Hosting;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Shared.DataFilter.Infrastructure;
 using Shared.DataFilter.Presentation;
 
 namespace Application.Abstractions.Messaging

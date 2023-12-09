@@ -5,6 +5,7 @@ using Infrastructure.FileSys;
 using MediatR;
 using Shared.DataTransferObject.Messenger;
 using System.Linq.Expressions;
+using System.Text;
 
 namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.UpdateMessage
 {
@@ -18,9 +19,9 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.UpdateMessage
             Uuid = Guid.NewGuid(),
             ChatId = ChatId,
             OwnerUuid = Guid.NewGuid(),
-            Text = "ValidText",
-            BinaryContentBase64 = "ValidBase64String",
-            BinaryContentMimeType = "image/png",
+            Text = "Mein init Text",
+            BinaryContentBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes("ValidBase64String")),
+            BinaryContentMimeType = "image/jpeg",
             CreatedTime = DateTime.Now,
             LastModifiedTime = DateTime.Now,
             DeletedTime = null,
@@ -39,7 +40,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.UpdateMessage
 
         private readonly UpdateMessageCommandHandler _handler;
         private readonly IMapper _mapperMock;
-        private readonly IChatRepository _chatRepositoryMock;
+        private readonly IMessageRepository _messageRepositoryMock;
         private readonly IUserRepository _userRepositoryMock;
         private readonly IMediaService _mediaServiceMock;
         private readonly IUnitOfWork _unitOfWorkMock;
@@ -53,14 +54,14 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.UpdateMessage
         {
             _mediatorMock = Substitute.For<IMediator>();
             _mapperMock = Substitute.For<IMapper>();
-            _chatRepositoryMock = Substitute.For<IChatRepository>();
+            _messageRepositoryMock = Substitute.For<IMessageRepository>();
             _userRepositoryMock = Substitute.For<IUserRepository>();
             _mediaServiceMock = Substitute.For<IMediaService>();
             _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _handler = new UpdateMessageCommandHandler(
                 _mediatorMock,
                 _mapperMock,
-                _chatRepositoryMock,
+                _messageRepositoryMock,
                 _userRepositoryMock,
                 _mediaServiceMock,
                 _unitOfWorkMock);
@@ -75,8 +76,10 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.UpdateMessage
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));
 
-            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
-                .Returns(Task.FromResult(ChatInstance));
+            var message = ChatInstance.AddMessage(UserInstance, "yeah mein test", null);
+
+            _messageRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Message, bool>>>())
+                .Returns(Task.FromResult(message));
 
             // Act
             var result = await handler.Handle(ValidCommand, CancellationToken.None);

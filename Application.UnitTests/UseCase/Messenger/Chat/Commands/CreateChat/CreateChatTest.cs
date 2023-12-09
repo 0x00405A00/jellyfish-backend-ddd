@@ -1,19 +1,24 @@
 ﻿using Application.CQS.Messenger.Chat.Command.CreateChat;
 using AutoMapper;
+using Domain.Entities.User;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
 using Shared.DataTransferObject.Messenger;
+using System.Linq.Expressions;
 
 namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateChat
 {
 
     public class CreateChatCommandHandlerTests
     {
+        private static readonly Guid UserId = Guid.NewGuid();
+        private static readonly Guid OtherUserId = Guid.NewGuid();
+
         private static readonly CreateChatCommand Command = new(
-            ChatOwnerUuid: Guid.NewGuid(),
+            ChatOwnerUuid: UserId,
             ChatName: "TestChat",
             ChatDescription: "Test Description",
-            Members: new List<Guid> { Guid.NewGuid(), Guid.NewGuid() },
+            Members: new List<Guid> { UserId, OtherUserId },
             Picture: "Base64EncodedPicture", // Replace with an actual Base64 encoded picture
             PictureMimeType: "image/png");
 
@@ -23,6 +28,9 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateChat
         private readonly IUserRepository _userRepositoryMock;
         private readonly IMediaService _mediaServiceMock;
         private readonly IUnitOfWork _unitOfWorkMock;
+
+        private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.User.User OtherUserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(OtherUserId);
 
         public CreateChatCommandHandlerTests()
         {
@@ -44,7 +52,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateChat
         public async Task Handle_ValidRequest_ReturnsSuccessResult()
         {
             // Arrange
-
+            _userRepositoryMock.ListAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns((new List<Domain.Entities.User.User>() { UserInstance,OtherUserInstance }));
             // Act
             var result = await _handler.Handle(Command, CancellationToken.None);
 

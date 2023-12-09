@@ -10,23 +10,24 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateMessage
 {
     internal sealed class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageCommand, MessageDTO>
     {
-        private readonly IChatRepository _chatRepository;
+        private readonly IMessageRepository _messageRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMediaService mediaService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator mediator;
         private readonly IMapper _mapper;
+
         public UpdateMessageCommandHandler(
             IMediator mediator,
             IMapper mapper,
-            IChatRepository chatRepository,
+            IMessageRepository messageRepository,
             IUserRepository userRepository,
             IMediaService mediaService,
             IUnitOfWork unitOfWork)
         {
             this.mediator = mediator;
             _mapper = mapper;
-            _chatRepository = chatRepository;
+            _messageRepository = messageRepository;
             _userRepository = userRepository;
             this.mediaService = mediaService;
             _unitOfWork = unitOfWork;
@@ -35,7 +36,44 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateMessage
 
         public async Task<Result<MessageDTO>> Handle(UpdateMessageCommand request, CancellationToken cancellationToken)
         {
-           throw new NotImplementedException(); 
+
+            var modifiedByUser = await _userRepository.GetAsync(x => x.Uuid == request.ModifiedById);
+            if (modifiedByUser is null)
+            {
+                return Result<MessageDTO>.Failure($"modifiedby-user not found");
+            }
+            var message = await _messageRepository.GetAsync(x => x.Uuid == request.MessageId && request.ChatId == x.ChatUuid);
+            if (message is null)
+            {
+                return Result<MessageDTO>.Failure($"message not found");
+            }
+
+            var newMessage = request.messageDTOs;
+            if (newMessage.HasBase64ContentSet)
+            {
+                MediaContent mediaContent = null;
+                try
+                {
+
+                    mediaContent = MediaContent.ParseBase64(newMessage.BinaryContentBase64, newMessage.BinaryContentMimeType);
+                }
+                catch (Exception ex)
+                {
+                    return Result<MessageDTO>.Failure($"cant processing the media content");
+                }
+                message.UpdateMediaContent(modifiedByUser, mediaContent);
+            }
+            if (!String.IsNullOrWhiteSpace(newMessage.Text))
+            {
+                message.UpdateText(modifiedByUser, newMessage.Text);    
+            }
+
+            _messageRepository.UpdateAsync(message);
+            await _unitOfWork.SaveChangesAsync();
+            _messageRepository.PublishDomainEvents(message, mediator);
+
+            var dto = _mapper.Map<MessageDTO>(message);
+            return Result<MessageDTO>.Success(dto);
         }
 
     }

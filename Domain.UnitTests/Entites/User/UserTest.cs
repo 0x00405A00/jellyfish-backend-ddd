@@ -271,15 +271,16 @@ namespace Domain.UnitTests.Entites.User
         {
             // Arrange
             var user = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
-            var friendRequest = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetFriendshipRequest(user, SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance()); // Erstelle gültige FriendshipRequest
+            var otherUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+            var friendRequest = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetFriendshipRequest(user, otherUser); // Erstelle gültige FriendshipRequest
 
             // Act
-            user.AddFriendshipRequest(friendRequest);
-            user.AcceptFriendshipRequest(friendRequest);
+            otherUser.AddFriendshipRequest(friendRequest);
+            otherUser.AcceptFriendshipRequest(friendRequest);
 
             // Assert
-            Assert.Contains(friendRequest.RequestUser, user.Friends.Select(x=>x.Friend).ToList());
-            Assert.DoesNotContain(friendRequest, user.FriendshipRequests);
+            Assert.Contains(friendRequest.RequestUser, otherUser.Friends.Select(x=>x.Friend).ToList());
+            Assert.DoesNotContain(friendRequest, otherUser.FriendshipRequests);
         }
 
         [Fact]

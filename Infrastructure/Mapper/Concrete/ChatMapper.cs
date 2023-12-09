@@ -3,7 +3,6 @@ using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.DatabaseEntity;
 using Infrastructure.FileSys;
-using Shared.ApiDataTransferObject;
 
 namespace Infrastructure.Mapper.Concrete
 {

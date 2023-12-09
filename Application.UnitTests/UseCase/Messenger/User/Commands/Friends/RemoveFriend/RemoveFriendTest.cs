@@ -22,7 +22,6 @@ namespace Application.UnitTests.UseCase.Messenger.User.Commands.Friends.RemoveFr
         private readonly IMediator _mediatorMock;
 
         private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
-
         private static readonly Domain.Entities.User.User UserFriendInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(FriendUserId);
 
         public RemoveFriendTest()

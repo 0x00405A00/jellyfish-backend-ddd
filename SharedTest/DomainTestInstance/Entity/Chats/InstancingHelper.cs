@@ -5,9 +5,9 @@ namespace SharedTest.DomainTestInstance.Entity.Chats
 {
     public static class InstancingHelper
     {
-        public static Domain.Entities.Chats.Chat GetChatInstance(Domain.Entities.User.User adminUser)
+        public static Domain.Entities.Chats.Chat GetChatInstance(Domain.Entities.User.User adminUser,Guid? chatId = null)
         {
-            var chatId = new ChatId(Guid.NewGuid());
+            var _chatId = new ChatId(chatId??Guid.NewGuid());
             var createdByUser = adminUser ?? User.InstancingHelper.GetUserInstance();
             var chatName = "Sample Chat";
             var members = new List<ChatMember>()
@@ -26,7 +26,7 @@ namespace SharedTest.DomainTestInstance.Entity.Chats
             }
 
             var chat = Chat.Create(
-                chatId,
+                _chatId,
                 createdByUser,
                 chatName,
                 null,

@@ -52,26 +52,19 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateChat
                 {
                     return Result<ChatDTO>.Failure(ex.Message);
                 }
-                finally
-                {
-
-                }
             }
             if (!String.IsNullOrEmpty(request.ChatDescription))
             {
                 try
                 {
-
                     chat.UpdateDescription(updatedByUser, request.ChatDescription);
                 }
                 catch (UserIsNoAdminInChatException ex)
                 {
-
                     return Result<ChatDTO>.Failure(ex.Message);
                 }
                 catch (NotValidChatDescriptionException ex)
                 {
-
                     return Result<ChatDTO>.Failure(ex.Message);
                 }
             }

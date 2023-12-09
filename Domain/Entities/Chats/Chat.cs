@@ -201,13 +201,13 @@ namespace Domain.Entities.Chats
             chatMember.SetAdmin(false);
             Raise(new ChatUserRevokeAdminDomainEvent(this, commandExecUser, member));
         }
-        public Message.Message AddMessage(User.User messageOwner, string text, MediaContent? mediaContent)
+        public Message.Message AddMessage(User.User messageOwner, string text, MediaContent? mediaContent =null)
         {
-            if (messageOwner == null)
+            if (messageOwner is null)
             {
                 throw new ArgumentNullException();
             }
-            if (String.IsNullOrWhiteSpace(text) && mediaContent == null)
+            if (String.IsNullOrWhiteSpace(text) && mediaContent is null)
             {
                 throw new NotValidMessageException();
             }
