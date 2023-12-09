@@ -1,6 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
-using Domain.Primitives;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
@@ -29,10 +28,14 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.CreateFriend
         public async Task<Result<FriendshipRequestDTO>> Handle(CreateFriendshipRequestCommand request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetAsync(x => x.Uuid == request.RequesterUserId);
+            if (user is null)
+            {
+                return Result<FriendshipRequestDTO>.Failure("request-user doesnt exists", Domain.Error.Error.ERROR_CODE.NotFound);
+            }
             var targetUser = await _userRepository.GetAsync(x => x.Uuid == request.PossibleNewFriendId);
             if(targetUser is null)
             {
-                return Result<FriendshipRequestDTO>.Failure("target user doesnt exists", Domain.Error.Error.ERROR_CODE.NotFound);
+                return Result<FriendshipRequestDTO>.Failure("target-user doesnt exists", Domain.Error.Error.ERROR_CODE.NotFound);
             }
 
             var previousRequests = user.GetRequestedFriendshipRequests();

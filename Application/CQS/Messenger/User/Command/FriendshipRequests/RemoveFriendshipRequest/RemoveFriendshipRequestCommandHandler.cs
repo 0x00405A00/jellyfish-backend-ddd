@@ -4,7 +4,6 @@ using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
-using Org.BouncyCastle.Asn1.X509;
 using Shared.DataTransferObject.Messenger;
 
 namespace Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriendshipRequest
@@ -33,31 +32,43 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriend
         public async Task<Result<RemoveFriendshipRequestDTO>> Handle(RemoveFriendshipRequestCommand request, CancellationToken cancellationToken)
         {
 
-            var executorUser = await _userRepository.GetAsync(x => x.Uuid == request.ExecutorUserId);
-            var requestUser = await _userRepository.GetAsync(x => x.Uuid == request.RequestUserId);
-            var targetUser = await _userRepository.GetAsync(x => x.Uuid == request.TargetUserId);
+            var executor = await _userRepository.GetAsync(x => x.Uuid == request.ExecutorUserId);
+            if (executor is null)
+            {
+                return Result<RemoveFriendshipRequestDTO>.Failure("executor not found", Domain.Error.Error.ERROR_CODE.NotFound);
+            }
+            var target = await _userRepository.GetAsync(x => x.Uuid == request.TargetUserId);
+            if (target is null)
+            {
+                return Result<RemoveFriendshipRequestDTO>.Failure("target-user not found", Domain.Error.Error.ERROR_CODE.NotFound);
+            }
+            var requester = await _userRepository.GetAsync(x => x.Uuid == request.RequestUserId);
+            if (requester is null)
+            {
+                return Result<RemoveFriendshipRequestDTO>.Failure("request-user not found", Domain.Error.Error.ERROR_CODE.NotFound);
+            }
 
-            bool isPermitted = (executorUser == requestUser || executorUser== targetUser);
+            bool isPermitted = (executor == requester || executor == target);
             if(!isPermitted)
             {
                 return Result<RemoveFriendshipRequestDTO>.Failure("you cant accept these request", Domain.Error.Error.ERROR_CODE.Forbidden);
             }
             try
             {
-                var friendshipRequest = requestUser.FriendshipRequests.Where(x => x.TargetUser.Uuid.ToGuid() == request.TargetUserId).Single();
+                var friendshipRequest = executor.FriendshipRequests.Where(x => x.TargetUser.Uuid.ToGuid() == request.TargetUserId&& x.RequestUser.Uuid.ToGuid() == request.RequestUserId).Single();
                 if(friendshipRequest is null)
                 {
                     return Result<RemoveFriendshipRequestDTO>.Failure("there is no matching friend ship request", Domain.Error.Error.ERROR_CODE.Exception);
                 }
 
-                requestUser.RemoveFriendshipRequest(friendshipRequest);
-                _userRepository.UpdateAsync(requestUser);
+                executor.RemoveFriendshipRequest(friendshipRequest);
+                _userRepository.UpdateAsync(requester);
             }
             catch (Exception ex)
             {
                 return Result<RemoveFriendshipRequestDTO>.Failure("cant remove friendship request", Domain.Error.Error.ERROR_CODE.Exception);
             }
-            _userRepository.PublishDomainEvents(requestUser, mediator);
+            _userRepository.PublishDomainEvents(requester, mediator);
 
             var dto = new RemoveFriendshipRequestDTO { RequestUserUuid = request.RequestUserId, TargetUserUuid = request.TargetUserId };
             return Result<RemoveFriendshipRequestDTO>.Success(dto);
