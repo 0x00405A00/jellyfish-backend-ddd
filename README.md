@@ -186,9 +186,9 @@ Legacy over binary or with docker container.
         - [x] Implementation
         - [ ] Test (Grey Box Test)
       - [ ] Application
-        - [ ] Command/Query
-        - [ ] Validation (Fluentvalidation)
-        - [ ] Handler
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
@@ -198,12 +198,12 @@ Legacy over binary or with docker container.
         - [x] Implementation
         - [ ] Test (Grey Box Test)
       - [ ] Infrastructure
-        - [ ] Implementation
+        - [x] Implementation
         - [ ] Test (Grey Box Test)
       - [ ] Application
-        - [ ] Command/Query
-        - [ ] Validation (Fluentvalidation)
-        - [ ] Handler
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
@@ -213,12 +213,12 @@ Legacy over binary or with docker container.
         - [x] Implementation
         - [ ] Test (Grey Box Test)
       - [ ] Infrastructure
-        - [ ] Implementation
+        - [x] Implementation
         - [ ] Test (Grey Box Test)
       - [ ] Application
-        - [ ] Command/Query
-        - [ ] Validation (Fluentvalidation)
-        - [ ] Handler
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
@@ -231,9 +231,9 @@ Legacy over binary or with docker container.
         - [x] Implementation
         - [ ] Test (Grey Box Test)
       - [ ] Application
-        - [ ] Command/Query
-        - [ ] Validation (Fluentvalidation)
-        - [ ] Handler
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
@@ -261,9 +261,9 @@ Legacy over binary or with docker container.
         - [x] Implementation
         - [ ] Test (Grey Box Test)
       - [ ] Application
-        - [ ] Command/Query
-        - [ ] Validation (Fluentvalidation)
-        - [ ] Handler
+        - [x] Command/Query
+        - [x] Validation (Fluentvalidation)
+        - [x] Handler
         - [ ] EventHandling
       - [x] Domain
         - [x] Implementation
