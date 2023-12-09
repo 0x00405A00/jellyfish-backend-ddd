@@ -1,6 +1,6 @@
 ﻿using Application.CQS.Messenger.User.Command.Friends.RemoveFriend;
 using AutoMapper;
-using Domain.Entities.User;
+using Domain.Extension;
 using Infrastructure.Abstractions;
 using MediatR;
 using System.Linq.Expressions;
@@ -44,8 +44,9 @@ namespace Application.UnitTests.UseCase.Messenger.User.Commands.Friends.RemoveFr
             // Arrange
             UserInstance.AddFriend(UserInstance, UserFriendInstance);
             UserFriendInstance.AddFriend(UserFriendInstance, UserInstance);
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(UserInstance);
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(UserFriendInstance);
+
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+                      .Returns(UserInstance, UserFriendInstance);
 
             // Act
             var result = await _handler.Handle(ValidCommand, CancellationToken.None);
