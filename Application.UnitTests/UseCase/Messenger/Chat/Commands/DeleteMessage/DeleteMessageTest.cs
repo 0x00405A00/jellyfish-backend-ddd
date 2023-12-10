@@ -26,7 +26,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteMessage
         private readonly IChatRepository _chatRepositoryMock;
         private readonly IUserRepository _userRepositoryMock;
         private readonly IMediaService _mediaServiceMock;
-        private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
         private readonly IMapper _mapperMock;
         private readonly IMessageRepository _messageRepository;
@@ -40,7 +39,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteMessage
             _chatRepositoryMock = Substitute.For<IChatRepository>();
             _userRepositoryMock = Substitute.For<IUserRepository>();
             _mediaServiceMock = Substitute.For<IMediaService>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _mediatorMock = Substitute.For<IMediator>();
             _mapperMock = Substitute.For<IMapper>();
             _messageRepository = Substitute.For<IMessageRepository>();
@@ -50,8 +48,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteMessage
                 _mapperMock,
                 _userRepositoryMock,
                 _mediaServiceMock,
-                _messageRepository,
-                _unitOfWorkMock);
+                _messageRepository);
         }
 
         [Fact]

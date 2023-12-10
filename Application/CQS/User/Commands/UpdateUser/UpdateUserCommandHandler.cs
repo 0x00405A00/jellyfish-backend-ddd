@@ -14,17 +14,14 @@ namespace Application.CQS.User.Commands.UpdateUser
         private readonly IMediator mediator;
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-        private readonly IUnitOfWork _unitOfWork;
         public UpdateUserCommandHandler(
             IMediator mediator,
             IMapper mapper,
-            IUserRepository userRepository,
-            IUnitOfWork unitOfWork)
+            IUserRepository userRepository)
         {
             this.mediator = mediator;
             this._mapper = mapper;
             _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<UserDTO>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
@@ -116,8 +113,6 @@ namespace Application.CQS.User.Commands.UpdateUser
             }
 
             _userRepository.UpdateAsync(user);
-            await _unitOfWork.SaveChangesAsync();
-
             _userRepository.PublishDomainEvents(user,mediator);
 
             var mapValue = _mapper.Map<UserDTO>(user);

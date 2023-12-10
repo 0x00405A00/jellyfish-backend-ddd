@@ -19,14 +19,12 @@ namespace Application.CQS.User.Commands.Roles.AssignRole
             IMapper mapper,
             IMediator mediator,
             IRoleRepository roleRepository,
-            IUserRepository userRepository,
-            IUnitOfWork unitOfWork)
+            IUserRepository userRepository)
         {
             _mapper = mapper;
             this.mediator = mediator;
             this.roleRepository = roleRepository;
             _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<List<Guid>>> Handle(AssignRoleCommand request, CancellationToken cancellationToken)
@@ -66,7 +64,6 @@ namespace Application.CQS.User.Commands.Roles.AssignRole
                 return Result<List<Guid>>.Failure("no roles added");
             }
             _userRepository.UpdateAsync(user);
-            await _unitOfWork.SaveChangesAsync();
             _userRepository.PublishDomainEvents(user, mediator);
             return Result<List<Guid>>.Success(roleIds);
         }

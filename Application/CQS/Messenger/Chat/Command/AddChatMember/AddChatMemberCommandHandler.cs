@@ -13,7 +13,6 @@ namespace Application.CQS.Messenger.Chat.Command.AddChatMember
         private readonly IChatRepository _chatRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMediaService mediaService;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IMediator mediator;
 
@@ -22,15 +21,13 @@ namespace Application.CQS.Messenger.Chat.Command.AddChatMember
             IMediator mediator,
             IChatRepository chatRepository,
             IUserRepository userRepository,
-            IMediaService mediaService,
-            IUnitOfWork unitOfWork)
+            IMediaService mediaService)
         {
             _mapper = mapper;
             this.mediator = mediator;
             _chatRepository = chatRepository;
             _userRepository = userRepository;
             this.mediaService = mediaService;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<bool>> Handle(AddChatMemberCommand request, CancellationToken cancellationToken)
@@ -67,7 +64,6 @@ namespace Application.CQS.Messenger.Chat.Command.AddChatMember
                 return Result<bool>.Failure(ex.Message);
             }
             _chatRepository.UpdateAsync(chat);
-            await _unitOfWork.SaveChangesAsync();
             _chatRepository.PublishDomainEvents(chat, mediator);
 
             return Result<bool>.Success(true);

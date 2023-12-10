@@ -13,31 +13,34 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateChat
         private readonly IMapper mapper;
         private readonly IChatRepository _chatRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IUnitOfWork _unitOfWork;
         public UpdateChatCommandHandler(
             IMapper mapper,
             IChatRepository chatRepository,
-            IUserRepository userRepository,
-            IUnitOfWork unitOfWork)
+            IUserRepository userRepository)
         {
             _userRepository = userRepository;
             this.mapper = mapper;
             _chatRepository = chatRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<ChatDTO>> Handle(UpdateChatCommand request, CancellationToken cancellationToken)
         {
-            var updatedByUser = await _userRepository.GetAsync(x=>x.Uuid == request.UpdatedByUserId);
-            if (updatedByUser == null)
-            {
-                return Result<ChatDTO>.Failure("execution user not found");
-            }
             var chat = await _chatRepository.GetAsync(x=>x.Uuid == request.ChatId);
             if(chat == null)
             {
                 return Result<ChatDTO>.Failure("chat not found");
             }
+            ChatMember updatedByMember = null;
+            try
+            {
+
+                updatedByMember = chat.GetChatMemberById(new Domain.Entities.User.UserId(request.UpdatedByUserId));
+            }
+            catch(Exception ex)
+            {
+                return Result<ChatDTO>.Failure("you are not a member in this chat");
+            }
+            var updatedByUser = updatedByMember.User;
             if (!String.IsNullOrEmpty(request.ChatName))
             {
                 try

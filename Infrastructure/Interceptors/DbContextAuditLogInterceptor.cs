@@ -30,6 +30,12 @@ namespace Infrastructure.Interceptors
                 return base.SavingChangesAsync(eventData, result, cancellationToken);
             }
             var changes = dbContext.ChangeTracker.Entries();
+            foreach( var change in changes )
+            {
+
+            }
+            //For Auditin Value set
+            #region Auditing
             var createdEntries = dbContext.ChangeTracker.Entries < IAuditibleCreateEntity>();
             foreach (var entry in createdEntries)
             {
@@ -46,6 +52,7 @@ namespace Infrastructure.Interceptors
                     entry.Property(x => x.LastModifiedTime).CurrentValue = DateTime.Now;
                 }
             }
+            #endregion
             return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
     }

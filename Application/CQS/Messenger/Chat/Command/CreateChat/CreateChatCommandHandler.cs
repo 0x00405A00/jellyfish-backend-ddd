@@ -15,20 +15,17 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
         private readonly IChatRepository _chatRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMediaService mediaService;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         public CreateChatCommandHandler(
             IMapper mapper,
             IChatRepository chatRepository,
             IUserRepository userRepository,
-            IMediaService mediaService,
-            IUnitOfWork unitOfWork)
+            IMediaService mediaService)
         {
             _mapper = mapper;
             _chatRepository = chatRepository;
             this._userRepository = userRepository;
             this.mediaService = mediaService;
-            _unitOfWork = unitOfWork;
         }
 
 
@@ -73,7 +70,6 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
             {
                 return Result<ChatDTO>.Failure("chat create failed");
             }
-
             _chatRepository.Add(chat);
             var dto = _mapper.Map<ChatDTO>(chat);
             return Result<ChatDTO>.Success(dto);

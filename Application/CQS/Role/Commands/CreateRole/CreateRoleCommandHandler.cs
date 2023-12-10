@@ -11,7 +11,6 @@ namespace Application.CQS.Role.Commands.CreateRole
     {
         private readonly IMapper _mapper;
         private readonly IRoleRepository _roleRepository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator mediator;
 
         public CreateRoleCommandHandler(
@@ -21,7 +20,6 @@ namespace Application.CQS.Role.Commands.CreateRole
             IMediator mediator)
         {
             this._mapper = mapper;
-            _unitOfWork = unitOfWork;
             this.mediator = mediator;
             _roleRepository = roleRepository;
         }
@@ -46,7 +44,6 @@ namespace Application.CQS.Role.Commands.CreateRole
             try
             {
                 _roleRepository.Add(role);
-                await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {

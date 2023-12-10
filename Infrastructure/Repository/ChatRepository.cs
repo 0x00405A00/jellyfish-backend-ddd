@@ -24,6 +24,7 @@ namespace Infrastructure.Repository
                 .ThenInclude(cru=>cru.UserUu)
                 .ThenInclude(ut => ut.UserTypeUu)
                 .AsNoTracking()
+                .AsSingleQuery()
                 .FirstOrDefaultAsync(expression);
 
             return await this.MapToDomainEntity(value, true);

@@ -14,19 +14,16 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriend
     internal sealed class RemoveFriendshipRequestCommandHandler : ICommandHandler<RemoveFriendshipRequestCommand, RemoveFriendshipRequestDTO>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator mediator;
         private readonly IMapper _mapper;
         public RemoveFriendshipRequestCommandHandler(
             IMediator mediator,
             IMapper mapper,
-            IUserRepository userRepository,
-            IUnitOfWork unitOfWork)
+            IUserRepository userRepository)
         {
             this.mediator = mediator;
             _mapper = mapper;
             _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<RemoveFriendshipRequestDTO>> Handle(RemoveFriendshipRequestCommand request, CancellationToken cancellationToken)

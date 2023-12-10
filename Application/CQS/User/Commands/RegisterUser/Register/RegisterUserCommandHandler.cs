@@ -11,27 +11,12 @@ namespace Application.CQS.User.Commands.RegisterUser.Register
 {
     internal sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, UserDTO>
     {
-        private readonly IMapper _mapper;
-        private readonly IUserRepository _userRepository;
-        private readonly IUserTypeRepository _userTypeRepository;
-        private readonly IRoleRepository _roleRepository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly ISender _sender;
 
         public RegisterUserCommandHandler(
-            IMapper mapper,
-            IUserRepository userRepository,
-            IUserTypeRepository userTypeRepository,
-            IRoleRepository roleRepository,
-            IUnitOfWork unitOfWork,
             ISender sender)
         {
-            _mapper = mapper;
-            _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
             this._sender = sender;
-            _userTypeRepository = userTypeRepository;
-            _roleRepository = roleRepository;
         }
 
         public async Task<Result<UserDTO>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)

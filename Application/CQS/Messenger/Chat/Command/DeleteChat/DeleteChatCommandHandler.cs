@@ -8,16 +8,13 @@ namespace Application.CQS.Messenger.Chat.Command.DeleteChat
     internal sealed class DeleteChatCommandHandler : ICommandHandler<DeleteChatCommand, Guid>
     {
         private readonly IChatRepository _chatRepository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IUserRepository _userRepository;
         public DeleteChatCommandHandler(
             IChatRepository chatRepository,
-            IUserRepository userRepository,
-            IUnitOfWork unitOfWork)
+            IUserRepository userRepository)
         {
             _chatRepository = chatRepository;
             _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
         }
 
 

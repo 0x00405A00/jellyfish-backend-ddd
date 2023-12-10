@@ -12,7 +12,6 @@ namespace Application.CQS.Messenger.Chat.Command.DeleteMessage
     {
         private readonly IUserRepository _userRepository;
         private readonly IMediaService mediaService;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator mediator;
         private readonly IMapper _mapper;
         private readonly IMessageRepository _messageRepository;
@@ -22,14 +21,12 @@ namespace Application.CQS.Messenger.Chat.Command.DeleteMessage
             IMapper mapper,
             IUserRepository userRepository,
             IMediaService mediaService,
-            IMessageRepository messageRepository,
-            IUnitOfWork unitOfWork)
+            IMessageRepository messageRepository)
         {
             this.mediator = mediator;
             _mapper = mapper;
             _userRepository = userRepository;
             this.mediaService = mediaService;
-            _unitOfWork = unitOfWork;
             _messageRepository = messageRepository;
         }
 
@@ -54,7 +51,6 @@ namespace Application.CQS.Messenger.Chat.Command.DeleteMessage
                 return Result<Guid>.Failure("you are not the owner of the message");
             }
             _messageRepository.UpdateAsync(message);    
-            await _unitOfWork.SaveChangesAsync();
             _messageRepository.PublishDomainEvents(message, mediator);
 
             return Result<Guid>.Success(request.MessageId);

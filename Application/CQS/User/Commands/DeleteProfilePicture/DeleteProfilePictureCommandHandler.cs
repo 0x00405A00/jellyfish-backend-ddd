@@ -14,18 +14,15 @@ namespace Application.CQS.User.Commands.DeleteProfilePicture
         private readonly IMediator mediator;
         private readonly IUserRepository _userRepository;
         private readonly IMediaService _mediaService;
-        private readonly IUnitOfWork _unitOfWork;
 
         public DeleteProfilePictureCommandHandler(
             IMediator mediator,
             IUserRepository userRepository,
-            IMediaService mediaService,
-            IUnitOfWork unitOfWork)
+            IMediaService mediaService)
         {
             this.mediator = mediator;
             _userRepository = userRepository;
             _mediaService = mediaService;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<bool>> Handle(DeleteProfilePictureCommand request, CancellationToken cancellationToken)
@@ -52,7 +49,6 @@ namespace Application.CQS.User.Commands.DeleteProfilePicture
                 var filePath = _mediaService.DeleteProfilePicture(request.UserId, MimeExtension.GetFileExtension(user.Picture.FileExtension), cancellationToken);
                 user.UpdatePicture(deletedByUser,null);
                 _userRepository.Update(user);
-                await _unitOfWork.SaveChangesAsync();
             }
             catch (NotValidPhoneNumberException ex)
             {

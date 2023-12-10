@@ -5,7 +5,6 @@ using Domain.Exceptions;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
-using Shared.Const;
 using Shared.DataTransferObject;
 
 namespace Application.CQS.User.Commands.CreateUser
@@ -16,7 +15,6 @@ namespace Application.CQS.User.Commands.CreateUser
         private readonly IUserRepository _userRepository;
         private readonly IUserTypeRepository _userTypeRepository;
         private readonly IRoleRepository _roleRepository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator mediator;
 
         public CreateUserCommandHandler(
@@ -29,7 +27,6 @@ namespace Application.CQS.User.Commands.CreateUser
         {
             this._mapper = mapper;
             _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
             this.mediator = mediator;
             _userTypeRepository = userTypeRepository;
             _roleRepository = roleRepository;
@@ -69,56 +66,48 @@ namespace Application.CQS.User.Commands.CreateUser
                 return Result<UserDTO>.Failure("phonenumber already in use");
             }
             Domain.Entities.User.User user;
-            using(var transaction = await _unitOfWork.BeginTransaction())
+            try
             {
+                Domain.Entities.User.User.CheckPasswordWithPolicy(request.Password, request.PasswordRepeat);
 
-                try
-                {
-                    Domain.Entities.User.User.CheckPasswordWithPolicy(request.Password, request.PasswordRepeat);
-
-                    var userId = new Domain.Entities.User.UserId(Guid.NewGuid());
-                    var userType = await _userTypeRepository.GetAsync(x => x.Uuid == UserTypeConst.UserTypeUuid);
-                    var userRole = await _roleRepository.GetAsync(x => x.Uuid == RoleConst.UserRoleUuid);
-                    user = Domain.Entities.User.User.Create(
-                        userId,
-                        userType,
-                        request.UserName,
-                        request.Password,
-                        request.FirstName,
-                        request.LastName,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        email,
-                        phoneNumber,
-                        null,
-                        null,
-                        null,
-                        null,
-                        DateOnly.FromDateTime(request.DateOfBirth),
-                        null,
-                        DateTime.Now,
-                        null,
-                        null,
-                        createdByUser);
-                    user.AddRole(createdByUser, userRole);
-                    user.GenerateActivationToken();
-                    user.NewRegistered();
-                    _userRepository.Add(user);
-                    await transaction.CommitAsync();
-
-                    _userRepository.PublishDomainEvents(user,mediator);
-                }
-                catch (Exception ex)
-                {
-                    await transaction.RollbackAsync();
-                    return Result<UserDTO>.Failure(ex.Message);
-                }
+                var userId = new Domain.Entities.User.UserId(Guid.NewGuid());
+                var userType = await _userTypeRepository.GetAsync(x => x.Uuid == UserTypeConst.UserTypeUuid);
+                var userRole = await _roleRepository.GetAsync(x => x.Uuid == RoleConst.UserRoleUuid);
+                user = Domain.Entities.User.User.Create(
+                    userId,
+                    userType,
+                    request.UserName,
+                    request.Password,
+                    request.FirstName,
+                    request.LastName,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    email,
+                    phoneNumber,
+                    null,
+                    null,
+                    null,
+                    null,
+                    DateOnly.FromDateTime(request.DateOfBirth),
+                    null,
+                    DateTime.Now,
+                    null,
+                    null,
+                    createdByUser);
+                user.AddRole(createdByUser, userRole);
+                user.GenerateActivationToken();
+                user.NewRegistered();
+                _userRepository.Add(user);
+                _userRepository.PublishDomainEvents(user, mediator);
+            }
+            catch (Exception ex)
+            {
+                return Result<UserDTO>.Failure(ex.Message);
             }
             var mapValue = _mapper.Map<UserDTO>(user);
-            mapValue.Password = null;
             return Result<UserDTO>.Success(mapValue);
         }
     }

@@ -13,7 +13,6 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateMessage
         private readonly IMessageRepository _messageRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMediaService mediaService;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator mediator;
         private readonly IMapper _mapper;
 
@@ -22,15 +21,13 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateMessage
             IMapper mapper,
             IMessageRepository messageRepository,
             IUserRepository userRepository,
-            IMediaService mediaService,
-            IUnitOfWork unitOfWork)
+            IMediaService mediaService)
         {
             this.mediator = mediator;
             _mapper = mapper;
             _messageRepository = messageRepository;
             _userRepository = userRepository;
             this.mediaService = mediaService;
-            _unitOfWork = unitOfWork;
         }
 
 
@@ -69,7 +66,6 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateMessage
             }
 
             _messageRepository.UpdateAsync(message);
-            await _unitOfWork.SaveChangesAsync();
             _messageRepository.PublishDomainEvents(message, mediator);
 
             var dto = _mapper.Map<MessageDTO>(message);

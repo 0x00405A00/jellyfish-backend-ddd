@@ -27,7 +27,6 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdateProfilePicture
         private readonly IUserRepository _userRepositoryMock;
         private readonly IUserTypeRepository _userTypeRepositoryMock;
         private readonly IRoleRepository _roleRepositoryMock;
-        private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
         private readonly IConfiguration _configuration;
 
@@ -48,7 +47,6 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdateProfilePicture
             _userRepositoryMock = Substitute.For<IUserRepository>();
             _userTypeRepositoryMock = Substitute.For<IUserTypeRepository>();
             _roleRepositoryMock = Substitute.For<IRoleRepository>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _mediatorMock = Substitute.For<IMediator>();
             _mediaService = Substitute.For<IMediaService>();
 
@@ -56,8 +54,7 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdateProfilePicture
                 _mapperMock,
                 _mediatorMock,
                 _userRepositoryMock,
-                _mediaService,
-                _unitOfWorkMock);
+                _mediaService);
         }
 
         [Fact]

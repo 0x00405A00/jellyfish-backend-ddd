@@ -16,7 +16,6 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
         private readonly IChatRepository _chatRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMediaService mediaService;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator mediator;
         private readonly IMapper _mapper;
         private readonly IAntiVirus antiVirus;
@@ -29,8 +28,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
             IAzureAdultContentDetection azureAdultContentDetection,
             IChatRepository chatRepository,
             IUserRepository userRepository,
-            IMediaService mediaService,
-            IUnitOfWork unitOfWork)
+            IMediaService mediaService)
         {
             this.mediator = mediator;
             _mapper = mapper;
@@ -39,7 +37,6 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
             _chatRepository = chatRepository;
             _userRepository = userRepository;
             this.mediaService = mediaService;
-            _unitOfWork = unitOfWork;
         }
 
 

@@ -15,7 +15,6 @@ namespace Application.UnitTests.UseCase.Messenger.User.Commands.FriendshipReques
         private readonly CreateFriendshipRequestCommandHandler _handler;
         private readonly IUserRepository _userRepositoryMock;
         private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
 
         private readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
@@ -24,15 +23,13 @@ namespace Application.UnitTests.UseCase.Messenger.User.Commands.FriendshipReques
         public CreateFriendshipRequestTest()
         {
             _userRepositoryMock = Substitute.For<IUserRepository>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _mediatorMock = Substitute.For<IMediator>();
             _mapper = Substitute.For<IMapper>();
 
             _handler = new CreateFriendshipRequestCommandHandler(
                 _mediatorMock,
                 _mapper,
-                _userRepositoryMock,
-                _unitOfWorkMock);
+                _userRepositoryMock);
         }
 
         [Fact]

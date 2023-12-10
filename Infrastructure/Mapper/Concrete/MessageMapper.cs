@@ -52,7 +52,7 @@ namespace Infrastructure.Mapper.Concrete
 
                 }
             }
-            else
+            else if(entity.BinaryContentBase64 is not null) 
             {
                 byte[] data = Convert.FromBase64String(entity.BinaryContentBase64);
                 mediaContent = MediaContent.Parse(data, entity.BinaryContentMimeType);

@@ -11,15 +11,13 @@ namespace Application.CQS.User.Commands.UpdatePassword
     {
         private readonly IMediator mediator;
         private readonly IUserRepository _userRepository;
-        private readonly IUnitOfWork _unitOfWork;
+
         public UpdateUserPasswordCommandHandler(
             IMediator mediator,
-            IUserRepository userRepository,
-            IUnitOfWork unitOfWork)
+            IUserRepository userRepository)
         {
             this.mediator = mediator;
             _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<Guid>> Handle(UpdateUserPasswordCommand request, CancellationToken cancellationToken)
@@ -45,7 +43,6 @@ namespace Application.CQS.User.Commands.UpdatePassword
 
             _userRepository.Update(user);
             _userRepository.PublishDomainEvents(user, mediator);
-            await _unitOfWork.SaveChangesAsync();
             return Result<Guid>.Success(user.Uuid.ToGuid());
         }
     }

@@ -16,20 +16,17 @@ namespace Application.CQS.User.Commands.UpdateProfilePicture
         private readonly IMediator mediator;
         private readonly IUserRepository _userRepository;
         private readonly IMediaService _mediaService;
-        private readonly IUnitOfWork _unitOfWork;
 
         public UploadProfilePictureCommandHandler(
             IMapper mapper,
             IMediator mediator,
             IUserRepository userRepository,
-            IMediaService mediaService,
-            IUnitOfWork unitOfWork)
+            IMediaService mediaService)
         {
             _mapper = mapper;
             this.mediator = mediator;
             this._userRepository = userRepository;
             this._mediaService = mediaService;
-            this._unitOfWork = unitOfWork;
         }
 
         public async Task<Result<UserDTO>> Handle(UploadProfilePictureCommand request, CancellationToken cancellationToken)
@@ -55,7 +52,6 @@ namespace Application.CQS.User.Commands.UpdateProfilePicture
                 picture = Picture.Parse(filePath, request.MimeType);
                 user.UpdatePicture(updatedByUser, picture);
                 _userRepository.UpdateAsync(user);
-                await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {

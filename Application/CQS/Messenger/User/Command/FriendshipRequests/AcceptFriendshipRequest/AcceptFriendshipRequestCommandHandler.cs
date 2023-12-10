@@ -9,19 +9,16 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.AcceptFriend
     internal sealed class AcceptFriendshipRequestCommandHandler : ICommandHandler<AcceptFriendshipRequestCommand, bool>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator mediator;
         private readonly IMapper _mapper;
         public AcceptFriendshipRequestCommandHandler(
             IMediator mediator,
             IMapper mapper,
-            IUserRepository userRepository,
-            IUnitOfWork unitOfWork)
+            IUserRepository userRepository)
         {
             this.mediator = mediator;
             _mapper = mapper;
             _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<bool>> Handle(AcceptFriendshipRequestCommand request, CancellationToken cancellationToken)
@@ -64,7 +61,6 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.AcceptFriend
                 var friendshipRequest = receivedRequest.Where(x => x.RequestUser == requester).Single();
                 target.AcceptFriendshipRequest(friendshipRequest);
                 _userRepository.UpdateAsync(target);
-                await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {

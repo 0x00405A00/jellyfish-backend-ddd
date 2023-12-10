@@ -23,7 +23,6 @@ namespace Application.UnitTests.UseCase.User.Commands.DeleteProfilePicture
         private readonly IUserRepository _userRepositoryMock;
         private readonly IUserTypeRepository _userTypeRepositoryMock;
         private readonly IRoleRepository _roleRepositoryMock;
-        private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
         private readonly IMediaService _mediaServiceMock;
 
@@ -35,15 +34,13 @@ namespace Application.UnitTests.UseCase.User.Commands.DeleteProfilePicture
             _userRepositoryMock = Substitute.For<IUserRepository>();
             _userTypeRepositoryMock = Substitute.For<IUserTypeRepository>();
             _roleRepositoryMock = Substitute.For<IRoleRepository>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _mediatorMock = Substitute.For<IMediator>();
             _mediaServiceMock = Substitute.For<IMediaService>();
 
             _handler = new DeleteProfilePictureCommandHandler(
                 _mediatorMock,
                 _userRepositoryMock,
-                _mediaServiceMock,
-                _unitOfWorkMock); ;
+                _mediaServiceMock); 
         }
         [Fact]
         public async Task Handle_ValidRequest_ReturnsSuccessResult()

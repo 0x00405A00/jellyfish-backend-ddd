@@ -16,7 +16,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteChat
         private readonly DeleteChatCommandHandler _handler;
         private readonly IChatRepository _chatRepositoryMock;
         private readonly IUserRepository _userRepositoryMock;
-        private readonly IUnitOfWork _unitOfWorkMock;
 
         private static readonly Domain.Entities.User.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
         private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
@@ -26,9 +25,8 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteChat
         {
             _chatRepositoryMock = Substitute.For<IChatRepository>();
             _userRepositoryMock = Substitute.For<IUserRepository>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
 
-            _handler = new DeleteChatCommandHandler(_chatRepositoryMock, _userRepositoryMock, _unitOfWorkMock);
+            _handler = new DeleteChatCommandHandler(_chatRepositoryMock, _userRepositoryMock);
         }
 
         [Fact]

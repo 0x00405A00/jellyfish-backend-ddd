@@ -11,17 +11,15 @@ namespace Application.CQS.User.Commands.DeleteUser
         private readonly ISender sender;
         private readonly IMediator mediator;
         private readonly IUserRepository _userRepository;
-        private readonly IUnitOfWork _unitOfWork;
+
         public DeleteUserCommandHandler(
             ISender sender,
             IMediator mediator, 
-            IUserRepository userRepository,
-            IUnitOfWork unitOfWork)
+            IUserRepository userRepository)
         {
             this.sender = sender;
             this.mediator = mediator;
             _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<Guid>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
@@ -43,7 +41,6 @@ namespace Application.CQS.User.Commands.DeleteUser
             try
             {
                 _userRepository.Update(user);
-                await _unitOfWork.SaveChangesAsync();
             }
             catch(Exception ex) {
                 return Result<Guid>.Failure(ex.Message);

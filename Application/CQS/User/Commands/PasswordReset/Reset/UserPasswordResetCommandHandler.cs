@@ -14,17 +14,14 @@ namespace Application.CQS.User.Commands.PasswordReset.Reset
         private readonly IMediator mediator;
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-        private readonly IUnitOfWork _unitOfWork;
         public UserPasswordResetCommandHandler(
             IMediator mediator,
             IMapper mapper,
-            IUserRepository userRepository,
-            IUnitOfWork unitOfWork)
+            IUserRepository userRepository)
         {
             this.mediator = mediator;
             _mapper = mapper;
             _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<bool>> Handle(UserPasswordResetCommand request, CancellationToken cancellationToken)
