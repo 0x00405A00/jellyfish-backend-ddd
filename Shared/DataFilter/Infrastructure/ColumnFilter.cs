@@ -21,6 +21,9 @@ namespace Shared.DataFilter.Infrastructure
         public bool IsInvalidOperator => Op == OPERATOR.INVALID;
 
         [JsonIgnore]
+        public bool FoundFieldInDto { get; set; } = false;
+
+        [JsonIgnore]
         public static readonly Dictionary<string, OPERATOR> OperatorMapping = new Dictionary<string, OPERATOR>() {
             {OperatorNames.EQUAL, OPERATOR.EQUAL},
             {OperatorNames.CONTAINS, OPERATOR.CONTAINS},

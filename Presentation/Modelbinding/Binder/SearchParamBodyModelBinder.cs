@@ -7,24 +7,25 @@ namespace Presentation.Modelbinding.Binder
 {
     public class SearchParamBodyModelBinder : IModelBinder
     {
-        public static JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true, DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
-    };
-    public async Task BindModelAsync(ModelBindingContext bindingContext)
+        public static JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true, DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
+        public async Task BindModelAsync(ModelBindingContext bindingContext)
         {
             if (bindingContext == null)
             {
                 throw new ArgumentNullException(nameof(bindingContext));
             }
-            if (bindingContext.HttpContext.Request.Query.Any()|| (bindingContext.HttpContext.Request.ContentLength == null || bindingContext.HttpContext.Request.ContentLength == 0))
+            if (bindingContext.HttpContext.Request.Query.Any()&& (bindingContext.HttpContext.Request.ContentLength == null || bindingContext.HttpContext.Request.ContentLength == 0))
             {
                 bindingContext.Result = ModelBindingResult.Success(null);
                 return;
             }
-            SearchParamsBody data= new SearchParamsBody();  
+
+            SearchParamsBody data= new SearchParamsBody(); 
             string pageSizeValueStr = null;
             string pageOffSetValueStr = null;
             string filtersValueStr = null;
             string orderValueStr = null;
+
             using (var reader = new StreamReader(bindingContext.HttpContext.Request.Body))
             {
                 try
@@ -50,43 +51,20 @@ namespace Presentation.Modelbinding.Binder
                 }
             }
 
-            int page_size = -1;
-            int page_offset = -1;
-            string filters = filtersValueStr;
-            string order_by = orderValueStr;
-
-            if (pageSizeValueStr!=null || pageOffSetValueStr!=null)
+            SearchParams searchParams = null;
+            try
             {
-                
-                bool pageSizeParse = int.TryParse(pageSizeValueStr, out page_size);
-                bool pageOffSetParse = int.TryParse(pageOffSetValueStr, out page_offset);
-                if (!pageSizeParse)
-                {
-                    bindingContext.Result = ModelBindingResult.Failed();
-                    throw new ModelBindingFailedException($"{nameof(SearchParams.page_size)} is not a valid integer value");
-                }
-                if (!pageOffSetParse)
-                {
-                    bindingContext.Result = ModelBindingResult.Failed();
-                    throw new ModelBindingFailedException($"{nameof(SearchParams.page_offset)} is not a valid integer value");
-                }
-                if (page_size < 1)
-                {
-                    bindingContext.Result = ModelBindingResult.Failed();
-                    throw new ModelBindingFailedException($"{nameof(SearchParams.page_size)} is not valid");
-                }
-                if (page_offset < 1)
-                {
-                    bindingContext.Result = ModelBindingResult.Failed();
-                    throw new ModelBindingFailedException($"{nameof(SearchParams.page_offset)} is not valid");
-                }
-
+                searchParams = SearchParamQueryModelBinderHelpers.ExtractSearchParams(
+                    bindingContext,
+                    pageSizeValueStr,
+                    pageOffSetValueStr,
+                    filtersValueStr,
+                    orderValueStr);
             }
-            SearchParams searchParams = new SearchParams();
-            searchParams.page_size = page_size;
-            searchParams.page_offset = page_offset;
-            searchParams.filters = filters;
-            searchParams.order_by = order_by;
+            catch (Exception ex)
+            {
+                throw;
+            }
 
             data.SearchParams = searchParams;
 

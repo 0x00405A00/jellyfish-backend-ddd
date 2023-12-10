@@ -9,7 +9,7 @@ using Shared.DataTransferObject.Messenger;
 namespace Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriendshipRequest
 {
     /// <summary>
-    /// 
+    /// Removes friendship request, executor must be targetuser or requestuser, both can decline/or revoke a friendship request
     /// </summary>
     internal sealed class RemoveFriendshipRequestCommandHandler : ICommandHandler<RemoveFriendshipRequestCommand, RemoveFriendshipRequestDTO>
     {
