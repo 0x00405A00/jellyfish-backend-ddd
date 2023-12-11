@@ -1,11 +1,10 @@
 ﻿using Infrastructure.Abstractions;
-using System;
-using System.Collections.Generic;
 
 namespace Infrastructure.DatabaseEntity;
 
 public partial class ChatRelationToUser : DatabaseEntityModel
 {
+    public Guid Uuid { get; set; } = Guid.Empty;
     public Guid ChatUuid { get; set; } = Guid.Empty;
 
     public Guid UserUuid { get; set; } = Guid.Empty;

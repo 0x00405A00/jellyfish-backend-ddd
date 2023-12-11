@@ -21,7 +21,6 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdatePassword
         private readonly UpdateUserPasswordCommandHandler _handler;
 
         private readonly IUserRepository _userRepositoryMock;
-        private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
 
         private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
@@ -29,13 +28,11 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdatePassword
         public UpdatePasswordTest()
         {
             _userRepositoryMock = Substitute.For<IUserRepository>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _mediatorMock = Substitute.For<IMediator>();
 
             _handler = new UpdateUserPasswordCommandHandler(
                 _mediatorMock,
-                _userRepositoryMock,
-                _unitOfWorkMock);
+                _userRepositoryMock);
         }
 
         [Fact]

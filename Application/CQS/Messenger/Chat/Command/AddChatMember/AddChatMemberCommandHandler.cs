@@ -51,19 +51,27 @@ namespace Application.CQS.Messenger.Chat.Command.AddChatMember
             {
                 chat.AddMember(executorUser, targetUser);
             }
-            catch (ArgumentNullException ex)
+            catch (Exception ex) when (ex is ArgumentNullException) 
             {
                 return Result<bool>.Failure($"value is null ({ex.Message})");
             }
-            catch (UserIsNoAdminInChatException ex)
+            catch (Exception ex) when (ex is UserIsNoAdminInChatException)
             {
                 return Result<bool>.Failure(ex.Message);
             }
-            catch (UserIsNoMemberInChatException ex)
+            catch (Exception ex) when (ex is UserIsNoMemberInChatException)
             {
                 return Result<bool>.Failure(ex.Message);
             }
-            _chatRepository.UpdateAsync(chat);
+            catch (Exception ex) when (ex is UserAlreadyMemberInChatException)
+            {
+                return Result<bool>.Failure(ex.Message);
+            }
+            catch (Exception ex)  
+            {
+                return Result<bool>.Failure(ex.Message);
+            }
+            _chatRepository.Update(chat);
             _chatRepository.PublishDomainEvents(chat, mediator);
 
             return Result<bool>.Success(true);

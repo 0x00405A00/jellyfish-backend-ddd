@@ -25,7 +25,6 @@ namespace Infrastructure.Repository
         #region Sync
         public void Add(TDbEntity entity)
         {
-            DbSet.Attach(entity).State = EntityState.Added;
             DbSet.Add(entity);
         }
         public void Attach(TDbEntity entity)
@@ -35,8 +34,9 @@ namespace Infrastructure.Repository
 
         public void Update(TDbEntity entity)
         {
-            DbSet.Attach(entity).State = EntityState.Modified;
-            //DbSet.Update(entity);
+
+            DbSet.Entry(entity).State = EntityState.Detached;
+            DbSet.Update(entity);
         }
 
         public void Remove(TDbEntity entity)
@@ -72,14 +72,14 @@ namespace Infrastructure.Repository
 
         public async Task AddAsync(TDbEntity entity)
         {
-            DbSet.Attach(entity).State = EntityState.Added;
+            //DbSet.Attach(entity).State = EntityState.Added;
             await DbSet.AddAsync(entity);
         }
 
         public void UpdateAsync(TDbEntity entity)
         {
-            DbSet.Attach(entity).State = EntityState.Modified;
-            //DbSet.Update(entity);
+            //DbSet.Attach(entity).State = EntityState.Modified;
+            DbSet.Update(entity);
         }
 
         public void RemoveAsync(TDbEntity entity)
@@ -132,7 +132,7 @@ namespace Infrastructure.Repository
 
         public async void Update(TEntity entity)
         {
-            var dbModel = await MapToDatabaseEntity(entity, false);
+            var dbModel = await MapToDatabaseEntity(entity, true);
             base.Update(dbModel);
         }
 
@@ -211,7 +211,7 @@ namespace Infrastructure.Repository
 
         public async Task AddAsync(TEntity entity)
         {
-            var dbModel = await MapToDatabaseEntity(entity, false);
+            var dbModel = await MapToDatabaseEntity(entity, true);
             await base.AddAsync(dbModel);
         }
 
@@ -223,7 +223,7 @@ namespace Infrastructure.Repository
 
         public async void UpdateAsync(TEntity entity)
         {
-            var dbModel = await MapToDatabaseEntity(entity, false);
+            var dbModel = await MapToDatabaseEntity(entity, true);
             base.UpdateAsync(dbModel);
         }
 

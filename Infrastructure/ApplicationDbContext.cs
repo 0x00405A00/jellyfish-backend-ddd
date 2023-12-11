@@ -189,14 +189,18 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<ChatRelationToUser>(entity =>
         {
-            entity.HasKey(e => new { e.ChatUuid,e.UserUuid}).HasName("PRIMARY");
+            entity.HasKey(e => e.Uuid).HasName("PRIMARY");
 
             entity.ToTable("chat_relation_to_user");
 
+            entity.HasIndex(e => e.Uuid, "chat_relation_to_user_uuid_IDX");
             entity.HasIndex(e => e.ChatUuid, "fkChatToChat_idx");
 
             entity.HasIndex(e => e.UserUuid, "fkChatToUser_idx");
 
+            entity.Property(e => e.Uuid)
+                .HasMaxLength(36)
+                .HasColumnName("uuid");
             entity.Property(e => e.ChatUuid)
                 .HasMaxLength(36)
                 .HasColumnName("chat_uuid");

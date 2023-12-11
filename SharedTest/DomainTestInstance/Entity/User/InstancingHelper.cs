@@ -54,7 +54,9 @@ namespace SharedTest.DomainTestInstance.Entity.User
                 createdTime,
                 null, // Optional: lastModifiedTime
                 null, // Optional: deletedTime
-                null); // Optional: createdBy
+                null,// Optional: createdBy
+                null,
+                null); 
 
             return user;
         }
@@ -64,6 +66,9 @@ namespace SharedTest.DomainTestInstance.Entity.User
             return UserType.Create(new UserTypeId(Guid.NewGuid()),
                                            typeName,
                                            DateTime.Now,
+                                           null,
+                                           null,
+                                           null,
                                            null,
                                            null);
         }
@@ -75,7 +80,16 @@ namespace SharedTest.DomainTestInstance.Entity.User
 
         public static Role GetRoleInstance(string roleName = "User")
         {
-            return Role.Create(new RoleId(Guid.NewGuid()), roleName, null, DateTime.Now, null, null);
+            return Role.Create(
+                new RoleId(Guid.NewGuid()),
+                roleName,
+                null,
+                DateTime.Now,
+                null,
+                null,
+                null,
+                null,
+                null);
         }
         public static UserRole GetUserRoleInstance(Role role)
         {

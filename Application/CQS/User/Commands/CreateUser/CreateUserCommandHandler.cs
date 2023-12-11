@@ -96,10 +96,13 @@ namespace Application.CQS.User.Commands.CreateUser
                     DateTime.Now,
                     null,
                     null,
-                    createdByUser);
+                    createdByUser, 
+                    null, 
+                    null);
                 user.AddRole(createdByUser, userRole);
                 user.GenerateActivationToken();
                 user.NewRegistered();
+                user.SetCreated(createdByUser);
                 _userRepository.Add(user);
                 _userRepository.PublishDomainEvents(user, mediator);
             }

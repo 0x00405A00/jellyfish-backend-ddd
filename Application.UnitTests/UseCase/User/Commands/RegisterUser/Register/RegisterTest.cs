@@ -28,7 +28,6 @@ namespace Application.UnitTests.UseCase.User.Commands.RegisterUser.Register
         private readonly IUserRepository _userRepositoryMock;
         private readonly IUserTypeRepository _userTypeRepositoryMock;
         private readonly IRoleRepository _roleRepositoryMock;
-        private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
 
         public RegisterTest()
@@ -38,16 +37,10 @@ namespace Application.UnitTests.UseCase.User.Commands.RegisterUser.Register
             _userRepositoryMock = Substitute.For<IUserRepository>();
             _userTypeRepositoryMock = Substitute.For<IUserTypeRepository>();
             _roleRepositoryMock = Substitute.For<IRoleRepository>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _mediatorMock = Substitute.For<IMediator>();
 
             _handler = new RegisterUserCommandHandler(
-                _mapperMock,
-                _userRepositoryMock,
-                _userTypeRepositoryMock,
-                _roleRepositoryMock,
-                _unitOfWorkMock,
-                _sender) ;
+                _sender);
         }
         [Fact]
         public async Task Handle_ValidCommand_ReturnsSuccess()

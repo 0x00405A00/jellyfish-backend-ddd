@@ -168,6 +168,8 @@ namespace Infrastructure.Mapper.Concrete
                 (DateTime)entity.CreatedTime!,
                 entity.LastModifiedTime,
                 entity.DeletedTime,
+                null,
+                null,
                 null);
         }
     }

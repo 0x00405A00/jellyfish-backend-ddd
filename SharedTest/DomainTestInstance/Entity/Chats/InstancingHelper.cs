@@ -12,8 +12,8 @@ namespace SharedTest.DomainTestInstance.Entity.Chats
             var chatName = "Sample Chat";
             var members = new List<ChatMember>()
             {
-                ChatMember.Create(User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
-                ChatMember.Create(User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
+                ChatMember.Create(Guid.NewGuid(),User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
+                ChatMember.Create(Guid.NewGuid(),User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
 
             };
 
@@ -21,13 +21,15 @@ namespace SharedTest.DomainTestInstance.Entity.Chats
 
             if (adminUser != null)
             {
-                var chatAdm = ChatMember.Create(adminUser, true, DateTime.Now, null, null);
+                var chatAdm = ChatMember.Create(Guid.NewGuid(), adminUser, true, DateTime.Now, null, null);
                 members.Add(chatAdm);
             }
 
             var chat = Chat.Create(
                 _chatId,
                 createdByUser,
+                null,
+                null,
                 chatName,
                 null,
                 null,

@@ -35,7 +35,7 @@ namespace Application.CQS.Role.Commands.CreateRole
             try
             {
                 var roleId = new Domain.Entities.Role.RoleId(Guid.NewGuid());
-                role = Domain.Entities.Role.Role.Create(roleId, request.Name, request.Description, DateTime.Now, null, null);
+                role = Domain.Entities.Role.Role.Create(roleId, request.Name, request.Description, DateTime.Now, null, null, null, null, null);
             }
             catch (Exception ex)
             {

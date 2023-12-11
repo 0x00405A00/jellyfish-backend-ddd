@@ -19,9 +19,7 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.RevokeRole
 
         private readonly IMapper _mapperMock;
         private readonly IUserRepository _userRepositoryMock;
-        private readonly IUserTypeRepository _userTypeRepositoryMock;
         private readonly IRoleRepository _roleRepositoryMock;
-        private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
 
         private static readonly Domain.Entities.Role.Role RoleAdmin = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance("Admin");
@@ -34,17 +32,14 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.RevokeRole
         {
             _mapperMock = Substitute.For<IMapper>();
             _userRepositoryMock = Substitute.For<IUserRepository>();
-            _userTypeRepositoryMock = Substitute.For<IUserTypeRepository>();
             _roleRepositoryMock = Substitute.For<IRoleRepository>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _mediatorMock = Substitute.For<IMediator>();
 
             _handler = new RevokeRoleCommandHandler(
                 _mapperMock,
                 _mediatorMock,
                 _roleRepositoryMock,
-                _userRepositoryMock,
-                _unitOfWorkMock);
+                _userRepositoryMock);
         }
         [Fact]
         public async Task Handle_ValidCommand_ReturnsSuccess()

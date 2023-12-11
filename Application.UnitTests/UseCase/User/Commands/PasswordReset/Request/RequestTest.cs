@@ -18,7 +18,6 @@ namespace Application.UnitTests.UseCase.User.Commands.PasswordReset.Request
 
         private readonly IMapper _mapperMock;
         private readonly IUserRepository _userRepositoryMock;
-        private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
 
         public RequestTest()
@@ -26,13 +25,11 @@ namespace Application.UnitTests.UseCase.User.Commands.PasswordReset.Request
 
             _mapperMock = Substitute.For<IMapper>();
             _userRepositoryMock = Substitute.For<IUserRepository>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _mediatorMock = Substitute.For<IMediator>();
             _handler = new UserPasswordResetRequestCommandHandler(
                 _mediatorMock,
                 _mapperMock,
-                _userRepositoryMock,
-                _unitOfWorkMock);
+                _userRepositoryMock);
         }
 
 

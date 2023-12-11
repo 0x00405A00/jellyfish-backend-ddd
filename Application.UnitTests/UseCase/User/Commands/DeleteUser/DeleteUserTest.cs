@@ -19,7 +19,6 @@ namespace Application.UnitTests.UseCase.User.Commands.DeleteUser
         private readonly IUserRepository _userRepositoryMock;
         private readonly IUserTypeRepository _userTypeRepositoryMock;
         private readonly IRoleRepository _roleRepositoryMock;
-        private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
 
         private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
@@ -32,14 +31,12 @@ namespace Application.UnitTests.UseCase.User.Commands.DeleteUser
             _userRepositoryMock = Substitute.For<IUserRepository>();
             _userTypeRepositoryMock = Substitute.For<IUserTypeRepository>();
             _roleRepositoryMock = Substitute.For<IRoleRepository>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _mediatorMock = Substitute.For<IMediator>();
 
             _handler = new DeleteUserCommandHandler(
                 _sender,
                 _mediatorMock,
-                _userRepositoryMock,
-                _unitOfWorkMock);
+                _userRepositoryMock);
         }
 
 

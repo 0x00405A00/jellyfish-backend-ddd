@@ -18,7 +18,6 @@ namespace Application.UnitTests.UseCase.Messenger.User.Commands.Friends.RemoveFr
         private readonly RemoveFriendCommandHandler _handler;
         private readonly IUserRepository _userRepositoryMock;
         private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
 
         private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
@@ -27,15 +26,13 @@ namespace Application.UnitTests.UseCase.Messenger.User.Commands.Friends.RemoveFr
         public RemoveFriendTest()
         {
             _userRepositoryMock = Substitute.For<IUserRepository>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _mediatorMock = Substitute.For<IMediator>();
             _mapper = Substitute.For<IMapper>();
 
             _handler = new RemoveFriendCommandHandler(
                 _mediatorMock,
                 _mapper,
-                _userRepositoryMock,
-                _unitOfWorkMock);
+                _userRepositoryMock);
         }
 
         [Fact]

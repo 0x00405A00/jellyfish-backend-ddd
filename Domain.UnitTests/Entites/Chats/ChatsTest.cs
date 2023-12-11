@@ -19,9 +19,9 @@ namespace Domain.UnitTests.Entites.Chats
             Picture picture = null; // Setze das Bild, falls benötigt
             var members = new List<ChatMember>
             {
-                ChatMember.Create(SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
-                ChatMember.Create(SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
-                ChatMember.Create(createdByUser,true,DateTime.Now,null,null),
+                ChatMember.Create(Guid.NewGuid(),SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
+                ChatMember.Create(Guid.NewGuid(),SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
+                ChatMember.Create(Guid.NewGuid(),createdByUser,true,DateTime.Now,null,null),
             };
             var messages = new List<Domain.Entities.Message.Message>();
             var createdTime = DateTime.Now;
@@ -29,7 +29,7 @@ namespace Domain.UnitTests.Entites.Chats
             DateTime? deletedTime = null;
 
             // Act
-            var chat = Chat.Create(chatId, createdByUser, chatName, chatDescription, picture, members, messages, createdTime, lastModifiedTime, deletedTime);
+            var chat = Chat.Create(chatId, createdByUser, null, null, chatName, chatDescription, picture, members, messages, createdTime, lastModifiedTime, deletedTime);
 
             // Assert
             Assert.NotNull(chat);
@@ -45,7 +45,7 @@ namespace Domain.UnitTests.Entites.Chats
             List<ChatMember> members = null; // Keine Mitglieder
 
             // Act and Assert
-            var exception = Assert.Throws<ChatCreateException>(() => Chat.Create(chatId, createdByUser, chatName, null, null, members, null, DateTime.Now, null, null));
+            var exception = Assert.Throws<ChatCreateException>(() => Chat.Create(chatId, createdByUser, null, null, chatName, null, null, members, null, DateTime.Now, null, null));
             Assert.NotNull(exception);
         }
 
@@ -58,13 +58,13 @@ namespace Domain.UnitTests.Entites.Chats
             var chatName = "Test Chat";
             List<ChatMember> members = new List<ChatMember>()
             { 
-                ChatMember.Create(SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
-                ChatMember.Create(SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
+                ChatMember.Create(Guid.NewGuid(),SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
+                ChatMember.Create(Guid.NewGuid(),SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
                 null
             };
 
             // Act and Assert
-            var exception = Assert.Throws<InvalidDataException>(() => Chat.Create(chatId, createdByUser, chatName, null, null, members, null, DateTime.Now, null, null));
+            var exception = Assert.Throws<InvalidDataException>(() => Chat.Create(chatId, createdByUser, null, null, chatName, null, null, members, null, DateTime.Now, null, null));
             Assert.NotNull(exception);
         }
 
@@ -77,14 +77,14 @@ namespace Domain.UnitTests.Entites.Chats
             var chatName = "Test Chat";
             List<ChatMember> members = new List<ChatMember>()
             {
-                ChatMember.Create(SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
-                ChatMember.Create(SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
-                ChatMember.Create(createdByUser,false,DateTime.Now,null,null),
+                ChatMember.Create(Guid.NewGuid(),SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
+                ChatMember.Create(Guid.NewGuid(),SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
+                ChatMember.Create(Guid.NewGuid(),createdByUser,false,DateTime.Now,null,null),
             };
             List<Entities.User.User> admins = null; // Admins sind null
 
             // Act and Assert
-            var exception = Assert.Throws<InvalidDataException>(() => Chat.Create(chatId, createdByUser, chatName, null, null, members, null, DateTime.Now, null, null));
+            var exception = Assert.Throws<InvalidDataException>(() => Chat.Create(chatId, createdByUser, null, null, chatName, null, null, members, null, DateTime.Now, null, null));
             Assert.NotNull(exception);
         }
 
@@ -93,9 +93,9 @@ namespace Domain.UnitTests.Entites.Chats
         {
             // Arrange
             var chatMemberUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
-            var chatMember = ChatMember.Create(chatMemberUser, false, DateTime.Now, null, null);
+            var chatMember = ChatMember.Create(Guid.NewGuid(), chatMemberUser, false, DateTime.Now, null, null);
             var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
-            var adminChatMember = ChatMember.Create(adminUser, true, DateTime.Now, null, null);
+            var adminChatMember = ChatMember.Create(Guid.NewGuid(), adminUser, true, DateTime.Now, null, null);
             var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
 
             // Act
@@ -155,9 +155,9 @@ namespace Domain.UnitTests.Entites.Chats
         {
             // Arrange
             var chatMemberUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
-            var chatMember = ChatMember.Create(chatMemberUser, false, DateTime.Now, null, null);
+            var chatMember = ChatMember.Create(Guid.NewGuid(), chatMemberUser, false, DateTime.Now, null, null);
             var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
-            var adminChatMember = ChatMember.Create(adminUser, true, DateTime.Now, null, null);
+            var adminChatMember = ChatMember.Create(Guid.NewGuid(), adminUser, true, DateTime.Now, null, null);
             var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
 
 
@@ -222,9 +222,9 @@ namespace Domain.UnitTests.Entites.Chats
         {
             // Arrange
             var chatMemberUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
-            var chatMember = ChatMember.Create(chatMemberUser, false, DateTime.Now, null, null);
+            var chatMember = ChatMember.Create(Guid.NewGuid(), chatMemberUser, false, DateTime.Now, null, null);
             var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
-            var adminChatMember = ChatMember.Create(adminUser, true, DateTime.Now, null, null);
+            var adminChatMember = ChatMember.Create(Guid.NewGuid(), adminUser, true, DateTime.Now, null, null);
             var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
 
             // Act
@@ -299,9 +299,9 @@ namespace Domain.UnitTests.Entites.Chats
             // Arrange
 
             var chatMemberUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
-            var chatMember = ChatMember.Create(chatMemberUser, false, DateTime.Now, null, null);
+            var chatMember = ChatMember.Create(Guid.NewGuid(), chatMemberUser, false, DateTime.Now, null, null);
             var adminUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
-            var adminChatMember = ChatMember.Create(adminUser, true, DateTime.Now, null, null);
+            var adminChatMember = ChatMember.Create(Guid.NewGuid(), adminUser, true, DateTime.Now, null, null);
             var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser);
 
             // Act

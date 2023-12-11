@@ -22,7 +22,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.RemoveChatMember
         private readonly IChatRepository _chatRepositoryMock;
         private readonly IUserRepository _userRepositoryMock;
         private readonly IMediaService _mediaServiceMock;
-        private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMapper _mapperMock;
         private readonly IMediator _mediator;
 
@@ -35,7 +34,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.RemoveChatMember
             _chatRepositoryMock = Substitute.For<IChatRepository>();
             _userRepositoryMock = Substitute.For<IUserRepository>();
             _mediaServiceMock = Substitute.For<IMediaService>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _mapperMock = Substitute.For<IMapper>();
             _mediator = Substitute.For<IMediator>();
 
@@ -44,8 +42,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.RemoveChatMember
                 _mediator,
                 _chatRepositoryMock,
                 _userRepositoryMock,
-                _mediaServiceMock,
-                _unitOfWorkMock);
+                _mediaServiceMock);
         }
 
         [Fact]

@@ -7,6 +7,7 @@ using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.DataTransferObject.Messenger;
 
 namespace Application.CQS.Messenger.Chat.Command.CreateMessage
@@ -80,12 +81,15 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
                             messageId,
                             chat.Uuid,
                             chatMember.User,
+                            null,
+                            null,
                             text,
                             mediaContent,
                             message.CreatedTime ?? DateTime.Now,//Prüfung des CreatedTime auf null-Wert in 'UploadProfilePictureCommandValidator'
                             null,
                             null);
                         var createMessageEntity = chat.AddMessage(messageEntity);
+                        messageEntity.SetCreated(chatMember.User);
                     }
                     catch(Exception ex)
                     {

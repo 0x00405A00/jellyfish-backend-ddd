@@ -4,6 +4,7 @@ using Domain.Entities.Message.Exception;
 using Domain.Primitives;
 using Domain.ValueObjects;
 using System.Collections.Immutable;
+using System.Runtime.CompilerServices;
 
 namespace Domain.Entities.Chats
 {
@@ -36,23 +37,29 @@ namespace Domain.Entities.Chats
         private Chat(
             ChatId id,
             User.User createdByUser,
+            User.User? modifiedByUser,
+            User.User? deletedByUser,
             string chatName,
             string? chatDescription,
             Picture? picture,
             ICollection<ChatMember> members,
             ICollection<Message.Message>? messages,
-            DateTime createdTime,
+            DateTime? createdTime,
             DateTime? lastModifiedTime,
             DateTime? deletedTime) : base(id)
         {
-            SetCreated(createdByUser);
             ChatName = chatName;
             ChatDescription = chatDescription;
             Picture = picture;
             _members = members;
-            _messages = messages??new List<Message.Message>();   
+            _messages = messages??new List<Message.Message>();
+
+            LastModifiedByUser = modifiedByUser;
             LastModifiedTime = lastModifiedTime;
+            DeletedByUser = deletedByUser;
             DeletedTime = deletedTime;
+            CreatedByUser = createdByUser;
+            CreatedTime = createdTime;
         }
         /// <summary>
         /// Factory Method for Creating a Chat
@@ -70,6 +77,8 @@ namespace Domain.Entities.Chats
         public static Chat Create(
             ChatId chatId,
             User.User createdByUser,
+            User.User modifiedByUser,
+            User.User deletedByUser,
             string chatName,
             string? chatDescription,
             Picture? picture,
@@ -94,6 +103,8 @@ namespace Domain.Entities.Chats
             Chat chat = new Chat(
                 chatId,
                 createdByUser,
+                modifiedByUser,
+                deletedByUser,
                 chatName,
                 chatDescription,
                 picture,
@@ -123,9 +134,9 @@ namespace Domain.Entities.Chats
             }
             if (IsChatMember(member))
             {
-                throw new UserAlreadyMemberInChatException();
+                throw new UserAlreadyMemberInChatException("user is already chat-member");
             }
-            var chatMember = ChatMember.Create(member, false, DateTime.Now, null, null);
+            var chatMember = ChatMember.Create(Guid.NewGuid(), member, false, DateTime.Now, null, null);
             this._members.Add(chatMember);
             Raise(new ChatUserAddToChatDomainEvent(this, commandExecUser, member));
         }
@@ -211,7 +222,7 @@ namespace Domain.Entities.Chats
             {
                 throw new NotValidMessageException();
             }
-            var message = Message.Message.Create(new Message.MessageId(Guid.NewGuid()), this.Uuid, messageOwner, text, mediaContent, DateTime.Now, null, null);
+            var message = Message.Message.Create(new Message.MessageId(Guid.NewGuid()), this.Uuid, messageOwner, null, null, text, mediaContent, DateTime.Now, null, null);
             this._messages.Add(message);
             Raise(new ChatAppendMessageDomainEvent(this, message.Owner, message));
             return message;

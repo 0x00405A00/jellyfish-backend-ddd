@@ -31,6 +31,8 @@ namespace Domain.Entities.Message
             MessageId id,
             ChatId chat,
             User.User owner,
+            User.User? modifiedByUser,
+            User.User? deletedByUser,
             string text,
             MediaContent? mediaContent,
             DateTime createdTime,
@@ -41,9 +43,13 @@ namespace Domain.Entities.Message
             Owner = owner;
             Text = text;
             MediaContent = mediaContent;
-            CreatedTime = createdTime;
+
+            LastModifiedByUser = modifiedByUser;
             LastModifiedTime = lastModifiedTime;
+            DeletedByUser = deletedByUser;
             DeletedTime = deletedTime;
+            CreatedByUser = owner;
+            CreatedTime = createdTime;
         }
         /// <summary>
         /// Factory Method for creating a Message
@@ -60,6 +66,8 @@ namespace Domain.Entities.Message
             MessageId messageId,
             ChatId chat,
             User.User owner,
+            User.User? modifiedByUser,
+            User.User? deletedByUser,
             string text,
             MediaContent? mediaContent,
             DateTime createdTime,
@@ -75,7 +83,7 @@ namespace Domain.Entities.Message
                 throw new NotValidMessageException();   
             }
 
-            Message msg = new Message(messageId,chat,owner,text, mediaContent, createdTime,lastModifiedTime,deletedTime);
+            Message msg = new Message(messageId,chat,owner,modifiedByUser,deletedByUser,text, mediaContent, createdTime,lastModifiedTime,deletedTime);
 
             msg.Raise(new MessageCreatedDomainEvent(msg));
             return msg;

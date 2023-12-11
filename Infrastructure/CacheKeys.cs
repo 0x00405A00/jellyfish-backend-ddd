@@ -31,6 +31,8 @@ namespace Infrastructure
                     var x = rightMemberExpression.Member.MemberType.GetType().GetProperties();
                     var y = rightMemberExpression.Member.DeclaringType.GetType().GetProperties();
                     var z = rightMemberExpression.Member.ReflectedType.GetType().GetProperties();
+                    var memProp = rightMemberExpression.Member.GetType().GetProperties();
+                    var memField= (PropertyInfo)rightMemberExpression.Member;
                     if (ttt ==typeof(ConstantExpression))
                     {
                         var val = (((ConstantExpression)tt).Value);
@@ -45,7 +47,8 @@ namespace Infrastructure
                             foreach( var v in pp)//2. Hierarchie, da record Value in record gekapselt und keine direkte Value
                             {
                                 var vp = v.GetValue(vt);
-                                if(vp is T2)
+                                var tttttt = memField.GetValue(vt, null);
+                                if (vp is T2 && tttttt == vp)
                                 {
                                     return (T2)vp;
                                 }

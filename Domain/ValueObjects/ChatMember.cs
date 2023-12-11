@@ -1,11 +1,11 @@
-﻿using Domain.Entities.Chats;
-using Domain.Entities.User;
+﻿using Domain.Entities.User;
 using Domain.Primitives;
 
 namespace Domain.ValueObjects
 {
     public sealed class ChatMember : IAuditibleCreateEntity, IAuditibleModifiedEntity, IAuditibleDeleteEntity
     {
+        public Guid Uuid { get; private set; }
         public User User { get; private set; }
         public bool IsAdmin { get; private set; }
 
@@ -21,12 +21,14 @@ namespace Domain.ValueObjects
 
         }
         private ChatMember(
+            Guid uuid,
             User user,
             bool isAdmin,   
             DateTime? createdTime,
             DateTime? lastModifiedTime,
             DateTime? deletedTime) 
         {
+            Uuid = uuid;
             IsAdmin = isAdmin;
             User = user;
             CreatedTime = createdTime;
@@ -35,6 +37,7 @@ namespace Domain.ValueObjects
         }
 
         public static ChatMember Create(
+            Guid uuid,
             User user,
             bool isAdmin,
             DateTime createdTime,
@@ -42,6 +45,7 @@ namespace Domain.ValueObjects
             DateTime? deletedTime)
         {
             ChatMember userRole = new ChatMember(
+                uuid,
                 user,
                 isAdmin,
                 createdTime,

@@ -32,7 +32,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateMessage
         private readonly IChatRepository _chatRepositoryMock;
         private readonly IUserRepository _userRepositoryMock;
         private readonly IMediaService _mediaServiceMock;
-        private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
 
         private static readonly Domain.Entities.User.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserAdminId);
@@ -45,7 +44,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateMessage
             _chatRepositoryMock = Substitute.For<IChatRepository>();
             _userRepositoryMock = Substitute.For<IUserRepository>();
             _mediaServiceMock = Substitute.For<IMediaService>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _mediatorMock = Substitute.For<IMediator>();
 
             _handler = new CreateMessageCommandHandler(
@@ -55,8 +53,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateMessage
                 Substitute.For<IAzureAdultContentDetection>(),
                 _chatRepositoryMock,
                 _userRepositoryMock,
-                _mediaServiceMock,
-                _unitOfWorkMock);
+                _mediaServiceMock);
         }
 
         [Fact]

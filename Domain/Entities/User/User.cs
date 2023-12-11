@@ -92,7 +92,10 @@ namespace Domain.Entities.User
                     DateTime? activationDateTime,
                     DateTime createdTime,
                     DateTime? lastModifiedTime,
-                    DateTime? deletedTime) : base(userId)
+                    DateTime? deletedTime,
+                    User createdByUser,
+                    User? modifiedByUser,
+                    User? deletedByUser) : base(userId)
         {
             UserType = userType;
             UserName = userName;
@@ -104,10 +107,7 @@ namespace Domain.Entities.User
             Picture = picture;
             DateOfBirth = dateOfBirth;
             Phone = phone;
-            CreatedTime = createdTime;
             ActivationDateTime = activationDateTime;
-            LastModifiedTime = lastModifiedTime;
-            DeletedTime = deletedTime;
             ActivationCode = activationCode;
             ActivationToken = activationToken;
             _friendshipRequests = friendshipRequests ?? new List<FriendshipRequest>();
@@ -116,6 +116,13 @@ namespace Domain.Entities.User
             PasswordResetCode = passwordResetCode;
             PasswordResetExpiresIn = passwordResetExpiresIn;
             PasswordResetToken = passwordResetToken;
+
+            LastModifiedByUser = modifiedByUser;
+            LastModifiedTime = lastModifiedTime;
+            DeletedByUser = deletedByUser;
+            DeletedTime = deletedTime;
+            CreatedByUser = createdByUser;
+            CreatedTime = createdTime;
         }
         /// <summary>
         /// Factory Method for creating a User instance with specified attributes.
@@ -167,7 +174,9 @@ namespace Domain.Entities.User
             DateTime createdTime,
             DateTime? lastModifiedTime,
             DateTime? deletedTime,
-            User createdBy)
+            User createdByUser,
+            User? modifiedByUser,
+            User? deletedByUser)
         {
             if (userType == null)
             {
@@ -211,8 +220,10 @@ namespace Domain.Entities.User
                 activationDateTime,
                 createdTime,
                 lastModifiedTime,
-                deletedTime);
-            user.SetCreated(createdBy);
+                deletedTime,
+                createdByUser,
+                modifiedByUser,
+                deletedByUser);
 
             return user;
         }
@@ -221,7 +232,7 @@ namespace Domain.Entities.User
         {
             UserId userId = new UserId(UserConst.SystemUserGuid);
             UserTypeId userTypeId = new UserTypeId(UserConst.SystemUserTypeGuid);
-            UserType userType = UserType.Create(userTypeId,UserConst.SystemUserTypeName,DateTime.Now,null,null);
+            UserType userType = UserType.Create(userTypeId,UserConst.SystemUserTypeName,DateTime.Now,null,null, null, null, null);
             return new User(
                 userId,
                 userType,
@@ -243,6 +254,9 @@ namespace Domain.Entities.User
                 DateOnly.MaxValue,
                 null,
                 DateTime.MaxValue,
+                null,
+                null,
+                null,
                 null,
                 null);
         }

@@ -25,13 +25,20 @@ namespace Domain.Entities.Role
             string? description,
             DateTime? createdTime,
             DateTime? lastModifiedTime,
-            DateTime? deletedTime) : base(id)
+            DateTime? deletedTime,
+            User.User createdByUser,
+            User.User? modifiedByUser,
+            User.User? deletedByUser) : base(id)
         {
             Name = name;
             Description = description;
-            CreatedTime = createdTime;
+
+            LastModifiedByUser = modifiedByUser;
             LastModifiedTime = lastModifiedTime;
+            DeletedByUser = deletedByUser;
             DeletedTime = deletedTime;
+            CreatedByUser = createdByUser;
+            CreatedTime = createdTime;
         }
 
         public static Role Create(
@@ -40,7 +47,10 @@ namespace Domain.Entities.Role
             string? description,
             DateTime createdTime,
             DateTime? lastModifiedTime,
-            DateTime? deletedTime)
+            DateTime? deletedTime,    
+            User.User createdByUser,
+            User.User? modifiedByUser,
+            User.User? deletedByUser)
         {
             Role role = new Role(
                 roleId,
@@ -48,7 +58,10 @@ namespace Domain.Entities.Role
                 description,
                 createdTime,
                 lastModifiedTime,
-                deletedTime);
+                deletedTime,
+                createdByUser,
+                modifiedByUser,
+                deletedByUser);
 
             role.Raise(new RoleCreatedDomainEvent(role));
             return role;

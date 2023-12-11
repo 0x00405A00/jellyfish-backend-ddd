@@ -28,7 +28,10 @@ namespace Infrastructure.Mapper.Concrete
                 entity.Name,
                 (DateTime)entity.CreatedTime!,
                 entity.LastModifiedTime,
-                entity.DeletedTime);
+                entity.DeletedTime,
+                null,
+                null,
+                null);
         }
     }
 }

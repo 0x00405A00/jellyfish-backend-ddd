@@ -29,11 +29,12 @@ namespace Infrastructure.Mapper.Concrete
                                   var memberDatabaseEntity = await member.User.MapToDatabaseEntity<Domain.Entities.User.User, User>(false);
 
                                   ChatRelationToUser chatRelationToUser = new ChatRelationToUser();
+                                  chatRelationToUser.Uuid = member.Uuid;
                                   chatRelationToUser.ChatUuid = chat.Uuid;
                                   chatRelationToUser.UserUuid = memberDatabaseEntity.Uuid;
-                                  chatRelationToUser.CreatedTime = chat.CreatedTime;
-                                  chatRelationToUser.LastModifiedTime = chat.LastModifiedTime;
-                                  chatRelationToUser.DeletedTime = chat.DeletedTime;
+                                  chatRelationToUser.CreatedTime = member.CreatedTime;
+                                  chatRelationToUser.LastModifiedTime = member.LastModifiedTime;
+                                  chatRelationToUser.DeletedTime = member.DeletedTime;
                                   chatRelationToUser.IsChatAdmin = Convert.ToSByte(entity.Admins.Contains(member));
                                   chat.ChatRelationToUsers.Add(chatRelationToUser);
 
@@ -58,7 +59,7 @@ namespace Infrastructure.Mapper.Concrete
                 var user = await userRelation.UserUu.MapToDomainEntity<Domain.Entities.User.User, User>(false);
 
                 bool isChatAdmin = Convert.ToBoolean(userRelation.IsChatAdmin);
-                return ChatMember.Create(user, isChatAdmin, userRelation.CreatedTime ?? DateTime.MinValue, userRelation.LastModifiedTime, userRelation.DeletedTime);
+                return ChatMember.Create(userRelation.Uuid, user, isChatAdmin, userRelation.CreatedTime ?? DateTime.MinValue, userRelation.LastModifiedTime, userRelation.DeletedTime);
             }).ToList();
             var chatMessages = await entity.Messages.MapToDomainEntity<Domain.Entities.Message.Message, Message>(true);
             var picture = Picture.Parse(entity.ChatPicturePath,entity.ChatPictureFileExt);
@@ -75,6 +76,8 @@ namespace Infrastructure.Mapper.Concrete
             return Domain.Entities.Chats.Chat.Create(
                 chatId,
                 ownerUserEntity,
+                null,
+                null,
                 entity.Name,
                 entity.Description,
                 picture,

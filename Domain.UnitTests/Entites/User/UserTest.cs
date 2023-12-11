@@ -57,7 +57,9 @@ namespace Domain.UnitTests.Entites.User
                 createdTime,
                 null, // Optional: lastModifiedTime
                 null, // Optional: deletedTime
-                null); // Optional: createdBy
+                null,// Optional: createdBy
+                null,
+                null); 
 
             // Assert
             Assert.NotNull(result);

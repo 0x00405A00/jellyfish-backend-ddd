@@ -1,6 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
-using AutoMapper.Execution;
 using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
@@ -42,7 +41,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
                 foreach(var member in members)
                 {
                     bool isAdmin = request.ChatOwnerUuid == member.Uuid.ToGuid();
-                    var chatMember = ChatMember.Create(member, isAdmin, DateTime.Now, null, null);
+                    var chatMember = ChatMember.Create(Guid.NewGuid(), member, isAdmin, DateTime.Now, null, null);
                     chatMembers.Add(chatMember);
                 }
                 var id = new Domain.Entities.Chats.ChatId(Guid.NewGuid());
@@ -56,6 +55,8 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
 
                 chat = Domain.Entities.Chats.Chat.Create(id,
                                                              createdBy,
+                                                             null,
+                                                             null,
                                                              request.ChatName,
                                                              request.ChatDescription,
                                                              picture,
@@ -64,6 +65,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
                                                              DateTime.Now,
                                                              null,
                                                              null);
+                chat.SetCreated(createdBy);
 
             }
             catch(Exception ex)

@@ -36,15 +36,13 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.AssignRole
             _userRepositoryMock = Substitute.For<IUserRepository>();
             _userTypeRepositoryMock = Substitute.For<IUserTypeRepository>();
             _roleRepositoryMock = Substitute.For<IRoleRepository>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _mediatorMock = Substitute.For<IMediator>();
 
             _handler = new AssignRoleCommandHandler(
                 _mapperMock,
                 _mediatorMock,
                 _roleRepositoryMock,
-                _userRepositoryMock,
-                _unitOfWorkMock);
+                _userRepositoryMock);
 
         }
 

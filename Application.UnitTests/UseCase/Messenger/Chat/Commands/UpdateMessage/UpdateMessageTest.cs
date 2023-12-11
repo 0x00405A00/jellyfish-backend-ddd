@@ -43,7 +43,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.UpdateMessage
         private readonly IMessageRepository _messageRepositoryMock;
         private readonly IUserRepository _userRepositoryMock;
         private readonly IMediaService _mediaServiceMock;
-        private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
 
         private static readonly Domain.Entities.User.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
@@ -57,14 +56,12 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.UpdateMessage
             _messageRepositoryMock = Substitute.For<IMessageRepository>();
             _userRepositoryMock = Substitute.For<IUserRepository>();
             _mediaServiceMock = Substitute.For<IMediaService>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _handler = new UpdateMessageCommandHandler(
                 _mediatorMock,
                 _mapperMock,
                 _messageRepositoryMock,
                 _userRepositoryMock,
-                _mediaServiceMock,
-                _unitOfWorkMock);
+                _mediaServiceMock);
         }
 
         [Fact]

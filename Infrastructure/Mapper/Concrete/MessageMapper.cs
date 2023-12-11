@@ -62,6 +62,8 @@ namespace Infrastructure.Mapper.Concrete
                 messageId,
                 chatId,
                 user,
+                null,
+                null,
                 entity.Text,
                 mediaContent,
                 (DateTime)entity.CreatedTime!,

@@ -18,13 +18,19 @@ namespace Domain.Entities.User
             string name,
             DateTime createdTime,
             DateTime? lastModifiedTime,
-            DateTime? deletedTime) : base(id)
+            DateTime? deletedTime,
+            User createdByUser,
+            User? modifiedByUser,
+            User? deletedByUser) : base(id)
         {
             Name = name;
 
-            CreatedTime = createdTime;
+            LastModifiedByUser = modifiedByUser;
             LastModifiedTime = lastModifiedTime;
+            DeletedByUser = deletedByUser;
             DeletedTime = deletedTime;
+            CreatedByUser = createdByUser;
+            CreatedTime = createdTime;
         }
 
         public static UserType Create(
@@ -32,14 +38,20 @@ namespace Domain.Entities.User
             string name,
             DateTime createdTime,
             DateTime? lastModifiedTime,
-            DateTime? deletedTime)
+            DateTime? deletedTime,
+            User createdByUser,
+            User? modifiedByUser,
+            User? deletedByUser)
         {
             UserType userType = new UserType(
                 userTypeId,
                 name,
                 createdTime,
                 lastModifiedTime,
-                deletedTime);
+                deletedTime,
+                createdByUser,
+                modifiedByUser,
+                deletedByUser);
 
             userType.Raise(new DomainEvent(userType));
             return userType;

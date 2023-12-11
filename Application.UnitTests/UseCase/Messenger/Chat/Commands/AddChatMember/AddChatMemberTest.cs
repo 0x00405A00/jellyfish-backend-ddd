@@ -25,7 +25,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.AddChatMember
         private readonly IUserRepository _userRepositoryMock;
         private readonly IChatRepository _chatRepository;
         private readonly IRoleRepository _roleRepositoryMock;
-        private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
 
         private static readonly Domain.Entities.User.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(ActorId);
@@ -39,15 +38,13 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.AddChatMember
             _userRepositoryMock = Substitute.For<IUserRepository>();
             _chatRepository = Substitute.For<IChatRepository>();
             _roleRepositoryMock = Substitute.For<IRoleRepository>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _mediatorMock = Substitute.For<IMediator>();
             _handler = new AddChatMemberCommandHandler(
                 _mapperMock,
                 _mediatorMock,
                 _chatRepository,
                 _userRepositoryMock,
-                _mediaService,
-                _unitOfWorkMock);
+                _mediaService);
         }
 
         [Fact]

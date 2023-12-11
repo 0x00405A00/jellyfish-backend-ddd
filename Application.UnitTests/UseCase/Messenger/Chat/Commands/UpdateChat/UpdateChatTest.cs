@@ -32,7 +32,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.UpdateChat
         private readonly IMapper _mapperMock;
         private readonly IChatRepository _chatRepositoryMock;
         private readonly IUserRepository _userRepositoryMock;
-        private readonly IUnitOfWork _unitOfWorkMock;
 
         private static readonly Domain.Entities.User.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(ChatAdminUserId);
         private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
@@ -43,12 +42,10 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.UpdateChat
             _mapperMock = Substitute.For<IMapper>();
             _chatRepositoryMock = Substitute.For<IChatRepository>();
             _userRepositoryMock = Substitute.For<IUserRepository>();
-            _unitOfWorkMock = Substitute.For<IUnitOfWork>();
             _handler = new UpdateChatCommandHandler(
                 _mapperMock,
                 _chatRepositoryMock,
-                _userRepositoryMock,
-                _unitOfWorkMock);
+                _userRepositoryMock);
         }
 
         [Fact]
