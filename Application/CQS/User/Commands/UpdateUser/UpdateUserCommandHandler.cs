@@ -30,13 +30,13 @@ namespace Application.CQS.User.Commands.UpdateUser
             {
                 return Result<UserDTO>.Failure("user not found");
             }
-            var user = await _userRepository.GetAsync(user => user.Uuid == request.UserId);
+            var user = await _userRepository.GetAsync(user => user.Id.Id == request.UserId);
             if (user is null)
             {
                 return Result<UserDTO>.Failure("user not found");
             }
 
-            var updatedByUser = await _userRepository.GetAsync(x => x.Uuid == request.UpdatedBy);
+            var updatedByUser = await _userRepository.GetAsync(x => x.Id.Id == request.UpdatedBy);
 
             if (request.Phone != null)
             {
@@ -112,7 +112,7 @@ namespace Application.CQS.User.Commands.UpdateUser
                 }
             }
 
-            _userRepository.UpdateAsync(user);
+            _userRepository.Update(user);
             _userRepository.PublishDomainEvents(user,mediator);
 
             var mapValue = _mapper.Map<UserDTO>(user);

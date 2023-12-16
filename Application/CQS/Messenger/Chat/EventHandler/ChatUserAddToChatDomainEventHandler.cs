@@ -1,6 +1,4 @@
 ﻿using Domain.Entities.Chats.Event;
-using Domain.Entities.User;
-using Domain.Primitives;
 using MediatR;
 
 namespace Application.CQS.Messenger.Chat.EventHandler

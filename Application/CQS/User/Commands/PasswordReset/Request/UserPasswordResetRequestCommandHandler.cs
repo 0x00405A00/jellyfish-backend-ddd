@@ -27,7 +27,7 @@ namespace Application.CQS.User.Commands.PasswordReset.Request
 
         public async Task<Result<bool>> Handle(UserPasswordResetRequestCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetAsync(x => x.Email.ToLower() == request.Email.ToLower());
+            var user = await _userRepository.GetAsync(x => x.Email.EmailValue.ToLower() == request.Email.ToLower());
             if (user == null) {
                 return Result<bool>.Failure("user not found");
             }
@@ -41,7 +41,7 @@ namespace Application.CQS.User.Commands.PasswordReset.Request
             }
             try
             {
-                _userRepository.UpdateAsync(user);
+                _userRepository.Update(user);
             }
             catch (Exception ex)
             {

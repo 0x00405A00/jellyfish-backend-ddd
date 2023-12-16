@@ -32,23 +32,49 @@ namespace Application.CQS.Messenger.Chat.Command.AddChatMember
 
         public async Task<Result<bool>> Handle(AddChatMemberCommand request, CancellationToken cancellationToken)
         {
-            var executorUser = await _userRepository.GetAsync(x => x.Uuid == request.ActorId);
+            var executorUser = await _userRepository.GetAsync(x => x.Id == new Domain.Entities.User.UserId(request.ActorId));
             if (executorUser is null)
             {
                 return Result<bool>.Failure($"executor-user not found");
             }
-            var targetUser = await _userRepository.GetAsync(x => x.Uuid == request.UserId);
+            var targetUser = await _userRepository.GetAsync(x => x.Id == new Domain.Entities.User.UserId(request.UserId));
             if (targetUser is null)
             {
                 return Result<bool>.Failure($"target-user not found");
             }
-            var chat = await _chatRepository.GetAsync(x => x.Uuid == request.ChatId);
+
+            var chat = await _chatRepository.GetAsync(x => x.Id == new Domain.Entities.Chats.ChatId(request.ChatId));
+
             if (chat is null)
             {
                 return Result<bool>.Failure($"chat not found");
             }
             try
             {
+
+                /*
+                 * 1.Test: Added state wird richtig von ChangeTracker erkannt
+                 * var item = new ChatRelationToUser
+                {
+                    
+                };
+                chat.ChatRelationToUsers.Add(item);
+
+                item.Uuid = Guid.NewGuid();
+                item.UserUuid = targetUser.Uuid.ToGuid();
+                item.ChatUuid = chat.Uuid;*/
+
+                /*
+                 * 2.Test: Added state wird richtig von ChangeTracker erkannt
+                var item = new ChatRelationToUser
+                {
+                    Uuid = Guid.NewGuid(),
+                    UserUuid = targetUser.Uuid.ToGuid(),
+                    ChatUuid = chat.Uuid,
+                    
+                };
+                chat.ChatRelationToUsers.Add(item);*/
+                 /**/
                 chat.AddMember(executorUser, targetUser);
             }
             catch (Exception ex) when (ex is ArgumentNullException) 
@@ -72,6 +98,7 @@ namespace Application.CQS.Messenger.Chat.Command.AddChatMember
                 return Result<bool>.Failure(ex.Message);
             }
             _chatRepository.Update(chat);
+            
             _chatRepository.PublishDomainEvents(chat, mediator);
 
             return Result<bool>.Success(true);

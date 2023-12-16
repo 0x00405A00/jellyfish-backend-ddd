@@ -31,7 +31,7 @@ namespace Application.CQS.User.Commands.DeleteProfilePicture
             {
                 return Result<bool>.Failure($"user not found");
             }
-            var user = await _userRepository.GetAsync(user => user.Uuid == request.UserId);
+            var user = await _userRepository.GetAsync(user => user.Id.Id == request.UserId);
             if (user is null)
             {
                 return Result<bool>.Failure($"user not found");
@@ -41,7 +41,7 @@ namespace Application.CQS.User.Commands.DeleteProfilePicture
             {
                 return Result<bool>.Failure($"profile picture is not set");
             }
-            var deletedByUser = await _userRepository.GetAsync(x => x.Uuid == request.DeletedBy);
+            var deletedByUser = await _userRepository.GetAsync(x => x.Id.Id == request.DeletedBy);
 
             try
             {

@@ -52,7 +52,7 @@ namespace Application.CQS.User.Commands.CreateUser
             {
                 return Result<UserDTO>.Failure(ex.Message);
             }
-            var createdByUser = await _userRepository.GetAsync(x => x.Uuid == request.CreatedBy);
+            var createdByUser = await _userRepository.GetAsync(x => x.Id.Id == request.CreatedBy);
 
             bool emailAlreadyInUseCheck = await _userRepository.IsEmailAlreadyInUse(request.Email);
             bool phoneAlreadyInUseCheck = await _userRepository.IsPhoneAlreadyInUse(request.Phone);
@@ -71,8 +71,8 @@ namespace Application.CQS.User.Commands.CreateUser
                 Domain.Entities.User.User.CheckPasswordWithPolicy(request.Password, request.PasswordRepeat);
 
                 var userId = new Domain.Entities.User.UserId(Guid.NewGuid());
-                var userType = await _userTypeRepository.GetAsync(x => x.Uuid == UserTypeConst.UserTypeUuid);
-                var userRole = await _roleRepository.GetAsync(x => x.Uuid == RoleConst.UserRoleUuid);
+                var userType = await _userTypeRepository.GetAsync(x => x.Id.Id == UserTypeConst.UserTypeUuid);
+                var userRole = await _roleRepository.GetAsync(x => x.Id.Id == RoleConst.UserRoleUuid);
                 user = Domain.Entities.User.User.Create(
                     userId,
                     userType,

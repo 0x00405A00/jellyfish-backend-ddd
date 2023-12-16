@@ -2,12 +2,8 @@
 
 namespace Domain.Entities.Role
 {
-    public class RoleId : Identification
+    public sealed class RoleId : Identification
     {
-        public RoleId()
-        {
-            
-        }
         public RoleId(Guid guid) : base(guid)
         {
         }

@@ -20,12 +20,12 @@ namespace Application.CQS.Messenger.Chat.Command.DeleteChat
 
         public async Task<Result<Guid>> Handle(DeleteChatCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetAsync(x=>x.Uuid == request.DeletedByUserId);
+            var user = await _userRepository.GetAsync(x=>x.Id.Id == request.DeletedByUserId);
             if(user == null)
             {
                 return Result<Guid>.Failure("execution user not found");
             }
-            var chat = await _chatRepository.GetAsync(x=>x.Uuid == request.ChatId);
+            var chat = await _chatRepository.GetAsync(x=>x.Id.Id == request.ChatId);
             if(chat == null) 
             {
                 return Result<Guid>.Failure("chat not found");

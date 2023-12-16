@@ -1,8 +1,5 @@
-﻿using Infrastructure.Abstractions;
-using Microsoft.VisualBasic;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace Infrastructure
 {
@@ -11,7 +8,7 @@ namespace Infrastructure
         public static Func<Guid, string> UserKey = (g) => $"user-{g.ToString()}";
         public static Func<string, string> UsersKey = (g) => $"user-{g}";
 
-        public static T2? ExtractValueFromExpression<T,T2>(this Expression<Func<T, bool>> expression)
+        public static T2? ExtractValueFromExpression<T, T2>(this Expression<Func<T, bool>> expression)
             where T : class
         {
             ParameterExpression parameter = expression.Parameters[0];
@@ -23,39 +20,37 @@ namespace Infrastructure
                     memberExpression.Expression == parameter &&
                     binaryExpression.Right is MemberExpression rightMemberExpression)
                 {
-                    // Der rechte Ausdruck ist ein MemberAccess für die Uuid-Eigenschaft.
-                    // Extrahieren Sie den Wert aus dem rechten MemberAccess.
-                    var t = rightMemberExpression.Expression.GetType();
-                    var tt = ((MemberExpression)(rightMemberExpression).Expression).Expression;
-                    var ttt = tt.GetType();
-                    var x = rightMemberExpression.Member.MemberType.GetType().GetProperties();
-                    var y = rightMemberExpression.Member.DeclaringType.GetType().GetProperties();
-                    var z = rightMemberExpression.Member.ReflectedType.GetType().GetProperties();
-                    var memProp = rightMemberExpression.Member.GetType().GetProperties();
-                    var memField= (PropertyInfo)rightMemberExpression.Member;
-                    if (ttt ==typeof(ConstantExpression))
+                    var parentExpression = ((MemberExpression)rightMemberExpression.Expression).Expression;
+                    var parentType = parentExpression.GetType();
+                    var memberField = (PropertyInfo)rightMemberExpression.Member;
+
+                    if (parentType == typeof(ConstantExpression))
                     {
-                        var val = (((ConstantExpression)tt).Value);
-                        var rm= rightMemberExpression.Member.GetType().GetProperties();
-                        
-                        var tttt = val.GetType();
-                        var f = tttt.GetFields();
-                        foreach(var i in f)//1. Hierarchie
+                        var constantValue = (((ConstantExpression)parentExpression).Value);
+                        var constantValueType = constantValue.GetType();
+                        var fields = constantValueType.GetFields();
+
+                        foreach (var field in fields) //1. Hierarchie
                         {
-                            var vt =i.GetValue(val);
-                            var pp = vt.GetType().GetProperties();
-                            foreach( var v in pp)//2. Hierarchie, da record Value in record gekapselt und keine direkte Value
+                            var fieldValue = field.GetValue(constantValue);
+                            var fieldProperties = fieldValue.GetType().GetProperties();
+
+                            foreach (var fieldProperty in fieldProperties) //2. Hierarchie, da Record Value in Record gekapselt und keine direkte Value
                             {
-                                var vp = v.GetValue(vt);
-                                var tttttt = memField.GetValue(vt, null);
-                                if (vp is T2 && tttttt == vp)
+                                var fieldValueProperty = fieldProperty.GetValue(fieldValue);
+                                if (fieldValueProperty is null)
                                 {
-                                    return (T2)vp;
+                                    continue;
+                                }
+                                var memberFieldValue = memberField.GetValue(fieldValue, null);
+
+                                if (fieldValueProperty is T2 && (memberFieldValue is not null) && memberFieldValue.ToString() == fieldValueProperty.ToString())
+                                {
+                                    return (T2)fieldValueProperty;
                                 }
                             }
-                            var ff=vt.GetType().GetFields();
+
                         }
-                        var p = tttt.GetProperties();
                         return default;
                     }
                 }
@@ -63,6 +58,7 @@ namespace Infrastructure
 
             return default;
         }
+
         public class UuidExtractor<T> : ExpressionVisitor
             where T : class
         {
@@ -72,13 +68,16 @@ namespace Infrastructure
             {
 
             }
+
             public Guid? ExtractUuid(Expression<Func<T, bool>> expression)
             {
                 Visit(expression);
+
                 if (Uuid.HasValue)
                 {
                     return Uuid.Value;
                 }
+
                 return null;
             }
 
@@ -89,6 +88,7 @@ namespace Infrastructure
                     var constantExpression = (ConstantExpression)node.Expression;
                     Uuid = (Guid)constantExpression.Value;
                 }
+
                 return base.VisitMember(node);
             }
         }

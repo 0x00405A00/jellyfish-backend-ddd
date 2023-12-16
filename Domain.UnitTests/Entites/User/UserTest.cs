@@ -63,7 +63,7 @@ namespace Domain.UnitTests.Entites.User
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(id, result.Uuid);
+            Assert.Equal(id, result.Id);
             Assert.Equal(UserType, result.UserType);
             Assert.Equal(userName, result.UserName);
             // Add more assertions based on your object properties
@@ -220,7 +220,7 @@ namespace Domain.UnitTests.Entites.User
             user.AddFriendshipRequest(friendRequest);
 
             // Assert
-            Assert.Contains(friendRequest, user.FriendshipRequests);
+            Assert.Contains(friendRequest, user.RequestedFriendshipRequests);
         }
 
         [Fact]
@@ -252,7 +252,7 @@ namespace Domain.UnitTests.Entites.User
             user.RemoveFriendshipRequest(friendRequest);
 
             // Assert
-            Assert.DoesNotContain(friendRequest, user.FriendshipRequests);
+            Assert.DoesNotContain(friendRequest, user.RequestedFriendshipRequests);
         }
 
         [Fact]
@@ -282,7 +282,7 @@ namespace Domain.UnitTests.Entites.User
 
             // Assert
             Assert.Contains(friendRequest.RequestUser, otherUser.Friends.Select(x=>x.Friend).ToList());
-            Assert.DoesNotContain(friendRequest, otherUser.FriendshipRequests);
+            Assert.DoesNotContain(friendRequest, otherUser.RequestedFriendshipRequests);
         }
 
         [Fact]
@@ -374,7 +374,7 @@ namespace Domain.UnitTests.Entites.User
             user.AddRole(assignerUser, role);
 
             // Assert
-            Assert.Contains(role, user.Roles.Select(x => x.Role).ToList());
+            Assert.Contains(role, user.UserRoles.Select(x => x.Role).ToList());
         }
 
         [Fact]
@@ -403,7 +403,7 @@ namespace Domain.UnitTests.Entites.User
             user.RemoveRole(revokerUser, role);
 
             // Assert
-            Assert.DoesNotContain(role, user.Roles.Select(x => x.Role).ToList());
+            Assert.DoesNotContain(role, user.UserRoles.Select(x => x.Role).ToList());
         }
 
         [Fact]

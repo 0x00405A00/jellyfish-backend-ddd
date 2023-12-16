@@ -2,12 +2,8 @@
 
 namespace Domain.Entities.Message
 {
-    public class MessageId : Identification
+    public sealed class MessageId : Identification
     {
-        public MessageId()
-        {
-            
-        }
         public MessageId(Guid guid) : base(guid)
         {
         }

@@ -36,13 +36,13 @@ namespace Application.CQS.User.Commands.UpdateProfilePicture
             {
                 return Result<UserDTO>.Failure("user not found");
             }
-            var user = await _userRepository.GetAsync(user => user.Uuid == request.UserId);
+            var user = await _userRepository.GetAsync(user => user.Id.Id == request.UserId);
             if (user is null)
             {
                 return Result<UserDTO>.Failure("user not found");
             }
 
-            var updatedByUser = await _userRepository.GetAsync(x => x.Uuid == request.UpdatedBy);
+            var updatedByUser = await _userRepository.GetAsync(x => x.Id.Id == request.UpdatedBy);
             Picture picture = null!;
             try
             {
@@ -51,7 +51,7 @@ namespace Application.CQS.User.Commands.UpdateProfilePicture
                 var filePath = _mediaService.CreateProfilePicture(request.UserId, MimeExtension.GetFileExtension(request.MimeType), base64ByteArr, cancellationToken);
                 picture = Picture.Parse(filePath, request.MimeType);
                 user.UpdatePicture(updatedByUser, picture);
-                _userRepository.UpdateAsync(user);
+                _userRepository.Update(user);
             }
             catch (Exception ex)
             {

@@ -1,6 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
 using Domain.Const;
-using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +8,10 @@ using Shared.Const;
 using Shared.DataTransferObject;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Domain.Entities.Auth;
+using Domain.Entities.User;
+using Newtonsoft.Json.Linq;
+using System;
 
 namespace Application.CQS.Auth.Command.CreateAuth
 {
@@ -33,7 +36,7 @@ namespace Application.CQS.Auth.Command.CreateAuth
 
         public async Task<Result<AuthDTO>> Handle(CreateAuthCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetAsync(user => user.Email == request.Email && user.Password == request.Password);
+            var user = await _userRepository.GetAsync(user => user.Email.EmailValue == request.Email && user.Password == request.Password);
             if(user == null) {
                 return Result<AuthDTO>.Failure("username or password wrong");
             }
@@ -46,15 +49,15 @@ namespace Application.CQS.Auth.Command.CreateAuth
             var rexpMin = int.Parse(config["RefreshTokenExpiresMinutes"]);
             var texpMinTimeSpan = new TimeSpan(0, texpMin, 0);
             var rexpMinTimeSpan = new TimeSpan(0, rexpMin, 0);
-            var isAdmin = user.Roles.Where(x => x.Role.Uuid == new Domain.Entities.Role.RoleId(RoleConst.AdminRoleUuid)).Any();
-            var isRoot = user.Roles.Where(x => x.Role.Uuid == new Domain.Entities.Role.RoleId(RoleConst.RootRoleUuid)).Any();
+            var isAdmin = user.UserRoles.Where(x => x.Role.Id == new Domain.Entities.Role.RoleId(RoleConst.AdminRoleUuid)).Any();
+            var isRoot = user.UserRoles.Where(x => x.Role.Id == new Domain.Entities.Role.RoleId(RoleConst.RootRoleUuid)).Any();
             var isUser = user.ActivationDateTime != null && user.ActivationDateTime != DateTime.MinValue;
             Claim[] claims = new Claim[] {
                 new Claim(AuthorizationConst.Claims.ClaimTypeIsAdmin, isAdmin.ToString()),
                 new Claim(AuthorizationConst.Claims.ClaimTypeIsRoot, isRoot.ToString()),
                 new Claim(AuthorizationConst.Claims.ClaimTypeIsActivatedUser, isUser.ToString()),
                 new Claim(AuthorizationConst.Claims.ClaimTypeUserEmail, user.Email.ToString()),
-                new Claim(AuthorizationConst.Claims.ClaimTypeUserUuid, user.Uuid.ToString()),
+                new Claim(AuthorizationConst.Claims.ClaimTypeUserUuid, user.Id.ToString()),
             };
             var token = JwtHandler.EncodeJwt(symetricKey, issuer, audience, claims, texpMinTimeSpan);
 
@@ -63,21 +66,20 @@ namespace Application.CQS.Auth.Command.CreateAuth
             var refreshTokenStr = new JwtSecurityTokenHandler().WriteToken(refreshToken);
             try
             {
-                var auth = new Infrastructure.DatabaseEntity.Auth
-                {
-                    Uuid = Guid.NewGuid(),
-                    UserUuid = user.Uuid.ToGuid(),
-                    CreatedTime =DateTime.Now,
-                    Token =tokenStr,
-                    TokenExpiresIn =DateTime.Now.Add(texpMinTimeSpan),
-                    RefreshToken = refreshTokenStr,
-                    RefreshTokenExpiresIn = DateTime.Now.Add(rexpMinTimeSpan),
-                    IpAddrLocal =request.LocalIp.ToString(),
-                    LocalPort = request.LocalIpPort,
-                    IpAddrRemote = request.RemoteIp.ToString(),
-                    RemotePort = request.RemoteIpPort,
-                    UserAgent =request.UserAgent,
-                };
+                var auth = Domain.Entities.Auth.Auth.Create(Domain.Entities.Auth.Auth.NewId(),
+                    user.Id,
+                    request.LocalIp.ToString(),
+                    request.LocalIpPort,
+                    request.RemoteIp.ToString(),
+                    request.RemoteIpPort,
+                    tokenStr,
+                    DateTime.Now.Add(texpMinTimeSpan),
+                    request.UserAgent,
+                    refreshTokenStr,
+                    DateTime.Now.Add(rexpMinTimeSpan),
+                    DateTime.Now,
+                    user);
+                
                 _authRepository.Add(auth);
                 await _unitOfWork.SaveChangesAsync();
             }

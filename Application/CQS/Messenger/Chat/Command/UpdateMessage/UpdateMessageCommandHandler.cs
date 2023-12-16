@@ -34,12 +34,12 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateMessage
         public async Task<Result<MessageDTO>> Handle(UpdateMessageCommand request, CancellationToken cancellationToken)
         {
 
-            var modifiedByUser = await _userRepository.GetAsync(x => x.Uuid == request.ModifiedById);
+            var modifiedByUser = await _userRepository.GetAsync(x => x.Id.Id == request.ModifiedById);
             if (modifiedByUser is null)
             {
                 return Result<MessageDTO>.Failure($"modifiedby-user not found");
             }
-            var message = await _messageRepository.GetAsync(x => x.Uuid == request.MessageId && request.ChatId == x.ChatUuid);
+            var message = await _messageRepository.GetAsync(x => x.Id.Id == request.MessageId && request.ChatId == x.Chat.Id);
             if (message is null)
             {
                 return Result<MessageDTO>.Failure($"message not found");
@@ -65,7 +65,7 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateMessage
                 message.UpdateText(modifiedByUser, newMessage.Text);    
             }
 
-            _messageRepository.UpdateAsync(message);
+            _messageRepository.Update(message);
             _messageRepository.PublishDomainEvents(message, mediator);
 
             var dto = _mapper.Map<MessageDTO>(message);

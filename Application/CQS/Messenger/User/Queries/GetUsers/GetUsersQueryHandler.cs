@@ -22,7 +22,7 @@ namespace Application.CQS.Messenger.User.Queries.GetUsers
         }
         public async Task<Result<List<MessengerUserDTO>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
-            var data = await _userRepository.ListAsync(x => x.ActivationDatetime != null);
+            var data = await _userRepository.ListAsync(x => x.ActivationDateTime != null);
 
             var t = _mapper.Map<List<MessengerUserDTO>>(data);
             return Result<List<MessengerUserDTO>>.Success(t);

@@ -1,11 +1,11 @@
-﻿using Domain.ValueObjects;
-using Infrastructure.DatabaseEntity;
+﻿using Domain.Entities.User;
+using Domain.ValueObjects;
 using Infrastructure.Repository;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Abstractions
 {
-    public interface IUserRepository : IGenericRepository<Domain.Entities.User.User,User>
+    public interface IUserRepository : IGenericRepository<User>
     {
         /// <summary>
         /// Check if user email is already in database
@@ -31,6 +31,6 @@ namespace Infrastructure.Abstractions
         /// Get requested and received friendship requests
         /// </summary>
         /// <returns></returns>
-        public Task<List<FriendshipRequest>> GetAllFriendshipRequests(Expression<Func<DatabaseEntity.User, bool>> expression);
+        public Task<List<FriendshipRequest>> GetAllFriendshipRequests(Expression<Func<User, bool>> expression);
     }
 }

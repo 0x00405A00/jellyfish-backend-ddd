@@ -33,15 +33,15 @@ namespace Application.CQS.User.Commands.Roles.AssignRole
             {
                 return Result<List<Guid>>.Failure("user not found");
             }
-            var user = await _userRepository.GetAsync(user => user.Uuid == request.UserId);
+            var user = await _userRepository.GetAsync(user => user.Id.Id == request.UserId);
             if (user is null)
             {
                 return Result<List<Guid>>.Failure("user not found");
             }
 
-            var assignedByUser = await _userRepository.GetAsync(x => x.Uuid == request.AssignerId);
+            var assignedByUser = await _userRepository.GetAsync(x => x.Id.Id == request.AssignerId);
 
-            var foundRoles = await roleRepository.ListAsync(role => request.RoleIds.Contains(role.Uuid));
+            var foundRoles = await roleRepository.ListAsync(role => request.RoleIds.Contains(role.Id.Id));
             if (!foundRoles.Any())
             {
                 return Result<List<Guid>>.Failure("invalid roles");
@@ -52,7 +52,7 @@ namespace Application.CQS.User.Commands.Roles.AssignRole
                 try
                 {
                     user.AddRole(assignedByUser, role);
-                    roleIds.Add(role.Uuid.ToGuid());
+                    roleIds.Add(role.Id.ToGuid());
                 }
                 catch (Exception ex)
                 {
@@ -63,7 +63,7 @@ namespace Application.CQS.User.Commands.Roles.AssignRole
             {
                 return Result<List<Guid>>.Failure("no roles added");
             }
-            _userRepository.UpdateAsync(user);
+            _userRepository.Update(user);
             _userRepository.PublishDomainEvents(user, mediator);
             return Result<List<Guid>>.Success(roleIds);
         }

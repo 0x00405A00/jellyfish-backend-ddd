@@ -51,17 +51,18 @@ namespace Domain.Primitives
         where TEntityId : Identification
     {
 
-        public TEntityId Uuid { get; init; }
+        public TEntityId Id { get; init; }
 
         protected Entity(TEntityId entityId)
         {
-            Uuid = entityId;
+            Id = entityId;
         }
 
         public Entity()
         {
             
         }
+        public static TEntityId NewId() => (TEntityId)Identification.Create();
 
         public static bool operator !=(Entity<TEntityId>? first, Entity<TEntityId>? second)
         {
@@ -70,7 +71,7 @@ namespace Domain.Primitives
         }
         public static bool operator ==(Entity<TEntityId>? first, Entity<TEntityId>? second)
         {
-            var equalCheck = (ReferenceEquals(first, null) && ReferenceEquals(first, null)) ||(!ReferenceEquals(first, null) && !ReferenceEquals(second, null) && (first.Uuid == second.Uuid));
+            var equalCheck = (ReferenceEquals(first, null) && ReferenceEquals(first, null)) ||(!ReferenceEquals(first, null) && !ReferenceEquals(second, null) && (first.Id == second.Id));
             return equalCheck;
         }
         public bool Equals(Entity<TEntityId>? other)
@@ -78,7 +79,7 @@ namespace Domain.Primitives
 
             if (ReferenceEquals(other, null)) return false;
             if (other.GetType().BaseType != typeof(Entity<TEntityId>)) return false;
-            return ((Entity<TEntityId>)other).Uuid == Uuid;
+            return ((Entity<TEntityId>)other).Id == Id;
         }
         public override bool Equals(object? obj)
         {
@@ -88,11 +89,11 @@ namespace Domain.Primitives
             {
                 return false;
             }
-            return ((Entity<TEntityId>)obj).Uuid == Uuid;
+            return ((Entity<TEntityId>)obj).Id == Id;
         }
         public override int GetHashCode()
         {
-            return Uuid.GetHashCode() * 41;
+            return Id.GetHashCode() * 41;
         }
 
         protected virtual new void Update<TEntity,Id>(Expression<Func<TEntity, object>> propertyExpression, object value)

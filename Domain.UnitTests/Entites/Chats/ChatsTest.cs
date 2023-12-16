@@ -438,7 +438,7 @@ namespace Domain.UnitTests.Entites.Chats
             var deletedByUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
 
             // Act
-            chat.RemoveMessage(deletedByUser, message.Uuid);
+            chat.RemoveMessage(deletedByUser, message.Id);
 
             // Assert
             Assert.DoesNotContain(message, chat.Messages);
@@ -467,7 +467,7 @@ namespace Domain.UnitTests.Entites.Chats
             var messageOwner = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var message = chat.AddMessage(messageOwner, "Test message",null);
             // Act and Assert
-            var exception = Assert.Throws<ArgumentNullException>(() => chat.RemoveMessage(null, message.Uuid));
+            var exception = Assert.Throws<ArgumentNullException>(() => chat.RemoveMessage(null, message.Id));
             Assert.NotNull(exception);
         }
         [Fact]
@@ -482,7 +482,7 @@ namespace Domain.UnitTests.Entites.Chats
             var newMediaContent = MediaContent.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 }, ValidMimeType);
 
             // Act
-            chat.UpdateMessage(messageOwner, message.Uuid, newText, newMediaContent);
+            chat.UpdateMessage(messageOwner, message.Id, newText, newMediaContent);
 
             // Assert
             Assert.Equal(newText, message.Text);
@@ -514,7 +514,7 @@ namespace Domain.UnitTests.Entites.Chats
             var newText = "Updated text";
 
             // Act
-            chat.UpdateMessage(messageOwner, message.Uuid, newText, null);
+            chat.UpdateMessage(messageOwner, message.Id, newText, null);
 
             // Assert
             Assert.Equal(newText, message.Text);
@@ -532,7 +532,7 @@ namespace Domain.UnitTests.Entites.Chats
             var newMediaContent = MediaContent.Parse(new byte[8] { 0, 1, 1, 0, 1, 1, 1, 0 }, ValidMimeType);
 
             // Act
-            chat.UpdateMessage(messageOwner, message.Uuid, null, newMediaContent);
+            chat.UpdateMessage(messageOwner, message.Id, null, newMediaContent);
 
             // Assert
             Assert.Equal(newMediaContent, message.MediaContent);
@@ -547,7 +547,7 @@ namespace Domain.UnitTests.Entites.Chats
             var messageOwner = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
             var message = chat.AddMessage(messageOwner, "Test message", null);
             // Act and Assert
-            var exception = Assert.Throws<ArgumentNullException>(() => chat.UpdateMessage(null, message.Uuid, "New text", null));
+            var exception = Assert.Throws<ArgumentNullException>(() => chat.UpdateMessage(null, message.Id, "New text", null));
             Assert.NotNull(exception);
         }
         [Fact]

@@ -33,17 +33,17 @@ namespace Application.CQS.Messenger.Chat.Command.AssignChatAdmin
 
         public async Task<Result<bool>> Handle(AssignChatAdminCommand request, CancellationToken cancellationToken)
         {
-            var executorUser = await _userRepository.GetAsync(x => x.Uuid == request.ActorId);
+            var executorUser = await _userRepository.GetAsync(x => x.Id.Id == request.ActorId);
             if (executorUser is null)
             {
                 return Result<bool>.Failure($"executor-user not found");
             }
-            var targetUser = await _userRepository.GetAsync(x => x.Uuid == request.UserId);
+            var targetUser = await _userRepository.GetAsync(x => x.Id.Id == request.UserId);
             if (targetUser is null)
             {
                 return Result<bool>.Failure($"target-user not found");
             }
-            var chat = await _chatRepository.GetAsync(x => x.Uuid == request.ChatId);
+            var chat = await _chatRepository.GetAsync(x => x.Id.Id == request.ChatId);
             if (chat is null)
             {
                 return Result<bool>.Failure($"chat not found");
@@ -64,7 +64,11 @@ namespace Application.CQS.Messenger.Chat.Command.AssignChatAdmin
             {
                 return Result<bool>.Failure(ex.Message);
             }
-            _chatRepository.UpdateAsync(chat);
+            catch (UserAlreadyAdminInChatException ex)
+            {
+                return Result<bool>.Failure(ex.Message);
+            }
+            _chatRepository.Update(chat);
             _chatRepository.PublishDomainEvents(chat, mediator);
 
             return Result<bool>.Success(true);

@@ -1,9 +1,9 @@
-﻿using Infrastructure.DatabaseEntity;
+﻿using Domain.Entities.Role;
 using Infrastructure.Repository;
 
 namespace Infrastructure.Abstractions
 {
-    public interface IRoleRepository : IGenericRepository<Domain.Entities.Role.Role, Role>
+    public interface IRoleRepository : IGenericRepository<Role>
     {
 
     }

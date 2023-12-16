@@ -22,7 +22,7 @@ namespace Application.CQS.Messenger.User.Queries.GetFriends
         }
         public async Task<Result<List<MessengerUserDTO>>> Handle(GetFriendsQuery request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetAsync(x=> x.Uuid == request.UserId);
+            var user = await _userRepository.GetAsync(x=> x.Id.Id == request.UserId);
             if(!user.HasFriends())
             {
                 return Result<List<MessengerUserDTO>>.Failure("you have no friends", Domain.Error.Error.ERROR_CODE.NotFound);

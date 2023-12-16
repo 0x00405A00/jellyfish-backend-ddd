@@ -2,14 +2,11 @@
 
 namespace Domain.Entities.User
 {
-    public class UserTypeId : Identification
+    public sealed class UserTypeId : Identification
     {
-        public UserTypeId()
-        {
-            
-        }
         public UserTypeId(Guid guid) : base(guid)
         {
         }
     }
+
 }

@@ -62,7 +62,7 @@ namespace Infrastructure.HostedService.Backgroundservice
                 foreach (var mail in mails)
                 {
                     var mailIsHtml = Convert.ToBoolean(mail.BodyIsHtml);
-                    var from = new MailboxAddress(mail.From, mail.From);
+                    var from = new MailboxAddress(mail.From.EmailValue, mail.From.EmailValue);
                     InternetAddressList recipientsToList = new InternetAddressList();
                     InternetAddressList recipientsCcList = new InternetAddressList();
                     InternetAddressList recipientsBccList = new InternetAddressList();
@@ -70,16 +70,16 @@ namespace Infrastructure.HostedService.Backgroundservice
                     foreach (var recipient in mail.MailOutboxRecipients)
                     {
 
-                        switch (recipient.EmailTypeUu.Type)
+                        switch (recipient.EmailType.Type)
                         {
                             case MailHandler.MailType.To:
-                                recipientsToList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
+                                recipientsToList.Add(MimeKit.InternetAddress.Parse(recipient.Email.EmailValue));
                                 break;
                             case MailHandler.MailType.Cc:
-                                recipientsCcList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
+                                recipientsCcList.Add(MimeKit.InternetAddress.Parse(recipient.Email.EmailValue));
                                 break;
                             case MailHandler.MailType.Bcc:
-                                recipientsBccList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
+                                recipientsBccList.Add(MimeKit.InternetAddress.Parse(recipient.Email.EmailValue));
                                 break;
                         }
                     }

@@ -4,7 +4,6 @@ using Domain.Entities.Message.Exception;
 using Domain.Primitives;
 using Domain.ValueObjects;
 using System.Collections.Immutable;
-using System.Runtime.CompilerServices;
 
 namespace Domain.Entities.Chats
 {
@@ -183,7 +182,7 @@ namespace Domain.Entities.Chats
             }
             if (IsChatAdmin(member))
             {
-                throw new UserAlreadyAdminInChatException();
+                throw new UserAlreadyAdminInChatException("user is already an admin");
             }
             var chatMember = this.GetMember(member);
             chatMember.SetAdmin(true);
@@ -222,7 +221,7 @@ namespace Domain.Entities.Chats
             {
                 throw new NotValidMessageException();
             }
-            var message = Message.Message.Create(new Message.MessageId(Guid.NewGuid()), this.Uuid, messageOwner, null, null, text, mediaContent, DateTime.Now, null, null);
+            var message = Message.Message.Create(new Message.MessageId(Guid.NewGuid()), this.Id, messageOwner, null, null, text, mediaContent, DateTime.Now, null, null);
             this._messages.Add(message);
             Raise(new ChatAppendMessageDomainEvent(this, message.Owner, message));
             return message;
@@ -239,7 +238,7 @@ namespace Domain.Entities.Chats
             {
                 throw new ArgumentNullException(nameof(deletedByUser));
             }
-            var message = _messages.FirstOrDefault(x => x.Uuid == messageId);
+            var message = _messages.FirstOrDefault(x => x.Id == messageId);
             if (message == null)
             {
                 throw new MessageNotFoundException("message is not found");
@@ -253,7 +252,7 @@ namespace Domain.Entities.Chats
             {
                 throw new ArgumentNullException();
             }
-            var message = _messages.FirstOrDefault(x => x.Uuid == messageId);
+            var message = _messages.FirstOrDefault(x => x.Id == messageId);
             if (message == null)
             {
                 throw new MessageNotFoundException("message is not found");
@@ -341,12 +340,12 @@ namespace Domain.Entities.Chats
             {
                 return null;
             }
-            var chatMember = _members.Where(x => x.User.Uuid == user.Uuid).First();
+            var chatMember = _members.Where(x => x.User.Id == user.Id).First();
             return chatMember;
         }
         public bool IsChatMember(User.User user)
         {
-            var result = user != null && _members.Any() && _members.Where(x => x.User.Uuid == user.Uuid).Count() != 0;
+            var result = user != null && _members.Any() && _members.Where(x => x.User.Id == user.Id).Count() != 0;
             return result;
         }
         public bool IsChatMember(User.UserId userId)
@@ -356,7 +355,7 @@ namespace Domain.Entities.Chats
         }
         public bool IsChatAdmin(User.User user)
         {
-            var result = user != null && _members.Any() && _members.Where(x => x.User.Uuid == user.Uuid && x.IsAdmin).Count() != 0;
+            var result = user != null && _members.Any() && _members.Where(x => x.User.Id == user.Id && x.IsAdmin).Count() != 0;
             return result;
         }
         public bool IsChatAdmin(User.UserId userId)
@@ -364,7 +363,7 @@ namespace Domain.Entities.Chats
             var member = GetChatMemberById(userId);
             return IsChatAdmin(member?.User);
         }
-        public ChatMember GetChatMemberById(User.UserId userId) => _members.Where(x=>x.User.Uuid == userId).Single();
+        public ChatMember GetChatMemberById(User.UserId userId) => _members.Where(x=>x.User.Id == userId).Single();
 
         public void SetLastModified(User.User modifiedBy)
         {

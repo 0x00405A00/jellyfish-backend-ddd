@@ -25,7 +25,7 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.AssignRole
         private readonly IMediator _mediatorMock;
 
         private static readonly Domain.Entities.Role.Role RoleAdmin = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance("Admin");
-        private static readonly Domain.ValueObjects.UserRole UserRoleAdmin = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserRoleInstance(RoleAdmin);
+        private static readonly UserRole UserRoleAdmin = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserRoleInstance(RoleAdmin);
         private static readonly Domain.Entities.Role.Role RoleUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance("User");
         private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
         private static readonly Domain.Entities.User.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserAdminId, UserRoleAdmin);
@@ -52,7 +52,7 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.AssignRole
             // Arrange
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(UserInstance);
 
-            var command = Command with { AssignerId = UserAdminId, UserId = UserId, RoleIds = new List<Guid> { RoleAdmin.Uuid.ToGuid() } };
+            var command = Command with { AssignerId = UserAdminId, UserId = UserId, RoleIds = new List<Guid> { RoleAdmin.Id.ToGuid() } };
 
             _roleRepositoryMock.ListAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Role, bool>>>()).Returns(new List<Domain.Entities.Role.Role>
             {
@@ -74,7 +74,7 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.AssignRole
             // Arrange
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(UserAdminInstance);
 
-            var command = Command with { AssignerId = UserAdminId, UserId = UserId, RoleIds = new List<Guid> { RoleAdmin.Uuid.ToGuid() } };
+            var command = Command with { AssignerId = UserAdminId, UserId = UserId, RoleIds = new List<Guid> { RoleAdmin.Id.ToGuid() } };
 
             _roleRepositoryMock.ListAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Role, bool>>>()).Returns(new List<Domain.Entities.Role.Role>
             {

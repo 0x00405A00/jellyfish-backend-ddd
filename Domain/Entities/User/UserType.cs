@@ -13,6 +13,9 @@ namespace Domain.Entities.User
         public User? LastModifiedByUser { get; private set; }
         public User? DeletedByUser { get; private set; }
 
+        private ICollection<User> _users = new List<User>();
+        public ICollection<User> Users { get => _users?.ToList(); }
+
         private UserType(
             UserTypeId id,
             string name,
@@ -23,6 +26,7 @@ namespace Domain.Entities.User
             User? modifiedByUser,
             User? deletedByUser) : base(id)
         {
+            Id = id;
             Name = name;
 
             LastModifiedByUser = modifiedByUser;

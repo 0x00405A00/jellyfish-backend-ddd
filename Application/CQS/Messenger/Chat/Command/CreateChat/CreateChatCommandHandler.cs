@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
+using Domain.Entities.Chats;
 using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
@@ -30,17 +31,17 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
 
         public async Task<Result<ChatDTO>> Handle(CreateChatCommand request, CancellationToken cancellationToken)
         {
-            var createdBy = await _userRepository.GetAsync(x => x.Uuid == request.ChatOwnerUuid);
+            var createdBy = await _userRepository.GetAsync(x => x.Id.Id == request.ChatOwnerUuid);
             ICollection<Domain.Entities.User.User> members = null;
             ICollection<ChatMember> chatMembers = new List<ChatMember>();
             request.Members.Add(request.ChatOwnerUuid);
-            members = await _userRepository.ListAsync(x => request.Members.Contains(x.Uuid));
+            members = await _userRepository.ListAsync(x => request.Members.Contains(x.Id.Id));
             Domain.Entities.Chats.Chat chat = null;
             try
             {
                 foreach(var member in members)
                 {
-                    bool isAdmin = request.ChatOwnerUuid == member.Uuid.ToGuid();
+                    bool isAdmin = request.ChatOwnerUuid == member.Id.ToGuid();
                     var chatMember = ChatMember.Create(Guid.NewGuid(), member, isAdmin, DateTime.Now, null, null);
                     chatMembers.Add(chatMember);
                 }

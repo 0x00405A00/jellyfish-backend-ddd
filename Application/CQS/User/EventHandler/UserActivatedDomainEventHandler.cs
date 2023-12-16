@@ -1,12 +1,13 @@
-﻿using Domain.Entities.User.Event;
+﻿using Domain.Entities.MailoutBox;
+using Domain.Entities.User.Event;
+using Domain.ValueObjects;
 using Infrastructure.Abstractions;
-using Infrastructure.DatabaseEntity;
 using Infrastructure.Mail;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MimeKit.Utils;
-using System.Configuration;
+using Shared.ApiDataTransferObject;
 using System.Text;
 
 namespace Application.CQS.User.EventHandler
@@ -28,60 +29,65 @@ namespace Application.CQS.User.EventHandler
             {
 
                 var mailoutboxRepository = scope.ServiceProvider.GetRequiredService<IMailoutboxRepository>();
+                var emailTypeRepository = scope.ServiceProvider.GetRequiredService<IEmailTypeRepository>();
                 var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
                 var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
                 var mailSection = configuration.GetSection("Infrastructure:Mail");
 
                 var mailSender = mailSection.GetValue<string>("system_sender_anonymous_mail");
-                var mailUuid = Guid.NewGuid();
+                Email systemEmail = Email.Parse(mailSender);
+                var mailUuid = MailOutbox.NewId();
 
                 var imageJellyfishPath = Path.Combine(Environment.CurrentDirectory, "Media", "Static", "jellyfish_image.png");
                 var imagePlaystorePath = Path.Combine(Environment.CurrentDirectory, "Media", "Static", "playstore_icon.png");
                 var imageAppstorePath = Path.Combine(Environment.CurrentDirectory, "Media", "Static", "appstore_icon.png");
 
 
-                MailOutboxAttachment jellyfishIcon = new MailOutboxAttachment
-                {
-                    MimeMediatype = "image",
-                    MimeMediasubtype = "png",
-                    MailUuid = mailUuid,
-                    AttachmentPath = imageJellyfishPath,
-                    AttachmentSha1 = "xyz",
-                    Filename = "jellyfish_image.png",
-                    Order = 1,
-                    Uuid = Guid.NewGuid(),
-                    IsEmbeddedInHtml = Convert.ToSByte(true),
-                    MimeCid = MimeUtils.GenerateMessageId()
-                };
-                MailOutboxAttachment appStore = new MailOutboxAttachment
-                {
-                    MimeMediatype = "image",
-                    MimeMediasubtype = "png",
-                    MailUuid = mailUuid,
-                    AttachmentPath = imageAppstorePath,
-                    AttachmentSha1 = "xyz",
-                    Filename = "appstore_icon.png",
-                    Order = 2,
-                    Uuid = Guid.NewGuid(),
-                    IsEmbeddedInHtml = Convert.ToSByte(true),
-                    MimeCid = MimeUtils.GenerateMessageId()
-                };
-                MailOutboxAttachment playStore = new MailOutboxAttachment
-                {
-                    MimeMediatype = "image",
-                    MimeMediasubtype = "png",
-                    MailUuid = mailUuid,
-                    AttachmentPath = imagePlaystorePath,
-                    AttachmentSha1 = "xyz",
-                    Filename = "playstore_icon.png",
-                    Order = 3,
-                    Uuid = Guid.NewGuid(),
-                    IsEmbeddedInHtml = Convert.ToSByte(true),
-                    MimeCid = MimeUtils.GenerateMessageId()
-                };
+                MailOutboxAttachment jellyfishIcon = MailOutboxAttachment.Create(
+                    id: MailOutboxAttachment.NewId(), // Annahme: Generierung einer eindeutigen GUID
+                    mailId: mailUuid,
+                    mimeMediatype: "image",
+                    mimeMediasubtype: "png",
+                    filename: "jellyfish_image.png",
+                    mimeCid: MimeUtils.GenerateMessageId(),
+                    order: 1,
+                    attachmentPath: imageJellyfishPath,
+                    attachmentSha1: "xyz",
+                    isEmbeddedInHtml: true,
+                    createTime: DateTime.Now // Annahme: Aktuelles Datum und Uhrzeit
+                );
 
-                var emailType = await mailoutboxRepository.GetEmailType(MailHandler.MailType.To);
+                MailOutboxAttachment appStore = MailOutboxAttachment.Create(
+                    id: MailOutboxAttachment.NewId(), // Annahme: Generierung einer eindeutigen GUID
+                    mailId: mailUuid,
+                    mimeMediatype: "image",
+                    mimeMediasubtype: "png",
+                    filename: "appstore_icon.png",
+                    mimeCid: MimeUtils.GenerateMessageId(),
+                    order: 2,
+                    attachmentPath: imageAppstorePath,
+                    attachmentSha1: "xyz",
+                    isEmbeddedInHtml: true,
+                    createTime: DateTime.Now // Annahme: Aktuelles Datum und Uhrzeit
+                );
+
+                MailOutboxAttachment playStore = MailOutboxAttachment.Create(
+                    id: MailOutboxAttachment.NewId(), // Annahme: Generierung einer eindeutigen GUID
+                    mailId: mailUuid,
+                    mimeMediatype: "image",
+                    mimeMediasubtype: "png",
+                    filename: "playstore_icon.png",
+                    mimeCid: MimeUtils.GenerateMessageId(),
+                    order: 3,
+                    attachmentPath: imagePlaystorePath,
+                    attachmentSha1: "xyz",
+                    isEmbeddedInHtml: true,
+                    createTime: DateTime.Now // Annahme: Aktuelles Datum und Uhrzeit
+                );
+
+                var emailType = await emailTypeRepository.GetAsync(x=> x.Type == MailHandler.MailType.To);
+
                 string bodyHtml = string.Format(@"
                                 <!DOCTYPE html>
                                 <html lang=""de"">
@@ -154,34 +160,33 @@ namespace Application.CQS.User.EventHandler
                 {
                     try
                     {
+                        var recipient = MailOutboxRecipient.Create(
+                            mailUuid,
+                            emailType.Id,
+                            notification.e.Email,
+                            DateTime.Now);
 
-                        var recipients = new List<MailOutboxRecipient>()
-                        {
-                            new MailOutboxRecipient
-                            {
-                                CreatedTime = DateTime.Now,
-                                Email=notification.e.Email.EmailValue,
-                                MailUuid=mailUuid,
-                                EmailTypeUuid=emailType.Uuid
-                            }
-                        };
+                        var recipients = new List<MailOutboxRecipient>() { recipient };
                         var attachments = new List<MailOutboxAttachment>() {
                                     playStore,jellyfishIcon,appStore
                                 };
+
                         var body = Encoding.UTF8.GetBytes(bodyHtml);
-                        var mail = new MailOutbox
-                        {
-                            Uuid = mailUuid,
-                            CreatedTime = DateTime.Now,
-                            From = mailSender,
-                            Subject = @"Registrierung abgeschlossen " + notification.e.UserName + ", Jellyfish im vollem Umfang nutzen \u2764",
-                            Body = body,
-                            BodyIsHtml = Convert.ToSByte(true),
-                            MailOutboxAttachments = attachments,
-                            MailOutboxRecipients = recipients,
-                        };
-                        await mailoutboxRepository.AddAsync(mail);
-                        mail.MailOutboxAttachments.ToList().ForEach(y => System.Diagnostics.Debug.WriteLine(y.Uuid));
+                        var systemUser = Domain.Entities.User.User.GetSystemUser();
+                        string subject = @"Registrierung abgeschlossen " + notification.e.UserName + ", Jellyfish im vollem Umfang nutzen \u2764";
+                        bool bodyIsHtml = true;
+                        var mail = MailOutbox.Create(
+                            mailUuid,
+                            systemEmail,
+                            subject,
+                            body,
+                            bodyIsHtml,
+                            recipients,
+                            attachments,
+                            systemUser);
+
+                        mailoutboxRepository.Add(mail);
+                        mail.MailOutboxAttachments.ToList().ForEach(y => System.Diagnostics.Debug.WriteLine(y.Id));
                         await unitOfWork.SaveChangesAsync();
                         transaction.Commit();
                     }

@@ -23,17 +23,17 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.AcceptFriend
 
         public async Task<Result<bool>> Handle(AcceptFriendshipRequestCommand request, CancellationToken cancellationToken)
         {
-            var executor = await _userRepository.GetAsync(x => x.Uuid == request.ExecutorUserId);
+            var executor = await _userRepository.GetAsync(x => x.Id.Id == request.ExecutorUserId);
             if (executor is null)
             {
                 return Result<bool>.Failure("executor not found", Domain.Error.Error.ERROR_CODE.NotFound);
             }
-            var target = await _userRepository.GetAsync(x => x.Uuid == request.TargetUserId);
+            var target = await _userRepository.GetAsync(x => x.Id.Id == request.TargetUserId);
             if (target is null)
             {
                 return Result<bool>.Failure("target-user not found", Domain.Error.Error.ERROR_CODE.NotFound);
             }
-            var requester = await _userRepository.GetAsync(x => x.Uuid == request.RequestUserId);
+            var requester = await _userRepository.GetAsync(x => x.Id.Id == request.RequestUserId);
             if (requester is null)
             {
                 return Result<bool>.Failure("request-user not found", Domain.Error.Error.ERROR_CODE.NotFound);
@@ -60,7 +60,7 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.AcceptFriend
             {
                 var friendshipRequest = receivedRequest.Where(x => x.RequestUser == requester).Single();
                 target.AcceptFriendshipRequest(friendshipRequest);
-                _userRepository.UpdateAsync(target);
+                _userRepository.Update(target);
             }
             catch (Exception ex)
             {

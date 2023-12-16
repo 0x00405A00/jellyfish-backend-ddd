@@ -43,7 +43,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
 
         public async Task<Result<List<MessageDTO>>> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Chats.Chat chat = await _chatRepository.GetAsync(x=>x.Uuid == request.ChatId);
+            Domain.Entities.Chats.Chat chat = await _chatRepository.GetAsync(x=>x.Id.Id == request.ChatId);
             if(chat is null)
             {
                 return Result<List<MessageDTO>>.Failure("chat is not existing", Domain.Error.Error.ERROR_CODE.NotFound);
@@ -79,7 +79,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
 
                         Domain.Entities.Message.Message messageEntity = Domain.Entities.Message.Message.Create(
                             messageId,
-                            chat.Uuid,
+                            chat.Id,
                             chatMember.User,
                             null,
                             null,
@@ -98,7 +98,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
 
                 }
                 //save nur wenn errs collected is empty
-                _chatRepository.UpdateAsync(chat);
+                _chatRepository.Update(chat);
                 _chatRepository.PublishDomainEvents(chat, mediator);
             }
             catch (Exception ex)

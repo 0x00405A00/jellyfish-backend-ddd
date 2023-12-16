@@ -5,7 +5,6 @@ using Domain.Exceptions;
 using Domain.Extension;
 using Domain.Primitives;
 using Domain.ValueObjects;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Domain.Entities.Message
 {

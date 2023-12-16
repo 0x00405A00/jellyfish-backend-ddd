@@ -23,7 +23,7 @@ namespace Application.CQS.Auth.Queries.GetAuthById
         }
         public async Task<Result<AuthDTO>> Handle(GetAuthByIdQuery request, CancellationToken cancellationToken)
         {
-            var data = _authRepository.GetAsync(x => x.Uuid == request.Id);
+            var data = _authRepository.GetAsync(x => x.Id.Id == request.Id);
             if (data == null)
             {
                 throw new UserNotFoundException(request.Id);

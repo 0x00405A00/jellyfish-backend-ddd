@@ -23,7 +23,7 @@ namespace Application.CQS.Messenger.User.Queries.GetUserById
         }
         public async Task<Result<MessengerUserDTO>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var data = await _userRepository.GetAsync(x => x.Uuid == request.Id);
+            var data = await _userRepository.GetAsync(x => x.Id.Id == request.Id);
             if (data == null)
             {
                 throw new UserNotFoundException(request.Id);

@@ -29,17 +29,17 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriend
         public async Task<Result<RemoveFriendshipRequestDTO>> Handle(RemoveFriendshipRequestCommand request, CancellationToken cancellationToken)
         {
 
-            var executor = await _userRepository.GetAsync(x => x.Uuid == request.ExecutorUserId);
+            var executor = await _userRepository.GetAsync(x => x.Id.ToGuid() == request.ExecutorUserId);
             if (executor is null)
             {
                 return Result<RemoveFriendshipRequestDTO>.Failure("executor not found", Domain.Error.Error.ERROR_CODE.NotFound);
             }
-            var target = await _userRepository.GetAsync(x => x.Uuid == request.TargetUserId);
+            var target = await _userRepository.GetAsync(x => x.Id.ToGuid() == request.TargetUserId);
             if (target is null)
             {
                 return Result<RemoveFriendshipRequestDTO>.Failure("target-user not found", Domain.Error.Error.ERROR_CODE.NotFound);
             }
-            var requester = await _userRepository.GetAsync(x => x.Uuid == request.RequestUserId);
+            var requester = await _userRepository.GetAsync(x => x.Id.ToGuid() == request.RequestUserId);
             if (requester is null)
             {
                 return Result<RemoveFriendshipRequestDTO>.Failure("request-user not found", Domain.Error.Error.ERROR_CODE.NotFound);
@@ -52,14 +52,14 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriend
             }
             try
             {
-                var friendshipRequest = executor.FriendshipRequests.Where(x => x.TargetUser.Uuid.ToGuid() == request.TargetUserId&& x.RequestUser.Uuid.ToGuid() == request.RequestUserId).Single();
+                var friendshipRequest = executor.ReceivedFriendshipRequests.Where(x => x.TargetUser.Id.ToGuid() == request.TargetUserId&& x.RequestUser.Id.ToGuid() == request.RequestUserId).Single();
                 if(friendshipRequest is null)
                 {
                     return Result<RemoveFriendshipRequestDTO>.Failure("there is no matching friend ship request", Domain.Error.Error.ERROR_CODE.Exception);
                 }
 
                 executor.RemoveFriendshipRequest(friendshipRequest);
-                _userRepository.UpdateAsync(requester);
+                _userRepository.Update(requester);
             }
             catch (Exception ex)
             {

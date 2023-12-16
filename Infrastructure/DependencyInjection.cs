@@ -4,12 +4,13 @@ using Infrastructure.Healthcheck.Concrete.MySql;
 using Infrastructure.HostedService.Backgroundservice;
 using Infrastructure.Interceptors;
 using Infrastructure.Mail;
-using Infrastructure.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.FileSys;
 using Infrastructure.Authentification;
 using Shared.Authentification.Service;
+using Microsoft.Extensions.Hosting;
+using Infrastructure.Repository.Concrete;
 
 namespace Infrastructure
 {
@@ -17,6 +18,11 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
+            services.Configure<HostOptions>(options =>
+            {
+                options.ServicesStartConcurrently = true;
+                options.ServicesStopConcurrently = true;
+            });
 
             services.AddScoped<IAntiVirus, AntiVirus>();
             services.AddScoped<IAzureAdultContentDetection, AzureAdultContentDetection>();
@@ -38,7 +44,7 @@ namespace Infrastructure
 
             services.AddSingleton<IHealtCheckMySqlHandler,HealtCheckMySqlHandler>();
 
-            services.AddScoped<DbContextAuditLogInterceptor>();
+            services.AddScoped<DbSaveChangesInterceptor>();
             services.AddScoped<ApplicationDbContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IMailoutboxRepository, MailOutboxRepository>();
@@ -55,11 +61,11 @@ namespace Infrastructure
             services.AddScoped<IMailHandler, MailHandler>();
 
             services.Scan(selector => selector
-            .FromAssemblies(AssemblyReference.Assembly)
-            .AddClasses(false)
-            .UsingRegistrationStrategy(Scrutor.RegistrationStrategy.Skip)
-            .AsImplementedInterfaces()//ClassName => IClassName
-            .WithScopedLifetime());
+                .FromAssemblies(AssemblyReference.Assembly)
+                .AddClasses(false)
+                .UsingRegistrationStrategy(Scrutor.RegistrationStrategy.Skip)
+                .AsImplementedInterfaces()//ClassName => IClassName
+                .WithScopedLifetime());
 
             services.AddHealthChecks()
                 .AddCheck<HealthCheckMySql>("mysql")

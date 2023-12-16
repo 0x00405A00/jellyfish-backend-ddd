@@ -1,5 +1,4 @@
 ﻿using Domain.Entities.Chats;
-using Domain.ValueObjects;
 
 namespace SharedTest.DomainTestInstance.Entity.Chats
 {

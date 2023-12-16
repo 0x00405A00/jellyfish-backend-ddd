@@ -45,9 +45,8 @@ namespace Application.CQS.Auth.Command.RefreshAuth
             var rexpMinTimeSpan = new TimeSpan(0, rexpMin, 0);
             try
             {
-                auth.TokenExpiresIn = DateTime.Now.Add(texpMinTimeSpan);
-                auth.RefreshTokenExpiresIn = DateTime.Now.Add(rexpMinTimeSpan);
-                _authRepository.UpdateAsync(auth);
+                auth.Refresh(texpMinTimeSpan, rexpMinTimeSpan); 
+                _authRepository.Update(auth);
                 await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)

@@ -34,11 +34,15 @@ namespace Domain.Entities.User
 
         private ICollection<UserFriend> _friends = new List<UserFriend>();
         public ICollection<UserFriend> Friends { get => _friends?.ToList(); }
+
         private ICollection<FriendshipRequest> _friendshipRequests = new List<FriendshipRequest>();
+        public ICollection<FriendshipRequest> ReceivedFriendshipRequests { get => _friendshipRequests?.Where(x=> x.TargetUser == this)?.ToList(); }
+        public ICollection<FriendshipRequest> RequestedFriendshipRequests { get => _friendshipRequests?.Where(x => x.RequestUser == this)?.ToList(); }
         public ICollection<FriendshipRequest> FriendshipRequests { get => _friendshipRequests?.ToList(); }
         private ICollection<UserRole> _roles = new List<UserRole>();
-        public ICollection<UserRole> Roles { get => _roles.ToList(); }
+        public ICollection<UserRole> UserRoles { get => _roles.ToList(); }
 
+        public UserTypeId UserTypeId { get; private set; }
         public UserType UserType { get;private set; }
         public string UserName { get; protected set; }
         public string Password { get; private set; }
@@ -546,7 +550,7 @@ namespace Domain.Entities.User
             {
                 throw new AddFriendException("you cant add yourself to friends");
             }
-            var userFriend = UserFriend.Create(this,friend, DateTime.Now, null, null, execUser);
+            var userFriend = UserFriend.Create(UserFriend.NewId(),this,friend, DateTime.Now, null, null, execUser);
             _friends.Add(userFriend);
             Raise(new UserAddFriendDomainEvent(this, friend));
         }
@@ -572,7 +576,7 @@ namespace Domain.Entities.User
             {
                 throw new AddRoleException("role already assigned");
             }
-            var userRole = UserRole.Create(role, DateTime.Now, null, null);
+            var userRole = UserRole.Create(UserRole.NewId(),role, DateTime.Now, null, null);
             _roles.Add(userRole);
             SetLastModified(assignerUser);
             Raise(new UserAssignedRoleToUserDomainEvent(assignerUser, this, role));
@@ -650,7 +654,7 @@ namespace Domain.Entities.User
         /// <returns></returns>
         public List<FriendshipRequest> GetRequestedFriendshipRequests()
         {
-            return this.FriendshipRequests.Where(x => x.AmIRequester(this))
+            return this.RequestedFriendshipRequests.Where(x => x.AmIRequester(this))
                                           .ToList();
         }
         /// <summary>
@@ -659,12 +663,12 @@ namespace Domain.Entities.User
         /// <returns></returns>
         public List<FriendshipRequest> GetReceivedFriendshipRequests()
         {
-            return this.FriendshipRequests.Where(x => x.AmIReceiver(this))
+            return this.RequestedFriendshipRequests.Where(x => x.AmIReceiver(this))
                                           .ToList();
         }
         public bool HasFriendshipRequests()
         {
-            return this.FriendshipRequests.Any();
+            return this.RequestedFriendshipRequests.Any();
         }
         public bool IsDeleted() => this.DeletedTime != null;
     }

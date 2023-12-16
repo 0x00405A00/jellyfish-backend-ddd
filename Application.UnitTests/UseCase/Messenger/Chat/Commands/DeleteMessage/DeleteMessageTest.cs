@@ -57,7 +57,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteMessage
             // Arrange
 
             var message = ChatInstance.AddMessage(UserInstance, "test", null);
-            var command = ValidCommand with { MessageId = message.Uuid.ToGuid() };
+            var command = ValidCommand with { MessageId = message.Id.ToGuid() };
 
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));

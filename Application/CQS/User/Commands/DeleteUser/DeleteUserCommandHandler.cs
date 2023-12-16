@@ -24,10 +24,10 @@ namespace Application.CQS.User.Commands.DeleteUser
 
         public async Task<Result<Guid>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetAsync(user => user.Uuid == request.UserId && user.DeletedTime==null);
+            var user = await _userRepository.GetAsync(user => user.Id.Id == request.UserId && user.DeletedTime==null);
             if (user == null)
                 return Result<Guid>.Failure("target user not found");
-            var deletetByUser = await _userRepository.GetAsync(user => user.Uuid == request.DeletedByUserId);
+            var deletetByUser = await _userRepository.GetAsync(user => user.Id.Id == request.DeletedByUserId);
             if (deletetByUser == null)
                 return Result<Guid>.Failure("execution user not found");
             try
@@ -47,7 +47,7 @@ namespace Application.CQS.User.Commands.DeleteUser
             }
 
             _userRepository.PublishDomainEvents(user, mediator);
-            return Result<Guid>.Success(user.Uuid.ToGuid());
+            return Result<Guid>.Success(user.Id.ToGuid());
         }
     }
 }

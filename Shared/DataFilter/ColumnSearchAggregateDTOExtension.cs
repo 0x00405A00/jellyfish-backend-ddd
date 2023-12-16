@@ -9,7 +9,7 @@ namespace Shared.DataFilter
 {
     public static class ColumnSearchAggregateDTOExtension
     {
-        public static ColumnSearchAggregateDTO GetFiltersFromSearchParams<TPresentationModel,TDBEntity>(this SearchParams searchParams)
+        public static ColumnSearchAggregateDTO GetFiltersFromSearchParams<TPresentationModel,TEntity>(this SearchParams searchParams)
         {
             List<Domain.Error.Error> errors = new List<Domain.Error.Error>();
             if (searchParams == null)

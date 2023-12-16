@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
+using Domain.Entities.Chats;
 using Domain.Entities.Chats.Exception;
 using Domain.Exceptions;
 using Domain.ValueObjects;
@@ -25,7 +26,7 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateChat
 
         public async Task<Result<ChatDTO>> Handle(UpdateChatCommand request, CancellationToken cancellationToken)
         {
-            var chat = await _chatRepository.GetAsync(x=>x.Uuid == request.ChatId);
+            var chat = await _chatRepository.GetAsync(x=>x.Id.Id == request.ChatId);
             if(chat == null)
             {
                 return Result<ChatDTO>.Failure("chat not found");
@@ -86,7 +87,7 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateChat
                 }
             }
 
-            _chatRepository.UpdateAsync(chat);
+            _chatRepository.Update(chat);
             var dto = mapper.Map<ChatDTO>(chat);
             return Result<ChatDTO>.Success(dto);
         }

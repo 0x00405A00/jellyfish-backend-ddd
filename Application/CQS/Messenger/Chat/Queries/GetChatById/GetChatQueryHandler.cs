@@ -19,7 +19,7 @@ namespace Application.CQS.Messenger.Chat.Queries.GetChatById
         }
         public async Task<Result<ChatDTO>> Handle(GetChatByIdQuery request, CancellationToken cancellationToken)
         {
-            var data = await _chatRepository.GetAsync(x => x.Uuid == request.Id);
+            var data = await _chatRepository.GetAsync(x => x.Id.Id == request.Id);
             if (data == null)
             {
                 return Result<ChatDTO>.Failure("chat not found");

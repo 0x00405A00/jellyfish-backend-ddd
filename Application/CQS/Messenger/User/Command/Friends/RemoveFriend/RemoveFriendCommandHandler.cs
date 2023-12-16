@@ -25,8 +25,8 @@ namespace Application.CQS.Messenger.User.Command.Friends.RemoveFriend
         public async Task<Result<Guid>> Handle(RemoveFriendCommand request, CancellationToken cancellationToken)
         {
 
-            var user = await _userRepository.GetAsync(x => x.Uuid == request.ExecuteUserId);
-            var targetUserThatShouldRemoved = await _userRepository.GetAsync(x => x.Uuid == request.TargetUserId);
+            var user = await _userRepository.GetAsync(x => x.Id.Id == request.ExecuteUserId);
+            var targetUserThatShouldRemoved = await _userRepository.GetAsync(x => x.Id.Id == request.TargetUserId);
             if(targetUserThatShouldRemoved is null)
             {
                 return Result<Guid>.Failure("target user mot found", Domain.Error.Error.ERROR_CODE.NotFound);
@@ -39,7 +39,7 @@ namespace Application.CQS.Messenger.User.Command.Friends.RemoveFriend
             try
             {
                 user.RemoveFriend(user, targetUserThatShouldRemoved);
-                _userRepository.UpdateAsync(user);  
+                _userRepository.Update(user);  
             }
             catch (Exception ex)
             {

@@ -32,12 +32,12 @@ namespace Application.CQS.Messenger.Chat.Command.DeleteMessage
 
         public async Task<Result<Guid>> Handle(DeleteMessageCommand request, CancellationToken cancellationToken)
         {
-            var deleteByUser = await _userRepository.GetAsync(x => x.Uuid == request.DeletedById);
+            var deleteByUser = await _userRepository.GetAsync(x => x.Id.Id == request.DeletedById);
             if(deleteByUser is null)
             {
                 return Result<Guid>.Failure("operational user not found");
             }
-            var message = await _messageRepository.GetAsync(x=>x.Uuid == request.MessageId && x.ChatUuid == request.ChatId);
+            var message = await _messageRepository.GetAsync(x=>x.Id.Id == request.MessageId && x.Chat.Id == request.ChatId);
             if (message is null)
             {
                 return Result<Guid>.Failure("message not found");
@@ -50,7 +50,7 @@ namespace Application.CQS.Messenger.Chat.Command.DeleteMessage
             {
                 return Result<Guid>.Failure("you are not the owner of the message");
             }
-            _messageRepository.UpdateAsync(message);    
+            _messageRepository.Update(message);    
             _messageRepository.PublishDomainEvents(message, mediator);
 
             return Result<Guid>.Success(request.MessageId);

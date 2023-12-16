@@ -4,16 +4,17 @@ using Microsoft.EntityFrameworkCore;
 using Shared.DataFilter;
 using Shared.DataFilter.Infrastructure;
 using System.Linq.Expressions;
+using static Dapper.SqlMapper;
 
 namespace Infrastructure.Repository
 {
     public static class GenericRepositoryExtension
     {
 
-        public static IQueryable<TDbEntity> ExpressionQuery<TDbEntity>(this DbSet<TDbEntity> dbSet, ColumnSearchAggregateDTO columnSearchAggregateDTO)
-            where TDbEntity : DatabaseEntityModel
+        public static IQueryable<TEntity> ExpressionQuery<TEntity>(this DbSet<TEntity> dbSet, ColumnSearchAggregateDTO columnSearchAggregateDTO)
+            where TEntity : Entity
         {
-            var expression = columnSearchAggregateDTO.GetExpression<TDbEntity>(nameof(dbSet));
+            var expression = columnSearchAggregateDTO.GetExpression<TEntity>(nameof(dbSet));
             var value = expression == null ?
                 dbSet.AsNoTracking().AsQueryable() : dbSet.AsNoTracking().AsQueryable().Where(expression);
 
@@ -23,18 +24,18 @@ namespace Infrastructure.Repository
             }
             return value;
         }
-        public static List<TDbEntity> OrderQuery<TDbEntity>(this List<TDbEntity> data, ColumnSearchAggregateDTO columnSearchAggregateDTO)
-            where TDbEntity : DatabaseEntityModel
+        public static List<TEntity> OrderQuery<TEntity>(this List<TEntity> data, ColumnSearchAggregateDTO columnSearchAggregateDTO)
+            where TEntity : Entity
         {
             var value = data;
             if (columnSearchAggregateDTO.Sorting != null && columnSearchAggregateDTO.Sorting.Any())
             {
-                value = value.GetSortedEntities<TDbEntity>(columnSearchAggregateDTO.Sorting);
+                value = value.GetSortedEntities<TEntity>(columnSearchAggregateDTO.Sorting);
             }
             return value;
         }
-        public static IQueryable<TDbEntity> ExpressionQuery<TDbEntity>(this DbSet<TDbEntity> dbSet, Expression<Func<TDbEntity, bool>> expression = null)
-            where TDbEntity : DatabaseEntityModel
+        public static IQueryable<TEntity> ExpressionQuery<TEntity>(this DbSet<TEntity> dbSet, Expression<Func<TEntity, bool>> expression = null)
+            where TEntity : Entity
         {
             var value = expression == null ?
                 dbSet.AsNoTracking().AsQueryable() : dbSet.AsNoTracking().AsQueryable().Where(expression);

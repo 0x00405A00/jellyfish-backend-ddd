@@ -3,13 +3,11 @@
     public class Identification : IEquatable<Identification>
     {
         public Guid Id { get; private set; }
-        public Identification() {
-        
-        }
         public Identification(Guid guid)
         {
             Id = guid;
         }
+        public static Identification Create() => new Identification(Guid.NewGuid());
         public static bool operator !=(Identification? first, Identification? second)
         {
             if (first is null || second is null) return false;

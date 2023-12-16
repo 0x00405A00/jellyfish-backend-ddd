@@ -1,6 +1,6 @@
 ﻿using Application.CQS.Messenger.User.Command.FriendshipRequests.AcceptFriendshipRequest;
 using AutoMapper;
-using Domain.ValueObjects;
+using Domain.Entities.User;
 using Infrastructure.Abstractions;
 using MediatR;
 using System.Linq.Expressions;

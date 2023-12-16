@@ -35,12 +35,12 @@ namespace Application.CQS.User.Commands.Roles.RevokeRole
             {
                 throw new InvalidOperationException($"userId is {request.UserId}");
             }
-            var user = await _userRepository.GetAsync(user => user.Uuid == request.UserId);
+            var user = await _userRepository.GetAsync(user => user.Id.Id == request.UserId);
             if (user is null)
                 throw new UserNotFoundException(request.UserId);
 
-            var revokedByUser = await _userRepository.GetAsync(x => x.Uuid == request.RevokerId);
-            var foundRoles = await roleRepository.ListAsync(role => request.RoleIds.Contains(role.Uuid));
+            var revokedByUser = await _userRepository.GetAsync(x => x.Id.Id == request.RevokerId);
+            var foundRoles = await roleRepository.ListAsync(role => request.RoleIds.Contains(role.Id.Id));
             if(!foundRoles.Any())
             {
                 return Result<List<Guid>>.Failure("invalid roles");
@@ -51,7 +51,7 @@ namespace Application.CQS.User.Commands.Roles.RevokeRole
                 try
                 {
                     user.RemoveRole(revokedByUser, role);
-                    roleIds.Add(role.Uuid.ToGuid());
+                    roleIds.Add(role.Id.ToGuid());
                 }
                 catch (Exception ex)
                 {
@@ -62,7 +62,7 @@ namespace Application.CQS.User.Commands.Roles.RevokeRole
             {
                 return Result<List<Guid>>.Failure("no roles removed");
             }
-            _userRepository.UpdateAsync(user);
+            _userRepository.Update(user);
             _userRepository.PublishDomainEvents(user, mediator);
             return Result<List<Guid>>.Success(request.RoleIds);
         }

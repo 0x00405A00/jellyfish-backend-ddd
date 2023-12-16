@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using Domain.Entities.Chats;
+using Domain.Entities.MailoutBox;
+using Domain.Entities.User;
 using Domain.Extension;
 using Domain.ValueObjects;
 using Microsoft.Extensions.Configuration;
@@ -35,25 +38,25 @@ namespace Application.Mapper
                 .ForMember(dst => dst.ChatId, dst => dst.MapFrom(x => x.Chat.ToGuid()))
                 .ForMember(dst => dst.BinaryContentBase64, dst => dst.MapFrom(x => x.MediaContent.ToString()))
                 .ForMember(dst => dst.BinaryContentMimeType, dst => dst.MapFrom(x => x.MediaContent.FileExtension))
-                .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Uuid.ToGuid()))
-                .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Uuid.ToGuid()))
-                .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Uuid.ToGuid()))
-                .ForMember(dst => dst.OwnerUuid, dst => dst.MapFrom(x => x.Owner.Uuid.ToGuid()));
+                .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Id.ToGuid()))
+                .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Id.ToGuid()))
+                .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Id.ToGuid()))
+                .ForMember(dst => dst.OwnerUuid, dst => dst.MapFrom(x => x.Owner.Id.ToGuid()));
 
             CreateMap<Domain.Entities.Chats.ChatId, Guid>()
                 .ConvertUsing(dst => dst.Id);
             CreateMap<Guid, Domain.Entities.Chats.ChatId>()
                 .ConvertUsing(dst => new Domain.Entities.Chats.ChatId(dst));
 
-            CreateMap<ChatMember, Domain.ValueObjects.UserFriend>();
+            CreateMap<ChatMember, UserFriend>();
             CreateMap<Domain.Entities.Chats.Chat, ChatDTO>()
-                .ForMember(dst => dst.Members, src => src.MapFrom(x => x.Members.Select(x => x.User.Uuid.ToGuid()).ToList()))
-                .ForMember(dst => dst.Admins, src => src.MapFrom(x => x.Admins.Select(x => x.User.Uuid.ToGuid()).ToList()))
-                .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Uuid.ToGuid()))
-                .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Uuid.ToGuid()))
+                .ForMember(dst => dst.Members, src => src.MapFrom(x => x.Members.Select(x => x.User.Id.ToGuid()).ToList()))
+                .ForMember(dst => dst.Admins, src => src.MapFrom(x => x.Admins.Select(x => x.User.Id.ToGuid()).ToList()))
+                .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Id.ToGuid()))
+                .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Id.ToGuid()))
                 .ForMember(dst => dst.PictureBase64, dst => dst.MapFrom(x => x.Picture.ToString()))
                 .ForMember(dst => dst.PictureMimeType, dst => dst.MapFrom(x => x.Picture.FileExtension))
-                .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Uuid.ToGuid()))
+                .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Id.ToGuid()))
                 .ForMember(dst => dst.Messages, src => src.MapFrom(x => x.Messages));
 
             CreateMap<Domain.Entities.Role.RoleId, Guid>()
@@ -61,50 +64,50 @@ namespace Application.Mapper
             CreateMap<Guid, Domain.Entities.Role.RoleId>()
                 .ConvertUsing(dst => new Domain.Entities.Role.RoleId(dst));
             CreateMap<Domain.Entities.Role.Role, RoleDTO>()
-                .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Uuid.ToGuid()))
-                .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Uuid.ToGuid()))
-                .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Uuid.ToGuid()));
+                .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Id.ToGuid()))
+                .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Id.ToGuid()))
+                .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Id.ToGuid()));
 
             CreateMap<Domain.Entities.User.UserId, Guid>()
                 .ConvertUsing(dst => dst.Id);
             CreateMap<Guid, Domain.Entities.User.UserId>()
                 .ConvertUsing(dst => new Domain.Entities.User.UserId(dst));
             CreateMap<Domain.Entities.User.User, UserDTO>()
-                .ForMember(dst => dst.Roles, dst => dst.MapFrom(x => x.Roles.Select(x => x.Role).ToList()))
-                .ForMember(dst => dst.Friends, dst => dst.MapFrom(x => x.Friends.Select(x => x.Friend.Uuid.ToGuid()).ToList()))
-                .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.FriendshipRequests))
+                .ForMember(dst => dst.Roles, dst => dst.MapFrom(x => x.UserRoles.Select(x => x.Role).ToList()))
+                .ForMember(dst => dst.Friends, dst => dst.MapFrom(x => x.Friends.Select(x => x.Friend.Id.ToGuid()).ToList()))
+                .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.RequestedFriendshipRequests))
                 .ForMember(dst => dst.Phone, dst => dst.MapFrom(x => x.Phone.ToString()))
                 .ForMember(dst => dst.Password, dst => dst.MapFrom(x => string.Empty))//securtiy: password shouldnt transfer over network
                 .ForMember(dst => dst.PasswordConfirm, dst => dst.MapFrom(x => string.Empty))//securtiy: password shouldnt transfer over network
-                .ForMember(dst => dst.UserTypeUuid, dst => dst.MapFrom(x => x.UserType.Uuid.ToGuid()))
+                .ForMember(dst => dst.UserTypeUuid, dst => dst.MapFrom(x => x.UserType.Id.ToGuid()))
                 .ForMember(dst => dst.PictureUrl, dst => dst.MapFrom(x => Shared.Http.Extension.Create(contentDeliveryUrl + x.Picture.FilePath.ToString().Replace(@"\","/"))??null))
                 .ForMember(dst => dst.PictureMimeType, dst => dst.MapFrom(x => x.Picture.FileExtension))
-                .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Uuid.ToGuid()))
-                .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Uuid.ToGuid()))
-                .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Uuid.ToGuid()))
+                .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Id.ToGuid()))
+                .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Id.ToGuid()))
+                .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Id.ToGuid()))
                 .ForMember(dst => dst.Email, dst => dst.MapFrom(x => x.Email.ToString()));
             CreateMap<Domain.Entities.User.User, MessengerUserDTO>()
                 .ForMember(dst => dst.Friends, dst => dst.MapFrom(x => x.Friends.Select(x => x.Friend).ToList()))
-                .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.FriendshipRequests))
+                .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.RequestedFriendshipRequests))
                 .ForMember(dst => dst.PictureBase64, dst => dst.MapFrom(x => x.Picture.ToString()));
 
-            CreateMap<Domain.ValueObjects.FriendshipRequest, FriendshipRequestDTO>();
-            CreateMap<RoleDTO, Domain.ValueObjects.UserRole>();
-            CreateMap<UserDTO, Domain.ValueObjects.UserFriend>();
+            CreateMap<FriendshipRequest, FriendshipRequestDTO>();
+            CreateMap<RoleDTO, UserRole>();
+            CreateMap<UserDTO, UserFriend>();
 
-            CreateMap<Infrastructure.DatabaseEntity.MailOutbox, MailOutboxDTO>();
-            CreateMap<Infrastructure.DatabaseEntity.MailOutboxAttachment, MailOutboxAttachmentDTO>();
-            CreateMap<Infrastructure.DatabaseEntity.MailOutboxRecipient, MailOutboxRecipientDTO>()
-                .ForMember(dst => dst.EmailType, dst => dst.MapFrom(x => x.EmailTypeUu.Type));
+            CreateMap<MailOutbox, MailOutboxDTO>();
+            CreateMap<MailOutboxAttachment, MailOutboxAttachmentDTO>();
+            CreateMap<MailOutboxRecipient, MailOutboxRecipientDTO>()
+                .ForMember(dst => dst.EmailType, dst => dst.MapFrom(x => x.EmailType.Type));
 
             CreateMap<Domain.Entities.User.UserTypeId, Guid>()
                 .ConvertUsing(dst => dst.Id);
             CreateMap<Guid, Domain.Entities.User.UserTypeId>()
                 .ConvertUsing(dst => new Domain.Entities.User.UserTypeId(dst));
             CreateMap<Domain.Entities.User.UserType, UserTypeDTO>()
-                .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Uuid.ToGuid()))
-                .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Uuid.ToGuid()))
-                .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Uuid.ToGuid()));
+                .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Id.ToGuid()))
+                .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Id.ToGuid()))
+                .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Id.ToGuid()));
         }
     }
     public class ByteArrayToBase64StringConverter : IValueConverter<byte[], string>

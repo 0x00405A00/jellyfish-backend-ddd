@@ -26,7 +26,7 @@ namespace Application.CQS.User.Commands.UpdatePassword
             {
                 return Result<Guid>.Failure("user not found");
             }
-            var user = await _userRepository.GetAsync(user => user.Uuid == request.UserId);
+            var user = await _userRepository.GetAsync(user => user.Id.Id == request.UserId);
             if (user == null)
             {
                 return Result<Guid>.Failure("user not found");
@@ -43,7 +43,7 @@ namespace Application.CQS.User.Commands.UpdatePassword
 
             _userRepository.Update(user);
             _userRepository.PublishDomainEvents(user, mediator);
-            return Result<Guid>.Success(user.Uuid.ToGuid());
+            return Result<Guid>.Success(user.Id.ToGuid());
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Application.CQS.User.Commands.RegisterUser.Register
         {
             var systemUser = Domain.Entities.User.User.GetSystemUser();
             var command = new CreateUserCommand(
-                systemUser.Uuid.ToGuid(),
+                systemUser.Id.ToGuid(),
                 request.UserName,
                 request.Password,
                 request.PasswordRepeat,

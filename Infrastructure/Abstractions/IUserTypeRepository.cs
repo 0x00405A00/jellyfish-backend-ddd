@@ -1,9 +1,9 @@
-﻿using Infrastructure.DatabaseEntity;
+﻿using Domain.Entities.User;
 using Infrastructure.Repository;
 
 namespace Infrastructure.Abstractions
 {
-    public interface IUserTypeRepository : IGenericRepository<Domain.Entities.User.UserType, UserType>
+    public interface IUserTypeRepository : IGenericRepository<UserType>
     {
 
     }
