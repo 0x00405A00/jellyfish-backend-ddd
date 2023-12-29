@@ -1,10 +1,8 @@
 ﻿using Domain.Primitives;
-using Infrastructure.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Shared.DataFilter;
 using Shared.DataFilter.Infrastructure;
 using System.Linq.Expressions;
-using static Dapper.SqlMapper;
 
 namespace Infrastructure.Repository
 {

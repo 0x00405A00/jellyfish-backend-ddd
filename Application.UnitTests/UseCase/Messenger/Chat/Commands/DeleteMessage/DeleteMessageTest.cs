@@ -1,6 +1,5 @@
 ﻿using Application.CQS.Messenger.Chat.Command.DeleteMessage;
 using AutoMapper;
-using Domain.Entities.User;
 using Domain.Extension;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
@@ -30,8 +29,8 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteMessage
         private readonly IMapper _mapperMock;
         private readonly IMessageRepository _messageRepository;
 
-        private static readonly Domain.Entities.User.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserAdminId);
-        private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserAdminId);
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
         private readonly Domain.Entities.Chats.Chat ChatInstance = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(UserInstance);
 
         public DeleteMessageTest()

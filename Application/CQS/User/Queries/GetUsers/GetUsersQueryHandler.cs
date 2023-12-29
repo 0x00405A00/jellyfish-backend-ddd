@@ -21,7 +21,7 @@ namespace Application.CQS.User.Queries.GetUsers
         }
         public async Task<Result<List<UserDTO>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
-            var searchFilterDto = ColumnSearchAggregateDTOExtension.GetFiltersFromSearchParams<UserDTO, Domain.Entities.User.User>(request.SearchParams);
+            var searchFilterDto = ColumnSearchAggregateDTOExtension.GetFiltersFromSearchParams<UserDTO, Domain.Entities.Users.User>(request.SearchParams);
             if(searchFilterDto.HasErrors)
             {
                 return Result<List<UserDTO>>.Failure(searchFilterDto.ErrorsToString);

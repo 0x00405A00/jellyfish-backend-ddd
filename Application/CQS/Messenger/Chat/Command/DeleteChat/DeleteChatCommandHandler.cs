@@ -1,5 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
-using Domain.Entities.Chats.Exception;
+using Domain.Entities.Chats.Exceptions;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 

@@ -8,9 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Abstractions\" />
-    <Folder Include="Entities\Role\Exception\" />
-    <Folder Include="Shared\" />
+    <Folder Include="Entities\Roles\Exceptions\" />
   </ItemGroup>
 
   <ItemGroup>

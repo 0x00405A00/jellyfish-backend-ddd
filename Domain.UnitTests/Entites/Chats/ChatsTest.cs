@@ -1,6 +1,7 @@
 ﻿using Domain.Entities.Chats;
-using Domain.Entities.Chats.Exception;
-using Domain.Entities.Message.Exception;
+using Domain.Entities.Chats.Exceptions;
+using Domain.Entities.Messages;
+using Domain.Entities.Messages.Exceptions;
 using Domain.ValueObjects;
 
 namespace Domain.UnitTests.Entites.Chats
@@ -23,7 +24,7 @@ namespace Domain.UnitTests.Entites.Chats
                 ChatMember.Create(Guid.NewGuid(),SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
                 ChatMember.Create(Guid.NewGuid(),createdByUser,true,DateTime.Now,null,null),
             };
-            var messages = new List<Domain.Entities.Message.Message>();
+            var messages = new List<Message>();
             var createdTime = DateTime.Now;
             DateTime? lastModifiedTime = null;
             DateTime? deletedTime = null;
@@ -81,7 +82,7 @@ namespace Domain.UnitTests.Entites.Chats
                 ChatMember.Create(Guid.NewGuid(),SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(),false,DateTime.Now,null,null),
                 ChatMember.Create(Guid.NewGuid(),createdByUser,false,DateTime.Now,null,null),
             };
-            List<Entities.User.User> admins = null; // Admins sind null
+            List<Entities.Users.User> admins = null; // Admins sind null
 
             // Act and Assert
             var exception = Assert.Throws<InvalidDataException>(() => Chat.Create(chatId, createdByUser, null, null, chatName, null, null, members, null, DateTime.Now, null, null));
@@ -603,7 +604,7 @@ namespace Domain.UnitTests.Entites.Chats
             chat.UpdateName(adminUser, newName);
 
             // Assert
-            Assert.Equal(newName, chat.ChatName);
+            Assert.Equal(newName, chat.Name);
         }
 
         [Fact]
@@ -657,7 +658,7 @@ namespace Domain.UnitTests.Entites.Chats
             chat.UpdateDescription(adminUser, newDescription);
 
             // Assert
-            Assert.Equal(newDescription, chat.ChatDescription);
+            Assert.Equal(newDescription, chat.Description);
         }
 
         [Fact]

@@ -17,8 +17,8 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteChat
         private readonly IChatRepository _chatRepositoryMock;
         private readonly IUserRepository _userRepositoryMock;
 
-        private static readonly Domain.Entities.User.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
-        private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+        private static readonly Domain.Entities.Users.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
         private readonly Domain.Entities.Chats.Chat ChatInstance = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(UserAdminInstance);
 
         public DeleteChatTest()
@@ -51,7 +51,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteChat
         {
             // Arrange
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
-                .Returns(Task.FromResult<Domain.Entities.User.User>(null));
+                .Returns(Task.FromResult<Domain.Entities.Users.User>(null));
 
             // Act
             var result = await _handler.Handle(InvalidUserCommand, CancellationToken.None);

@@ -1,6 +1,5 @@
 ﻿using Application.CQS.User.Commands.DeleteUser;
 using AutoMapper;
-using Domain.Entities.User;
 using Infrastructure.Abstractions;
 using MediatR;
 using System.Linq.Expressions;
@@ -21,7 +20,7 @@ namespace Application.UnitTests.UseCase.User.Commands.DeleteUser
         private readonly IRoleRepository _roleRepositoryMock;
         private readonly IMediator _mediatorMock;
 
-        private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
 
         public DeleteUserTest()
         {
@@ -64,7 +63,7 @@ namespace Application.UnitTests.UseCase.User.Commands.DeleteUser
             var handler = _handler;
 
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
-                   .Returns(Task.FromResult<Domain.Entities.User.User>(null));
+                   .Returns(Task.FromResult<Domain.Entities.Users.User>(null));
 
             // Act
             var result = await handler.Handle(ValidCommand, CancellationToken.None);

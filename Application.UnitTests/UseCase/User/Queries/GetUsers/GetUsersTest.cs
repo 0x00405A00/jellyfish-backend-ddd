@@ -28,7 +28,7 @@ namespace Application.UnitTests.UseCase.User.Queries.GetUsers
         private readonly IMapper _mapperMock;
         private readonly IUserRepository _userRepositoryMock;
 
-        private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
         
 
 
@@ -49,8 +49,8 @@ namespace Application.UnitTests.UseCase.User.Queries.GetUsers
             //Arrange
             var meta = new Infrastructure.Repository.Primitives.Meta(); 
             var searchFilterDto = ColumnSearchAggregateDTOExtension.GetFiltersFromSearchParams<UserDTO, Infrastructure.DatabaseEntity.User>(ValidQueryWithConditionalGroups.SearchParams);
-            var listAsyncWithMetaReturns = new List<Domain.Entities.User.User>() { UserInstance };
-            _userRepositoryMock.ListAsyncWithMeta(Arg.Any<ColumnSearchAggregateDTO>()).Returns(new RepositoryResponse<ICollection<Domain.Entities.User.User>>(listAsyncWithMetaReturns, ref meta, searchFilterDto)
+            var listAsyncWithMetaReturns = new List<Domain.Entities.Users.User>() { UserInstance };
+            _userRepositoryMock.ListAsyncWithMeta(Arg.Any<ColumnSearchAggregateDTO>()).Returns(new RepositoryResponse<ICollection<Domain.Entities.Users.User>>(listAsyncWithMetaReturns, ref meta, searchFilterDto)
             {
 
             }); 
@@ -68,8 +68,8 @@ namespace Application.UnitTests.UseCase.User.Queries.GetUsers
             //Arrange
             var meta = new Infrastructure.Repository.Primitives.Meta();
             var searchFilterDto = ColumnSearchAggregateDTOExtension.GetFiltersFromSearchParams<UserDTO, Infrastructure.DatabaseEntity.User>(ValidQueryWithConditionalGroups.SearchParams);
-            var listAsyncWithMetaReturns = new List<Domain.Entities.User.User>() { UserInstance };
-            _userRepositoryMock.ListAsyncWithMeta(Arg.Any<ColumnSearchAggregateDTO>()).Returns(new RepositoryResponse<ICollection<Domain.Entities.User.User>>(listAsyncWithMetaReturns, ref meta, searchFilterDto)
+            var listAsyncWithMetaReturns = new List<Domain.Entities.Users.User>() { UserInstance };
+            _userRepositoryMock.ListAsyncWithMeta(Arg.Any<ColumnSearchAggregateDTO>()).Returns(new RepositoryResponse<ICollection<Domain.Entities.Users.User>>(listAsyncWithMetaReturns, ref meta, searchFilterDto)
             {
 
             });
@@ -87,8 +87,8 @@ namespace Application.UnitTests.UseCase.User.Queries.GetUsers
             //Arrange
             var meta = new Infrastructure.Repository.Primitives.Meta();
             var searchFilterDto = ColumnSearchAggregateDTOExtension.GetFiltersFromSearchParams<UserDTO, Infrastructure.DatabaseEntity.User>(InvalidQueryWithoutConditionalGroups.SearchParams);
-            var listAsyncWithMetaReturns = new List<Domain.Entities.User.User>() { };
-            _userRepositoryMock.ListAsyncWithMeta(Arg.Any<ColumnSearchAggregateDTO>()).Returns(new RepositoryResponse<ICollection<Domain.Entities.User.User>>(listAsyncWithMetaReturns, ref meta, searchFilterDto)
+            var listAsyncWithMetaReturns = new List<Domain.Entities.Users.User>() { };
+            _userRepositoryMock.ListAsyncWithMeta(Arg.Any<ColumnSearchAggregateDTO>()).Returns(new RepositoryResponse<ICollection<Domain.Entities.Users.User>>(listAsyncWithMetaReturns, ref meta, searchFilterDto)
             {
 
             });
@@ -106,8 +106,8 @@ namespace Application.UnitTests.UseCase.User.Queries.GetUsers
             //Arrange
             var meta = new Infrastructure.Repository.Primitives.Meta();
             var searchFilterDto = ColumnSearchAggregateDTOExtension.GetFiltersFromSearchParams<UserDTO, Infrastructure.DatabaseEntity.User>(InvalidQueryWithoutConditionalGroups.SearchParams);
-            var listAsyncWithMetaReturns = new List<Domain.Entities.User.User>() { };
-            _userRepositoryMock.ListAsyncWithMeta(Arg.Any<ColumnSearchAggregateDTO>()).Returns(new RepositoryResponse<ICollection<Domain.Entities.User.User>>(listAsyncWithMetaReturns, ref meta, searchFilterDto)
+            var listAsyncWithMetaReturns = new List<Domain.Entities.Users.User>() { };
+            _userRepositoryMock.ListAsyncWithMeta(Arg.Any<ColumnSearchAggregateDTO>()).Returns(new RepositoryResponse<ICollection<Domain.Entities.Users.User>>(listAsyncWithMetaReturns, ref meta, searchFilterDto)
             {
 
             });

@@ -1,5 +1,5 @@
 ﻿using Infrastructure.Repository;
-using Domain.Entities.MailoutBox;
+using Domain.Entities.Mails;
 
 namespace Infrastructure.Abstractions
 {

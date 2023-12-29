@@ -1,4 +1,4 @@
-﻿using Domain.Entities.Message.Event;
+﻿using Domain.Entities.Messages.Events;
 using MediatR;
 
 namespace Application.CQS.Messenger.Chat.Command.CreateMessage.EventHandler

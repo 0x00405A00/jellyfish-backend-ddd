@@ -1,5 +1,4 @@
-﻿using Domain.Entities.User;
-using Domain.ValueObjects;
+﻿using Domain.Entities.Users;
 using Infrastructure.Abstractions;
 using Infrastructure.Repository.Primitives;
 using Microsoft.EntityFrameworkCore;

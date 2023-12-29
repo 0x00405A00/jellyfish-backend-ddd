@@ -1,6 +1,7 @@
 ﻿using Application.CQS.User.Commands.Roles.RevokeRole;
 using AutoMapper;
-using Domain.Entities.User;
+using Domain.Entities.Roles;
+using Domain.Entities.Users;
 using Domain.Extension;
 using FluentAssertions;
 using Infrastructure.Abstractions;
@@ -22,11 +23,11 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.RevokeRole
         private readonly IRoleRepository _roleRepositoryMock;
         private readonly IMediator _mediatorMock;
 
-        private static readonly Domain.Entities.Role.Role RoleAdmin = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance("Admin");
-        private static readonly UserRole UserRoleAdmin = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserRoleInstance(RoleAdmin);
-        private static readonly Domain.Entities.Role.Role RoleUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance("User");
-        private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId, UserRoleAdmin);
-        private static readonly Domain.Entities.User.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserAdminId, UserRoleAdmin);
+        private static readonly Role RoleAdmin = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance("Admin");
+        private static readonly UserHasRelationToRole UserRoleAdmin = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserRoleInstance(RoleAdmin);
+        private static readonly Role RoleUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance("User");
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId, UserRoleAdmin);
+        private static readonly Domain.Entities.Users.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserAdminId, UserRoleAdmin);
 
         public RevokeRoleTest()
         {
@@ -49,7 +50,7 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.RevokeRole
 
             var command = Command with { RevokerId = UserAdminId, UserId = UserId, RoleIds = new List<Guid> { RoleAdmin.Id.ToGuid() } };
 
-            _roleRepositoryMock.ListAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Role, bool>>>()).Returns(new List<Domain.Entities.Role.Role>
+            _roleRepositoryMock.ListAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Role, bool>>>()).Returns(new List<Role>
             {
                 RoleAdmin,
             });
@@ -71,7 +72,7 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.RevokeRole
 
             var command = Command with { RevokerId = UserAdminId, UserId = UserId, RoleIds = new List<Guid> { RoleUser.Id.ToGuid() } };
 
-            _roleRepositoryMock.ListAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Role, bool>>>()).Returns(new List<Domain.Entities.Role.Role>
+            _roleRepositoryMock.ListAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Role, bool>>>()).Returns(new List<Role>
             {
             });
 

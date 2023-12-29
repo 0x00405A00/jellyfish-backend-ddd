@@ -23,7 +23,7 @@ namespace Application.UnitTests.UseCase.User.Commands.PasswordReset
         private readonly IUserRepository _userRepositoryMock;
         private readonly IMediator _mediatorMock;
 
-        private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
 
         public ResetTest()
         {
@@ -59,7 +59,7 @@ namespace Application.UnitTests.UseCase.User.Commands.PasswordReset
         public async Task Handle_InvalidResetRequest_ReturnsFailure()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns((Domain.Entities.User.User)null);
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns((Domain.Entities.Users.User)null);
 
             // Act
             var result = await _handler.Handle(ValidCommand, CancellationToken.None);

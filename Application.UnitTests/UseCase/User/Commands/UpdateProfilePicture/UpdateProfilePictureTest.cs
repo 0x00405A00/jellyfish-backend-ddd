@@ -1,7 +1,6 @@
 ﻿using Application.CQS.User.Commands.UpdateProfilePicture;
 using Application.Mapper;
 using AutoMapper;
-using Domain.Entities.User;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
 using MediatR;
@@ -30,7 +29,7 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdateProfilePicture
         private readonly IMediator _mediatorMock;
         private readonly IConfiguration _configuration;
 
-        private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
 
         public UpdateProfilePictureTest()
         {

@@ -1,5 +1,5 @@
 ﻿using Infrastructure.Repository;
-using Domain.Entities.Message;
+using Domain.Entities.Messages;
 
 namespace Infrastructure.Abstractions
 {

@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
+using Domain.Errors;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
@@ -26,35 +27,35 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.AcceptFriend
             var executor = await _userRepository.GetAsync(x => x.Id.Id == request.ExecutorUserId);
             if (executor is null)
             {
-                return Result<bool>.Failure("executor not found", Domain.Error.Error.ERROR_CODE.NotFound);
+                return Result<bool>.Failure("executor not found", Error.ERROR_CODE.NotFound);
             }
             var target = await _userRepository.GetAsync(x => x.Id.Id == request.TargetUserId);
             if (target is null)
             {
-                return Result<bool>.Failure("target-user not found", Domain.Error.Error.ERROR_CODE.NotFound);
+                return Result<bool>.Failure("target-user not found", Error.ERROR_CODE.NotFound);
             }
             var requester = await _userRepository.GetAsync(x => x.Id.Id == request.RequestUserId);
             if (requester is null)
             {
-                return Result<bool>.Failure("request-user not found", Domain.Error.Error.ERROR_CODE.NotFound);
+                return Result<bool>.Failure("request-user not found", Error.ERROR_CODE.NotFound);
             }
 
             bool isPermitted = executor == target;
 
             if (!isPermitted)
             {
-                return Result<bool>.Failure("you cant accept these request", Domain.Error.Error.ERROR_CODE.Forbidden);
+                return Result<bool>.Failure("you cant accept these request", Error.ERROR_CODE.Forbidden);
             }
 
             var receivedRequest = target.GetReceivedFriendshipRequests();
             if(receivedRequest is null)
             {
-                return Result<bool>.Failure("you have not open friendship requests", Domain.Error.Error.ERROR_CODE.NotFound);
+                return Result<bool>.Failure("you have not open friendship requests", Error.ERROR_CODE.NotFound);
             }
             if(!receivedRequest.Any(x=>x.RequestUser == requester))
             {
 
-                return Result<bool>.Failure($"you have not open friendship from {requester.UserName}", Domain.Error.Error.ERROR_CODE.NotFound);
+                return Result<bool>.Failure($"you have not open friendship from {requester.UserName}", Error.ERROR_CODE.NotFound);
             }
             try
             {
@@ -64,7 +65,7 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.AcceptFriend
             }
             catch (Exception ex)
             {
-                return Result<bool>.Failure("cant accept request", Domain.Error.Error.ERROR_CODE.Exception);
+                return Result<bool>.Failure("cant accept request", Error.ERROR_CODE.Exception);
             }
             _userRepository.PublishDomainEvents(target,mediator);
             return Result<bool>.Success(true);

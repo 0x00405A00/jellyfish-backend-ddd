@@ -21,7 +21,7 @@ namespace Application.CQS.User.Commands.RegisterUser.Register
 
         public async Task<Result<UserDTO>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            var systemUser = Domain.Entities.User.User.GetSystemUser();
+            var systemUser = Domain.Entities.Users.User.GetSystemUser();
             var command = new CreateUserCommand(
                 systemUser.Id.ToGuid(),
                 request.UserName,

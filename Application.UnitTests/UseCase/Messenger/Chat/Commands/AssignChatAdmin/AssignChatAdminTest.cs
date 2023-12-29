@@ -1,6 +1,5 @@
 ﻿using Application.CQS.Messenger.Chat.Command.AssignChatAdmin;
 using AutoMapper;
-using Domain.Entities.User;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
 using MediatR;
@@ -23,8 +22,8 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.AssignChatAdmin
         private readonly IMediaService _mediaServiceMock;
         private readonly IMediator mediator;
 
-        private static readonly Domain.Entities.User.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(ActorId);
-        private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(ActorId);
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
         private readonly Domain.Entities.Chats.Chat ChatInstance = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(UserAdminInstance,ChatId);
 
         public AssignChatAdminCommandHandlerTests()

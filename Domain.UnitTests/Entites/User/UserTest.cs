@@ -1,14 +1,14 @@
-﻿using Domain.Entities.User;
-using Domain.Entities.User.Exception;
+﻿using Domain.Entities.Users;
+using Domain.Entities.Users.Exceptions;
 using Domain.ValueObjects;
 
 namespace Domain.UnitTests.Entites.User
 {
     public class UserTest
     {
-        public static Domain.Entities.User.User CreatedBy = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
-        public static Domain.Entities.User.User ModifiedBy = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
-        public static Domain.Entities.User.UserType UserType = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserTypeInstance();
+        public static Entities.Users.User CreatedBy = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+        public static Entities.Users.User ModifiedBy = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance();
+        public static UserType UserType = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserTypeInstance();
 
         public UserTest()
         {
@@ -31,10 +31,10 @@ namespace Domain.UnitTests.Entites.User
 
             var role = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance();
             var userRole = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserRoleInstance(role);
-            ICollection<UserRole> userRoles = new List<UserRole>() { userRole };
+            ICollection<UserHasRelationToRole> userRoles = new List<UserHasRelationToRole>() { userRole };
 
             //Act
-            var result = Entities.User.User.Create(
+            var result = Entities.Users.User.Create(
                 id,
                 UserType,
                 userName,

@@ -1,4 +1,4 @@
-﻿using Domain.Entities.User;
+﻿using Domain.Entities.Users;
 using Infrastructure.Repository;
 
 namespace Infrastructure.Abstractions

@@ -1,5 +1,4 @@
 ﻿using Domain.Exceptions;
-using System.Numerics;
 using System.Text.RegularExpressions;
 
 namespace Domain.ValueObjects

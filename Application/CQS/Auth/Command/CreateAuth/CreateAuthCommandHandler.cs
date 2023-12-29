@@ -8,7 +8,6 @@ using Shared.Const;
 using Shared.DataTransferObject;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Domain.Entities.Auth;
 using Domain.Entities.User;
 using Newtonsoft.Json.Linq;
 using System;
@@ -66,7 +65,7 @@ namespace Application.CQS.Auth.Command.CreateAuth
             var refreshTokenStr = new JwtSecurityTokenHandler().WriteToken(refreshToken);
             try
             {
-                var auth = Domain.Entities.Auth.Auth.Create(Domain.Entities.Auth.Auth.NewId(),
+                var auth = Domain.Entities.Auths.Auth.Create(Domain.Entities.Auths.Auth.NewId(),
                     user.Id,
                     request.LocalIp.ToString(),
                     request.LocalIpPort,

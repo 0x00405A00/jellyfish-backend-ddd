@@ -65,15 +65,15 @@ namespace Application.CQS.User.Commands.CreateUser
             {
                 return Result<UserDTO>.Failure("phonenumber already in use");
             }
-            Domain.Entities.User.User user;
+            Domain.Entities.Users.User user;
             try
             {
-                Domain.Entities.User.User.CheckPasswordWithPolicy(request.Password, request.PasswordRepeat);
+                Domain.Entities.Users.User.CheckPasswordWithPolicy(request.Password, request.PasswordRepeat);
 
                 var userId = new Domain.Entities.User.UserId(Guid.NewGuid());
                 var userType = await _userTypeRepository.GetAsync(x => x.Id.Id == UserTypeConst.UserTypeUuid);
                 var userRole = await _roleRepository.GetAsync(x => x.Id.Id == RoleConst.UserRoleUuid);
-                user = Domain.Entities.User.User.Create(
+                user = Domain.Entities.Users.User.Create(
                     userId,
                     userType,
                     request.UserName,

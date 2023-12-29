@@ -1,7 +1,6 @@
 ﻿using Application.CQS.User.Commands.RegisterUser.Activation;
 using AutoMapper;
-using Domain.Entities.User;
-using Domain.Entities.User.Exception;
+using Domain.Entities.Users.Exceptions;
 using Infrastructure.Abstractions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +23,7 @@ namespace Application.UnitTests.UseCase.User.Commands.RegisterUser.Activation
         private readonly IMediator _mediatorMock;
         private readonly IMapper _mapperMock;
 
-        private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
 
         public ActivationTest()
         {
@@ -78,7 +77,7 @@ namespace Application.UnitTests.UseCase.User.Commands.RegisterUser.Activation
         {
             // Arrange
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
-                   .Returns(Task.FromResult<Domain.Entities.User.User>(null));
+                   .Returns(Task.FromResult<Domain.Entities.Users.User>(null));
 
             // Act & Assert
             var exception = await Assert.ThrowsAsync<UserNotFoundException>(() => _handler.Handle(ValidCommand, CancellationToken.None));

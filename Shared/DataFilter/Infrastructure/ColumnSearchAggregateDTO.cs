@@ -1,4 +1,5 @@
-﻿using Shared.DataFilter.Presentation;
+﻿using Domain.Errors;
+using Shared.DataFilter.Presentation;
 using Shared.Linq;
 using System.Linq.Expressions;
 
@@ -9,7 +10,7 @@ namespace Shared.DataFilter.Infrastructure
         public SearchParams SearchParams { get; private set; }=new SearchParams();
         public List<ColumnFilterGroup> FilterGroups { get; private set; } = new List<ColumnFilterGroup>();
         public List<ColumnSorting> Sorting { get; private set; } = new List<ColumnSorting>();
-        public List<Domain.Error.Error> Errors { get; private set; } = new List<Domain.Error.Error>();
+        public List<Error> Errors { get; private set; } = new List<Error>();
         public bool HasErrors=> Errors.Any();
         public bool HasPaginationParamsSet
         {
@@ -34,7 +35,7 @@ namespace Shared.DataFilter.Infrastructure
         {
                 
         }
-        public ColumnSearchAggregateDTO(SearchParams searchParams,List<ColumnFilterGroup> columnFilterGroups,List<ColumnSorting> columnSortings,List<Domain.Error.Error> errors)
+        public ColumnSearchAggregateDTO(SearchParams searchParams,List<ColumnFilterGroup> columnFilterGroups,List<ColumnSorting> columnSortings,List<Error> errors)
         {
             FilterGroups = columnFilterGroups;
             Sorting = columnSortings;

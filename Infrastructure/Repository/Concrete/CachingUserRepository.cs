@@ -1,4 +1,4 @@
-﻿using Domain.Entities.User;
+﻿using Domain.Entities.Users;
 using Infrastructure.Abstractions;
 using Microsoft.Extensions.Caching.Memory;
 using System.Linq.Expressions;

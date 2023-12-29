@@ -1,5 +1,5 @@
-﻿using Domain.Entities.MailoutBox;
-using Domain.Entities.User.Event;
+﻿using Domain.Entities.Mails;
+using Domain.Entities.Users.Events;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.Mail;
@@ -136,7 +136,7 @@ namespace Application.CQS.User.EventHandler
                         };
 
                         var body = Encoding.UTF8.GetBytes(bodyHtml);
-                        var systemUser = Domain.Entities.User.User.GetSystemUser();
+                        var systemUser = Domain.Entities.Users.User.GetSystemUser();
                         string subject = @"Dein Passwort wurde bei Jellyfish zurückgesetzt " + notification.e.UserName + "";
                         bool bodyIsHtml = true;
 

@@ -1,6 +1,6 @@
 ﻿using Application.CQS.Messenger.User.Command.FriendshipRequests.AcceptFriendshipRequest;
 using AutoMapper;
-using Domain.Entities.User;
+using Domain.Entities.Users;
 using Infrastructure.Abstractions;
 using MediatR;
 using System.Linq.Expressions;
@@ -18,8 +18,8 @@ namespace Application.UnitTests.UseCase.Messenger.User.Commands.FriendshipReques
         private readonly IMapper _mapper;
         private readonly IMediator _mediatorMock;
 
-        private readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
-        private readonly Domain.Entities.User.User UserFriendInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(FriendUserId);
+        private readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private readonly Domain.Entities.Users.User UserFriendInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(FriendUserId);
 
         public AcceptFriendshipRequestTest()
         {

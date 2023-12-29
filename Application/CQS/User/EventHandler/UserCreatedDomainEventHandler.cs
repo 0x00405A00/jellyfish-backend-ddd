@@ -1,5 +1,5 @@
-﻿using Domain.Entities.MailoutBox;
-using Domain.Entities.User.Event;
+﻿using Domain.Entities.Mails;
+using Domain.Entities.Users.Events;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.Mail;
@@ -116,7 +116,7 @@ namespace Application.CQS.User.EventHandler
                 activationLink, jellyfishIcon.MimeCid, jellyfishIcon.Filename);
 
                 var body = Encoding.UTF8.GetBytes(bodyHtml);
-                var systemUser = Domain.Entities.User.User.GetSystemUser();
+                var systemUser = Domain.Entities.Users.User.GetSystemUser();
                 string subject = @"Willkommen bei Jellyfish " + notification.e.UserName + " \U0001F44B";
                 bool bodyIsHtml = true;
 

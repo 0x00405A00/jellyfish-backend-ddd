@@ -1,4 +1,4 @@
-﻿using Domain.Entities.User.Event;
+﻿using Domain.Entities.Users.Events;
 using MediatR;
 
 namespace Application.CQS.Messenger.User.Command.Friends.EventHandler

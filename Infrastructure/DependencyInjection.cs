@@ -2,7 +2,6 @@
 using Infrastructure.Healthcheck.Concrete.Cache;
 using Infrastructure.Healthcheck.Concrete.MySql;
 using Infrastructure.HostedService.Backgroundservice;
-using Infrastructure.Interceptors;
 using Infrastructure.Mail;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +10,10 @@ using Infrastructure.Authentification;
 using Shared.Authentification.Service;
 using Microsoft.Extensions.Hosting;
 using Infrastructure.Repository.Concrete;
+using Microsoft.Extensions.Options;
+using System.Configuration;
+using Microsoft.EntityFrameworkCore;
+using Infrastructure.EFCore.Interceptors;
 
 namespace Infrastructure
 {
@@ -44,8 +47,10 @@ namespace Infrastructure
 
             services.AddSingleton<IHealtCheckMySqlHandler,HealtCheckMySqlHandler>();
 
+            var sp = services.BuildServiceProvider();
+            var configuration = sp.GetRequiredService<IConfiguration>();
             services.AddScoped<DbSaveChangesInterceptor>();
-            services.AddScoped<ApplicationDbContext>();
+            services.AddDbContext<ApplicationDbContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IMailoutboxRepository, MailOutboxRepository>();
 
@@ -72,9 +77,7 @@ namespace Infrastructure
                 .AddCheck<HealthCheckCache>("cache");
 
 
-            var sp = services.BuildServiceProvider();
-            var configuration = sp.GetRequiredService<IConfiguration>();
-
+            
             var signalRSection = configuration.GetSection("Infrastructure:SignalR");
             if(signalRSection != null)
             {

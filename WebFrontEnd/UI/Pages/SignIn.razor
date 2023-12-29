@@ -27,8 +27,8 @@
                 <MudDatePicker 
                     Label="Geburstag" 
                     DisplayMonths="2" 
-                    MinDate="@(Domain.Entities.User.User.MinimumBirthDayDate)" 
-                    MaxDate="@(Domain.Entities.User.User.MaximumBirthDayDate)" 
+                    MinDate="@(User.MinimumBirthDayDate)" 
+                    MaxDate="@(User.MaximumBirthDayDate)" 
                     TitleDateFormat="dd.MM.yyyy" @bind-Date=@RegisterDateTime 
                     Required 
                     RequiredError="birthday must be setted" />

@@ -1,4 +1,4 @@
-﻿using Domain.Entities.MailoutBox;
+﻿using Domain.Entities.Mails;
 using Infrastructure.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;

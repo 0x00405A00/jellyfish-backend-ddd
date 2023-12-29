@@ -31,11 +31,11 @@ namespace Application.CQS.Role.Commands.CreateRole
             {
                 return Result<RoleDTO>.Failure("role already exists");
             }
-            Domain.Entities.Role.Role role =null;
+            Domain.Entities.Roles.Role role =null;
             try
             {
                 var roleId = new Domain.Entities.Role.RoleId(Guid.NewGuid());
-                role = Domain.Entities.Role.Role.Create(roleId, request.Name, request.Description, DateTime.Now, null, null, null, null, null);
+                role = Domain.Entities.Roles.Role.Create(roleId, request.Name, request.Description, DateTime.Now, null, null, null, null, null);
             }
             catch (Exception ex)
             {

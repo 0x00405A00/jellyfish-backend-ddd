@@ -1,6 +1,7 @@
-﻿using MediatR;
+﻿using Domain.Entities.Users.Events;
+using MediatR;
 
-namespace Domain.Entities.User.Event
+namespace Domain.Entities.Users.Events
 {
     internal sealed class UserLoggedInDomainEventHandler :
         INotificationHandler<UserLoggedInDomainEvent>

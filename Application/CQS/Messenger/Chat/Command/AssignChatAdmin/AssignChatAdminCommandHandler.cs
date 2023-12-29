@@ -1,6 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
-using Domain.Entities.Chats.Exception;
+using Domain.Entities.Chats.Exceptions;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;

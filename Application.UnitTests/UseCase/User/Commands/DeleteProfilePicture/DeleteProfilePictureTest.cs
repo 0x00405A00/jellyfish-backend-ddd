@@ -26,7 +26,7 @@ namespace Application.UnitTests.UseCase.User.Commands.DeleteProfilePicture
         private readonly IMediator _mediatorMock;
         private readonly IMediaService _mediaServiceMock;
 
-        private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
 
         public DeleteProfilePictureTest()
         {
@@ -71,7 +71,7 @@ namespace Application.UnitTests.UseCase.User.Commands.DeleteProfilePicture
             var handler = _handler;
 
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
-                .Returns(Task.FromResult<Domain.Entities.User.User>(null));
+                .Returns(Task.FromResult<Domain.Entities.Users.User>(null));
 
             // Act
             var result = await handler.Handle(ValidCommand, CancellationToken.None);

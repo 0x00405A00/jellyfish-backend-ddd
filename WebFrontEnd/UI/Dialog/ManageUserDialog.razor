@@ -32,7 +32,7 @@
              }
             <MudTextField InputType="InputType.Email" @bind-Value=@User.Email Label="Email" ReadOnly="false" Required RequiredError="email must be setted" />
              <MudTextField InputType="InputType.Telephone" @bind-Value=@User.Phone Label="Phone" ReadOnly="false" Required RequiredError="phonenumber must be setted" />
-             <MudDatePicker Label="Geburstag" DisplayMonths="2" MinDate="@(Domain.Entities.User.User.MinimumBirthDayDate)" MaxDate="@(Domain.Entities.User.User.MaximumBirthDayDate)" TitleDateFormat="dd.MM.yyyy" @bind-Date=@User.DateOfBirth Required RequiredError="birthday must be setted" />
+             <MudDatePicker Label="Geburstag" DisplayMonths="2" MinDate="@(Domain.Entities.Users.User.MinimumBirthDayDate)" MaxDate="@(Domain.Entities.Users.User.MaximumBirthDayDate)" TitleDateFormat="dd.MM.yyyy" @bind-Date=@User.DateOfBirth Required RequiredError="birthday must be setted" />
              <MudSelect T="UserTypeDTO" MultiSelection=false Label="UserType" AnchorOrigin="Origin.BottomCenter" @bind-Value=@SelectedUserType Required RequiredError="need one user-type">
                  @foreach (var item in UserTypes)
                 {
@@ -119,9 +119,9 @@
     {
         try
         {
-            Domain.Entities.User.User.CheckPasswordWithPolicy(password, passwordConfirmTextField.Value);
+            Domain.Entities.Users.User.CheckPasswordWithPolicy(password, passwordConfirmTextField.Value);
         }
-        catch (Domain.Entities.User.Exception.InvalidPasswordException ex)
+        catch (InvalidPasswordException ex)
         {
             return ex.Errors.ToList();
         }

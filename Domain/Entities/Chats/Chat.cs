@@ -1,8 +1,13 @@
-﻿using Domain.Entities.Chats.Event;
-using Domain.Entities.Chats.Exception;
-using Domain.Entities.Message.Exception;
+﻿using Domain.Entities.Chats.Events;
+using Domain.Entities.Chats.Exceptions;
+using Domain.Entities.Messages;
+using Domain.Entities.Messages.Exceptions;
+using Domain.Entities.Users;
+using Domain.Extension;
 using Domain.Primitives;
 using Domain.ValueObjects;
+using Shared.Entities.Users;
+using Shared.ValueObjects.Ids;
 using System.Collections.Immutable;
 
 namespace Domain.Entities.Chats
@@ -11,81 +16,77 @@ namespace Domain.Entities.Chats
     /// Aggregate Root for BoundedContext Chat
     /// Included Entities: Chat (Aggregate), Message, User
     /// </summary>
-    public sealed class Chat : Entity<ChatId>, IAuditibleCreateEntity, IAuditibleModifiedEntity, IAuditibleDeleteEntity
+    public sealed partial class Chat : AuditableEntity<ChatId>
     {
-        private ICollection<ChatMember> _members = new List<ChatMember>();
-        private ICollection<Message.Message> _messages = new List<Message.Message>();
+        private ICollection<ChatRelationToUser> _members = new List<ChatRelationToUser>();
+        private ICollection<ChatInviteRequest> _invites = new List<ChatInviteRequest>();
+        private ICollection<Message> _messages = new List<Message>();
 
         public Picture Picture { get; private set; }
-        public string ChatName { get; private set; }
-        public string ChatDescription { get; private set; }
-        public IReadOnlyCollection<ChatMember> Members { get => _members.ToImmutableList(); }
-        public IReadOnlyCollection<ChatMember> Admins { get => _members.Where(x=>x.IsAdmin).ToImmutableList(); }
-        public IReadOnlyCollection<Message.Message> Messages { get => _messages.ToImmutableList(); }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
 
-        public DateTime? CreatedTime { get; private set; }
-        public DateTime? LastModifiedTime { get; private set; }
-        public DateTime? DeletedTime { get; private set; }
-        public User.User CreatedByUser { get; private set; }
-        public User.User? LastModifiedByUser { get; private set; }
-        public User.User? DeletedByUser { get; private set; }
-        private Chat()
+        public IReadOnlyCollection<ChatRelationToUser> Members { get => _members.ToImmutableList(); }
+        public IReadOnlyCollection<ChatRelationToUser> Admins { get => _members.Where(x=>x.IsChatAdmin??false).ToImmutableList(); }
+
+        private Chat():base()
         {
             
         }
         private Chat(
             ChatId id,
-            User.User createdByUser,
-            User.User? modifiedByUser,
-            User.User? deletedByUser,
-            string chatName,
-            string? chatDescription,
+            string name,
+            string description,
             Picture? picture,
-            ICollection<ChatMember> members,
-            ICollection<Message.Message>? messages,
-            DateTime? createdTime,
-            DateTime? lastModifiedTime,
-            DateTime? deletedTime) : base(id)
+            ICollection<ChatRelationToUser> members,
+            CustomDateTime createdDateTime,
+            UserId createdBy,
+            CustomDateTime? modifiedDateTime,
+            UserId? modifiedBy,
+            CustomDateTime? deletedDateTime,
+            UserId? deletedBy) : base(id)
         {
-            ChatName = chatName;
-            ChatDescription = chatDescription;
+            Name = name;
+            Description = description;
             Picture = picture;
-            _members = members;
-            _messages = messages??new List<Message.Message>();
+            CreatedTime = createdDateTime;
+            CreatedByUserForeignKey = createdBy;
+            LastModifiedTime = modifiedDateTime;
+            LastModifiedByUserForeignKey = modifiedBy;
+            DeletedTime = deletedDateTime;
+            DeletedByUserForeignKey = deletedBy;
 
-            LastModifiedByUser = modifiedByUser;
-            LastModifiedTime = lastModifiedTime;
-            DeletedByUser = deletedByUser;
-            DeletedTime = deletedTime;
-            CreatedByUser = createdByUser;
-            CreatedTime = createdTime;
+            _members = members;
         }
         /// <summary>
         /// Factory Method for Creating a Chat
         /// </summary>
-        /// <param name="chatId"></param>
-        /// <param name="user"></param>
-        /// <param name="chatName"></param>
-        /// <param name="chatPicture"></param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="picture"></param>
         /// <param name="members"></param>
-        /// <param name="messages"></param>
-        /// <param name="createdTime"></param>
-        /// <param name="lastModifiedTime"></param>
-        /// <param name="deletedTime"></param>
+        /// <param name="createdDateTime"></param>
+        /// <param name="createdBy"></param>
+        /// <param name="modifiedDateTime"></param>
+        /// <param name="modifiedBy"></param>
+        /// <param name="deletedDateTime"></param>
+        /// <param name="deletedBy"></param>
         /// <returns></returns>
+        /// <exception cref="ChatCreateException"></exception>
+        /// <exception cref="InvalidDataException"></exception>
         public static Chat Create(
-            ChatId chatId,
-            User.User createdByUser,
-            User.User modifiedByUser,
-            User.User deletedByUser,
-            string chatName,
-            string? chatDescription,
+            ChatId id,
+            string name,
+            string? description,
             Picture? picture,
-            ICollection<ChatMember> members,
-            ICollection<Message.Message> messages,
-            DateTime createdTime,
-            DateTime? lastModifiedTime,
-            DateTime? deletedTime)
+            ICollection<ChatRelationToUser> members,
+            CustomDateTime createdDateTime,
+            UserId createdBy,
+            CustomDateTime? modifiedDateTime,
+            UserId? modifiedBy,
+            CustomDateTime? deletedDateTime,
+            UserId? deletedBy)
         {
             if(members == null|| members.Count<2)
             {
@@ -95,28 +96,27 @@ namespace Domain.Entities.Chats
             {
                 throw new InvalidDataException($"item of list {nameof(members)} contains one or more items with null value");
             }
-            if (members.Where(x => x.IsAdmin).Count() == 0)
+            if (members.Where(x => x.IsChatAdmin??false).Count() == 0)
             {
                 throw new InvalidDataException($"the chat needs at least one admin");
             }
             Chat chat = new Chat(
-                chatId,
-                createdByUser,
-                modifiedByUser,
-                deletedByUser,
-                chatName,
-                chatDescription,
+                id,
+                name,
+                description,
                 picture,
                 members,
-                messages,
-                createdTime,
-                lastModifiedTime,
-                deletedTime);
+                createdDateTime,
+                createdBy,
+                modifiedDateTime,
+                modifiedBy,
+                deletedDateTime,
+                deletedBy);
 
             chat.Raise(new ChatCreatedDomainEvent(chat));
             return chat;
         }
-        public void AddMember(User.User commandExecUser, User.User member)
+        public void AddMember(User commandExecUser, User member)
         {
             if (commandExecUser == null)
             {
@@ -135,11 +135,21 @@ namespace Domain.Entities.Chats
             {
                 throw new UserAlreadyMemberInChatException("user is already chat-member");
             }
-            var chatMember = ChatMember.Create(Guid.NewGuid(), member, false, DateTime.Now, null, null);
+            var chatMember = ChatRelationToUser.Create(
+                ChatRelationToUser.NewId(),
+                member.Id,
+                this.Id,
+                false,
+                DateTime.Now.ToTypedDateTime(),
+                commandExecUser.Id,
+                null,
+                null,
+                null,
+                null);
             this._members.Add(chatMember);
             Raise(new ChatUserAddToChatDomainEvent(this, commandExecUser, member));
         }
-        public void RemoveMember(User.User commandExecUser, User.User member)
+        public void RemoveMember(User commandExecUser, User member)
         {
             if (commandExecUser == null)
             {
@@ -162,7 +172,7 @@ namespace Domain.Entities.Chats
             this._members.Remove(chatMember);
             Raise(new ChatUserRemoveFromChatDomainEvent(this, commandExecUser, member));
         }
-        public void AssignAdmin(User.User commandExecUser, User.User member)
+        public void AssignAdmin(User commandExecUser, User member)
         {
             if (commandExecUser == null)
             {
@@ -188,7 +198,7 @@ namespace Domain.Entities.Chats
             chatMember.SetAdmin(true);
             Raise(new ChatUserAssignAdminChatDomainEvent(this, commandExecUser, member));
         }
-        public void RevokeAdmin(User.User commandExecUser, User.User member)
+        public void RevokeAdmin(User commandExecUser, User member)
         {
             if (commandExecUser == null)
             {
@@ -211,7 +221,7 @@ namespace Domain.Entities.Chats
             chatMember.SetAdmin(false);
             Raise(new ChatUserRevokeAdminDomainEvent(this, commandExecUser, member));
         }
-        public Message.Message AddMessage(User.User messageOwner, string text, MediaContent? mediaContent =null)
+        public Message AddMessage(User messageOwner, string text, MediaContent? mediaContent =null)
         {
             if (messageOwner is null)
             {
@@ -221,18 +231,29 @@ namespace Domain.Entities.Chats
             {
                 throw new NotValidMessageException();
             }
-            var message = Message.Message.Create(new Message.MessageId(Guid.NewGuid()), this.Id, messageOwner, null, null, text, mediaContent, DateTime.Now, null, null);
+            var message = Message.Create(
+                Message.NewId(),
+                this.Id,
+                messageOwner.Id,
+                text,
+                mediaContent,
+                DateTime.Now.ToTypedDateTime(),
+                messageOwner.Id,
+                null,
+                null,
+                null,
+                null);
             this._messages.Add(message);
-            Raise(new ChatAppendMessageDomainEvent(this, message.Owner, message));
+            Raise(new ChatAppendMessageDomainEvent(this, message.User, message));
             return message;
         }
-        public Message.Message AddMessage(Message.Message message)
+        public Message AddMessage(Message message)
         {
             this._messages.Add(message);
-            Raise(new ChatAppendMessageDomainEvent(this, message.Owner, message));
+            Raise(new ChatAppendMessageDomainEvent(this, message.User, message));
             return message;
         }
-        public void RemoveMessage(User.User deletedByUser, Message.MessageId messageId)
+        public void RemoveMessage(User deletedByUser, MessageId messageId)
         {
             if (deletedByUser == null)
             {
@@ -244,9 +265,9 @@ namespace Domain.Entities.Chats
                 throw new MessageNotFoundException("message is not found");
             }
             this._messages.Remove(message);
-            Raise(new ChatRemoveMessageDomainEvent(this, deletedByUser,message.Owner, message));
+            Raise(new ChatRemoveMessageDomainEvent(this, deletedByUser,message.User, message));
         }
-        public void UpdateMessage(User.User modifiedByUser, Message.MessageId messageId,string text,MediaContent? mediaContent)
+        public void UpdateMessage(User modifiedByUser, MessageId messageId,string text,MediaContent? mediaContent)
         {
             if(modifiedByUser == null)
             {
@@ -265,9 +286,9 @@ namespace Domain.Entities.Chats
             {
                 message.UpdateMediaContent(modifiedByUser, mediaContent);
             }
-            Raise(new ChatUpdateMessageDomainEvent(this, modifiedByUser, message.Owner, message));
+            Raise(new ChatUpdateMessageDomainEvent(this, modifiedByUser, message.User, message));
         }
-        public void UpdatePicture(User.User modifiedBy, Picture picture)
+        public void UpdatePicture(User modifiedBy, Picture picture)
         {
             if (modifiedBy == null)
             {
@@ -281,7 +302,7 @@ namespace Domain.Entities.Chats
             SetLastModified(modifiedBy);
             Raise(new ChatUpdatedDomainEvent(this));
         }
-        public void UpdateName(User.User modifiedBy, string name)
+        public void UpdateName(User modifiedBy, string name)
         {
             if(modifiedBy == null)
             {
@@ -295,11 +316,11 @@ namespace Domain.Entities.Chats
             {
                 throw new NotValidChatDescriptionException("chat is null, empty or whitespace");
             }
-            this.ChatName = name;
+            this.Name = name;
             SetLastModified(modifiedBy);
             Raise(new ChatUpdatedDomainEvent(this));
         }
-        public void UpdateDescription(User.User modifiedBy, string text)
+        public void UpdateDescription(User modifiedBy, string text)
         {
             if (modifiedBy == null)
             {
@@ -313,11 +334,11 @@ namespace Domain.Entities.Chats
             {
                 throw new NotValidChatDescriptionException("description is null, empty or whitespace");
             }
-            this.ChatDescription = text;
+            this.Description = text;
             SetLastModified(modifiedBy);
             Raise(new ChatUpdatedDomainEvent(this));
         }
-        public void Remove(User.User deletedBy)
+        public void Remove(User deletedBy)
         {
             if (deletedBy == null)
             {
@@ -334,7 +355,7 @@ namespace Domain.Entities.Chats
             SetDeleted(deletedBy);
             Raise(new ChatDeletedDomainEvent(this));
         }
-        public ChatMember GetMember(User.User user)
+        public ChatRelationToUser GetMember(User user)
         {
             if(user == null)
             {
@@ -343,44 +364,35 @@ namespace Domain.Entities.Chats
             var chatMember = _members.Where(x => x.User.Id == user.Id).First();
             return chatMember;
         }
-        public bool IsChatMember(User.User user)
+        public bool IsChatMember(User user)
         {
             var result = user != null && _members.Any() && _members.Where(x => x.User.Id == user.Id).Count() != 0;
             return result;
         }
-        public bool IsChatMember(User.UserId userId)
+        public bool IsChatMember(UserId userId)
         {
             var member = GetChatMemberById(userId);
             return IsChatMember(member?.User);
         }
-        public bool IsChatAdmin(User.User user)
+        public bool IsChatAdmin(User user)
         {
-            var result = user != null && _members.Any() && _members.Where(x => x.User.Id == user.Id && x.IsAdmin).Count() != 0;
+            var result = user != null && _members.Any() && _members.Where(x => x.User.Id == user.Id && (x.IsChatAdmin ?? false)).Count() != 0;
             return result;
         }
-        public bool IsChatAdmin(User.UserId userId)
+        public bool IsChatAdmin(UserId userId)
         {
             var member = GetChatMemberById(userId);
             return IsChatAdmin(member?.User);
         }
-        public ChatMember GetChatMemberById(User.UserId userId) => _members.Where(x=>x.User.Id == userId).Single();
+        public ChatRelationToUser GetChatMemberById(UserId userId) => _members.Where(x=>x.User.Id == userId).Single();
 
-        public void SetLastModified(User.User modifiedBy)
-        {
-            this.LastModifiedTime = DateTime.Now;
-            this.LastModifiedByUser = modifiedBy;
-        }
-        public void SetCreated(User.User createdBy)
-        {
-            this.CreatedTime = DateTime.Now;
-            this.CreatedByUser = createdBy;
-        }
-        public void SetDeleted(User.User deletedBy)
-        {
-            this.DeletedTime = DateTime.Now;
-            this.DeletedByUser = deletedBy;
-        }
         public bool IsDeleted() => this.DeletedTime != null;
 
+    }
+    public sealed partial class Chat
+    {
+        public ICollection<ChatRelationToUser>? ChatRelationToUsers { get => _members; }
+        public ICollection<ChatInviteRequest>? ChatInvitesToUsers { get => _invites; }
+        public ICollection<Message> Messages { get => _messages.ToImmutableList(); }
     }
 }

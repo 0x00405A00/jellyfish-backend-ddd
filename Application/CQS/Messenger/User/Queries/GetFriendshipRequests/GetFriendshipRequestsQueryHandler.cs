@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
+using Domain.Errors;
 using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
@@ -26,7 +27,7 @@ namespace Application.CQS.Messenger.User.Queries.GetFriendshipRequests
             var user = await _userRepository.GetAsync(x => x.Id.ToGuid() == request.UserId);
             if (!user.HasFriendshipRequests())
             {
-                return Result<List<FriendshipRequestDTO>>.Failure("you have no open friendship requests", Domain.Error.Error.ERROR_CODE.NotFound);
+                return Result<List<FriendshipRequestDTO>>.Failure("you have no open friendship requests", Error.ERROR_CODE.NotFound);
             }
             var friends = user.FriendshipRequests.ToList();
 

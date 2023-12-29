@@ -2,10 +2,13 @@
 
 namespace Domain.Primitives
 {
-    public abstract class Entity
+    public abstract class Entity : IEntityBase
     {
         protected readonly List<DomainEvent> _domainEvents = new();
         public ICollection<DomainEvent> DomainEvents { get { return _domainEvents; } }
+        public CustomDateTime CreatedTime { get; set; }
+        public CustomDateTime? LastModifiedTime { get; set; }
+        public CustomDateTime? DeletedTime { get; set; }
 
         protected void Raise(DomainEvent domainEvent)
         {
@@ -47,10 +50,10 @@ namespace Domain.Primitives
             propertyExpression.ToList().ForEach(e => SetValueInInstance(this, e.Value, e.Key));
         }
     }
-    public abstract class Entity<TEntityId> : Entity,IEquatable<Entity<TEntityId>>
+    public abstract class Entity<TEntityId> : Entity, IEquatable<Entity<TEntityId>>, IEntityWithTypedId<TEntityId> 
         where TEntityId : Identification
+        
     {
-
         public TEntityId Id { get; init; }
 
         protected Entity(TEntityId entityId)
@@ -58,7 +61,7 @@ namespace Domain.Primitives
             Id = entityId;
         }
 
-        public Entity()
+        protected Entity()
         {
             
         }

@@ -1,5 +1,5 @@
 ﻿using Domain.Entities.User;
-using Domain.Entities.User.Event;
+using Domain.Entities.Users.Events;
 using MediatR;
 
 namespace Application.CQS.User.Commands.UpdateUser.EventHandler

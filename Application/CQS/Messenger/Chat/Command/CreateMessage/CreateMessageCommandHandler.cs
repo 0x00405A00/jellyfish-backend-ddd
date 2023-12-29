@@ -1,8 +1,9 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
-using Domain.Entities.User;
-using Domain.Error;
+using Domain.Entities.Messages;
+using Domain.Errors;
 using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
@@ -46,14 +47,14 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
             Domain.Entities.Chats.Chat chat = await _chatRepository.GetAsync(x=>x.Id.Id == request.ChatId);
             if(chat is null)
             {
-                return Result<List<MessageDTO>>.Failure("chat is not existing", Domain.Error.Error.ERROR_CODE.NotFound);
+                return Result<List<MessageDTO>>.Failure("chat is not existing", Error.ERROR_CODE.NotFound);
             }
             var userId = request.MessageCreatorId.ToIdentification<UserId>();
             if(!chat.IsChatMember(userId))
             {
-                return Result<List<MessageDTO>>.Failure("you are not a member of the chat", Domain.Error.Error.ERROR_CODE.NotFound);
+                return Result<List<MessageDTO>>.Failure("you are not a member of the chat", Error.ERROR_CODE.NotFound);
             }
-            List<Domain.Error.Error> errors = new List<Domain.Error.Error>();
+            List<Error> errors = new List<Error>();
             var chatMember = chat.GetChatMemberById(userId);
             try
             {
@@ -77,7 +78,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
                             mediaContent = MediaContent.Parse(binaryData, mimeType);
                         }
 
-                        Domain.Entities.Message.Message messageEntity = Domain.Entities.Message.Message.Create(
+                        Message messageEntity = Message.Create(
                             messageId,
                             chat.Id,
                             chatMember.User,
@@ -103,7 +104,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
             }
             catch (Exception ex)
             {
-                return Result<List<MessageDTO>>.Failure("cant save messages to chat", Domain.Error.Error.ERROR_CODE.Exception);
+                return Result<List<MessageDTO>>.Failure("cant save messages to chat", Error.ERROR_CODE.Exception);
             }
 
             var dto = _mapper.Map<List<MessageDTO>>(null);

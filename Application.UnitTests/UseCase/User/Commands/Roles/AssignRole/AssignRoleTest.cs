@@ -1,11 +1,12 @@
 ﻿using Application.CQS.User.Commands.Roles.AssignRole;
 using AutoMapper;
-using Domain.Entities.User;
 using Domain.Extension;
 using Infrastructure.Abstractions;
 using MediatR;
 using System.Linq.Expressions;
 using FluentAssertions;
+using Domain.Entities.Users;
+using Domain.Entities.Roles;
 
 namespace Application.UnitTests.UseCase.User.Commands.Roles.AssignRole
 {
@@ -24,11 +25,11 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.AssignRole
         private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
 
-        private static readonly Domain.Entities.Role.Role RoleAdmin = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance("Admin");
-        private static readonly UserRole UserRoleAdmin = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserRoleInstance(RoleAdmin);
-        private static readonly Domain.Entities.Role.Role RoleUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance("User");
-        private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
-        private static readonly Domain.Entities.User.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserAdminId, UserRoleAdmin);
+        private static readonly Role RoleAdmin = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance("Admin");
+        private static readonly UserHasRelationToRole UserRoleAdmin = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserRoleInstance(RoleAdmin);
+        private static readonly Role RoleUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance("User");
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserAdminId, UserRoleAdmin);
 
         public AssignRoleTest()
         {
@@ -54,7 +55,7 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.AssignRole
 
             var command = Command with { AssignerId = UserAdminId, UserId = UserId, RoleIds = new List<Guid> { RoleAdmin.Id.ToGuid() } };
 
-            _roleRepositoryMock.ListAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Role, bool>>>()).Returns(new List<Domain.Entities.Role.Role>
+            _roleRepositoryMock.ListAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Role, bool>>>()).Returns(new List<Role>
             {
                 RoleUser,
             });
@@ -76,7 +77,7 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.AssignRole
 
             var command = Command with { AssignerId = UserAdminId, UserId = UserId, RoleIds = new List<Guid> { RoleAdmin.Id.ToGuid() } };
 
-            _roleRepositoryMock.ListAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Role, bool>>>()).Returns(new List<Domain.Entities.Role.Role>
+            _roleRepositoryMock.ListAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Role, bool>>>()).Returns(new List<Role>
             {
                 RoleAdmin,
             });

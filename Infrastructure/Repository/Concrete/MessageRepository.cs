@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using Domain.Entities.Message;
+using Domain.Entities.Messages;
 
 namespace Infrastructure.Repository.Concrete
 {

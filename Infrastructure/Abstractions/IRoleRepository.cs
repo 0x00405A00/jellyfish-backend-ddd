@@ -1,4 +1,4 @@
-﻿using Domain.Entities.Role;
+﻿using Domain.Entities.Roles;
 using Infrastructure.Repository;
 
 namespace Infrastructure.Abstractions

@@ -32,7 +32,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
         public async Task<Result<ChatDTO>> Handle(CreateChatCommand request, CancellationToken cancellationToken)
         {
             var createdBy = await _userRepository.GetAsync(x => x.Id.Id == request.ChatOwnerUuid);
-            ICollection<Domain.Entities.User.User> members = null;
+            ICollection<Domain.Entities.Users.User> members = null;
             ICollection<ChatMember> chatMembers = new List<ChatMember>();
             request.Members.Add(request.ChatOwnerUuid);
             members = await _userRepository.ListAsync(x => request.Members.Contains(x.Id.Id));

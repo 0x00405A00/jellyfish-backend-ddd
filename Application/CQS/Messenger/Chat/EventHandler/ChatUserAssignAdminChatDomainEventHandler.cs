@@ -1,4 +1,4 @@
-﻿using Domain.Entities.Chats.Event;
+﻿using Domain.Entities.Chats.Events;
 using Domain.Entities.User;
 using Domain.Primitives;
 using MediatR;

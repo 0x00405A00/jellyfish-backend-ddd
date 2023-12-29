@@ -1,7 +1,8 @@
-﻿using Domain.Primitives;
+﻿using Domain.Entities.Users.Events;
+using Domain.Primitives;
 using MediatR;
 
-namespace Domain.Entities.User.Event
+namespace Domain.Entities.Users.Events
 {
     internal sealed class UserUpdatedDomainEventHandler<TEntity,TEntityId> :
         INotificationHandler<UserUpdatedDomainEvent<TEntity, TEntityId>>

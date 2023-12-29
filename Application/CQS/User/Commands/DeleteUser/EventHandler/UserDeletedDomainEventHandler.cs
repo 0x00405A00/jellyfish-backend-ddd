@@ -1,6 +1,6 @@
-﻿using Domain.Entities.Message.Event;
+﻿using Domain.Entities.Messages.Events;
 using Domain.Entities.User;
-using Domain.Entities.User.Event;
+using Domain.Entities.Users.Events;
 using MediatR;
 
 namespace Application.CQS.User.Commands.DeleteUser.EventHandler

@@ -1,6 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
-using Domain.Entities.User.Exception;
+using Domain.Entities.Users.Exceptions;
 using Domain.Exceptions;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;

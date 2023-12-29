@@ -1,4 +1,5 @@
-﻿using Shared.DataFilter.Infrastructure;
+﻿using Domain.Errors;
+using Shared.DataFilter.Infrastructure;
 using Shared.DataFilter.Presentation;
 using System.Reflection;
 using System.Text.Json;
@@ -11,7 +12,7 @@ namespace Shared.DataFilter
     {
         public static ColumnSearchAggregateDTO GetFiltersFromSearchParams<TPresentationModel,TEntity>(this SearchParams searchParams)
         {
-            List<Domain.Error.Error> errors = new List<Domain.Error.Error>();
+            List<Error> errors = new List<Error>();
             if (searchParams == null)
             {
                 return new ColumnSearchAggregateDTO();

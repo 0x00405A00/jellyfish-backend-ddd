@@ -1,4 +1,4 @@
-﻿using Domain.Entities.MailoutBox;
+﻿using Domain.Entities.Mails;
 using Infrastructure.Abstractions;
 
 namespace Infrastructure.Repository.Concrete

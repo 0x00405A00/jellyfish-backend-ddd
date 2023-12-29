@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
+using Domain.Errors;
 using Domain.Primitives;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
@@ -29,11 +30,11 @@ namespace Application.CQS.Messenger.User.Command.Friends.RemoveFriend
             var targetUserThatShouldRemoved = await _userRepository.GetAsync(x => x.Id.Id == request.TargetUserId);
             if(targetUserThatShouldRemoved is null)
             {
-                return Result<Guid>.Failure("target user mot found", Domain.Error.Error.ERROR_CODE.NotFound);
+                return Result<Guid>.Failure("target user mot found", Error.ERROR_CODE.NotFound);
             }
             if (!user.IsFriend(targetUserThatShouldRemoved))
             {
-                return Result<Guid>.Failure("target user is not your friend", Domain.Error.Error.ERROR_CODE.NotFound);
+                return Result<Guid>.Failure("target user is not your friend", Error.ERROR_CODE.NotFound);
             }
 
             try
@@ -43,7 +44,7 @@ namespace Application.CQS.Messenger.User.Command.Friends.RemoveFriend
             }
             catch (Exception ex)
             {
-                return Result<Guid>.Failure("cant remove friend", Domain.Error.Error.ERROR_CODE.Exception);
+                return Result<Guid>.Failure("cant remove friend", Error.ERROR_CODE.Exception);
             }
             _userRepository.PublishDomainEvents(user, mediator);
             return Result<Guid>.Success(request.TargetUserId);

@@ -1,5 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
-using Domain.Entities.User.Exception;
+using Domain.Entities.Users.Exceptions;
 using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;

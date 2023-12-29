@@ -1,6 +1,5 @@
 ﻿using Application.CQS.Messenger.Chat.Command.CreateChat;
 using AutoMapper;
-using Domain.Entities.User;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
 using Shared.DataTransferObject.Messenger;
@@ -28,8 +27,8 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateChat
         private readonly IUserRepository _userRepositoryMock;
         private readonly IMediaService _mediaServiceMock;
 
-        private static readonly Domain.Entities.User.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
-        private static readonly Domain.Entities.User.User OtherUserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(OtherUserId);
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User OtherUserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(OtherUserId);
 
         public CreateChatCommandHandlerTests()
         {
@@ -49,7 +48,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateChat
         public async Task Handle_ValidRequest_ReturnsSuccessResult()
         {
             // Arrange
-            _userRepositoryMock.ListAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns((new List<Domain.Entities.User.User>() { UserInstance,OtherUserInstance }));
+            _userRepositoryMock.ListAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns((new List<Domain.Entities.Users.User>() { UserInstance,OtherUserInstance }));
             // Act
             var result = await _handler.Handle(Command, CancellationToken.None);
 

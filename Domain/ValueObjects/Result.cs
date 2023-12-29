@@ -1,9 +1,11 @@
-﻿namespace Domain.ValueObjects
+﻿using Domain.Errors;
+
+namespace Domain.ValueObjects
 {
     public class Result 
     {
         public bool IsSuccess { get; protected set; }
-        public Error.Error Error { get; set; }
+        public Error Error { get; set; }
         public Meta Meta { get; protected set; }
 
         public static Result Success()
@@ -12,7 +14,7 @@
             result.IsSuccess = true;
             return result;
         }
-        public static Result Failure(string errorMessage, Domain.Error.Error.ERROR_CODE errorCode = Domain.Error.Error.ERROR_CODE.BadRequest)
+        public static Result Failure(string errorMessage, Error.ERROR_CODE errorCode = Error.ERROR_CODE.BadRequest)
         {
             var result = new Result();
             result.Error = new Domain.Error.Error(errorMessage, errorCode);
@@ -43,7 +45,7 @@
             result.Meta = meta;
             return result;
         }
-        public new static Result<T> Failure(string errorMessage, Domain.Error.Error.ERROR_CODE errorCode= Domain.Error.Error.ERROR_CODE.BadRequest)
+        public new static Result<T> Failure(string errorMessage, Error.ERROR_CODE errorCode= Error.ERROR_CODE.BadRequest)
         {
             var result = new Result<T>();
             result.Error = new Domain.Error.Error(errorMessage, errorCode);
