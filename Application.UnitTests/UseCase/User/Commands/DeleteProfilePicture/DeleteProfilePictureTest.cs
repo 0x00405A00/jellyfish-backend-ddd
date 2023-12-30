@@ -26,7 +26,7 @@ namespace Application.UnitTests.UseCase.User.Commands.DeleteProfilePicture
         private readonly IMediator _mediatorMock;
         private readonly IMediaService _mediaServiceMock;
 
-        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance(UserId);
 
         public DeleteProfilePictureTest()
         {

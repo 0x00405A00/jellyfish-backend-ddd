@@ -25,11 +25,11 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.AssignRole
         private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
 
-        private static readonly Role RoleAdmin = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance("Admin");
-        private static readonly UserHasRelationToRole UserRoleAdmin = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserRoleInstance(RoleAdmin);
-        private static readonly Role RoleUser = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetRoleInstance("User");
-        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
-        private static readonly Domain.Entities.Users.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserAdminId, UserRoleAdmin);
+        private static readonly Role RoleAdmin = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetRoleInstance("Admin");
+        private static readonly UserHasRelationToRole UserRoleAdmin = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserRoleInstance(RoleAdmin);
+        private static readonly Role RoleUser = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetRoleInstance("User");
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance(UserAdminId, UserRoleAdmin);
 
         public AssignRoleTest()
         {

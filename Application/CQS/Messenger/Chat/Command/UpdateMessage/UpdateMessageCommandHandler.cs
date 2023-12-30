@@ -1,5 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
+using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
@@ -34,12 +36,12 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateMessage
         public async Task<Result<MessageDTO>> Handle(UpdateMessageCommand request, CancellationToken cancellationToken)
         {
 
-            var modifiedByUser = await _userRepository.GetAsync(x => x.Id.Id == request.ModifiedById);
+            var modifiedByUser = await _userRepository.GetAsync(x => x.Id == request.ModifiedById.ToIdentification<UserId>());
             if (modifiedByUser is null)
             {
                 return Result<MessageDTO>.Failure($"modifiedby-user not found");
             }
-            var message = await _messageRepository.GetAsync(x => x.Id.Id == request.MessageId && request.ChatId == x.Chat.Id);
+            var message = await _messageRepository.GetAsync(x => x.Id == request.MessageId.ToIdentification<MessageId>() && request.ChatId.ToIdentification<ChatId>() == x.Chat.Id);
             if (message is null)
             {
                 return Result<MessageDTO>.Failure($"message not found");

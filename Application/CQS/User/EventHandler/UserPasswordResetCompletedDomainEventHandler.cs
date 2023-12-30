@@ -54,7 +54,7 @@ namespace Application.CQS.User.EventHandler
                     createTime: DateTime.Now // Annahme: Aktuelles Datum und Uhrzeit
                 );
 
-                var emailType = await emailTypeRepository.GetAsync(x => x.Type == MailHandler.MailType.To);
+                var emailType = await emailTypeRepository.GetAsync(x => x.Name == MailHandler.MailType.To);
                 string bodyHtml = string.Format(@"
                                 <!DOCTYPE html>
                                 <html lang=""de"">

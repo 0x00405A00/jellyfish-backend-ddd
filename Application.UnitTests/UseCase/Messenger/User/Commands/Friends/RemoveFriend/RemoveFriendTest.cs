@@ -20,8 +20,8 @@ namespace Application.UnitTests.UseCase.Messenger.User.Commands.Friends.RemoveFr
         private readonly IMapper _mapper;
         private readonly IMediator _mediatorMock;
 
-        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
-        private static readonly Domain.Entities.Users.User UserFriendInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(FriendUserId);
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User UserFriendInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance(FriendUserId);
 
         public RemoveFriendTest()
         {

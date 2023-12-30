@@ -2,6 +2,10 @@
 {
     public class Picture : MediaContent
     {
+        private Picture():base()
+        {
+
+        }
         public Picture(byte[] data, string filePath, string fileExtension) : base(data, filePath, fileExtension)
         {
         }

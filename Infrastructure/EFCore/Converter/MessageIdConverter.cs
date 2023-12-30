@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Shared.ValueObjects.Ids;
+﻿using Domain.Primitives.Ids;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EFCoreMigrationTestWithInheritence_MySql_Updated.Converter
 {

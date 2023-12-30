@@ -1,6 +1,6 @@
 ﻿using Domain.Primitives;
 
-namespace Shared.ValueObjects.Ids
+namespace Domain.Primitives.Ids
 {
     public record UserTypeId : Identification
     {

@@ -2,6 +2,7 @@
 using AutoMapper;
 using Domain.Errors;
 using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Shared.DataTransferObject;
@@ -24,7 +25,7 @@ namespace Application.CQS.Messenger.User.Queries.GetFriendshipRequests
         }
         public async Task<Result<List<FriendshipRequestDTO>>> Handle(GetFriendshipRequestsQuery request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetAsync(x => x.Id.ToGuid() == request.UserId);
+            var user = await _userRepository.GetAsync(x => x.Id == request.UserId.ToIdentification<UserId>());
             if (!user.HasFriendshipRequests())
             {
                 return Result<List<FriendshipRequestDTO>>.Failure("you have no open friendship requests", Error.ERROR_CODE.NotFound);

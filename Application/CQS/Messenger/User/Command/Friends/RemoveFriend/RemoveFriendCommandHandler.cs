@@ -1,7 +1,9 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
 using Domain.Errors;
+using Domain.Extension;
 using Domain.Primitives;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
@@ -26,8 +28,8 @@ namespace Application.CQS.Messenger.User.Command.Friends.RemoveFriend
         public async Task<Result<Guid>> Handle(RemoveFriendCommand request, CancellationToken cancellationToken)
         {
 
-            var user = await _userRepository.GetAsync(x => x.Id.Id == request.ExecuteUserId);
-            var targetUserThatShouldRemoved = await _userRepository.GetAsync(x => x.Id.Id == request.TargetUserId);
+            var user = await _userRepository.GetAsync(x => x.Id == request.ExecuteUserId.ToIdentification<UserId>());
+            var targetUserThatShouldRemoved = await _userRepository.GetAsync(x => x.Id == request.TargetUserId.ToIdentification<UserId>());
             if(targetUserThatShouldRemoved is null)
             {
                 return Result<Guid>.Failure("target user mot found", Error.ERROR_CODE.NotFound);

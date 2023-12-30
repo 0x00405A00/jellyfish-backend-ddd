@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
 using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
@@ -33,13 +34,13 @@ namespace Application.CQS.User.Commands.Roles.AssignRole
             {
                 return Result<List<Guid>>.Failure("user not found");
             }
-            var user = await _userRepository.GetAsync(user => user.Id.Id == request.UserId);
+            var user = await _userRepository.GetAsync(user => user.Id == request.UserId.ToIdentification<UserId>());
             if (user is null)
             {
                 return Result<List<Guid>>.Failure("user not found");
             }
 
-            var assignedByUser = await _userRepository.GetAsync(x => x.Id.Id == request.AssignerId);
+            var assignedByUser = await _userRepository.GetAsync(x => x.Id == request.AssignerId.ToIdentification<UserId>());
 
             var foundRoles = await roleRepository.ListAsync(role => request.RoleIds.Contains(role.Id.Id));
             if (!foundRoles.Any())

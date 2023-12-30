@@ -1,9 +1,8 @@
 ﻿using Domain.Entities.Chats;
-using Domain.Entities.Users;
 using Domain.Primitives;
-using Shared.ValueObjects.Ids;
+using Domain.Primitives.Ids;
 
-namespace Shared.Entities.Users
+namespace Domain.Entities.Users
 {
     public sealed partial class ChatInviteRequest : Entity<ChatInviteRequestId>
     {

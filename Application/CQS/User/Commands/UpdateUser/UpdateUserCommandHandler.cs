@@ -2,6 +2,8 @@
 using AutoMapper;
 using Domain.Entities.Users.Exceptions;
 using Domain.Exceptions;
+using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
@@ -30,13 +32,13 @@ namespace Application.CQS.User.Commands.UpdateUser
             {
                 return Result<UserDTO>.Failure("user not found");
             }
-            var user = await _userRepository.GetAsync(user => user.Id.Id == request.UserId);
+            var user = await _userRepository.GetAsync(user => user.Id == request.UserId.ToIdentification<UserId>());
             if (user is null)
             {
                 return Result<UserDTO>.Failure("user not found");
             }
 
-            var updatedByUser = await _userRepository.GetAsync(x => x.Id.Id == request.UpdatedBy);
+            var updatedByUser = await _userRepository.GetAsync(x => x.Id == request.UpdatedBy.ToIdentification<UserId>());
 
             if (request.Phone != null)
             {
@@ -71,7 +73,7 @@ namespace Application.CQS.User.Commands.UpdateUser
             {
                 try
                 {
-                    user.UpdateDateOfBirth(updatedByUser, DateOnly.FromDateTime(request.DateOfBirth??DateTime.MinValue));
+                    user.UpdateDateOfBirth(updatedByUser, DateOnly.FromDateTime(request.DateOfBirth??DateTime.MinValue).ToTypedDateOnly());
                 }
                 catch (InvalidDateOfBirthException ex)
                 {

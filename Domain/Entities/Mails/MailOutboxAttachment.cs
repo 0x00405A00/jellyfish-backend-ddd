@@ -1,61 +1,84 @@
 ﻿using Domain.Primitives;
-using Shared.ValueObjects.Ids;
+using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Mails;
 
-public sealed class MailOutboxAttachment : Entity<MailOutboxAttachmentId>
+public sealed partial class MailOutboxAttachment : Entity<MailOutboxAttachmentId>
 {
-    public MailId MailId { get; private set; }
-    public string MimeMediatype { get; private set; } = null!;
-    public string MimeMediasubtype { get; private set; } = null!;
-    public string Filename { get; private set; } = null!;
-    public string MimeCid { get; private set; } = null!;
-    public int Order { get; private set; }
+    public MailOutboxId MailOutboxForeignKey { get; private set; }
+    public string Filename { get; private set; }
     public string AttachmentPath { get; private set; }
-    public string AttachmentSha1 { get; private set; } = null!;
-    public bool IsEmbeddedInHtml { get; private set; } = false;
-    public MailOutbox Mails { get; private set; } = null!;
-    public DateTime? CreatedTime { get; private set; }
-    public Users.User? CreatedByUser { get; private set; }
+    public int Order { get; private set; }
+    public string AttachmentSha1 { get; private set; }
+    public string MimeMediaType { get; private set; }
+    public string MimeMediaSubType { get; private set; }
+    public bool? IsEmbededInHtml { get; private set; }
+    public string MimeCid { get; private set; }
 
-    private MailOutboxAttachment()
+    private MailOutboxAttachment() : base()
     {
-        // Private constructor to enforce the use of the factory method
-    }
 
-    public static MailOutboxAttachment Create(
-        MailAttachmentId id,
-        MailId mailId,
-        string mimeMediatype,
-        string mimeMediasubtype,
-        string filename,
-        string mimeCid,
-        int order,
+    }
+    private MailOutboxAttachment(
+        MailOutboxAttachmentId id,
+        MailOutboxId mailOutboxId,
+        string fileName,
         string attachmentPath,
+        int order,
         string attachmentSha1,
-        bool isEmbeddedInHtml,
-        DateTime createTime)
+        string mimeMediaType,
+        string mimeMediaSubType,
+        bool isEmbededInHtml,
+        string mimeCid,
+        CustomDateTime createdDateTime,
+        CustomDateTime? modifiedDateTime,
+        CustomDateTime? deletedDateTime) :base(id)
     {
-        var attachment = new MailOutboxAttachment
-        {
-            CreatedTime = createTime,
-            Id = id,
-            MailId = mailId,
-            MimeMediatype = mimeMediatype,
-            MimeMediasubtype = mimeMediasubtype,
-            Filename = filename,
-            MimeCid = mimeCid,
-            Order = order,
-            AttachmentPath = attachmentPath,
-            AttachmentSha1 = attachmentSha1,
-            IsEmbeddedInHtml = isEmbeddedInHtml
-        };
-
-        return attachment;
+        MailOutboxForeignKey = mailOutboxId;
+        Filename = fileName;
+        AttachmentPath = attachmentPath;
+        Order = order;
+        AttachmentSha1 = attachmentSha1;
+        MimeMediaType = mimeMediaType;
+        MimeMediaSubType = mimeMediaSubType;
+        IsEmbededInHtml = isEmbededInHtml;
+        MimeCid = mimeCid;
+        CreatedTime = createdDateTime;
+        LastModifiedTime = modifiedDateTime;
+        DeletedTime = deletedDateTime;
     }
-    public void SetCreated(Users.User createdBy)
+    public static MailOutboxAttachment Create(
+        MailOutboxAttachmentId id,
+        MailOutboxId mailOutboxId,
+        string fileName,
+        string attachmentPath,
+        int order,
+        string attachmentSha1,
+        string mimeMediaType,
+        string mimeMediaSubType,
+        bool isEmbededInHtml,
+        string mimeCid,
+        CustomDateTime createdDateTime,
+        CustomDateTime? modifiedDateTime,
+        CustomDateTime? deletedDateTime)
     {
-        CreatedTime = DateTime.Now;
-        CreatedByUser = createdBy;
+        return new MailOutboxAttachment(
+            id,
+            mailOutboxId,
+            fileName,
+            attachmentPath,
+            order,
+            attachmentSha1,
+            mimeMediaType,
+            mimeMediaSubType,
+            isEmbededInHtml,
+            mimeCid,
+            createdDateTime,
+            modifiedDateTime,
+            deletedDateTime);
     }
+}
+public sealed partial class MailOutboxAttachment
+{
+    public MailOutbox Mail { get; set; }
 }

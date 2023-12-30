@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
-using Domain.Entities.User.Exception;
+using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
@@ -36,13 +37,13 @@ namespace Application.CQS.User.Commands.UpdateProfilePicture
             {
                 return Result<UserDTO>.Failure("user not found");
             }
-            var user = await _userRepository.GetAsync(user => user.Id.Id == request.UserId);
+            var user = await _userRepository.GetAsync(user => user.Id == request.UserId.ToIdentification<UserId>());
             if (user is null)
             {
                 return Result<UserDTO>.Failure("user not found");
             }
 
-            var updatedByUser = await _userRepository.GetAsync(x => x.Id.Id == request.UpdatedBy);
+            var updatedByUser = await _userRepository.GetAsync(x => x.Id == request.UpdatedBy.ToIdentification<UserId>());
             Picture picture = null!;
             try
             {

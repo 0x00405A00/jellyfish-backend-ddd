@@ -23,7 +23,7 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdatePassword
         private readonly IUserRepository _userRepositoryMock;
         private readonly IMediator _mediatorMock;
 
-        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance(UserId);
 
         public UpdatePasswordTest()
         {

@@ -1,66 +1,55 @@
-﻿using Domain.Entities.Roles.Events;
+﻿using Domain.Entities.Users;
 using Domain.Primitives;
-using Shared.ValueObjects.Ids;
+using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Roles
 {
-    public sealed class Role : AuditableEntity<RoleId>
+    public sealed partial class Role : AuditableEntity<RoleId>
     {
         public string Name { get; set; }
-        public string Description { get; set; }
 
-        private Role()
-        {
-
-        }
         private Role(
             RoleId id,
             string name,
-            string? description,
-            DateTime? createdTime,
-            DateTime? lastModifiedTime,
-            DateTime? deletedTime,
-            Users.User createdByUser,
-            Users.User? modifiedByUser,
-            Users.User? deletedByUser) : base(id)
+            CustomDateTime createdDateTime,
+            UserId createdBy,
+            CustomDateTime? modifiedDateTime,
+            UserId? modifiedBy,
+            CustomDateTime? deletedDateTime,
+            UserId? deletedBy) : base(id)
         {
             Name = name;
-            Description = description;
-
-            LastModifiedByUser = modifiedByUser;
-            LastModifiedTime = lastModifiedTime;
-            DeletedByUser = deletedByUser;
-            DeletedTime = deletedTime;
-            CreatedByUser = createdByUser;
-            CreatedTime = createdTime;
+            CreatedTime = createdDateTime;
+            CreatedByUserForeignKey = createdBy;
+            LastModifiedTime = modifiedDateTime;
+            LastModifiedByUserForeignKey = modifiedBy;
+            DeletedTime = deletedDateTime;
+            DeletedByUserForeignKey = deletedBy;
         }
-
         public static Role Create(
-            RoleId roleId,
+            RoleId id,
             string name,
-            string? description,
-            DateTime createdTime,
-            DateTime? lastModifiedTime,
-            DateTime? deletedTime,
-            Users.User createdByUser,
-            Users.User? modifiedByUser,
-            Users.User? deletedByUser)
+            CustomDateTime createdDateTime,
+            UserId createdBy,
+            CustomDateTime? modifiedDateTime,
+            UserId? modifiedBy,
+            CustomDateTime? deletedDateTime,
+            UserId? deletedBy)
         {
-            Role role = new Role(
-                roleId,
+            return new Role(
+                id,
                 name,
-                description,
-                createdTime,
-                lastModifiedTime,
-                deletedTime,
-                createdByUser,
-                modifiedByUser,
-                deletedByUser);
-
-            role.Raise(new RoleCreatedDomainEvent(role));
-            return role;
+                createdDateTime,
+                createdBy,
+                modifiedDateTime,
+                modifiedBy,
+                deletedDateTime,
+                deletedBy);
         }
-
-
+    }
+    public sealed partial class Role
+    {
+        public ICollection<UserHasRelationToRole> UserHasRelationToRoles { get; }
+        public ICollection<User> Users { get; }
     }
 }

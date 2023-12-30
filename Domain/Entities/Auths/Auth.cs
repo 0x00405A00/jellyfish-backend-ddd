@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.Users;
 using Domain.Extension;
 using Domain.Primitives;
-using Shared.ValueObjects.Ids;
+using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Auths;
 
@@ -55,9 +55,9 @@ public sealed partial class Auth : Entity<AuthId>
         AuthId id,
         UserId userId,
         string remoteIp,
-        uint remoteIpPort,
+        int remoteIpPort,
         string localIp,
-        uint localIpPort,
+        int localIpPort,
         string token,
         CustomDateTime tokenExpiresIn,
         string userAgent,

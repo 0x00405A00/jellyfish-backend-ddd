@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
-using Domain.Entities.User.Exception;
 using Domain.Exceptions;
+using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
@@ -31,7 +32,7 @@ namespace Application.CQS.User.Commands.DeleteProfilePicture
             {
                 return Result<bool>.Failure($"user not found");
             }
-            var user = await _userRepository.GetAsync(user => user.Id.Id == request.UserId);
+            var user = await _userRepository.GetAsync(user => user.Id == request.UserId.ToIdentification<UserId>());
             if (user is null)
             {
                 return Result<bool>.Failure($"user not found");
@@ -41,7 +42,7 @@ namespace Application.CQS.User.Commands.DeleteProfilePicture
             {
                 return Result<bool>.Failure($"profile picture is not set");
             }
-            var deletedByUser = await _userRepository.GetAsync(x => x.Id.Id == request.DeletedBy);
+            var deletedByUser = await _userRepository.GetAsync(x => x.Id == request.DeletedBy.ToIdentification<UserId>());
 
             try
             {

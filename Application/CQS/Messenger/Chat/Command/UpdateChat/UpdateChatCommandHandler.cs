@@ -3,6 +3,8 @@ using AutoMapper;
 using Domain.Entities.Chats;
 using Domain.Entities.Chats.Exceptions;
 using Domain.Exceptions;
+using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Shared.DataTransferObject.Messenger;
@@ -26,7 +28,7 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateChat
 
         public async Task<Result<ChatDTO>> Handle(UpdateChatCommand request, CancellationToken cancellationToken)
         {
-            var chat = await _chatRepository.GetAsync(x=>x.Id.Id == request.ChatId);
+            var chat = await _chatRepository.GetAsync(x=>x.Id == request.ChatId.ToIdentification<ChatId>());
             if(chat == null)
             {
                 return Result<ChatDTO>.Failure("chat not found");
@@ -35,7 +37,7 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateChat
             try
             {
 
-                updatedByMember = chat.GetChatMemberById(new Domain.Entities.User.UserId(request.UpdatedByUserId));
+                updatedByMember = chat.GetChatMemberById(new UserId(request.UpdatedByUserId));
             }
             catch(Exception ex)
             {

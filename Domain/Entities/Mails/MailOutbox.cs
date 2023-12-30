@@ -1,47 +1,61 @@
-﻿using Domain.Primitives;
-using Domain.ValueObjects;
-using Shared.ValueObjects.Ids;
+﻿using Domain.Entities.Mails.Exceptions;
+using Domain.Primitives;
+using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Mails;
 
-public sealed class MailOutbox : Entity<MailOutboxId>
+public sealed partial class MailOutbox : Entity<MailOutboxId>
 {
-    public Email From { get; private set; } = null!;
-    public string? Subject { get; private set; }
-    public byte[]? Body { get; private set; }
-    public bool BodyIsHtml { get; private set; }
-    private List<MailOutboxAttachment> _mailOutboxAttachments = new List<MailOutboxAttachment>();
-    public IReadOnlyList<MailOutboxAttachment> MailOutboxAttachments { get => _mailOutboxAttachments?.AsReadOnly(); }
-    private List<MailOutboxRecipient> _mailOutboxRecipients = new List<MailOutboxRecipient>();
-    public IReadOnlyList<MailOutboxRecipient> MailOutboxRecipients { get => _mailOutboxRecipients?.AsReadOnly(); }
+    private List<MailOutboxAttachment> _attachments = new List<MailOutboxAttachment>();
+    private List<MailOutboxRecipient> _recipients = new List<MailOutboxRecipient>();
 
-    private MailOutbox()
+    public string From { get; private set; }
+    public string Subject { get; private set; }
+    public string Body { get; private set; }
+    public bool? IsBodyHtml { get; private set; }
+
+    private MailOutbox() : base()
     {
+
     }
 
-    public static MailOutbox Create(
-        MailId id,
-        Email from,
+    private MailOutbox(
+        MailOutboxId id,
+        string from,
         string subject,
-        byte[] body,
-        bool bodyIsHtml,
-        List<MailOutboxRecipient> mailOutboxRecipients,
-        List<MailOutboxAttachment> mailOutboxAttachments,
-        Users.User createdBy)
+        string body,
+        bool isBodyHtml,
+        CustomDateTime createdDateTime,
+        CustomDateTime? modifiedDateTime,
+        CustomDateTime? deletedDateTime) : base(id)
     {
-        var mailOutbox = new MailOutbox
-        {
-            Id = id,
-            From = from,
-            Subject = subject,
-            Body = body,
-            BodyIsHtml = bodyIsHtml,
-            CreatedTime = DateTime.Now,
-            CreatedByUser = createdBy
-        };
-        mailOutbox._mailOutboxAttachments = mailOutboxAttachments;
-        mailOutbox._mailOutboxRecipients = mailOutboxRecipients;
-        return mailOutbox;
+        From = from;
+        Subject = subject;
+        Body = body;
+        IsBodyHtml = isBodyHtml;
+        CreatedTime = createdDateTime;
+        LastModifiedTime = modifiedDateTime;
+        DeletedTime = deletedDateTime;
+    }
+    public static MailOutbox Create(
+        MailOutboxId id,
+        string from,
+        string subject,
+        string body,
+        bool isBodyHtml,
+        CustomDateTime createdDateTime,
+        CustomDateTime? modifiedDateTime,
+        CustomDateTime? deletedDateTime)
+    {
+        return new MailOutbox(
+            id,
+            from,
+            subject,
+            body,
+            isBodyHtml,
+            createdDateTime,
+            modifiedDateTime,
+            deletedDateTime);
     }
 
     public void AddAttachment(MailOutboxAttachment attachment)
@@ -50,12 +64,12 @@ public sealed class MailOutbox : Entity<MailOutboxId>
         {
             throw new ArgumentNullException(nameof(attachment), "Attachment cannot be null.");
         }
-        if (!_mailOutboxAttachments.Any(x => x.AttachmentSha1 == attachment.AttachmentSha1))
+        if (!_attachments.Any(x => x.AttachmentSha1 == attachment.AttachmentSha1))
         {
             throw new AttachmentAlreadyExistsException("Recipient cannot be null.");
         }
 
-        _mailOutboxAttachments.Add(attachment);
+        _attachments.Add(attachment);
     }
 
     public void AddRecipient(MailOutboxRecipient recipient)
@@ -64,11 +78,17 @@ public sealed class MailOutbox : Entity<MailOutboxId>
         {
             throw new ArgumentNullException(nameof(recipient), "Recipient cannot be null.");
         }
-        if (!_mailOutboxRecipients.Any(x => x.Email == recipient.Email))
+        if (!_recipients.Any(x => x.Email == recipient.Email))
         {
             throw new RecipientAlreadyAddedException(nameof(recipient), "Recipient cannot be null.");
         }
-        _mailOutboxRecipients.Add(recipient);
+        _recipients.Add(recipient);
     }
+}
+public sealed partial class MailOutbox
+{
+
+    public ICollection<MailOutboxAttachment> Attachments { get => _attachments; }
+    public ICollection<MailOutboxRecipient> Recipients { get => _recipients; }
 }
 

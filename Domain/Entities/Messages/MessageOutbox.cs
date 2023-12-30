@@ -1,9 +1,8 @@
-﻿using Domain.Entities.Messages;
-using Domain.Entities.Users;
+﻿using Domain.Entities.Users;
 using Domain.Primitives;
-using Shared.ValueObjects.Ids;
+using Domain.Primitives.Ids;
 
-namespace Shared.Entities.Chats
+namespace Domain.Entities.Messages
 {
     public sealed partial class MessageOutbox : Entity<MessageOutboxId>
     {

@@ -1,10 +1,10 @@
 ﻿using Domain.Entities.Auths;
 using Domain.Entities.Users;
+using Domain.Primitives.Ids;
 using Infrastructure.EFCore.Extension;
 using Infrastructure.Extension;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.ValueObjects.Ids;
 
 namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
 {

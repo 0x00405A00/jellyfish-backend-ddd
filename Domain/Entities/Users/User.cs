@@ -5,11 +5,10 @@ using Domain.Entities.Messages;
 using Domain.Entities.Roles;
 using Domain.Entities.Users.Events;
 using Domain.Entities.Users.Exceptions;
+using Domain.Extension;
 using Domain.Primitives;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
-using Shared.Entities.Chats;
-using Shared.Entities.Users;
-using Shared.ValueObjects.Ids;
 using System.Data;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -40,26 +39,24 @@ namespace Domain.Entities.Users
         public static DateTime MaximumBirthDayDate = DateTime.Now.AddYears(-16);//man muss mindestens 16 sein
 
         private ICollection<UserHasRelationToFriend> _friends = new List<UserHasRelationToFriend>();
+        private ICollection<FriendshipRequest> _friendshipRequests = new List<FriendshipRequest>();
         private ICollection<UserHasRelationToRole> _roles = new List<UserHasRelationToRole>();
-
 
         public UserTypeId UserTypeForeignKey { get; private set; }
         public string UserName { get; protected set; }
         public string Password { get; private set; }
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
+        public CustomDateOnly DateOfBirth { get; private set; }
         public string ActivationToken { get; private set; }
         public string ActivationCode { get; private set; }
-
+        public CustomDateTime? ActivationDateTime { get; private set; }
         public string PasswordResetCode { get; private set; }
         public string PasswordResetToken { get; private set; }
-        public DateTime? PasswordResetExpiresIn { get; private set; }
-
+        public CustomDateTime? PasswordResetExpiresIn { get; private set; }
         public Email Email { get; protected set; }
         public PhoneNumber Phone { get; private set; }
         public Picture Picture { get; private set; }
-        public DateOnly DateOfBirth { get; private set; }
-        public DateTime? ActivationDateTime { get; private set; }
 
         public bool HasUserProfilePicture => Picture != null && Picture.FilePath != null;
 
@@ -69,8 +66,8 @@ namespace Domain.Entities.Users
         }
 
         private User(
-            UserId userId,
-            UserType userType,
+            UserId id,
+            UserTypeId userTypeId,
             string userName,
             string password,
             string firstName,
@@ -79,23 +76,21 @@ namespace Domain.Entities.Users
             string activationCode,
             string passwordResetCode,
             string passwordResetToken,
-            DateTime? passwordResetExpiresIn,
+            CustomDateTime? passwordResetExpiresIn,
             Email email,
             PhoneNumber phone,
             Picture? picture,
             ICollection<UserHasRelationToRole> roles,
-            ICollection<UserHasRelationToFriend>? friends,
-            ICollection<FriendshipRequest>? friendshipRequests,
-            DateOnly dateOfBirth,
-            DateTime? activationDateTime,
+            CustomDateOnly dateOfBirth,
+            CustomDateTime? activationDateTime,
             CustomDateTime createdDateTime,
             UserId createdBy,
             CustomDateTime? modifiedDateTime,
             UserId? modifiedBy,
             CustomDateTime? deletedDateTime,
-            UserId? deletedBy) : base(userId)
+            UserId? deletedBy) : base(id)
         {
-            UserType = userType;
+            UserTypeForeignKey = userTypeId;
             UserName = userName;
             Password = password;
             FirstName = firstName;
@@ -108,8 +103,6 @@ namespace Domain.Entities.Users
             ActivationDateTime = activationDateTime;
             ActivationCode = activationCode;
             ActivationToken = activationToken;
-            _friendshipRequests = friendshipRequests ?? new List<FriendshipRequest>();
-            _friends = friends ?? new List<UserHasRelationToFriend>();
             _roles = roles ?? new List<UserHasRelationToRole>();
             PasswordResetCode = passwordResetCode;
             PasswordResetExpiresIn = passwordResetExpiresIn;
@@ -126,7 +119,7 @@ namespace Domain.Entities.Users
         /// Factory Method for creating a User instance with specified attributes.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="userType"></param>
+        /// <param name="userTypeId"></param>
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <param name="firstName"></param>
@@ -156,7 +149,7 @@ namespace Domain.Entities.Users
         /// <exception cref="InvalidUserNameException"></exception>
         public static User Create(
             UserId id,
-            UserType userType,
+            UserTypeId userTypeId,
             string userName,
             string password,
             string firstName,
@@ -165,15 +158,13 @@ namespace Domain.Entities.Users
             string activationCode,
             string passwordResetCode,
             string passwordResetToken,
-            DateTime? passwordResetExpiresIn,
+            CustomDateTime? passwordResetExpiresIn,
             Email email,
             PhoneNumber phone,
             Picture? picture,
             ICollection<UserHasRelationToRole>? roles,
-            ICollection<UserHasRelationToFriend>? friends,
-            ICollection<FriendshipRequest>? friendshipRequests,
-            DateOnly dateOfBirth,
-            DateTime? activationDateTime,
+            CustomDateOnly dateOfBirth,
+            CustomDateTime? activationDateTime,
             CustomDateTime createdDateTime,
             UserId createdBy,
             CustomDateTime? modifiedDateTime,
@@ -181,21 +172,13 @@ namespace Domain.Entities.Users
             CustomDateTime? deletedDateTime,
             UserId? deletedBy)
         {
-            if (userType == null)
+            if (userTypeId == null)
             {
-                throw new ArgumentNullException(nameof(userType));
+                throw new ArgumentNullException(nameof(userTypeId));
             }
             if (roles != null && roles.Any(x => x == null))
             {
                 throw new InvalidDataException($"item of list {nameof(roles)} contains one or more items with null value");
-            }
-            if (friendshipRequests != null && friendshipRequests.Any(x => x == null))
-            {
-                throw new InvalidDataException($"item of list {nameof(friendshipRequests)} contains one or more items with null value");
-            }
-            if (friends != null && friends.Any(x => x == null))
-            {
-                throw new InvalidDataException($"item of list {nameof(friendshipRequests)} contains one or more items with null value");
             }
             if (userName.ToLower() == email.ToString())
             {
@@ -203,7 +186,7 @@ namespace Domain.Entities.Users
             }
             User user = new User(
                 id,
-                userType,
+                userTypeId,
                 userName,
                 password,
                 firstName,
@@ -217,8 +200,6 @@ namespace Domain.Entities.Users
                 phone,
                 picture,
                 roles,
-                friends,
-                friendshipRequests,
                 dateOfBirth,
                 activationDateTime,
                 createdDateTime,
@@ -233,13 +214,12 @@ namespace Domain.Entities.Users
 
         public static User GetSystemUser()
         {
-            UserId userId = new UserId(UserConst.SystemUserGuid);
-            UserTypeId userTypeId = new UserTypeId(UserConst.SystemUserTypeGuid);
-            UserType userType = UserType.Create(userTypeId, UserConst.SystemUserTypeName, DateTime.Now, null, null, null, null, null);
-            return new User(
+            UserId userId = new UserId(UserConst.UserType.Root);
+            UserTypeId userTypeId = new UserTypeId(UserConst.RootUserId);
+            return User.Create(
                 userId,
-                userType,
-                UserConst.SystemUserName,
+                userTypeId,
+                UserConst.RootUserName,
                 string.Empty,
                 string.Empty,
                 string.Empty,
@@ -252,11 +232,9 @@ namespace Domain.Entities.Users
                 null,
                 null,
                 null,
+                DateOnly.MaxValue.ToTypedDateOnly(),
                 null,
                 null,
-                DateOnly.MaxValue,
-                null,
-                DateTime.MaxValue,
                 null,
                 null,
                 null,
@@ -389,13 +367,13 @@ namespace Domain.Entities.Users
         public void ResetPasswordRequest()
         {
             PasswordResetCode = GenerateCode(ActivationCodeLen);
-            PasswordResetExpiresIn = DateTime.Now.Add(PasswordResetExpiresInTime);
+            PasswordResetExpiresIn = DateTime.Now.Add(PasswordResetExpiresInTime).ToTypedDateTime();
             PasswordResetToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(Random.Shared.Next(1000) + Guid.NewGuid().ToString()));
             Raise(new UserPasswordResetRequestDomainEvent(this));
         }
         public void ResetPassword(string newPassword, string newPasswordConfirm, string base64, string code)
         {
-            if (PasswordResetExpiresIn <= DateTime.Now)
+            if (PasswordResetExpiresIn.DateTime <= DateTime.Now)
             {
                 throw new InvalidPasswordException("password-reset action time frame is expired");
             }
@@ -476,7 +454,7 @@ namespace Domain.Entities.Users
             Raise(new UserUpdatedDomainEvent<User, UserId>(this, x => x.Phone, phone));
         }
 
-        public void UpdateDateOfBirth(User modifiedUser, DateOnly dateOfBirth)
+        public void UpdateDateOfBirth(User modifiedUser, CustomDateOnly dateOfBirth)
         {
             DateOfBirth = dateOfBirth;
             SetLastModified(modifiedUser);
@@ -492,7 +470,7 @@ namespace Domain.Entities.Users
 
         public void AddFriendshipRequest(FriendshipRequest friendRequest)
         {
-            if (_friendshipRequests.Where(x => x.TargetUser == friendRequest.TargetUser && x.RequestUser == friendRequest.RequestUser).Any())
+            if (_friendshipRequests.Where(x => x.TargetUser == friendRequest.TargetUser && x.RequesterUser == friendRequest.RequesterUser).Any())
             {
                 throw new AddFriendshipRequestException("friendship request already exists");
             }
@@ -502,7 +480,7 @@ namespace Domain.Entities.Users
 
         public void RemoveFriendshipRequest(FriendshipRequest friendRequest)
         {
-            if (!_friendshipRequests.Where(x => x.TargetUser == friendRequest.TargetUser && x.RequestUser == friendRequest.RequestUser).Any())
+            if (!_friendshipRequests.Where(x => x.TargetUser == friendRequest.TargetUser && x.RequesterUser == friendRequest.RequesterUser).Any())
             {
                 throw new RemoveFriendshipRequestException("friendship request doesnt exists");
             }
@@ -512,23 +490,23 @@ namespace Domain.Entities.Users
 
         public void AcceptFriendshipRequest(FriendshipRequest friendRequest)
         {
-            if (!_friendshipRequests.Where(x => x.TargetUser == friendRequest.TargetUser && x.RequestUser == friendRequest.RequestUser).Any())
+            if (!_friendshipRequests.Where(x => x.TargetUser == friendRequest.TargetUser && x.RequesterUser == friendRequest.RequesterUser).Any())
             {
                 throw new AcceptFriendshipException("friendship request doesnt exists");
             }
-            if (_friends.Where(x => x.Friend == friendRequest.RequestUser).Any())
+            if (_friends.Where(x => x.UserFriend == friendRequest.RequesterUser).Any())
             {
                 throw new AcceptFriendshipException("you already friends");
             }
             _friendshipRequests.Remove(friendRequest);
-            AddFriend(this, friendRequest.RequestUser);
+            AddFriend(this, friendRequest.RequesterUser);
             Raise(new UserAcceptFriendshipRequestDomainEvent(this, friendRequest));
         }
 
         public void AddFriend(User execUser, User friend)
         {
 
-            var foundFriend = _friends.Any(x => x.Friend == friend);
+            var foundFriend = _friends.Any(x => x.UserFriend == friend);
             if (foundFriend)
             {
                 throw new AddFriendException("you already friends");
@@ -537,7 +515,17 @@ namespace Domain.Entities.Users
             {
                 throw new AddFriendException("you cant add yourself to friends");
             }
-            var userFriend = UserHasRelationToFriend.Create(UserHasRelationToFriend.NewId(), this, friend, DateTime.Now, null, null, execUser);
+            var userFriend = UserHasRelationToFriend.Create(
+                UserHasRelationToFriend.NewId(),
+                this.Id,
+                friend.Id,
+                DateTime.Now.ToTypedDateTime(),
+                execUser.Id,
+                null,
+                null,
+                null,
+                null);
+
             _friends.Add(userFriend);
             Raise(new UserAddFriendDomainEvent(this, friend));
         }
@@ -548,7 +536,7 @@ namespace Domain.Entities.Users
             {
                 throw new RemoveFriendException("you have no friends");
             }
-            var foundFriend = _friends.Where(x => x.Friend == friend).FirstOrDefault();
+            var foundFriend = _friends.Where(x => x.UserFriend == friend).FirstOrDefault();
             if (foundFriend is null)
             {
                 throw new RemoveFriendException("you arent be friends");
@@ -565,10 +553,15 @@ namespace Domain.Entities.Users
             }
             var userRole = UserHasRelationToRole.Create(
                 UserHasRelationToRole.NewId(),
+                this.Id,
                 role.Id,
-                DateTime.Now,
+                DateTime.Now.ToTypedDateTime(),
+                assignerUser.Id,
+                null,
+                null,
                 null,
                 null);
+
             _roles.Add(userRole);
             SetLastModified(assignerUser);
             Raise(new UserAssignedRoleToUserDomainEvent(assignerUser, this, role));
@@ -603,16 +596,16 @@ namespace Domain.Entities.Users
 
         public bool IsFullyRegistered()
         {
-            return ActivationDateTime != null && ActivationDateTime != DateTime.MinValue;
+            return ActivationDateTime != null && ActivationDateTime.DateTime != DateTime.MinValue;
         }
 
         public bool HasBirthday()
         {
-            return DateOfBirth == DateOnly.FromDateTime(DateTime.Now);
+            return DateOfBirth == DateOnly.FromDateTime(DateTime.Now).ToTypedDateOnly();
         }
         public bool HasFriends()
         {
-            return Friends.Any();
+            return _friends.Any();
         }
         public bool IsFriend(User user)
         {
@@ -620,7 +613,7 @@ namespace Domain.Entities.Users
             {
                 throw new ArgumentNullException(nameof(user));
             }
-            return Friends.Any(x => x.Friend == user);
+            return _friends.Any(x => x.UserFriend == user);
         }
         /// <summary>
         /// Gets all own requested friendship invites (direction: u to other user)
@@ -628,7 +621,7 @@ namespace Domain.Entities.Users
         /// <returns></returns>
         public List<FriendshipRequest> GetRequestedFriendshipRequests()
         {
-            return RequestedFriendshipRequests.Where(x => x.AmIRequester(this))
+            return _friendshipRequests.Where(x => x.AmIRequester(this))
                                           .ToList();
         }
         /// <summary>
@@ -637,12 +630,12 @@ namespace Domain.Entities.Users
         /// <returns></returns>
         public List<FriendshipRequest> GetReceivedFriendshipRequests()
         {
-            return RequestedFriendshipRequests.Where(x => x.AmIReceiver(this))
+            return _friendshipRequests.Where(x => x.AmIReceiver(this))
                                           .ToList();
         }
         public bool HasFriendshipRequests()
         {
-            return RequestedFriendshipRequests.Any();
+            return _friendshipRequests.Any();
         }
         public bool IsDeleted() => DeletedTime != null;
     }

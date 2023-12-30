@@ -1,11 +1,11 @@
-﻿using Infrastructure.EFCore.Extension;
+﻿using Domain.Const;
+using Domain.Entities.Roles;
+using Domain.Entities.Users;
+using Domain.Primitives.Ids;
+using Infrastructure.EFCore.Extension;
+using Infrastructure.Extension;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.Const;
-using Shared.Entities.Roles;
-using Shared.Entities.Users;
-using Shared.ValueObjects.Ids;
-using System.Security.Cryptography.Xml;
 
 namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
 {
@@ -16,27 +16,83 @@ namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
             builder.AddDefaultProperties<User, UserId>();
             builder.AddAuditableProperties<User, UserId>();
 
-            builder.Property(ut => ut.Name)
-                .IsRequired()
-                .HasMaxLength(DbContextExtension.ColumnLength.Names)
-                .HasColumnName(DbContextExtension.ColumnNameDefinitions.Name);
-            
-            builder.Property(ut => ut.Email)
-                .IsRequired()
-                .HasMaxLength (DbContextExtension.ColumnLength.EmailAddrLength)
-                .HasColumnName("email");
-
             builder.Property(ut => ut.UserTypeForeignKey)
                 .IsRequired()
                 .HasMaxLength(DbContextExtension.ColumnLength.Ids)
-                .HasDefaultValue(new UserTypeId(Shared.Const.UserConst.UserType.User))
-                .HasConversion(toDb => toDb.Id, fromDb => new UserTypeId(fromDb))
+                .HasDefaultValue(new UserTypeId(UserConst.UserType.User))
                 .HasColumnName("user_type_id");
+
+            builder.Property(ut => ut.UserName)
+                .IsRequired()
+                .HasMaxLength(DbContextExtension.ColumnLength.Names)
+                .HasColumnName(DbContextExtension.ColumnNameDefinitions.Name);
 
             builder.Property(ut => ut.Password)
                 .IsRequired()
                 .HasMaxLength(DbContextExtension.ColumnLength.PasswordLength)
                 .HasColumnName("password");
+
+            builder.Property(ut => ut.FirstName)
+                .IsRequired()
+                .HasMaxLength(DbContextExtension.ColumnLength.PasswordLength)
+                .HasColumnName("first_name");
+
+            builder.Property(ut => ut.LastName)
+                .IsRequired()
+                .HasMaxLength(DbContextExtension.ColumnLength.PasswordLength)
+                .HasColumnName("last_name");
+
+            builder.Property(ut => ut.DateOfBirth)
+                .HasColumnType("datetime")
+                .HasColumnName("date_of_birth");
+
+            builder.Property(ut => ut.ActivationToken)
+                .IsRequired()
+                .HasMaxLength(DbContextExtension.ColumnLength.Base64)
+                .HasColumnName("activation_token");
+
+            builder.Property(ut => ut.ActivationCode)
+                .IsRequired()
+                .HasMaxLength(DbContextExtension.ColumnLength.PasswordLength)
+                .HasColumnName("activation_code");
+
+            builder.Property(ut => ut.ActivationDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("activation_datetime");
+
+            builder.Property(ut => ut.PasswordResetCode)
+                .IsRequired()
+                .HasMaxLength(DbContextExtension.ColumnLength.PasswordLength)
+                .HasColumnName("password_reset_code");
+
+            builder.Property(ut => ut.PasswordResetCode)
+                .IsRequired()
+                .HasMaxLength(DbContextExtension.ColumnLength.PasswordLength)
+                .HasColumnName("password_reset_token");
+
+            builder.Property(ut => ut.PasswordResetExpiresIn)
+                .HasColumnType("datetime")
+                .HasColumnName("password_reset_token_expires_in");
+
+            builder.Property(ut => ut.Email)
+                .IsRequired()
+                .HasMaxLength(DbContextExtension.ColumnLength.EmailAddrLength)
+                .HasColumnName("email");
+
+            builder.Property(ut => ut.Phone)
+                .IsRequired()
+                .HasMaxLength(DbContextExtension.ColumnLength.EmailAddrLength)
+                .HasColumnName("phone");
+
+            builder.OwnsOne(ut => ut.Picture, navigationBuilder =>
+            {
+                navigationBuilder.Property(img => img.FilePath)
+                .HasColumnName("profile_picture_path");
+                navigationBuilder.Property(img => img.FileExtension)
+                .HasColumnName("profile_picture_fileext");
+            });
+
+
 
             //alte Constraints-Erstellung vor builder.AddAuditableConstraints<EUser, UserId>(); Implementierung
             /*builder.HasOne(u => u.CreatedByUser)
@@ -76,7 +132,7 @@ namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
                 });
 
             List<User> users = new List<User>();
-            users.Add(DbContextExtension.GetRootUser());
+            users.Add(User.GetSystemUser());
             users.AddRange(DbContextExtension.GetTestSet());
             builder.HasData(users);
         }

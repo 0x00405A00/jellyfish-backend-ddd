@@ -1,5 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using Domain.Entities.Chats.Exceptions;
+using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 
@@ -20,12 +22,12 @@ namespace Application.CQS.Messenger.Chat.Command.DeleteChat
 
         public async Task<Result<Guid>> Handle(DeleteChatCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetAsync(x=>x.Id.Id == request.DeletedByUserId);
+            var user = await _userRepository.GetAsync(x=>x.Id == request.DeletedByUserId.ToIdentification<UserId>());
             if(user == null)
             {
                 return Result<Guid>.Failure("execution user not found");
             }
-            var chat = await _chatRepository.GetAsync(x=>x.Id.Id == request.ChatId);
+            var chat = await _chatRepository.GetAsync(x=>x.Id == request.ChatId.ToIdentification<ChatId>());
             if(chat == null) 
             {
                 return Result<Guid>.Failure("chat not found");

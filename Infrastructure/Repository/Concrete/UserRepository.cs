@@ -37,7 +37,7 @@ EF.CompileQuery((ApplicationDbContext context, Expression<Func<DatabaseEntity.Us
         {
             var value = await DbSet
                                     .Include(i => i.UserType)
-                                    .Include(i => i.UserRoles)
+                                    .Include(i => i.UserHasRelationToRoles)
                                     .ThenInclude(ur => ur.Role)
                                     .Include(i => i.Friends)
                                         .ThenInclude(uf => uf.User)
@@ -79,7 +79,7 @@ EF.CompileQuery((ApplicationDbContext context, Expression<Func<DatabaseEntity.Us
         {
             var value = await DbSet.ExpressionQuery(expression)
                                     .Include(i => i.UserType)
-                                    .Include(i => i.UserRoles)
+                                    .Include(i => i.UserHasRelationToRoles)
                                     .ThenInclude(ur => ur.Role)
                                     .Include(i => i.Friends)
                                         .ThenInclude(uf => uf.User)
@@ -99,7 +99,7 @@ EF.CompileQuery((ApplicationDbContext context, Expression<Func<DatabaseEntity.Us
         {
             var value = await DbSet.ExpressionQuery(columnSearchAggregateDTO)
                                     .Include(i => i.UserType)
-                                    .Include(i => i.UserRoles)
+                                    .Include(i => i.UserHasRelationToRoles)
                                     .ThenInclude(ur => ur.Role)
                                     .Include(i => i.Friends)
                                         .ThenInclude(uf => uf.User)
@@ -122,7 +122,7 @@ EF.CompileQuery((ApplicationDbContext context, Expression<Func<DatabaseEntity.Us
             int count = await CountMaxAsync(expression);
             var value = await DbSet.ExpressionQuery(expression)
                                     .Include(i => i.UserType)
-                                    .Include(i => i.UserRoles)
+                                    .Include(i => i.UserHasRelationToRoles)
                                     .ThenInclude(ur => ur.Role)
                                     .Include(i => i.Friends)
                                         .ThenInclude(uf => uf.User)
@@ -148,7 +148,7 @@ EF.CompileQuery((ApplicationDbContext context, Expression<Func<DatabaseEntity.Us
             int count = await CountMaxAsync(expression);
             var value = await DbSet.ExpressionQuery(columnSearchAggregateDTO)
                                     .Include(i => i.UserType)
-                                    .Include(i => i.UserRoles)
+                                    .Include(i => i.UserHasRelationToRoles)
                                     .ThenInclude(ur => ur.Role)
                                     .Include(i => i.Friends)
                                         .ThenInclude(uf => uf.User)

@@ -2,6 +2,7 @@
 using AutoMapper;
 using Domain.Errors;
 using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
@@ -30,17 +31,17 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriend
         public async Task<Result<RemoveFriendshipRequestDTO>> Handle(RemoveFriendshipRequestCommand request, CancellationToken cancellationToken)
         {
 
-            var executor = await _userRepository.GetAsync(x => x.Id.ToGuid() == request.ExecutorUserId);
+            var executor = await _userRepository.GetAsync(x => x.Id == request.ExecutorUserId.ToIdentification<UserId>());
             if (executor is null)
             {
                 return Result<RemoveFriendshipRequestDTO>.Failure("executor not found", Error.ERROR_CODE.NotFound);
             }
-            var target = await _userRepository.GetAsync(x => x.Id.ToGuid() == request.TargetUserId);
+            var target = await _userRepository.GetAsync(x => x.Id == request.TargetUserId.ToIdentification<UserId>());
             if (target is null)
             {
                 return Result<RemoveFriendshipRequestDTO>.Failure("target-user not found", Error.ERROR_CODE.NotFound);
             }
-            var requester = await _userRepository.GetAsync(x => x.Id.ToGuid() == request.RequestUserId);
+            var requester = await _userRepository.GetAsync(x => x.Id == request.RequestUserId.ToIdentification<UserId>());
             if (requester is null)
             {
                 return Result<RemoveFriendshipRequestDTO>.Failure("request-user not found", Error.ERROR_CODE.NotFound);

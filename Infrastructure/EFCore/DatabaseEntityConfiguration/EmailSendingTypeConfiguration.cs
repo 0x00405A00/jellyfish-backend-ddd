@@ -1,10 +1,11 @@
-﻿using Infrastructure.EFCore.Extension;
+﻿using Domain.Const;
+using Domain.Entities.Mails;
+using Domain.Primitives;
+using Domain.Primitives.Ids;
+using Infrastructure.EFCore.Extension;
+using Infrastructure.Extension;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.Const;
-using Shared.Entities.Mail;
-using Shared.Primitives;
-using Shared.ValueObjects.Ids;
 
 namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
 {
@@ -20,21 +21,21 @@ namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
                 .HasColumnName(DbContextExtension.ColumnNameDefinitions.Name);
 
             var toType = EmailSendingType.Create(
-                new EmailTypeId(Email.Type.To),
+                new EmailTypeId(EmailConst.Type.To),
                 "to",
                 new CustomDateTime(DateTime.Now),
                 null,
                 null);
 
             var  ccType = EmailSendingType.Create(
-                new EmailTypeId(Email.Type.Cc),
+                new EmailTypeId(EmailConst.Type.Cc),
                 "cc",
                 new CustomDateTime(DateTime.Now),
                 null,
                 null);
 
             var bccType = EmailSendingType.Create(
-                new EmailTypeId(Email.Type.Bcc),
+                new EmailTypeId(EmailConst.Type.Bcc),
                 "bcc",
                 new CustomDateTime(DateTime.Now),
                 null,

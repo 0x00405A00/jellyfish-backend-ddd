@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using Domain.Entities.Users.Exceptions;
 using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
@@ -26,7 +27,7 @@ namespace Application.CQS.User.Commands.UpdatePassword
             {
                 return Result<Guid>.Failure("user not found");
             }
-            var user = await _userRepository.GetAsync(user => user.Id.Id == request.UserId);
+            var user = await _userRepository.GetAsync(user => user.Id == request.UserId.ToIdentification<UserId>());
             if (user == null)
             {
                 return Result<Guid>.Failure("user not found");

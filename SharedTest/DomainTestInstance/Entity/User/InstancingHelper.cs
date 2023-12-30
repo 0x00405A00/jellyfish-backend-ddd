@@ -1,15 +1,16 @@
-﻿using Domain.Entities.Role;
+﻿using Domain.Const;
 using Domain.Entities.Roles;
-using Domain.Entities.User;
 using Domain.Entities.Users;
+using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 
-namespace SharedTest.DomainTestInstance.Entity.User
+namespace SharedTest.DomainTestInstance.Entity.Users
 {
     public static class InstancingHelper
     {
 
-        public static Domain.Entities.Users.User GetUserInstance(Guid? uuid = null, UserHasRelationToRole? adminRole = null)
+        public static User GetUserInstance(Guid? uuid = null, UserHasRelationToRole? adminRole = null)
         {
 
             // Arrange
@@ -26,16 +27,16 @@ namespace SharedTest.DomainTestInstance.Entity.User
             var createdTime = DateTime.UtcNow;
 
             var role = GetRoleInstance();
-            var userRole = GetUserRoleInstance(role);
+            var userRole = GetUserRoleInstance(role,id);
             ICollection<UserHasRelationToRole> userRoles = new List<UserHasRelationToRole>() { userRole };
             if(adminRole is not null)
             {
                 userRoles.Add(adminRole);
             }
 
-            var user = Domain.Entities.Users.User.Create(
+            var user = User.Create(
                 id,
-                userType,
+                userType.Id,
                 userName,
                 password,
                 firstName,
@@ -49,11 +50,9 @@ namespace SharedTest.DomainTestInstance.Entity.User
                 phone,
                 null, // Optional: picture
                 userRoles, // Optional: roles
-                null, // Optional: friends
-                null, // Optional: friendshipRequests
-                dateOfBirth,
+                dateOfBirth.ToTypedDateOnly(),
                 null, // Optional: activationDateTime
-                createdTime,
+                createdTime.ToTypedDateTime(),
                 null, // Optional: lastModifiedTime
                 null, // Optional: deletedTime
                 null,// Optional: createdBy
@@ -65,9 +64,9 @@ namespace SharedTest.DomainTestInstance.Entity.User
 
         public static UserType GetUserTypeInstance(string typeName = "User")
         {
-            return UserType.Create(new UserTypeId(Guid.NewGuid()),
+            return UserType.Create(new UserTypeId(UserConst.UserType.User),
                                            typeName,
-                                           DateTime.Now,
+                                           DateTime.Now.ToTypedDateTime(),
                                            null,
                                            null,
                                            null,
@@ -75,27 +74,42 @@ namespace SharedTest.DomainTestInstance.Entity.User
                                            null);
         }
 
-        public static FriendshipRequest GetFriendshipRequest(Domain.Entities.Users.User fromUser, Domain.Entities.Users.User toUser)
+        public static FriendshipRequest GetFriendshipRequest(User fromUser, User toUser)
         {
-            return FriendshipRequest.Create("be my new friend", fromUser, toUser);
+            return FriendshipRequest.Create(
+                FriendshipRequest.NewId(),
+                "be my new friend",
+                fromUser.Id,
+                toUser.Id,
+                DateTime.Now.ToTypedDateTime(),
+                null,
+                null);
         }
 
         public static Role GetRoleInstance(string roleName = "User")
         {
             return Role.Create(
-                new RoleId(Guid.NewGuid()),
+                new RoleId(RoleConst.UserRoleUuid),
                 roleName,
-                null,
-                DateTime.Now,
+                DateTime.Now.ToTypedDateTime(),
                 null,
                 null,
                 null,
                 null,
                 null);
         }
-        public static UserHasRelationToRole GetUserRoleInstance(Role role)
+        public static UserHasRelationToRole GetUserRoleInstance(Role role,UserId user)
         {
-            return UserHasRelationToRole.Create(role, DateTime.Now, null, null);
+            return UserHasRelationToRole.Create(
+                UserHasRelationToRole.NewId(),
+                user,
+                role.Id,
+                DateTime.Now.ToTypedDateTime(),
+                null,
+                null,
+                null,
+                null,
+                null);
         }
     }
 }

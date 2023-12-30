@@ -27,8 +27,8 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateChat
         private readonly IUserRepository _userRepositoryMock;
         private readonly IMediaService _mediaServiceMock;
 
-        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
-        private static readonly Domain.Entities.Users.User OtherUserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(OtherUserId);
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User OtherUserInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance(OtherUserId);
 
         public CreateChatCommandHandlerTests()
         {

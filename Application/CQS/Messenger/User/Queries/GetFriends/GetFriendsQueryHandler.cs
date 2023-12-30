@@ -1,6 +1,8 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
 using Domain.Errors;
+using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Shared.DataTransferObject.Messenger;
@@ -23,7 +25,7 @@ namespace Application.CQS.Messenger.User.Queries.GetFriends
         }
         public async Task<Result<List<MessengerUserDTO>>> Handle(GetFriendsQuery request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetAsync(x=> x.Id.Id == request.UserId);
+            var user = await _userRepository.GetAsync(x=> x.Id == request.UserId.ToIdentification<UserId>());
             if(!user.HasFriends())
             {
                 return Result<List<MessengerUserDTO>>.Failure("you have no friends", Error.ERROR_CODE.NotFound);

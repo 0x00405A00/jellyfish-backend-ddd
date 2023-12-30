@@ -1,10 +1,11 @@
-﻿using Infrastructure.EFCore.Extension;
+﻿using Domain.Const;
+using Domain.Entities.Roles;
+using Domain.Entities.Users;
+using Domain.Primitives.Ids;
+using Infrastructure.EFCore.Extension;
+using Infrastructure.Extension;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.Const;
-using Shared.Entities.Roles;
-using Shared.Entities.Users;
-using Shared.ValueObjects.Ids;
 
 namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
 {
@@ -24,7 +25,7 @@ namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
             builder.Property(ut => ut.RoleForeignKey)
                 .IsRequired()
                 .HasMaxLength(DbContextExtension.ColumnLength.Ids)
-                .HasDefaultValue(new RoleId(Shared.Const.UserConst.Role.User))
+                .HasDefaultValue(new RoleId(UserConst.Role.User))
                 .HasColumnName("role_id");
             
             builder.Property(ut => ut.UserForeignKey)

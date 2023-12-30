@@ -5,6 +5,7 @@ using Domain.Entities.Messages;
 using Domain.Entities.Roles;
 using Domain.Entities.Users;
 using Domain.Primitives;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using EFCoreMigrationTestWithInheritence_MySql_Updated.Converter;
 using EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration;
@@ -13,8 +14,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Shared.ValueObjects.Ids;
-using System.Text;
 
 namespace Infrastructure
 {
@@ -22,35 +21,6 @@ namespace Infrastructure
     {
         #region Const
         public const string ConnectionStringAlias = "JellyfishMySqlDatabase";
-        public struct ColumnLength
-        {
-            public const int Ids = 36;
-            public const int Names = 64;
-            public const int Descriptions = 255;
-        }
-        public static Func<Type, string> GetTableName = new Func<Type, string>((type) =>
-        {
-            string typeName = type.Name;
-            string tableName = null;
-            StringBuilder result = new StringBuilder();
-
-            foreach (char character in typeName)
-            {
-                if (char.IsUpper(character))
-                {
-                    result.Append('_');
-                }
-                result.Append(character);
-            }
-            tableName = result.ToString().TrimStart('_');
-
-            return ($"{tableName}").ToLower(); 
-        });
-        public static Func<string, string> GetIndexName = new Func<string, string>((name) => 
-        { return ($"IDX_{name}").ToUpper(); });
-        public static Func<string, string, string> GetForeignKeyName = new Func<string,string, string>((from,to) => 
-        { return ($"FK_{from}_TO_{to}_{Guid.NewGuid()}").ToUpper(); });
-
         #endregion
         #region Consumed DI Services
         public DbSaveChangesInterceptor DbContextAuditLogInterceptor { get; }
@@ -161,8 +131,16 @@ namespace Infrastructure
                 .HaveConversion<CustomDateTimeConverter>();
 
             configurationBuilder
+                .Properties<CustomDateOnly>()
+                .HaveConversion<CustomDateOnlyConverter>();
+
+            configurationBuilder
                 .Properties<UserId>()
                 .HaveConversion<UserIdConverter>();
+
+            configurationBuilder
+                .Properties<UserTypeId>()
+                .HaveConversion<UserTypeIdConverter>();
 
             configurationBuilder
                 .Properties<ChatId>()

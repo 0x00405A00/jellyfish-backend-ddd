@@ -1,7 +1,10 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
 using Domain.Const;
+using Domain.Entities.Users;
 using Domain.Exceptions;
+using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
@@ -52,7 +55,7 @@ namespace Application.CQS.User.Commands.CreateUser
             {
                 return Result<UserDTO>.Failure(ex.Message);
             }
-            var createdByUser = await _userRepository.GetAsync(x => x.Id.Id == request.CreatedBy);
+            var createdByUser = await _userRepository.GetAsync(x => x.Id == request.CreatedBy.ToIdentification<UserId>());
 
             bool emailAlreadyInUseCheck = await _userRepository.IsEmailAlreadyInUse(request.Email);
             bool phoneAlreadyInUseCheck = await _userRepository.IsPhoneAlreadyInUse(request.Phone);
@@ -70,12 +73,12 @@ namespace Application.CQS.User.Commands.CreateUser
             {
                 Domain.Entities.Users.User.CheckPasswordWithPolicy(request.Password, request.PasswordRepeat);
 
-                var userId = new Domain.Entities.User.UserId(Guid.NewGuid());
-                var userType = await _userTypeRepository.GetAsync(x => x.Id.Id == UserTypeConst.UserTypeUuid);
-                var userRole = await _roleRepository.GetAsync(x => x.Id.Id == RoleConst.UserRoleUuid);
+                var userId = Domain.Entities.Users.User.NewId();
+                var userType = await _userTypeRepository.GetAsync(x => x.Id == UserTypeConst.UserTypeUuid.ToIdentification<UserTypeId>());
+                var userRole = await _roleRepository.GetAsync(x => x.Id == RoleConst.UserRoleUuid.ToIdentification<RoleId>());
                 user = Domain.Entities.Users.User.Create(
                     userId,
-                    userType,
+                    userType.Id,
                     request.UserName,
                     request.Password,
                     request.FirstName,
@@ -89,16 +92,15 @@ namespace Application.CQS.User.Commands.CreateUser
                     phoneNumber,
                     null,
                     null,
+                    DateOnly.FromDateTime(request.DateOfBirth).ToTypedDateOnly(),
+                    null,
+                    DateTime.Now.ToTypedDateTime(),
+                    createdByUser.Id,
                     null,
                     null,
-                    DateOnly.FromDateTime(request.DateOfBirth),
-                    null,
-                    DateTime.Now,
-                    null,
-                    null,
-                    createdByUser, 
                     null, 
                     null);
+
                 user.AddRole(createdByUser, userRole);
                 user.GenerateActivationToken();
                 user.NewRegistered();

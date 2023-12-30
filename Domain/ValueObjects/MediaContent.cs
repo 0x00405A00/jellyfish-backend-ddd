@@ -8,6 +8,11 @@
         /// Filesystem Fileextension or MimeType
         /// </summary>
         public string FileExtension { get; private set; }
+
+        protected MediaContent()
+        {
+
+        }
         public MediaContent(byte[] data, string filePath, string fileExtension)
         {
             Data = data;
@@ -17,6 +22,7 @@
         public MediaContent(string filePath, string fileExtension):this(null,filePath,fileExtension)
         {
         }
+
         public static MediaContent Parse(byte[] data, string filePath, string fileExtension)
         {
             return new MediaContent(data, filePath, fileExtension);

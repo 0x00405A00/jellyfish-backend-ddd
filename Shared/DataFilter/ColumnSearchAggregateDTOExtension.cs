@@ -80,11 +80,11 @@ namespace Shared.DataFilter
                         filter.Op = filter.GetOperatorFromOp();
                         if (filter.IsInvalidOperator)
                         {
-                            errors.Add(new Domain.Error.Error($"field: {filter.field} with given operator {columnFilterGroup.Filters[i].op} is not valid"));
+                            errors.Add(new Error($"field: {filter.field} with given operator {columnFilterGroup.Filters[i].op} is not valid"));
                         }
                         if(!filter.FoundFieldInDto)
                         {
-                            errors.Add(new Domain.Error.Error($"field with given name '{filter.field}' is not existing"));
+                            errors.Add(new Error($"field with given name '{filter.field}' is not existing"));
                         }
                     }
                 }
@@ -119,7 +119,7 @@ namespace Shared.DataFilter
                     var sorting = columnSorting[i];
                     if (!sorting.FoundFieldInDto)
                     {
-                        errors.Add(new Domain.Error.Error($"field with given name '{sorting.field}' is not existing"));
+                        errors.Add(new Error($"field with given name '{sorting.field}' is not existing"));
                     }
                 }
             }

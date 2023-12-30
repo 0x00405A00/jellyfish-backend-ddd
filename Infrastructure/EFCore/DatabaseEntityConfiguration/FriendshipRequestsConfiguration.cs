@@ -1,9 +1,9 @@
-﻿using Infrastructure.EFCore.Extension;
+﻿using Domain.Entities.Users;
+using Domain.Primitives.Ids;
+using Infrastructure.EFCore.Extension;
+using Infrastructure.Extension;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.Const;
-using Shared.Entities.Users;
-using Shared.ValueObjects.Ids;
 
 namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
 {

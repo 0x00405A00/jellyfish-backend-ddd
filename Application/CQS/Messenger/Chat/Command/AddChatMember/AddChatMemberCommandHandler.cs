@@ -1,6 +1,8 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
 using Domain.Entities.Chats.Exceptions;
+using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
@@ -32,18 +34,18 @@ namespace Application.CQS.Messenger.Chat.Command.AddChatMember
 
         public async Task<Result<bool>> Handle(AddChatMemberCommand request, CancellationToken cancellationToken)
         {
-            var executorUser = await _userRepository.GetAsync(x => x.Id == new Domain.Entities.User.UserId(request.ActorId));
+            var executorUser = await _userRepository.GetAsync(x => x.Id == request.ActorId.ToIdentification<UserId>());
             if (executorUser is null)
             {
                 return Result<bool>.Failure($"executor-user not found");
             }
-            var targetUser = await _userRepository.GetAsync(x => x.Id == new Domain.Entities.User.UserId(request.UserId));
+            var targetUser = await _userRepository.GetAsync(x => x.Id == request.UserId.ToIdentification<UserId>());
             if (targetUser is null)
             {
                 return Result<bool>.Failure($"target-user not found");
             }
 
-            var chat = await _chatRepository.GetAsync(x => x.Id == new Domain.Entities.Chats.ChatId(request.ChatId));
+            var chat = await _chatRepository.GetAsync(x => x.Id == request.ChatId.ToIdentification<ChatId>());
 
             if (chat is null)
             {

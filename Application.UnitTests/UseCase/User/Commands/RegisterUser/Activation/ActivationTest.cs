@@ -23,7 +23,7 @@ namespace Application.UnitTests.UseCase.User.Commands.RegisterUser.Activation
         private readonly IMediator _mediatorMock;
         private readonly IMapper _mapperMock;
 
-        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance(UserId);
 
         public ActivationTest()
         {

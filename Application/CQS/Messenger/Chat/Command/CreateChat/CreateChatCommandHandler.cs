@@ -1,7 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
-using Domain.Entities.Chats;
 using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
@@ -31,7 +31,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
 
         public async Task<Result<ChatDTO>> Handle(CreateChatCommand request, CancellationToken cancellationToken)
         {
-            var createdBy = await _userRepository.GetAsync(x => x.Id.Id == request.ChatOwnerUuid);
+            var createdBy = await _userRepository.GetAsync(x => x.Id == request.ChatOwnerUuid.ToIdentification<UserId>());
             ICollection<Domain.Entities.Users.User> members = null;
             ICollection<ChatMember> chatMembers = new List<ChatMember>();
             request.Members.Add(request.ChatOwnerUuid);
@@ -45,7 +45,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
                     var chatMember = ChatMember.Create(Guid.NewGuid(), member, isAdmin, DateTime.Now, null, null);
                     chatMembers.Add(chatMember);
                 }
-                var id = new Domain.Entities.Chats.ChatId(Guid.NewGuid());
+                var id = new ChatId(Guid.NewGuid());
                 Picture? picture = null;
                 if (!String.IsNullOrWhiteSpace(request.Picture))
                 {
@@ -54,18 +54,20 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
                     picture = Picture.Parse(pictureBinary, path, request.PictureMimeType);
                 }
 
-                chat = Domain.Entities.Chats.Chat.Create(id,
-                                                             createdBy,
-                                                             null,
-                                                             null,
-                                                             request.ChatName,
-                                                             request.ChatDescription,
-                                                             picture,
-                                                             chatMembers,
-                                                             null,
-                                                             DateTime.Now,
-                                                             null,
-                                                             null);
+                chat = Domain.Entities.Chats.Chat.Create(
+                    id,
+                    createdBy,
+                    null,
+                    null,
+                    request.ChatName,
+                    request.ChatDescription,
+                    picture,
+                    chatMembers,
+                    null,
+                    DateTime.Now,
+                    null,
+                    null);
+
                 chat.SetCreated(createdBy);
 
             }

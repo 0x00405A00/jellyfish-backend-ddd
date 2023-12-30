@@ -1,7 +1,9 @@
 ﻿using Domain.Const;
 using Domain.Entities.Users;
+using Domain.Extension;
 using Domain.Primitives;
-using Shared.ValueObjects.Ids;
+using Domain.Primitives.Ids;
+using Domain.ValueObjects;
 using System.Text;
 
 namespace Infrastructure.Extension
@@ -103,39 +105,51 @@ namespace Infrastructure.Extension
             return val;
         });
 
-        public static User GetRootUser()
-        {
-            User rootUser = User.Create(
-                new UserId(UserConst.RootUserId),
-                "Root",
-                $"root@localhost",
-                "abcd1234",
-                new UserTypeId(UserConst.UserType.Root),
-                new CustomDateTime(DateTime.Now),
-                null,
-                null,
-                null,
-                null,
-                null);
-            return rootUser;
-        }
         public static List<User> GetTestSet()
         {
             List<User> testSet = new List<User>();
             for (int i = 0; i < 10; i++)
             {
+                var userId = new UserId(Guid.NewGuid());
+                var rootUserId = new UserId(UserConst.RootUserId);
+                List<UserHasRelationToRole> roles = new List<UserHasRelationToRole>() 
+                {
+
+                    UserHasRelationToRole.Create(
+                        UserHasRelationToRole.NewId(),
+                        userId,
+                        new RoleId(RoleConst.UserRoleUuid),
+                        DateTime.Now.ToTypedDateTime(),
+                        rootUserId,
+                        null,
+                        null,
+                        null,
+                        null)
+                };
                 var var1 = User.Create(
-                    new UserId(Guid.NewGuid()),
-                    $"Test{i}",
-                    $"test{i}@localhost",
-                    "abcd1234",
+                    userId,
                     new UserTypeId(UserConst.UserType.Root),
-                    new CustomDateTime(DateTime.Now),
-                    new UserId(UserConst.RootUserId),
+                    $"Test{i}",
+                    "abcd1234",
+                    $"Test{i}",
+                    $"Test{i}",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    Email.Parse($"test{i}@localhost.local"),
+                    PhoneNumber.Parse("+49123456789"),
+                    null,
+                    roles,
+                    DateOnly.FromDateTime(DateTime.Now).ToTypedDateOnly(),
+                    DateTime.Now.ToTypedDateTime(),
+                    DateTime.Now.ToTypedDateTime(),
+                    rootUserId,
                     new CustomDateTime(DateTime.Now),
                     null,
                     null,
-                    null);
+                    null); 
 
                 testSet.Add(var1);
             }

@@ -1,6 +1,5 @@
 ﻿using Domain.Entities.Users;
-using Shared.Entities.Users;
-using Shared.ValueObjects.Ids;
+using Domain.Primitives.Ids;
 
 namespace Domain.Primitives
 {

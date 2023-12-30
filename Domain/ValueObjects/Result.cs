@@ -17,7 +17,7 @@ namespace Domain.ValueObjects
         public static Result Failure(string errorMessage, Error.ERROR_CODE errorCode = Error.ERROR_CODE.BadRequest)
         {
             var result = new Result();
-            result.Error = new Domain.Error.Error(errorMessage, errorCode);
+            result.Error = new Error(errorMessage, errorCode);
             return result;
         }
     }
@@ -48,7 +48,7 @@ namespace Domain.ValueObjects
         public new static Result<T> Failure(string errorMessage, Error.ERROR_CODE errorCode= Error.ERROR_CODE.BadRequest)
         {
             var result = new Result<T>();
-            result.Error = new Domain.Error.Error(errorMessage, errorCode);
+            result.Error = new Error(errorMessage, errorCode);
             return result;
         }
     }

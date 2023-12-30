@@ -35,7 +35,7 @@ namespace Application.Mapper
             CreateMap<MessageId, Guid>()
                 .ConvertUsing(dst => dst.Id);
             CreateMap<Guid, MessageId>()
-                .ConvertUsing(dst => new Domain.Entities.Message.MessageId(dst));
+                .ConvertUsing(dst => new MessageId(dst));
             CreateMap<Message, MessageDTO>()
                 .ForMember(dst => dst.ChatId, dst => dst.MapFrom(x => x.Chat.ToGuid()))
                 .ForMember(dst => dst.BinaryContentBase64, dst => dst.MapFrom(x => x.MediaContent.ToString()))
@@ -48,7 +48,7 @@ namespace Application.Mapper
             CreateMap<ChatId, Guid>()
                 .ConvertUsing(dst => dst.Id);
             CreateMap<Guid, ChatId>()
-                .ConvertUsing(dst => new Domain.Entities.Chats.ChatId(dst));
+                .ConvertUsing(dst => new ChatId(dst));
 
             CreateMap<ChatMember, UserHasRelationToFriend>();
             CreateMap<Domain.Entities.Chats.Chat, ChatDTO>()
@@ -73,7 +73,7 @@ namespace Application.Mapper
             CreateMap<UserId, Guid>()
                 .ConvertUsing(dst => dst.Id);
             CreateMap<Guid, UserId>()
-                .ConvertUsing(dst => new Domain.Entities.User.UserId(dst));
+                .ConvertUsing(dst => new UserId(dst));
             CreateMap<User, UserDTO>()
                 .ForMember(dst => dst.Roles, dst => dst.MapFrom(x => x.UserRoles.Select(x => x.Role).ToList()))
                 .ForMember(dst => dst.Friends, dst => dst.MapFrom(x => x.Friends.Select(x => x.Friend.Id.ToGuid()).ToList()))

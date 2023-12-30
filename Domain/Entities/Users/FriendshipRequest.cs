@@ -1,5 +1,5 @@
 ﻿using Domain.Primitives;
-using Shared.ValueObjects.Ids;
+using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Users
 {
@@ -44,13 +44,14 @@ namespace Domain.Entities.Users
             CustomDateTime? modifiedDateTime,
             CustomDateTime? deletedDateTime)
         {
-            return new FriendshipRequest(id,
-                                         targetUserRequestMessage,
-                                         requestUserId,
-                                         targetUserId,
-                                         createdDateTime,
-                                         modifiedDateTime,
-                                         deletedDateTime);
+            return new FriendshipRequest(
+                id,
+                targetUserRequestMessage,
+                requestUserId,
+                targetUserId,
+                createdDateTime,
+                modifiedDateTime,
+                deletedDateTime);
         }
 
         /// <summary>

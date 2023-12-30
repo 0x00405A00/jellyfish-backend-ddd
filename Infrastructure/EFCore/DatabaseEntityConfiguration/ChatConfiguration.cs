@@ -1,9 +1,9 @@
 ﻿using Domain.Entities.Chats;
+using Domain.Primitives.Ids;
 using Infrastructure.EFCore.Extension;
 using Infrastructure.Extension;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.ValueObjects.Ids;
 
 namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
 {
@@ -24,15 +24,15 @@ namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
                 .HasMaxLength(DbContextExtension.ColumnLength.Descriptions)
                 .HasColumnName(DbContextExtension.ColumnNameDefinitions.Description);
 
-            builder.Property(ut => ut.PicturePath)
-                .IsRequired(false)
-                .HasMaxLength(DbContextExtension.ColumnLength.PathDescriptors)
-                .HasColumnName("picture_path");
+            builder.OwnsOne(ut => ut.Picture, navigationBuilder => {
 
-            builder.Property(ut => ut.PictureFileExtension)
-                .IsRequired(false)
-                .HasMaxLength(DbContextExtension.ColumnLength.FileExtension)
-                .HasColumnName("picture_path_file_extension");
+                navigationBuilder.Property(img => img.FilePath)
+                                             .HasColumnName("picture_path")
+                                             .IsRequired(false);
+                navigationBuilder.Property(img => img.FileExtension)
+                                             .HasColumnName("picture_path_file_extension")
+                                             .IsRequired(false);
+            });
 
             builder.AddAuditableConstraints<Chat, ChatId>();
         }

@@ -1,44 +1,55 @@
 ﻿using Domain.Primitives;
-using Domain.ValueObjects;
-using Shared.ValueObjects.Ids;
+using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Mails;
 
-public sealed class MailOutboxRecipient : Entity<MailOutboxRecipientId>
+public sealed partial class MailOutboxRecipient : Entity<MailOutboxRecipientId>
 {
-    public MailId MailId { get; private set; }
-    public EmailTypeId EmailTypeId { get; private set; }
-    public Email Email { get; private set; } = null!;
-    public EmailType EmailType { get; private set; } = null!;
-    public MailOutbox Mail { get; private set; } = null!;
-    public DateTime? CreatedTime { get; private set; }
-    public Users.User? CreatedByUser { get; private set; }
+    public string Email { get; private set; }
+    public MailOutboxId MailOutboxForeignKey { get; private set; }
+    public EmailTypeId EmailSendingTypeForeignKey { get; private set; }
 
-    private MailOutboxRecipient()
+    private MailOutboxRecipient() : base()
     {
-        // Private constructor to enforce the use of factory methods
-    }
 
-    public static MailOutboxRecipient Create(
-        MailOutboxId mailId,
+    }
+    private MailOutboxRecipient(
+        MailOutboxRecipientId id,
+        MailOutboxId mailOutboxId,
         EmailTypeId emailTypeId,
-        Email email,
-        DateTime createTime)
+        string email,
+        CustomDateTime createdDateTime,
+        CustomDateTime? modifiedDateTime,
+        CustomDateTime? deletedDateTime) : base(id)
     {
-        var recipient = new MailOutboxRecipient
-        {
-            CreatedTime = createTime,
-            MailId = mailId,
-            EmailTypeId = emailTypeId,
-            Email = email ?? throw new ArgumentNullException(nameof(email), "Email cannot be null."),
-        };
-
-        return recipient;
+        MailOutboxForeignKey = mailOutboxId;
+        EmailSendingTypeForeignKey = emailTypeId;
+        Email = email;
+        CreatedTime = createdDateTime;
+        LastModifiedTime = modifiedDateTime;
+        DeletedTime = deletedDateTime;
     }
-
-    public void SetCreated(Users.User createdBy)
+    public static MailOutboxRecipient Create(
+        MailOutboxRecipientId id,
+        MailOutboxId mailOutboxId,
+        EmailTypeId emailTypeId,
+        string email,
+        CustomDateTime createdDateTime,
+        CustomDateTime? modifiedDateTime,
+        CustomDateTime? deletedDateTime)
     {
-        CreatedTime = DateTime.Now;
-        CreatedByUser = createdBy;
+        return new MailOutboxRecipient(
+            id,
+            mailOutboxId,
+            emailTypeId,
+            email,
+            createdDateTime,
+            modifiedDateTime,
+            deletedDateTime);
     }
+}
+public sealed partial class MailOutboxRecipient
+{
+    public MailOutbox Mail { get; set; }
+    public EmailSendingType SendingType { get; set; }
 }

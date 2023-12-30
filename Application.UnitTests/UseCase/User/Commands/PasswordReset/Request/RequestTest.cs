@@ -14,7 +14,7 @@ namespace Application.UnitTests.UseCase.User.Commands.PasswordReset.Request
 
         private readonly UserPasswordResetRequestCommandHandler _handler;
 
-        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.User.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance(UserId);
 
         private readonly IMapper _mapperMock;
         private readonly IUserRepository _userRepositoryMock;

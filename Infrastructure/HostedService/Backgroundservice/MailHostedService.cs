@@ -61,35 +61,35 @@ namespace Infrastructure.HostedService.Backgroundservice
 
                 foreach (var mail in mails)
                 {
-                    var mailIsHtml = Convert.ToBoolean(mail.BodyIsHtml);
-                    var from = new MailboxAddress(mail.From.EmailValue, mail.From.EmailValue);
+                    var mailIsHtml = Convert.ToBoolean(mail.IsBodyHtml);
+                    var from = new MailboxAddress(mail.From, mail.From);
                     InternetAddressList recipientsToList = new InternetAddressList();
                     InternetAddressList recipientsCcList = new InternetAddressList();
                     InternetAddressList recipientsBccList = new InternetAddressList();
 
-                    foreach (var recipient in mail.MailOutboxRecipients)
+                    foreach (var recipient in mail.Recipients)
                     {
 
-                        switch (recipient.EmailType.Type)
+                        switch (recipient.SendingType.Name)
                         {
                             case MailHandler.MailType.To:
-                                recipientsToList.Add(MimeKit.InternetAddress.Parse(recipient.Email.EmailValue));
+                                recipientsToList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
                                 break;
                             case MailHandler.MailType.Cc:
-                                recipientsCcList.Add(MimeKit.InternetAddress.Parse(recipient.Email.EmailValue));
+                                recipientsCcList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
                                 break;
                             case MailHandler.MailType.Bcc:
-                                recipientsBccList.Add(MimeKit.InternetAddress.Parse(recipient.Email.EmailValue));
+                                recipientsBccList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
                                 break;
                         }
                     }
                     string subject = mail.Subject ?? String.Empty;
-                    string body = Encoding.UTF8.GetString(mail.Body ?? new byte[0]);
+                    string body = mail.Body;
                     MimeKit.AttachmentCollection mailAttachments = new MimeKit.AttachmentCollection();
                     MimeKit.AttachmentCollection mailEmbeddedInHtmlMedia = new MimeKit.AttachmentCollection();
-                    foreach (var attachment in mail.MailOutboxAttachments)
+                    foreach (var attachment in mail.Attachments)
                     {
-                        var isEmbedded = Convert.ToBoolean(attachment.IsEmbeddedInHtml);
+                        var isEmbedded = Convert.ToBoolean(attachment.IsEmbededInHtml);
                         string filePath = attachment.AttachmentPath;
                         if (isEmbedded)
                         {
@@ -102,7 +102,7 @@ namespace Infrastructure.HostedService.Backgroundservice
                         {
                             using (FileStream fs = File.OpenRead(filePath))
                             {
-                                var mediaAttachent = new MimePart(attachment.MimeMediatype, attachment.MimeMediasubtype)
+                                var mediaAttachent = new MimePart(attachment.MimeMediaType, attachment.MimeMediaSubType)
                                 {
 
                                     Content = new MimeContent(fs, ContentEncoding.Default),

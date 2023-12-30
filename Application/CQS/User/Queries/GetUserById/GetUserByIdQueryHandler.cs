@@ -1,6 +1,8 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
-using Domain.Entities.User.Exception;
+using Domain.Entities.Users.Exceptions;
+using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Shared.DataTransferObject;
@@ -20,7 +22,7 @@ namespace Application.CQS.User.Queries.GetUserById
         }
         public async Task<Result<UserDTO>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var data = await _userRepository.GetAsync(x => x.Id.Id == request.Id && x.DeletedTime == null);
+            var data = await _userRepository.GetAsync(x => x.Id == request.Id.ToIdentification<UserId>() && x.DeletedTime == null);
             if (data == null)
             {
                 throw new UserNotFoundException(request.Id);

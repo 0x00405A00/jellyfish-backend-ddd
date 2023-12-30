@@ -1,10 +1,11 @@
-﻿using Infrastructure.EFCore.Extension;
+﻿using Domain.Const;
+using Domain.Entities.Roles;
+using Domain.Primitives;
+using Domain.Primitives.Ids;
+using Infrastructure.EFCore.Extension;
+using Infrastructure.Extension;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.Const;
-using Shared.Entities.Roles;
-using Shared.Primitives;
-using Shared.ValueObjects.Ids;
 
 namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
 {
@@ -30,6 +31,7 @@ namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
                 null,
                 null,
                 null);
+
             var roleUser = Role.Create(
                 new RoleId(UserConst.Role.User),
                 "User",

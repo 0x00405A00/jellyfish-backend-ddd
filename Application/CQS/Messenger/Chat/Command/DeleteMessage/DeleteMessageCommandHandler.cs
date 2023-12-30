@@ -1,6 +1,8 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
 using Domain.Entities.Messages.Exceptions;
+using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
@@ -32,12 +34,12 @@ namespace Application.CQS.Messenger.Chat.Command.DeleteMessage
 
         public async Task<Result<Guid>> Handle(DeleteMessageCommand request, CancellationToken cancellationToken)
         {
-            var deleteByUser = await _userRepository.GetAsync(x => x.Id.Id == request.DeletedById);
+            var deleteByUser = await _userRepository.GetAsync(x => x.Id == request.DeletedById.ToIdentification<UserId>());
             if(deleteByUser is null)
             {
                 return Result<Guid>.Failure("operational user not found");
             }
-            var message = await _messageRepository.GetAsync(x=>x.Id.Id == request.MessageId && x.Chat.Id == request.ChatId);
+            var message = await _messageRepository.GetAsync(x=>x.Id == request.MessageId.ToIdentification<MessageId>() && x.Chat.Id == request.ChatId.ToIdentification<ChatId>());
             if (message is null)
             {
                 return Result<Guid>.Failure("message not found");

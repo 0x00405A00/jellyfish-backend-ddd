@@ -1,7 +1,8 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
-using Domain.Entities.User.Exception;
+using Domain.Entities.Users.Exceptions;
 using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
@@ -35,11 +36,11 @@ namespace Application.CQS.User.Commands.Roles.RevokeRole
             {
                 throw new InvalidOperationException($"userId is {request.UserId}");
             }
-            var user = await _userRepository.GetAsync(user => user.Id.Id == request.UserId);
+            var user = await _userRepository.GetAsync(user => user.Id == request.UserId.ToIdentification<UserId>());
             if (user is null)
                 throw new UserNotFoundException(request.UserId);
 
-            var revokedByUser = await _userRepository.GetAsync(x => x.Id.Id == request.RevokerId);
+            var revokedByUser = await _userRepository.GetAsync(x => x.Id == request.RevokerId.ToIdentification<UserId>());
             var foundRoles = await roleRepository.ListAsync(role => request.RoleIds.Contains(role.Id.Id));
             if(!foundRoles.Any())
             {

@@ -1,6 +1,8 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
 using Domain.Errors;
+using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
@@ -24,17 +26,17 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.AcceptFriend
 
         public async Task<Result<bool>> Handle(AcceptFriendshipRequestCommand request, CancellationToken cancellationToken)
         {
-            var executor = await _userRepository.GetAsync(x => x.Id.Id == request.ExecutorUserId);
+            var executor = await _userRepository.GetAsync(x => x.Id == request.ExecutorUserId.ToIdentification<UserId>());
             if (executor is null)
             {
                 return Result<bool>.Failure("executor not found", Error.ERROR_CODE.NotFound);
             }
-            var target = await _userRepository.GetAsync(x => x.Id.Id == request.TargetUserId);
+            var target = await _userRepository.GetAsync(x => x.Id == request.TargetUserId.ToIdentification<UserId>());
             if (target is null)
             {
                 return Result<bool>.Failure("target-user not found", Error.ERROR_CODE.NotFound);
             }
-            var requester = await _userRepository.GetAsync(x => x.Id.Id == request.RequestUserId);
+            var requester = await _userRepository.GetAsync(x => x.Id == request.RequestUserId.ToIdentification<UserId>());
             if (requester is null)
             {
                 return Result<bool>.Failure("request-user not found", Error.ERROR_CODE.NotFound);
@@ -52,14 +54,14 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.AcceptFriend
             {
                 return Result<bool>.Failure("you have not open friendship requests", Error.ERROR_CODE.NotFound);
             }
-            if(!receivedRequest.Any(x=>x.RequestUser == requester))
+            if(!receivedRequest.Any(x=>x.RequesterUser == requester))
             {
 
                 return Result<bool>.Failure($"you have not open friendship from {requester.UserName}", Error.ERROR_CODE.NotFound);
             }
             try
             {
-                var friendshipRequest = receivedRequest.Where(x => x.RequestUser == requester).Single();
+                var friendshipRequest = receivedRequest.Where(x => x.RequesterUser == requester).Single();
                 target.AcceptFriendshipRequest(friendshipRequest);
                 _userRepository.Update(target);
             }

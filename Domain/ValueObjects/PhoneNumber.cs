@@ -7,7 +7,13 @@ namespace Domain.ValueObjects
     {
         public static Regex PhoneNumberRegex = new Regex(@"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}", RegexOptions.Compiled);
         public string PhoneNumb { get; private set; } 
-        private PhoneNumber(string value) {
+        
+        private PhoneNumber()
+        {
+
+        }
+        private PhoneNumber(string value) 
+        {
             PhoneNumb = value;
         }
         public static PhoneNumber Parse(string value)

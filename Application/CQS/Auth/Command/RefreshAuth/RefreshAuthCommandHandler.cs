@@ -1,8 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
-using Application.CQS.Auth.Command.CreateAuth;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
-using MediatR;
 using Microsoft.Extensions.Configuration;
 using Shared.DataTransferObject;
 
@@ -56,8 +54,8 @@ namespace Application.CQS.Auth.Command.RefreshAuth
             var authDto = new AuthDTO {
                 Token = auth.Token,
                 RefreshToken = auth.RefreshToken,
-                TokenExpiresIn = auth.TokenExpiresIn,
-                RefreshTokenExpiresIn = auth.RefreshTokenExpiresIn,
+                TokenExpiresIn = auth.TokenExpiresIn.DateTime,
+                RefreshTokenExpiresIn = auth.RefreshTokenExpiresIn.DateTime,
             };
             return Result<AuthDTO>.Success(authDto);
         }

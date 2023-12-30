@@ -5,9 +5,8 @@ using Domain.Entities.Messages.Exceptions;
 using Domain.Entities.Users;
 using Domain.Extension;
 using Domain.Primitives;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
-using Shared.Entities.Users;
-using Shared.ValueObjects.Ids;
 using System.Collections.Immutable;
 
 namespace Domain.Entities.Chats

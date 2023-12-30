@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
@@ -24,10 +25,10 @@ namespace Application.CQS.User.Commands.DeleteUser
 
         public async Task<Result<Guid>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetAsync(user => user.Id.Id == request.UserId && user.DeletedTime==null);
+            var user = await _userRepository.GetAsync(user => user.Id == request.UserId.ToIdentification<UserId>() && user.DeletedTime==null);
             if (user == null)
                 return Result<Guid>.Failure("target user not found");
-            var deletetByUser = await _userRepository.GetAsync(user => user.Id.Id == request.DeletedByUserId);
+            var deletetByUser = await _userRepository.GetAsync(user => user.Id == request.DeletedByUserId.ToIdentification<UserId>());
             if (deletetByUser == null)
                 return Result<Guid>.Failure("execution user not found");
             try

@@ -8,7 +8,6 @@ using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.DataTransferObject.Messenger;
 
 namespace Application.CQS.Messenger.Chat.Command.CreateMessage
@@ -44,7 +43,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
 
         public async Task<Result<List<MessageDTO>>> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Chats.Chat chat = await _chatRepository.GetAsync(x=>x.Id.Id == request.ChatId);
+            Domain.Entities.Chats.Chat chat = await _chatRepository.GetAsync(x=>x.Id == request.ChatId.ToIdentification<ChatId>());
             if(chat is null)
             {
                 return Result<List<MessageDTO>>.Failure("chat is not existing", Error.ERROR_CODE.NotFound);
@@ -66,7 +65,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
 
                         //Prüfung des Content in 'UploadProfilePictureCommandValidator'
                         MediaContent mediaContent = null;
-                        var messageId = new Domain.Entities.Message.MessageId(Guid.NewGuid());
+                        var messageId = Message.NewId();
                         if (message.HasBase64ContentSet)
                         {
                             var mimeType = message.BinaryContentMimeType;

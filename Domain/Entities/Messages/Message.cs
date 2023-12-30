@@ -5,9 +5,8 @@ using Domain.Entities.Users;
 using Domain.Exceptions;
 using Domain.Extension;
 using Domain.Primitives;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
-using Shared.Entities.Chats;
-using Shared.ValueObjects.Ids;
 
 namespace Domain.Entities.Messages
 {
@@ -17,10 +16,7 @@ namespace Domain.Entities.Messages
         public UserId UserForeignKey { get; private set; }
 
         public string Text { get; private set; }
-        public string BinaryContentPath { get; private set; }
-        public string BinaryContentPathFileExtension { get; private set; }
-        public string BinaryContentBase64 { get; private set; }
-        public string BinaryContentBase64MimeType { get; private set; }
+
         public MediaContent? MediaContent { get; private set; }
 
         private Message() : base()

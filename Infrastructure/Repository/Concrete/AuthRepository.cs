@@ -16,7 +16,7 @@ namespace Infrastructure.Repository.Concrete
         {
             var result = await DbSet.AsNoTracking()
                                      .Include(x => x.User)
-                                     .ThenInclude(x => x.UserRoles)
+                                     .ThenInclude(x => x.UserHasRelationToRoles)
                                      .ThenInclude(x => x.Role)
                                      .AsSingleQuery()
                                      .FirstOrDefaultAsync(expression);

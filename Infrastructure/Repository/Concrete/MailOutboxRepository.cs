@@ -14,14 +14,14 @@ namespace Infrastructure.Repository.Concrete
 
         public override async Task<ICollection<MailOutbox>> ListAsync(Expression<Func<MailOutbox, bool>> expression = null)
         {
-            var result = expression == null ? await DbSet.Include(x => x.MailOutboxAttachments)
-                .Include(x => x.MailOutboxRecipients)
-                .ThenInclude(x => x.EmailType)
+            var result = expression == null ? await DbSet.Include(x => x.Attachments)
+                .Include(x => x.Recipients)
+                .ThenInclude(x => x.SendingType)
                 .AsSingleQuery()
                 .ToListAsync() :
-                await DbSet.Include(x => x.MailOutboxAttachments)
-                .Include(x => x.MailOutboxRecipients)
-                .ThenInclude(x => x.EmailType)
+                await DbSet.Include(x => x.Attachments)
+                .Include(x => x.Recipients)
+                .ThenInclude(x => x.SendingType)
                 .AsSingleQuery()
                 .Where(expression)
                 .ToListAsync();
