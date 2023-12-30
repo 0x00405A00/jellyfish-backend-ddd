@@ -66,7 +66,7 @@ namespace Application.CQS.Messenger.Chat.Command.AddChatMember
                 item.UserUuid = targetUser.Uuid.ToGuid();
                 item.ChatUuid = chat.Uuid;*/
 
-                /*
+                
                  * 2.Test: Added state wird richtig von ChangeTracker erkannt
                 var item = new ChatRelationToUser
                 {
@@ -75,8 +75,8 @@ namespace Application.CQS.Messenger.Chat.Command.AddChatMember
                     ChatUuid = chat.Uuid,
                     
                 };
-                chat.ChatRelationToUsers.Add(item);*/
-                 /**/
+                chat.ChatRelationToUsers.Add(item);
+                 
                 chat.AddMember(executorUser, targetUser);
             }
             catch (Exception ex) when (ex is ArgumentNullException) 
@@ -101,8 +101,6 @@ namespace Application.CQS.Messenger.Chat.Command.AddChatMember
             }
             _chatRepository.Update(chat);
             
-            _chatRepository.PublishDomainEvents(chat, mediator);
-
             return Result<bool>.Success(true);
 
         }

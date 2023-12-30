@@ -106,7 +106,6 @@ namespace Application.CQS.User.Commands.CreateUser
                 user.NewRegistered();
                 user.SetCreated(createdByUser);
                 _userRepository.Add(user);
-                _userRepository.PublishDomainEvents(user, mediator);
             }
             catch (Exception ex)
             {

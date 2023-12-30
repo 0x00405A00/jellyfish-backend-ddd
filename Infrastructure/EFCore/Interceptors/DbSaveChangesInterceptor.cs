@@ -1,12 +1,16 @@
 ﻿using Domain.Primitives;
+using MediatR;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Infrastructure.EFCore.Interceptors
 {
     public class DbSaveChangesInterceptor : SaveChangesInterceptor
     {
-        public DbSaveChangesInterceptor()
+        private readonly IMediator mediator;
+
+        public DbSaveChangesInterceptor(IMediator mediator)
         {
+            this.mediator = mediator;
         }
         public override ValueTask<int> SavedChangesAsync(SaveChangesCompletedEventData eventData, int result, CancellationToken cancellationToken = default)
         {
@@ -32,7 +36,17 @@ namespace Infrastructure.EFCore.Interceptors
             var changes = dbContext.ChangeTracker.Entries();
             foreach (var change in changes)
             {
-
+                if(change.Entity is Entity<Identification> entity)
+                {
+                    if (!entity.DomainEvents.Any())
+                    {
+                        continue;
+                    }
+                    entity.DomainEvents.ToList().ForEach(e =>
+                    {
+                        mediator.Publish(e);
+                    });
+                }
             }
             return base.SavingChangesAsync(eventData, result, cancellationToken);
         }

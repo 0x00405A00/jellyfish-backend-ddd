@@ -60,7 +60,6 @@ namespace Application.CQS.User.Commands.UpdateProfilePicture
             }
 
             var mapValue = _mapper.Map<UserDTO>(user);
-            _userRepository.PublishDomainEvents(user,mediator);
             return Result<UserDTO>.Success(mapValue);
         }
     }

@@ -53,7 +53,6 @@ namespace Application.CQS.Messenger.Chat.Command.DeleteMessage
                 return Result<Guid>.Failure("you are not the owner of the message");
             }
             _messageRepository.Update(message);    
-            _messageRepository.PublishDomainEvents(message, mediator);
 
             return Result<Guid>.Success(request.MessageId);
         }

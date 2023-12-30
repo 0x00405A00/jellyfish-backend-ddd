@@ -69,7 +69,6 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.AcceptFriend
             {
                 return Result<bool>.Failure("cant accept request", Error.ERROR_CODE.Exception);
             }
-            _userRepository.PublishDomainEvents(target,mediator);
             return Result<bool>.Success(true);
         }
     }

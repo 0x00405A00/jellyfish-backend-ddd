@@ -90,17 +90,6 @@ namespace Infrastructure.Repository
             return new RepositoryResponse<ICollection<TEntity>>(data, ref meta);
         }
 
-        public void PublishDomainEvents(TEntity entity, IMediator mediator)
-        {
-            if(!entity.DomainEvents.Any())
-            {
-                return;
-            }
-            entity.DomainEvents.ToList().ForEach(e =>
-            {
-                mediator.Publish(e);
-            });
-        }
         #endregion
     }
 }

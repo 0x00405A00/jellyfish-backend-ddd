@@ -1,6 +1,7 @@
 ﻿using Application.DateTimeExtension;
 using Domain.Const;
 using Domain.Extension;
+using Domain.Primitives.Ids;
 using Infrastructure.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
@@ -132,8 +133,8 @@ namespace Infrastructure.Authentification
             var isAdminFromClaim = Shared.Authentification.Claims.Extension.GetClaims(claims, x => x.Type == AuthorizationConst.Claims.ClaimTypeIsAdmin && x.Value == bool.TrueString).Any();
             var isRootFromClaim = Shared.Authentification.Claims.Extension.GetClaims(claims, x => x.Type == AuthorizationConst.Claims.ClaimTypeIsRoot && x.Value == bool.TrueString).Any();
             var isUserFromClaim = Shared.Authentification.Claims.Extension.GetClaims(claims, x => x.Type == AuthorizationConst.Claims.ClaimTypeIsActivatedUser && x.Value == bool.TrueString).Any();
-            var isAdminFromDatabase = authFromDatabase.User.UserHasRelationToRoles.Select(x=>x.Role).Where(x => x.Id.ToGuid() == RoleConst.AdminRoleUuid).Any();
-            var isRootFromDatabase = authFromDatabase.User.UserHasRelationToRoles.Select(x => x.Role).Where(x => x.Id.ToGuid() == RoleConst.RootRoleUuid).Any();
+            var isAdminFromDatabase = authFromDatabase.User.UserHasRelationToRoles.Select(x=>x.Role).Where(x => x.Id == RoleConst.AdminRoleUuid.ToIdentification<RoleId>()).Any();
+            var isRootFromDatabase = authFromDatabase.User.UserHasRelationToRoles.Select(x => x.Role).Where(x => x.Id == RoleConst.RootRoleUuid.ToIdentification<RoleId>()).Any();
             var isUserFromDatabase = authFromDatabase.User.ActivationDateTime != null && authFromDatabase.User.ActivationDateTime != DateTime.MinValue.ToTypedDateTime();
 
             if (isAdminFromClaim != isAdminFromDatabase)

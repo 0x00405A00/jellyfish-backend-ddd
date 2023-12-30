@@ -12,7 +12,17 @@ namespace Infrastructure
         }
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            return await _applicationDbContext.SaveChangesAsync(cancellationToken);
+            int result = 0;
+            try
+            {
+
+                result = await _applicationDbContext.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
         }
         public async Task<IDbContextTransaction> BeginTransaction(CancellationToken cancellationToken)
         {

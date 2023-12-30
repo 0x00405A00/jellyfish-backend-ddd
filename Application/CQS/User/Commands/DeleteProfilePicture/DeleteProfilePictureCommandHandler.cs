@@ -55,7 +55,6 @@ namespace Application.CQS.User.Commands.DeleteProfilePicture
             {
                 return Result<bool>.Failure(ex.Message);
             }
-            _userRepository.PublishDomainEvents(user, mediator);
             return Result<bool>.Success(true);
         }
 

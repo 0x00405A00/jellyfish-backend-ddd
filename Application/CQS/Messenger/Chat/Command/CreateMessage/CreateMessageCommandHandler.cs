@@ -80,13 +80,11 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
                         Message messageEntity = Message.Create(
                             messageId,
                             chat.Id,
-                            chatMember.User,
-                            null,
-                            null,
+                            userId,
                             text,
                             mediaContent,
-                            message.CreatedTime ?? DateTime.Now,//Prüfung des CreatedTime auf null-Wert in 'UploadProfilePictureCommandValidator'
-                            null,
+                            (message.CreatedTime ?? DateTime.Now).ToTypedDateTime(),//Prüfung des CreatedTime auf null-Wert in 'UploadProfilePictureCommandValidator'
+                            userId,null,null,null,
                             null);
                         var createMessageEntity = chat.AddMessage(messageEntity);
                         messageEntity.SetCreated(chatMember.User);
@@ -99,7 +97,6 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
                 }
                 //save nur wenn errs collected is empty
                 _chatRepository.Update(chat);
-                _chatRepository.PublishDomainEvents(chat, mediator);
             }
             catch (Exception ex)
             {

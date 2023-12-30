@@ -32,7 +32,6 @@ namespace Application.CQS.Messenger.Chat.Command.AssignChatAdmin
             this.mediaService = mediaService;
         }
 
-
         public async Task<Result<bool>> Handle(AssignChatAdminCommand request, CancellationToken cancellationToken)
         {
             var executorUser = await _userRepository.GetAsync(x => x.Id == request.ActorId.ToIdentification<UserId>());
@@ -71,7 +70,6 @@ namespace Application.CQS.Messenger.Chat.Command.AssignChatAdmin
                 return Result<bool>.Failure(ex.Message);
             }
             _chatRepository.Update(chat);
-            _chatRepository.PublishDomainEvents(chat, mediator);
 
             return Result<bool>.Success(true);
         }

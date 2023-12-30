@@ -12,10 +12,10 @@ namespace Domain.Extension
 
             return identification;
         }
-        /*public static Guid ToGuid(this Identification identification)
+        public static Guid ToGuid(this Identification identification)
         {
             return identification.Id;
-        }*/
+        }
         public static bool IsValid(this Identification identification)
         {
             return identification.Id != Guid.Empty;

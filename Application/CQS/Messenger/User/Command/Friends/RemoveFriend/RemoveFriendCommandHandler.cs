@@ -48,7 +48,6 @@ namespace Application.CQS.Messenger.User.Command.Friends.RemoveFriend
             {
                 return Result<Guid>.Failure("cant remove friend", Error.ERROR_CODE.Exception);
             }
-            _userRepository.PublishDomainEvents(user, mediator);
             return Result<Guid>.Success(request.TargetUserId);
         }
     }

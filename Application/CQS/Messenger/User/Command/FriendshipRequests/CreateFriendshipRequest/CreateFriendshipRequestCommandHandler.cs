@@ -1,6 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
-using Domain.Entities.User;
 using Domain.Entities.Users;
 using Domain.Errors;
 using Domain.Extension;
@@ -51,8 +50,11 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.CreateFriend
                 friendshipRequest = FriendshipRequest.Create(
                     FriendshipRequest.NewId(),
                     request.Message,
-                    user,
-                    targetUser);
+                    user.Id,
+                    targetUser.Id,
+                    DateTime.Now.ToTypedDateTime(),
+                    null,
+                    null);
 
                 user.AddFriendshipRequest(friendshipRequest);
                 _userRepository.Update(user);
@@ -62,7 +64,6 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.CreateFriend
                 return Result<FriendshipRequestDTO>.Failure("cant remove friendship request", Error.ERROR_CODE.Exception);
             }
 
-            _userRepository.PublishDomainEvents(user, mediator);
             var dto = _mapper.Map<FriendshipRequestDTO>(friendshipRequest);
             return Result<FriendshipRequestDTO>.Success(dto);
 

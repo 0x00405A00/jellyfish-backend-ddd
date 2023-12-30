@@ -67,7 +67,6 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriend
             {
                 return Result<RemoveFriendshipRequestDTO>.Failure("cant remove friendship request", Error.ERROR_CODE.Exception);
             }
-            _userRepository.PublishDomainEvents(requester, mediator);
 
             var dto = new RemoveFriendshipRequestDTO { RequestUserUuid = request.RequestUserId, TargetUserUuid = request.TargetUserId };
             return Result<RemoveFriendshipRequestDTO>.Success(dto);

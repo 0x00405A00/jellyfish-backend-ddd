@@ -47,7 +47,6 @@ namespace Application.CQS.User.Commands.DeleteUser
                 return Result<Guid>.Failure(ex.Message);
             }
 
-            _userRepository.PublishDomainEvents(user, mediator);
             return Result<Guid>.Success(user.Id.ToGuid());
         }
     }

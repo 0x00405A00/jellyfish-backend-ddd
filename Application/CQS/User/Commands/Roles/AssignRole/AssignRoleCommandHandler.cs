@@ -65,7 +65,6 @@ namespace Application.CQS.User.Commands.Roles.AssignRole
                 return Result<List<Guid>>.Failure("no roles added");
             }
             _userRepository.Update(user);
-            _userRepository.PublishDomainEvents(user, mediator);
             return Result<List<Guid>>.Success(roleIds);
         }
     }

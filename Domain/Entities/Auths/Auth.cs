@@ -10,9 +10,9 @@ public sealed partial class Auth : Entity<AuthId>
     public UserId UserId { get; private set; }
 
     public string RemoteIp { get; private set; }
-    public uint RemoteIpPort { get; private set; }
+    public int RemoteIpPort { get; private set; }
     public string LocalIp { get; private set; }
-    public uint LocalIpPort { get; private set; }
+    public int LocalIpPort { get; private set; }
     public string Token { get; private set; }
     public CustomDateTime TokenExpiresIn { get; private set; }
     public string UserAgent { get; private set; }
@@ -28,9 +28,9 @@ public sealed partial class Auth : Entity<AuthId>
         AuthId id,
         UserId userId,
         string remoteIp,
-        uint remoteIpPort,
+        int remoteIpPort,
         string localIp,
-        uint localIpPort,
+        int localIpPort,
         string token,
         CustomDateTime tokenExpiresIn,
         string userAgent,

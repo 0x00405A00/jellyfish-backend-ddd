@@ -68,7 +68,6 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateMessage
             }
 
             _messageRepository.Update(message);
-            _messageRepository.PublishDomainEvents(message, mediator);
 
             var dto = _mapper.Map<MessageDTO>(message);
             return Result<MessageDTO>.Success(dto);

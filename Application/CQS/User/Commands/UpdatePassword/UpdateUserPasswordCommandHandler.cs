@@ -43,7 +43,6 @@ namespace Application.CQS.User.Commands.UpdatePassword
             }
 
             _userRepository.Update(user);
-            _userRepository.PublishDomainEvents(user, mediator);
             return Result<Guid>.Success(user.Id.ToGuid());
         }
     }

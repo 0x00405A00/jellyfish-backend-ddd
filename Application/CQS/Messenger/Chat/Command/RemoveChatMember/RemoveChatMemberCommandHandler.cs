@@ -66,7 +66,6 @@ namespace Application.CQS.Messenger.Chat.Command.RemoveChatMember
                 return Result<bool>.Failure(ex.Message);
             }
             _chatRepository.Update(chat);
-            _chatRepository.PublishDomainEvents(chat, mediator);
 
             return Result<bool>.Success(true);
         }

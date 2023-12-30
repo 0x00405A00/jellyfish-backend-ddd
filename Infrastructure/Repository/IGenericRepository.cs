@@ -1,6 +1,5 @@
 ﻿using Domain.Primitives;
 using Infrastructure.Repository.Primitives;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared.DataFilter.Infrastructure;
 using System.Linq.Expressions;
@@ -27,8 +26,5 @@ namespace Infrastructure.Repository
         public Task<ICollection<TEntity>> ListAsync(ColumnSearchAggregateDTO? columnSearchAggregateDTO);
         public Task<RepositoryResponse<ICollection<TEntity>>> ListAsyncWithMeta(Expression<Func<TEntity, bool>> expression = null);
         public Task<RepositoryResponse<ICollection<TEntity>>> ListAsyncWithMeta(ColumnSearchAggregateDTO? columnSearchAggregateDTO);
-
-        public void PublishDomainEvents(TEntity entity, IMediator mediator);
-
     }
 }

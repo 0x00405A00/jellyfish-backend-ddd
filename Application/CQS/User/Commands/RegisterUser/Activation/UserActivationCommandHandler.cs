@@ -42,7 +42,6 @@ namespace Application.CQS.User.Commands.RegisterUser.Activation
                 }
 
                 userRepository.Update(user);
-                userRepository.PublishDomainEvents(user, mediator);
 
                 var mapValue = mapper.Map<UserDTO>(user);
                 return Result<UserDTO>.Success(mapValue);

@@ -64,7 +64,6 @@ namespace Application.CQS.User.Commands.Roles.RevokeRole
                 return Result<List<Guid>>.Failure("no roles removed");
             }
             _userRepository.Update(user);
-            _userRepository.PublishDomainEvents(user, mediator);
             return Result<List<Guid>>.Success(request.RoleIds);
         }
 
