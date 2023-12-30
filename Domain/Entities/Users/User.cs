@@ -38,8 +38,31 @@ namespace Domain.Entities.Users
         public static DateTime MinimumBirthDayDate = new DateTime(1900, 1, 1);
         public static DateTime MaximumBirthDayDate = DateTime.Now.AddYears(-16);//man muss mindestens 16 sein
 
-        private ICollection<UserHasRelationToFriend> _friends = new List<UserHasRelationToFriend>();
-        private ICollection<FriendshipRequest> _friendshipRequests = new List<FriendshipRequest>();
+        private List<FriendshipRequest> _friendshipRequestsWhereIamRequester = new List<FriendshipRequest>();
+        private List<FriendshipRequest> _friendshipRequestsWhereIamTarget = new List<FriendshipRequest>();
+        private List<UserHasRelationToFriend> _userHasRelationToFriendsLeft = new List<UserHasRelationToFriend>();
+        private List<UserHasRelationToFriend> _userHasRelationToFriendsRight = new List<UserHasRelationToFriend>();
+
+        private ICollection<UserHasRelationToFriend> _friends
+        {
+            get
+            {
+                var allRequests = new List<UserHasRelationToFriend>();
+                allRequests.AddRange(_userHasRelationToFriendsLeft);
+                allRequests.AddRange(_userHasRelationToFriendsRight);
+                return allRequests;
+            }
+        }
+        private ICollection<FriendshipRequest> _friendshipRequests 
+        { 
+            get
+            {
+                var allRequests = new List<FriendshipRequest>();
+                allRequests.AddRange(_friendshipRequestsWhereIamRequester);
+                allRequests.AddRange(_friendshipRequestsWhereIamTarget);
+                return allRequests;
+            }
+        }
         private ICollection<UserHasRelationToRole> _roles = new List<UserHasRelationToRole>();
 
         public UserTypeId UserTypeForeignKey { get; private set; }
@@ -633,6 +656,10 @@ namespace Domain.Entities.Users
             return _friendshipRequests.Where(x => x.AmIReceiver(this))
                                           .ToList();
         }
+        public List<UserHasRelationToFriend> GetFriends()
+        {
+            return _friends.ToList();
+        }
         public bool HasFriendshipRequests()
         {
             return _friendshipRequests.Any();
@@ -663,15 +690,16 @@ namespace Domain.Entities.Users
 
         public ICollection<Role> Roles { get; }
 
-        public ICollection<UserHasRelationToFriend>? UserHasRelationToFriendsLeft { get; }
-        public ICollection<UserHasRelationToFriend>? UserHasRelationToFriendsRight { get; }
+        public ICollection<UserHasRelationToFriend>? UserHasRelationToFriendsLeft { get =>_userHasRelationToFriendsLeft; }
+        public ICollection<UserHasRelationToFriend>? UserHasRelationToFriendsRight { get=> _userHasRelationToFriendsRight; }
 
         public ICollection<UserHasRelationToRole>? CreatedUserHasRelationToRoles { get; }
         public ICollection<UserHasRelationToRole>? ModifiedUserHasRelationToRoles { get; }
         public ICollection<UserHasRelationToRole>? DeletedUserHasRelationToRoles { get; }
 
-        public ICollection<FriendshipRequest>? FriendshipRequestsWhereIamRequester { get; }
-        public ICollection<FriendshipRequest>? FriendshipRequestsWhereIamTarget { get; }
+
+        public ICollection<FriendshipRequest>? FriendshipRequestsWhereIamRequester { get=> _friendshipRequestsWhereIamRequester; }
+        public ICollection<FriendshipRequest>? FriendshipRequestsWhereIamTarget { get=> _friendshipRequestsWhereIamRequester; }
 
         public ICollection<ChatInviteRequest>? ChatInvitesWhereIamRequester { get; }
         public ICollection<ChatInviteRequest>? ChatInvitesWhereIamTarget { get; }

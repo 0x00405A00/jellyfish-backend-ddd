@@ -1,5 +1,6 @@
 ﻿using Domain.Entities.Mails;
 using Domain.Entities.Users.Events;
+using Domain.Extension;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.Mail;
@@ -37,7 +38,7 @@ namespace Application.CQS.User.EventHandler
 
                 var mailSender = mailSection.GetValue<string>("system_sender_anonymous_mail");
                 Email systemEmail = Email.Parse(mailSender);
-                var mailUuid = MailOutbox.NewId();
+                var mailOutboxId = MailOutbox.NewId();
 
                 var imageJellyfishPath = Path.Combine(Environment.CurrentDirectory, "Media", "Static", "jellyfish_image.png");
                 var imagePlaystorePath = Path.Combine(Environment.CurrentDirectory, "Media", "Static", "playstore_icon.png");
@@ -46,44 +47,50 @@ namespace Application.CQS.User.EventHandler
 
                 MailOutboxAttachment jellyfishIcon = MailOutboxAttachment.Create(
                     id: MailOutboxAttachment.NewId(), // Annahme: Generierung einer eindeutigen GUID
-                    mailId: mailUuid,
-                    mimeMediatype: "image",
-                    mimeMediasubtype: "png",
-                    filename: "jellyfish_image.png",
+                    mailOutboxId: mailOutboxId,
+                    mimeMediaType: "image",
+                    mimeMediaSubType: "png",
+                    fileName: "jellyfish_image.png",
                     mimeCid: MimeUtils.GenerateMessageId(),
                     order: 1,
                     attachmentPath: imageJellyfishPath,
                     attachmentSha1: "xyz",
-                    isEmbeddedInHtml: true,
-                    createTime: DateTime.Now // Annahme: Aktuelles Datum und Uhrzeit
+                    isEmbededInHtml: true,
+                    createdDateTime: DateTime.Now.ToTypedDateTime(),// Annahme: Aktuelles Datum und Uhrzeit
+                    modifiedDateTime: null,
+                    deletedDateTime: null
                 );
 
                 MailOutboxAttachment appStore = MailOutboxAttachment.Create(
                     id: MailOutboxAttachment.NewId(), // Annahme: Generierung einer eindeutigen GUID
-                    mailId: mailUuid,
-                    mimeMediatype: "image",
-                    mimeMediasubtype: "png",
-                    filename: "appstore_icon.png",
+                    mailOutboxId: mailOutboxId,
+                    mimeMediaType: "image",
+                    mimeMediaSubType: "png",
+                    fileName: "appstore_icon.png",
                     mimeCid: MimeUtils.GenerateMessageId(),
                     order: 2,
                     attachmentPath: imageAppstorePath,
                     attachmentSha1: "xyz",
-                    isEmbeddedInHtml: true,
-                    createTime: DateTime.Now // Annahme: Aktuelles Datum und Uhrzeit
-                );
+                    isEmbededInHtml: true,
+                    createdDateTime: DateTime.Now.ToTypedDateTime(),// Annahme: Aktuelles Datum und Uhrzeit
+                    modifiedDateTime: null,
+                    deletedDateTime: null
+                ) ;
 
                 MailOutboxAttachment playStore = MailOutboxAttachment.Create(
                     id: MailOutboxAttachment.NewId(), // Annahme: Generierung einer eindeutigen GUID
-                    mailId: mailUuid,
-                    mimeMediatype: "image",
-                    mimeMediasubtype: "png",
-                    filename: "playstore_icon.png",
+                    mailOutboxId: mailOutboxId,
+                    mimeMediaType: "image",
+                    mimeMediaSubType: "png",
+                    fileName: "playstore_icon.png",
                     mimeCid: MimeUtils.GenerateMessageId(),
                     order: 3,
                     attachmentPath: imagePlaystorePath,
                     attachmentSha1: "xyz",
-                    isEmbeddedInHtml: true,
-                    createTime: DateTime.Now // Annahme: Aktuelles Datum und Uhrzeit
+                    isEmbededInHtml: true,
+                    createdDateTime: DateTime.Now.ToTypedDateTime(),// Annahme: Aktuelles Datum und Uhrzeit
+                    modifiedDateTime: null,
+                    deletedDateTime: null
                 );
 
                 var emailType = await emailTypeRepository.GetAsync(x=> x.Name == MailHandler.MailType.To);
@@ -161,32 +168,43 @@ namespace Application.CQS.User.EventHandler
                     try
                     {
                         var recipient = MailOutboxRecipient.Create(
-                            mailUuid,
+                            MailOutboxRecipient.NewId(),
+                            mailOutboxId,
                             emailType.Id,
-                            notification.e.Email,
-                            DateTime.Now);
+                            notification.e.Email.EmailValue,
+                            createdDateTime: DateTime.Now.ToTypedDateTime(),// Annahme: Aktuelles Datum und Uhrzeit
+                            modifiedDateTime: null,
+                            deletedDateTime: null);
 
                         var recipients = new List<MailOutboxRecipient>() { recipient };
                         var attachments = new List<MailOutboxAttachment>() {
                                     playStore,jellyfishIcon,appStore
                                 };
 
-                        var body = Encoding.UTF8.GetBytes(bodyHtml);
                         var systemUser = Domain.Entities.Users.User.GetSystemUser();
                         string subject = @"Registrierung abgeschlossen " + notification.e.UserName + ", Jellyfish im vollem Umfang nutzen \u2764";
                         bool bodyIsHtml = true;
-                        var mail = MailOutbox.Create(
-                            mailUuid,
-                            systemEmail,
-                            subject,
-                            body,
-                            bodyIsHtml,
-                            recipients,
-                            attachments,
-                            systemUser);
 
+                        var mail = MailOutbox.Create(
+                            mailOutboxId,
+                            systemEmail.EmailValue,
+                            subject,
+                            bodyHtml,
+                            bodyIsHtml,
+                            DateTime.Now.ToTypedDateTime(),
+                            null,
+                            null);
+
+                        foreach (var item in recipients)
+                        {
+                            mail.AddRecipient(item);
+                        }
+                        foreach (var item in attachments)
+                        {
+                            mail.AddAttachment(item);
+                        }
                         mailoutboxRepository.Add(mail);
-                        mail.MailOutboxAttachments.ToList().ForEach(y => System.Diagnostics.Debug.WriteLine(y.Id));
+
                         await unitOfWork.SaveChangesAsync();
                         transaction.Commit();
                     }

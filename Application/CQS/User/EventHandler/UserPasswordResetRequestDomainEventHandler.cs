@@ -1,5 +1,7 @@
 ﻿using Domain.Entities.Mails;
 using Domain.Entities.Users.Events;
+using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.Mail;
@@ -40,24 +42,26 @@ namespace Application.CQS.User.EventHandler
                 var resetPasswordBaseUrl = userSection.GetValue<string>("reset_password_link");
                 var mailSender = mailSection.GetValue<string>("system_sender_anonymous_mail");
                 Email systemEmail = Email.Parse(mailSender);
-                var mailUuid = MailOutbox.NewId();
+                var mailOutboxId = MailOutbox.NewId();
 
                 var imageJellyfishPath = Path.Combine(Environment.CurrentDirectory, "Media", "Static", "jellyfish_image.png");
 
                 string resetUrl = $"{resetPasswordBaseUrl}{notification.e.PasswordResetToken}";
 
                 MailOutboxAttachment jellyfishIcon = MailOutboxAttachment.Create(
-                    id: MailOutboxAttachment.NewId(),
-                    mailId: mailUuid,
-                    mimeMediatype: "image",
-                    mimeMediasubtype: "png",
-                    filename: "jellyfish_image.png",
+                    id: MailOutboxAttachment.NewId(), // Annahme: Generierung einer eindeutigen GUID
+                    mailOutboxId: mailOutboxId,
+                    mimeMediaType: "image",
+                    mimeMediaSubType: "png",
+                    fileName: "jellyfish_image.png",
                     mimeCid: MimeUtils.GenerateMessageId(),
                     order: 1,
                     attachmentPath: imageJellyfishPath,
                     attachmentSha1: "xyz",
-                    isEmbeddedInHtml: true,
-                    createTime: DateTime.Now // Annahme: Aktuelles Datum und Uhrzeit
+                    isEmbededInHtml: true,
+                    createdDateTime: DateTime.Now.ToTypedDateTime(),// Annahme: Aktuelles Datum und Uhrzeit
+                    modifiedDateTime: null,
+                    deletedDateTime: null
                 );
 
                 var emailType = await emailTypeRepository.GetAsync(x => x.Name == MailHandler.MailType.To);
@@ -133,12 +137,14 @@ namespace Application.CQS.User.EventHandler
                 {
                     try
                     {
-
                         var recipient = MailOutboxRecipient.Create(
-                            mailUuid,
+                            MailOutboxRecipient.NewId(),
+                            mailOutboxId,
                             emailType.Id,
-                            notification.e.Email,
-                            DateTime.Now);
+                            notification.e.Email.EmailValue,
+                            createdDateTime: DateTime.Now.ToTypedDateTime(),// Annahme: Aktuelles Datum und Uhrzeit
+                            modifiedDateTime: null,
+                            deletedDateTime: null);
 
                         var recipients = new List<MailOutboxRecipient>() { recipient };
                         var attachments = new List<MailOutboxAttachment>() {
@@ -150,14 +156,23 @@ namespace Application.CQS.User.EventHandler
                         bool bodyIsHtml = true;
 
                         var mail = MailOutbox.Create(
-                            mailUuid,
-                            systemEmail,
+                            mailOutboxId,
+                            systemEmail.EmailValue,
                             subject,
-                            body,
+                            bodyHtml,
                             bodyIsHtml,
-                            recipients,
-                            attachments,
-                            systemUser);
+                            DateTime.Now.ToTypedDateTime(),
+                            null,
+                            null);
+
+                        foreach (var item in recipients)
+                        {
+                            mail.AddRecipient(item);
+                        }
+                        foreach (var item in attachments)
+                        {
+                            mail.AddAttachment(item);
+                        }
                         mailoutboxRepository.Add(mail);
 
                         await unitOfWork.SaveChangesAsync();

@@ -1,7 +1,7 @@
 ﻿using Domain.Primitives;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EFCoreMigrationTestWithInheritence_MySql_Updated.Converter
+namespace Infrastructure.EFCore.Converter
 {
     public class CustomDateTimeConverter : ValueConverter<CustomDateTime, DateTime>
     {

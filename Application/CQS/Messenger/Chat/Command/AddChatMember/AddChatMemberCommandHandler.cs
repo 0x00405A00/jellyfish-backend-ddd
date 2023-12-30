@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
+using Domain.Entities.Chats;
 using Domain.Entities.Chats.Exceptions;
 using Domain.Extension;
 using Domain.Primitives.Ids;
@@ -54,27 +55,18 @@ namespace Application.CQS.Messenger.Chat.Command.AddChatMember
             try
             {
 
-                /*
-                 * 1.Test: Added state wird richtig von ChangeTracker erkannt
-                 * var item = new ChatRelationToUser
-                {
-                    
-                };
-                chat.ChatRelationToUsers.Add(item);
+                var item = ChatRelationToUser.Create(
+                    ChatRelationToUser.NewId(),
+                    targetUser.Id,
+                    chat.Id,
+                    false,
+                    DateTime.Now.ToTypedDateTime(),
+                    executorUser.Id,
+                    null,
+                    null,
+                    null,
+                    null);
 
-                item.Uuid = Guid.NewGuid();
-                item.UserUuid = targetUser.Uuid.ToGuid();
-                item.ChatUuid = chat.Uuid;*/
-
-                
-                 * 2.Test: Added state wird richtig von ChangeTracker erkannt
-                var item = new ChatRelationToUser
-                {
-                    Uuid = Guid.NewGuid(),
-                    UserUuid = targetUser.Uuid.ToGuid(),
-                    ChatUuid = chat.Uuid,
-                    
-                };
                 chat.ChatRelationToUsers.Add(item);
                  
                 chat.AddMember(executorUser, targetUser);

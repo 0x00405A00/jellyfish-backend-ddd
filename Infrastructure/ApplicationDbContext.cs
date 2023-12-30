@@ -7,8 +7,8 @@ using Domain.Entities.Users;
 using Domain.Primitives;
 using Domain.Primitives.Ids;
 using Domain.ValueObjects;
-using EFCoreMigrationTestWithInheritence_MySql_Updated.Converter;
-using EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration;
+using Infrastructure.EFCore.Converter;
+using Infrastructure.EFCore.DatabaseEntityConfiguration;
 using Infrastructure.EFCore.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -21,6 +21,8 @@ namespace Infrastructure
     {
         #region Const
         public const string ConnectionStringAlias = "JellyfishMySqlDatabase";
+        public static string ConnectionString = @"server=127.0.0.1;port=33306;uid=jellyfish;pwd=meinDatabasePassword!;database=jellyfish;charset=utf8mb4;";//hardcoded connection string, because cli tool dotnet ef migrations/database cant consume IConfiguration-Service from DI
+
         #endregion
         #region Consumed DI Services
         public DbSaveChangesInterceptor DbContextAuditLogInterceptor { get; }
@@ -45,7 +47,7 @@ namespace Infrastructure
         public DbSet<MailOutboxAttachment> MailOutboxAttachments { get; set; }
         #endregion
         #region Ctor
-        public ApplicationDbContext()
+        public ApplicationDbContext()//für ef core
         {
             
         }
@@ -82,9 +84,11 @@ namespace Infrastructure
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         {
-            string connectionString = @"server=127.0.0.1;port=33306;uid=jellyfish;pwd=meinDatabasePassword!;database=jellyfish;charset=utf8mb4;";//hardcoded connection string, because cli tool dotnet ef migrations/database cant consume IConfiguration-Service from DI
-
-            optionsBuilder.UseMySQL(connectionString);
+            if(_configuration is not null)
+            {
+                ConnectionString = _configuration.GetConnectionString(ConnectionStringAlias);
+            }
+            optionsBuilder.UseMySQL(ConnectionString);
             optionsBuilder.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
             optionsBuilder.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
             optionsBuilder.EnableSensitiveDataLogging(true);

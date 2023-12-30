@@ -5,7 +5,7 @@ using Infrastructure.Extension;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
+namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 {
     internal class UserHasRelationToFriendsConfiguration : IEntityTypeConfiguration<UserHasRelationToFriend>
     {

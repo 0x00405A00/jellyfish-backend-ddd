@@ -7,7 +7,7 @@ using Infrastructure.Extension;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
+namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 {
     internal class UserHasRelationToRoleConfiguration : IEntityTypeConfiguration<UserHasRelationToRole>
     {
@@ -27,7 +27,7 @@ namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
                 .HasMaxLength(DbContextExtension.ColumnLength.Ids)
                 .HasDefaultValue(new RoleId(UserConst.Role.User))
                 .HasColumnName("role_id");
-            
+
             builder.Property(ut => ut.UserForeignKey)
                 .IsRequired()
                 .HasMaxLength(DbContextExtension.ColumnLength.Ids)

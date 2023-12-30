@@ -1,7 +1,7 @@
 ﻿using Domain.Primitives.Ids;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EFCoreMigrationTestWithInheritence_MySql_Updated.Converter
+namespace Infrastructure.EFCore.Converter
 {
     public class ChatIdConverter : ValueConverter<ChatId, Guid>
     {

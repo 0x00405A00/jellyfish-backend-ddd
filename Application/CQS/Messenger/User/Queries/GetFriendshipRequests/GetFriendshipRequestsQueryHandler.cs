@@ -30,7 +30,7 @@ namespace Application.CQS.Messenger.User.Queries.GetFriendshipRequests
             {
                 return Result<List<FriendshipRequestDTO>>.Failure("you have no open friendship requests", Error.ERROR_CODE.NotFound);
             }
-            var friends = user.FriendshipRequests.ToList();
+            var friends = user.GetReceivedFriendshipRequests();
 
             var dto = _mapper.Map<List<FriendshipRequestDTO>>(friends);
             return Result<List<FriendshipRequestDTO>>.Success(dto);

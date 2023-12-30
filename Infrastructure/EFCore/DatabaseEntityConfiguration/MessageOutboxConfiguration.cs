@@ -7,7 +7,7 @@ using Infrastructure.Extension;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
+namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 {
     internal class MessageOutboxConfiguration : IEntityTypeConfiguration<MessageOutbox>
     {
@@ -39,7 +39,7 @@ namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
                 .HasConstraintName(messageOutboxRelationToChatConstraintName)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasKey(e => new { e.MessageForeignKey,e.UserForeignKey });
+            builder.HasKey(e => new { e.MessageForeignKey, e.UserForeignKey });
         }
     }
 }

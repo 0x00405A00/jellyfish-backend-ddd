@@ -33,7 +33,7 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateChat
             {
                 return Result<ChatDTO>.Failure("chat not found");
             }
-            ChatMember updatedByMember = null;
+            ChatRelationToUser updatedByMember = null;
             try
             {
 

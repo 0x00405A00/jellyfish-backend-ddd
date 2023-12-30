@@ -5,7 +5,7 @@ using Infrastructure.Extension;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
+namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 {
     internal class ChatConfiguration : IEntityTypeConfiguration<Chat>
     {
@@ -24,7 +24,8 @@ namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
                 .HasMaxLength(DbContextExtension.ColumnLength.Descriptions)
                 .HasColumnName(DbContextExtension.ColumnNameDefinitions.Description);
 
-            builder.OwnsOne(ut => ut.Picture, navigationBuilder => {
+            builder.OwnsOne(ut => ut.Picture, navigationBuilder =>
+            {
 
                 navigationBuilder.Property(img => img.FilePath)
                                              .HasColumnName("picture_path")

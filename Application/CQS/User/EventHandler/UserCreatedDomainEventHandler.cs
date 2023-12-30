@@ -1,5 +1,7 @@
 ﻿using Domain.Entities.Mails;
 using Domain.Entities.Users.Events;
+using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.Mail;
@@ -37,22 +39,25 @@ namespace Application.CQS.User.EventHandler
 
                 var mailSender = mailSection.GetValue<string>("system_sender_anonymous_mail");
                 Email systemEmail = Email.Parse(mailSender);
-                var mailUuid = MailOutbox.NewId();
+                var mailOutboxId = MailOutbox.NewId();
                 var imageUuid = Guid.NewGuid();
 
-                var imagePath = Path.Combine(Environment.CurrentDirectory, "Media", "Static", "jellyfish_image.png");
+                var imageJellyfishPath = Path.Combine(Environment.CurrentDirectory, "Media", "Static", "jellyfish_image.png");
+
                 MailOutboxAttachment jellyfishIcon = MailOutboxAttachment.Create(
-                    id: MailOutboxAttachment.NewId(),
-                    mailId: mailUuid,
-                    mimeMediatype: "image",
-                    mimeMediasubtype: "png",
-                    filename: "jellyfish_image.png",
+                    id: MailOutboxAttachment.NewId(), // Annahme: Generierung einer eindeutigen GUID
+                    mailOutboxId: mailOutboxId,
+                    mimeMediaType: "image",
+                    mimeMediaSubType: "png",
+                    fileName: "jellyfish_image.png",
                     mimeCid: MimeUtils.GenerateMessageId(),
-                    order: 0,
-                    attachmentPath: imagePath,
+                    order: 1,
+                    attachmentPath: imageJellyfishPath,
                     attachmentSha1: "xyz",
-                    isEmbeddedInHtml: true,
-                    createTime: DateTime.Now // Annahme: Aktuelles Datum und Uhrzeit
+                    isEmbededInHtml: true,
+                    createdDateTime: DateTime.Now.ToTypedDateTime(),// Annahme: Aktuelles Datum und Uhrzeit
+                    modifiedDateTime: null,
+                    deletedDateTime: null
                 );
 
 
@@ -121,10 +126,13 @@ namespace Application.CQS.User.EventHandler
                 bool bodyIsHtml = true;
 
                 var recipient = MailOutboxRecipient.Create(
-                    mailUuid,
+                    MailOutboxRecipient.NewId(),
+                    mailOutboxId,
                     emailType.Id,
-                    notification.e.Email,
-                    DateTime.Now);
+                    notification.e.Email.EmailValue,
+                    createdDateTime: DateTime.Now.ToTypedDateTime(),// Annahme: Aktuelles Datum und Uhrzeit
+                    modifiedDateTime: null,
+                    deletedDateTime: null);
 
                 List<MailOutboxRecipient> recipients = new List<MailOutboxRecipient>()
                 {
@@ -135,14 +143,23 @@ namespace Application.CQS.User.EventHandler
                     jellyfishIcon
                 };
                 var mail = MailOutbox.Create(
-                    mailUuid,
-                    systemEmail,
+                    mailOutboxId,
+                    systemEmail.EmailValue,
                     subject,
-                    body,
+                    bodyHtml,
                     bodyIsHtml,
-                    recipients,
-                    attachments,
-                    systemUser);
+                    DateTime.Now.ToTypedDateTime(),
+                    null,
+                    null);
+
+                foreach (var item in recipients)
+                {
+                    mail.AddRecipient(item);
+                }
+                foreach (var item in attachments)
+                {
+                    mail.AddAttachment(item);
+                }
                 mailoutboxRepository.Add(mail);
             }
 

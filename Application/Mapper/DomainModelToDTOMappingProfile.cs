@@ -37,20 +37,19 @@ namespace Application.Mapper
             CreateMap<Guid, MessageId>()
                 .ConvertUsing(dst => new MessageId(dst));
             CreateMap<Message, MessageDTO>()
-                .ForMember(dst => dst.ChatId, dst => dst.MapFrom(x => x.Chat.ToGuid()))
+                .ForMember(dst => dst.ChatId, dst => dst.MapFrom(x => x.ChatForeignKey.ToGuid()))
                 .ForMember(dst => dst.BinaryContentBase64, dst => dst.MapFrom(x => x.MediaContent.ToString()))
                 .ForMember(dst => dst.BinaryContentMimeType, dst => dst.MapFrom(x => x.MediaContent.FileExtension))
                 .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Id.ToGuid()))
                 .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Id.ToGuid()))
                 .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Id.ToGuid()))
-                .ForMember(dst => dst.OwnerUuid, dst => dst.MapFrom(x => x.Owner.Id.ToGuid()));
+                .ForMember(dst => dst.OwnerUuid, dst => dst.MapFrom(x => x.UserForeignKey.ToGuid()));
 
             CreateMap<ChatId, Guid>()
                 .ConvertUsing(dst => dst.Id);
             CreateMap<Guid, ChatId>()
                 .ConvertUsing(dst => new ChatId(dst));
 
-            CreateMap<ChatMember, UserHasRelationToFriend>();
             CreateMap<Domain.Entities.Chats.Chat, ChatDTO>()
                 .ForMember(dst => dst.Members, src => src.MapFrom(x => x.Members.Select(x => x.User.Id.ToGuid()).ToList()))
                 .ForMember(dst => dst.Admins, src => src.MapFrom(x => x.Admins.Select(x => x.User.Id.ToGuid()).ToList()))
@@ -64,7 +63,7 @@ namespace Application.Mapper
             CreateMap<RoleId, Guid>()
                 .ConvertUsing(dst => dst.Id);
             CreateMap<Guid, RoleId>()
-                .ConvertUsing(dst => new Domain.Entities.Role.RoleId(dst));
+                .ConvertUsing(dst => new RoleId(dst));
             CreateMap<Role, RoleDTO>()
                 .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Id.ToGuid()))
                 .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Id.ToGuid()))
@@ -75,9 +74,9 @@ namespace Application.Mapper
             CreateMap<Guid, UserId>()
                 .ConvertUsing(dst => new UserId(dst));
             CreateMap<User, UserDTO>()
-                .ForMember(dst => dst.Roles, dst => dst.MapFrom(x => x.UserRoles.Select(x => x.Role).ToList()))
-                .ForMember(dst => dst.Friends, dst => dst.MapFrom(x => x.Friends.Select(x => x.Friend.Id.ToGuid()).ToList()))
-                .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.RequestedFriendshipRequests))
+                .ForMember(dst => dst.Roles, dst => dst.MapFrom(x => x.UserHasRelationToRoles.Select(x => x.Role).ToList()))
+                .ForMember(dst => dst.Friends, dst => dst.MapFrom(x => x.GetFriends().Select(x => x.UserFriendForeignKey.ToGuid()).ToList()))
+                .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.FriendshipRequestsWhereIamTarget))
                 .ForMember(dst => dst.Phone, dst => dst.MapFrom(x => x.Phone.ToString()))
                 .ForMember(dst => dst.Password, dst => dst.MapFrom(x => string.Empty))//securtiy: password shouldnt transfer over network
                 .ForMember(dst => dst.PasswordConfirm, dst => dst.MapFrom(x => string.Empty))//securtiy: password shouldnt transfer over network
@@ -89,8 +88,8 @@ namespace Application.Mapper
                 .ForMember(dst => dst.LastModifiedByUserUuid, dst => dst.MapFrom(x => x.LastModifiedByUser.Id.ToGuid()))
                 .ForMember(dst => dst.Email, dst => dst.MapFrom(x => x.Email.ToString()));
             CreateMap<User, MessengerUserDTO>()
-                .ForMember(dst => dst.Friends, dst => dst.MapFrom(x => x.Friends.Select(x => x.Friend).ToList()))
-                .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.RequestedFriendshipRequests))
+                .ForMember(dst => dst.Friends, dst => dst.MapFrom(x => x.GetFriends().Select(x => x.UserFriend).ToList()))
+                .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.FriendshipRequestsWhereIamTarget))
                 .ForMember(dst => dst.PictureBase64, dst => dst.MapFrom(x => x.Picture.ToString()));
 
             CreateMap<FriendshipRequest, FriendshipRequestDTO>();
@@ -100,12 +99,12 @@ namespace Application.Mapper
             CreateMap<MailOutbox, MailOutboxDTO>();
             CreateMap<MailOutboxAttachment, MailOutboxAttachmentDTO>();
             CreateMap<MailOutboxRecipient, MailOutboxRecipientDTO>()
-                .ForMember(dst => dst.EmailType, dst => dst.MapFrom(x => x.EmailType.Type));
+                .ForMember(dst => dst.EmailType, dst => dst.MapFrom(x => x.SendingType.Name));
 
             CreateMap<UserTypeId, Guid>()
                 .ConvertUsing(dst => dst.Id);
             CreateMap<Guid, UserTypeId>()
-                .ConvertUsing(dst => new Domain.Entities.User.UserTypeId(dst));
+                .ConvertUsing(dst => new UserTypeId(dst));
             CreateMap<UserType, UserTypeDTO>()
                 .ForMember(dst => dst.DeletedByUserUuid, dst => dst.MapFrom(x => x.DeletedByUser.Id.ToGuid()))
                 .ForMember(dst => dst.CreatedByUserUuid, dst => dst.MapFrom(x => x.CreatedByUser.Id.ToGuid()))

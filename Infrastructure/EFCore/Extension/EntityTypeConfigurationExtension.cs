@@ -12,6 +12,7 @@ namespace Infrastructure.EFCore.Extension
             where TEntity : Entity<TEntityId>
             where TEntityId : Identification
         {
+
             builder.HasKey(ut => ut.Id).HasName(DbContextExtension.IndexNameDefinitions.PrimaryKeyIndex);
 
             string tableName = DbContextExtension.GetTableName(typeof(TEntity));

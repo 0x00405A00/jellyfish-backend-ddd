@@ -7,7 +7,7 @@ using Infrastructure.Extension;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
+namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 {
     internal class UserConfiguration : IEntityTypeConfiguration<User>
     {
@@ -110,10 +110,10 @@ namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
                 .IsRequired(false)
                 .HasForeignKey(fk => fk.DeletedByUserForeignKey);*/
 
-            var userToUserTypeConstraintName = DbContextExtension.GetForeignKeyName(nameof(User),nameof(User.UserTypeForeignKey),nameof(UserType));
-            builder.HasOne(x=>x.UserType)
-                .WithMany(x=>x.Users)
-                .HasForeignKey(x=>x.UserTypeForeignKey)
+            var userToUserTypeConstraintName = DbContextExtension.GetForeignKeyName(nameof(User), nameof(User.UserTypeForeignKey), nameof(UserType));
+            builder.HasOne(x => x.UserType)
+                .WithMany(x => x.Users)
+                .HasForeignKey(x => x.UserTypeForeignKey)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired()
                 .HasConstraintName(userToUserTypeConstraintName);

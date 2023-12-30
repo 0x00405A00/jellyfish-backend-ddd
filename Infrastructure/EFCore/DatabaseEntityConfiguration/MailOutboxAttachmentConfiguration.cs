@@ -5,7 +5,7 @@ using Infrastructure.Extension;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
+namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 {
     internal class MailOutboxAttachmentConfiguration : IEntityTypeConfiguration<MailOutboxAttachment>
     {
@@ -62,7 +62,7 @@ namespace EFCoreMigrationTestWithInheritence_MySql_Updated.DatabaseConfiguration
 
             var mailConstraintName = DbContextExtension.GetForeignKeyName(typeof(MailOutboxAttachment).Name, nameof(MailOutboxAttachment.MailOutboxForeignKey), nameof(MailOutbox));
             builder.HasOne(u => u.Mail)
-                .WithMany(x=>x.Attachments)
+                .WithMany(x => x.Attachments)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasForeignKey(fk => fk.MailOutboxForeignKey)

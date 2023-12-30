@@ -30,7 +30,7 @@ namespace Application.CQS.Messenger.User.Queries.GetFriends
             {
                 return Result<List<MessengerUserDTO>>.Failure("you have no friends", Error.ERROR_CODE.NotFound);
             }
-            var friends = user.Friends.ToList();
+            var friends = user.GetFriends();
 
             var dto = _mapper.Map<List<MessengerUserDTO>>(friends);
             return Result<List<MessengerUserDTO>>.Success(dto);
