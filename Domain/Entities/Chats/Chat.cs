@@ -11,26 +11,38 @@ using System.Collections.Immutable;
 
 namespace Domain.Entities.Chats
 {
+    public interface IChat
+    {
+        IReadOnlyCollection<ChatRelationToUser> Admins { get; }
+        IReadOnlyCollection<ChatInviteRequest>? ChatInvitesToUsers { get; }
+        IReadOnlyCollection<ChatRelationToUser>? ChatRelationToUsers { get; }
+        string Description { get; }
+        IReadOnlyCollection<ChatRelationToUser> Members { get; }
+        IReadOnlyCollection<Message> Messages { get; }
+        string Name { get; }
+        Picture Picture { get; }
+    }
+
     /// <summary>
     /// Aggregate Root for BoundedContext Chat
     /// Included Entities: Chat (Aggregate), Message, User
     /// </summary>
-    public sealed partial class Chat : AuditableEntity<ChatId>
+    public sealed partial class Chat : AuditableEntity<ChatId>, IChat
     {
-        private List<ChatRelationToUser> _members = new ();
-        private List<ChatInviteRequest> _invites = new ();
-        private List<Message> _messages = new ();
+        private List<ChatRelationToUser> _members = new();
+        private List<ChatInviteRequest> _invites = new();
+        private List<Message> _messages = new();
 
         public Picture Picture { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
 
         public IReadOnlyCollection<ChatRelationToUser> Members { get => _members.ToImmutableList(); }
-        public IReadOnlyCollection<ChatRelationToUser> Admins { get => _members.Where(x=>x.IsChatAdmin??false).ToImmutableList(); }
+        public IReadOnlyCollection<ChatRelationToUser> Admins { get => _members.Where(x => x.IsChatAdmin ?? false).ToImmutableList(); }
 
-        private Chat():base()
+        private Chat() : base()
         {
-            
+
         }
         private Chat(
             ChatId id,
@@ -87,15 +99,15 @@ namespace Domain.Entities.Chats
             CustomDateTime? deletedDateTime,
             UserId? deletedBy)
         {
-            if(members == null|| members.Count<2)
+            if (members == null || members.Count < 2)
             {
                 throw new ChatCreateException("a new chat need minimum 2 members");
             }
-            if(members!=null&& members.Any(x=>x==null))
+            if (members != null && members.Any(x => x == null))
             {
                 throw new InvalidDataException($"item of list {nameof(members)} contains one or more items with null value");
             }
-            if (members.Where(x => x.IsChatAdmin??false).Count() == 0)
+            if (members.Where(x => x.IsChatAdmin ?? false).Count() == 0)
             {
                 throw new InvalidDataException($"the chat needs at least one admin");
             }
@@ -112,10 +124,10 @@ namespace Domain.Entities.Chats
                 deletedDateTime,
                 deletedBy);
 
-            chat.Raise(new ChatCreatedDomainEvent(chat));
+            chat.Raise(new ChatCreatedDomainEvent(chat.Id));
             return chat;
         }
-        public void AddMember(User commandExecUser, User member)
+        public void AddMember(UserId commandExecUser, UserId member)
         {
             if (commandExecUser == null)
             {
@@ -136,19 +148,19 @@ namespace Domain.Entities.Chats
             }
             var chatMember = ChatRelationToUser.Create(
                 ChatRelationToUser.NewId(),
-                member.Id,
+                member,
                 this.Id,
                 false,
                 DateTime.Now.ToTypedDateTime(),
-                commandExecUser.Id,
+                commandExecUser,
                 null,
                 null,
                 null,
                 null);
             this._members.Add(chatMember);
-            Raise(new ChatUserAddToChatDomainEvent(this, commandExecUser, member));
+            Raise(new ChatUserAddToChatDomainEvent(this.Id, commandExecUser, member));
         }
-        public void RemoveMember(User commandExecUser, User member)
+        public void RemoveMember(UserId commandExecUser, UserId member)
         {
             if (commandExecUser == null)
             {
@@ -169,9 +181,9 @@ namespace Domain.Entities.Chats
             }
             var chatMember = this.GetMember(member);
             this._members.Remove(chatMember);
-            Raise(new ChatUserRemoveFromChatDomainEvent(this, commandExecUser, member));
+            Raise(new ChatUserRemoveFromChatDomainEvent(this.Id, commandExecUser, member));
         }
-        public void AssignAdmin(User commandExecUser, User member)
+        public void AssignAdmin(UserId commandExecUser, UserId member)
         {
             if (commandExecUser == null)
             {
@@ -181,7 +193,7 @@ namespace Domain.Entities.Chats
             {
                 throw new ArgumentNullException(nameof(member));
             }
-            if(!IsChatMember(member))
+            if (!IsChatMember(member))
             {
                 throw new UserIsNoMemberInChatException("target user is no chat member");
             }
@@ -195,15 +207,15 @@ namespace Domain.Entities.Chats
             }
             var chatMember = this.GetMember(member);
             chatMember.SetAdmin(true);
-            Raise(new ChatUserAssignAdminChatDomainEvent(this, commandExecUser, member));
+            Raise(new ChatUserAssignAdminChatDomainEvent(this.Id, commandExecUser, member));
         }
-        public void RevokeAdmin(User commandExecUser, User member)
+        public void RevokeAdmin(UserId commandExecUser, UserId member)
         {
             if (commandExecUser == null)
             {
                 throw new ArgumentNullException(nameof(commandExecUser));
             }
-            if(member == null)
+            if (member == null)
             {
                 throw new ArgumentNullException(nameof(member));
             }
@@ -218,9 +230,9 @@ namespace Domain.Entities.Chats
 
             var chatMember = this.GetMember(member);
             chatMember.SetAdmin(false);
-            Raise(new ChatUserRevokeAdminDomainEvent(this, commandExecUser, member));
+            Raise(new ChatUserRevokeAdminDomainEvent(this.Id, commandExecUser, member));
         }
-        public Message AddMessage(User messageOwner, string text, MediaContent? mediaContent =null)
+        public Message AddMessage(UserId messageOwner, string text, MediaContent? mediaContent = null)
         {
             if (messageOwner is null)
             {
@@ -233,26 +245,26 @@ namespace Domain.Entities.Chats
             var message = Message.Create(
                 Message.NewId(),
                 this.Id,
-                messageOwner.Id,
+                messageOwner,
                 text,
                 mediaContent,
                 DateTime.Now.ToTypedDateTime(),
-                messageOwner.Id,
+                messageOwner,
                 null,
                 null,
                 null,
                 null);
             this._messages.Add(message);
-            Raise(new ChatAppendMessageDomainEvent(this, message.User, message));
+            Raise(new ChatAppendMessageDomainEvent(this.Id, message.UserForeignKey, message.Id));
             return message;
         }
         public Message AddMessage(Message message)
         {
             this._messages.Add(message);
-            Raise(new ChatAppendMessageDomainEvent(this, message.User, message));
+            Raise(new ChatAppendMessageDomainEvent(this.Id, message.UserForeignKey, message.Id));
             return message;
         }
-        public void RemoveMessage(User deletedByUser, MessageId messageId)
+        public void RemoveMessage(UserId deletedByUser, MessageId messageId)
         {
             if (deletedByUser == null)
             {
@@ -264,11 +276,11 @@ namespace Domain.Entities.Chats
                 throw new MessageNotFoundException("message is not found");
             }
             this._messages.Remove(message);
-            Raise(new ChatRemoveMessageDomainEvent(this, deletedByUser,message.User, message));
+            Raise(new ChatRemoveMessageDomainEvent(this.Id, deletedByUser, message.UserForeignKey, message.Id));
         }
-        public void UpdateMessage(User modifiedByUser, MessageId messageId,string text,MediaContent? mediaContent)
+        public void UpdateMessage(UserId modifiedByUser, MessageId messageId, string text, MediaContent? mediaContent)
         {
-            if(modifiedByUser == null)
+            if (modifiedByUser == null)
             {
                 throw new ArgumentNullException();
             }
@@ -281,13 +293,13 @@ namespace Domain.Entities.Chats
             {
                 message.UpdateText(modifiedByUser, text);
             }
-            if (mediaContent!=null)
+            if (mediaContent != null)
             {
                 message.UpdateMediaContent(modifiedByUser, mediaContent);
             }
-            Raise(new ChatUpdateMessageDomainEvent(this, modifiedByUser, message.User, message));
+            Raise(new ChatUpdateMessageDomainEvent(this.Id, modifiedByUser, message.UserForeignKey, message.Id));
         }
-        public void UpdatePicture(User modifiedBy, Picture picture)
+        public void UpdatePicture(UserId modifiedBy, Picture picture)
         {
             if (modifiedBy == null)
             {
@@ -299,11 +311,11 @@ namespace Domain.Entities.Chats
             }
             this.Picture = picture;
             SetLastModified(modifiedBy);
-            Raise(new ChatUpdatedDomainEvent(this));
+            Raise(new ChatUpdatedDomainEvent(this.Id));
         }
-        public void UpdateName(User modifiedBy, string name)
+        public void UpdateName(UserId modifiedBy, string name)
         {
-            if(modifiedBy == null)
+            if (modifiedBy == null)
             {
                 throw new ArgumentNullException();
             }
@@ -317,9 +329,9 @@ namespace Domain.Entities.Chats
             }
             this.Name = name;
             SetLastModified(modifiedBy);
-            Raise(new ChatUpdatedDomainEvent(this));
+            Raise(new ChatUpdatedDomainEvent(this.Id));
         }
-        public void UpdateDescription(User modifiedBy, string text)
+        public void UpdateDescription(UserId modifiedBy, string text)
         {
             if (modifiedBy == null)
             {
@@ -335,15 +347,15 @@ namespace Domain.Entities.Chats
             }
             this.Description = text;
             SetLastModified(modifiedBy);
-            Raise(new ChatUpdatedDomainEvent(this));
+            Raise(new ChatUpdatedDomainEvent(this.Id));
         }
-        public void Remove(User deletedBy)
+        public void Remove(UserId deletedBy)
         {
             if (deletedBy == null)
             {
                 throw new ArgumentNullException($"{nameof(deletedBy)} argument is null");
             }
-            if(IsDeleted())
+            if (IsDeleted())
             {
                 throw new ChatAlreadyDeletedException("chat is already deleted");
             }
@@ -352,38 +364,28 @@ namespace Domain.Entities.Chats
                 throw new UserIsNoAdminInChatException("executive is no chat admin");
             }
             SetDeleted(deletedBy);
-            Raise(new ChatDeletedDomainEvent(this));
+            Raise(new ChatDeletedDomainEvent(this.Id));
         }
-        public ChatRelationToUser GetMember(User user)
+        public ChatRelationToUser GetMember(UserId user)
         {
-            if(user == null)
+            if (user == null)
             {
                 return null;
             }
-            var chatMember = _members.Where(x => x.UserForeignKey == user.Id).First();
+            var chatMember = _members.Where(x => x.UserForeignKey == user).First();
             return chatMember;
         }
-        public bool IsChatMember(User user)
+        public bool IsChatMember(UserId user)
         {
-            var result = user != null && _members.Any() && _members.Where(x => x.UserForeignKey == user.Id).Count() != 0;
+            var result = user != null && _members.Any() && _members.Where(x => x.UserForeignKey == user).Count() != 0;
             return result;
         }
-        public bool IsChatMember(UserId userId)
+        public bool IsChatAdmin(UserId user)
         {
-            var member = GetChatMemberById(userId);
-            return IsChatMember(member?.User);
-        }
-        public bool IsChatAdmin(User user)
-        {
-            var result = user != null && _members.Any() && _members.Where(x => x.UserForeignKey== user.Id && (x.IsChatAdmin ?? false)).Count() != 0;
+            var result = user != null && _members.Any() && _members.Where(x => x.UserForeignKey == user && (x.IsChatAdmin ?? false)).Count() != 0;
             return result;
         }
-        public bool IsChatAdmin(UserId userId)
-        {
-            var member = GetChatMemberById(userId);
-            return IsChatAdmin(member?.User);
-        }
-        public ChatRelationToUser GetChatMemberById(UserId userId) => _members.Where(x=>x.UserForeignKey == userId).Single();
+        public ChatRelationToUser GetChatMemberById(UserId userId) => _members.Where(x => x.UserForeignKey == userId).Single();
 
         public bool IsDeleted() => this.DeletedTime != null;
 

@@ -33,7 +33,7 @@ namespace Application.CQS.User.Commands.DeleteUser
                 return Result<Guid>.Failure("execution user not found");
             try
             {
-                user.Remove(deletetByUser);
+                user.Remove(deletetByUser.Id);
             }
             catch(Exception ex)
             {

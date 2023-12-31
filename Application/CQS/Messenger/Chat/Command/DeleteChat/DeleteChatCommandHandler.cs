@@ -35,7 +35,7 @@ namespace Application.CQS.Messenger.Chat.Command.DeleteChat
             try
             {
 
-                chat.Remove(user);
+                chat.Remove(user.Id);
             }
             catch(UserIsNoAdminInChatException ex)
             {

@@ -3,7 +3,21 @@ using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Mails;
 
-public sealed partial class MailOutboxAttachment : Entity<MailOutboxAttachmentId>
+public interface IMailOutboxAttachment
+{
+    string AttachmentPath { get; }
+    string AttachmentSha1 { get; }
+    string Filename { get; }
+    bool? IsEmbededInHtml { get; }
+    MailOutbox Mail { get; set; }
+    MailOutboxId MailOutboxForeignKey { get; }
+    string MimeCid { get; }
+    string MimeMediaSubType { get; }
+    string MimeMediaType { get; }
+    int Order { get; }
+}
+
+public sealed partial class MailOutboxAttachment : Entity<MailOutboxAttachmentId>, IMailOutboxAttachment
 {
     public MailOutboxId MailOutboxForeignKey { get; private set; }
     public string Filename { get; private set; }
@@ -32,7 +46,7 @@ public sealed partial class MailOutboxAttachment : Entity<MailOutboxAttachmentId
         string mimeCid,
         CustomDateTime createdDateTime,
         CustomDateTime? modifiedDateTime,
-        CustomDateTime? deletedDateTime) :base(id)
+        CustomDateTime? deletedDateTime) : base(id)
     {
         MailOutboxForeignKey = mailOutboxId;
         Filename = fileName;

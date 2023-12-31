@@ -22,20 +22,20 @@ namespace Domain.Primitives
             
         }
 
-        public void SetLastModified(User modifiedBy)
+        public void SetLastModified(UserId modifiedBy)
         {
             LastModifiedTime = new CustomDateTime(DateTime.Now);
-            LastModifiedByUser = modifiedBy;
+            LastModifiedByUserForeignKey = modifiedBy;
         }
-        public void SetCreated(User createdBy)
+        public void SetCreated(UserId createdBy)
         {
             CreatedTime = new CustomDateTime(DateTime.Now);
-            CreatedByUser = createdBy;
+            CreatedByUserForeignKey = createdBy;
         }
-        public void SetDeleted(User deletedBy)
+        public void SetDeleted(UserId deletedBy)
         {
             DeletedTime = new CustomDateTime(DateTime.Now);
-            DeletedByUser = deletedBy;
+            DeletedByUserForeignKey = deletedBy;
         }
     }
 }

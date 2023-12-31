@@ -1,8 +1,9 @@
 ﻿using Domain.Primitives;
+using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Messages.Events
 {
-    public record MessageAcknowlegedByUserDomainEvent(Message e, Users.User user) : DomainEvent(e)
+    public record MessageAcknowlegedByUserDomainEvent(MessageId MessageId, UserId UserId) : DomainEvent(MessageId)
     {
     }
 }

@@ -246,7 +246,7 @@ namespace Presentation.Controllers.Api.v1
         public async Task<IActionResult> RemoveFriend([FromBody] UserDTO friend, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new RemoveFriendCommand(userUuid, friend.Uuid);
+            var command = new RemoveFriendCommand(userUuid, friend.Id);
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
         }
@@ -379,7 +379,7 @@ namespace Presentation.Controllers.Api.v1
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
             var command = new AssignRoleCommand(
-                userUuid, id, roleDTOs.DistinctBy(x => x.Uuid).Select(x => x.Uuid).ToList());
+                userUuid, id, roleDTOs.DistinctBy(x => x.Id).Select(x => x.Id).ToList());
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
@@ -395,7 +395,7 @@ namespace Presentation.Controllers.Api.v1
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
             var command = new RevokeRoleCommand(
-                userUuid, id, roleDTOs.DistinctBy(x => x.Uuid).Select(x => x.Uuid).ToList());
+                userUuid, id, roleDTOs.DistinctBy(x => x.Id).Select(x => x.Id).ToList());
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();

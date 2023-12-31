@@ -39,8 +39,8 @@ namespace Application.UnitTests.UseCase.Messenger.User.Commands.Friends.RemoveFr
         public async Task Handle_ValidCommand_ReturnsSuccess()
         {
             // Arrange
-            UserInstance.AddFriend(UserInstance, UserFriendInstance);
-            UserFriendInstance.AddFriend(UserFriendInstance, UserInstance);
+            UserInstance.AddFriend(UserInstance.Id, UserFriendInstance.Id);
+            UserFriendInstance.AddFriend(UserFriendInstance.Id, UserInstance.Id);
 
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                       .Returns(UserInstance, UserFriendInstance);

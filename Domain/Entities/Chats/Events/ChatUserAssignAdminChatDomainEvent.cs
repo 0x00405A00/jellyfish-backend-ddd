@@ -1,8 +1,9 @@
 ﻿using Domain.Primitives;
+using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Chats.Events
 {
-    public record ChatUserAssignAdminChatDomainEvent(Chat e, Users.User assigner, Users.User target) : DomainEvent(e)
+    public record ChatUserAssignAdminChatDomainEvent(ChatId ChatId, UserId ActorUserId, UserId TargetUserId) : DomainEvent(ChatId)
     {
     }
 }

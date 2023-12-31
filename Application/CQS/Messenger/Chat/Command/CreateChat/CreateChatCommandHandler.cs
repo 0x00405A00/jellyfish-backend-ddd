@@ -79,7 +79,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
                     null,
                     null);
 
-                chat.SetCreated(createdBy);
+                chat.SetCreated(createdBy.Id);
 
             }
             catch(Exception ex)

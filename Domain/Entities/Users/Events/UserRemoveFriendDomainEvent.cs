@@ -1,8 +1,9 @@
 ﻿using Domain.Primitives;
+using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Users.Events
 {
-    public record UserRemoveFriendDomainEvent(User user, User newFriend) : DomainEvent(user)
+    public record UserRemoveFriendDomainEvent(UserId UserId, UserId NewFriendId) : DomainEvent(UserId)
     {
     }
 }

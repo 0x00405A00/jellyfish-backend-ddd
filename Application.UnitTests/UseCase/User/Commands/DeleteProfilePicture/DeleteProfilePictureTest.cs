@@ -48,7 +48,7 @@ namespace Application.UnitTests.UseCase.User.Commands.DeleteProfilePicture
             // Arrange
             var handler = _handler;
 
-            UserInstance.UpdatePicture(UserInstance, Picture.Parse("", ValidMimePart));
+            UserInstance.UpdatePicture(UserInstance.Id, Picture.Parse("", ValidMimePart));
 
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));
@@ -87,7 +87,7 @@ namespace Application.UnitTests.UseCase.User.Commands.DeleteProfilePicture
             // Arrange
             var handler = _handler;
 
-            UserInstance.UpdatePicture(UserInstance, null);
+            UserInstance.UpdatePicture(UserInstance.Id, null);
 
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));

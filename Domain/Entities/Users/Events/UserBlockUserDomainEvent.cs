@@ -1,8 +1,9 @@
 ﻿using Domain.Primitives;
+using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Users.Events
 {
-    public record UserBlockUserDomainEvent(User e, User blockedUser) : DomainEvent(e)
+    public record UserBlockUserDomainEvent(UserId UserId, UserId BlockedUserId) : DomainEvent(UserId)
     {
     }
 }

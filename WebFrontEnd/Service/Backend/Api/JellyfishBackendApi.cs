@@ -38,19 +38,19 @@ namespace WebFrontEnd.Service.Backend.Api
         }
         public async Task<JellyfishBackendApiResponse<UserDTO>> EditUser(UserDTO user, CancellationToken cancellationToken)
         {
-            var url = "/user/" + user.Uuid + "";
+            var url = "/user/" + user.Id + "";
             var response = await this.TypedRequest<UserDTO, UserDTO>(url, RestSharp.Method.Put, user, cancellationToken);
             return response;
         }
         public async Task<JellyfishBackendApiResponse<UserDTO>> UpdateUserProfilePicture(UserDTO user, CancellationToken cancellationToken)
         {
-            var url = "/user/" + user.Uuid + "/profile-picture";
+            var url = "/user/" + user.Id + "/profile-picture";
             var response = await this.TypedRequest<UserDTO, UserDTO>(url, RestSharp.Method.Put, user, cancellationToken);
             return response;
         }
         public async Task<JellyfishBackendApiResponse<UserDTO>> DeleteUserProfilePicture(UserDTO userDTO, CancellationToken cancellationToken)
         {
-            var url = "/user/" + userDTO.Uuid + "/profile-picture";
+            var url = "/user/" + userDTO.Id + "/profile-picture";
             var response = await this.TypedRequest<UserDTO, UserDTO>(url, RestSharp.Method.Delete, null, cancellationToken);
             return response;
         }
@@ -121,13 +121,13 @@ namespace WebFrontEnd.Service.Backend.Api
         }
         public async Task<JellyfishBackendApiResponse<List<Guid>>> AssignRoles(UserDTO user, List<RoleDTO> roleDTOs, CancellationToken cancellationToken)
         {
-            var url = "/user/" + user.Uuid + "/role";
+            var url = "/user/" + user.Id + "/role";
             var response = await this.TypedRequest<List<RoleDTO>, List<Guid>>(url, RestSharp.Method.Patch, roleDTOs, cancellationToken);
             return response;
         }
         public async Task<JellyfishBackendApiResponse<List<Guid>>> RevokeRoles(UserDTO user, List<RoleDTO> roleDTOs, CancellationToken cancellationToken)
         {
-            var url = "/user/" + user.Uuid + "/role";
+            var url = "/user/" + user.Id + "/role";
             var response = await this.TypedRequest<List<RoleDTO>, List<Guid>>(url, RestSharp.Method.Delete, roleDTOs, cancellationToken);
             return response;
         }

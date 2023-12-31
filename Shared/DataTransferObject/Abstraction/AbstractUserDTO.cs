@@ -1,6 +1,6 @@
 ﻿namespace Shared.DataTransferObject.Abstraction
 {
-    public abstract class AbstractUserDTO : IDataTransferObject
+    public abstract class AbstractUserDTO : AbstractAuditableDTO
     {
     }
 }

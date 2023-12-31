@@ -35,7 +35,7 @@ namespace Application.CQS.User.Commands.UpdatePassword
 
             try
             {
-                user.UpdatePassword(user, request.Password, request.PasswordConfirm);
+                user.UpdatePassword(user.Id, request.Password, request.PasswordConfirm);
             }
             catch (InvalidPasswordException ex)
             {

@@ -1,8 +1,9 @@
 ﻿using Domain.Primitives;
+using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Roles.Events
 {
-    public record RoleDeletedDomainEvent(Role e) : DomainEvent(e)
+    public record RoleDeletedDomainEvent(RoleId RoleId) : DomainEvent(RoleId)
     {
     }
 }

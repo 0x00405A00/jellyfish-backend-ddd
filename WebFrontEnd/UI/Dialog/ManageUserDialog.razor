@@ -73,7 +73,7 @@
     private MudTextField<string> passwordConfirmTextField;
     private bool success;
     private string[] errors = { };
-    private bool isEditDialog=>User!=null&&User.Uuid!=null&&User.Uuid!=Guid.Empty;
+    private bool isEditDialog=>User!=null&&User.Id!=null&&User.Id!=Guid.Empty;
     private UserTypeDTO SelectedUserType { get; set; } = new UserTypeDTO();
     private IEnumerable<RoleDTO> SelectedRoles { get; set; } = new List<RoleDTO>();
     private IEnumerable<RoleDTO> InitialRoles { get; set; } = new List<RoleDTO>();
@@ -93,14 +93,14 @@
             }
             if (User.UserTypeUuid!=null)
             {
-                SelectedUserType = UserTypes.Where(x => x.Uuid == User.UserTypeUuid).First();
+                SelectedUserType = UserTypes.Where(x => x.Id == User.UserTypeUuid).First();
             }
             if(User.Roles!=null)
             {
                 List<RoleDTO> roleDTOs = new List<RoleDTO>();
                 User.Roles.ToList().ForEach(x =>
                 {
-                    var fromRoles = Roles.Where(y=>y.Uuid == x.Uuid).First();
+                    var fromRoles = Roles.Where(y=>y.Id == x.Id).First();
                     roleDTOs.Add(fromRoles);
 
                 });
@@ -188,11 +188,11 @@
     }
     private List<RoleDTO> GetRevokedRoles()
     {
-        return InitialRoles.Where(x => !SelectedRoles.Where(y=>y.Uuid == x.Uuid).Any())?.ToList();
+        return InitialRoles.Where(x => !SelectedRoles.Where(y=>y.Id == x.Id).Any())?.ToList();
     }
     private List<RoleDTO> GetAssignedRoles()
     {
-        return SelectedRoles.Where(x => !InitialRoles.Where(y => y.Uuid == x.Uuid).Any())?.ToList();
+        return SelectedRoles.Where(x => !InitialRoles.Where(y => y.Id == x.Id).Any())?.ToList();
     }
 
     private async void Commit()
@@ -200,7 +200,7 @@
         form.Validate();
         if (!success)
             return;
-        User.UserTypeUuid =SelectedUserType.Uuid;
+        User.UserTypeUuid =SelectedUserType.Id;
         User.Roles =SelectedRoles.ToList();
 
         if(isEditDialog)//Edit

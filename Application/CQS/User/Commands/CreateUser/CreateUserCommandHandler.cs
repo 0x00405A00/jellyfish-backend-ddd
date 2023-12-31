@@ -101,10 +101,10 @@ namespace Application.CQS.User.Commands.CreateUser
                     null, 
                     null);
 
-                user.AddRole(createdByUser, userRole);
+                user.AddRole(createdByUser.Id, userRole.Id);
                 user.GenerateActivationToken();
                 user.NewRegistered();
-                user.SetCreated(createdByUser);
+                user.SetCreated(createdByUser.Id);
                 _userRepository.Add(user);
             }
             catch (Exception ex)

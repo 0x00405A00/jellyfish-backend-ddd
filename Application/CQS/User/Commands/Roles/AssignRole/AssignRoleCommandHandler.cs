@@ -52,7 +52,7 @@ namespace Application.CQS.User.Commands.Roles.AssignRole
             {
                 try
                 {
-                    user.AddRole(assignedByUser, role);
+                    user.AddRole(assignedByUser.Id, role.Id);
                     roleIds.Add(role.Id.ToGuid());
                 }
                 catch (Exception ex)

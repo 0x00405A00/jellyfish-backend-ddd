@@ -87,7 +87,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
                             userId,null,null,null,
                             null);
                         var createMessageEntity = chat.AddMessage(messageEntity);
-                        messageEntity.SetCreated(chatMember.User);
+                        messageEntity.SetCreated(chatMember.UserForeignKey);
                     }
                     catch(Exception ex)
                     {

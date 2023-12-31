@@ -93,7 +93,7 @@ namespace Domain.Primitives
         {
             var bt = obj.GetType().BaseType;
             if (ReferenceEquals(obj, null)) return false;
-            if(bt != typeof(Entity<TEntityId>))
+            if(bt != typeof(Entity<TEntityId>) && bt?.BaseType != typeof(Entity<TEntityId>))
             {
                 return false;
             }

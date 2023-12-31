@@ -77,7 +77,7 @@
                          <MudTd DataLabel="Phone">@TableContext.Phone</MudTd>
                          <MudTd DataLabel="CreatedTime">@TableContext.CreatedTime?.ToString("dd.MM.yyyy")</MudTd>
                          <MudTd DataLabel="LastModifiedTime">@TableContext.LastModifiedTime?.ToString("dd.MM.yyyy")</MudTd>
-                         <MudTd DataLabel="UserType">@UserTypesList.Where(y=>y.Uuid==@TableContext.UserTypeUuid).First().Name</MudTd>
+                         <MudTd DataLabel="UserType">@UserTypesList.Where(y=>y.Id==@TableContext.UserTypeUuid).First().Name</MudTd>
                          <MudTd DataLabel="Roles">@TableContext.RoleStr</MudTd>
                     </RowTemplate>
                 </MudTable>
@@ -334,11 +334,11 @@
             List<Task<WebApiHttpRequestResponseModel<Guid>>> tasks = new List<Task<WebApiHttpRequestResponseModel<Guid>>>();
             foreach (var user in SelectedItems)
             {
-                var url = "/user/" + user.Uuid + "";
+                var url = "/user/" + user.Id + "";
                 var deleteUserRequest = await WebApiClient.Request < ApiDataTransferObject<Guid>, object>(url, RestSharp.Method.Delete, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
                 if (deleteUserRequest.IsSuccess)
                 {
-                    var userUuid = UsersList.Where(x => x.Uuid == deleteUserRequest.ApiResponseDeserialized.Data.Value).First();
+                    var userUuid = UsersList.Where(x => x.Id == deleteUserRequest.ApiResponseDeserialized.Data.Value).First();
                     UsersList.Remove(userUuid);
                 }
             }

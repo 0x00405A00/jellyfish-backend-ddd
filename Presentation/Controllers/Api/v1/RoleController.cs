@@ -32,7 +32,7 @@ namespace Presentation.Controllers.Api.v1
         public async Task<IActionResult> CreateRole([FromBody] RoleDTO RoleDTO, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new CreateRoleCommand(userUuid, RoleDTO.Name, RoleDTO.Description);
+            var command = new CreateRoleCommand(userUuid, RoleDTO.Name);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();

@@ -30,9 +30,12 @@ namespace Application.CQS.User.EventHandler
             {
 
                 var mailoutboxRepository = scope.ServiceProvider.GetRequiredService<IMailoutboxRepository>();
+                var userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
                 var emailTypeRepository = scope.ServiceProvider.GetRequiredService<IEmailTypeRepository>();
                 var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
                 var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+                var user = await userRepository.GetAsync(x => x.Id == notification.UserId);
 
                 var mailSection = configuration.GetSection("Infrastructure:Mail");
 
@@ -171,7 +174,7 @@ namespace Application.CQS.User.EventHandler
                             MailOutboxRecipient.NewId(),
                             mailOutboxId,
                             emailType.Id,
-                            notification.e.Email.EmailValue,
+                            user.Email.EmailValue,
                             createdDateTime: DateTime.Now.ToTypedDateTime(),// Annahme: Aktuelles Datum und Uhrzeit
                             modifiedDateTime: null,
                             deletedDateTime: null);
@@ -182,7 +185,7 @@ namespace Application.CQS.User.EventHandler
                                 };
 
                         var systemUser = Domain.Entities.Users.User.GetSystemUser();
-                        string subject = @"Registrierung abgeschlossen " + notification.e.UserName + ", Jellyfish im vollem Umfang nutzen \u2764";
+                        string subject = @"Registrierung abgeschlossen " + user.UserName + ", Jellyfish im vollem Umfang nutzen \u2764";
                         bool bodyIsHtml = true;
 
                         var mail = MailOutbox.Create(

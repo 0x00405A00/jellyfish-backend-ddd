@@ -60,11 +60,11 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateMessage
                 {
                     return Result<MessageDTO>.Failure($"cant processing the media content");
                 }
-                message.UpdateMediaContent(modifiedByUser, mediaContent);
+                message.UpdateMediaContent(modifiedByUser.Id, mediaContent);
             }
             if (!String.IsNullOrWhiteSpace(newMessage.Text))
             {
-                message.UpdateText(modifiedByUser, newMessage.Text);    
+                message.UpdateText(modifiedByUser.Id, newMessage.Text);    
             }
 
             _messageRepository.Update(message);

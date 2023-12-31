@@ -3,12 +3,18 @@ using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Users
 {
-    public sealed partial class UserHasRelationToFriend : AuditableEntity<UserHasRelationToFriendId>
+    public interface IUserHasRelationToFriend
+    {
+        UserId UserForeignKey { get; }
+        UserId UserFriendForeignKey { get; }
+    }
+
+    public sealed partial class UserHasRelationToFriend : AuditableEntity<UserHasRelationToFriendId>, IUserHasRelationToFriend
     {
         public UserId UserForeignKey { get; private set; }
         public UserId UserFriendForeignKey { get; private set; }
 
-        private UserHasRelationToFriend():base()
+        private UserHasRelationToFriend() : base()
         {
 
         }
@@ -22,7 +28,7 @@ namespace Domain.Entities.Users
             CustomDateTime? modifiedDateTime,
             UserId? modifiedBy,
             CustomDateTime? deletedDateTime,
-            UserId? deletedBy) :base(id)
+            UserId? deletedBy) : base(id)
         {
             UserForeignKey = userId;
             UserFriendForeignKey = friendId;

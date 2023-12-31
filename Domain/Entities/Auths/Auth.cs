@@ -5,7 +5,22 @@ using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Auths;
 
-public sealed partial class Auth : Entity<AuthId>
+public interface IAuth
+{
+    string LocalIp { get; }
+    int LocalIpPort { get; }
+    CustomDateTime? LogoutTime { get; }
+    string RefreshToken { get; }
+    CustomDateTime RefreshTokenExpiresIn { get; }
+    string RemoteIp { get; }
+    int RemoteIpPort { get; }
+    string Token { get; }
+    CustomDateTime TokenExpiresIn { get; }
+    User User { get; set; }
+    string UserAgent { get; }
+    UserId UserId { get; }
+}
+public sealed partial class Auth : Entity<AuthId>, IAuth
 {
     public UserId UserId { get; private set; }
 
@@ -20,7 +35,7 @@ public sealed partial class Auth : Entity<AuthId>
     public string RefreshToken { get; private set; }
     public CustomDateTime? LogoutTime { get; private set; }
 
-    private Auth() :base()
+    private Auth() : base()
     {
 
     }

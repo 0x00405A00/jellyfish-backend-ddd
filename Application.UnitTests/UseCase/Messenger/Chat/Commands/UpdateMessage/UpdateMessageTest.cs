@@ -16,7 +16,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.UpdateMessage
         private static readonly Guid MessageId = Guid.NewGuid();
         private static readonly MessageDTO ValidMessageDTO = new MessageDTO
         {
-            Uuid = Guid.NewGuid(),
+            Id = Guid.NewGuid(),
             ChatId = ChatId,
             OwnerUuid = Guid.NewGuid(),
             Text = "Mein init Text",
@@ -25,9 +25,9 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.UpdateMessage
             CreatedTime = DateTime.Now,
             LastModifiedTime = DateTime.Now,
             DeletedTime = null,
-            CreatedByUserUuid = Guid.NewGuid(),
-            LastModifiedByUserUuid = Guid.NewGuid(),
-            DeletedByUserUuid = null
+            CreatedByUserForeignKey = Guid.NewGuid(),
+            LastModifiedByUserForeignKey = Guid.NewGuid(),
+            DeletedByUserForeignKey = null
         };
 
         private static readonly UpdateMessageCommand ValidCommand = new UpdateMessageCommand(
@@ -73,7 +73,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.UpdateMessage
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));
 
-            var message = ChatInstance.AddMessage(UserInstance, "yeah mein test", null);
+            var message = ChatInstance.AddMessage(UserInstance.Id, "yeah mein test", null);
 
             _messageRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Messages.Message, bool>>>())
                 .Returns(Task.FromResult(message));

@@ -3,7 +3,12 @@ using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Users
 {
-    public sealed partial class UserType : AuditableEntity<UserTypeId>
+    public interface IUserType
+    {
+        string Name { get; }
+    }
+
+    public sealed partial class UserType : AuditableEntity<UserTypeId>, IUserType
     {
         public string Name { get; private set; }
 
@@ -50,12 +55,12 @@ namespace Domain.Entities.Users
                 deletedDateTime,
                 deletedBy);
 
-            userType.Raise(new DomainEvent(userType));
+            userType.Raise(new DomainEvent(userTypeId));
             return userType;
         }
     }
     public sealed partial class UserType
     {
-        public ICollection<User>? Users { get; }
+        public IReadOnlyCollection<User>? Users { get; }
     }
 }

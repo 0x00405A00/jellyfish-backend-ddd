@@ -15,7 +15,32 @@ using System.Text.RegularExpressions;
 
 namespace Domain.Entities.Users
 {
-    public sealed partial class User : AuditableEntity<UserId>
+    public interface IUser
+    {
+        string ActivationCode { get; }
+        CustomDateTime? ActivationDateTime { get; }
+        string ActivationToken { get; }
+        IReadOnlyCollection<ChatInviteRequest>? ChatInvitesWhereIamRequester { get; }
+        IReadOnlyCollection<ChatInviteRequest>? ChatInvitesWhereIamTarget { get; }
+        CustomDateTime DateOfBirth { get; }
+        Email Email { get; }
+        string FirstName { get; }
+        IReadOnlyCollection<FriendshipRequest>? FriendshipRequestsWhereIamRequester { get; }
+        IReadOnlyCollection<FriendshipRequest>? FriendshipRequestsWhereIamTarget { get; }
+        IReadOnlyCollection<UserHasRelationToFriend>? FriendshipsThatIAccepted { get; }
+        IReadOnlyCollection<UserHasRelationToFriend>? FriendshipsThatIRequested { get; }
+        string LastName { get; }
+        IReadOnlyCollection<Message>? Messages { get; }
+        IReadOnlyCollection<MessageOutbox>? MessagesInOutbox { get; }
+        PhoneNumber Phone { get; }
+        Picture Picture { get; }
+        IReadOnlyCollection<UserHasRelationToRole> UserHasRelationToRoles { get; }
+        string UserName { get; }
+        UserType UserType { get; set; }
+        UserTypeId UserTypeForeignKey { get; }
+    }
+
+    public sealed partial class User : AuditableEntity<UserId>, IUser
     {
         /// <summary>
         ///  ^                        Start anchor
@@ -38,9 +63,9 @@ namespace Domain.Entities.Users
         public static DateTime MinimumBirthDayDate = new DateTime(1900, 1, 1);
         public static DateTime MaximumBirthDayDate = DateTime.Now.AddYears(-16);//man muss mindestens 16 sein
 
-        private List<FriendshipRequest> _friendshipRequestsWhereIamRequester = new ();
-        private List<FriendshipRequest> _friendshipRequestsWhereIamTarget = new ();
-        private List<UserHasRelationToFriend> _friendshipsThatIAccept = new ();
+        private List<FriendshipRequest> _friendshipRequestsWhereIamRequester = new();
+        private List<FriendshipRequest> _friendshipRequestsWhereIamTarget = new();
+        private List<UserHasRelationToFriend> _friendshipsThatIAccept = new();
         private List<UserHasRelationToFriend> _friendshipsThatIRequested = new();
 
         private List<UserHasRelationToFriend> _friends
@@ -53,8 +78,8 @@ namespace Domain.Entities.Users
                 return allRequests;
             }
         }
-        private List<FriendshipRequest> _friendshipRequests 
-        { 
+        private List<FriendshipRequest> _friendshipRequests
+        {
             get
             {
                 var allRequests = new List<FriendshipRequest>();
@@ -83,7 +108,7 @@ namespace Domain.Entities.Users
 
         public bool HasUserProfilePicture => Picture != null && Picture.FilePath != null;
 
-        private User():base()
+        private User() : base()
         {
 
         }
@@ -203,7 +228,7 @@ namespace Domain.Entities.Users
             {
                 throw new InvalidDataException($"item of list {nameof(roles)} contains one or more items with null value");
             }
-            if(email is null)
+            if (email is null)
             {
                 throw new ArgumentNullException("email is null");
             }
@@ -301,13 +326,13 @@ namespace Domain.Entities.Users
             }
 
             //ActivationDateTime = DateTime.Now;
-            Raise(new UserActivatedDomainEvent(this));
+            Raise(new UserActivatedDomainEvent(this.Id));
         }
         public void NewRegistered()
         {
-            Raise(new UserCreatedDomainEvent(this));
+            Raise(new UserCreatedDomainEvent(this.Id));
         }
-        public void UpdateUserType(User modifiedUser, UserType userType)
+        public void UpdateUserType(UserId modifiedUser, UserType userType)
         {
             if (userType == null)
             {
@@ -318,7 +343,7 @@ namespace Domain.Entities.Users
             Raise(new UserUpdatedDomainEvent<User, UserId>(this, x => x.Email, userType));
         }
 
-        public void UpdateUserName(User modifiedUser, string userName)
+        public void UpdateUserName(UserId modifiedUser, string userName)
         {
             if (string.IsNullOrWhiteSpace(userName))
             {
@@ -379,7 +404,7 @@ namespace Domain.Entities.Users
             }
         }
 
-        public void UpdatePassword(User modifiedUser, string password, string passwordConfirm)
+        public void UpdatePassword(UserId modifiedUser, string password, string passwordConfirm)
         {
             try
             {
@@ -399,7 +424,7 @@ namespace Domain.Entities.Users
             PasswordResetCode = GenerateCode(ActivationCodeLen);
             PasswordResetExpiresIn = DateTime.Now.Add(PasswordResetExpiresInTime).ToTypedDateTime();
             PasswordResetToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(Random.Shared.Next(1000) + Guid.NewGuid().ToString()));
-            Raise(new UserPasswordResetRequestDomainEvent(this));
+            Raise(new UserPasswordResetRequestDomainEvent(this.Id));
         }
         public void ResetPassword(string newPassword, string newPasswordConfirm, string base64, string code)
         {
@@ -418,17 +443,17 @@ namespace Domain.Entities.Users
             try
             {
 
-                UpdatePassword(this, newPassword, newPasswordConfirm);
+                UpdatePassword(this.Id, newPassword, newPasswordConfirm);
             }
             catch (InvalidPasswordException ex)
             {
                 throw;
             }
 
-            Raise(new UserPasswordResetCompletedDomainEvent(this));
+            Raise(new UserPasswordResetCompletedDomainEvent(this.Id));
         }
 
-        public void UpdateFirstName(User modifiedUser, string firstName)
+        public void UpdateFirstName(UserId modifiedUser, string firstName)
         {
             if (string.IsNullOrWhiteSpace(firstName))
             {
@@ -443,7 +468,7 @@ namespace Domain.Entities.Users
             Raise(new UserUpdatedDomainEvent<User, UserId>(this, x => x.Email, firstName));
         }
 
-        public void UpdateLastName(User modifiedUser, string lastName)
+        public void UpdateLastName(UserId modifiedUser, string lastName)
         {
             if (string.IsNullOrWhiteSpace(lastName))
             {
@@ -458,7 +483,7 @@ namespace Domain.Entities.Users
             Raise(new UserUpdatedDomainEvent<User, UserId>(this, x => x.Email, lastName));
         }
 
-        public void UpdateEmail(User modifiedUser, Email email)
+        public void UpdateEmail(UserId modifiedUser, Email email)
         {
             if (email is null)
             {
@@ -473,7 +498,7 @@ namespace Domain.Entities.Users
             Raise(new UserUpdatedDomainEvent<User, UserId>(this, x => x.Email, email));
         }
 
-        public void UpdatePhone(User modifiedUser, PhoneNumber phone)
+        public void UpdatePhone(UserId modifiedUser, PhoneNumber phone)
         {
             if (phone is null)
             {
@@ -484,14 +509,14 @@ namespace Domain.Entities.Users
             Raise(new UserUpdatedDomainEvent<User, UserId>(this, x => x.Phone, phone));
         }
 
-        public void UpdateDateOfBirth(User modifiedUser, CustomDateTime dateOfBirth)
+        public void UpdateDateOfBirth(UserId modifiedUser, CustomDateTime dateOfBirth)
         {
             DateOfBirth = dateOfBirth;
             SetLastModified(modifiedUser);
             Raise(new UserUpdatedDomainEvent<User, UserId>(this, x => x.DateOfBirth, dateOfBirth));
         }
 
-        public void UpdatePicture(User modifiedUser, Picture picture)
+        public void UpdatePicture(UserId modifiedUser, Picture picture)
         {
             Picture = picture;
             SetLastModified(modifiedUser);
@@ -504,11 +529,18 @@ namespace Domain.Entities.Users
             {
                 throw new AddFriendshipRequestException("friendship request already exists");
             }
-            _friendshipRequestsWhereIamRequester.Add(friendRequest);
-            Raise(new UserCreateFriendshipRequestDomainEvent(this, friendRequest));
+            if (friendRequest.AmIReceiver(this))
+            {
+                _friendshipRequestsWhereIamTarget.Add(friendRequest);
+            }
+            else
+            {
+                _friendshipRequestsWhereIamRequester.Add(friendRequest);
+            }
+            Raise(new UserCreateFriendshipRequestDomainEvent(this.Id, friendRequest.Id));
         }
 
-        public void RemoveFriendshipRequest(FriendshipRequest friendRequest)
+        private void RemoveFriendshipRequest(FriendshipRequest friendRequest)
         {
             if (!_friendshipRequests.Where(x => x.TargetUserForeignKey == friendRequest.TargetUserForeignKey && x.RequestUserForeignKey == friendRequest.RequestUserForeignKey).Any())
             {
@@ -522,7 +554,11 @@ namespace Domain.Entities.Users
             {
                 _friendshipRequestsWhereIamRequester.Remove(friendRequest);
             }
-            Raise(new UserRemoveFriendshipRequestDomainEvent(this, friendRequest));
+        }
+        public void DeclineFriendshipRequest(FriendshipRequest friendRequest)
+        {
+            RemoveFriendshipRequest(friendRequest);
+            Raise(new UserRemoveFriendshipRequestDomainEvent(this.Id, friendRequest.Id));
         }
 
         public void AcceptFriendshipRequest(FriendshipRequest friendRequest)
@@ -535,39 +571,39 @@ namespace Domain.Entities.Users
             {
                 throw new AcceptFriendshipException("you already friends");
             }
-            _friendshipRequestsWhereIamTarget.Remove(friendRequest);
-            AddFriend(this, friendRequest.RequesterUser);
-            Raise(new UserAcceptFriendshipRequestDomainEvent(this, friendRequest));
+            RemoveFriendshipRequest(friendRequest);
+            AddFriend(this.Id, friendRequest.RequestUserForeignKey);
+            Raise(new UserAcceptFriendshipRequestDomainEvent(this.Id, friendRequest.Id));
         }
 
-        public void AddFriend(User execUser, User friend)
+        public void AddFriend(UserId execUser, UserId friendId)
         {
 
-            var foundFriend = _friends.Any(x => x.UserFriendForeignKey == friend.Id);
+            var foundFriend = _friends.Any(x => x.UserFriendForeignKey == friendId);
             if (foundFriend)
             {
                 throw new AddFriendException("you already friends");
             }
-            if (friend == this)
+            if (friendId == this.Id)
             {
                 throw new AddFriendException("you cant add yourself to friends");
             }
             var userFriend = UserHasRelationToFriend.Create(
                 UserHasRelationToFriend.NewId(),
                 this.Id,
-                friend.Id,
+                friendId,
                 DateTime.Now.ToTypedDateTime(),
-                execUser.Id,
+                execUser,
                 null,
                 null,
                 null,
                 null);
 
             _friendshipsThatIAccept.Add(userFriend);
-            Raise(new UserAddFriendDomainEvent(this, friend));
+            Raise(new UserAddFriendDomainEvent(this.Id, friendId));
         }
 
-        public void RemoveFriend(User execUser, User friend)
+        public void RemoveFriend(UserId execUser, User friend)
         {
             if (!_friends.Any())
             {
@@ -578,7 +614,7 @@ namespace Domain.Entities.Users
             {
                 throw new RemoveFriendException("you arent be friends");
             }
-            if(_friendshipsThatIAccept.Any(x=>x.Id== foundFriend.Id))
+            if (_friendshipsThatIAccept.Any(x => x.Id == foundFriend.Id))
             {
                 _friendshipsThatIAccept.Remove(foundFriend);
             }
@@ -586,21 +622,21 @@ namespace Domain.Entities.Users
             {
                 _friendshipsThatIRequested.Remove(foundFriend);
             }
-            Raise(new UserRemoveFriendDomainEvent(this, friend));
+            Raise(new UserRemoveFriendDomainEvent(this.Id, friend.Id));
         }
 
-        public void AddRole(User assignerUser, Role role)
+        public void AddRole(UserId assignerUser, RoleId role)
         {
-            if (_roles.Where(x => x.RoleForeignKey == role.Id).Any())
+            if (_roles.Where(x => x.RoleForeignKey == role).Any())
             {
                 throw new AddRoleException("role already assigned");
             }
             var userRole = UserHasRelationToRole.Create(
                 UserHasRelationToRole.NewId(),
                 this.Id,
-                role.Id,
+                role,
                 DateTime.Now.ToTypedDateTime(),
-                assignerUser.Id,
+                assignerUser,
                 null,
                 null,
                 null,
@@ -608,16 +644,16 @@ namespace Domain.Entities.Users
 
             _roles.Add(userRole);
             SetLastModified(assignerUser);
-            Raise(new UserAssignedRoleToUserDomainEvent(assignerUser, this, role));
+            Raise(new UserAssignedRoleToUserDomainEvent(assignerUser, this.Id, role));
         }
 
-        public void RemoveRole(User revokerUser, Role role)
+        public void RemoveRole(UserId revokerUser, RoleId role)
         {
             if (!_roles.Any())
             {
                 throw new RemoveRoleException("you have no roles assigned");
             }
-            var foundUserRole = _roles.Where(x => x.RoleForeignKey == role.Id)
+            var foundUserRole = _roles.Where(x => x.RoleForeignKey == role)
                 .FirstOrDefault();
             if (foundUserRole is null)
             {
@@ -625,17 +661,17 @@ namespace Domain.Entities.Users
             }
             _roles.Remove(foundUserRole);
             SetLastModified(revokerUser);
-            Raise(new UserRevokedRoleToUserDomainEvent(revokerUser, this, role));
+            Raise(new UserRevokedRoleToUserDomainEvent(revokerUser, this.Id, role));
         }
 
-        public void Remove(User deletedByUser)
+        public void Remove(UserId deletedByUser)
         {
             if (IsDeleted())
             {
                 throw new UserAlreadyDeletedException("user is already deleted");
             }
             SetDeleted(deletedByUser);
-            Raise(new UserDeletedDomainEvent(this));
+            Raise(new UserDeletedDomainEvent(this.Id));
         }
 
         public bool IsFullyRegistered()
@@ -651,13 +687,13 @@ namespace Domain.Entities.Users
         {
             return _friends.Any();
         }
-        public bool IsFriend(User user)
+        public bool IsFriend(UserId user)
         {
             if (user is null)
             {
                 throw new ArgumentNullException(nameof(user));
             }
-            return _friends.Any(x => x.UserFriendForeignKey == user.Id);
+            return _friends.Any(x => x.UserFriendForeignKey == user);
         }
         /// <summary>
         /// Gets all own requested friendship invites (direction: u to other user)
@@ -677,6 +713,10 @@ namespace Domain.Entities.Users
             return _friendshipRequests.Where(x => x.AmIReceiver(this))
                                           .ToList();
         }
+        public List<FriendshipRequest> GetFriendshipRequests()
+        {
+            return _friendshipRequests;
+        }
         public List<UserHasRelationToFriend> GetFriends()
         {
             return _friends.ToList();
@@ -693,57 +733,57 @@ namespace Domain.Entities.Users
 
         public IReadOnlyCollection<UserHasRelationToRole> UserHasRelationToRoles => _roles;
 
-        public ICollection<ChatRelationToUser>? ChatRelationToUsers { get; }
+        public IReadOnlyCollection<ChatRelationToUser>? ChatRelationToUsers { get; }
 
-        public ICollection<Message>? Messages { get; }
-        public ICollection<Message>? CreatedMessages { get; }
-        public ICollection<Message>? ModifiedMessages { get; }
-        public ICollection<Message>? DeletedMessages { get; }
+        public IReadOnlyCollection<Message>? Messages { get; }
+        public IReadOnlyCollection<Message>? CreatedMessages { get; }
+        public IReadOnlyCollection<Message>? ModifiedMessages { get; }
+        public IReadOnlyCollection<Message>? DeletedMessages { get; }
 
         /// <summary>
         /// Messages that are not received from user, when received (acknowledged) than the message should be removed from entity 'MessagesInOutbox'
         /// </summary>
-        public ICollection<MessageOutbox>? MessagesInOutbox { get; }
+        public IReadOnlyCollection<MessageOutbox>? MessagesInOutbox { get; }
 
-        public ICollection<ChatRelationToUser>? CreatedChatRelationToUsers { get; }
-        public ICollection<ChatRelationToUser>? ModifiedChatRelationToUsers { get; }
-        public ICollection<ChatRelationToUser>? DeletedChatRelationToUsers { get; }
+        public IReadOnlyCollection<ChatRelationToUser>? CreatedChatRelationToUsers { get; }
+        public IReadOnlyCollection<ChatRelationToUser>? ModifiedChatRelationToUsers { get; }
+        public IReadOnlyCollection<ChatRelationToUser>? DeletedChatRelationToUsers { get; }
 
         public IReadOnlyCollection<UserHasRelationToFriend>? FriendshipsThatIAccepted  =>_friendshipsThatIAccept; 
         public IReadOnlyCollection<UserHasRelationToFriend>? FriendshipsThatIRequested => _friendshipsThatIRequested; 
 
-        public ICollection<UserHasRelationToFriend>? CreatedUserHasRelationToFriends { get; }
-        public ICollection<UserHasRelationToFriend>? ModifiedUserHasRelationToFriends { get; }
-        public ICollection<UserHasRelationToFriend>? DeletedUserHasRelationToFriends { get; }
+        public IReadOnlyCollection<UserHasRelationToFriend>? CreatedUserHasRelationToFriends { get; }
+        public IReadOnlyCollection<UserHasRelationToFriend>? ModifiedUserHasRelationToFriends { get; }
+        public IReadOnlyCollection<UserHasRelationToFriend>? DeletedUserHasRelationToFriends { get; }
 
-        public ICollection<UserHasRelationToRole>? CreatedUserHasRelationToRoles { get; }
-        public ICollection<UserHasRelationToRole>? ModifiedUserHasRelationToRoles { get; }
-        public ICollection<UserHasRelationToRole>? DeletedUserHasRelationToRoles { get; }
+        public IReadOnlyCollection<UserHasRelationToRole>? CreatedUserHasRelationToRoles { get; }
+        public IReadOnlyCollection<UserHasRelationToRole>? ModifiedUserHasRelationToRoles { get; }
+        public IReadOnlyCollection<UserHasRelationToRole>? DeletedUserHasRelationToRoles { get; }
 
 
         public IReadOnlyCollection<FriendshipRequest>? FriendshipRequestsWhereIamRequester => _friendshipRequestsWhereIamRequester;
         public IReadOnlyCollection<FriendshipRequest>? FriendshipRequestsWhereIamTarget => _friendshipRequestsWhereIamTarget;
 
-        public ICollection<ChatInviteRequest>? ChatInvitesWhereIamRequester { get; }
-        public ICollection<ChatInviteRequest>? ChatInvitesWhereIamTarget { get; }
+        public IReadOnlyCollection<ChatInviteRequest>? ChatInvitesWhereIamRequester { get; }
+        public IReadOnlyCollection<ChatInviteRequest>? ChatInvitesWhereIamTarget { get; }
 
-        public ICollection<UserType>? CreatedUserTypes { get; }
-        public ICollection<UserType>? ModifiedUserTypes { get; }
-        public ICollection<UserType>? DeletedUserTypes { get; }
+        public IReadOnlyCollection<UserType>? CreatedUserTypes { get; }
+        public IReadOnlyCollection<UserType>? ModifiedUserTypes { get; }
+        public IReadOnlyCollection<UserType>? DeletedUserTypes { get; }
 
-        public ICollection<Role>? CreatedRoles { get; }
-        public ICollection<Role>? ModifiedRoles { get; }
-        public ICollection<Role>? DeletedRoles { get; }
+        public IReadOnlyCollection<Role>? CreatedRoles { get; }
+        public IReadOnlyCollection<Role>? ModifiedRoles { get; }
+        public IReadOnlyCollection<Role>? DeletedRoles { get; }
 
-        public ICollection<Chat>? CreatedChats { get; }
-        public ICollection<Chat>? ModifiedChats { get; }
-        public ICollection<Chat>? DeletedChats { get; }
+        public IReadOnlyCollection<Chat>? CreatedChats { get; }
+        public IReadOnlyCollection<Chat>? ModifiedChats { get; }
+        public IReadOnlyCollection<Chat>? DeletedChats { get; }
 
-        public ICollection<User>? CreatedUsers { get; }
-        public ICollection<User>? ModifiedUsers { get; }
-        public ICollection<User>? DeletedUsers { get; }
+        public IReadOnlyCollection<User>? CreatedUsers { get; }
+        public IReadOnlyCollection<User>? ModifiedUsers { get; }
+        public IReadOnlyCollection<User>? DeletedUsers { get; }
 
-        public ICollection<Auth>? Auths { get; }
+        public IReadOnlyCollection<Auth>? Auths { get; }
 
     }
 }

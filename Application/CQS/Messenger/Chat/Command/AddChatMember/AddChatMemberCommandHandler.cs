@@ -54,7 +54,7 @@ namespace Application.CQS.Messenger.Chat.Command.AddChatMember
             }
             try
             {
-                chat.AddMember(executorUser, targetUser);
+                chat.AddMember(executorUser.Id, targetUser.Id);
             }
             catch (Exception ex) when (ex is ArgumentNullException) 
             {

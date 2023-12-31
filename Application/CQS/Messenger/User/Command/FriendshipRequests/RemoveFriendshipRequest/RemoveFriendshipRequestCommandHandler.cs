@@ -54,14 +54,14 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriend
             }
             try
             {
-                var friendshipRequest = executor.FriendshipRequestsWhereIamTarget.Where(x => x.TargetUser.Id == request.TargetUserId.ToIdentification<UserId>() && x.RequesterUser.Id == request.RequestUserId.ToIdentification<UserId>())
+                var friendshipRequest = executor.GetFriendshipRequests().Where(x => x.TargetUserForeignKey == request.TargetUserId.ToIdentification<UserId>() && x.RequestUserForeignKey == request.RequestUserId.ToIdentification<UserId>())
                     .Single();
                 if(friendshipRequest is null)
                 {
                     return Result<RemoveFriendshipRequestDTO>.Failure("there is no matching friend ship request", Error.ERROR_CODE.Exception);
                 }
 
-                executor.RemoveFriendshipRequest(friendshipRequest);
+                executor.DeclineFriendshipRequest(friendshipRequest);
                 _userRepository.Update(requester);
             }
             catch (Exception ex)

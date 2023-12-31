@@ -4,7 +4,17 @@ using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Users
 {
-    public sealed partial class ChatInviteRequest : Entity<ChatInviteRequestId>
+    public interface IChatInviteRequest
+    {
+        Chat Chat { get; set; }
+        ChatId ChatForeignKey { get; }
+        User RequesterUser { get; set; }
+        UserId RequesterUserForeignKey { get; }
+        User TargetUser { get; set; }
+        UserId TargetUserForeignKey { get; }
+        string? TargetUserRequestMessage { get; }
+    }
+    public sealed partial class ChatInviteRequest : Entity<ChatInviteRequestId>, IChatInviteRequest
     {
         public ChatId ChatForeignKey { get; private set; }
         public UserId RequesterUserForeignKey { get; private set; }

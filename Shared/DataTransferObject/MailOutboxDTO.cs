@@ -1,19 +1,11 @@
 ﻿using System.Text.Json.Serialization;
+using Domain.Entities.Mails;
 using Shared.DataTransferObject.Abstraction;
 
 namespace Shared.DataTransferObject
 {
-    public class MailOutboxDTO : IDataTransferObject
+    public class MailOutboxDTO : AbstractDTO, IMailOutbox
     {
-        [JsonPropertyName("created_time")]
-        public DateTime? CreatedTime { get; set; }
-        [JsonPropertyName("last_modified_time")]
-        public DateTime? LastModifiedTime { get; set; }
-        [JsonPropertyName("deleted_time")]
-        public DateTime? DeletedTime { get; set; }
-        [JsonPropertyName("uuid")]
-        public Guid Uuid { get; set; } = Guid.Empty;
-
         [JsonPropertyName("from")]
         public string From { get; set; } = null!;
 

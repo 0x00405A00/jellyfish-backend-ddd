@@ -51,7 +51,7 @@ namespace Application.CQS.User.Commands.UpdateProfilePicture
 
                 var filePath = _mediaService.CreateProfilePicture(request.UserId, MimeExtension.GetFileExtension(request.MimeType), base64ByteArr, cancellationToken);
                 picture = Picture.Parse(filePath, request.MimeType);
-                user.UpdatePicture(updatedByUser, picture);
+                user.UpdatePicture(updatedByUser.Id, picture);
                 _userRepository.Update(user);
             }
             catch (Exception ex)

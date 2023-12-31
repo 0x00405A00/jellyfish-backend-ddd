@@ -55,7 +55,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteMessage
         {
             // Arrange
 
-            var message = ChatInstance.AddMessage(UserInstance, "test", null);
+            var message = ChatInstance.AddMessage(UserInstance.Id, "test", null);
             var command = ValidCommand with { MessageId = message.Id.ToGuid() };
 
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
@@ -77,8 +77,8 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteMessage
         {
             // Arrange
 
-            ChatInstance.AddMember(UserInstance, UserAdminInstance);
-            var message = ChatInstance.AddMessage(UserInstance, "test", null);
+            ChatInstance.AddMember(UserInstance.Id, UserAdminInstance.Id);
+            var message = ChatInstance.AddMessage(UserInstance.Id, "test", null);
 
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));
@@ -96,8 +96,8 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteMessage
         public async Task Handle_InvalidChatId_ReturnsFailureResult()
         {
             // Arrange
-            ChatInstance.AddMember(UserInstance, UserAdminInstance);
-            var message = ChatInstance.AddMessage(UserInstance, "test", null);
+            ChatInstance.AddMember(UserInstance.Id, UserAdminInstance.Id);
+            var message = ChatInstance.AddMessage(UserInstance.Id, "test", null);
 
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));
@@ -115,8 +115,8 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteMessage
         public async Task Handle_InvalidMessageId_ReturnsFailureResult()
         {
             // Arrange
-            ChatInstance.AddMember(UserInstance, UserAdminInstance);
-            var message = ChatInstance.AddMessage(UserInstance, "test", null);
+            ChatInstance.AddMember(UserInstance.Id, UserAdminInstance.Id);
+            var message = ChatInstance.AddMessage(UserInstance.Id, "test", null);
 
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));

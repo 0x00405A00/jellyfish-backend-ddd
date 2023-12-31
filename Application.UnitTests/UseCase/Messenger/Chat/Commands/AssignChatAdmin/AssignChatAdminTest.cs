@@ -47,7 +47,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.AssignChatAdmin
         {
             // Arrange
             var command = ValidCommand;
-            ChatInstance.AddMember(UserAdminInstance, UserInstance);
+            ChatInstance.AddMember(UserAdminInstance.Id, UserInstance.Id);
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(UserAdminInstance,UserInstance);
             _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Chats.Chat, bool>>>())

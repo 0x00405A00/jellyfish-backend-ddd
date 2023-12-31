@@ -33,8 +33,11 @@ namespace Application.CQS.User.EventHandler
 
                 var mailoutboxRepository = scope.ServiceProvider.GetRequiredService<IMailoutboxRepository>();
                 var emailTypeRepository = scope.ServiceProvider.GetRequiredService<IEmailTypeRepository>();
+                var userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
                 var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
                 var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+                var user = await userRepository.GetAsync(x => x.Id == notification.UserId);
 
                 var userSection = configuration.GetSection("Infrastructure:User:PasswordReset");
                 var mailSection = configuration.GetSection("Infrastructure:Mail");
@@ -46,7 +49,7 @@ namespace Application.CQS.User.EventHandler
 
                 var imageJellyfishPath = Path.Combine(Environment.CurrentDirectory, "Media", "Static", "jellyfish_image.png");
 
-                string resetUrl = $"{resetPasswordBaseUrl}{notification.e.PasswordResetToken}";
+                string resetUrl = $"{resetPasswordBaseUrl}{user.PasswordResetToken}";
 
                 MailOutboxAttachment jellyfishIcon = MailOutboxAttachment.Create(
                     id: MailOutboxAttachment.NewId(), // Annahme: Generierung einer eindeutigen GUID
@@ -130,7 +133,7 @@ namespace Application.CQS.User.EventHandler
                                     </div>
                                 </body>
                                 </html>",
-                jellyfishIcon.Filename, jellyfishIcon.MimeCid, resetUrl, notification.e.PasswordResetCode);
+                jellyfishIcon.Filename, jellyfishIcon.MimeCid, resetUrl, user.PasswordResetCode);
 
 
                 using (var transaction = await unitOfWork.BeginTransaction())
@@ -141,7 +144,7 @@ namespace Application.CQS.User.EventHandler
                             MailOutboxRecipient.NewId(),
                             mailOutboxId,
                             emailType.Id,
-                            notification.e.Email.EmailValue,
+                            user.Email.EmailValue,
                             createdDateTime: DateTime.Now.ToTypedDateTime(),// Annahme: Aktuelles Datum und Uhrzeit
                             modifiedDateTime: null,
                             deletedDateTime: null);
@@ -152,7 +155,7 @@ namespace Application.CQS.User.EventHandler
                         };
                         var body = Encoding.UTF8.GetBytes(bodyHtml);
                         var systemUser = Domain.Entities.Users.User.GetSystemUser();
-                        string subject = @"Zurücksetzen deines Passworts bei Jellyfish " + notification.e.UserName + "";
+                        string subject = @"Zurücksetzen deines Passworts bei Jellyfish " + user.UserName + "";
                         bool bodyIsHtml = true;
 
                         var mail = MailOutbox.Create(

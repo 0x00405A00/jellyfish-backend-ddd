@@ -10,7 +10,17 @@ using Domain.ValueObjects;
 
 namespace Domain.Entities.Messages
 {
-    public sealed partial class Message : AuditableEntity<MessageId>
+    public interface IMessage
+    {
+        Chat Chat { get; }
+        ChatId ChatForeignKey { get; }
+        MediaContent? MediaContent { get; }
+        IReadOnlyCollection<MessageOutbox>? MessagesInOutbox { get; }
+        string Text { get; }
+        User User { get; }
+        UserId UserForeignKey { get; }
+    }
+    public sealed partial class Message : AuditableEntity<MessageId>, IMessage
     {
         public ChatId ChatForeignKey { get; private set; }
         public UserId UserForeignKey { get; private set; }
@@ -94,10 +104,10 @@ namespace Domain.Entities.Messages
                 deletedDateTime,
                 deletedBy);
 
-            msg.Raise(new MessageCreatedDomainEvent(msg));
+            msg.Raise(new MessageCreatedDomainEvent(msg.Id));
             return msg;
         }
-        public void UpdateText(User modifiedBy, string text)
+        public void UpdateText(UserId modifiedBy, string text)
         {
             if (modifiedBy == null || string.IsNullOrWhiteSpace(text))
             {
@@ -109,9 +119,9 @@ namespace Domain.Entities.Messages
             }
             Text = text;
             SetLastModified(modifiedBy);
-            Raise(new MessageUpdatedDomainEvent(modifiedBy, this));
+            Raise(new MessageUpdatedDomainEvent(modifiedBy, this.Id));
         }
-        public void UpdateMediaContent(User modifiedBy, MediaContent mediaContent)
+        public void UpdateMediaContent(UserId modifiedBy, MediaContent mediaContent)
         {
             if (modifiedBy == null || mediaContent == null)
             {
@@ -123,20 +133,20 @@ namespace Domain.Entities.Messages
             }
             MediaContent = mediaContent;
             SetLastModified(modifiedBy);
-            Raise(new MessageUpdatedDomainEvent(modifiedBy, this));
+            Raise(new MessageUpdatedDomainEvent(modifiedBy, this.Id));
         }
-        public void Delete(User deletedBy)
+        public void Delete(UserId deletedBy)
         {
             if (!IsMessageOwner(deletedBy))
             {
                 throw new NotMessageOwnerException();
             }
             SetDeleted(deletedBy);
-            Raise(new MessageRemovedDomainEvent(deletedBy, this));
+            Raise(new MessageRemovedDomainEvent(deletedBy, this.Id));
         }
-        public bool IsMessageOwner(User user)
+        public bool IsMessageOwner(UserId user)
         {
-            return user.Id == this.UserForeignKey;
+            return user == this.UserForeignKey;
         }
 
     }
@@ -144,6 +154,6 @@ namespace Domain.Entities.Messages
     {
         public Chat Chat { get; }
         public User User { get; }
-        public ICollection<MessageOutbox>? MessagesInOutbox { get; }
+        public IReadOnlyCollection<MessageOutbox>? MessagesInOutbox { get; }
     }
 }

@@ -48,7 +48,7 @@ namespace Application.CQS.User.Commands.DeleteProfilePicture
             {
 
                 var filePath = _mediaService.DeleteProfilePicture(request.UserId, MimeExtension.GetFileExtension(user.Picture.FileExtension), cancellationToken);
-                user.UpdatePicture(deletedByUser,null);
+                user.UpdatePicture(deletedByUser.Id, null);
                 _userRepository.Update(user);
             }
             catch (NotValidPhoneNumberException ex)

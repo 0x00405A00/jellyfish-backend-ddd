@@ -52,7 +52,7 @@ namespace Application.CQS.Messenger.Chat.Command.RevokeChatAdmin
             }
             try
             {
-                chat.RevokeAdmin(executorUser, targetUser);
+                chat.RevokeAdmin(executorUser.Id, targetUser.Id);
             }
             catch (ArgumentNullException ex)
             {

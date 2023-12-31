@@ -4,16 +4,25 @@ using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Chats
 {
-    public sealed partial class ChatRelationToUser : AuditableEntity<ChatRelationToUserId>
+    public interface IChatRelationToUser
+    {
+        Chat Chat { get; set; }
+        ChatId ChatForeignKey { get; }
+        bool? IsChatAdmin { get; }
+        User User { get; set; }
+        UserId UserForeignKey { get; }
+    }
+
+    public sealed partial class ChatRelationToUser : AuditableEntity<ChatRelationToUserId>, IChatRelationToUser
     {
         public UserId UserForeignKey { get; private set; }
         public ChatId ChatForeignKey { get; private set; }
 
         public bool? IsChatAdmin { get; private set; }
 
-        private ChatRelationToUser():base()
+        private ChatRelationToUser() : base()
         {
-        
+
         }
         private ChatRelationToUser(
             ChatRelationToUserId id,
@@ -25,7 +34,7 @@ namespace Domain.Entities.Chats
             CustomDateTime? modifiedDateTime,
             UserId? modifiedBy,
             CustomDateTime? deletedDateTime,
-            UserId? deletedBy) :base(id)
+            UserId? deletedBy) : base(id)
         {
             UserForeignKey = userId;
             ChatForeignKey = chatId;

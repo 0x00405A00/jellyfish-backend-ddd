@@ -3,10 +3,18 @@ using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Users
 {
+    public interface IFriendshipRequest
+    {
+        User RequesterUser { get; set; }
+        UserId RequestUserForeignKey { get; }
+        User TargetUser { get; set; }
+        UserId TargetUserForeignKey { get; }
+        string? TargetUserRequestMessage { get; }
+    }
     /// <summary>
     /// Primary Key for a FriendshipRequest are RequestUser.Uuid and TargetUser.Uuid
     /// </summary>
-    public sealed partial class FriendshipRequest : Entity<FriendshipRequestId>
+    public sealed partial class FriendshipRequest : Entity<FriendshipRequestId>, IFriendshipRequest
     {
         public UserId RequestUserForeignKey { get; private set; }
         public UserId TargetUserForeignKey { get; private set; }
@@ -24,7 +32,7 @@ namespace Domain.Entities.Users
             UserId targetUserId,
             CustomDateTime createdDateTime,
             CustomDateTime? modifiedDateTime,
-            CustomDateTime? deletedDateTime) :base (id)
+            CustomDateTime? deletedDateTime) : base(id)
         {
             RequestUserForeignKey = requestUserId;
             TargetUserForeignKey = targetUserId;
@@ -66,7 +74,7 @@ namespace Domain.Entities.Users
             {
                 throw new ArgumentException(nameof(user));
             }
-            return RequesterUser == user;
+            return RequestUserForeignKey == user.Id;
         }
         /// <summary>
         /// Check if the given <see cref="user"/> is the receiver of the request
@@ -80,7 +88,7 @@ namespace Domain.Entities.Users
             {
                 throw new ArgumentException(nameof(user));
             }
-            return TargetUser == user;
+            return TargetUserForeignKey == user.Id;
         }
     }
 

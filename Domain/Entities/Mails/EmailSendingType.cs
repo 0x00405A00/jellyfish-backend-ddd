@@ -3,7 +3,13 @@ using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Mails;
 
-public sealed partial class EmailSendingType : Entity<EmailTypeId>
+public interface IEmailSendingType
+{
+    IReadOnlyCollection<MailOutboxRecipient> MailOutboxRecipients { get; }
+    string Name { get; }
+}
+
+public sealed partial class EmailSendingType : Entity<EmailTypeId>, IEmailSendingType
 {
     public string Name { get; private set; }
 
@@ -46,5 +52,5 @@ public sealed partial class EmailSendingType : Entity<EmailTypeId>
 }
 public sealed partial class EmailSendingType
 {
-    public ICollection<MailOutboxRecipient> MailOutboxRecipients { get; }
+    public IReadOnlyCollection<MailOutboxRecipient> MailOutboxRecipients { get; }
 }

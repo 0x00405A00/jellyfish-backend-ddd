@@ -51,7 +51,7 @@ namespace Application.CQS.Messenger.Chat.Command.RemoveChatMember
             }
             try
             {
-                chat.RemoveMember(executorUser, targetUser);
+                chat.RemoveMember(executorUser.Id, targetUser.Id);
             }
             catch (ArgumentNullException ex)
             {

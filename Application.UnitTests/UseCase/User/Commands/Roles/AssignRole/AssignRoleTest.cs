@@ -58,7 +58,7 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.AssignRole
 
             _roleRepositoryMock.ListAsync(Arg.Any<Expression<Func<Domain.Entities.Roles.Role, bool>>>()).Returns(new List<Role>
             {
-                RoleUser,
+                RoleAdmin,
             });
 
             // Act

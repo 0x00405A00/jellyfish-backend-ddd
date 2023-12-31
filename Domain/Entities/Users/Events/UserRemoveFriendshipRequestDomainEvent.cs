@@ -1,17 +1,17 @@
-﻿using Domain.Entities.Users;
-using Domain.Primitives;
+﻿using Domain.Primitives;
+using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Users.Events
 {
     public record UserRemoveFriendshipRequestDomainEvent : DomainEvent
     {
-        private User user;
-        private FriendshipRequest request;
+        private UserId user;
+        private FriendshipRequestId request;
 
-        public UserRemoveFriendshipRequestDomainEvent(User User, FriendshipRequest Request) : base(User)
+        public UserRemoveFriendshipRequestDomainEvent(UserId UserId, FriendshipRequestId RequestId) : base(UserId)
         {
-            user = User;
-            request = Request;
+            user = UserId;
+            request = RequestId;
         }
     }
 }

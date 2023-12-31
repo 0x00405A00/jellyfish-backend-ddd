@@ -4,11 +4,17 @@ using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Roles
 {
-    public sealed partial class Role : AuditableEntity<RoleId>
+    public interface IRole
+    {
+        string Name { get; set; }
+        IReadOnlyCollection<UserHasRelationToRole> UserHasRelationToRoles { get; }
+    }
+
+    public sealed partial class Role : AuditableEntity<RoleId>, IRole
     {
         public string Name { get; set; }
 
-        private Role():base()
+        private Role() : base()
         {
 
         }
@@ -55,6 +61,6 @@ namespace Domain.Entities.Roles
     }
     public sealed partial class Role
     {
-        public ICollection<UserHasRelationToRole> UserHasRelationToRoles { get; }
+        public IReadOnlyCollection<UserHasRelationToRole> UserHasRelationToRoles { get; }
     }
 }

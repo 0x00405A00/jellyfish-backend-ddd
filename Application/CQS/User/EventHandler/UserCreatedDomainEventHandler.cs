@@ -30,12 +30,15 @@ namespace Application.CQS.User.EventHandler
             {
                 var mailoutboxRepository = scope.ServiceProvider.GetRequiredService<IMailoutboxRepository>();
                 var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+                var userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
                 var emailTypeRepository = scope.ServiceProvider.GetRequiredService<IEmailTypeRepository>();
                 var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
+                var user = await userRepository.GetAsync(x=>x.Id == notification.UserId);
+
                 var mailSection = configuration.GetSection("Infrastructure:Mail");
                 var userSection = configuration.GetSection("Infrastructure:User:Registration");
-                var activationLink = string.Format("{0}{1}", userSection.GetValue<string>("account_activation_link"), notification.e.ActivationToken);
+                var activationLink = string.Format("{0}{1}", userSection.GetValue<string>("account_activation_link"), user.ActivationToken);
 
                 var mailSender = mailSection.GetValue<string>("system_sender_anonymous_mail");
                 Email systemEmail = Email.Parse(mailSender);
@@ -122,14 +125,14 @@ namespace Application.CQS.User.EventHandler
 
                 var body = Encoding.UTF8.GetBytes(bodyHtml);
                 var systemUser = Domain.Entities.Users.User.GetSystemUser();
-                string subject = @"Willkommen bei Jellyfish " + notification.e.UserName + " \U0001F44B";
+                string subject = @"Willkommen bei Jellyfish " + user.UserName + " \U0001F44B";
                 bool bodyIsHtml = true;
 
                 var recipient = MailOutboxRecipient.Create(
                     MailOutboxRecipient.NewId(),
                     mailOutboxId,
                     emailType.Id,
-                    notification.e.Email.EmailValue,
+                    user.Email.EmailValue,
                     createdDateTime: DateTime.Now.ToTypedDateTime(),// Annahme: Aktuelles Datum und Uhrzeit
                     modifiedDateTime: null,
                     deletedDateTime: null);

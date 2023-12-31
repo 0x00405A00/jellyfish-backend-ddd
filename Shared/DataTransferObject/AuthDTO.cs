@@ -1,8 +1,10 @@
-﻿using System.Text.Json.Serialization;
+﻿using Domain.Entities.Auths;
+using Shared.DataTransferObject.Abstraction;
+using System.Text.Json.Serialization;
 
 namespace Shared.DataTransferObject
 {
-    public class AuthDTO 
+    public class AuthDTO :AbstractDTO, IAuth
     {
         [JsonPropertyName("token")]
         public string? Token { get; set; }

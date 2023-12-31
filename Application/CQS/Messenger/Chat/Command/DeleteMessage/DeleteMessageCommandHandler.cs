@@ -46,7 +46,7 @@ namespace Application.CQS.Messenger.Chat.Command.DeleteMessage
             }
             try
             {
-                message.Delete(deleteByUser);
+                message.Delete(deleteByUser.Id);
             }
             catch (NotMessageOwnerException ex)
             {

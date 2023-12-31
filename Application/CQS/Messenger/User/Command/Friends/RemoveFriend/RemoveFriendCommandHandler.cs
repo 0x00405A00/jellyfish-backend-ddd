@@ -34,14 +34,14 @@ namespace Application.CQS.Messenger.User.Command.Friends.RemoveFriend
             {
                 return Result<Guid>.Failure("target user mot found", Error.ERROR_CODE.NotFound);
             }
-            if (!user.IsFriend(targetUserThatShouldRemoved))
+            if (!user.IsFriend(targetUserThatShouldRemoved.Id))
             {
                 return Result<Guid>.Failure("target user is not your friend", Error.ERROR_CODE.NotFound);
             }
 
             try
             {
-                user.RemoveFriend(user, targetUserThatShouldRemoved);
+                user.RemoveFriend(user.Id, targetUserThatShouldRemoved);
                 _userRepository.Update(user);  
             }
             catch (Exception ex)

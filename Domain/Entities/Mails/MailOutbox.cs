@@ -4,7 +4,17 @@ using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Mails;
 
-public sealed partial class MailOutbox : Entity<MailOutboxId>
+public interface IMailOutbox
+{
+    IReadOnlyCollection<MailOutboxAttachment> Attachments { get; }
+    string Body { get; }
+    string From { get; }
+    bool? IsBodyHtml { get; }
+    IReadOnlyCollection<MailOutboxRecipient> Recipients { get; }
+    string Subject { get; }
+}
+
+public sealed partial class MailOutbox : Entity<MailOutboxId>, IMailOutbox
 {
     private List<MailOutboxAttachment> _attachments = new List<MailOutboxAttachment>();
     private List<MailOutboxRecipient> _recipients = new List<MailOutboxRecipient>();
@@ -87,8 +97,7 @@ public sealed partial class MailOutbox : Entity<MailOutboxId>
 }
 public sealed partial class MailOutbox
 {
-
-    public ICollection<MailOutboxAttachment> Attachments { get => _attachments; }
-    public ICollection<MailOutboxRecipient> Recipients { get => _recipients; }
+    public IReadOnlyCollection<MailOutboxAttachment> Attachments { get => _attachments; }
+    public IReadOnlyCollection<MailOutboxRecipient> Recipients { get => _recipients; }
 }
 

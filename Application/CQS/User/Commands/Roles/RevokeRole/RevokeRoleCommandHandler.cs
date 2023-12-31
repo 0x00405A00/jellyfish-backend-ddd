@@ -51,7 +51,7 @@ namespace Application.CQS.User.Commands.Roles.RevokeRole
             {
                 try
                 {
-                    user.RemoveRole(revokedByUser, role);
+                    user.RemoveRole(revokedByUser.Id, role.Id);
                     roleIds.Add(role.Id.ToGuid());
                 }
                 catch (Exception ex)

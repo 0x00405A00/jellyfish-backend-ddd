@@ -51,7 +51,7 @@ namespace Application.CQS.Messenger.Chat.Command.AssignChatAdmin
             }
             try
             {
-                chat.AssignAdmin(executorUser, targetUser);
+                chat.AssignAdmin(executorUser.Id, targetUser.Id);
             }
             catch (ArgumentNullException ex)
             {

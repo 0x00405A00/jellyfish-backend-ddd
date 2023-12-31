@@ -2,7 +2,7 @@
 
 namespace Domain.Primitives
 {
-    public record DomainEvent(Entity entity) : INotification
+    public record DomainEvent(Identification entity) : INotification
     {
     }
 }

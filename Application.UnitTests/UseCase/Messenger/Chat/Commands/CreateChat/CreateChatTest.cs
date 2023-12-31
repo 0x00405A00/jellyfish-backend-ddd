@@ -49,6 +49,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateChat
         {
             // Arrange
             _userRepositoryMock.ListAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns((new List<Domain.Entities.Users.User>() { UserInstance,OtherUserInstance }));
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns((UserInstance));
             // Act
             var result = await _handler.Handle(Command, CancellationToken.None);
 

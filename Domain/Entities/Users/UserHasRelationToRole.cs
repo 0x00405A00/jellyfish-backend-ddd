@@ -6,7 +6,13 @@ using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Users
 {
-    public sealed partial class UserHasRelationToRole : AuditableEntity<UserHasRelationToRoleId>
+    public interface IUserHasRelationToRole
+    {
+        RoleId RoleForeignKey { get; }
+        UserId UserForeignKey { get; }
+    }
+
+    public sealed partial class UserHasRelationToRole : AuditableEntity<UserHasRelationToRoleId>, IUserHasRelationToRole
     {
         public UserId UserForeignKey { get; private set; }
         public RoleId RoleForeignKey { get; private set; }
@@ -25,7 +31,7 @@ namespace Domain.Entities.Users
             CustomDateTime? modifiedDateTime,
             UserId? modifiedBy,
             CustomDateTime? deletedDateTime,
-            UserId? deletedBy):base(id)
+            UserId? deletedBy) : base(id)
         {
             UserForeignKey = userId;
             RoleForeignKey = roleId;
@@ -61,7 +67,7 @@ namespace Domain.Entities.Users
 
             return userRole;
         }
-        public static UserHasRelationToRole NewRoot(UserId userId,UserId assignerId=null)
+        public static UserHasRelationToRole NewRoot(UserId userId, UserId assignerId = null)
         {
             return New(
                 userId,
@@ -82,7 +88,7 @@ namespace Domain.Entities.Users
                 RoleConst.UserRoleUuid.ToIdentification<RoleId>(),
                 assignerId);
         }
-        private static UserHasRelationToRole New(UserId userId,RoleId roleId, UserId assignerId = null)
+        private static UserHasRelationToRole New(UserId userId, RoleId roleId, UserId assignerId = null)
         {
             return UserHasRelationToRole.Create(
                 UserHasRelationToRole.NewId(),

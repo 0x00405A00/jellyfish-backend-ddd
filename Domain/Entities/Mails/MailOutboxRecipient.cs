@@ -3,7 +3,16 @@ using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Mails;
 
-public sealed partial class MailOutboxRecipient : Entity<MailOutboxRecipientId>
+public interface IMailOutboxRecipient
+{
+    string Email { get; }
+    EmailTypeId EmailSendingTypeForeignKey { get; }
+    MailOutbox Mail { get; set; }
+    MailOutboxId MailOutboxForeignKey { get; }
+    EmailSendingType SendingType { get; set; }
+}
+
+public sealed partial class MailOutboxRecipient : Entity<MailOutboxRecipientId>, IMailOutboxRecipient
 {
     public string Email { get; private set; }
     public MailOutboxId MailOutboxForeignKey { get; private set; }

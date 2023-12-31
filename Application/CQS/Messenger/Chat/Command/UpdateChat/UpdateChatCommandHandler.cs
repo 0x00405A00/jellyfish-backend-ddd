@@ -43,7 +43,7 @@ namespace Application.CQS.Messenger.Chat.Command.UpdateChat
             {
                 return Result<ChatDTO>.Failure("you are not a member in this chat");
             }
-            var updatedByUser = updatedByMember.User;
+            var updatedByUser = updatedByMember.UserForeignKey;
             if (!String.IsNullOrEmpty(request.ChatName))
             {
                 try

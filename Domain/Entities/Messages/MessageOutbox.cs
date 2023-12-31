@@ -4,7 +4,15 @@ using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Messages
 {
-    public sealed partial class MessageOutbox : Entity<MessageOutboxId>
+    public interface IMessageOutbox
+    {
+        Message Message { get; }
+        MessageId MessageForeignKey { get; }
+        User User { get; }
+        UserId UserForeignKey { get; }
+    }
+
+    public sealed partial class MessageOutbox : Entity<MessageOutboxId>, IMessageOutbox
     {
         public MessageId MessageForeignKey { get; private set; }
         public UserId UserForeignKey { get; private set; }
@@ -19,7 +27,7 @@ namespace Domain.Entities.Messages
             UserId userId,
             CustomDateTime createdDateTime,
             CustomDateTime? modifiedDateTime,
-            CustomDateTime? deletedDateTime) :base(id)
+            CustomDateTime? deletedDateTime) : base(id)
         {
             MessageForeignKey = messageId;
             UserForeignKey = userId;

@@ -1,9 +1,10 @@
 ﻿using System.Text.Json.Serialization;
+using Domain.Entities.Mails;
 using Shared.DataTransferObject.Abstraction;
 
 namespace Shared.DataTransferObject
 {
-    public class MailOutboxAttachmentDTO : IDataTransferObject
+    public class MailOutboxAttachmentDTO : AbstractDTO, IMailOutboxAttachment
     {
         [JsonPropertyName("mime_mediatype")]
         public string MimeMediatype { get; set; } = null!;

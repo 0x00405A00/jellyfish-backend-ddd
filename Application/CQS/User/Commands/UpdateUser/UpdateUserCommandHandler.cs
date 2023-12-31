@@ -47,7 +47,7 @@ namespace Application.CQS.User.Commands.UpdateUser
                 {
 
                     phoneNumber = PhoneNumber.Parse(request.Phone);
-                    user.UpdatePhone(updatedByUser, phoneNumber);
+                    user.UpdatePhone(updatedByUser.Id, phoneNumber);
                 }
                 catch (NotValidPhoneNumberException ex)
                 {
@@ -62,7 +62,7 @@ namespace Application.CQS.User.Commands.UpdateUser
                 {
 
                     email = Email.Parse(request.Email);
-                    user.UpdateEmail(updatedByUser, email);
+                    user.UpdateEmail(updatedByUser.Id, email);
                 }
                 catch (NotValidEmailException ex)
                 {
@@ -73,7 +73,7 @@ namespace Application.CQS.User.Commands.UpdateUser
             {
                 try
                 {
-                    user.UpdateDateOfBirth(updatedByUser, (request.DateOfBirth??DateTime.MinValue).ToTypedDateOnly());
+                    user.UpdateDateOfBirth(updatedByUser.Id, (request.DateOfBirth??DateTime.MinValue).ToTypedDateOnly());
                 }
                 catch (InvalidDateOfBirthException ex)
                 {
@@ -84,7 +84,7 @@ namespace Application.CQS.User.Commands.UpdateUser
             {
                 try
                 {
-                    user.UpdateFirstName(updatedByUser, request.FirstName);
+                    user.UpdateFirstName(updatedByUser.Id, request.FirstName);
                 }
                 catch (InvalidFirstNameException ex)
                 {
@@ -95,7 +95,7 @@ namespace Application.CQS.User.Commands.UpdateUser
             {
                 try
                 {
-                    user.UpdateLastName(updatedByUser, request.LastName);
+                    user.UpdateLastName(updatedByUser.Id, request.LastName);
                 }
                 catch (InvalidLastNameException ex)
                 {
@@ -106,7 +106,7 @@ namespace Application.CQS.User.Commands.UpdateUser
             {
                 try
                 {
-                    user.UpdateUserName(updatedByUser, request.UserName);
+                    user.UpdateUserName(updatedByUser.Id, request.UserName);
                 }
                 catch(InvalidUserNameException ex)
                 {
