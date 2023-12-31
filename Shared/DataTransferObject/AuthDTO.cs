@@ -1,4 +1,7 @@
 ﻿using Domain.Entities.Auths;
+using Domain.Entities.Users;
+using Domain.Primitives;
+using Domain.Primitives.Ids;
 using Shared.DataTransferObject.Abstraction;
 using System.Text.Json.Serialization;
 
@@ -21,6 +24,27 @@ namespace Shared.DataTransferObject
         public bool IsTokenExpired => TokenExpiresIn != null&&TokenExpiresIn <= DateTime.Now;
         public bool IsRefreshTokenExpired => RefreshTokenExpiresIn!=null&&RefreshTokenExpiresIn <= DateTime.Now;
         public bool IsAuthentificated => TokenExpiresIn != null && TokenExpiresIn > DateTime.Now;
+
+
+        public string LocalIp{ get; }
+
+        public int LocalIpPort{ get; }
+
+        public CustomDateTime? LogoutTime{ get; }
+
+        public string RemoteIp{ get; }
+
+        public int RemoteIpPort{ get; }
+
+        public User User { get; set; }
+
+        public string UserAgent{ get; }
+
+        public UserId UserId{ get; }
+
+        CustomDateTime IAuth.RefreshTokenExpiresIn{ get; }
+
+        CustomDateTime IAuth.TokenExpiresIn{ get; }
 
         public List<KeyValuePair<string, string>> CreateAuthorizationHeader()
         {

@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Domain.Entities.Roles;
+using Domain.Entities.Users;
 using Shared.DataTransferObject.Abstraction;
 
 namespace Shared.DataTransferObject
@@ -8,6 +9,8 @@ namespace Shared.DataTransferObject
     {
         [JsonPropertyName("name")]
         public string Name { get; set; }
+
+        public IReadOnlyCollection<UserHasRelationToRole> UserHasRelationToRoles { get; }
 
         public override string ToString() => Name;
     }

@@ -34,5 +34,12 @@ namespace Shared.DataTransferObject
             }
         }
 
+        public IReadOnlyCollection<MailOutboxAttachment> Attachments{ get; }
+
+        public string Body{ get; }
+
+        public bool? IsBodyHtml{ get; }
+
+        public IReadOnlyCollection<MailOutboxRecipient> Recipients{ get; }
     }
 }

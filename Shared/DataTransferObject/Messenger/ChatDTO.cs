@@ -1,5 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 using Domain.Entities.Chats;
+using Domain.Entities.Messages;
+using Domain.Entities.Users;
+using Domain.ValueObjects;
 using Shared.DataTransferObject.Abstraction;
 
 namespace Shared.DataTransferObject.Messenger
@@ -26,6 +29,22 @@ namespace Shared.DataTransferObject.Messenger
 
         [JsonPropertyName("messages")]
         public ICollection<MessageDTO>? Messages { get; set; }
+
+        IReadOnlyCollection<ChatRelationToUser> IChat.Admins{ get; }
+
+        public IReadOnlyCollection<ChatInviteRequest>? ChatInvitesToUsers{ get; }
+
+        public IReadOnlyCollection<ChatRelationToUser>? ChatRelationToUsers{ get; }
+
+        public string Description{ get; }
+
+        IReadOnlyCollection<ChatRelationToUser> IChat.Members{ get; }
+
+        IReadOnlyCollection<Message> IChat.Messages{ get; }
+
+        public string Name{ get; }
+
+        public Picture Picture{ get; }
 
         public ChatDTO()
         {

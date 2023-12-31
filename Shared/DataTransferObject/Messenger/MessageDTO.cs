@@ -1,5 +1,9 @@
 ﻿using System.Text.Json.Serialization;
+using Domain.Entities.Chats;
 using Domain.Entities.Messages;
+using Domain.Entities.Users;
+using Domain.Primitives.Ids;
+using Domain.ValueObjects;
 using Shared.DataTransferObject.Abstraction;
 
 namespace Shared.DataTransferObject.Messenger
@@ -22,5 +26,17 @@ namespace Shared.DataTransferObject.Messenger
 
         [JsonIgnore]
         public bool HasBase64ContentSet => !String.IsNullOrEmpty(this.BinaryContentBase64);
+
+        public Chat Chat{ get; }
+
+        public ChatId ChatForeignKey{ get; }
+
+        public MediaContent? MediaContent{ get; }
+
+        public IReadOnlyCollection<MessageOutbox>? MessagesInOutbox{ get; }
+
+        public User User{ get; }
+
+        public UserId UserForeignKey{ get; }
     }
 }

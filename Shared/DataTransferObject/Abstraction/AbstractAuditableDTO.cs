@@ -16,11 +16,11 @@ namespace Shared.DataTransferObject.Abstraction
         [JsonPropertyName("deleted_by_user_uuid")]
         public Guid? DeletedByUserForeignKey { get; set; }
 
-        public User? CreatedByUser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public User? DeletedByUser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public User? LastModifiedByUser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        UserId? IAuditableEntity.CreatedByUserForeignKey { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        UserId? IAuditableEntity.DeletedByUserForeignKey { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        UserId? IAuditableEntity.LastModifiedByUserForeignKey { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public User? CreatedByUser { get; set; }
+        public User? DeletedByUser { get; set; }
+        public User? LastModifiedByUser { get; set; }
+        UserId? IAuditableEntity.CreatedByUserForeignKey { get; set; }
+        UserId? IAuditableEntity.DeletedByUserForeignKey { get; set; }
+        UserId? IAuditableEntity.LastModifiedByUserForeignKey { get; set; }
     }
 }

@@ -17,8 +17,8 @@ namespace Shared.DataTransferObject.Abstraction
         [JsonPropertyName("deleted_time")]
         public DateTime? DeletedTime { get; set; }
 
-        CustomDateTime IEntityBase.CreatedTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        CustomDateTime? IEntityBase.DeletedTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        CustomDateTime? IEntityBase.LastModifiedTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        CustomDateTime IEntityBase.CreatedTime { get; set; }
+        CustomDateTime? IEntityBase.DeletedTime { get; set; }
+        CustomDateTime? IEntityBase.LastModifiedTime { get; set; }
     }
 }

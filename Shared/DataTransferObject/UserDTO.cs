@@ -1,4 +1,8 @@
-﻿using Domain.Entities.Users;
+﻿using Domain.Entities.Messages;
+using Domain.Entities.Users;
+using Domain.Primitives;
+using Domain.Primitives.Ids;
+using Domain.ValueObjects;
 using Shared.DataTransferObject.Abstraction;
 using Shared.Http;
 using System.Text.Json.Serialization;
@@ -74,6 +78,42 @@ namespace Shared.DataTransferObject
 
         [JsonIgnore]
         public bool HasImage { get { return (!String.IsNullOrEmpty(PictureUrl) && Extension.IsValidUrl(PictureUrl) || (!String.IsNullOrEmpty(PictureBase64) && !String.IsNullOrEmpty(PictureMimeType))); } }
+
+        public string ActivationCode{ get; }
+
+        CustomDateTime? IUser.ActivationDateTime{ get; }
+
+        public string ActivationToken{ get; }
+
+        public IReadOnlyCollection<ChatInviteRequest>? ChatInvitesWhereIamRequester{ get; }
+
+        public IReadOnlyCollection<ChatInviteRequest>? ChatInvitesWhereIamTarget{ get; }
+
+        CustomDateTime IUser.DateOfBirth{ get; }
+
+        Email IUser.Email{ get; }
+
+        public IReadOnlyCollection<FriendshipRequest>? FriendshipRequestsWhereIamRequester{ get; }
+
+        public IReadOnlyCollection<FriendshipRequest>? FriendshipRequestsWhereIamTarget{ get; }
+
+        public IReadOnlyCollection<UserHasRelationToFriend>? FriendshipsThatIAccepted{ get; }
+
+        public IReadOnlyCollection<UserHasRelationToFriend>? FriendshipsThatIRequested{ get; }
+
+        public IReadOnlyCollection<Message>? Messages{ get; }
+
+        public IReadOnlyCollection<MessageOutbox>? MessagesInOutbox{ get; }
+
+        PhoneNumber IUser.Phone{ get; }
+
+        public Picture Picture{ get; }
+
+        public IReadOnlyCollection<UserHasRelationToRole> UserHasRelationToRoles{ get; }
+
+        public UserType UserType { get; set; }
+
+        public UserTypeId UserTypeForeignKey{ get; }
 
         public UserDTO()
         {
