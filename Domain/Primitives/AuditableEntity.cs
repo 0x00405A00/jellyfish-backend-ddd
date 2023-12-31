@@ -12,6 +12,7 @@ namespace Domain.Primitives
         public User? CreatedByUser { get; set; }
         public User? LastModifiedByUser { get; set; }
         public User? DeletedByUser { get; set; }
+
         protected AuditableEntity() 
         {
 

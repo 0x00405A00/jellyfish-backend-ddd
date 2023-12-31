@@ -5,11 +5,15 @@ namespace Domain.Primitives
     public abstract class Entity : IEntityBase
     {
         protected readonly List<DomainEvent> _domainEvents = new();
-        public ICollection<DomainEvent> DomainEvents { get { return _domainEvents; } }
+
         public CustomDateTime CreatedTime { get; set; }
         public CustomDateTime? LastModifiedTime { get; set; }
         public CustomDateTime? DeletedTime { get; set; }
 
+        protected Entity()
+        {
+
+        }
         protected void Raise(DomainEvent domainEvent)
         {
             _domainEvents.Add(domainEvent);
@@ -49,23 +53,24 @@ namespace Domain.Primitives
             }
             propertyExpression.ToList().ForEach(e => SetValueInInstance(this, e.Value, e.Key));
         }
+        public List<DomainEvent> GetDomainEvents() => _domainEvents;
     }
     public abstract class Entity<TEntityId> : Entity, IEquatable<Entity<TEntityId>>, IEntityWithTypedId<TEntityId> 
         where TEntityId : Identification
         
     {
-        public TEntityId Id { get; init; }
+        public TEntityId Id { get; set; }
 
         protected Entity(TEntityId entityId)
         {
             Id = entityId;
         }
 
-        protected Entity()
+        protected Entity():base()
         {
             
         }
-        public static TEntityId NewId() => (TEntityId)Identification.Create();
+        public static TEntityId NewId() => (TEntityId)Activator.CreateInstance(typeof(TEntityId),new object[] { Guid.NewGuid() });
 
         public static bool operator !=(Entity<TEntityId>? first, Entity<TEntityId>? second)
         {

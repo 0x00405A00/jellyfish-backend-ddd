@@ -8,6 +8,7 @@ namespace Domain.Entities.Chats
     {
         public UserId UserForeignKey { get; private set; }
         public ChatId ChatForeignKey { get; private set; }
+
         public bool? IsChatAdmin { get; private set; }
 
         private ChatRelationToUser():base()
@@ -68,7 +69,7 @@ namespace Domain.Entities.Chats
     }
     public sealed partial class ChatRelationToUser
     {
-        public User User { get; }
-        public Chat Chat { get; }
+        public User User { get; set; }
+        public Chat Chat { get; set; }
     }
 }

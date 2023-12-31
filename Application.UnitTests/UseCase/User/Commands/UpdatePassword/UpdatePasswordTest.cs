@@ -39,7 +39,7 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdatePassword
         public async Task Handle_ValidCommand_ReturnsSuccess()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(UserInstance);
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(UserInstance);
 
             // Act
             var result = await _handler.Handle(ValidCommand, CancellationToken.None);
@@ -52,7 +52,7 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdatePassword
         public async Task Handle_InvalidCommand_PasswordNotEqual_ReturnsFailure()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(UserInstance);
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(UserInstance);
 
             // Act
             var result = await _handler.Handle(InvalidCommandPasswordNotEqual, CancellationToken.None);
@@ -64,7 +64,7 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdatePassword
         public async Task Handle_InvalidCommand_PasswordNotSecure_ReturnsFailure()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(UserInstance);
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(UserInstance);
 
             // Act
             var result = await _handler.Handle(InvalidCommandPasswordIsNotSecure, CancellationToken.None);

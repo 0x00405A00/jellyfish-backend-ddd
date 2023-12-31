@@ -12,6 +12,7 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
         public void Configure(EntityTypeBuilder<UserHasRelationToFriend> builder)
         {
             builder.AddDefaultProperties<UserHasRelationToFriend, UserHasRelationToFriendId>();
+            builder.AddAuditableProperties<UserHasRelationToFriend, UserHasRelationToFriendId>();
 
             var fk1Index = DbContextExtension.GetIndexForFkName(nameof(UserHasRelationToFriend), nameof(UserHasRelationToFriend.UserForeignKey), nameof(User));
             builder.HasIndex(e => e.UserForeignKey, fk1Index);
@@ -34,16 +35,17 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
             string userFriendsUserToUserConstraintName = DbContextExtension.GetForeignKeyName(nameof(UserHasRelationToFriend), nameof(UserHasRelationToFriend.UserForeignKey), nameof(User));
             string userFriendsFriendToUserConstraintName = DbContextExtension.GetForeignKeyName(nameof(UserHasRelationToFriend), nameof(UserHasRelationToFriend.UserFriendForeignKey), nameof(User));
             builder.HasOne(e => e.User)
-                .WithMany(x => x.UserHasRelationToFriendsLeft)
+                .WithMany(x => x.FriendshipsThatIAccepted)
                 .HasForeignKey(x => x.UserForeignKey)
                 .HasConstraintName(userFriendsUserToUserConstraintName)
                 .OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(t => t.UserFriend)
-                .WithMany(e => e.UserHasRelationToFriendsRight)
+                .WithMany(e => e.FriendshipsThatIRequested)
                 .HasForeignKey(e => e.UserFriendForeignKey)
                 .HasConstraintName(userFriendsFriendToUserConstraintName)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.AddAuditableConstraints<UserHasRelationToFriend, UserHasRelationToFriendId>();
         }
     }
 }

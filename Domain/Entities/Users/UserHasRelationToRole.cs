@@ -1,4 +1,6 @@
-﻿using Domain.Entities.Roles;
+﻿using Domain.Const;
+using Domain.Entities.Roles;
+using Domain.Extension;
 using Domain.Primitives;
 using Domain.Primitives.Ids;
 
@@ -13,6 +15,7 @@ namespace Domain.Entities.Users
         {
 
         }
+
         private UserHasRelationToRole(
             UserHasRelationToRoleId id,
             UserId userId,
@@ -57,6 +60,40 @@ namespace Domain.Entities.Users
                 deletedBy);
 
             return userRole;
+        }
+        public static UserHasRelationToRole NewRoot(UserId userId,UserId assignerId=null)
+        {
+            return New(
+                userId,
+                RoleConst.RootRoleUuid.ToIdentification<RoleId>(),
+                assignerId);
+        }
+        public static UserHasRelationToRole NewAdmin(UserId userId, UserId assignerId = null)
+        {
+            return New(
+                userId,
+                RoleConst.AdminRoleUuid.ToIdentification<RoleId>(),
+                assignerId);
+        }
+        public static UserHasRelationToRole NewUser(UserId userId, UserId assignerId = null)
+        {
+            return New(
+                userId,
+                RoleConst.UserRoleUuid.ToIdentification<RoleId>(),
+                assignerId);
+        }
+        private static UserHasRelationToRole New(UserId userId,RoleId roleId, UserId assignerId = null)
+        {
+            return UserHasRelationToRole.Create(
+                UserHasRelationToRole.NewId(),
+                userId,
+                roleId,
+                DateTime.Now.ToTypedDateTime(),
+                assignerId ?? UserConst.RootUserId.ToIdentification<UserId>(),
+                null,
+                null,
+                null,
+                null);
         }
     }
     public sealed partial class UserHasRelationToRole

@@ -33,7 +33,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Queries.GetChatById
             // Arrange
             var handler = _handler;
 
-            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
+            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Chats.Chat, bool>>>())
                 .Returns(Task.FromResult(ChatInstance));
 
             // Act
@@ -50,7 +50,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Queries.GetChatById
             // Arrange
             var handler = _handler;
 
-            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
+            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Chats.Chat, bool>>>())
                 .Returns(Task.FromResult<Domain.Entities.Chats.Chat>(null));
 
             // Act

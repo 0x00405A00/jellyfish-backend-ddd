@@ -47,12 +47,12 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
                 .HasColumnName("date_of_birth");
 
             builder.Property(ut => ut.ActivationToken)
-                .IsRequired()
+                .IsRequired(false)
                 .HasMaxLength(DbContextExtension.ColumnLength.Base64)
                 .HasColumnName("activation_token");
 
             builder.Property(ut => ut.ActivationCode)
-                .IsRequired()
+                .IsRequired(false)
                 .HasMaxLength(DbContextExtension.ColumnLength.PasswordLength)
                 .HasColumnName("activation_code");
 
@@ -61,16 +61,17 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
                 .HasColumnName("activation_datetime");
 
             builder.Property(ut => ut.PasswordResetCode)
-                .IsRequired()
+                .IsRequired(false)
                 .HasMaxLength(DbContextExtension.ColumnLength.PasswordLength)
                 .HasColumnName("password_reset_code");
 
-            builder.Property(ut => ut.PasswordResetCode)
-                .IsRequired()
+            builder.Property(ut => ut.PasswordResetToken)
+                .IsRequired(false)
                 .HasMaxLength(DbContextExtension.ColumnLength.PasswordLength)
                 .HasColumnName("password_reset_token");
 
             builder.Property(ut => ut.PasswordResetExpiresIn)
+                .IsRequired(false)
                 .HasColumnType("datetime")
                 .HasColumnName("password_reset_token_expires_in");
 
@@ -80,19 +81,19 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
                 .HasColumnName("email");
 
             builder.Property(ut => ut.Phone)
-                .IsRequired()
+                .IsRequired(false)
                 .HasMaxLength(DbContextExtension.ColumnLength.EmailAddrLength)
                 .HasColumnName("phone");
 
             builder.OwnsOne(ut => ut.Picture, navigationBuilder =>
             {
                 navigationBuilder.Property(img => img.FilePath)
+                .IsRequired(false)
                 .HasColumnName("profile_picture_path");
                 navigationBuilder.Property(img => img.FileExtension)
+                .IsRequired(false)
                 .HasColumnName("profile_picture_fileext");
             });
-
-
 
             //alte Constraints-Erstellung vor builder.AddAuditableConstraints<EUser, UserId>(); Implementierung
             /*builder.HasOne(u => u.CreatedByUser)
@@ -110,6 +111,7 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
                 .IsRequired(false)
                 .HasForeignKey(fk => fk.DeletedByUserForeignKey);*/
 
+
             var userToUserTypeConstraintName = DbContextExtension.GetForeignKeyName(nameof(User), nameof(User.UserTypeForeignKey), nameof(UserType));
             builder.HasOne(x => x.UserType)
                 .WithMany(x => x.Users)
@@ -120,21 +122,6 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 
             builder.AddAuditableConstraints<User, UserId>();
 
-            string userHasRoleToUserConstraintName = DbContextExtension.GetForeignKeyName(nameof(UserHasRelationToRole), nameof(UserHasRelationToRole.UserForeignKey), nameof(User));
-            string userHasRoleToRoleConstraintName = DbContextExtension.GetForeignKeyName(nameof(UserHasRelationToRole), nameof(UserHasRelationToRole.RoleForeignKey), nameof(Role));
-            builder.HasMany(u => u.Roles)
-                .WithMany(r => r.Users)
-                .UsingEntity<UserHasRelationToRole>(
-                j =>
-                {
-                    j.HasOne(e => e.User).WithMany(e => e.UserHasRelationToRoles).HasForeignKey(e => e.UserForeignKey).HasConstraintName(userHasRoleToUserConstraintName);
-                    j.HasOne(t => t.Role).WithMany(e => e.UserHasRelationToRoles).HasForeignKey(e => e.RoleForeignKey).HasConstraintName(userHasRoleToRoleConstraintName);
-                });
-
-            List<User> users = new List<User>();
-            users.Add(User.GetSystemUser());
-            users.AddRange(DbContextExtension.GetTestSet());
-            builder.HasData(users);
         }
     }
 }

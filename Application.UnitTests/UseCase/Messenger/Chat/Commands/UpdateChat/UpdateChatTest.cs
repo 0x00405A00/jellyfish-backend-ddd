@@ -54,10 +54,10 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.UpdateChat
             // Arrange
             var handler = _handler;
 
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserAdminInstance));
 
-            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
+            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Chats.Chat, bool>>>())
                 .Returns(Task.FromResult(ChatInstance));
 
             // Act
@@ -73,10 +73,10 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.UpdateChat
             // Arrange
             var handler = _handler;
 
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));
 
-            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
+            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Chats.Chat, bool>>>())
                 .Returns(Task.FromResult(ChatInstance));
 
             // Act

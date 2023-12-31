@@ -16,8 +16,8 @@ namespace Infrastructure.Repository
 
         protected GenericRepository(ApplicationDbContext applicationDbContext)
         {
-            DbSet = Context.Set<TEntity>();
             Context = applicationDbContext;
+            DbSet = Context.Set<TEntity>();
         }
         #region Sync 
         public void Add(TEntity entity)

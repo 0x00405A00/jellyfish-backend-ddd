@@ -1,6 +1,8 @@
 ﻿using Application.CQS.Messenger.User.Command.FriendshipRequests.RemoveFriendshipRequest;
 using AutoMapper;
 using Domain.Entities.Users;
+using Domain.Extension;
+using Domain.Primitives.Ids;
 using Infrastructure.Abstractions;
 using MediatR;
 using System.Linq.Expressions;
@@ -37,9 +39,9 @@ namespace Application.UnitTests.UseCase.Messenger.User.Commands.FriendshipReques
         public async Task Handle_ValidCommand_ReturnsSuccess()
         {
             // Arrange
-            var request = FriendshipRequest.Create($"hey iam {UserInstance.UserName}. do you want to be my friend?", UserInstance, UserFriendInstance);
-            UserFriendInstance.AddFriendshipRequest(request);
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(UserFriendInstance, UserFriendInstance, UserInstance);
+            var friendshipRequestId = FriendshipRequest.NewId();
+            var request = FriendshipRequest.Create(friendshipRequestId, $"hey iam {UserInstance.UserName}. do you want to be my friend?", UserInstance.Id, UserFriendInstance.Id, DateTime.Now.ToTypedDateTime(), null, null); UserFriendInstance.AddFriendshipRequest(request);
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(UserFriendInstance, UserFriendInstance, UserInstance);
 
             // Act
             var result = await _handler.Handle(ValidCommand, CancellationToken.None);

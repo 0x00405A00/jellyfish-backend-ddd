@@ -47,16 +47,22 @@ namespace Infrastructure
         public DbSet<MailOutboxAttachment> MailOutboxAttachments { get; set; }
         #endregion
         #region Ctor
-        public ApplicationDbContext()//für ef core
-        {
-            
-        }
+
         public ApplicationDbContext(
                 IConfiguration configuration)
         {
             _configuration = configuration;
         }
+        public ApplicationDbContext()
+        {
+            
+        }
 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+            Options = options;
+        }
         public ApplicationDbContext(
                 IConfiguration configuration, DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -93,7 +99,7 @@ namespace Infrastructure
             optionsBuilder.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
             optionsBuilder.EnableSensitiveDataLogging(true);
             optionsBuilder.AddInterceptors(new DatabaseReaderInterceptor());
-            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            //optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
 
 #warning Before any start, check if u changed the entity structure in IEntityConfiguration classes. When any changes are done, please migrate to database 
@@ -107,9 +113,9 @@ namespace Infrastructure
             modelBuilder.ApplyConfiguration(new UserTypeConfiguration());
             modelBuilder.ApplyConfiguration(new UserHasRelationToFriendsConfiguration());
             modelBuilder.ApplyConfiguration(new FriendshipRequestsConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
             modelBuilder.ApplyConfiguration(new UserHasRelationToRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new AuthConfiguration());
             modelBuilder.ApplyConfiguration(new ChatConfiguration());
             modelBuilder.ApplyConfiguration(new ChatRelationToUserConfiguration());
@@ -121,11 +127,21 @@ namespace Infrastructure
             modelBuilder.ApplyConfiguration(new MailOutboxRecipientConfiguration());
             modelBuilder.ApplyConfiguration(new MailOutboxAttachmentConfiguration());
 
-            //modelBuilder.ApplyConfigurationsFromAssembly ignore any order so dependencies which are order depend could not be created (app runs in exception)
-
-            //Data seeding: Schema initial data with: https://learn.microsoft.com/de-de/ef/core/modeling/data-seeding
-
             base.OnModelCreating(modelBuilder);
+
+
+            List<User> users = new List<User>();
+            var rootUser = User.GetSystemUser();
+            var rootRole = UserHasRelationToRole.NewRoot(rootUser.Id);
+            var adminRole = UserHasRelationToRole.NewAdmin(rootUser.Id);
+            var userRole = UserHasRelationToRole.NewUser(rootUser.Id);
+
+            users.Add(rootUser);
+            //users.AddRange(DbContextExtension.GetTestSet());
+            modelBuilder.Entity<User>().HasData(users);
+            modelBuilder.Entity<UserHasRelationToRole>().HasData(rootRole,adminRole,userRole);
+            //modelBuilder.ApplyConfigurationsFromAssembly ignore any order so dependencies which are order depend could not be created (app runs in exception)
+            //Data seeding: Schema initial data with: https://learn.microsoft.com/de-de/ef/core/modeling/data-seeding
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
@@ -133,10 +149,6 @@ namespace Infrastructure
             configurationBuilder
                 .Properties<CustomDateTime>()
                 .HaveConversion<CustomDateTimeConverter>();
-
-            configurationBuilder
-                .Properties<CustomDateOnly>()
-                .HaveConversion<CustomDateOnlyConverter>();
 
             configurationBuilder
                 .Properties<UserId>()
@@ -160,7 +172,7 @@ namespace Infrastructure
 
             configurationBuilder
                 .Properties<PhoneNumber>()
-                .HaveConversion<PhoneNumber>();
+                .HaveConversion<PhoneNumberConverter>();
 
             configurationBuilder
                 .Properties<Email>()

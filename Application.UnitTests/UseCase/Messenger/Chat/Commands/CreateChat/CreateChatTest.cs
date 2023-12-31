@@ -48,7 +48,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateChat
         public async Task Handle_ValidRequest_ReturnsSuccessResult()
         {
             // Arrange
-            _userRepositoryMock.ListAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns((new List<Domain.Entities.Users.User>() { UserInstance,OtherUserInstance }));
+            _userRepositoryMock.ListAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns((new List<Domain.Entities.Users.User>() { UserInstance,OtherUserInstance }));
             // Act
             var result = await _handler.Handle(Command, CancellationToken.None);
 

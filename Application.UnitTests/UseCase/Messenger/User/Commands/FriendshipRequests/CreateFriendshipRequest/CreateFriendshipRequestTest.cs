@@ -36,7 +36,7 @@ namespace Application.UnitTests.UseCase.Messenger.User.Commands.FriendshipReques
         public async Task Handle_ValidCommand_ReturnsSuccess()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                               .Returns(UserInstance, UserFriendInstance);
 
             // Act
@@ -50,7 +50,7 @@ namespace Application.UnitTests.UseCase.Messenger.User.Commands.FriendshipReques
         public async Task Handle_RequestUserNotFound_ReturnsFailure()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                               .Returns(null,UserInstance);
 
             // Act

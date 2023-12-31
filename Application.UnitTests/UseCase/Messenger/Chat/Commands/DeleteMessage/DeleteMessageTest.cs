@@ -58,11 +58,11 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteMessage
             var message = ChatInstance.AddMessage(UserInstance, "test", null);
             var command = ValidCommand with { MessageId = message.Id.ToGuid() };
 
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));
-            _messageRepository.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Message, bool>>>())
+            _messageRepository.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Messages.Message, bool>>>())
                 .Returns(Task.FromResult(message));
-            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
+            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Chats.Chat, bool>>>())
                 .Returns(Task.FromResult(ChatInstance));
 
             // Act
@@ -80,9 +80,9 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteMessage
             ChatInstance.AddMember(UserInstance, UserAdminInstance);
             var message = ChatInstance.AddMessage(UserInstance, "test", null);
 
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));
-            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
+            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Chats.Chat, bool>>>())
                 .Returns(Task.FromResult(ChatInstance));
 
             // Act
@@ -99,9 +99,9 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteMessage
             ChatInstance.AddMember(UserInstance, UserAdminInstance);
             var message = ChatInstance.AddMessage(UserInstance, "test", null);
 
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));
-            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
+            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Chats.Chat, bool>>>())
                 .Returns(Task.FromResult(ChatInstance));
 
             // Act
@@ -118,9 +118,9 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteMessage
             ChatInstance.AddMember(UserInstance, UserAdminInstance);
             var message = ChatInstance.AddMessage(UserInstance, "test", null);
 
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));
-            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
+            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Chats.Chat, bool>>>())
                 .Returns(Task.FromResult(ChatInstance));
 
             // Act

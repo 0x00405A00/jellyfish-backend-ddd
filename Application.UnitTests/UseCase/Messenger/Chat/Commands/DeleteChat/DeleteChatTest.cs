@@ -1,4 +1,5 @@
 ﻿using Application.CQS.Messenger.Chat.Command.DeleteChat;
+using Domain.Entities.Users;
 using Infrastructure.Abstractions;
 using System.Linq.Expressions;
 
@@ -33,10 +34,10 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteChat
         public async Task Handle_ValidRequest_ReturnsSuccessResult()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserAdminInstance));
 
-            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
+            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Chats.Chat, bool>>>())
                 .Returns(Task.FromResult(ChatInstance));
 
             // Act
@@ -50,7 +51,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteChat
         public async Task Handle_InvalidUser_ReturnsFailureResult()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult<Domain.Entities.Users.User>(null));
 
             // Act
@@ -64,10 +65,10 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteChat
         public async Task Handle_InvalidChat_ReturnsFailureResult()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserAdminInstance));
 
-            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
+            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Chats.Chat, bool>>>())
                 .Returns(Task.FromResult<Domain.Entities.Chats.Chat>(null));
 
             // Act
@@ -81,10 +82,10 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteChat
         public async Task Handle_UserIsNoAdmin_ReturnsFailureResult()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));
 
-            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
+            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Chats.Chat, bool>>>())
                 .Returns(Task.FromResult(ChatInstance));
 
             // Act

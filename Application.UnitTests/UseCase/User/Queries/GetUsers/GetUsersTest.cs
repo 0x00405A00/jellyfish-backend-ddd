@@ -48,13 +48,13 @@ namespace Application.UnitTests.UseCase.User.Queries.GetUsers
         {
             //Arrange
             var meta = new Infrastructure.Repository.Primitives.Meta(); 
-            var searchFilterDto = ColumnSearchAggregateDTOExtension.GetFiltersFromSearchParams<UserDTO, Infrastructure.DatabaseEntity.User>(ValidQueryWithConditionalGroups.SearchParams);
+            var searchFilterDto = ColumnSearchAggregateDTOExtension.GetFiltersFromSearchParams<UserDTO, Domain.Entities.Users.User>(ValidQueryWithConditionalGroups.SearchParams);
             var listAsyncWithMetaReturns = new List<Domain.Entities.Users.User>() { UserInstance };
             _userRepositoryMock.ListAsyncWithMeta(Arg.Any<ColumnSearchAggregateDTO>()).Returns(new RepositoryResponse<ICollection<Domain.Entities.Users.User>>(listAsyncWithMetaReturns, ref meta, searchFilterDto)
             {
 
             }); 
-            _userRepositoryMock.CountMaxAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(1);
+            _userRepositoryMock.CountMaxAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(1);
 
             // Act
             var result = await _handler.Handle(ValidQueryWithConditionalGroups, CancellationToken.None);
@@ -67,13 +67,13 @@ namespace Application.UnitTests.UseCase.User.Queries.GetUsers
         {
             //Arrange
             var meta = new Infrastructure.Repository.Primitives.Meta();
-            var searchFilterDto = ColumnSearchAggregateDTOExtension.GetFiltersFromSearchParams<UserDTO, Infrastructure.DatabaseEntity.User>(ValidQueryWithConditionalGroups.SearchParams);
+            var searchFilterDto = ColumnSearchAggregateDTOExtension.GetFiltersFromSearchParams<UserDTO, Domain.Entities.Users.User>(ValidQueryWithConditionalGroups.SearchParams);
             var listAsyncWithMetaReturns = new List<Domain.Entities.Users.User>() { UserInstance };
             _userRepositoryMock.ListAsyncWithMeta(Arg.Any<ColumnSearchAggregateDTO>()).Returns(new RepositoryResponse<ICollection<Domain.Entities.Users.User>>(listAsyncWithMetaReturns, ref meta, searchFilterDto)
             {
 
             });
-            _userRepositoryMock.CountMaxAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(1);
+            _userRepositoryMock.CountMaxAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(1);
 
             // Act
             var result = await _handler.Handle(ValidQueryWithoutConditionalGroups, CancellationToken.None);
@@ -86,13 +86,13 @@ namespace Application.UnitTests.UseCase.User.Queries.GetUsers
         {
             //Arrange
             var meta = new Infrastructure.Repository.Primitives.Meta();
-            var searchFilterDto = ColumnSearchAggregateDTOExtension.GetFiltersFromSearchParams<UserDTO, Infrastructure.DatabaseEntity.User>(InvalidQueryWithoutConditionalGroups.SearchParams);
+            var searchFilterDto = ColumnSearchAggregateDTOExtension.GetFiltersFromSearchParams<UserDTO, Domain.Entities.Users.User>(InvalidQueryWithoutConditionalGroups.SearchParams);
             var listAsyncWithMetaReturns = new List<Domain.Entities.Users.User>() { };
             _userRepositoryMock.ListAsyncWithMeta(Arg.Any<ColumnSearchAggregateDTO>()).Returns(new RepositoryResponse<ICollection<Domain.Entities.Users.User>>(listAsyncWithMetaReturns, ref meta, searchFilterDto)
             {
 
             });
-            _userRepositoryMock.CountMaxAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(1);
+            _userRepositoryMock.CountMaxAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(1);
 
             // Act
             var result = await _handler.Handle(InvalidQueryWithoutConditionalGroups, CancellationToken.None);
@@ -105,13 +105,13 @@ namespace Application.UnitTests.UseCase.User.Queries.GetUsers
         {
             //Arrange
             var meta = new Infrastructure.Repository.Primitives.Meta();
-            var searchFilterDto = ColumnSearchAggregateDTOExtension.GetFiltersFromSearchParams<UserDTO, Infrastructure.DatabaseEntity.User>(InvalidQueryWithoutConditionalGroups.SearchParams);
+            var searchFilterDto = ColumnSearchAggregateDTOExtension.GetFiltersFromSearchParams<UserDTO, Domain.Entities.Users.User>(InvalidQueryWithoutConditionalGroups.SearchParams);
             var listAsyncWithMetaReturns = new List<Domain.Entities.Users.User>() { };
             _userRepositoryMock.ListAsyncWithMeta(Arg.Any<ColumnSearchAggregateDTO>()).Returns(new RepositoryResponse<ICollection<Domain.Entities.Users.User>>(listAsyncWithMetaReturns, ref meta, searchFilterDto)
             {
 
             });
-            _userRepositoryMock.CountMaxAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(1);
+            _userRepositoryMock.CountMaxAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(1);
 
             // Act
             var result = await _handler.Handle(InvalidQueryWithoutInvalidSorting, CancellationToken.None);

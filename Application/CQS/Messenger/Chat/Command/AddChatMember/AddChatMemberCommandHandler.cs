@@ -54,21 +54,6 @@ namespace Application.CQS.Messenger.Chat.Command.AddChatMember
             }
             try
             {
-
-                var item = ChatRelationToUser.Create(
-                    ChatRelationToUser.NewId(),
-                    targetUser.Id,
-                    chat.Id,
-                    false,
-                    DateTime.Now.ToTypedDateTime(),
-                    executorUser.Id,
-                    null,
-                    null,
-                    null,
-                    null);
-
-                chat.ChatRelationToUsers.Add(item);
-                 
                 chat.AddMember(executorUser, targetUser);
             }
             catch (Exception ex) when (ex is ArgumentNullException) 

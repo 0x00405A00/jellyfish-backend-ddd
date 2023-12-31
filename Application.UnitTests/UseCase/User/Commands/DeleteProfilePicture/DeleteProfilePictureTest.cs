@@ -50,7 +50,7 @@ namespace Application.UnitTests.UseCase.User.Commands.DeleteProfilePicture
 
             UserInstance.UpdatePicture(UserInstance, Picture.Parse("", ValidMimePart));
 
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));
 
             _mediaServiceMock.DeleteProfilePicture(Arg.Any<Guid>(), Arg.Any<string>(), Arg.Any<CancellationToken>())
@@ -70,7 +70,7 @@ namespace Application.UnitTests.UseCase.User.Commands.DeleteProfilePicture
             // Arrange
             var handler = _handler;
 
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult<Domain.Entities.Users.User>(null));
 
             // Act
@@ -89,7 +89,7 @@ namespace Application.UnitTests.UseCase.User.Commands.DeleteProfilePicture
 
             UserInstance.UpdatePicture(UserInstance, null);
 
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));
 
             // Act
@@ -106,7 +106,7 @@ namespace Application.UnitTests.UseCase.User.Commands.DeleteProfilePicture
             // Arrange
             var handler = _handler;
 
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));
 
             _mediaServiceMock.DeleteProfilePicture(Arg.Any<Guid>(), Arg.Any<string>(), Arg.Any<CancellationToken>())

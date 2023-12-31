@@ -1,8 +1,10 @@
 ﻿using Domain.Entities.Users;
 using Domain.Primitives;
 using Infrastructure.Extension;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.EFCore.Extension
 {
@@ -84,7 +86,7 @@ namespace Infrastructure.EFCore.Extension
             }*/
             if (!props.Any() || props.Count != nameCollection.Count())
             {
-                throw new InvalidOperationException($"cant find any of these foreign-properties (prop-type should be '{nameof(ICollection<TEntity>)}') '{createByUserForeignPropertyName},{modifiedByUserForeignPropertyName},{deletedByUserForeignPropertyName}' in entity {nameof(User)}");
+                throw new InvalidOperationException($"cant find any of these foreign-properties (prop-type should be '{typeof(ICollection<TEntity>).FullName}') '{createByUserForeignPropertyName},{modifiedByUserForeignPropertyName},{deletedByUserForeignPropertyName}' in entity {nameof(User)}");
             }
 
             var createdByUserConstraintName = DbContextExtension.GetForeignKeyName(typeof(TEntity).Name, nameof(AuditableEntity<TEntityId>.CreatedByUserForeignKey), nameof(User));
@@ -112,6 +114,13 @@ namespace Infrastructure.EFCore.Extension
                 .HasConstraintName(deletedByUserConstraintName);
 
             return builder;
+        }
+        public static WebApplication AppendMigrations(this WebApplication app)
+        {
+            var scope = app.Services.CreateScope();
+            using ApplicationDbContext applicationDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            applicationDbContext.Database.Migrate();
+            return app;
         }
     }
 }

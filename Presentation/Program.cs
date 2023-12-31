@@ -1,6 +1,6 @@
 using Application;
 using Infrastructure;
-using Infrastructure.Authentification;
+using Infrastructure.EFCore.Extension;
 using Infrastructure.Healthcheck.Response;
 using Infrastructure.SignalR;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -35,6 +35,8 @@ namespace WebApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
                 app.UseExceptionHandler("/error-debug");
+
+                app.AppendMigrations();
             }
             else
             {

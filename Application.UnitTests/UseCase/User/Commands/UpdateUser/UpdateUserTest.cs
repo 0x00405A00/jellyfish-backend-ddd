@@ -47,7 +47,7 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdateUser
         public async Task Handle_ValidUpdateCommand_Success()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(UserInstance);
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(UserInstance);
 
             // Act
             var result = await _handler.Handle(ValidCommand, CancellationToken.None);
@@ -60,7 +60,7 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdateUser
         public async Task Handle_InvalidPhoneNumber_Failure()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(UserInstance);
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(UserInstance);
 
             // Act
             var result = await _handler.Handle(InvalidCommand, CancellationToken.None);

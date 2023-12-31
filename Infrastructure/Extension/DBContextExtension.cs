@@ -142,7 +142,7 @@ namespace Infrastructure.Extension
                     PhoneNumber.Parse("+49123456789"),
                     null,
                     roles,
-                    DateOnly.FromDateTime(DateTime.Now).ToTypedDateOnly(),
+                    DateTime.Now.ToTypedDateOnly(),
                     DateTime.Now.ToTypedDateTime(),
                     DateTime.Now.ToTypedDateTime(),
                     rootUserId,

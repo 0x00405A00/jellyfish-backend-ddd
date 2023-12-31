@@ -62,7 +62,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateMessage
             // Arrange
             var validCommand = Command;
             ChatInstance.AddMember(UserAdminInstance, UserInstance);
-            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
+            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Chats.Chat, bool>>>())
                 .Returns(Task.FromResult(ChatInstance));
             // Act
             var result = await _handler.Handle(validCommand, CancellationToken.None);

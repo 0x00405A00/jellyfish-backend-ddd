@@ -23,8 +23,8 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
             builder.AddAuditableConstraints<Role, RoleId>();
 
             var roleAdmin = Role.Create(
-                new RoleId(UserConst.Role.Admin),
-                "Admin",
+                new RoleId(RoleConst.AdminRoleUuid),
+                UserConst.UserType.AdminName,
                 new CustomDateTime(DateTime.Now),
                 null,
                 null,
@@ -33,15 +33,25 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
                 null);
 
             var roleUser = Role.Create(
-                new RoleId(UserConst.Role.User),
-                "User",
+                new RoleId(RoleConst.UserRoleUuid),
+                UserConst.UserType.UserName,
                 new CustomDateTime(DateTime.Now),
                 null,
                 null,
                 null,
                 null,
                 null);
-            builder.HasData(roleAdmin, roleUser);
+
+            var roleRoot = Role.Create(
+                new RoleId(RoleConst.RootRoleUuid),
+                UserConst.UserType.RootName,
+                new CustomDateTime(DateTime.Now),
+                null,
+                null,
+                null,
+                null,
+                null);
+            builder.HasData(roleAdmin, roleUser,roleRoot);
         }
     }
 

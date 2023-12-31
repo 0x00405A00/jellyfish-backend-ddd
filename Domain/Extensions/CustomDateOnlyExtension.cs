@@ -4,9 +4,9 @@ namespace Domain.Extension
 {
     public static class CustomDateOnlyExtension
     {
-        public static CustomDateOnly ToTypedDateOnly(this DateOnly date)
+        public static CustomDateTime ToTypedDateOnly(this DateTime date)
         {
-            return new CustomDateOnly(date);
+            return new CustomDateTime(date);
         }
     }
 }

@@ -137,15 +137,7 @@ namespace Infrastructure.Authentification
             var isRootFromDatabase = authFromDatabase.User.UserHasRelationToRoles.Select(x => x.Role).Where(x => x.Id == RoleConst.RootRoleUuid.ToIdentification<RoleId>()).Any();
             var isUserFromDatabase = authFromDatabase.User.ActivationDateTime != null && authFromDatabase.User.ActivationDateTime != DateTime.MinValue.ToTypedDateTime();
 
-            if (isAdminFromClaim != isAdminFromDatabase)
-            {
-                return AuthenticateResult.Fail("unauthorized");
-            }
-            if (isRootFromClaim != isRootFromDatabase)
-            {
-                return AuthenticateResult.Fail("unauthorized");
-            }
-            if (isUserFromClaim != isUserFromDatabase)
+            if (isAdminFromClaim != isAdminFromDatabase && isRootFromClaim != isRootFromDatabase && isUserFromClaim != isUserFromDatabase)
             {
                 return AuthenticateResult.Fail("unauthorized");
             }

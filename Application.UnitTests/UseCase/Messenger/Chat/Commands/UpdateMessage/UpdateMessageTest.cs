@@ -70,12 +70,12 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.UpdateMessage
             // Arrange
             var handler = _handler;
 
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(Task.FromResult(UserInstance));
 
             var message = ChatInstance.AddMessage(UserInstance, "yeah mein test", null);
 
-            _messageRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Message, bool>>>())
+            _messageRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Messages.Message, bool>>>())
                 .Returns(Task.FromResult(message));
 
             // Act

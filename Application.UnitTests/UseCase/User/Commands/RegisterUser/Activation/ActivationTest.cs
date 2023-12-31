@@ -61,14 +61,13 @@ namespace Application.UnitTests.UseCase.User.Commands.RegisterUser.Activation
             
             UserInstance.GenerateActivationToken(); 
             var command = ValidCommand with { ActivationCode = UserInstance.ActivationCode, Base64Token = UserInstance.ActivationToken };
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(UserInstance);
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(UserInstance);
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            _userRepositoryMock.Received(1).UpdateAsync(UserInstance);
-            _userRepositoryMock.Received(1).PublishDomainEvents(UserInstance, _mediatorMock);
+            _userRepositoryMock.Received(1).Update(UserInstance);
             Assert.True(result.IsSuccess);
         }
 
@@ -76,7 +75,7 @@ namespace Application.UnitTests.UseCase.User.Commands.RegisterUser.Activation
         public async Task Handle_InvalidActivation_ThrowsException()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                    .Returns(Task.FromResult<Domain.Entities.Users.User>(null));
 
             // Act & Assert

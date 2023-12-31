@@ -48,9 +48,9 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.AssignChatAdmin
             // Arrange
             var command = ValidCommand;
             ChatInstance.AddMember(UserAdminInstance, UserInstance);
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(UserAdminInstance,UserInstance);
-            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
+            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Chats.Chat, bool>>>())
                 .Returns(Task.FromResult(ChatInstance));
 
             // Act
@@ -66,9 +66,9 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.AssignChatAdmin
             // Arrange
             var invalidCommand = ValidCommand with { ChatId = Guid.Empty };
 
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                 .Returns(UserAdminInstance, UserInstance);
-            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Chat, bool>>>())
+            _chatRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Chats.Chat, bool>>>())
                 .Returns(Task.FromResult(ChatInstance));
 
             // Act

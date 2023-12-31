@@ -34,7 +34,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
         {
             var createdBy = await _userRepository.GetAsync(x => x.Id == request.ChatOwnerUuid.ToIdentification<UserId>());
             ICollection<Domain.Entities.Users.User> members = null;
-            ICollection<ChatRelationToUser> chatMembers = new List<ChatRelationToUser>();
+            List<ChatRelationToUser> chatMembers = new List<ChatRelationToUser>();
             request.Members.Add(request.ChatOwnerUuid);
             members = await _userRepository.ListAsync(x => request.Members.Contains(x.Id.Id));
             Domain.Entities.Chats.Chat chat = null;

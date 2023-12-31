@@ -42,7 +42,7 @@ namespace Application.UnitTests.UseCase.Messenger.User.Commands.Friends.RemoveFr
             UserInstance.AddFriend(UserInstance, UserFriendInstance);
             UserFriendInstance.AddFriend(UserFriendInstance, UserInstance);
 
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>())
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>())
                       .Returns(UserInstance, UserFriendInstance);
 
             // Act

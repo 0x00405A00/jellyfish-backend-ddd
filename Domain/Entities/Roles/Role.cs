@@ -8,6 +8,11 @@ namespace Domain.Entities.Roles
     {
         public string Name { get; set; }
 
+        private Role():base()
+        {
+
+        }
+
         private Role(
             RoleId id,
             string name,
@@ -26,6 +31,7 @@ namespace Domain.Entities.Roles
             DeletedTime = deletedDateTime;
             DeletedByUserForeignKey = deletedBy;
         }
+
         public static Role Create(
             RoleId id,
             string name,
@@ -50,6 +56,5 @@ namespace Domain.Entities.Roles
     public sealed partial class Role
     {
         public ICollection<UserHasRelationToRole> UserHasRelationToRoles { get; }
-        public ICollection<User> Users { get; }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using FluentAssertions;
 using Domain.Entities.Users;
 using Domain.Entities.Roles;
+using Domain.Primitives.Ids;
 
 namespace Application.UnitTests.UseCase.User.Commands.Roles.AssignRole
 {
@@ -25,9 +26,9 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.AssignRole
         private readonly IUnitOfWork _unitOfWorkMock;
         private readonly IMediator _mediatorMock;
 
-        private static readonly Role RoleAdmin = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetRoleInstance("Admin");
-        private static readonly UserHasRelationToRole UserRoleAdmin = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserRoleInstance(RoleAdmin);
-        private static readonly Role RoleUser = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetRoleInstance("User");
+        private static readonly Role RoleAdmin = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetRoleAdminInstance();
+        private static readonly UserHasRelationToRole UserRoleAdmin = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserRoleInstance(RoleAdmin, UserAdminId.ToIdentification<UserId>());
+        private static readonly Role RoleUser = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetRoleUserInstance();
         private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance(UserId);
         private static readonly Domain.Entities.Users.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance(UserAdminId, UserRoleAdmin);
 
@@ -51,11 +52,11 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.AssignRole
         public async Task Handle_ValidCommand_ReturnsSuccess()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(UserInstance);
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(UserInstance);
 
             var command = Command with { AssignerId = UserAdminId, UserId = UserId, RoleIds = new List<Guid> { RoleAdmin.Id.ToGuid() } };
 
-            _roleRepositoryMock.ListAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Role, bool>>>()).Returns(new List<Role>
+            _roleRepositoryMock.ListAsync(Arg.Any<Expression<Func<Domain.Entities.Roles.Role, bool>>>()).Returns(new List<Role>
             {
                 RoleUser,
             });
@@ -73,11 +74,11 @@ namespace Application.UnitTests.UseCase.User.Commands.Roles.AssignRole
         public async Task Handle_InvalidCommand_RoleAlreadyAssigned()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(UserAdminInstance);
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(UserAdminInstance);
 
             var command = Command with { AssignerId = UserAdminId, UserId = UserId, RoleIds = new List<Guid> { RoleAdmin.Id.ToGuid() } };
 
-            _roleRepositoryMock.ListAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.Role, bool>>>()).Returns(new List<Role>
+            _roleRepositoryMock.ListAsync(Arg.Any<Expression<Func<Domain.Entities.Roles.Role, bool>>>()).Returns(new List<Role>
             {
                 RoleAdmin,
             });

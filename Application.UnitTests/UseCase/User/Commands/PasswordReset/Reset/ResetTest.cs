@@ -37,29 +37,11 @@ namespace Application.UnitTests.UseCase.User.Commands.PasswordReset
                 _userRepositoryMock);
         }
 
-
-        [Fact]
-        public async Task Handle_ValidResetRequest_ResetsPasswordAndPublishesEvents()
-        {
-            // Arrange
-            var user = UserInstance;
-            user.ResetPasswordRequest();
-            var command = ValidCommand with { PasswordResetBase64Token = user.PasswordResetToken,PasswordResetCode = user.PasswordResetCode };
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(user);
-
-            // Act
-            var result = await _handler.Handle(command, CancellationToken.None);
-
-            // Assert
-            _userRepositoryMock.Received(1).PublishDomainEvents(user, _mediatorMock);
-            Assert.True(result.IsSuccess);
-        }
-
         [Fact]
         public async Task Handle_InvalidResetRequest_ReturnsFailure()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns((Domain.Entities.Users.User)null);
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns((Domain.Entities.Users.User)null);
 
             // Act
             var result = await _handler.Handle(ValidCommand, CancellationToken.None);

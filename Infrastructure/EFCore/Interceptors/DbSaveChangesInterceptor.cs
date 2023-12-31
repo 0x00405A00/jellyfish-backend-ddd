@@ -38,11 +38,12 @@ namespace Infrastructure.EFCore.Interceptors
             {
                 if(change.Entity is Entity<Identification> entity)
                 {
-                    if (!entity.DomainEvents.Any())
+                    var domainEvents = entity.GetDomainEvents();
+                    if (!domainEvents.Any())
                     {
                         continue;
                     }
-                    entity.DomainEvents.ToList().ForEach(e =>
+                    domainEvents.ForEach(e =>
                     {
                         mediator.Publish(e);
                     });

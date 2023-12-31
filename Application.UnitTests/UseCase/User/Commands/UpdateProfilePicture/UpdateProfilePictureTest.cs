@@ -60,7 +60,7 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdateProfilePicture
         public async Task Handle_ValidCommand_ReturnsSuccessResult()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Infrastructure.DatabaseEntity.User, bool>>>()).Returns(UserInstance);
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(UserInstance);
             _mediaService.CreateProfilePicture(Arg.Any<Guid>(), Arg.Any<string>(), Arg.Any<byte[]>(), Arg.Any<System.Threading.CancellationToken>())
                 .Returns("path/to/profile/picture.png");
 

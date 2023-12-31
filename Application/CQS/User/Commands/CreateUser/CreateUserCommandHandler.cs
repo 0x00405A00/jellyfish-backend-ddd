@@ -92,7 +92,7 @@ namespace Application.CQS.User.Commands.CreateUser
                     phoneNumber,
                     null,
                     null,
-                    DateOnly.FromDateTime(request.DateOfBirth).ToTypedDateOnly(),
+                    request.DateOfBirth.ToTypedDateOnly(),
                     null,
                     DateTime.Now.ToTypedDateTime(),
                     createdByUser.Id,

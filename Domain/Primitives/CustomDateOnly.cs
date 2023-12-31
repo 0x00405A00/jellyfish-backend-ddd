@@ -1,4 +1,4 @@
 ﻿namespace Domain.Primitives
 {
-    public record CustomDateOnly(DateOnly Date);
+    public record CustomDateOnly(DateTime Date);
 }

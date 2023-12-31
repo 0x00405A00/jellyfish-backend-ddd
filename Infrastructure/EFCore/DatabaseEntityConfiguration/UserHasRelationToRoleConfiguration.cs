@@ -25,13 +25,27 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
             builder.Property(ut => ut.RoleForeignKey)
                 .IsRequired()
                 .HasMaxLength(DbContextExtension.ColumnLength.Ids)
-                .HasDefaultValue(new RoleId(UserConst.Role.User))
+                .HasDefaultValue(new RoleId(RoleConst.UserRoleUuid))
                 .HasColumnName("role_id");
 
             builder.Property(ut => ut.UserForeignKey)
                 .IsRequired()
                 .HasMaxLength(DbContextExtension.ColumnLength.Ids)
                 .HasColumnName("user_id");
+
+            string userHasRoleToUserConstraintName = DbContextExtension.GetForeignKeyName(nameof(UserHasRelationToRole), nameof(UserHasRelationToRole.UserForeignKey), nameof(User));
+            string userHasRoleToRoleConstraintName = DbContextExtension.GetForeignKeyName(nameof(UserHasRelationToRole), nameof(UserHasRelationToRole.RoleForeignKey), nameof(Role));
+            builder.HasOne(e => e.User)
+                .WithMany(e => e.UserHasRelationToRoles)
+                .HasForeignKey(e => e.UserForeignKey)
+                .HasConstraintName(userHasRoleToUserConstraintName)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(t => t.Role)
+                .WithMany(e => e.UserHasRelationToRoles)
+                .HasForeignKey(e => e.RoleForeignKey)
+                .HasConstraintName(userHasRoleToRoleConstraintName)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.AddAuditableConstraints<UserHasRelationToRole, UserHasRelationToRoleId>();
         }

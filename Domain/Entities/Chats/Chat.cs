@@ -17,9 +17,9 @@ namespace Domain.Entities.Chats
     /// </summary>
     public sealed partial class Chat : AuditableEntity<ChatId>
     {
-        private ICollection<ChatRelationToUser> _members = new List<ChatRelationToUser>();
-        private ICollection<ChatInviteRequest> _invites = new List<ChatInviteRequest>();
-        private ICollection<Message> _messages = new List<Message>();
+        private List<ChatRelationToUser> _members = new ();
+        private List<ChatInviteRequest> _invites = new ();
+        private List<Message> _messages = new ();
 
         public Picture Picture { get; private set; }
         public string Name { get; private set; }
@@ -37,7 +37,7 @@ namespace Domain.Entities.Chats
             string name,
             string description,
             Picture? picture,
-            ICollection<ChatRelationToUser> members,
+            List<ChatRelationToUser> members,
             CustomDateTime createdDateTime,
             UserId createdBy,
             CustomDateTime? modifiedDateTime,
@@ -79,7 +79,7 @@ namespace Domain.Entities.Chats
             string name,
             string? description,
             Picture? picture,
-            ICollection<ChatRelationToUser> members,
+            List<ChatRelationToUser> members,
             CustomDateTime createdDateTime,
             UserId createdBy,
             CustomDateTime? modifiedDateTime,
@@ -360,12 +360,12 @@ namespace Domain.Entities.Chats
             {
                 return null;
             }
-            var chatMember = _members.Where(x => x.User.Id == user.Id).First();
+            var chatMember = _members.Where(x => x.UserForeignKey == user.Id).First();
             return chatMember;
         }
         public bool IsChatMember(User user)
         {
-            var result = user != null && _members.Any() && _members.Where(x => x.User.Id == user.Id).Count() != 0;
+            var result = user != null && _members.Any() && _members.Where(x => x.UserForeignKey == user.Id).Count() != 0;
             return result;
         }
         public bool IsChatMember(UserId userId)
@@ -375,7 +375,7 @@ namespace Domain.Entities.Chats
         }
         public bool IsChatAdmin(User user)
         {
-            var result = user != null && _members.Any() && _members.Where(x => x.User.Id == user.Id && (x.IsChatAdmin ?? false)).Count() != 0;
+            var result = user != null && _members.Any() && _members.Where(x => x.UserForeignKey== user.Id && (x.IsChatAdmin ?? false)).Count() != 0;
             return result;
         }
         public bool IsChatAdmin(UserId userId)
@@ -383,15 +383,15 @@ namespace Domain.Entities.Chats
             var member = GetChatMemberById(userId);
             return IsChatAdmin(member?.User);
         }
-        public ChatRelationToUser GetChatMemberById(UserId userId) => _members.Where(x=>x.User.Id == userId).Single();
+        public ChatRelationToUser GetChatMemberById(UserId userId) => _members.Where(x=>x.UserForeignKey == userId).Single();
 
         public bool IsDeleted() => this.DeletedTime != null;
 
     }
     public sealed partial class Chat
     {
-        public ICollection<ChatRelationToUser>? ChatRelationToUsers { get => _members; }
-        public ICollection<ChatInviteRequest>? ChatInvitesToUsers { get => _invites; }
-        public ICollection<Message> Messages { get => _messages.ToImmutableList(); }
+        public IReadOnlyCollection<ChatRelationToUser>? ChatRelationToUsers => _members; 
+        public IReadOnlyCollection<ChatInviteRequest>? ChatInvitesToUsers => _invites; 
+        public IReadOnlyCollection<Message> Messages => _messages.ToImmutableList(); 
     }
 }

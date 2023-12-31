@@ -41,6 +41,7 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
                 .HasForeignKey(x => x.UserForeignKey)
                 .HasConstraintName(chatRelationToUserConstraintName)
                 .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasOne(t => t.Chat)
                 .WithMany(e => e.ChatRelationToUsers)
                 .HasForeignKey(e => e.ChatForeignKey)

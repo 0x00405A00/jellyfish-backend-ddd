@@ -14,6 +14,9 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
             builder.AddDefaultProperties<Chat, ChatId>();
             builder.AddAuditableProperties<Chat, ChatId>();
 
+            builder.Ignore(x => x.Admins);
+            builder.Ignore(x => x.Members);
+
             builder.Property(ut => ut.Name)
                 .IsRequired()
                 .HasMaxLength(DbContextExtension.ColumnLength.Names)

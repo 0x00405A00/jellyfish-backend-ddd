@@ -1,19 +1,16 @@
 ﻿using Infrastructure.Abstractions;
+using Infrastructure.Authentification;
+using Infrastructure.EFCore.Interceptors;
+using Infrastructure.FileSys;
 using Infrastructure.Healthcheck.Concrete.Cache;
 using Infrastructure.Healthcheck.Concrete.MySql;
 using Infrastructure.HostedService.Backgroundservice;
 using Infrastructure.Mail;
+using Infrastructure.Repository.Concrete;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Infrastructure.FileSys;
-using Infrastructure.Authentification;
-using Shared.Authentification.Service;
 using Microsoft.Extensions.Hosting;
-using Infrastructure.Repository.Concrete;
-using Microsoft.Extensions.Options;
-using System.Configuration;
-using Microsoft.EntityFrameworkCore;
-using Infrastructure.EFCore.Interceptors;
+using Shared.Authentification.Service;
 
 namespace Infrastructure
 {

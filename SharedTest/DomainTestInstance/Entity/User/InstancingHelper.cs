@@ -4,6 +4,7 @@ using Domain.Entities.Users;
 using Domain.Extension;
 using Domain.Primitives.Ids;
 using Domain.ValueObjects;
+using Shared.ApiDataTransferObject;
 
 namespace SharedTest.DomainTestInstance.Entity.Users
 {
@@ -23,12 +24,12 @@ namespace SharedTest.DomainTestInstance.Entity.Users
             var lastName = "Doe";
             var email = Email.Parse("johndoe@example.com");
             var phone = PhoneNumber.Parse("1234567890");
-            var dateOfBirth = new DateOnly(1990, 1, 1);
+            var dateOfBirth = new DateTime(1980, 12, 31);
             var createdTime = DateTime.UtcNow;
 
-            var role = GetRoleInstance();
+            var role = GetRoleUserInstance();
             var userRole = GetUserRoleInstance(role,id);
-            ICollection<UserHasRelationToRole> userRoles = new List<UserHasRelationToRole>() { userRole };
+            List<UserHasRelationToRole> userRoles = new List<UserHasRelationToRole>() { userRole };
             if(adminRole is not null)
             {
                 userRoles.Add(adminRole);
@@ -86,11 +87,35 @@ namespace SharedTest.DomainTestInstance.Entity.Users
                 null);
         }
 
-        public static Role GetRoleInstance(string roleName = "User")
+        public static Role GetRoleUserInstance()
         {
             return Role.Create(
                 new RoleId(RoleConst.UserRoleUuid),
-                roleName,
+                UserConst.UserType.UserName,
+                DateTime.Now.ToTypedDateTime(),
+                null,
+                null,
+                null,
+                null,
+                null);
+        }
+        public static Role GetRoleAdminInstance()
+        {
+            return Role.Create(
+                new RoleId(RoleConst.AdminRoleUuid),
+                UserConst.UserType.AdminName,
+                DateTime.Now.ToTypedDateTime(),
+                null,
+                null,
+                null,
+                null,
+                null);
+        }
+        public static Role GetRoleRootInstance()
+        {
+            return Role.Create(
+                new RoleId(RoleConst.RootRoleUuid),
+                UserConst.UserType.RootName,
                 DateTime.Now.ToTypedDateTime(),
                 null,
                 null,

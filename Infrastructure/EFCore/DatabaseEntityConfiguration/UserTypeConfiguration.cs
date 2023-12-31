@@ -25,7 +25,7 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 
             var userType1 = UserType.Create(
                 new UserTypeId(UserConst.UserType.User),
-                "User",
+                UserConst.UserType.UserName,
                 new CustomDateTime(DateTime.Now),
                 null,
                 null,
@@ -34,8 +34,8 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
                 null);
 
             var userType2 = UserType.Create(
-                new UserTypeId(UserConst.UserType.Root),
-                "Root",
+                new UserTypeId(UserConst.UserType.Admin),
+                UserConst.UserType.AdminName,
                 new CustomDateTime(DateTime.Now),
                 null,
                 null,
@@ -43,7 +43,17 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
                 null,
                 null);
 
-            builder.HasData(userType1, userType2);
+            var userType3 = UserType.Create(
+                new UserTypeId(UserConst.UserType.Root),
+                UserConst.UserType.RootName,
+                new CustomDateTime(DateTime.Now),
+                null,
+                null,
+                null,
+                null,
+                null);
+
+            builder.HasData(userType1, userType2,userType3);
         }
     }
 }
