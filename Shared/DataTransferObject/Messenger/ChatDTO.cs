@@ -9,11 +9,11 @@ namespace Shared.DataTransferObject.Messenger
 {
     public class ChatDTO : AbstractAuditableDTO, IChat
     {
-        [JsonPropertyName("chat_name")]
-        public string? ChatName { get; set; }
+        [JsonPropertyName("name")]
+        public string? Name { get; set; }
 
-        [JsonPropertyName("chat_description")]
-        public string? ChatDescription { get; set; }
+        [JsonPropertyName("description")]
+        public string? Description { get; set; }
 
         [JsonPropertyName("picture_base64")]
         public string? PictureBase64 { get; set; }
@@ -30,21 +30,23 @@ namespace Shared.DataTransferObject.Messenger
         [JsonPropertyName("messages")]
         public ICollection<MessageDTO>? Messages { get; set; }
 
+        [JsonIgnore]
         IReadOnlyCollection<ChatRelationToUser> IChat.Admins{ get; }
 
+        [JsonIgnore]
         public IReadOnlyCollection<ChatInviteRequest>? ChatInvitesToUsers{ get; }
 
+        [JsonIgnore]
         public IReadOnlyCollection<ChatRelationToUser>? ChatRelationToUsers{ get; }
 
-        public string Description{ get; }
-
+        [JsonIgnore]
         IReadOnlyCollection<ChatRelationToUser> IChat.Members{ get; }
 
+        [JsonIgnore]
         IReadOnlyCollection<Message> IChat.Messages{ get; }
 
-        public string Name{ get; }
-
-        public Picture Picture{ get; }
+        [JsonIgnore]
+        public Picture? Picture{ get; }
 
         public ChatDTO()
         {

@@ -12,6 +12,18 @@ namespace Domain.Extension
 
             return identification;
         }
+        public static ICollection<TIdentification> ToIdentification<TIdentification>(this ICollection<Guid> guid)
+            where TIdentification : Identification
+        {
+            ICollection<TIdentification> response = new List<TIdentification>();
+            foreach (var g in guid)
+            {
+
+                var identification = (TIdentification)Activator.CreateInstance(typeof(TIdentification), new object[] { g })!;
+                response.Add(identification);
+            }
+            return response;
+        }
         public static Guid ToGuid(this Identification identification)
         {
             return identification.Id;

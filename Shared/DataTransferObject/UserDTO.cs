@@ -79,40 +79,58 @@ namespace Shared.DataTransferObject
         [JsonIgnore]
         public bool HasImage { get { return (!String.IsNullOrEmpty(PictureUrl) && Extension.IsValidUrl(PictureUrl) || (!String.IsNullOrEmpty(PictureBase64) && !String.IsNullOrEmpty(PictureMimeType))); } }
 
+        [JsonIgnore]
         public string ActivationCode{ get; }
 
+        [JsonIgnore]
         CustomDateTime? IUser.ActivationDateTime{ get; }
 
+        [JsonIgnore]
         public string ActivationToken{ get; }
 
+        [JsonIgnore]
         public IReadOnlyCollection<ChatInviteRequest>? ChatInvitesWhereIamRequester{ get; }
 
+        [JsonIgnore]
         public IReadOnlyCollection<ChatInviteRequest>? ChatInvitesWhereIamTarget{ get; }
 
+        [JsonIgnore]
         CustomDateTime IUser.DateOfBirth{ get; }
 
+        [JsonIgnore]
         Email IUser.Email{ get; }
 
+        [JsonIgnore]
         public IReadOnlyCollection<FriendshipRequest>? FriendshipRequestsWhereIamRequester{ get; }
 
+        [JsonIgnore]
         public IReadOnlyCollection<FriendshipRequest>? FriendshipRequestsWhereIamTarget{ get; }
 
+        [JsonIgnore]
         public IReadOnlyCollection<UserHasRelationToFriend>? FriendshipsThatIAccepted{ get; }
 
+        [JsonIgnore]
         public IReadOnlyCollection<UserHasRelationToFriend>? FriendshipsThatIRequested{ get; }
 
+        [JsonIgnore]
         public IReadOnlyCollection<Message>? Messages{ get; }
 
+        [JsonIgnore]
         public IReadOnlyCollection<MessageOutbox>? MessagesInOutbox{ get; }
 
+        [JsonIgnore]
         PhoneNumber IUser.Phone{ get; }
 
+        [JsonIgnore]
         public Picture Picture{ get; }
 
+        [JsonIgnore]
         public IReadOnlyCollection<UserHasRelationToRole> UserHasRelationToRoles{ get; }
 
+        [JsonIgnore]
         public UserType UserType { get; set; }
 
+        [JsonIgnore]
         public UserTypeId UserTypeForeignKey{ get; }
 
         public UserDTO()

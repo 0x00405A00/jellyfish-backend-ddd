@@ -43,8 +43,8 @@ namespace Presentation.Controllers.Api.v1.Messenger
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
             var commandCreateChat = new CreateChatCommand(userUuid,
-                                                          chatDto.ChatName,
-                                                          chatDto.ChatDescription,
+                                                          chatDto.Name,
+                                                          chatDto.Description,
                                                           chatDto.Members,
                                                           chatDto.PictureBase64,
                                                           chatDto.PictureMimeType);
@@ -77,8 +77,8 @@ namespace Presentation.Controllers.Api.v1.Messenger
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
             var command = new UpdateChatCommand(userUuid, 
                                                 chatId,
-                                                chatDto.ChatName,
-                                                chatDto.ChatDescription,
+                                                chatDto.Name,
+                                                chatDto.Description,
                                                 chatDto.PictureBase64,
                                                           chatDto.PictureMimeType);
             var result = await Sender.Send(command, cancellationToken);

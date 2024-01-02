@@ -25,7 +25,7 @@ namespace Presentation.Extension
                 var userUuid = context.User.Claims.FirstOrDefault(x => x.Type == AuthorizationConst.Claims.ClaimTypeUserUuid);
                 uuidStr = userUuid != null ? userUuid.Value : string.Empty;
             }
-            catch
+            catch(Exception ex) 
             {
 
             }

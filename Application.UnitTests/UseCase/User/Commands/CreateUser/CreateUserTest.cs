@@ -58,7 +58,7 @@ namespace Application.UnitTests.UseCase.User.Commands.CreateUser
             Domain.ValueObjects.Result<UserDTO> result = await _handler.Handle(invalidCommand, default);
 
             //Assert
-            result.Error.Should().NotBeNull();
+            result.Errors.Should().NotBeNull();
         }
 
     }

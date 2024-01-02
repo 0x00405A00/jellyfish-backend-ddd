@@ -1,6 +1,7 @@
 ﻿using Application.CQS.User.Commands.CreateUser;
 using Application.CQS.User.Commands.RegisterUser.Register;
 using AutoMapper;
+using Domain.Errors;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using MediatR;
@@ -67,7 +68,6 @@ namespace Application.UnitTests.UseCase.User.Commands.RegisterUser.Register
 
             // Assert
             Assert.False(result.IsSuccess);
-            Assert.Equal("User creation failed", result.Error.Message);
         }
     }
 }

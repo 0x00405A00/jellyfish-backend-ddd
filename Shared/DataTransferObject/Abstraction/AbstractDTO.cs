@@ -5,7 +5,7 @@ namespace Shared.DataTransferObject.Abstraction
 {
     public class AbstractDTO : IDataTransferObject, IEntityBase
     {
-        [JsonPropertyName("uuid")]
+        [JsonPropertyName("id")]
         public Guid Id { get; set; }
 
         [JsonPropertyName("created_time")]
@@ -17,8 +17,11 @@ namespace Shared.DataTransferObject.Abstraction
         [JsonPropertyName("deleted_time")]
         public DateTime? DeletedTime { get; set; }
 
+        [JsonIgnore]
         CustomDateTime IEntityBase.CreatedTime { get; set; }
+        [JsonIgnore]
         CustomDateTime? IEntityBase.DeletedTime { get; set; }
+        [JsonIgnore]
         CustomDateTime? IEntityBase.LastModifiedTime { get; set; }
     }
 }

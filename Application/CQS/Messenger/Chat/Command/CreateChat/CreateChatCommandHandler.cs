@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
 using Domain.Entities.Chats;
+using Domain.Errors;
 using Domain.Extension;
 using Domain.Primitives.Ids;
 using Domain.ValueObjects;
@@ -8,6 +9,7 @@ using Infrastructure.Abstractions;
 using Infrastructure.FileSys;
 using Shared.DataTransferObject.Messenger;
 using Shared.MimePart;
+using System.Linq.Expressions;
 
 namespace Application.CQS.Messenger.Chat.Command.CreateChat
 {
@@ -35,8 +37,29 @@ namespace Application.CQS.Messenger.Chat.Command.CreateChat
             var createdBy = await _userRepository.GetAsync(x => x.Id == request.ChatOwnerUuid.ToIdentification<UserId>());
             ICollection<Domain.Entities.Users.User> members = null;
             List<ChatRelationToUser> chatMembers = new List<ChatRelationToUser>();
-            request.Members.Add(request.ChatOwnerUuid);
-            members = await _userRepository.ListAsync(x => request.Members.Contains(x.Id.Id));
+            
+            if (!request.Members.Contains(request.ChatOwnerUuid))
+                request.Members.Add(request.ChatOwnerUuid);
+
+            var memberIds = request.Members.ToIdentification<UserId>();
+            
+            members = await _userRepository.ListAsync(x => memberIds.Contains(x.Id));
+            Result<ChatDTO> result = null;
+            if(members!=null&&members.Count!=memberIds.Count)
+            {
+                List<Error> errors = new List<Error>();
+                foreach (var memberId in memberIds) 
+                {
+                    var foundMemberInDb = members.Any(x => x.Id == memberId);
+                    if (!foundMemberInDb)
+                    {
+                        var err = new Error($"{memberId} not found", Error.ERROR_CODE.BadRequest);
+                        errors.Add(err);
+                    }
+                }
+                result = Result<ChatDTO>.Failure("chat member not found", errors);
+                return result;
+            }
             Domain.Entities.Chats.Chat chat = null;
             try
             {

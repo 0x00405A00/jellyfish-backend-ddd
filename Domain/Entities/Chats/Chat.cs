@@ -37,8 +37,8 @@ namespace Domain.Entities.Chats
         public string Name { get; private set; }
         public string Description { get; private set; }
 
-        public IReadOnlyCollection<ChatRelationToUser> Members { get => _members.ToImmutableList(); }
-        public IReadOnlyCollection<ChatRelationToUser> Admins { get => _members.Where(x => x.IsChatAdmin ?? false).ToImmutableList(); }
+        public IReadOnlyCollection<ChatRelationToUser> Members => _members.ToImmutableList();
+        public IReadOnlyCollection<ChatRelationToUser> Admins => _members.Where(x => x.IsChatAdmin ?? false).ToList().ToImmutableList();
 
         private Chat() : base()
         {
@@ -392,6 +392,7 @@ namespace Domain.Entities.Chats
     }
     public sealed partial class Chat
     {
+
         public IReadOnlyCollection<ChatRelationToUser>? ChatRelationToUsers => _members; 
         public IReadOnlyCollection<ChatInviteRequest>? ChatInvitesToUsers => _invites; 
         public IReadOnlyCollection<Message> Messages => _messages.ToImmutableList(); 

@@ -37,11 +37,14 @@ namespace Shared.ApiDataTransferObject
                     {
                         apiError = new List<ApiError>();
                     }
-                    if (result.Error != null)
+                    if (result.Errors != null)
                     {
-                        var errorObj = new ApiError();
-                        errorObj.Message = result.Error.Message;
-                        apiError.Add(errorObj);
+                        foreach(var err in result.Errors)
+                        {
+                            var errorObj = new ApiError();
+                            errorObj.Message = err.Message;
+                            apiError.Add(errorObj);
+                        }
                     }
                 }
             }

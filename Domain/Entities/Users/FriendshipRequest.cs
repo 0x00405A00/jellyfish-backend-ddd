@@ -5,11 +5,11 @@ namespace Domain.Entities.Users
 {
     public interface IFriendshipRequest
     {
-        User RequesterUser { get; set; }
-        UserId RequestUserForeignKey { get; }
-        User TargetUser { get; set; }
-        UserId TargetUserForeignKey { get; }
-        string? TargetUserRequestMessage { get; }
+        public User? RequesterUser { get; set; }
+        public UserId RequestUserForeignKey { get; }
+        public User? TargetUser { get; set; }
+        public UserId TargetUserForeignKey { get; }
+        public string? TargetUserRequestMessage { get; }
     }
     /// <summary>
     /// Primary Key for a FriendshipRequest are RequestUser.Uuid and TargetUser.Uuid

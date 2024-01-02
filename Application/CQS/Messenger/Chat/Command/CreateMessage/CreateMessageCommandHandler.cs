@@ -105,7 +105,10 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
 
             var dto = _mapper.Map<List<MessageDTO>>(null);
             var result = Result<List<MessageDTO>>.Success(dto);
-            result.Error = errors.Any()?errors.First():null;  
+            if (errors.Any())
+            {
+                result.AddError(errors);
+            }
             return result;
         }
 
