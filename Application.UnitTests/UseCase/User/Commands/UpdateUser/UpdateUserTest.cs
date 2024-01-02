@@ -18,7 +18,7 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdateUser
             FirstName: "John",
             LastName: "Doe",
             Email: "john.doe@example.com",
-            Phone: "1234567890",
+            Phone: "+491764567213",
             DateOfBirth: new DateTime(1990, 1, 1));
 
         private static readonly UpdateUserCommand InvalidCommand = ValidCommand with { Phone = "abcd iam not a valid phonenumber" };

@@ -23,7 +23,7 @@ namespace SharedTest.DomainTestInstance.Entity.Users
             var firstName = "John";
             var lastName = "Doe";
             var email = Email.Parse("johndoe@example.com");
-            var phone = PhoneNumber.Parse("1234567890");
+            var phone = PhoneNumber.Parse("+491764567213");
             var dateOfBirth = new DateTime(1980, 12, 31);
             var createdTime = DateTime.UtcNow;
 

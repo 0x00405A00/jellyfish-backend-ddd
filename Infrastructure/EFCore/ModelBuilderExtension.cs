@@ -55,16 +55,16 @@ namespace Infrastructure.EFCore
     public static class SampleDataSeedExtension
     {
         private static User RootUser = User.GetSystemUser();
-        private static List<(UserId, string, string, string, Picture)> _sampleUsers = new List<(UserId,string,string,string,Picture)>()
+        private static List<(UserId, string, string, string, Picture, string)> _sampleUsers = new List<(UserId,string,string,string,Picture, string)>()
         {
-            (Guid.Parse("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f").ToIdentification<UserId>(),"darth-vader","Darth","Vader",null),
-            (Guid.Parse("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f").ToIdentification < UserId >(), "darth-maul", "Darth", "Maul",null),
-            (Guid.Parse("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f").ToIdentification < UserId >(), "princess-laia", "Laia", "Organa",null),
-            (Guid.Parse("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f").ToIdentification < UserId >(), "luke-skywalker", "Luke", "Skywalker",null),
-            (Guid.Parse("c3f257ff-1c85-4e3c-b6b2-21ef3afba61f").ToIdentification < UserId >(), "jabba-the-hut", "Jabba", "TheHut",null),
-            (Guid.Parse("c3f257ff-1c85-4e3c-b6b2-21ef5afba61f").ToIdentification < UserId >(), "carl-johnson", "Carl", "Johnson",null),
+            (Guid.Parse("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f").ToIdentification<UserId>(),"darth-vader","Darth","Vader",null,"+49175123451"),
+            (Guid.Parse("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f").ToIdentification < UserId >(), "darth-maul", "Darth", "Maul",null,"+49175123452"),
+            (Guid.Parse("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f").ToIdentification < UserId >(), "princess-laia", "Laia", "Organa",null,"+49175123453"),
+            (Guid.Parse("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f").ToIdentification < UserId >(), "luke-skywalker", "Luke", "Skywalker",null,"+49175123454"),
+            (Guid.Parse("c3f257ff-1c85-4e3c-b6b2-21ef3afba61f").ToIdentification < UserId >(), "jabba-the-hut", "Jabba", "TheHut",null,"+49175123455"),
+            (Guid.Parse("c3f257ff-1c85-4e3c-b6b2-21ef5afba61f").ToIdentification < UserId >(), "carl-johnson", "Carl", "Johnson",null,"+49175123456"),
         };
-        public static User CreateSampleUser(UserId userId,string userNameStr,string firstNameStr,string lastNameStr,Picture pictureObj = null)
+        public static User CreateSampleUser(UserId userId,string userNameStr,string firstNameStr,string lastNameStr, string phoneNumberStr, Picture pictureObj = null)
         {
             int hashCode = (new object().GetHashCode()) * 41;
             int randNumber = Random.Shared.Next(1,40) ;
@@ -80,7 +80,7 @@ namespace Infrastructure.EFCore
             string passwordResetToken = null;
             CustomDateTime? passwordResetExpiresIn = null;
             Domain.ValueObjects.Email email = Email.Parse($"{lastName}.{firstName}.sample@web.net");
-            Domain.ValueObjects.PhoneNumber phone = PhoneNumber.Parse($"+49175123{((randNumber).ToString().PadLeft(4,'0'))}");
+            Domain.ValueObjects.PhoneNumber phone = PhoneNumber.Parse(phoneNumberStr);
             Domain.ValueObjects.Picture? picture = pictureObj;
             CustomDateTime dateOfBirth = User.MinimumBirthDayDate.AddYears(-(randNumber + User.MinimumAgeForRegistration)).ToTypedDateTime();
             CustomDateTime? activationDateTime = DateTime.Now.ToTypedDateOnly();
@@ -125,7 +125,7 @@ namespace Infrastructure.EFCore
 
             foreach(var userDataTuple in _sampleUsers)
             {
-                var user = CreateSampleUser(userDataTuple.Item1, userDataTuple.Item2, userDataTuple.Item3, userDataTuple.Item4, userDataTuple.Item5);
+                var user = CreateSampleUser(userDataTuple.Item1, userDataTuple.Item2, userDataTuple.Item3, userDataTuple.Item4, userDataTuple.Item6, userDataTuple.Item5);
                 var userRole = UserHasRelationToRole.NewUser(user.Id);
 
                 users.Add(user);

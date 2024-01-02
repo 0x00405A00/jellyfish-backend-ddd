@@ -1,36 +1,29 @@
-﻿using Domain.Exceptions;
+﻿using Domain.Entities.Users;
+using Domain.Exceptions;
 using Domain.ValueObjects;
 
 namespace Domain.UnitTests.ValueObjects
 {
     public class PhoneNumberTests
     {
-        [Fact]
-        public void Parse_ValidPhoneNumber_ReturnsPhoneNumberObject()
-        {
-            // Arrange
-            var validPhoneNumber = "(123)-456-7890";
-
-            // Act
-            var phoneNumber = PhoneNumber.Parse(validPhoneNumber);
-
-            // Assert
-            Assert.NotNull(phoneNumber);
-            Assert.Equal(validPhoneNumber, phoneNumber.ToString());
-        }
-
         [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData("123-456")]
-        [InlineData("123-456-789")]
-        [InlineData("(123)-456")]
-        [InlineData("invalid")]
-        public void Parse_InvalidPhoneNumber_ThrowsNotValidPhoneNumberException(string invalidPhoneNumber)
+        [InlineData("+491764567213", true)]
+        [InlineData("01764567213", true)]
+        [InlineData("12345", false)] // Ungültige Nummer, sollte fehlschlagen
+        [InlineData("abc", false)]   // Ungültige Nummer, sollte fehlschlagen
+        public void Parse_ValidPhoneAndInvalidPhoneNumbers(string phoneNumber, bool isValid)
         {
-            // Act and Assert
-            var exception = Assert.Throws<NotValidPhoneNumberException>(() => PhoneNumber.Parse(invalidPhoneNumber));
-            Assert.NotNull(exception);
+            // Act & Assert
+            if (isValid)
+            {
+                var phone = PhoneNumber.Parse(phoneNumber);
+                Assert.Equal(phone.PhoneNumb, phoneNumber);
+            }
+            else
+            {
+                var exception = Assert.Throws<NotValidPhoneNumberException>(() => PhoneNumber.Parse(phoneNumber));
+                Assert.True(exception is NotValidPhoneNumberException);
+            }
         }
     }
 }

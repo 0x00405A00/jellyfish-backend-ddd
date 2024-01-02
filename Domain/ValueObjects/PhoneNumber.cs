@@ -5,7 +5,7 @@ namespace Domain.ValueObjects
 {
     public class PhoneNumber:IEquatable<PhoneNumber>
     {
-        public static Regex PhoneNumberRegex = new Regex(@"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}", RegexOptions.Compiled);
+        public static Regex PhoneNumberRegex = new Regex(@"^(?:\+49|0)(?:[1-9][0-9]{1,4})?[0-9]+$", RegexOptions.Compiled);
         public string PhoneNumb { get; private set; } 
         
         private PhoneNumber()
@@ -27,7 +27,7 @@ namespace Domain.ValueObjects
                 throw new NotValidPhoneNumberException(value);
             }
 
-            return new PhoneNumber(result.Value);
+            return new PhoneNumber(value);
         }
         public override string ToString()
         {

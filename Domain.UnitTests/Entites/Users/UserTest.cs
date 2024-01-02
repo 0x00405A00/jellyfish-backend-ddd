@@ -1,6 +1,7 @@
 ﻿using Domain.Const;
 using Domain.Entities.Users;
 using Domain.Entities.Users.Exceptions;
+using Domain.Exceptions;
 using Domain.Extension;
 using Domain.Primitives.Ids;
 using Domain.ValueObjects;
@@ -28,7 +29,7 @@ namespace Domain.UnitTests.Entites.Users
             var firstName = "John";
             var lastName = "Doe";
             var email = Email.Parse("johndoe@example.com");
-            var phone = PhoneNumber.Parse("1234567890");
+            var phone = PhoneNumber.Parse("+491764567213");
             var dateOfBirth = new DateTime(1980,12,31);
             var createdTime = DateTime.UtcNow;
 
@@ -197,13 +198,14 @@ namespace Domain.UnitTests.Entites.Users
             // Arrange
             var user = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance();
             var modifiedUser = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance();
-            var newPhone = PhoneNumber.Parse("(123)-456-7890");
+            var newPhone = PhoneNumber.Parse("+491764567213");
 
             // Act
+
             user.UpdatePhone(modifiedUser.Id, newPhone);
 
-            // Assert
-            Assert.Equal(newPhone, user.Phone);
+            //Assert 
+            Assert.Equal(newPhone.PhoneNumb, user.Phone.PhoneNumb);
         }
 
         [Fact]
