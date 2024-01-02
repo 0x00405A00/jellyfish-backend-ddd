@@ -7,8 +7,8 @@ using Domain.Entities.Users;
 using Domain.Primitives;
 using Domain.Primitives.Ids;
 using Domain.ValueObjects;
+using Infrastructure.EFCore;
 using Infrastructure.EFCore.Converter;
-using Infrastructure.EFCore.DatabaseEntityConfiguration;
 using Infrastructure.EFCore.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -26,7 +26,9 @@ namespace Infrastructure
         #endregion
         #region Consumed DI Services
         public DbSaveChangesInterceptor DbContextAuditLogInterceptor { get; }
-        public IConfiguration _configuration { get; }
+        private readonly IConfiguration _configuration;
+        private ILogger<ApplicationDbContext> _logger;
+
         public DbContextOptions<ApplicationDbContext> Options { get; }
         #endregion
         #region DbSets
@@ -94,8 +96,10 @@ namespace Infrastructure
             {
                 ConnectionString = _configuration.GetConnectionString(ConnectionStringAlias);
             }
+            var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+            _logger = loggerFactory.CreateLogger<ApplicationDbContext>();
             optionsBuilder.UseMySQL(ConnectionString);
-            optionsBuilder.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
+            optionsBuilder.UseLoggerFactory(loggerFactory);
             optionsBuilder.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
             optionsBuilder.EnableSensitiveDataLogging(true);
             optionsBuilder.AddInterceptors(new DatabaseReaderInterceptor());
@@ -110,36 +114,20 @@ namespace Infrastructure
 
             //Initial Migration: PS C:\Users\Mika\source\repos\jellyfish-backend-ddd\Presentation> dotnet ef migrations add InitialCreate --context ApplicationDbContext
             //Current Problem: A key cannot be configured on 'Entity<Identification>' because it is a derived type.The key must be configured on the root type 'Entity'.If you did not intend for 'Entity' to be included in the model, ensure that it is not referenced by a DbSet property on your context, referenced in a configuration call to ModelBuilder, or referenced from a navigation on a type that is included in the model.
-            modelBuilder.ApplyConfiguration(new UserTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new UserHasRelationToFriendsConfiguration());
-            modelBuilder.ApplyConfiguration(new FriendshipRequestsConfiguration());
-            modelBuilder.ApplyConfiguration(new RoleConfiguration());
-            modelBuilder.ApplyConfiguration(new UserHasRelationToRoleConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new AuthConfiguration());
-            modelBuilder.ApplyConfiguration(new ChatConfiguration());
-            modelBuilder.ApplyConfiguration(new ChatRelationToUserConfiguration());
-            modelBuilder.ApplyConfiguration(new MessageConfiguration());
-            modelBuilder.ApplyConfiguration(new MessageOutboxConfiguration());
-            modelBuilder.ApplyConfiguration(new ChatInviteRequestConfiguration());
-            modelBuilder.ApplyConfiguration(new EmailSendingTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new MailOutboxConfiguration());
-            modelBuilder.ApplyConfiguration(new MailOutboxRecipientConfiguration());
-            modelBuilder.ApplyConfiguration(new MailOutboxAttachmentConfiguration());
 
+            _logger.LogInformation($"try to create database entities...");
+            modelBuilder.CreateModels();
+            _logger.LogInformation($"database entities created");
             base.OnModelCreating(modelBuilder);
+            _logger.LogInformation($"try to data seed initial data...");
+            modelBuilder.CreateInitialDataSeed();
+            _logger.LogInformation($"initial data seed created");
+            _logger.LogWarning($"!!! BE CAREFULL IN PRODUCTION WITH SAMPLE DATA !!!");
+            _logger.LogWarning($"try to add sample data...");
+            modelBuilder.CreateSampleData();
+            _logger.LogWarning($"sample data is added");
+            _logger.LogWarning($"!!! BE CAREFULL IN PRODUCTION WITH SAMPLE DATA !!!");
 
-
-            List<User> users = new List<User>();
-            var rootUser = User.GetSystemUser();
-            var rootRole = UserHasRelationToRole.NewRoot(rootUser.Id);
-            var adminRole = UserHasRelationToRole.NewAdmin(rootUser.Id);
-            var userRole = UserHasRelationToRole.NewUser(rootUser.Id);
-
-            users.Add(rootUser);
-            //users.AddRange(DbContextExtension.GetTestSet());
-            modelBuilder.Entity<User>().HasData(users);
-            modelBuilder.Entity<UserHasRelationToRole>().HasData(rootRole,adminRole,userRole);
             //modelBuilder.ApplyConfigurationsFromAssembly ignore any order so dependencies which are order depend could not be created (app runs in exception)
             //Data seeding: Schema initial data with: https://learn.microsoft.com/de-de/ef/core/modeling/data-seeding
         }

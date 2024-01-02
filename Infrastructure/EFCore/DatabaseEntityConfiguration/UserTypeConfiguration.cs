@@ -23,37 +23,6 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 
             builder.AddAuditableConstraints<UserType, UserTypeId>();
 
-            var userType1 = UserType.Create(
-                new UserTypeId(UserConst.UserType.User),
-                UserConst.UserType.UserName,
-                new CustomDateTime(DateTime.Now),
-                null,
-                null,
-                null,
-                null,
-                null);
-
-            var userType2 = UserType.Create(
-                new UserTypeId(UserConst.UserType.Admin),
-                UserConst.UserType.AdminName,
-                new CustomDateTime(DateTime.Now),
-                null,
-                null,
-                null,
-                null,
-                null);
-
-            var userType3 = UserType.Create(
-                new UserTypeId(UserConst.UserType.Root),
-                UserConst.UserType.RootName,
-                new CustomDateTime(DateTime.Now),
-                null,
-                null,
-                null,
-                null,
-                null);
-
-            builder.HasData(userType1, userType2,userType3);
         }
     }
 }

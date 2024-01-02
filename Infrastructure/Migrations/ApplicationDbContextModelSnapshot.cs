@@ -29,7 +29,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2023, 12, 31, 2, 3, 31, 23, DateTimeKind.Local).AddTicks(4412))
+                        .HasDefaultValue(new DateTime(2024, 1, 2, 22, 18, 9, 387, DateTimeKind.Local).AddTicks(316))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime?>("DeletedTime")
@@ -120,7 +120,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2023, 12, 31, 2, 3, 31, 23, DateTimeKind.Local).AddTicks(7842))
+                        .HasDefaultValue(new DateTime(2024, 1, 2, 22, 18, 9, 387, DateTimeKind.Local).AddTicks(3416))
                         .HasColumnName("created_time");
 
                     b.Property<Guid?>("DeletedByUserForeignKey")
@@ -184,7 +184,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2023, 12, 31, 2, 3, 31, 37, DateTimeKind.Local).AddTicks(4533))
+                        .HasDefaultValue(new DateTime(2024, 1, 2, 22, 18, 9, 400, DateTimeKind.Local).AddTicks(8109))
                         .HasColumnName("created_time");
 
                     b.Property<Guid?>("DeletedByUserForeignKey")
@@ -240,7 +240,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2023, 12, 31, 2, 3, 31, 64, DateTimeKind.Local).AddTicks(5479))
+                        .HasDefaultValue(new DateTime(2024, 1, 2, 22, 18, 9, 427, DateTimeKind.Local).AddTicks(7033))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime?>("DeletedTime")
@@ -266,19 +266,19 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("c4f357ff-1c85-4e3c-b6b2-21ef4afba71f"),
-                            CreatedTime = new DateTime(2023, 12, 31, 2, 3, 31, 64, DateTimeKind.Local).AddTicks(6164),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 431, DateTimeKind.Local).AddTicks(6310),
                             Name = "to"
                         },
                         new
                         {
                             Id = new Guid("c62db414-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2023, 12, 31, 2, 3, 31, 64, DateTimeKind.Local).AddTicks(6180),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 431, DateTimeKind.Local).AddTicks(6324),
                             Name = "cc"
                         },
                         new
                         {
                             Id = new Guid("c52db414-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2023, 12, 31, 2, 3, 31, 64, DateTimeKind.Local).AddTicks(6183),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 431, DateTimeKind.Local).AddTicks(6328),
                             Name = "bcc"
                         });
                 });
@@ -299,7 +299,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2023, 12, 31, 2, 3, 31, 65, DateTimeKind.Local).AddTicks(5909))
+                        .HasDefaultValue(new DateTime(2024, 1, 2, 22, 18, 9, 428, DateTimeKind.Local).AddTicks(7550))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime?>("DeletedTime")
@@ -357,7 +357,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2023, 12, 31, 2, 3, 31, 67, DateTimeKind.Local).AddTicks(4975))
+                        .HasDefaultValue(new DateTime(2024, 1, 2, 22, 18, 9, 430, DateTimeKind.Local).AddTicks(6629))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime?>("DeletedTime")
@@ -426,7 +426,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2023, 12, 31, 2, 3, 31, 66, DateTimeKind.Local).AddTicks(1233))
+                        .HasDefaultValue(new DateTime(2024, 1, 2, 22, 18, 9, 429, DateTimeKind.Local).AddTicks(2889))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime?>("DeletedTime")
@@ -483,7 +483,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2023, 12, 31, 2, 3, 31, 46, DateTimeKind.Local).AddTicks(5763))
+                        .HasDefaultValue(new DateTime(2024, 1, 2, 22, 18, 9, 409, DateTimeKind.Local).AddTicks(8368))
                         .HasColumnName("created_time");
 
                     b.Property<Guid?>("DeletedByUserForeignKey")
@@ -544,7 +544,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2023, 12, 31, 2, 3, 31, 57, DateTimeKind.Local).AddTicks(5668))
+                        .HasDefaultValue(new DateTime(2024, 1, 2, 22, 18, 9, 420, DateTimeKind.Local).AddTicks(6051))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime?>("DeletedTime")
@@ -582,7 +582,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2023, 12, 31, 2, 3, 30, 988, DateTimeKind.Local).AddTicks(6811))
+                        .HasDefaultValue(new DateTime(2024, 1, 2, 22, 18, 9, 355, DateTimeKind.Local).AddTicks(5613))
                         .HasColumnName("created_time");
 
                     b.Property<Guid?>("DeletedByUserForeignKey")
@@ -623,19 +623,19 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("776848df-084f-11ee-b2c8-7085c294413b"),
-                            CreatedTime = new DateTime(2023, 12, 31, 2, 3, 30, 996, DateTimeKind.Local).AddTicks(1946),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 361, DateTimeKind.Local).AddTicks(1264),
                             Name = "Admin"
                         },
                         new
                         {
                             Id = new Guid("8937df9c-fbef-11ed-8f81-7085c294413b"),
-                            CreatedTime = new DateTime(2023, 12, 31, 2, 3, 30, 996, DateTimeKind.Local).AddTicks(1970),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 361, DateTimeKind.Local).AddTicks(1289),
                             Name = "User"
                         },
                         new
                         {
                             Id = new Guid("d411a531-fbea-11ed-8f81-7085c294413b"),
-                            CreatedTime = new DateTime(2023, 12, 31, 2, 3, 30, 996, DateTimeKind.Local).AddTicks(1973),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 361, DateTimeKind.Local).AddTicks(1292),
                             Name = "Root"
                         });
                 });
@@ -655,7 +655,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2023, 12, 31, 2, 3, 31, 59, DateTimeKind.Local).AddTicks(8748))
+                        .HasDefaultValue(new DateTime(2024, 1, 2, 22, 18, 9, 422, DateTimeKind.Local).AddTicks(9274))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime?>("DeletedTime")
@@ -707,7 +707,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2023, 12, 31, 2, 3, 30, 985, DateTimeKind.Local).AddTicks(2468))
+                        .HasDefaultValue(new DateTime(2024, 1, 2, 22, 18, 9, 352, DateTimeKind.Local).AddTicks(337))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime?>("DeletedTime")
@@ -766,7 +766,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2023, 12, 31, 2, 3, 31, 11, DateTimeKind.Local).AddTicks(4002))
+                        .HasDefaultValue(new DateTime(2024, 1, 2, 22, 18, 9, 375, DateTimeKind.Local).AddTicks(3447))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -864,13 +864,104 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            DateOfBirth = new DateTime(2023, 12, 31, 2, 3, 31, 68, DateTimeKind.Local).AddTicks(604),
+                            ActivationDateTime = new DateTime(2024, 1, 2, 22, 18, 9, 431, DateTimeKind.Local).AddTicks(5923),
+                            DateOfBirth = new DateTime(2024, 1, 2, 22, 18, 9, 431, DateTimeKind.Local).AddTicks(5916),
                             Email = "root@localhost.local",
                             FirstName = "Root",
                             LastName = "Root",
                             Password = "root@localhost.local",
                             UserName = "Root",
                             UserTypeForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef4afba71f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
+                            ActivationDateTime = new DateTime(2024, 1, 2, 22, 18, 9, 432, DateTimeKind.Local).AddTicks(8994),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 432, DateTimeKind.Local).AddTicks(9006),
+                            DateOfBirth = new DateTime(1861, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "vader.darth.sample@web.net",
+                            FirstName = "Darth",
+                            LastName = "Vader",
+                            Password = "MG#81svd",
+                            Phone = "4917512300",
+                            UserName = "darth-vader",
+                            UserTypeForeignKey = new Guid("c92db314-765b-46dd-bf40-ef7d5a5abd7b")
+                        },
+                        new
+                        {
+                            Id = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f"),
+                            ActivationDateTime = new DateTime(2024, 1, 2, 22, 18, 9, 432, DateTimeKind.Local).AddTicks(9831),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 432, DateTimeKind.Local).AddTicks(9843),
+                            DateOfBirth = new DateTime(1861, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "maul.darth.sample@web.net",
+                            FirstName = "Darth",
+                            LastName = "Maul",
+                            Password = "CM&44tge",
+                            Phone = "4917512300",
+                            UserName = "darth-maul",
+                            UserTypeForeignKey = new Guid("c92db314-765b-46dd-bf40-ef7d5a5abd7b")
+                        },
+                        new
+                        {
+                            Id = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f"),
+                            ActivationDateTime = new DateTime(2024, 1, 2, 22, 18, 9, 433, DateTimeKind.Local).AddTicks(627),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 433, DateTimeKind.Local).AddTicks(641),
+                            DateOfBirth = new DateTime(1852, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "organa.laia.sample@web.net",
+                            FirstName = "Laia",
+                            LastName = "Organa",
+                            Password = "XB*39avb",
+                            Phone = "4917512300",
+                            UserName = "princess-laia",
+                            UserTypeForeignKey = new Guid("c92db314-765b-46dd-bf40-ef7d5a5abd7b")
+                        },
+                        new
+                        {
+                            Id = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f"),
+                            ActivationDateTime = new DateTime(2024, 1, 2, 22, 18, 9, 433, DateTimeKind.Local).AddTicks(1366),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 433, DateTimeKind.Local).AddTicks(1380),
+                            DateOfBirth = new DateTime(1873, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "skywalker.luke.sample@web.net",
+                            FirstName = "Luke",
+                            LastName = "Skywalker",
+                            Password = "NR*87utx",
+                            Phone = "4917512300",
+                            UserName = "luke-skywalker",
+                            UserTypeForeignKey = new Guid("c92db314-765b-46dd-bf40-ef7d5a5abd7b")
+                        },
+                        new
+                        {
+                            Id = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef3afba61f"),
+                            ActivationDateTime = new DateTime(2024, 1, 2, 22, 18, 9, 433, DateTimeKind.Local).AddTicks(2259),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 433, DateTimeKind.Local).AddTicks(2271),
+                            DateOfBirth = new DateTime(1858, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "thehut.jabba.sample@web.net",
+                            FirstName = "Jabba",
+                            LastName = "TheHut",
+                            Password = "BO$67plf",
+                            Phone = "4917512300",
+                            UserName = "jabba-the-hut",
+                            UserTypeForeignKey = new Guid("c92db314-765b-46dd-bf40-ef7d5a5abd7b")
+                        },
+                        new
+                        {
+                            Id = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef5afba61f"),
+                            ActivationDateTime = new DateTime(2024, 1, 2, 22, 18, 9, 433, DateTimeKind.Local).AddTicks(2987),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 433, DateTimeKind.Local).AddTicks(3002),
+                            DateOfBirth = new DateTime(1845, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "johnson.carl.sample@web.net",
+                            FirstName = "Carl",
+                            LastName = "Johnson",
+                            Password = "CE#80txn",
+                            Phone = "4917512300",
+                            UserName = "carl-johnson",
+                            UserTypeForeignKey = new Guid("c92db314-765b-46dd-bf40-ef7d5a5abd7b")
                         });
                 });
 
@@ -894,7 +985,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2023, 12, 31, 2, 3, 30, 975, DateTimeKind.Local).AddTicks(416))
+                        .HasDefaultValue(new DateTime(2024, 1, 2, 22, 18, 9, 341, DateTimeKind.Local).AddTicks(7384))
                         .HasColumnName("created_time");
 
                     b.Property<Guid?>("DeletedByUserForeignKey")
@@ -950,7 +1041,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2023, 12, 31, 2, 3, 30, 996, DateTimeKind.Local).AddTicks(5285))
+                        .HasDefaultValue(new DateTime(2024, 1, 2, 22, 18, 9, 361, DateTimeKind.Local).AddTicks(4657))
                         .HasColumnName("created_time");
 
                     b.Property<Guid?>("DeletedByUserForeignKey")
@@ -1001,27 +1092,75 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("93014c27-5f0b-4181-b204-95c5fcd3c58d"),
+                            Id = new Guid("f7483142-a94f-496c-a395-6e99e7fde8cf"),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2023, 12, 31, 2, 3, 31, 68, DateTimeKind.Local).AddTicks(732),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 431, DateTimeKind.Local).AddTicks(6091),
                             RoleForeignKey = new Guid("d411a531-fbea-11ed-8f81-7085c294413b"),
                             UserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b")
                         },
                         new
                         {
-                            Id = new Guid("232e5f9c-4129-407e-bf59-ef5475860491"),
+                            Id = new Guid("93cb8c0a-4baf-449c-ae05-7512711b661a"),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2023, 12, 31, 2, 3, 31, 68, DateTimeKind.Local).AddTicks(752),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 431, DateTimeKind.Local).AddTicks(6150),
                             RoleForeignKey = new Guid("776848df-084f-11ee-b2c8-7085c294413b"),
                             UserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b")
                         },
                         new
                         {
-                            Id = new Guid("b427a56c-ebe5-4d2f-88df-05a05015aa24"),
+                            Id = new Guid("37753954-ad8b-466f-bc3e-b378f10e80f1"),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2023, 12, 31, 2, 3, 31, 68, DateTimeKind.Local).AddTicks(762),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 431, DateTimeKind.Local).AddTicks(6184),
                             RoleForeignKey = new Guid("8937df9c-fbef-11ed-8f81-7085c294413b"),
                             UserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b")
+                        },
+                        new
+                        {
+                            Id = new Guid("00716485-5dbd-4e8f-ba71-721dfef245be"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 432, DateTimeKind.Local).AddTicks(9074),
+                            RoleForeignKey = new Guid("8937df9c-fbef-11ed-8f81-7085c294413b"),
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("95f69e57-6b98-41ee-8d23-c16ffab6739c"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 432, DateTimeKind.Local).AddTicks(9906),
+                            RoleForeignKey = new Guid("8937df9c-fbef-11ed-8f81-7085c294413b"),
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3ec68557-16d1-4fb6-aac7-09ae233853f7"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 433, DateTimeKind.Local).AddTicks(719),
+                            RoleForeignKey = new Guid("8937df9c-fbef-11ed-8f81-7085c294413b"),
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("03bd0a66-1e14-4055-a264-cc24bf85952a"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 433, DateTimeKind.Local).AddTicks(1456),
+                            RoleForeignKey = new Guid("8937df9c-fbef-11ed-8f81-7085c294413b"),
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f06a708b-3e5c-46a3-94f5-ef3f6dafce03"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 433, DateTimeKind.Local).AddTicks(2336),
+                            RoleForeignKey = new Guid("8937df9c-fbef-11ed-8f81-7085c294413b"),
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef3afba61f")
+                        },
+                        new
+                        {
+                            Id = new Guid("68f7d16e-8eb1-431f-ad7f-3ce60b85cf90"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 433, DateTimeKind.Local).AddTicks(3072),
+                            RoleForeignKey = new Guid("8937df9c-fbef-11ed-8f81-7085c294413b"),
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef5afba61f")
                         });
                 });
 
@@ -1040,7 +1179,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2023, 12, 31, 2, 3, 30, 968, DateTimeKind.Local).AddTicks(434))
+                        .HasDefaultValue(new DateTime(2024, 1, 2, 22, 18, 9, 334, DateTimeKind.Local).AddTicks(6344))
                         .HasColumnName("created_time");
 
                     b.Property<Guid?>("DeletedByUserForeignKey")
@@ -1082,36 +1221,21 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("c92db314-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2023, 12, 31, 2, 3, 30, 974, DateTimeKind.Local).AddTicks(7516),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 431, DateTimeKind.Local).AddTicks(5656),
                             Name = "User"
                         },
                         new
                         {
                             Id = new Guid("c3f267ff-1c85-4e3c-b6b2-21ef4afba71f"),
-                            CreatedTime = new DateTime(2023, 12, 31, 2, 3, 30, 974, DateTimeKind.Local).AddTicks(7562),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 431, DateTimeKind.Local).AddTicks(5702),
                             Name = "Admin"
                         },
                         new
                         {
                             Id = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef4afba71f"),
-                            CreatedTime = new DateTime(2023, 12, 31, 2, 3, 30, 974, DateTimeKind.Local).AddTicks(7566),
+                            CreatedTime = new DateTime(2024, 1, 2, 22, 18, 9, 431, DateTimeKind.Local).AddTicks(5709),
                             Name = "Root"
                         });
-                });
-
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.Property<Guid>("RolesId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("RolesId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("RoleUser");
                 });
 
             modelBuilder.Entity("Domain.Entities.Auths.Auth", b =>
@@ -1511,14 +1635,14 @@ namespace Infrastructure.Migrations
                         .HasConstraintName("FK__USERHASRELATIONTOFRIEND_LASTMODIFIEDBYUSERFK_TO_USER");
 
                     b.HasOne("Domain.Entities.Users.User", "User")
-                        .WithMany("UserHasRelationToFriendsLeft")
+                        .WithMany("FriendshipsThatIAccepted")
                         .HasForeignKey("UserForeignKey")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK__USERHASRELATIONTOFRIEND_USERFK_TO_USER");
 
                     b.HasOne("Domain.Entities.Users.User", "UserFriend")
-                        .WithMany("UserHasRelationToFriendsRight")
+                        .WithMany("FriendshipsThatIRequested")
                         .HasForeignKey("UserFriendForeignKey")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
@@ -1607,21 +1731,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("LastModifiedByUser");
                 });
 
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.HasOne("Domain.Entities.Roles.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Users.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Domain.Entities.Chats.Chat", b =>
                 {
                     b.Navigation("ChatInvitesToUsers");
@@ -1699,6 +1808,10 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("FriendshipRequestsWhereIamTarget");
 
+                    b.Navigation("FriendshipsThatIAccepted");
+
+                    b.Navigation("FriendshipsThatIRequested");
+
                     b.Navigation("Messages");
 
                     b.Navigation("MessagesInOutbox");
@@ -1718,10 +1831,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("ModifiedUserTypes");
 
                     b.Navigation("ModifiedUsers");
-
-                    b.Navigation("UserHasRelationToFriendsLeft");
-
-                    b.Navigation("UserHasRelationToFriendsRight");
 
                     b.Navigation("UserHasRelationToRoles");
                 });

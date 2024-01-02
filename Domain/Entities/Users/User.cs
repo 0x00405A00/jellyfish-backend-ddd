@@ -59,9 +59,10 @@ namespace Domain.Entities.Users
             {"need length of minimal 8",new Regex("^.{8,}$") },
         };
         public static int ActivationCodeLen = 4;
+        public static int MinimumAgeForRegistration = 16;
         public static TimeSpan PasswordResetExpiresInTime = new TimeSpan(12, 0, 0);
         public static DateTime MinimumBirthDayDate = new DateTime(1900, 1, 1);
-        public static DateTime MaximumBirthDayDate = DateTime.Now.AddYears(-16);//man muss mindestens 16 sein
+        public static DateTime MaximumBirthDayDate = DateTime.Now.AddYears(-MinimumAgeForRegistration);//man muss mindestens 16 sein
 
         private List<FriendshipRequest> _friendshipRequestsWhereIamRequester = new();
         private List<FriendshipRequest> _friendshipRequestsWhereIamTarget = new();
@@ -269,7 +270,7 @@ namespace Domain.Entities.Users
             string emailStr = $"{UserConst.RootUserName}@localhost.local".ToLower();
             Email email = Email.Parse(emailStr);
             UserId userId = new UserId(UserConst.RootUserId);
-            UserTypeId userTypeId = new UserTypeId(UserConst.UserType.Root);
+            UserTypeId userTypeId = UserTypeId.GetRootType();
 
             return User.Create(
                 userId,

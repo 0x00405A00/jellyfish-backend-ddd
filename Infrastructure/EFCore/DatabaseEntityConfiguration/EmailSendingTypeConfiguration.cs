@@ -20,28 +20,6 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
                 .HasMaxLength(DbContextExtension.ColumnLength.Names)
                 .HasColumnName(DbContextExtension.ColumnNameDefinitions.Name);
 
-            var toType = EmailSendingType.Create(
-                new EmailTypeId(EmailConst.Type.To),
-                "to",
-                new CustomDateTime(DateTime.Now),
-                null,
-                null);
-
-            var ccType = EmailSendingType.Create(
-                new EmailTypeId(EmailConst.Type.Cc),
-                "cc",
-                new CustomDateTime(DateTime.Now),
-                null,
-                null);
-
-            var bccType = EmailSendingType.Create(
-                new EmailTypeId(EmailConst.Type.Bcc),
-                "bcc",
-                new CustomDateTime(DateTime.Now),
-                null,
-                null);
-
-            builder.HasData(toType, ccType, bccType);
         }
     }
 
