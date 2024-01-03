@@ -31,6 +31,10 @@ namespace Infrastructure
 
         public DbContextOptions<ApplicationDbContext> Options { get; }
         #endregion
+        #region DbFunctions
+        [DbFunction("EmailContains", IsBuiltIn = true, IsNullable = false)]
+        public static Email EmailContains(Email email, string value) => throw new NotImplementedException();
+        #endregion
         #region DbSets
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserHasRelationToRole> UserHasRelationToRoles { get; set; }
@@ -118,6 +122,9 @@ namespace Infrastructure
             _logger.LogInformation($"try to create database entities...");
             modelBuilder.CreateModels();
             _logger.LogInformation($"database entities created");
+            _logger.LogInformation($"try to create database functions...");
+            modelBuilder.CreateDbFunctions();
+            _logger.LogInformation($"database functions created");
             base.OnModelCreating(modelBuilder);
             _logger.LogInformation($"try to data seed initial data...");
             modelBuilder.CreateInitialDataSeed();

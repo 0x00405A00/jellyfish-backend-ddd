@@ -97,7 +97,7 @@ namespace Application.Mapper
             CreateMap<User, UserDTO>()
                 .ForMember(dst => dst.Roles, dst => dst.MapFrom(x => x.UserHasRelationToRoles.Select(x => x.Role).ToList()))
                 .ForMember(dst => dst.Friends, dst => dst.MapFrom(x => x.GetFriends().Select(x => x.UserFriendForeignKey.ToGuid()).ToList()))
-                .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.FriendshipRequestsWhereIamTarget))
+                .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.GetFriendshipRequests()))
                 .ForMember(dst => dst.Phone, dst => dst.MapFrom(x => x.Phone.ToString()))
                 .ForMember(dst => dst.Password, dst => dst.MapFrom(x => string.Empty))//securtiy: password shouldnt transfer over network
                 .ForMember(dst => dst.PasswordConfirm, dst => dst.MapFrom(x => string.Empty))//securtiy: password shouldnt transfer over network
@@ -130,8 +130,8 @@ namespace Application.Mapper
                 .ForMember(dst => dst.RequestUserForeignKey, dst => dst.MapFrom(x => x.RequestUserForeignKey))
                 .ForMember(dst => dst.TargetUserForeignKey, dst => dst.MapFrom(x => x.TargetUserForeignKey))
                 .ForMember(dst => dst.TargetUserRequestMessage, dst => dst.MapFrom(x => x.TargetUserRequestMessage))
-                .ForMember(dst => dst.TargetUser, dst => dst.MapFrom(x => x.TargetUser))
-                .ForMember(dst => dst.RequesterUser, dst => dst.MapFrom(x => x.RequesterUser))
+                .ForMember(dst => dst.TargetUserName, dst => dst.MapFrom(x => x.TargetUser.UserName))
+                .ForMember(dst => dst.RequesterUserName, dst => dst.MapFrom(x => x.RequesterUser.UserName))
                 .ForMember(dst => dst.CreatedTime, dst => dst.MapFrom(x => x.CreatedTime))
                 .ForMember(dst => dst.LastModifiedTime, dst => dst.MapFrom(x => x.LastModifiedTime))
                 .ForMember(dst => dst.DeletedTime, dst => dst.MapFrom(x => x.DeletedTime))

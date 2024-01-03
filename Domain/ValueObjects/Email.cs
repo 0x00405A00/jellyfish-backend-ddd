@@ -12,10 +12,12 @@ namespace Domain.ValueObjects
         {
 
         }
+
         private Email(string value) 
         {
             EmailValue = value.ToLower();
         }
+
         public static Email Parse(string value)
         {
             if(String.IsNullOrWhiteSpace(value))
@@ -29,9 +31,16 @@ namespace Domain.ValueObjects
 
             return new Email(result.Value);
         }
+
         public override string ToString()
         {
+
             return EmailValue;
+        }
+
+        public static bool Contains(Email email,string value)
+        {
+            return email.EmailValue.IndexOf(value) >= 0;
         }
 
         public static bool operator !=(Email emailLeft, Email emailRight)
@@ -41,6 +50,7 @@ namespace Domain.ValueObjects
 
             return emailLeft.Equals(emailRight);
         }
+
         public static bool operator ==(Email emailLeft, Email emailRight)
         {
             return (emailLeft!=emailRight);

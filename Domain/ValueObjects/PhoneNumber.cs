@@ -12,10 +12,12 @@ namespace Domain.ValueObjects
         {
 
         }
+
         private PhoneNumber(string value) 
         {
             PhoneNumb = value;
         }
+
         public static PhoneNumber Parse(string value)
         {
             if(String.IsNullOrEmpty(value))
@@ -29,9 +31,15 @@ namespace Domain.ValueObjects
 
             return new PhoneNumber(value);
         }
+
         public override string ToString()
         {
             return PhoneNumb;
+        }
+
+        public static bool Contains(PhoneNumber phoneNumber, string value)
+        {
+            return phoneNumber.PhoneNumb.IndexOf(value) >= 0;
         }
 
         public static bool operator !=(PhoneNumber phonelLeft, PhoneNumber phoneRight)
@@ -41,6 +49,7 @@ namespace Domain.ValueObjects
 
             return phonelLeft.Equals(phoneRight);
         }
+
         public static bool operator ==(PhoneNumber phoneLeft, PhoneNumber phoneRight)
         {
             return (phoneLeft != phoneRight);

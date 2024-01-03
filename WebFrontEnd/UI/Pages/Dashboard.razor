@@ -156,7 +156,7 @@
     private async Task GetData()
     {
         var token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token) ;
-        var requestUsers = await WebApiClient.GetUsers(null,cancellationToken.Token);
+        var requestUsers = await WebApiClient.GetUsers(new SearchParamsBody(),cancellationToken.Token);
 
         if (requestUsers.IsSuccess)
         {

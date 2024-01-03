@@ -1,6 +1,10 @@
-﻿using Shared.DataFilter.Infrastructure;
+﻿using Domain.ValueObjects;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using Shared.DataFilter.Infrastructure;
 using System;
 using System.Linq.Expressions;
+using System.Reflection;
+using System.Reflection.Metadata;
 using static Shared.DataFilter.Infrastructure.ColumnFilterConst;
 
 namespace Shared.Linq
@@ -264,6 +268,46 @@ namespace Shared.Linq
                         break;
                 }
             }
+            //Fehler bei WebFrontEnd bei Users-> Search nach name als bsp.
+            extra fehler
+            else if (property.Type == typeof(Email))
+            {
+                var constant = Expression.Constant(filter.Value);
+                switch (filter.Operator)
+                {
+                    case OPERATOR.EQUAL:
+                        comparison = Expression.Equal(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
+                        break;
+                    case OPERATOR.CONTAINS:
+                        comparison = Expression.Call(property, typeof(Email).GetMethod(nameof(Email.Contains)), constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
+                        break;
+                    case OPERATOR.NOT_EQUAL:
+                        comparison = Expression.NotEqual(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
+                        break;
+                    default:
+                        comparison = Expression.Equal(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
+                        break;
+                }
+            }
+            else if (property.Type == typeof(PhoneNumber))
+            {
+                var constant = Expression.Constant(filter.Value);
+                switch (filter.Operator)
+                {
+                    case OPERATOR.EQUAL:
+                        comparison = Expression.Equal(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
+                        break;
+                    case OPERATOR.CONTAINS:
+                        comparison = Expression.Call(property, typeof(PhoneNumber).GetMethod(nameof(PhoneNumber.Contains)), constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
+                        break;
+                    case OPERATOR.NOT_EQUAL:
+                        comparison = Expression.NotEqual(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
+                        break;
+                    default:
+                        comparison = Expression.Equal(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
+                        break;
+                }
+            }
             else
             {
                 var constant = Expression.Constant(filter.Value);
@@ -281,6 +325,16 @@ namespace Shared.Linq
                 }
             }
             return comparison;
+        }
+        public static T Construct<T>(Type[] paramTypes, object[] paramValues)
+        {
+            Type t = typeof(T);
+
+            ConstructorInfo ci = t.GetConstructor(
+                BindingFlags.Instance | BindingFlags.NonPublic,
+                null, paramTypes, null);
+
+            return (T)ci.Invoke(paramValues);
         }
     }
 }

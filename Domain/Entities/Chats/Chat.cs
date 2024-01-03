@@ -388,6 +388,7 @@ namespace Domain.Entities.Chats
         public ChatRelationToUser GetChatMemberById(UserId userId) => _members.Where(x => x.UserForeignKey == userId).Single();
 
         public bool IsDeleted() => this.DeletedTime != null;
+        public void ClearAllMembers() => _members.Clear();
 
     }
     public sealed partial class Chat

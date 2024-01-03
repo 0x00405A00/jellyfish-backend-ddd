@@ -77,7 +77,6 @@
                          <MudTd DataLabel="Phone">@TableContext.Phone</MudTd>
                          <MudTd DataLabel="CreatedTime">@TableContext.CreatedTime?.ToString("dd.MM.yyyy")</MudTd>
                          <MudTd DataLabel="LastModifiedTime">@TableContext.LastModifiedTime?.ToString("dd.MM.yyyy")</MudTd>
-                         <MudTd DataLabel="UserType">@UserTypesList.Where(y=>y.Id==@TableContext.UserTypeUuid).First().Name</MudTd>
                          <MudTd DataLabel="Roles">@TableContext.RoleStr</MudTd>
                     </RowTemplate>
                 </MudTable>

@@ -1,4 +1,6 @@
-﻿using Domain.Entities.Users;
+﻿using Domain.Const;
+using Domain.Entities.Users;
+using Domain.Extension;
 using Domain.Primitives;
 using Domain.Primitives.Ids;
 
@@ -46,6 +48,7 @@ namespace Domain.Entities.Chats
             DeletedTime = deletedDateTime;
             DeletedByUserForeignKey = deletedBy;
         }
+
         public static ChatRelationToUser Create(
             ChatRelationToUserId id,
             UserId userId,
@@ -69,6 +72,41 @@ namespace Domain.Entities.Chats
                 modifiedBy,
                 deletedDateTime,
                 deletedBy);
+        }
+
+        public static ChatRelationToUser NewAdmin(ChatId chatId, UserId userId, UserId assignerId = null)
+        {
+            var id = ChatRelationToUser.NewId();
+            bool isAdmin = true;
+            CustomDateTime createdDateTime = DateTime.Now.ToTypedDateTime();
+            return Create(
+                id,
+                userId,
+                chatId,
+                isAdmin,
+                createdDateTime,
+                assignerId,
+                null,
+                null,
+                null,
+                null);
+        }
+        public static ChatRelationToUser NewMember(ChatId chatId,UserId userId, UserId inviteMember = null)
+        {
+            var id = ChatRelationToUser.NewId();
+            bool isAdmin = false;
+            CustomDateTime createdDateTime = DateTime.Now.ToTypedDateTime();
+            return Create(
+                id,
+                userId,
+                chatId,
+                isAdmin,
+                createdDateTime,
+                inviteMember,
+                null,
+                null,
+                null,
+                null);
         }
 
         public void SetAdmin(bool isAdmin)

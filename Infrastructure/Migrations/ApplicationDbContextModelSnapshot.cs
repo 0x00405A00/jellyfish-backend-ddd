@@ -29,7 +29,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 1, 3, 0, 32, 51, 828, DateTimeKind.Local).AddTicks(852))
+                        .HasDefaultValue(new DateTime(2024, 1, 3, 19, 5, 56, 495, DateTimeKind.Local).AddTicks(9156))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime?>("DeletedTime")
@@ -120,7 +120,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 1, 3, 0, 32, 51, 828, DateTimeKind.Local).AddTicks(3978))
+                        .HasDefaultValue(new DateTime(2024, 1, 3, 19, 5, 56, 496, DateTimeKind.Local).AddTicks(2283))
                         .HasColumnName("created_time");
 
                     b.Property<Guid?>("DeletedByUserForeignKey")
@@ -162,6 +162,24 @@ namespace Infrastructure.Migrations
                     b.HasIndex("LastModifiedByUserForeignKey");
 
                     b.ToTable("chat", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(9890),
+                            Description = "Chatdesc",
+                            Name = "Private Chat"
+                        },
+                        new
+                        {
+                            Id = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1363),
+                            Description = "Against the republic",
+                            Name = "Our Groupchat"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Chats.ChatRelationToUser", b =>
@@ -184,7 +202,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 1, 3, 0, 32, 51, 841, DateTimeKind.Local).AddTicks(8873))
+                        .HasDefaultValue(new DateTime(2024, 1, 3, 19, 5, 56, 509, DateTimeKind.Local).AddTicks(6607))
                         .HasColumnName("created_time");
 
                     b.Property<Guid?>("DeletedByUserForeignKey")
@@ -228,6 +246,62 @@ namespace Infrastructure.Migrations
                     b.HasIndex("LastModifiedByUserForeignKey");
 
                     b.ToTable("chat_relation_to_user", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(9847),
+                            Id = new Guid("18b9e162-50df-40db-beb9-cf464e52c519"),
+                            IsChatAdmin = true
+                        },
+                        new
+                        {
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(9881),
+                            Id = new Guid("2914a74a-3f19-4ebc-8ae1-28b1c45c1ba0"),
+                            IsChatAdmin = false
+                        },
+                        new
+                        {
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1340),
+                            Id = new Guid("c52e5ad4-6211-4d8a-b686-4394d6802963"),
+                            IsChatAdmin = true
+                        },
+                        new
+                        {
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1347),
+                            Id = new Guid("b894cb3c-8ab4-4cf4-87f7-7125b9b513a1"),
+                            IsChatAdmin = false
+                        },
+                        new
+                        {
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1354),
+                            Id = new Guid("a58dd4db-bc1c-40d7-a31c-dc364c4ad108"),
+                            IsChatAdmin = false
+                        },
+                        new
+                        {
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1360),
+                            Id = new Guid("2c553227-88ec-4630-a455-70d97e6fd46c"),
+                            IsChatAdmin = false
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Mails.EmailSendingType", b =>
@@ -240,7 +314,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 1, 3, 0, 32, 51, 869, DateTimeKind.Local).AddTicks(4995))
+                        .HasDefaultValue(new DateTime(2024, 1, 3, 19, 5, 56, 547, DateTimeKind.Local).AddTicks(9105))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime?>("DeletedTime")
@@ -266,19 +340,19 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("c4f357ff-1c85-4e3c-b6b2-21ef4afba71f"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 873, DateTimeKind.Local).AddTicks(3886),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 553, DateTimeKind.Local).AddTicks(3405),
                             Name = "to"
                         },
                         new
                         {
                             Id = new Guid("c62db414-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 873, DateTimeKind.Local).AddTicks(3896),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 553, DateTimeKind.Local).AddTicks(3414),
                             Name = "cc"
                         },
                         new
                         {
                             Id = new Guid("c52db414-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 873, DateTimeKind.Local).AddTicks(3900),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 553, DateTimeKind.Local).AddTicks(3418),
                             Name = "bcc"
                         });
                 });
@@ -299,7 +373,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 1, 3, 0, 32, 51, 870, DateTimeKind.Local).AddTicks(5422))
+                        .HasDefaultValue(new DateTime(2024, 1, 3, 19, 5, 56, 549, DateTimeKind.Local).AddTicks(3684))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime?>("DeletedTime")
@@ -357,7 +431,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 1, 3, 0, 32, 51, 872, DateTimeKind.Local).AddTicks(4237))
+                        .HasDefaultValue(new DateTime(2024, 1, 3, 19, 5, 56, 552, DateTimeKind.Local).AddTicks(1759))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime?>("DeletedTime")
@@ -426,7 +500,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 1, 3, 0, 32, 51, 871, DateTimeKind.Local).AddTicks(733))
+                        .HasDefaultValue(new DateTime(2024, 1, 3, 19, 5, 56, 550, DateTimeKind.Local).AddTicks(928))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime?>("DeletedTime")
@@ -483,7 +557,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 1, 3, 0, 32, 51, 851, DateTimeKind.Local).AddTicks(455))
+                        .HasDefaultValue(new DateTime(2024, 1, 3, 19, 5, 56, 518, DateTimeKind.Local).AddTicks(8037))
                         .HasColumnName("created_time");
 
                     b.Property<Guid?>("DeletedByUserForeignKey")
@@ -527,6 +601,5408 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserForeignKey");
 
                     b.ToTable("message", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("5d188a1f-e55a-4a2f-b53d-28460662c7ee"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(9964),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("24485bba-23a5-4b0a-aba8-6a584e9b405c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(9990),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0ebdf132-c6d9-4db2-8a94-67af0d18a043"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("52c0e983-3a0a-494a-ad3a-dd05da6ee6f4"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(15),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4965be26-6354-496a-bbbb-2815e8093783"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(31),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e103e0fe-3b0d-4638-a3f0-5654d8da9cee"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(40),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("99f2578e-af2d-429f-9684-689878635b0b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(48),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("605b54df-1f9d-4f83-b972-b9e982a153aa"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(54),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("60b002fb-e528-486b-925b-0e61eec178bc"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(61),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("833c9f81-0aba-4912-9d74-35cda0e48fc9"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(67),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("de68f46b-71f2-4c92-bfe6-f97a78de1c9b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(73),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9d09b392-40e8-4777-8c91-47c41a0ddf35"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(81),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b22bef39-8dd0-409f-a254-ff5b0fde6042"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(87),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6b56154d-7608-4627-88bb-c77057c05d06"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(94),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2e39de0a-5e25-4fc9-805f-ddc4fb284542"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(100),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d3930837-73dd-42cc-a0f3-0800337c3ff7"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(105),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ce828e26-3361-41ac-8da0-9b09292fd5d2"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(111),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a19b4262-22ac-4253-a83d-2030e75bcc40"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(123),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("dc0e76dd-515b-4e7c-884b-aa6a4e4d3495"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(129),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1c0af741-d86a-4fbe-97fd-bb27b141b4ee"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(137),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("fcccf5ef-db53-4675-9e1e-c8653859b4a8"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(144),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b6c5d6f8-a684-483d-bfa3-6e3fee4ac8c8"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(150),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("90f64c40-5aac-447e-b811-6712e4297688"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(157),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("01e591ba-2fba-4239-9839-37e2bef2a72b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(162),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("316ad695-2d75-4a05-8e70-88dcd4395a5d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(169),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("fd290c8a-5f67-4a1d-b3d5-f5ff36fb380f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(175),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("de8921bd-5c82-4fe5-acfc-385a287f134e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(181),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("8eb407f9-9acd-45b3-bacc-bf9a09daa9ac"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(189),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("02bdd477-6e06-44d4-b046-069201a8547d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(195),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a7882908-4aa0-4028-b704-510b905a6ebc"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(206),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("adad7a65-96ff-4966-bd87-41628e8c2dac"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(212),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4754737b-3933-4818-a810-9e4151e0b5d0"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(218),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("fabb2550-253a-4387-af3d-71abf5d52299"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(224),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d30a20af-c69b-471d-a893-0c0a577ae321"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(231),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("efa22348-dcdd-4eb1-97c2-b9b674096f79"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(238),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("228f661c-f6d0-4ecb-b76e-84e4a43dc16a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(245),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a8e5f2c2-b48d-4424-9a75-11890d976b9c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(251),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3bc13c5d-5071-4292-9afa-93662d8fd48e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(257),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b7ec0ee1-cd7a-41f0-abf1-c14194f29b9c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(264),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("fd6dba39-c52f-43f4-986e-b1efd870fb14"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(270),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1c4c6fd0-7787-4dee-8da3-e9533713f844"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(276),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b33495c5-e086-4ce3-8b55-a7a053e07bdf"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(288),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5de1d86a-11af-462f-9b68-cb2bd58bc218"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(294),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("de1d1284-0e94-4d91-835c-f05cd6919fb2"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(301),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("27041c09-fadd-451e-aac0-dc3774de0142"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(307),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("81cbb3ec-e5a5-431a-bb35-fbb418100492"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(313),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ab858756-c6a5-4e54-b969-fff4a38d1166"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(319),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2d9c2aa8-a9e2-4149-8f3e-05f63cbed1da"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(325),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("124ac41a-ff95-4da8-90a9-e939a983d46a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(330),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b4eba701-6298-4132-aabb-107186d1e123"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(336),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("911e621b-9e3a-4c02-af2c-fe7969a5a42d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(343),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("75c2296f-5bd6-43ad-b121-11af8b65d5ac"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(350),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2c5c77bf-7ef8-4b2f-bdcc-abd2065e5b93"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(356),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6663f9d0-7227-419c-9a1a-239ed12efacb"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(367),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c7b00843-cae9-48c5-ae63-5798746344cb"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(373),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("fe354983-c0a1-48bc-9ea7-fd543ac93135"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(379),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2edef0fe-3bf5-4c5f-8138-80c37d0e2b0f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(385),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("faa70714-014a-45ee-99dc-0a54afdab7cb"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(390),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5063aed6-17a1-4acb-b409-46359bfe3618"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(397),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9a825499-4276-4aef-9923-6f512b2af0b3"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(405),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("8f072acd-7c25-42c5-a3f1-add6a1eb1b19"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(411),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4067daee-8122-4186-9754-4b4b05e04fbd"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(416),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("46d16e5e-9782-4e2f-962e-eda5fd6ab1c0"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(423),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("cc5a923b-d370-426a-a79b-c5a0b24b671c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(428),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("32624ddc-af3c-4081-9088-bd532380506b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(434),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5db3db67-8e2a-4357-b443-62249a5b89aa"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(445),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a887f173-c29d-4e32-bffe-68ead5d7e40f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(451),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9c8c55f1-3704-4e9d-8fba-33bc659b1ea0"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(459),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1a3629c0-edeb-45d4-adc1-28e3cefa7dbf"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(465),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f6108cde-d242-4c67-a652-44e1805a3943"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(470),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5a51682d-1985-4b42-adf7-15d3b9286f08"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(477),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("db3a2723-1a17-467a-b5f9-21ffff70108a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(482),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2400363b-b9bb-4d0d-babb-8d1cfb7bad2e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(488),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("eb915f8a-9d8c-4b43-b960-4260656f39ba"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(494),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4e874104-9079-466d-96d6-1c10eaa71b01"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(500),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b40816e2-37e0-45fd-a150-5d70e066063b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(507),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0fff4ad3-3e65-4c66-8576-06bb60684946"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(513),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ab0ec163-e386-4ec3-9d6a-847232fb457e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(523),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("666c0874-54af-4018-aeda-1aa45c91e7c0"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(529),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("da9c8629-1067-4df3-84cc-049d3fee66ec"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(536),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("bb8b2e84-086e-483f-8661-0a9467640940"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(542),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("29912fd8-af91-47e5-915e-00cb4afa974e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(547),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("953a3104-4a74-4839-9869-ed4f43843f74"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(553),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2bfe20b3-0174-4ec4-a869-18719d91d18b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(561),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("dc9a671d-021f-46f1-80b1-3f53b1265f80"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(568),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1ab472f6-4510-441f-900f-41f970504c90"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(574),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ea8d19b7-d985-479c-be59-546f2363635e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(580),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4de623f0-0a4a-463a-86a5-efe9e1f3f481"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(585),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0a34bb18-4239-4f6e-a964-41be673f0685"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(592),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("81f9d240-20ef-4110-84fa-4787ec8fb29f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(597),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("780e3cd6-c5da-414a-9a39-e53c31345e8c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(608),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a1737cc5-dfed-422b-8035-d68373e773c2"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(616),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("09827eb2-621a-4a2f-add5-29a7c83c478b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(622),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9c4f2125-138b-429f-80b5-48de5d5fb661"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(627),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("285e4105-cfaf-4363-8452-4cf45b955aec"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(633),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("69b4138b-1286-457c-8e0c-dd59e3f42944"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(639),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b8fac8e0-be73-4fce-88f6-29899ce37b4e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(645),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("05b0c959-7f5b-452b-a5a6-f2798697d299"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(651),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("45123a72-3fb2-4529-a1e2-f538c8c59ec9"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(657),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f530f9aa-af29-45d4-80d8-8349a381fe23"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(664),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b865887e-031b-496a-a8f5-36dd7ed479f1"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(670),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("33d2485c-a14a-4c00-90f2-d783adb715ee"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(676),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d7a22347-f50e-4aba-84bb-c200b2af61a0"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(691),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("348ef450-3543-4058-bbfb-b3a932651f5e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(697),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6c2d86e8-d83c-4018-8d4f-710028b4ef4c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(704),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b498b9d3-2ca8-4ebc-b9c2-7e68f8096495"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(710),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e1680ec8-a925-4afe-8879-470b6782c21d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(716),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("152479f8-7683-4646-8b97-db7f4daa4b74"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(723),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("07f31569-23b4-4821-a69f-bd1468b04ec2"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(729),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("cad80fa2-6b5f-4568-8ed4-789ef070d581"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(735),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("df597c4e-30ef-4c21-9df9-a60c6f217f33"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(741),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("47fb04e2-3ad3-4133-a2f8-2f44dc8fb853"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(746),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("eac54959-c3c2-4ce2-b3d0-d43defdace53"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(752),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d780578b-d24a-4119-b6c7-6090e015a922"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(759),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("aeeb929e-0b3b-41c3-b52b-4552d3d289ce"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(765),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("aa11006a-80f5-4a15-8d5c-8e81b5898d39"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(777),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3360cf64-e895-4353-a886-43cbaffc8951"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(783),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("75ad9600-a867-42b3-819f-847fe8d25449"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(789),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("425e33c3-0452-4b40-81df-f53eed9dc92c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(795),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ba11b929-b098-4200-9424-fe8d2755e93a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(801),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d9a64c8d-31c9-4172-a968-8b8337095b0d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(806),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3241347b-3e69-45bc-9149-8b363a1592cf"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(812),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c0c4215e-ed4e-4173-931d-0886289a60ef"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(818),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("955034a5-5749-4fdd-926c-fd849e3d4844"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(825),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a04d04e0-c436-43ba-a590-6180f671be4f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(831),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("79b41fde-d13b-4f0d-8f81-31c1a510dbac"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(836),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("cabf708c-bdbb-43c2-b2ea-332b9440c9df"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(842),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("46932dad-1b25-4dfe-ba5e-2f68c2fd32eb"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(848),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("47752ff5-3581-4e74-a034-785a0d8a694b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(858),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b71b94bf-39f3-430b-a211-fb1198a96541"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(865),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1db9fba2-a836-49b2-8c3e-c1ade26f7b6b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(871),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("fd8461b9-ef8c-4df7-9eff-63639760651b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(878),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0691546f-ce69-472e-9de9-cb1fffb7a3a7"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(884),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4bff6300-30d4-4285-9715-cf607dc8929a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(890),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("64072e89-58b1-4d43-ac6d-5d116ff49d42"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(896),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("708f2660-f54e-4feb-875a-529ebee19639"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(902),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("65a40208-74f1-4ff5-9b3a-69136ee90199"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(908),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("72f3217c-4149-4590-96d4-7bfd0a92abaf"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(919),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("cc27270f-5cf8-47c2-ba61-04585ee426ce"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(925),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ef5fd333-49f0-482f-bb1c-d595b9972d48"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(932),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("68f62a1d-1012-47ee-a1ec-352edeeb8097"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(938),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("dcb3ee95-9710-48c9-b4b9-6b9f264f634d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(943),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("565eb557-e45a-4ac0-a430-68bef922ed3a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(950),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0b2ae5eb-6e76-458e-bd24-10715513a966"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(955),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d312be82-7381-4757-825a-e81704a78a34"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(961),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9b11ec07-f957-4662-9ab2-5cd76216a0b2"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(967),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("476d6df4-9a38-4a00-b434-81048bb7ab58"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(972),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("086cd50d-378f-42cc-a2a5-8b9c69c7c681"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(980),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4d51c3f9-ef67-4ba5-895b-9e7fb7e3425e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(986),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a78e8a2b-ce7e-44e2-ace4-9cc967856cfd"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(992),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4be48372-f56b-4bf0-af94-6798aec5b266"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1006),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2bedf22e-c24d-4931-8c39-7b6ce4558b8e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1012),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3da6ff89-0a7a-4946-adee-88f32b32230c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1018),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("7a5bcb1b-5319-46aa-bb07-5d0883359074"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1024),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4aaef687-59ad-4a27-8f07-7175fae47f9c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1030),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9ed7c5ea-bed2-4e54-879a-471752859453"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1038),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("be521b01-e259-4313-8775-b66c60b905c2"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1044),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f068b87e-ecbe-4fb3-aea7-216f9331e9f5"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1050),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9d050688-3b31-483c-829a-33b0f189efe9"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1056),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ea246de6-16c7-4519-b5c3-616afa51e75b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1062),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("555e3182-7865-48fc-8bdb-15c5894dd307"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1068),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("443ccaf4-c99c-415e-af4d-21a7faf23fd7"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1074),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1a5291bb-1e11-4611-ad90-fde302c571a6"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1081),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("37dcaef5-3f4f-4594-bfd2-22805266f240"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1093),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("84bcfea8-7f73-4a8d-ad02-85243fe36121"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1099),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5bf01683-f361-43d5-a642-90e6c3e63e48"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1105),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("aaecd671-5540-4c73-8020-e9c6295f4796"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1111),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d67e6e9b-74ff-46eb-91fe-e9c8b4be18da"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1117),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("34018432-4fba-4515-a37d-35c3e52f2833"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1122),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("79dac157-5bc7-4b17-a427-0bed43d0a1e4"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1128),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b282c287-fa96-4b7b-94ab-5c7680cfe353"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1134),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("616745bf-192a-4ebc-9761-a1ffea768512"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1141),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("98a5cce8-6988-4c49-8d15-cd3e3ac1236b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1147),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("08ef5985-93b1-4707-bf05-5386934eb6b5"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1153),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f5a9e4f1-9bf8-424c-8fab-25caf896d7fc"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1158),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9b8dcbde-c336-4157-9818-0da1570f94e9"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1170),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d9d0af41-dc7b-488b-b46f-1732aef6b841"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1176),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f9871463-526e-4da6-a6ed-74beaee9be5d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1182),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0c029ab0-04e5-45d0-89f6-dcafb1d0ff44"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1187),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("dce4814e-4ea5-4d5d-9e90-d417a444ea0e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1195),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c9bdcfde-623b-4f48-951b-f347fc0cea1c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1201),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("07102457-f2fb-4f2b-8986-d65e0219847f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1207),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ef2a9a87-2bde-4259-9564-049b5bf8beb0"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1212),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5e442442-45d3-48fe-b292-7ac5a6950019"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1218),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("edc69e64-e596-4ce1-9181-9811372237e4"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1224),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9a708e68-90ea-430e-b5a5-fa25c3c4d1c9"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1230),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3c28ea64-6c55-4232-9bfe-f2344a702c87"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1236),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5ccda0fe-a250-4afc-a39d-4af2e75c5e0b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1244),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4f825918-0944-4916-925a-0d124f42d91a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1254),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("25bbeb60-0141-435e-93e3-a98b8ae58b40"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1261),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c83a7b6d-3952-4856-ae58-e45d88bc1309"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1267),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("aaa3c367-eee6-4055-bb86-76a4a509a4ea"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1272),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("614bb842-d832-4fc9-b1bc-30a26ad66aa4"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1278),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("db4a065a-b803-4842-9a8a-6b73dc27e082"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1284),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("576f8ac0-f967-45cf-9d1c-a776b43f3480"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1290),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("64cbaf5b-ba84-45d0-a16b-39a7c9ddf034"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1297),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0a014b3c-5297-41fc-be90-b308b1e55040"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1303),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3d9b14be-df3b-473f-9afd-9de891bb1916"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1309),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d58419c3-1172-46ac-af82-98b1937698fe"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1314),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0e67b390-ec0b-41b5-84fa-fd6466e23135"),
+                            ChatForeignKey = new Guid("c3f257ff-1c86-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1320),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("bd828517-d74c-4b56-9028-4faaf8179e95"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1376),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6701af9a-e9b3-4baa-a81a-88955d62c658"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1382),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c770ef4b-85df-484b-978b-cf7e31b870f3"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1388),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9e65a6a6-5b4d-4992-b468-cf71c03d6c21"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1394),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1e29dc3a-692d-4fc9-bcee-88395402cf7a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1400),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2c29139c-d482-43b9-a081-34b9488635c2"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1407),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6239ffd0-b5fd-4b36-b793-b0ea5cb747e1"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1417),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ee44e707-d4e8-4691-95fc-b3d3bd5c369d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1424),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5b10ff2b-6db4-43c5-a2ab-234ac2adbb98"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1430),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("042f5196-8da1-443e-9546-497878c5ebe0"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1436),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("761ea59c-1216-4205-a82c-93ab6cd93e5a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1442),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c2e4484e-c3d2-43b1-9dec-6bc1251192e3"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1448),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("369bfbdd-a991-4dfb-b948-d27d72f74f53"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1454),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c7852169-acc1-4f23-b5b6-5cf620f27390"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1460),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("27a8d3be-330e-44e0-ae85-2e2182c7737c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1465),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("22fab745-9c2c-4f09-98c1-f1a897df400d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1473),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f0010c1c-a37c-4475-bab7-05bff7a85916"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1479),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5c20196a-af1e-412b-bb86-bc4d8f100f0e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1485),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b9250f47-753b-4480-a04f-d08b22c62bb0"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1496),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5a3fed02-9337-441f-9215-3dc277d8a778"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1502),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f75ce565-f3ca-4598-bdae-7915278684c5"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1508),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ddba1498-9508-4754-8de6-426012140d3f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1514),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("30c213d4-1249-413b-b843-65d320ac12d6"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1519),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ae06091b-3da5-4f2b-8c62-fa35e6ba41ca"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1526),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("8ec26709-018b-4605-81a2-8a723ceb105f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1532),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("88bee7f2-4c8e-4438-9e6d-9d93e8f5ffac"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1538),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("792263c0-9ee4-41d7-b52e-0c0187df6630"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1544),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d32b4f7a-5247-46d6-9f74-f2afb12440e7"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1549),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("271709a3-ac2e-4df2-82dc-26a94a5cc9ae"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1556),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("42e9c50e-e383-474b-8c0a-4f7e3f420824"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1562),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b2bf309b-8a52-4392-abf8-74b0186e3783"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1567),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e127efec-f322-4892-94fe-bed15423b230"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1579),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("461ceb13-3659-4656-b1e2-d57223808283"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1585),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("aa3e95fe-777c-4121-a2fe-da17892b40f5"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1591),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b5eee851-b38f-4a25-9616-7321148f031e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1597),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("72169792-7b3f-4914-a193-582239dcc131"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1603),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ebed1a04-bff1-45a3-ae88-7dfd968d1a63"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1609),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3cda5ef8-3beb-4898-b318-72d98b724943"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1615),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("28cfdd9f-74c7-4e37-8c6e-27fae553d516"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1621),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("25d2c985-ec1f-4c30-881c-4122ce0977d6"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1628),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5a81888c-7f46-41a6-84ca-86e78684506a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1635),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b1116d3e-a2c9-4134-9f7d-3c3c22a59c0d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1640),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("788f4efb-abef-4b43-9163-d033a4c7d2cd"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1651),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4a33d161-ab4c-4686-b77f-0ace2248d43c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1657),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("7e685dd0-2a7c-49f1-9530-5b69e73b0b02"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1663),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("644a2f80-844c-406d-ab64-fa0548635fa6"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1669),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ccf017a7-d3f4-49a0-b2a6-c265dbddb4ea"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1675),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("45b4e79e-4ca1-466d-996e-e3d14925c98b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1682),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b693e81b-f26f-45ea-9006-0369a4e06709"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1688),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("482c6291-1cdb-4d42-ad04-2c2a0d09fd8a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1694),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2947abd2-a5ca-4ec9-b453-371f01b1d638"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1700),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e28089ce-ffb9-4b7a-a204-121c9623a4a8"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1706),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("61ebbd0a-d45d-4b7e-b416-1f97ac91576a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1712),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("55e9f46e-a765-4531-81c2-31a037d2544d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1718),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("00b2e2e7-c72d-4e37-a50f-73c1d9b4472f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1724),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("799d61ca-73d8-4d5d-8ff6-429c539c96af"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1735),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("bfac636a-8337-48d6-b647-5904d0d5c1ab"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1741),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f6399586-3221-46bb-9c88-102d58d4f452"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1747),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6a5b9ab1-483b-431a-aecc-573361416b8d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1753),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("7e7b15bc-9e25-4f60-8cd3-90ceb664fa76"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1759),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3ba32b0c-fbf6-4e68-94dd-d064a4469e81"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1765),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("94928924-998a-48c2-b4f9-83aa455874af"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1771),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("cdb1969b-c25a-43da-ad69-3f7d2a594f9b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1777),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("39dffa66-91b6-4147-a1ea-7a7d1d4fe62f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1784),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f37d1caa-da7b-415f-86bc-12c82d109a8c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1790),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f17421f3-76dc-4bc5-9f6a-7b5d7ce73285"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1797),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c0edf65c-e3e4-4e2c-84c2-a3ccf0af55bd"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1810),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a8cb6816-84f4-4c7a-af30-6e537ec4d218"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1816),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4be7abbb-b7a8-4f25-b665-3a6ece3114d7"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1822),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f616a532-f7b0-4579-89d5-909773b254a0"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1828),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("94b1856b-2525-49b8-8d2d-0a5808c1e269"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1834),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6027c97b-af51-41b7-8907-43c62fdd687a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1842),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("21fd8888-9c1c-4399-a14d-43314c81ab6f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1848),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("84098f04-5b13-41c8-a7f6-9dfa11b39959"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1854),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("cbeadcd3-3ec7-4ffd-84fe-b9ca2fa3591f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1860),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0c7bfead-97d1-4b13-99ae-4bba5c5012d1"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1866),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1f9f6099-a82b-424d-8866-3cd9216337a2"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1872),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3ef77753-d6ca-4e3f-ac33-3217920c521e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1879),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b56e4298-05e9-43ce-9b35-070a1503f684"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1885),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9b59b010-4c3c-4cb8-b3d8-2ab7ab19af8c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1898),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2bd78ec4-cb2f-4d6a-831d-f7721f9e7242"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1905),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("88e66b39-9d50-4bbb-831b-71550d226ea8"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1911),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("588cb5d6-ab90-4624-830f-3373922bc1a8"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1917),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("936f041f-c9ed-47e2-a1f8-4ee100c870b8"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1922),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("55edec6c-46d1-446d-8665-9577a05fca9a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1928),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("64499983-1b7d-40f9-a411-3eda83a71621"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1934),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("fbe2cfa7-cdc8-411d-96d9-1c3d718943f4"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1940),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9c69b0d1-b3ee-415d-9db6-52780f630b20"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1947),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e6a2daf1-ffb6-4529-8f7f-5a414369ccce"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1954),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("8e6c51b1-fca9-4da7-a216-c8716ce27bed"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1959),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("57612baa-7bfc-466b-b625-c8a26a98a1a7"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1965),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9750dec6-3e5a-4861-82b7-20570c2511e4"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1976),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d836b67a-e35b-47c3-8296-8b4dea74b181"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1982),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c3f48ba8-7c49-4280-b7b6-ea97b9d6a67f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1988),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("51129942-10d9-4e56-9bda-87fa3e6dd76b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(1994),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("34c39013-c63f-49e0-926d-738696139d07"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2001),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d41497dc-1a30-423c-b9fb-2bc8f78d6139"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2007),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("79603a75-7997-4004-8beb-8821c4524c92"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2013),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4e1b1490-c28d-46db-b35d-0f45cae1bc88"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2018),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("08fee125-2c5d-46b1-bd3b-4050dd33c2ff"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2024),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("8c8ce169-c3c3-4a19-82e5-f520673a628e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2030),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("200181cb-78e6-497c-9f50-2914da3a935f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2036),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3ef12f04-0f61-462b-ad5d-f9656b50f194"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2042),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("7262fbb2-25dc-4861-b06f-f740315d60ea"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2050),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("7e35ce48-cf5a-48d6-9719-fe58a0fc3dbf"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2060),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b176b067-62a4-4b35-ab5f-e6b6e2a8765a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2066),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1c3e22e2-6c8b-45ed-a058-75fbc0dbd3ee"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2072),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("7d636d4a-f77e-4f83-b196-e67bf0c86486"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2078),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("02339fff-8706-4dff-b22f-3e508cce9c32"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2084),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("dbd452dc-57c6-4301-be6f-fc92f75b8471"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2090),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4fc029f5-988e-4afd-9f60-d7790dcb3987"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2096),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("23059711-f7bc-41ea-96e9-64cd2fc5c4d9"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2103),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a9b7deec-5144-463a-83a5-8f7f7d34425e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2109),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4977d414-24d5-4fa9-8d49-677ac1d5d8c8"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2115),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("032f52fa-16e4-41b0-bc11-494b44b4e610"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2120),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("edbf4c8b-d4ec-41d1-9092-6fb5a13ad2a1"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2126),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ec15068d-9dbe-4d61-b5d1-b54a9bc93820"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2132),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e34f9ef2-27bd-44a1-b704-35f7c64e2c85"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2142),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c631fa69-c657-4b70-9ae4-918246a576ad"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2148),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9ef0c8e1-ed03-4b7e-b945-1d08cfb711db"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2156),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("80d11e39-d437-4b74-aabc-9c56a1be41e6"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2162),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("012965a9-ecac-417c-a77a-8152fe21fae5"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2168),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5541d649-5927-4b4d-8ba2-3e71d7e7e300"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2174),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f6077acc-f2d0-4e62-9109-b903e57a14e1"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2180),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("32873099-75b3-48f2-989b-3effaea7ace8"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2185),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("420c861f-2898-4531-8e2c-cee08ff28b86"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2191),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a5667c05-300f-4c81-ad4f-ad710fcd5456"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2197),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b7e8aee1-7c1a-4c1d-9be2-c6268f19a2eb"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2204),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b279ea7b-58b5-4c9b-a659-62bd021ec5d1"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2211),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("95799253-0591-49dc-af63-a58eb275896e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2223),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d9c50ce8-d14e-422c-b2e6-1e133cfc23ea"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2229),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5458dfce-7956-49ec-8bbc-817839608404"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2235),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("69388e4b-2d02-47e7-a219-a1e4b844d677"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2241),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3b68b836-5705-4d80-b08e-ea98baf273cb"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2247),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4327796a-6daa-4e7a-a969-9a1c7939b37d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2253),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("cc6baf15-61c0-4176-8435-b1c279eaef24"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2260),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0764782a-99bc-4121-8f10-c214414ebd05"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2266),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("206ac957-8798-40ba-bd53-6548c1cec940"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2273),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b79ac7b4-abeb-4508-8075-d9045e6684d3"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2279),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6e2c7615-5056-40a1-b663-a2abec7f50bf"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2290),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("98336917-f9bc-4b74-9c3d-19417b548a32"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2297),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("91362d71-a8d1-4b15-91b2-02e2452cd7ef"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2303),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("70940998-cda0-4d03-a26d-741f910cae51"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2309),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a5e9f861-bdc5-4c85-9b67-6bc4dd35aecc"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2316),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("7c9a6d38-9783-4ec4-a848-99aaf9879880"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2322),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f5a14ccd-0ae5-4760-b591-1a65ac7f2acf"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2328),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f35b594b-e552-4ed0-adae-bc2c6250f50f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2334),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("133bde6e-69c3-47dd-8215-30f81de29f09"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2340),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f86ba0a4-4bb0-4013-aeb9-627cf84029cb"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2346),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("83336fbf-af14-41bc-9625-4bb591386539"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2352),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("76191369-f1ca-4a30-be63-24e44b254307"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2357),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d48fec25-12c1-4441-b48d-f553229da52a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2370),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("68e29e30-6743-43d4-a80a-2309bd94e23d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2377),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("83726217-f9f4-4158-8798-5dd2302a47fd"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2382),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c86a206f-d2b8-49c3-9d5b-dbd715d8c0c2"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2388),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d3b7eea3-0266-4646-98b0-5e7b252ba448"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2394),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3048006d-60c1-4245-95ad-62ce7ba57d5f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2400),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("fb22c0db-6212-4bba-915b-1ffd0cffb78f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2405),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c81a2289-00ca-4c59-9a6c-7ddb4941ecec"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2411),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("909b58e2-31d8-4db6-9979-c9d7d6f44d67"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2418),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("497f897e-3cd7-432a-aa84-fbf953a9e979"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2425),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ac267447-96ab-480e-815a-374cf7751ebe"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2431),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("8d874c69-3a96-497b-aef6-eef4b4c45e30"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2436),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("50401c50-33a6-4d37-aa1b-d851416b1b6b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2442),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e355c91c-3f33-4a6d-8f7f-31f67747bce9"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2454),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("930db531-781d-483d-8a45-83af8fd2cbfc"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2461),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("afc540da-d8e0-46a5-8121-f90b0535fc35"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2467),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("7672278d-5aa3-4da8-bfac-50f1ea01ef02"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2475),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f770031b-9398-4789-8de6-9392fd41ed08"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2481),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1a306415-b115-4ee1-b22a-b7d4736f11b8"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2487),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e848d903-c837-4c20-84de-e8e93d31ffd6"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2493),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("209bc69b-4b80-4aff-8b88-2139fd5c7aad"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2499),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6016e7fc-9c32-4352-81b6-5d95e9afce0a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2505),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f471c7e4-a921-4b69-ba03-23b8ca023d47"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2511),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a79eb5ac-65a9-49f5-acad-e22af8a6405f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2517),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("16f8267f-ea78-4b26-824b-80f5c6818490"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2524),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4007943a-7504-4f34-9d18-cf685bcef6b7"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2530),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("57a620de-f4c2-4012-9470-64dff49c5414"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2541),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f0d3ee05-fd96-4b55-886f-223bfe1128c8"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2547),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6b2ec435-ba1b-4f1b-ac59-cfda3a1ceea0"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2552),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("762397a4-74f1-493c-8da7-90e4ff7ed630"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2558),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c75ca41d-8a36-43c1-8b86-1650595314a5"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2564),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("93ac5b1f-a60a-4d1c-b851-237b0806cd56"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2570),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4278e565-d9a1-4dd2-867f-04f7f30918b0"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2577),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ce32be49-817b-4b1c-9ae0-357932dd9259"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2583),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0922717c-2d97-429a-af94-ba14e5fd1775"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2589),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a271421c-7d99-46e5-936c-8b9dcaef3e13"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2596),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0c745a8f-e6ec-4b38-8ccd-156caa47a793"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2601),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3d99d15f-565b-443a-bf14-afc58005085d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2607),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1711f70f-1756-4238-a15a-20e46d02c9c6"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2617),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("39627462-774e-40a8-9002-f03156888746"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2623),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e5bd2a60-0a54-4efd-8eb9-143458879dbb"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2631),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("8d561bd8-bbd2-4185-99be-7771603e5164"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2637),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("19c021e5-5f9b-42b4-9e3a-408ccee8e296"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2643),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0a5cd5c2-3740-49c5-960e-f314070c328b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2649),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1921778b-6481-4587-a6fe-5202f6df4c58"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2655),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("414c2d58-a116-4e2e-974e-7331395f418c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2661),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("986848c8-02eb-4b49-98fa-81678f222722"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2667),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c893a30f-6dd0-4a5f-ab58-c7af5a65c85f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2672),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("8425d969-b57a-4c5a-b04e-382f4a4cd8bb"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2679),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("65309ff7-4bea-4c8e-a47d-c4bca98c0b15"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2685),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0aeb9897-e7a8-4195-b5c1-4f0b56b4bd82"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2691),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5d86ffb8-832e-4611-86bb-3f65f3209d41"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2702),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5383edba-f62f-4c89-b559-5d7b45ea590d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2709),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("bf2f0ae5-6df6-4b2e-b178-39ef440cad72"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2715),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b1ed14a5-cf58-4245-ab4a-336932d1d2c7"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2721),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("12ba9058-8f42-4d84-bc34-432ea3c540a2"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2727),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5da43492-299d-4228-a62f-fc1667cddd79"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2734),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6e4a8d64-c944-4b56-9e9e-dbb410473c6c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2740),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5ef0e917-0d9c-41a3-bd07-495387934113"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2746),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("905273ab-2aff-4fa3-9656-9162d2c0b077"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2752),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("68d79580-df14-4c37-aa34-b60796753ae1"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2757),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e4cf3bc4-1015-4d06-b774-d990ebb63e0e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2763),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6c281b44-75ac-472a-837e-5d8787c9dd82"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2769),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d10b9a17-660f-4d95-a20b-a857e54eb9d2"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2775),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("31ebc424-7e9b-4e77-a0e9-be3c347d164f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2788),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ab21e69d-9ac3-4fef-aac9-0770bad30184"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2794),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("abbf92d9-4c6b-47a5-b018-436cdd85731e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2801),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e82245b4-2768-43b0-af56-949f955067aa"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2806),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("eb8f615d-ae13-4a57-befc-2a3c0624d8c6"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2812),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5bb04685-43ce-421f-9830-24843c638049"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2818),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6d089691-a46b-4a34-a20b-ac68ad31760c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2824),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4f6a4587-1c24-4721-802d-26c7c87138f9"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2829),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1ab54456-e04b-4c9b-8925-a5f5563fdf42"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2837),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("67b0c2c4-81d3-4ba6-a3af-1923b5458823"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2843),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("538e9e87-f571-4013-85c3-ddaac9e83da8"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2848),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("056b36ee-0c2d-462d-b9d6-c38de8937719"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2854),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d925bb38-fba5-4397-b354-3bc81fd1569f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2865),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("215a824d-2ba4-4a6d-a0ad-b05158fe5aef"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2871),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("55c91d90-2d03-482e-a3cf-f8505afe749e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2877),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0b1c14c0-4e76-48da-b6e7-fa98c3243822"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2882),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d18e6356-bfdd-4726-9de8-246f24d8388a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2890),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3b1fb48f-701b-4924-adb8-25fb0cbc52c4"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2895),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("fbfac942-a76d-4773-b9b4-09c604ac5f39"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2901),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("8b472d9c-f881-472c-bc20-d160ddc3d9a4"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2907),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c878e4e6-68b0-4e68-b41f-0a53a24f375a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2913),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("197b1f48-203a-4b28-8345-bc8faade8451"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2920),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("8516afea-d3a9-41da-a63d-8c6ede838236"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2925),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a44eee76-6dd8-475d-b4cf-d4dc4682e870"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2931),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("67923e6c-0d54-4ff1-88f0-7f947cb1cc85"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2938),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("53939e08-ba8a-4734-9732-eb71905eae39"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2950),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("72f310e5-5d63-431b-ae78-802cb5307864"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2955),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("44c3f8c7-db56-41bd-a68e-9c33cfe1e7d8"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2961),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2baf4bf4-a550-4dae-ba0a-da21194f7b6d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2967),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("203e54ff-cdc4-4d18-a090-885bf4fb8c7c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2973),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6d74cdf6-7f12-4fa0-98c3-a78e04d50b15"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2979),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b0bb8094-1d20-4874-ad2a-a652d7178549"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2984),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("83081c53-7d09-4d71-8f2b-c0bc56bd2a33"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2991),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("7c929253-b5cf-43bd-b737-bd9a58243aaf"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(2997),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ebabcaf6-d920-4043-9732-1c8bec4ff13c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3002),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c5b2ffad-42f6-4f9d-b0a3-13baded3923b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3008),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ffa23144-241d-43cc-b58d-4d6aea2d038f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3014),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("53c8a338-8e47-41ac-a45f-d0fd9b3dc5e0"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3021),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("dba33c0e-f217-4ad4-b994-f46a9ca86725"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3032),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("09b77c27-3771-4451-9344-5edb043fac9a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3038),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("8f039f78-27d8-4322-ba47-30750e5eb861"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3045),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("90f01ed0-3607-4dbe-a9b5-754b537ddd2c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3051),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("702f0a6d-9b3b-4676-940b-c4f812483dd2"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3057),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5c9e6278-c32e-4021-9708-17449239943b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3063),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ade795a0-2a21-4e4c-8d96-53e4640e5ac9"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3075),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("66cfca3d-3428-4fdd-a8fe-73a04d85fc92"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3082),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5c32b5e7-005b-42c0-b29e-08a20884c160"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3088),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("97263b18-da94-4fd0-8595-109ae1fc0b27"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3094),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("bda66325-6634-47ef-b1c8-6ce97986bc0c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3101),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c1301241-46d8-4121-94c8-e770d033414f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3107),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4d87c992-6c08-433b-b5fe-d0d991f5548a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3112),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2b1875f4-7f18-491c-862d-a35d2b297d1e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3118),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("82d0a6bb-902e-481f-9a2c-0af8f05611ba"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3124),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("726c5c2f-dcf3-4a8d-902b-23c5af3ed485"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3130),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e67b67b7-a10e-4b0a-a666-a6fb7b8a493e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3136),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("67644112-ae02-4b7b-b10f-7cd5f0fd0f49"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3142),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6a4b47ee-2415-422d-84a0-990923473e53"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3149),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6747cc0d-3d55-4d8e-b501-386d217d0721"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3160),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b7b7c5ad-fba2-473e-b6c6-f02b9451ed5c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3166),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("35d9a1f9-6492-4adc-b15c-853f9e5db2c1"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3172),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a40f214e-e028-4305-b557-74c2f8f717be"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3177),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c5fb2d3e-1bd0-41a9-8576-78102e2f41bb"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3183),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("fd2023a3-feb5-4e9a-93c1-6a2cdda05656"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3189),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("03631dff-4349-433b-8a80-31ea60f34112"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3194),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d39d7298-8fbf-4159-a037-de95573ad02b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3201),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0a561930-9b19-4185-8e64-40a47a86f994"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3207),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ca3ad5c1-928c-47a2-baf8-2eb6b917f23c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3213),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("60576028-3d32-4ca2-b243-49367e719384"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3219),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("553cb5b4-9af2-4dae-8c97-6831cae1dc2c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3224),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("814fa1de-4c62-4e8e-a713-b712d9ee2acd"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3236),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e5112308-fa1d-47a3-8bb4-e9a52059e188"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3242),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ab966569-167c-4ef4-9997-9e4f784cd843"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3248),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("eee11b4f-0156-4878-84d5-8df922a98980"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3255),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b23e1b8a-ab0c-4a85-89d4-b0e90699903b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3261),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f440fb2a-c410-4c53-a210-88f810f07b91"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3267),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("75ce153a-2e3d-4f77-a6bc-d7cc9ed1fd62"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3273),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("14cb6cd5-41fb-4d0a-a86a-818b17429278"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3279),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c4cac260-bb49-4fa9-a6da-ca5759124130"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3285),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("387d039d-ee22-4831-8bec-89324227e11e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3291),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0de1cca5-c105-4472-9de4-0da0441e6a97"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3297),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("de2de1f1-51d1-4ca3-88d8-2d7f796cb635"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3304),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("58683fb7-a8b7-4823-bdc1-8d9b6672c856"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3310),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("8732396e-9f6e-41db-81a7-e25366baac24"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3321),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3ddb304f-f4b3-41f9-9296-948ec696c06b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3327),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b0bb3dfd-5a5e-4d7c-8770-804d2603c873"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3332),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e46c754c-d211-462b-ab92-d380c5963922"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3339),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("fbc3f1cd-c162-4891-8675-ef12cc89f981"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3345),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d8204288-7aa8-4584-b598-3f8bfe237fbb"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3350),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("34f16024-515d-4b13-8972-921c2ade9ce6"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3357),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2fe80e99-39f9-4c50-8ef2-8cc1e25e24d4"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3363),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("79071fb8-f19b-4b84-b12e-747ec4296320"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3369),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("96af0724-966c-4ff3-97c8-c9cb1e5883bd"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3375),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6ff61fff-00fc-442c-a2ac-53ab65b5f9fc"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3381),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9b5771fd-f003-4a8f-aac0-0095eefd2aba"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3387),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4a7d40a6-b1c3-42db-b14b-d473679c7d16"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3392),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3fec51b0-8557-47f0-94a6-93d388524a4c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3403),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("7dd9c31c-4bfa-4af2-82be-c101537698f9"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3410),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("d8f111a9-5386-4f23-b460-39207bd3411b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3416),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("736eff4b-da79-45df-af92-77120daf8fb2"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3422),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2c54ce52-37de-46d6-b184-c3bc62dad39f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3427),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e586df82-fffa-41f0-869c-28fc9dc96452"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3433),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("7edcf433-145a-4000-a686-54cd3458b3a5"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3439),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("10320891-1ea3-4e51-bc4d-3ec4ebee2d76"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3445),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("7fc5d284-dd8e-43a0-85a0-943b1fac6884"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3450),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("092b703b-a095-4a98-8038-ddb62797c141"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3458),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f1f7594b-da68-4e0c-9370-2946d497ee66"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3464),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6cbdb010-7046-49a7-9c8d-b974592eab89"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3469),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("8a0f17b8-786f-479b-abfa-a98904a145ee"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3480),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1344d0e0-616a-413e-b0a2-c4ba8441c26f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3486),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("61718424-5228-4818-bb25-1169d120060e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3492),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1241fee8-eb41-456f-94de-62ba96b5d4bb"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3498),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2473e4db-0709-46be-adbc-43724601f4c1"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3504),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("15e4e210-a8fd-4231-9241-418279cb73a8"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3511),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5abbc5a4-7ebd-4f66-a92b-fc6cad92bad2"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3517),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("58af2876-444f-4ebe-aa66-dab27ac33bf5"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3523),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2c2406f4-ebc3-4b4a-a69c-bc8a553a7367"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3529),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("146946c6-06de-413b-b293-079cf48de32d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3534),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9f8bd13f-1907-4b7d-a831-fd412572fe29"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3540),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f7276bcc-7a1c-4630-bbec-632c3799fe38"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3546),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("800e1d0e-679c-47f0-8976-cf15d01b895d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3552),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3c18f8ce-88f8-4e88-ba2f-03b403b508bc"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3564),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("af0724a5-b25c-4c0f-8a42-fdfb43ca3d4a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3570),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("26fdfa98-fc0e-40ea-96d8-68aa19f4b97b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3576),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b648ad70-3468-4f51-a3c0-89a1bc652a0c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3582),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("439a2115-ac7d-4de0-b22e-c2b55d3c8e02"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3588),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c2227f55-49aa-4ec7-b9d8-db2355f11869"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3594),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a3b62fd1-d464-4655-8af7-3b40bc2d0a8d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3600),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("2cb08dc7-6e15-4d92-8ded-33d85b4b21c9"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3605),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f3b53db4-f10f-4cc0-b768-21b379fa4e9f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3613),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("972f6c5b-c622-4b02-85d2-4a4951d800fe"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3619),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b0420fab-e414-4722-8284-e3e892a69c2b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3624),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e0fd2428-177f-462d-919c-0f97130f2f59"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3630),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1d1de1fd-c07d-4f88-92e6-47e0ca3c0587"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3636),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("158dace1-082d-454e-8f78-a2c584ec124e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3647),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("33b6bf36-0a37-41ad-abb7-19148b4c112f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3652),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b11cbf69-4723-4e08-9887-807192ff2232"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3658),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("fbe7ea2a-13fe-4d87-9db5-5a9e64bacb13"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3665),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("dcc51f1c-4177-46dd-aa12-d263f1776dbd"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3671),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("40e69e0b-9b74-4ce9-a0d2-fbae74597570"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3677),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("3caf924b-63aa-4ceb-bbf6-d261989a1c0a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3683),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("9b9d3da8-26ed-4052-a272-480f8c490349"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3689),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("794a5d53-6b74-4f1b-98e0-432cfaa4cbd7"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3695),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0bcd58d3-c2c4-420a-aa5c-01ecd67bb818"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3701),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("82f39f7d-757a-42fe-b67a-5aebdc2e28b5"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3706),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0c67bcd8-6fcc-4842-be04-c8a167abbb07"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3714),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("c6da755d-afa5-440d-8c12-55c15a1f4dd8"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3726),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("b305e308-382c-4c09-90cd-04056a91e7b5"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3731),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("0bcb9a75-8f54-439b-8807-c2eaacfa63bd"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3737),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e9687a95-e43f-46ec-a6c6-37ecd7afb7db"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3743),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ab59a0c0-692e-45d7-bc59-959be33d3c02"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3749),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ceda4b58-3075-4f51-9c48-06b82defbe1d"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3755),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("476f694f-7c77-4565-94e4-6ea07e436e98"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3761),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a02b98da-add9-4df8-b3d8-bc3ab1f298be"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3769),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("51abaae1-9fcb-4576-a62e-c79d843fb372"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3776),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a9e21c56-328e-434a-9e1a-4930db3afc5c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3781),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("f7a226f4-9325-4949-b9d7-c12e4ed69352"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3787),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e39580de-931d-46c3-9b85-144719e40e28"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3793),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("dc9cf5c4-8f87-4150-a480-31914b0b80a7"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3799),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6c705f1f-f2f8-4c5d-86fc-8f3597d37646"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3811),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("585ef4f4-5a75-4f3b-9523-d99b24e559da"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3817),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("00a4aab7-0155-47af-a899-35eb550498fd"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3824),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a12d0258-5150-4778-a9be-6a71acca14bc"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3831),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("4849d145-d617-421d-b8f6-680dfbb1942a"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3837),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("38df916c-378a-43d3-8d94-e092dc9bb8be"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3842),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("e092314c-9093-49ae-914c-858632e1793e"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3848),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("083446d0-a911-4498-8891-e445115ae6a4"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3854),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("77f06530-350c-4d8b-81d4-dcf2d65bc1f7"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3859),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("523666e9-6103-40e0-96aa-89c77754b03c"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3865),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5f8abc4f-6a4b-4a53-9120-66962bfba126"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3872),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("404f4b8b-2d01-4752-b865-5fa61c7943bd"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3878),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("407acb91-77fb-4c41-bdb7-97d38c457e46"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3884),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("221e3260-b047-47f8-bb6c-08e62bd353d4"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3899),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("764819aa-0d12-4d11-b5ba-c9eb49a35d01"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3905),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("270b134b-cfe0-4a63-9ef8-1f30873a3bf1"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3911),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("20b5c99b-8a0a-490c-869c-d4f923442f6f"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3917),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("337db69f-ece2-4f04-833f-6a0e43db8282"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3923),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a8ce84ff-126c-4cef-a320-8a7efdda2d30"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3930),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("6c318782-a5a2-47f3-803d-11531c36e857"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3936),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("5ceb7f8a-b9d1-41d7-a3c0-3c89f8833dc5"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3942),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("084870a9-c4bb-4213-a74f-cdaaef7b7172"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3947),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("a634ac82-23ca-4ccd-9abc-2f621b826a18"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3953),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        },
+                        new
+                        {
+                            Id = new Guid("1fcb2305-2fdb-40f2-badc-e4f651bf5f01"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3959),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
+                        },
+                        new
+                        {
+                            Id = new Guid("90715d91-fbd7-4c90-b9f6-0019a7fb884b"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3965),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ae8a1c70-0084-4037-a499-e21e49031bf1"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3976),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
+                        },
+                        new
+                        {
+                            Id = new Guid("659064d5-0e95-4ac5-ad65-ab2e37cccf50"),
+                            ChatForeignKey = new Guid("c3f257ff-1c95-4e3c-b6b2-21ef9afba21f"),
+                            CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 555, DateTimeKind.Local).AddTicks(3983),
+                            Text = "Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)",
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Messages.MessageOutbox", b =>
@@ -544,7 +6020,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 1, 3, 0, 32, 51, 862, DateTimeKind.Local).AddTicks(3142))
+                        .HasDefaultValue(new DateTime(2024, 1, 3, 19, 5, 56, 535, DateTimeKind.Local).AddTicks(320))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime?>("DeletedTime")
@@ -582,7 +6058,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 1, 3, 0, 32, 51, 796, DateTimeKind.Local).AddTicks(7773))
+                        .HasDefaultValue(new DateTime(2024, 1, 3, 19, 5, 56, 469, DateTimeKind.Local).AddTicks(7061))
                         .HasColumnName("created_time");
 
                     b.Property<Guid?>("DeletedByUserForeignKey")
@@ -623,19 +6099,19 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("776848df-084f-11ee-b2c8-7085c294413b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 802, DateTimeKind.Local).AddTicks(2793),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 475, DateTimeKind.Local).AddTicks(1519),
                             Name = "Admin"
                         },
                         new
                         {
                             Id = new Guid("8937df9c-fbef-11ed-8f81-7085c294413b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 802, DateTimeKind.Local).AddTicks(2817),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 475, DateTimeKind.Local).AddTicks(1550),
                             Name = "User"
                         },
                         new
                         {
                             Id = new Guid("d411a531-fbea-11ed-8f81-7085c294413b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 802, DateTimeKind.Local).AddTicks(2820),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 475, DateTimeKind.Local).AddTicks(1554),
                             Name = "Root"
                         });
                 });
@@ -655,7 +6131,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 1, 3, 0, 32, 51, 864, DateTimeKind.Local).AddTicks(7613))
+                        .HasDefaultValue(new DateTime(2024, 1, 3, 19, 5, 56, 538, DateTimeKind.Local).AddTicks(7616))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime?>("DeletedTime")
@@ -707,7 +6183,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 1, 3, 0, 32, 51, 793, DateTimeKind.Local).AddTicks(2709))
+                        .HasDefaultValue(new DateTime(2024, 1, 3, 19, 5, 56, 466, DateTimeKind.Local).AddTicks(2657))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime?>("DeletedTime")
@@ -735,6 +6211,16 @@ namespace Infrastructure.Migrations
                     b.HasIndex(new[] { "TargetUserForeignKey" }, "IDX_FK__FRIENDSHIPREQUEST_TARGETUSER_TO_USER");
 
                     b.ToTable("friendship_request", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            RequestUserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f"),
+                            TargetUserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(8037),
+                            Id = new Guid("5239a45f-c70c-4dcf-b795-c30bc52c40ed"),
+                            TargetUserRequestMessage = "do you want to be my friend?"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Users.User", b =>
@@ -766,7 +6252,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 1, 3, 0, 32, 51, 816, DateTimeKind.Local).AddTicks(4598))
+                        .HasDefaultValue(new DateTime(2024, 1, 3, 19, 5, 56, 483, DateTimeKind.Local).AddTicks(8268))
                         .HasColumnName("created_time");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -864,8 +6350,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            ActivationDateTime = new DateTime(2024, 1, 3, 0, 32, 51, 873, DateTimeKind.Local).AddTicks(3546),
-                            DateOfBirth = new DateTime(2024, 1, 3, 0, 32, 51, 873, DateTimeKind.Local).AddTicks(3539),
+                            ActivationDateTime = new DateTime(2024, 1, 3, 19, 5, 56, 553, DateTimeKind.Local).AddTicks(3083),
+                            DateOfBirth = new DateTime(2024, 1, 3, 19, 5, 56, 553, DateTimeKind.Local).AddTicks(3078),
                             Email = "root@localhost.local",
                             FirstName = "Root",
                             LastName = "Root",
@@ -876,14 +6362,14 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
-                            ActivationDateTime = new DateTime(2024, 1, 3, 0, 32, 51, 874, DateTimeKind.Local).AddTicks(6263),
+                            ActivationDateTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(4281),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 874, DateTimeKind.Local).AddTicks(6277),
-                            DateOfBirth = new DateTime(1877, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(4295),
+                            DateOfBirth = new DateTime(1875, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "vader.darth.sample@web.net",
                             FirstName = "Darth",
                             LastName = "Vader",
-                            Password = "XB#20jbq",
+                            Password = "HG@61xuq",
                             Phone = "+49175123451",
                             UserName = "darth-vader",
                             UserTypeForeignKey = new Guid("c92db314-765b-46dd-bf40-ef7d5a5abd7b")
@@ -891,14 +6377,14 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f"),
-                            ActivationDateTime = new DateTime(2024, 1, 3, 0, 32, 51, 874, DateTimeKind.Local).AddTicks(7097),
+                            ActivationDateTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(5122),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 874, DateTimeKind.Local).AddTicks(7112),
-                            DateOfBirth = new DateTime(1847, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(5132),
+                            DateOfBirth = new DateTime(1858, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "maul.darth.sample@web.net",
                             FirstName = "Darth",
                             LastName = "Maul",
-                            Password = "OD&36xiq",
+                            Password = "NI#50wix",
                             Phone = "+49175123452",
                             UserName = "darth-maul",
                             UserTypeForeignKey = new Guid("c92db314-765b-46dd-bf40-ef7d5a5abd7b")
@@ -906,14 +6392,14 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f"),
-                            ActivationDateTime = new DateTime(2024, 1, 3, 0, 32, 51, 874, DateTimeKind.Local).AddTicks(7861),
+                            ActivationDateTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(5885),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 874, DateTimeKind.Local).AddTicks(7874),
-                            DateOfBirth = new DateTime(1864, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(5899),
+                            DateOfBirth = new DateTime(1854, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "organa.laia.sample@web.net",
                             FirstName = "Laia",
                             LastName = "Organa",
-                            Password = "HS$38bzt",
+                            Password = "XE&02sss",
                             Phone = "+49175123453",
                             UserName = "princess-laia",
                             UserTypeForeignKey = new Guid("c92db314-765b-46dd-bf40-ef7d5a5abd7b")
@@ -921,14 +6407,14 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f"),
-                            ActivationDateTime = new DateTime(2024, 1, 3, 0, 32, 51, 874, DateTimeKind.Local).AddTicks(8685),
+                            ActivationDateTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(6780),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 874, DateTimeKind.Local).AddTicks(8695),
-                            DateOfBirth = new DateTime(1851, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(6791),
+                            DateOfBirth = new DateTime(1873, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "skywalker.luke.sample@web.net",
                             FirstName = "Luke",
                             LastName = "Skywalker",
-                            Password = "WT@14qia",
+                            Password = "IB!79rer",
                             Phone = "+49175123454",
                             UserName = "luke-skywalker",
                             UserTypeForeignKey = new Guid("c92db314-765b-46dd-bf40-ef7d5a5abd7b")
@@ -936,14 +6422,14 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef3afba61f"),
-                            ActivationDateTime = new DateTime(2024, 1, 3, 0, 32, 51, 874, DateTimeKind.Local).AddTicks(9408),
+                            ActivationDateTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(8717),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 874, DateTimeKind.Local).AddTicks(9424),
-                            DateOfBirth = new DateTime(1860, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(8730),
+                            DateOfBirth = new DateTime(1862, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "thehut.jabba.sample@web.net",
                             FirstName = "Jabba",
                             LastName = "TheHut",
-                            Password = "EX^45jcf",
+                            Password = "YX&28ztw",
                             Phone = "+49175123455",
                             UserName = "jabba-the-hut",
                             UserTypeForeignKey = new Guid("c92db314-765b-46dd-bf40-ef7d5a5abd7b")
@@ -951,14 +6437,14 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef5afba61f"),
-                            ActivationDateTime = new DateTime(2024, 1, 3, 0, 32, 51, 875, DateTimeKind.Local).AddTicks(233),
+                            ActivationDateTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(9483),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 875, DateTimeKind.Local).AddTicks(247),
-                            DateOfBirth = new DateTime(1876, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(9496),
+                            DateOfBirth = new DateTime(1875, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "johnson.carl.sample@web.net",
                             FirstName = "Carl",
                             LastName = "Johnson",
-                            Password = "HE$91xhq",
+                            Password = "WB*52eyf",
                             Phone = "+49175123456",
                             UserName = "carl-johnson",
                             UserTypeForeignKey = new Guid("c92db314-765b-46dd-bf40-ef7d5a5abd7b")
@@ -985,7 +6471,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 1, 3, 0, 32, 51, 782, DateTimeKind.Local).AddTicks(9414))
+                        .HasDefaultValue(new DateTime(2024, 1, 3, 19, 5, 56, 456, DateTimeKind.Local).AddTicks(3091))
                         .HasColumnName("created_time");
 
                     b.Property<Guid?>("DeletedByUserForeignKey")
@@ -1024,6 +6510,40 @@ namespace Infrastructure.Migrations
                     b.HasIndex(new[] { "UserFriendForeignKey" }, "IDX_FK__USERHASRELATIONTOFRIEND_USERFRIENDFK_TO_USER");
 
                     b.ToTable("user_has_relation_to_friend", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
+                            UserFriendForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f"),
+                            CreatedByUserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(4422),
+                            Id = new Guid("de05bf33-cc1c-4c8c-8586-dd477f195a45")
+                        },
+                        new
+                        {
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
+                            UserFriendForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef3afba61f"),
+                            CreatedByUserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(4437),
+                            Id = new Guid("6665e507-a4db-4cb1-ad03-dadb854010c6")
+                        },
+                        new
+                        {
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f"),
+                            UserFriendForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f"),
+                            CreatedByUserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(5995),
+                            Id = new Guid("6060da5e-7d18-4fa6-9a3e-f41ab4166b2e")
+                        },
+                        new
+                        {
+                            UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f"),
+                            UserFriendForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef5afba61f"),
+                            CreatedByUserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f"),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(6012),
+                            Id = new Guid("d72c9682-b198-4bc6-8e92-291321925dba")
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Users.UserHasRelationToRole", b =>
@@ -1041,7 +6561,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 1, 3, 0, 32, 51, 802, DateTimeKind.Local).AddTicks(6498))
+                        .HasDefaultValue(new DateTime(2024, 1, 3, 19, 5, 56, 475, DateTimeKind.Local).AddTicks(5695))
                         .HasColumnName("created_time");
 
                     b.Property<Guid?>("DeletedByUserForeignKey")
@@ -1092,73 +6612,73 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("00f04640-afb0-448a-a1b3-46a22fefcc4d"),
+                            Id = new Guid("9852aca8-7a79-4ee1-98f4-9281754f26e7"),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 873, DateTimeKind.Local).AddTicks(3702),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 553, DateTimeKind.Local).AddTicks(3248),
                             RoleForeignKey = new Guid("d411a531-fbea-11ed-8f81-7085c294413b"),
                             UserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b")
                         },
                         new
                         {
-                            Id = new Guid("09468eb0-96b5-4c05-8cb0-64552952f1a3"),
+                            Id = new Guid("5f617cb8-5c37-4c3f-a0f7-4ad0a8fd9b11"),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 873, DateTimeKind.Local).AddTicks(3738),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 553, DateTimeKind.Local).AddTicks(3276),
                             RoleForeignKey = new Guid("776848df-084f-11ee-b2c8-7085c294413b"),
                             UserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b")
                         },
                         new
                         {
-                            Id = new Guid("87eefb3e-3fd8-45e5-94cb-88152bd2611f"),
+                            Id = new Guid("8a5cd980-601c-48ae-94e0-5c7a014fa123"),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 873, DateTimeKind.Local).AddTicks(3762),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 553, DateTimeKind.Local).AddTicks(3293),
                             RoleForeignKey = new Guid("8937df9c-fbef-11ed-8f81-7085c294413b"),
                             UserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b")
                         },
                         new
                         {
-                            Id = new Guid("d8d2350f-2a51-4243-a65b-ed267139caca"),
+                            Id = new Guid("b230b9ba-3d8a-46e1-b8b7-4acaa95699bd"),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 874, DateTimeKind.Local).AddTicks(6354),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(4392),
                             RoleForeignKey = new Guid("8937df9c-fbef-11ed-8f81-7085c294413b"),
                             UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef9afba21f")
                         },
                         new
                         {
-                            Id = new Guid("9aeda538-4603-410c-a744-a64d37071d1f"),
+                            Id = new Guid("ded9e165-dd69-42d5-b79c-eb8765bfe06b"),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 874, DateTimeKind.Local).AddTicks(7184),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(5186),
                             RoleForeignKey = new Guid("8937df9c-fbef-11ed-8f81-7085c294413b"),
                             UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef8afba31f")
                         },
                         new
                         {
-                            Id = new Guid("9c1acd43-0b8d-4d6d-af72-4563d3fa2ffb"),
+                            Id = new Guid("3e182dbb-3e37-490d-be5d-3b7012bd585f"),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 874, DateTimeKind.Local).AddTicks(7956),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(5971),
                             RoleForeignKey = new Guid("8937df9c-fbef-11ed-8f81-7085c294413b"),
                             UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef7afba41f")
                         },
                         new
                         {
-                            Id = new Guid("1fc161a1-758b-484f-9d40-b0d3fec4e5f7"),
+                            Id = new Guid("8e17196b-c55e-4f57-bf56-dfed90502c60"),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 874, DateTimeKind.Local).AddTicks(8750),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(6851),
                             RoleForeignKey = new Guid("8937df9c-fbef-11ed-8f81-7085c294413b"),
                             UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef2afba51f")
                         },
                         new
                         {
-                            Id = new Guid("dc89065b-dbb7-4625-ac8d-59170789ffea"),
+                            Id = new Guid("d04b0514-039f-481c-9250-68a3165a6b94"),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 874, DateTimeKind.Local).AddTicks(9503),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(8792),
                             RoleForeignKey = new Guid("8937df9c-fbef-11ed-8f81-7085c294413b"),
                             UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef3afba61f")
                         },
                         new
                         {
-                            Id = new Guid("7fc1a0ad-cbc7-4cea-9cfb-7d3b74828f14"),
+                            Id = new Guid("36e8699b-724e-420e-96ed-ef012cc90eee"),
                             CreatedByUserForeignKey = new Guid("c92db313-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 875, DateTimeKind.Local).AddTicks(323),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 554, DateTimeKind.Local).AddTicks(9569),
                             RoleForeignKey = new Guid("8937df9c-fbef-11ed-8f81-7085c294413b"),
                             UserForeignKey = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef5afba61f")
                         });
@@ -1179,7 +6699,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2024, 1, 3, 0, 32, 51, 775, DateTimeKind.Local).AddTicks(8985))
+                        .HasDefaultValue(new DateTime(2024, 1, 3, 19, 5, 56, 449, DateTimeKind.Local).AddTicks(5238))
                         .HasColumnName("created_time");
 
                     b.Property<Guid?>("DeletedByUserForeignKey")
@@ -1221,19 +6741,19 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("c92db314-765b-46dd-bf40-ef7d5a5abd7b"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 873, DateTimeKind.Local).AddTicks(3271),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 553, DateTimeKind.Local).AddTicks(2838),
                             Name = "User"
                         },
                         new
                         {
                             Id = new Guid("c3f267ff-1c85-4e3c-b6b2-21ef4afba71f"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 873, DateTimeKind.Local).AddTicks(3319),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 553, DateTimeKind.Local).AddTicks(2878),
                             Name = "Admin"
                         },
                         new
                         {
                             Id = new Guid("c3f257ff-1c85-4e3c-b6b2-21ef4afba71f"),
-                            CreatedTime = new DateTime(2024, 1, 3, 0, 32, 51, 873, DateTimeKind.Local).AddTicks(3326),
+                            CreatedTime = new DateTime(2024, 1, 3, 19, 5, 56, 553, DateTimeKind.Local).AddTicks(2885),
                             Name = "Root"
                         });
                 });

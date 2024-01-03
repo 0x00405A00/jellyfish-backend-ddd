@@ -702,8 +702,9 @@ namespace Domain.Entities.Users
         /// <returns></returns>
         public List<FriendshipRequest> GetRequestedFriendshipRequests()
         {
-            return _friendshipRequests.Where(x => x.AmIRequester(this))
+            var response = _friendshipRequests.Where(x => x.AmIRequester(this))
                                           .ToList();
+            return response;
         }
         /// <summary>
         /// Gets all received friendship requests (direction: other user to u)
@@ -711,8 +712,9 @@ namespace Domain.Entities.Users
         /// <returns></returns>
         public List<FriendshipRequest> GetReceivedFriendshipRequests()
         {
-            return _friendshipRequests.Where(x => x.AmIReceiver(this))
+            var response = _friendshipRequests.Where(x => x.AmIReceiver(this))
                                           .ToList();
+            return response;
         }
         public List<FriendshipRequest> GetFriendshipRequests()
         {

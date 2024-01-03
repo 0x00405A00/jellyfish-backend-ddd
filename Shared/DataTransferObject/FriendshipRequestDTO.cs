@@ -6,9 +6,9 @@ namespace Shared.DataTransferObject
     public class FriendshipRequestDTO : AbstractDTO
     {
         [JsonPropertyName("requester_user")]
-        public UserDTO? RequesterUser { get; set; }
+        public string? RequesterUserName { get; set; }
         [JsonPropertyName("target_user")]
-        public UserDTO? TargetUser { get; set; }
+        public string? TargetUserName { get; set; }
         [JsonPropertyName("target_user_request_message")]
         public string? TargetUserRequestMessage { get; set; }
         [JsonPropertyName("requester_user_id")]

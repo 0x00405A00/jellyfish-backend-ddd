@@ -45,6 +45,8 @@ EF.CompileQuery((ApplicationDbContext context, Expression<Func<DatabaseEntity.Us
                                         .ThenInclude(x => x.User)
                                     .Include(i => i.FriendshipRequestsWhereIamRequester)//all request that user requested to other users
                                             .ThenInclude(tu => tu.TargetUser)
+                                    .Include(i => i.FriendshipRequestsWhereIamTarget)//all request that user requested to other users
+                                            .ThenInclude(tu => tu.RequesterUser)
                                     .AsNoTracking()
                                     .AsSingleQuery()
                                     .FirstOrDefaultAsync(expression);
@@ -84,6 +86,8 @@ EF.CompileQuery((ApplicationDbContext context, Expression<Func<DatabaseEntity.Us
                                         .ThenInclude(x => x.User)
                                     .Include(i => i.FriendshipRequestsWhereIamRequester)//all request that user requested to other users
                                             .ThenInclude(tu => tu.TargetUser)
+                                    .Include(i => i.FriendshipRequestsWhereIamTarget)//all request that user requested to other users
+                                            .ThenInclude(tu => tu.RequesterUser)
                                     .AsNoTracking()
                                     .AsSingleQuery()
                                     .ToListAsync();
@@ -101,6 +105,8 @@ EF.CompileQuery((ApplicationDbContext context, Expression<Func<DatabaseEntity.Us
                                         .ThenInclude(x => x.User)
                                     .Include(i => i.FriendshipRequestsWhereIamRequester)//all request that user requested to other users
                                             .ThenInclude(tu => tu.TargetUser)
+                                    .Include(i => i.FriendshipRequestsWhereIamTarget)//all request that user requested to other users
+                                            .ThenInclude(tu => tu.RequesterUser)
                                     .AsNoTracking()
                                     .AsSingleQuery()
                                     .ToListAsync();
@@ -121,6 +127,8 @@ EF.CompileQuery((ApplicationDbContext context, Expression<Func<DatabaseEntity.Us
                                         .ThenInclude(x => x.User)
                                     .Include(i => i.FriendshipRequestsWhereIamRequester)//all request that user requested to other users
                                             .ThenInclude(tu => tu.TargetUser)
+                                    .Include(i => i.FriendshipRequestsWhereIamTarget)//all request that user requested to other users
+                                            .ThenInclude(tu => tu.RequesterUser)
                                     .AsNoTracking()
                                     .AsSingleQuery()
                                     .ToListAsync();
@@ -144,6 +152,8 @@ EF.CompileQuery((ApplicationDbContext context, Expression<Func<DatabaseEntity.Us
                                         .ThenInclude(x => x.User)
                                     .Include(i => i.FriendshipRequestsWhereIamRequester)//all request that user requested to other users
                                             .ThenInclude(tu => tu.TargetUser)
+                                    .Include(i => i.FriendshipRequestsWhereIamTarget)//all request that user requested to other users
+                                            .ThenInclude(tu => tu.RequesterUser)
                                     .AsNoTracking()
                                     .AsSingleQuery()
                                     .ToListAsync();

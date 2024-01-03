@@ -66,7 +66,7 @@ namespace WebFrontEnd.Service.Backend.SignalR.Abstraction
                 {
                     options.SkipNegotiation = false;
                     options.Headers.Add("User-Agent", userAgent);
-                    options.AccessTokenProvider = () => AccessTokenProviderAction();
+                    options.AccessTokenProvider = () => AccessTokenProviderAction is not null?AccessTokenProviderAction():null;
                     options.Transports = TransportType;
                     options.DefaultTransferFormat = TransferFormat;
 

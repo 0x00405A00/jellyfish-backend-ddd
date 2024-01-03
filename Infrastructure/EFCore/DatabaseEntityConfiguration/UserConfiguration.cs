@@ -2,10 +2,12 @@
 using Domain.Entities.Roles;
 using Domain.Entities.Users;
 using Domain.Primitives.Ids;
+using Domain.ValueObjects;
 using Infrastructure.EFCore.Extension;
 using Infrastructure.Extension;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 {

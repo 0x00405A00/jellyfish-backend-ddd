@@ -34,7 +34,9 @@ namespace Presentation.Modelbinding.Binder
                     var body = await reader.ReadToEndAsync();
                     if (String.IsNullOrEmpty(body))
                     {
-                        throw new ModelBindingFailedException($"body is null");
+
+                        bindingContext.Result = ModelBindingResult.Success(data);
+                        return;
                     }
                     data = JsonSerializer.Deserialize<SearchParamsBody>(body, JsonSerializerOptions);
                     pageSizeValueStr = data.page_size.ToString();
