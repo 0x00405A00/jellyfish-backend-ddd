@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace Infrastructure.EFCore.Extension
 {
@@ -16,7 +15,8 @@ namespace Infrastructure.EFCore.Extension
             where TEntityId : Identification
         {
 
-            builder.HasKey(ut => ut.Id).HasName(DbContextExtension.IndexNameDefinitions.PrimaryKeyIndex);
+            var primaryKeyIndex = DbContextExtension.GetForeignKeyName((DbContextExtension.IndexNameDefinitions.PrimaryKeyIndex+typeof(TEntity).Name), nameof(AuditableEntity<TEntityId>.Id), typeof(TEntity).Name);
+            builder.HasKey(ut => ut.Id).HasName(primaryKeyIndex);
 
             string tableName = DbContextExtension.GetTableName(typeof(TEntity));
             builder.ToTable(tableName);
