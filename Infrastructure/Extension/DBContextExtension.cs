@@ -40,6 +40,10 @@ namespace Infrastructure.Extension
             public const string PrimaryKeyIndex = "PRIMARY";
         }
 
+        public struct ColumnType
+        {
+            public const string Bool = "BOOLEAN";
+        }
         public struct ColumnLength
         {
             public const int Ids = 36;
@@ -146,7 +150,7 @@ namespace Infrastructure.Extension
                     DateTime.Now.ToTypedDateTime(),
                     DateTime.Now.ToTypedDateTime(),
                     rootUserId,
-                    new CustomDateTime(DateTime.Now),
+                    CustomDateTime.Now(),
                     null,
                     null,
                     null); 

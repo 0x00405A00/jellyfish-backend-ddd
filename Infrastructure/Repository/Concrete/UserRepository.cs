@@ -3,6 +3,7 @@ using Infrastructure.Abstractions;
 using Infrastructure.Repository.Primitives;
 using Microsoft.EntityFrameworkCore;
 using Shared.DataFilter.Infrastructure;
+using Shared.Linq;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repository.Concrete

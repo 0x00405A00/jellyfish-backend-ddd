@@ -38,6 +38,11 @@ namespace Domain.ValueObjects
             return EmailValue;
         }
 
+        public bool Contains(Email email)
+        {
+            return this.EmailValue.IndexOf(email.EmailValue) >= 0;
+        }
+
         public static bool Contains(Email email,string value)
         {
             return email.EmailValue.IndexOf(value) >= 0;

@@ -21,7 +21,7 @@ namespace Infrastructure
     {
         #region Const
         public const string ConnectionStringAlias = "JellyfishMySqlDatabase";
-        public static string ConnectionString = @"server=127.0.0.1;port=33306;uid=jellyfish;pwd=meinDatabasePassword!;database=jellyfish;charset=utf8mb4;";//hardcoded connection string, because cli tool dotnet ef migrations/database cant consume IConfiguration-Service from DI
+        public static string ConnectionString = @"Host=127.0.0.1;Port=5432;Username=jellyfish;Password=meinDatabasePassword!;Database=jellyfish;";//hardcoded connection string, because cli tool dotnet ef migrations/database cant consume IConfiguration-Service from DI
 
         #endregion
         #region Consumed DI Services
@@ -30,10 +30,6 @@ namespace Infrastructure
         private ILogger<ApplicationDbContext> _logger;
 
         public DbContextOptions<ApplicationDbContext> Options { get; }
-        #endregion
-        #region DbFunctions
-        [DbFunction("EmailContains", IsBuiltIn = true, IsNullable = false)]
-        public static Email EmailContains(Email email, string value) => throw new NotImplementedException();
         #endregion
         #region DbSets
         public DbSet<Role> Roles { get; set; }
@@ -61,7 +57,7 @@ namespace Infrastructure
         }
         public ApplicationDbContext()
         {
-            
+
         }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -102,7 +98,7 @@ namespace Infrastructure
             }
             var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
             _logger = loggerFactory.CreateLogger<ApplicationDbContext>();
-            optionsBuilder.UseMySQL(ConnectionString);
+            optionsBuilder.UseNpgsql(ConnectionString);
             optionsBuilder.UseLoggerFactory(loggerFactory);
             optionsBuilder.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
             optionsBuilder.EnableSensitiveDataLogging(true);

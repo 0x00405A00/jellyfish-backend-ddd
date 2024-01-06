@@ -1,7 +1,7 @@
-﻿using Domain.ValueObjects;
-using Microsoft.EntityFrameworkCore.Query.Internal;
+﻿using Domain.Entities.Users;
+using Domain.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 using Shared.DataFilter.Infrastructure;
-using System;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Reflection.Metadata;
@@ -9,8 +9,69 @@ using static Shared.DataFilter.Infrastructure.ColumnFilterConst;
 
 namespace Shared.Linq
 {
+    [Keyless]
+    public class CustomDbFunctions
+    {
+        [DbFunction("EmailContains", IsBuiltIn = true, IsNullable = true)]
+        public static bool EmailContains(string emailValue, string value)
+        {
+            var email = InstanceHelper.Construct<Email>(new Type[] { typeof(string)}, new object[] { emailValue });
+            return Email.Contains(email, value);
+        }
+        [DbFunction("PhoneNumberContains", IsBuiltIn = true, IsNullable = true)]
+        public static bool PhoneNumberContains(string phoneNumber, string value)
+        {
+            var phone = InstanceHelper.Construct<PhoneNumber>(new Type[] { typeof(string)}, new object[] { phoneNumber });
+            return PhoneNumber.Contains(phone, value);
+        }
+        public static string EmailToString(Email email)
+        {
+            return email.ToString();
+        }
+        public static string PhoneNumberToString(PhoneNumber phoneNumber)
+        {
+            return phoneNumber.ToString();
+        }
+    }
+    public static class InstanceHelper
+    {
+        public static T Construct<T>(Type[] paramTypes, object[] paramValues)
+        {
+            Type t = typeof(T);
+
+            ConstructorInfo ci = t.GetConstructor(
+                BindingFlags.Instance | BindingFlags.NonPublic,
+                null, paramTypes, null);
+
+            return (T)ci.Invoke(paramValues);
+        }
+        public static object GetValue(MemberExpression member)
+        {
+            return Expression.Lambda(member).Compile().DynamicInvoke();
+        }
+        public static Expression<Func<T, bool>> Like<T>(Expression<Func<T, string>> prop, string keyword)
+        {
+            var concatMethod = typeof(string).GetMethod(nameof(string.Concat), new[] { typeof(string), typeof(string) });
+            return Expression.Lambda<Func<T, bool>>(
+                Expression.Call(
+                    typeof(DbFunctionsExtensions),
+                    nameof(DbFunctionsExtensions.Like),
+                    null,
+                    Expression.Constant(EF.Functions),
+                    prop.Body,
+                    Expression.Add(
+                        Expression.Add(
+                            Expression.Constant("%"),
+                            Expression.Constant(keyword),
+                            concatMethod),
+                        Expression.Constant("%"),
+                        concatMethod)),
+                prop.Parameters);
+        }
+    }
     public static partial class CustomExpressionFilter<T> where T : class
     {
+
         public static Expression<Func<T, bool>> CustomFilter(List<ColumnFilterGroup> columnFilterGroup, string className)
         {
             Expression filterExpressionFinal = null;
@@ -51,10 +112,13 @@ namespace Shared.Linq
 
                         Expression comparison = GetExpressionByOperator(property, filter);
 
-
-                        filterExpression = filterExpression == null
-                            ? comparison
-                            : (GetConditionGroup(filterExpression, comparison, group));
+                        comparison = (comparison);// ?? (Expression.Equal(Expression.Constant(true), Expression.Constant(true))));
+                        if(comparison != null)
+                        {
+                            filterExpression = filterExpression == null
+                                ? comparison
+                                : (GetConditionGroup(filterExpression, comparison, group));
+                        }
 
                         
                     }
@@ -62,7 +126,8 @@ namespace Shared.Linq
 
 
                 }
-                filters = Expression.Lambda<Func<T, bool>>(filterExpressionFinal, parameter);
+                if(filterExpressionFinal is not null)
+                    filters = Expression.Lambda<Func<T, bool>>(filterExpressionFinal, parameter);
             }
             catch (Exception ex)
             {
@@ -269,17 +334,22 @@ namespace Shared.Linq
                 }
             }
             //Fehler bei WebFrontEnd bei Users-> Search nach name als bsp.
-            extra fehler
+            //extra fehler
             else if (property.Type == typeof(Email))
             {
-                var constant = Expression.Constant(filter.Value);
+                var email = InstanceHelper.Construct<Email>(new Type[] {typeof(string) }, new object[] { filter.Value });
+                var constant = Expression.Constant(email);
+
+                var propertyExpression = Expression.Property(property, nameof(Email.EmailValue));
+
                 switch (filter.Operator)
                 {
                     case OPERATOR.EQUAL:
                         comparison = Expression.Equal(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
                         break;
                     case OPERATOR.CONTAINS:
-                        comparison = Expression.Call(property, typeof(Email).GetMethod(nameof(Email.Contains)), constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
+                        //comparison = Expression.Equal(property, constant); ... direct hit geht
+                        comparison = Expression.Call(property, "Contains", Type.EmptyTypes, constant);
                         break;
                     case OPERATOR.NOT_EQUAL:
                         comparison = Expression.NotEqual(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
@@ -288,17 +358,20 @@ namespace Shared.Linq
                         comparison = Expression.Equal(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
                         break;
                 }
-            }
+            }/*
             else if (property.Type == typeof(PhoneNumber))
             {
                 var constant = Expression.Constant(filter.Value);
+                var phoneToStringCall = Expression.Call(typeof(CustomDbFunctions).GetMethod(nameof(CustomDbFunctions.PhoneNumberToString)), property);
                 switch (filter.Operator)
                 {
                     case OPERATOR.EQUAL:
                         comparison = Expression.Equal(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
                         break;
                     case OPERATOR.CONTAINS:
-                        comparison = Expression.Call(property, typeof(PhoneNumber).GetMethod(nameof(PhoneNumber.Contains)), constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
+                        var phoneNumberContainsMethod = typeof(CustomDbFunctions).GetMethod(nameof(CustomDbFunctions.PhoneNumberContains));
+                        var constantValue = Expression.Constant(filter.Value);
+                        comparison = Expression.Call(phoneNumberContainsMethod, phoneToStringCall, constantValue);
                         break;
                     case OPERATOR.NOT_EQUAL:
                         comparison = Expression.NotEqual(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
@@ -307,8 +380,8 @@ namespace Shared.Linq
                         comparison = Expression.Equal(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
                         break;
                 }
-            }
-            else
+            }*/
+            /*else
             {
                 var constant = Expression.Constant(filter.Value);
                 switch (filter.Operator)
@@ -323,18 +396,8 @@ namespace Shared.Linq
                         comparison = Expression.Equal(property, constant);
                         break;
                 }
-            }
+            }*/
             return comparison;
-        }
-        public static T Construct<T>(Type[] paramTypes, object[] paramValues)
-        {
-            Type t = typeof(T);
-
-            ConstructorInfo ci = t.GetConstructor(
-                BindingFlags.Instance | BindingFlags.NonPublic,
-                null, paramTypes, null);
-
-            return (T)ci.Invoke(paramValues);
         }
     }
 }

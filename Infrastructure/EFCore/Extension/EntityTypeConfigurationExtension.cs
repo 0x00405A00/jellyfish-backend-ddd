@@ -23,15 +23,12 @@ namespace Infrastructure.EFCore.Extension
 
             //Timestamps by action
             builder.Property(ut => ut.CreatedTime)
-                .HasColumnType("datetime")
                 .IsRequired()
-                .HasDefaultValue(new CustomDateTime(DateTime.Now))
+                .HasDefaultValue(CustomDateTime.Now())
                 .HasColumnName(DbContextExtension.ColumnNameDefinitions.TimeSpecific.CreatedTime);
             builder.Property(ut => ut.LastModifiedTime)
-                .HasColumnType("datetime")
                 .HasColumnName(DbContextExtension.ColumnNameDefinitions.TimeSpecific.ModifiedTime);
             builder.Property(ut => ut.DeletedTime)
-                .HasColumnType("datetime")
                 .HasColumnName(DbContextExtension.ColumnNameDefinitions.TimeSpecific.DeletedTime);
 
             builder.Property(ut => ut.Id)
@@ -119,12 +116,6 @@ namespace Infrastructure.EFCore.Extension
         public static WebApplication AppendMigrations(this WebApplication app)
         {
             var scope = app.Services.CreateScope();
-            Assembly efCoreAssembly = Assembly.GetAssembly(typeof(DbContext));
-            System.Diagnostics.FileVersionInfo efCoreAssemblyVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(efCoreAssembly.Location);
-            if(efCoreAssemblyVersion != null && efCoreAssemblyVersion.ProductVersion == "8.0.0")
-            {
-                throw new Exception("ef core is not usable with efcore in version 8, because of error 'Method not found: 'Void CoreTypeMappingParameters'");
-            }
             using ApplicationDbContext applicationDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             applicationDbContext.Database.Migrate();
             return app;

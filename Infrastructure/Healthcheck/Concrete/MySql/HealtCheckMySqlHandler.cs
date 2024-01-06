@@ -1,20 +1,21 @@
 ﻿using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using MySql.Data.MySqlClient;
+using Npgsql;
 using System.Data;
+using System.Data.Common;
 using System.Runtime.CompilerServices;
 
 namespace Infrastructure.Healthcheck.Concrete.MySql
 {
     public class HealtCheckMySqlHandler : IHealtCheckMySqlHandler
     {
-        public MySqlConnection MySqlConnection { get; private set; }
+        public DbConnection DatabaseConnection { get; private set; }
         public HealtCheckMySqlHandler(IConfiguration configuration)
         {
 
-            var connectionString = configuration.GetConnectionString("JellyfishMySqlDatabase");
-            MySqlConnection = new MySqlConnection(connectionString);
+            var connectionString = configuration.GetConnectionString(ApplicationDbContext.ConnectionStringAlias);
+            DatabaseConnection = new NpgsqlConnection(connectionString);
 
         }
 
@@ -34,13 +35,13 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
 
                 try
                 {
-                    var response = MySqlConnection.Query<T>(query);
+                    var response = DatabaseConnection.Query<T>(query);
                     responseValue.DataStorage = response.ToList();
                     responseValue.Message = response.Count() + " returned";
                 }
-                catch (MySqlException ex)
+                catch (DbException ex)
                 {
-                    responseValue.Number = ex.Number;
+                    //responseValue.Number = ex.;
                     responseValue.Exception = ex;
                     responseValue.ErrorCode = ex.ErrorCode;
                     responseValue.Message = ex.Message;
@@ -56,11 +57,11 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
         }
         public bool Open()
         {
-            if (MySqlConnection.State != ConnectionState.Open)
+            if (DatabaseConnection.State != ConnectionState.Open)
             {
                 try
                 {
-                    MySqlConnection.Open();
+                    DatabaseConnection.Open();
                     return true;
                 }
                 catch (Exception ex)
@@ -72,11 +73,11 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
         }
         public void Close()
         {
-            if (MySqlConnection.State == ConnectionState.Open)
+            if (DatabaseConnection.State == ConnectionState.Open)
             {
                 try
                 {
-                    MySqlConnection.Close();
+                    DatabaseConnection.Close();
                 }
                 catch (Exception ex)
                 {
@@ -99,13 +100,13 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
 
                 try
                 {
-                    var response = await MySqlConnection.QueryAsync<T>(query);
+                    var response = await DatabaseConnection.QueryAsync<T>(query);
                     responseValue.DataStorage = response.ToList();
                     responseValue.Message = response.Count() + " returned";
                 }
-                catch (MySqlException ex)
+                catch (DbException ex)
                 {
-                    responseValue.Number = ex.Number;
+                    //responseValue.Number = ex.Number;
                     responseValue.Exception = ex;
                     responseValue.ErrorCode = ex.ErrorCode;
                     responseValue.Message = ex.Message;
@@ -121,11 +122,11 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
         }
         public async Task<bool> OpenAsync()
         {
-            if (MySqlConnection.State != ConnectionState.Open)
+            if (DatabaseConnection.State != ConnectionState.Open)
             {
                 try
                 {
-                    await MySqlConnection.OpenAsync();
+                    await DatabaseConnection.OpenAsync();
                     return true;
                 }
                 catch (Exception ex)
@@ -137,11 +138,11 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
         }
         public async void CloseAsync()
         {
-            if (MySqlConnection.State == ConnectionState.Open)
+            if (DatabaseConnection.State == ConnectionState.Open)
             {
                 try
                 {
-                    await MySqlConnection.CloseAsync();
+                    await DatabaseConnection.CloseAsync();
                 }
                 catch (Exception ex)
                 {
@@ -156,13 +157,13 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
         public async Task<int> SelectOne()
         {
             int response = 0;
-            if (MySqlConnection.State != ConnectionState.Open)
+            if (DatabaseConnection.State != ConnectionState.Open)
             {
-                await MySqlConnection.OpenAsync();
+                await DatabaseConnection.OpenAsync();
 
             }
 
-            using (var command = new MySqlCommand("SELECT 1;", MySqlConnection))
+            using (var command = new NpgsqlCommand("SELECT 1;", (NpgsqlConnection)DatabaseConnection))
             {
                 command.CommandType = CommandType.Text;
                 using (var reader = await command.ExecuteReaderAsync())
@@ -217,7 +218,7 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
                 }
             }
 
-            await MySqlConnection.CloseAsync();
+            await DatabaseConnection.CloseAsync();
             return response;
         }
 

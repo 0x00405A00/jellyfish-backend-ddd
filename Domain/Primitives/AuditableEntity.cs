@@ -24,17 +24,17 @@ namespace Domain.Primitives
 
         public void SetLastModified(UserId modifiedBy)
         {
-            LastModifiedTime = new CustomDateTime(DateTime.Now);
+            LastModifiedTime = CustomDateTime.Now();
             LastModifiedByUserForeignKey = modifiedBy;
         }
         public void SetCreated(UserId createdBy)
         {
-            CreatedTime = new CustomDateTime(DateTime.Now);
+            CreatedTime = CustomDateTime.Now();
             CreatedByUserForeignKey = createdBy;
         }
         public void SetDeleted(UserId deletedBy)
         {
-            DeletedTime = new CustomDateTime(DateTime.Now);
+            DeletedTime = CustomDateTime.Now();
             DeletedByUserForeignKey = deletedBy;
         }
     }

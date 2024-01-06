@@ -55,7 +55,7 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 
             builder.Property(ut => ut.IsEmbededInHtml)
                 .IsRequired(false)
-                .HasColumnType("tinyint(1)")
+                .HasColumnType(DbContextExtension.ColumnType.Bool)
                 .HasDefaultValue(false)
                 .HasComment("boolean value to describe if attachment is part of html mail")
             .HasColumnName("is_embeded_in_html");

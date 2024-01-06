@@ -30,7 +30,7 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 
             builder.Property(ut => ut.IsBodyHtml)
                 .IsRequired(false)
-                .HasColumnType("tinyint(1)")
+                .HasColumnType(DbContextExtension.ColumnType.Bool)
                 .HasDefaultValue(false)
                 .HasComment("boolean value to describe if email contain html content")
                 .HasColumnName("is_body_html");

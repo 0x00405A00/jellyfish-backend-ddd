@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
-using MySql.Data.MySqlClient;
+using System.Data.Common;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -7,11 +7,11 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
 {
     public class HealthCheckMySql : IHealthCheck
     {
-        private readonly IHealtCheckMySqlHandler _mySqlHandler;
+        private readonly IHealtCheckMySqlHandler _databaseHandler;
 
         public HealthCheckMySql(IHealtCheckMySqlHandler mySqlHandler)
         {
-            _mySqlHandler = mySqlHandler;
+            _databaseHandler = mySqlHandler;
         }
 
         public Task<HealthCheckResult> CheckHealthAsync(
@@ -24,7 +24,7 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
             {
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
-                var data = _mySqlHandler.ExecuteQueryWithDapper<int>("SELECT 1;");
+                var data = _databaseHandler.ExecuteQueryWithDapper<int>("SELECT 1;");
 
                 stopwatch.Stop();
                 if (data != null)
@@ -58,7 +58,7 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
                 string libFileName = "MySql.Data.dll";
                 Version versionClient = AssemblyName.GetAssemblyName(Path.Combine(currentWorkingDir, libFileName)).Version;
 
-                var dataVersion = _mySqlHandler.ExecuteQueryWithDapper<string>("SELECT @@version;");
+                var dataVersion = _databaseHandler.ExecuteQueryWithDapper<string>("SELECT @@version;");
                 if (dataVersion.HasStorageData)
                 {
                     string versionServer = dataVersion.FirstRow.ToString();
@@ -72,7 +72,7 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
                     healthStatus = HealthStatus.Degraded;
                 }
             }
-            catch (MySqlException ex)
+            catch (DbException ex)
             {
                 desciption = "Up-state=Down;SELECT 1=?;fetch-time=?;errors=yes;warning=no;details=" + ex.Message + ";";
                 healthStatus = HealthStatus.Unhealthy;

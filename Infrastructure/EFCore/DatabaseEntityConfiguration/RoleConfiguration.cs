@@ -25,7 +25,7 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
             var roleAdmin = Role.Create(
                 new RoleId(RoleConst.AdminRoleUuid),
                 UserConst.UserType.AdminName,
-                new CustomDateTime(DateTime.Now),
+                CustomDateTime.Now(),
                 null,
                 null,
                 null,
@@ -35,7 +35,7 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
             var roleUser = Role.Create(
                 new RoleId(RoleConst.UserRoleUuid),
                 UserConst.UserType.UserName,
-                new CustomDateTime(DateTime.Now),
+                CustomDateTime.Now(),
                 null,
                 null,
                 null,
@@ -45,7 +45,7 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
             var roleRoot = Role.Create(
                 new RoleId(RoleConst.RootRoleUuid),
                 UserConst.UserType.RootName,
-                new CustomDateTime(DateTime.Now),
+                CustomDateTime.Now(),
                 null,
                 null,
                 null,

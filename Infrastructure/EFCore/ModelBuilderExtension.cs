@@ -1,17 +1,15 @@
 ﻿using Domain.Const;
+using Domain.Entities.Chats;
 using Domain.Entities.Mails;
+using Domain.Entities.Messages;
 using Domain.Entities.Users;
-using Domain.Primitives.Ids;
+using Domain.Extension;
 using Domain.Primitives;
+using Domain.Primitives.Ids;
+using Domain.ValueObjects;
 using Infrastructure.EFCore.DatabaseEntityConfiguration;
 using Microsoft.EntityFrameworkCore;
-using Domain.Extension;
-using Shared.ApiDataTransferObject;
-using Domain.ValueObjects;
-using Google.Protobuf.WellKnownTypes;
-using Domain.Entities.Chats;
-using Domain.Entities.Messages;
-using System.Collections.Generic;
+using Shared.Linq;
 
 namespace Infrastructure.EFCore
 {
@@ -352,21 +350,21 @@ namespace Infrastructure.EFCore
             var toType = EmailSendingType.Create(
                 new EmailTypeId(EmailConst.Type.To),
                 "to",
-                new CustomDateTime(DateTime.Now),
+                CustomDateTime.Now(),
                 null,
                 null);
 
             var ccType = EmailSendingType.Create(
                 new EmailTypeId(EmailConst.Type.Cc),
                 "cc",
-                new CustomDateTime(DateTime.Now),
+                CustomDateTime.Now(),
                 null,
                 null);
 
             var bccType = EmailSendingType.Create(
                 new EmailTypeId(EmailConst.Type.Bcc),
                 "bcc",
-                new CustomDateTime(DateTime.Now),
+                CustomDateTime.Now(),
                 null,
                 null);
 
@@ -394,17 +392,21 @@ namespace Infrastructure.EFCore
         public static ModelBuilder CreateDbFunctions(this ModelBuilder modelBuilder)
         {
 
-            /*modelBuilder.HasDbFunction(typeof(Email).GetMethod(nameof(Email.Contains), new[] { typeof(Email),typeof(string) }),
+            modelBuilder.HasDbFunction(typeof(CustomDbFunctions).GetMethod(nameof(CustomDbFunctions.EmailContains)),
             b =>
             {
-                b.HasName("EmailContainsFunction");
-                b.HasParameter("email").PropagatesNullability();
-                b.HasParameter("value").PropagatesNullability();
-            });*/
-            /*modelBuilder.HasDbFunction(typeof(PhoneNumber).GetMethod(nameof(PhoneNumber.Contains), new[] { typeof(PhoneNumber), typeof(string) }),
+                b.HasName("EmailContains");
+                b.HasParameter("emailValue");
+                b.HasParameter("value");
+            }); 
+            /*modelBuilder.HasDbFunction(typeof(CustomDbFunctions).GetMethod(nameof(CustomDbFunctions.EmailContains), new[] { typeof(string), typeof(string) }))
+                .HasTranslation(
+                    args =>
+                        new SqlFragmentExpression(ExpressionType.));*/
+            /*modelBuilder.HasDbFunction(typeof(CustomDbFunctions).GetMethod(nameof(CustomDbFunctions.PhoneNumberContains)),
             b =>
             {
-                b.HasName("PhoneNumberContainsFunction");
+                b.HasName("PhoneNumberContains");
                 b.HasParameter("phoneNumber").PropagatesNullability();
                 b.HasParameter("value").PropagatesNullability();
             });*/
@@ -416,7 +418,7 @@ namespace Infrastructure.EFCore
             var userType1 = UserType.Create(
                 new UserTypeId(UserConst.UserType.User),
                 UserConst.UserType.UserName,
-                new CustomDateTime(DateTime.Now),
+                CustomDateTime.Now(),
                 null,
                 null,
                 null,
@@ -426,7 +428,7 @@ namespace Infrastructure.EFCore
             var userType2 = UserType.Create(
                 new UserTypeId(UserConst.UserType.Admin),
                 UserConst.UserType.AdminName,
-                new CustomDateTime(DateTime.Now),
+                CustomDateTime.Now(),
                 null,
                 null,
                 null,
@@ -436,7 +438,7 @@ namespace Infrastructure.EFCore
             var userType3 = UserType.Create(
                 new UserTypeId(UserConst.UserType.Root),
                 UserConst.UserType.RootName,
-                new CustomDateTime(DateTime.Now),
+                CustomDateTime.Now(),
                 null,
                 null,
                 null,

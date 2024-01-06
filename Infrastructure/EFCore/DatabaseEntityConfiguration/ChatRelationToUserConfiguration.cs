@@ -27,7 +27,7 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 
             builder.Property(ut => ut.IsChatAdmin)
                 .IsRequired(false)
-                .HasColumnType("tinyint(1)")
+                .HasColumnType(DbContextExtension.ColumnType.Bool)
                 .HasDefaultValue(false)
                 .HasComment("boolean value to describe if chatmember is chat-admin")
                 .HasColumnName("is_admin");

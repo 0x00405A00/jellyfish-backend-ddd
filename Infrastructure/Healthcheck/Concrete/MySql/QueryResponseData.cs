@@ -1,5 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using System.Data;
+﻿using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
 
@@ -16,9 +15,9 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
         private int _number = -1;
         private int _errorCode = -1;
         private DataTable _data = null;
-        private MySqlParameterCollection _queryParametes = null;
+        private DbParameterCollection _queryParametes = null;
         private DataTable _metaData = null;
-        private MySqlException _exceptionData = null;
+        private DbException _exceptionData = null;
         private DbTransaction _transaction = null;
         #endregion
         #region Public
@@ -200,7 +199,7 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
                 _message = value;
             }
         }
-        public MySqlParameterCollection QueryParametes
+        public DbParameterCollection QueryParametes
         {
             get
             {
@@ -218,7 +217,7 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
                 return _fetchData.ElapsedMilliseconds;
             }
         }
-        public MySqlException Exception
+        public DbException Exception
         {
             get
             {

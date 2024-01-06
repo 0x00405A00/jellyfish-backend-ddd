@@ -46,7 +46,6 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 
             builder.Property(ut => ut.TokenExpiresIn)
                 .IsRequired()
-                .HasColumnType("datetime")
                 .HasColumnName("token_expires_in");
 
             builder.Property(ut => ut.UserAgent)
@@ -61,12 +60,10 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 
             builder.Property(ut => ut.RefreshTokenExpiresIn)
                 .IsRequired()
-                .HasColumnType("datetime")
                 .HasColumnName("refresh_token_expires_in");
 
             builder.Property(ut => ut.LogoutTime)
                 .IsRequired(false)
-                .HasColumnType("datetime")
                 .HasColumnName("logout_time");
 
             string authConstraintName = DbContextExtension.GetForeignKeyName(nameof(Auth), nameof(Auth.UserId), nameof(User));

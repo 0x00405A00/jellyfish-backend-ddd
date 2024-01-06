@@ -45,7 +45,6 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
                 .HasColumnName("last_name");
 
             builder.Property(ut => ut.DateOfBirth)
-                .HasColumnType("datetime")
                 .HasColumnName("date_of_birth");
 
             builder.Property(ut => ut.ActivationToken)
@@ -59,7 +58,6 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
                 .HasColumnName("activation_code");
 
             builder.Property(ut => ut.ActivationDateTime)
-                .HasColumnType("datetime")
                 .HasColumnName("activation_datetime");
 
             builder.Property(ut => ut.PasswordResetCode)
@@ -74,7 +72,6 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 
             builder.Property(ut => ut.PasswordResetExpiresIn)
                 .IsRequired(false)
-                .HasColumnType("datetime")
                 .HasColumnName("password_reset_token_expires_in");
 
             builder.Property(ut => ut.Email)
