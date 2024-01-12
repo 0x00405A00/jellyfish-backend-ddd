@@ -16,6 +16,7 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
 
             builder.Ignore(x => x.Admins);
             builder.Ignore(x => x.Members);
+            builder.Ignore(x => x.Picture);
 
             builder.Property(ut => ut.Name)
                 .IsRequired()

@@ -117,7 +117,10 @@ namespace Infrastructure.EFCore.Extension
         {
             var scope = app.Services.CreateScope();
             using ApplicationDbContext applicationDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            applicationDbContext.Database.Migrate();
+            if(applicationDbContext.Database.EnsureCreated())
+            {
+                applicationDbContext.Database.Migrate();
+            }
             return app;
         }
     }

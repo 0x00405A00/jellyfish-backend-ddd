@@ -17,8 +17,8 @@ namespace SharedTest.DomainTestInstance.Entity.Chats
 
             var members = new List<ChatRelationToUser>()
             {
-                ChatRelationToUser.Create(ChatRelationToUser.NewId(),member1.Id,_chatId,false,DateTime.Now.ToTypedDateTime(),null,null,null,null,null),
-                ChatRelationToUser.Create(ChatRelationToUser.NewId(),member2.Id,_chatId,false,DateTime.Now.ToTypedDateTime(),null,null,null,null,null),
+                ChatRelationToUser.Create(ChatRelationToUser.NewId(),member1.Id,_chatId,false,DateTime.UtcNow.ToTypedDateTime(),null,null,null,null,null),
+                ChatRelationToUser.Create(ChatRelationToUser.NewId(),member2.Id,_chatId,false,DateTime.UtcNow.ToTypedDateTime(),null,null,null,null,null),
 
             };
 
@@ -26,7 +26,7 @@ namespace SharedTest.DomainTestInstance.Entity.Chats
 
             if (adminUser != null)
             {
-                var chatAdm = ChatRelationToUser.Create(ChatRelationToUser.NewId(), adminUser.Id, _chatId, true, DateTime.Now.ToTypedDateTime(), null, null, null, null, null);
+                var chatAdm = ChatRelationToUser.Create(ChatRelationToUser.NewId(), adminUser.Id, _chatId, true, DateTime.UtcNow.ToTypedDateTime(), null, null, null, null, null);
                members.Add(chatAdm);
             }
 
@@ -36,7 +36,7 @@ namespace SharedTest.DomainTestInstance.Entity.Chats
                 "testDesc",
                 null,
                 members,
-                DateTime.Now.ToTypedDateTime(),
+                DateTime.UtcNow.ToTypedDateTime(),
                 null,
                 null,
                 null,

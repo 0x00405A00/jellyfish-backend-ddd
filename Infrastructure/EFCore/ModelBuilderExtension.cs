@@ -9,7 +9,10 @@ using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.EFCore.DatabaseEntityConfiguration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Shared.Linq;
+using System;
 
 namespace Infrastructure.EFCore
 {
@@ -34,6 +37,11 @@ namespace Infrastructure.EFCore
             modelBuilder.ApplyConfiguration(new MailOutboxConfiguration());
             modelBuilder.ApplyConfiguration(new MailOutboxRecipientConfiguration());
             modelBuilder.ApplyConfiguration(new MailOutboxAttachmentConfiguration());
+
+
+            /*modelBuilder.Entity<Email>()
+                .HasNoKey() // keyless
+                .ToView(null);*/
             return modelBuilder;
         }
         public static ModelBuilder CreateInitialDataSeed(this ModelBuilder modelBuilder)
@@ -49,6 +57,11 @@ namespace Infrastructure.EFCore
             _isSampleDataLoaded = true;
             modelBuilder.SampleUsers();
             modelBuilder.SampleChats();
+            return modelBuilder;
+        }
+        public static ModelBuilder CreateOwnedTypes(this ModelBuilder modelBuilder)
+        {
+
             return modelBuilder;
         }
         public static bool IsSampleDataLoaded()=> _isSampleDataLoaded;
@@ -100,7 +113,7 @@ namespace Infrastructure.EFCore
 
             Domain.ValueObjects.Picture? picture = pictureObj;
             List<ChatRelationToUser> members = chatRelationToUsers;
-            CustomDateTime createdDateTime = DateTime.Now.ToTypedDateOnly();
+            CustomDateTime createdDateTime = DateTime.UtcNow.ToTypedDateOnly();
             UserId createdBy = ownerId;
             CustomDateTime? modifiedDateTime = null;
             UserId? modifiedBy = null;
@@ -134,7 +147,7 @@ namespace Infrastructure.EFCore
 
 
             Domain.ValueObjects.MediaContent? media = mediaContent;
-            CustomDateTime createdDateTime = DateTime.Now.ToTypedDateOnly();
+            CustomDateTime createdDateTime = DateTime.UtcNow.ToTypedDateOnly();
             UserId createdBy = RootUser.Id;
             CustomDateTime? modifiedDateTime = null;
             UserId? modifiedBy = null;
@@ -181,8 +194,8 @@ namespace Infrastructure.EFCore
             Domain.ValueObjects.PhoneNumber phone = PhoneNumber.Parse(phoneNumberStr);
             Domain.ValueObjects.Picture? picture = pictureObj;
             CustomDateTime dateOfBirth = User.MinimumBirthDayDate.AddYears(-(randNumber + User.MinimumAgeForRegistration)).ToTypedDateTime();
-            CustomDateTime? activationDateTime = DateTime.Now.ToTypedDateOnly();
-            CustomDateTime createdDateTime = DateTime.Now.ToTypedDateOnly();
+            CustomDateTime? activationDateTime = DateTime.UtcNow.ToTypedDateOnly();
+            CustomDateTime createdDateTime = DateTime.UtcNow.ToTypedDateOnly();
             UserId createdBy = RootUser.Id;
             CustomDateTime? modifiedDateTime = null;
             UserId? modifiedBy = null;
@@ -241,14 +254,14 @@ namespace Infrastructure.EFCore
                 foreach (var friend in userDataTuple.Item7)
                 {
                     var id = UserHasRelationToFriend.NewId();
-                    var createdDateTime = DateTime.Now.ToTypedDateTime();
+                    var createdDateTime = DateTime.UtcNow.ToTypedDateTime();
                     var friendObj = UserHasRelationToFriend.Create(id,user.Id,friend,createdDateTime,user.Id,null,null,null,null);
                     friends.Add(friendObj);
                 }
                 foreach (var friendshipRequest in userDataTuple.Item8)
                 {
                     var id = FriendshipRequest.NewId();
-                    var createdDateTime = DateTime.Now.ToTypedDateTime();
+                    var createdDateTime = DateTime.UtcNow.ToTypedDateTime();
                     var friend = FriendshipRequest.Create(id,"do you want to be my friend?",user.Id,friendshipRequest,createdDateTime,null,null);
                     friendshipRequests.Add(friend);
                 }
@@ -392,13 +405,23 @@ namespace Infrastructure.EFCore
         public static ModelBuilder CreateDbFunctions(this ModelBuilder modelBuilder)
         {
 
-            modelBuilder.HasDbFunction(typeof(CustomDbFunctions).GetMethod(nameof(CustomDbFunctions.EmailContains)),
-            b =>
+            /*modelBuilder.HasDbFunction(() => CustomDbFunctions.EmailContains(default, default)).HasTranslation(args =>
             {
-                b.HasName("EmailContains");
-                b.HasParameter("emailValue");
-                b.HasParameter("value");
-            }); 
+                SqlExpression emailValue = args.First();
+                SqlExpression shouldContainInEmail = args.Skip(1).First();
+                SqlParameterExpression sqlParameterExpression = emailValue as SqlParameterExpression;
+
+                var emailValueLiteral = emailValue.TypeMapping.GenerateSqlLiteral(emailValue.Print());
+                var shouldContainInEmailLiteral = shouldContainInEmail.TypeMapping.GenerateSqlLiteral(shouldContainInEmail.Print());
+
+                return new SqlFunctionExpression(
+                    "emailcontains",
+                    new List<SqlExpression>() { new SqlFragmentExpression(emailValueLiteral),new SqlFragmentExpression(shouldContainInEmailLiteral) },
+                    false,
+                    new List<bool>() { false, false, false },
+                    typeof(DateTimeOffset),
+                    null);
+            });*/
             /*modelBuilder.HasDbFunction(typeof(CustomDbFunctions).GetMethod(nameof(CustomDbFunctions.EmailContains), new[] { typeof(string), typeof(string) }))
                 .HasTranslation(
                     args =>

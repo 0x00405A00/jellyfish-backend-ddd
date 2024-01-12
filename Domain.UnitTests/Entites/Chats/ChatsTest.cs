@@ -22,12 +22,12 @@ namespace Domain.UnitTests.Entites.Chats
             Picture picture = null; // Setze das Bild, falls benötigt
             var members = new List<ChatRelationToUser>
             {
-                ChatRelationToUser.Create(ChatRelationToUser.NewId(),SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance().Id,chatId,false,DateTime.Now.ToTypedDateTime(),null,null,null,null,null),
-                ChatRelationToUser.Create(ChatRelationToUser.NewId(),SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance().Id,chatId,false,DateTime.Now.ToTypedDateTime(),null,null,null,null,null),
-                ChatRelationToUser.Create(ChatRelationToUser.NewId(),createdByUser.Id,chatId,true,DateTime.Now.ToTypedDateTime(),null,null,null,null,null),
+                ChatRelationToUser.Create(ChatRelationToUser.NewId(),SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance().Id,chatId,false,DateTime.UtcNow.ToTypedDateTime(),null,null,null,null,null),
+                ChatRelationToUser.Create(ChatRelationToUser.NewId(),SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance().Id,chatId,false,DateTime.UtcNow.ToTypedDateTime(),null,null,null,null,null),
+                ChatRelationToUser.Create(ChatRelationToUser.NewId(),createdByUser.Id,chatId,true,DateTime.UtcNow.ToTypedDateTime(),null,null,null,null,null),
             };
             var messages = new List<Message>();
-            var createdTime = DateTime.Now;
+            var createdTime = DateTime.UtcNow;
             DateTime? lastModifiedTime = null;
             DateTime? deletedTime = null;
 
@@ -48,7 +48,7 @@ namespace Domain.UnitTests.Entites.Chats
             List<ChatRelationToUser> members = null; // Keine Mitglieder
 
             // Act and Assert
-            var exception = Assert.Throws<ChatCreateException>(() => Chat.Create(chatId,chatName,null,null,members,DateTime.Now.ToTypedDateTime(),createdByUser.Id,null,null,null,null));
+            var exception = Assert.Throws<ChatCreateException>(() => Chat.Create(chatId,chatName,null,null,members,DateTime.UtcNow.ToTypedDateTime(),createdByUser.Id,null,null,null,null));
             Assert.NotNull(exception);
         }
 
@@ -61,13 +61,13 @@ namespace Domain.UnitTests.Entites.Chats
             var chatName = "Test Chat";
             List<ChatRelationToUser> members = new List<ChatRelationToUser>()
             {
-                ChatRelationToUser.Create(ChatRelationToUser.NewId(),SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance().Id,chatId,false,DateTime.Now.ToTypedDateTime(),null,null,null,null,null),
-                ChatRelationToUser.Create(ChatRelationToUser.NewId(),SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance().Id,chatId,false,DateTime.Now.ToTypedDateTime(),null,null,null,null,null),
+                ChatRelationToUser.Create(ChatRelationToUser.NewId(),SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance().Id,chatId,false,DateTime.UtcNow.ToTypedDateTime(),null,null,null,null,null),
+                ChatRelationToUser.Create(ChatRelationToUser.NewId(),SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance().Id,chatId,false,DateTime.UtcNow.ToTypedDateTime(),null,null,null,null,null),
                 null
             };
 
             // Act and Assert
-            var exception = Assert.Throws<InvalidDataException>(() => Chat.Create(chatId, chatName, null, null, members, DateTime.Now.ToTypedDateTime(), createdByUser.Id, null, null, null, null));
+            var exception = Assert.Throws<InvalidDataException>(() => Chat.Create(chatId, chatName, null, null, members, DateTime.UtcNow.ToTypedDateTime(), createdByUser.Id, null, null, null, null));
             Assert.NotNull(exception);
         }
 
@@ -80,14 +80,14 @@ namespace Domain.UnitTests.Entites.Chats
             var chatName = "Test Chat";
             List<ChatRelationToUser> members = new List<ChatRelationToUser>()
             {
-                ChatRelationToUser.Create(ChatRelationToUser.NewId(),SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance().Id,chatId,false,DateTime.Now.ToTypedDateTime(),null,null,null,null,null),
-                ChatRelationToUser.Create(ChatRelationToUser.NewId(),SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance().Id,chatId,false,DateTime.Now.ToTypedDateTime(),null,null,null,null,null),
-                ChatRelationToUser.Create(ChatRelationToUser.NewId(),createdByUser.Id,chatId,false,DateTime.Now.ToTypedDateTime(),null,null,null,null,null),
+                ChatRelationToUser.Create(ChatRelationToUser.NewId(),SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance().Id,chatId,false,DateTime.UtcNow.ToTypedDateTime(),null,null,null,null,null),
+                ChatRelationToUser.Create(ChatRelationToUser.NewId(),SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance().Id,chatId,false,DateTime.UtcNow.ToTypedDateTime(),null,null,null,null,null),
+                ChatRelationToUser.Create(ChatRelationToUser.NewId(),createdByUser.Id,chatId,false,DateTime.UtcNow.ToTypedDateTime(),null,null,null,null,null),
             };
             List<Entities.Users.User> admins = null; // Admins sind null
 
             // Act and Assert
-            var exception = Assert.Throws<InvalidDataException>(() => Chat.Create(chatId, chatName,null,null,members,DateTime.Now.ToTypedDateTime(), createdByUser.Id,null,null,null,null));
+            var exception = Assert.Throws<InvalidDataException>(() => Chat.Create(chatId, chatName,null,null,members,DateTime.UtcNow.ToTypedDateTime(), createdByUser.Id,null,null,null,null));
             Assert.NotNull(exception);
         }
 
@@ -97,9 +97,9 @@ namespace Domain.UnitTests.Entites.Chats
             // Arrange
             var chatId = Chat.NewId();
             var chatMemberUser = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance();
-            var chatMember = ChatRelationToUser.Create(ChatRelationToUser.NewId(), chatMemberUser.Id, chatId, false, DateTime.Now.ToTypedDateTime(), null, null, null, null, null);
+            var chatMember = ChatRelationToUser.Create(ChatRelationToUser.NewId(), chatMemberUser.Id, chatId, false, DateTime.UtcNow.ToTypedDateTime(), null, null, null, null, null);
             var adminUser = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance();
-            var adminChatMember = ChatRelationToUser.Create(ChatRelationToUser.NewId(), adminUser.Id, chatId, true, DateTime.Now.ToTypedDateTime(), null, null, null, null, null);
+            var adminChatMember = ChatRelationToUser.Create(ChatRelationToUser.NewId(), adminUser.Id, chatId, true, DateTime.UtcNow.ToTypedDateTime(), null, null, null, null, null);
             var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser,chatId.Id);
 
             // Act
@@ -160,9 +160,9 @@ namespace Domain.UnitTests.Entites.Chats
             // Arrange
             var chatId = Chat.NewId();
             var chatMemberUser = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance();
-            var chatMember = ChatRelationToUser.Create(ChatRelationToUser.NewId(), chatMemberUser.Id, chatId, false, DateTime.Now.ToTypedDateTime(), null, null, null, null, null);
+            var chatMember = ChatRelationToUser.Create(ChatRelationToUser.NewId(), chatMemberUser.Id, chatId, false, DateTime.UtcNow.ToTypedDateTime(), null, null, null, null, null);
             var adminUser = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance();
-            var adminChatMember = ChatRelationToUser.Create(ChatRelationToUser.NewId(), adminUser.Id, chatId, true, DateTime.Now.ToTypedDateTime(), null, null, null, null, null);
+            var adminChatMember = ChatRelationToUser.Create(ChatRelationToUser.NewId(), adminUser.Id, chatId, true, DateTime.UtcNow.ToTypedDateTime(), null, null, null, null, null);
             var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser, chatId.Id);
 
             // Act
@@ -227,9 +227,9 @@ namespace Domain.UnitTests.Entites.Chats
             // Arrange
             var chatId = Chat.NewId();
             var chatMemberUser = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance();
-            var chatMember = ChatRelationToUser.Create(ChatRelationToUser.NewId(), chatMemberUser.Id, chatId, false, DateTime.Now.ToTypedDateTime(), null, null, null, null, null);
+            var chatMember = ChatRelationToUser.Create(ChatRelationToUser.NewId(), chatMemberUser.Id, chatId, false, DateTime.UtcNow.ToTypedDateTime(), null, null, null, null, null);
             var adminUser = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance();
-            var adminChatMember = ChatRelationToUser.Create(ChatRelationToUser.NewId(), adminUser.Id, chatId, true, DateTime.Now.ToTypedDateTime(), null, null, null, null, null);
+            var adminChatMember = ChatRelationToUser.Create(ChatRelationToUser.NewId(), adminUser.Id, chatId, true, DateTime.UtcNow.ToTypedDateTime(), null, null, null, null, null);
             var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser, chatId.Id);
 
             // Act
@@ -304,9 +304,9 @@ namespace Domain.UnitTests.Entites.Chats
             // Arrange
             var chatId = Chat.NewId();
             var chatMemberUser = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance();
-            var chatMember = ChatRelationToUser.Create(ChatRelationToUser.NewId(), chatMemberUser.Id, chatId, false, DateTime.Now.ToTypedDateTime(), null, null, null, null, null);
+            var chatMember = ChatRelationToUser.Create(ChatRelationToUser.NewId(), chatMemberUser.Id, chatId, false, DateTime.UtcNow.ToTypedDateTime(), null, null, null, null, null);
             var adminUser = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance();
-            var adminChatMember = ChatRelationToUser.Create(ChatRelationToUser.NewId(), adminUser.Id, chatId, true, DateTime.Now.ToTypedDateTime(), null, null, null, null, null);
+            var adminChatMember = ChatRelationToUser.Create(ChatRelationToUser.NewId(), adminUser.Id, chatId, true, DateTime.UtcNow.ToTypedDateTime(), null, null, null, null, null);
             var chat = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(adminUser, chatId.Id);
 
             // Act

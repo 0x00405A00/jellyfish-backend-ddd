@@ -94,7 +94,7 @@ namespace Domain.Entities.Users
                 UserHasRelationToRole.NewId(),
                 userId,
                 roleId,
-                DateTime.Now.ToTypedDateTime(),
+                DateTime.UtcNow.ToTypedDateTime(),
                 assignerId ?? UserConst.RootUserId.ToIdentification<UserId>(),
                 null,
                 null,

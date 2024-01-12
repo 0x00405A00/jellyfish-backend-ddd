@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shared.Authentification.Service;
+using Shared.Linq.Converters;
 
 namespace Infrastructure
 {
@@ -18,6 +19,7 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
+            ExpressionFilterExtension.RegisterWellKnownTypes();
             services.Configure<HostOptions>(options =>
             {
                 options.ServicesStartConcurrently = true;

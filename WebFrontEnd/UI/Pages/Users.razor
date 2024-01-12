@@ -236,14 +236,23 @@
                             Filters = new List<Shared.DataFilter.Infrastructure.ColumnFilter>()
                         };
 
-            var properties = typeof(UserDTO).GetProperties().Where(x => x.CanWrite && x.PropertyType == typeof(string)).Select(x => x.GetCustomAttribute<JsonPropertyNameAttribute>()).ToList();
+            var properties = typeof(UserDTO).GetProperties().Where(x => x.CanWrite && (x.PropertyType == typeof(string) || (x.PropertyType == typeof(Guid) || x.PropertyType == typeof(Guid?)) || (x.PropertyType == typeof(DateTime) || x.PropertyType == typeof(DateTime?)))).Select(x => new { attr = x.GetCustomAttribute<JsonPropertyNameAttribute>(), propertyType = x.PropertyType }).ToList();
             foreach (var prop in properties)
             {
-                string field = prop.Name;
+                string field = prop.attr.Name;
+                string op = null; 
+                if (prop.propertyType == typeof(string) || prop.propertyType == typeof(Guid))
+                {
+                    op = "contains";
+                }
+                else
+                {
+                    op = "eq";
+                }
                 var condition = new Shared.DataFilter.Infrastructure.ColumnFilter
                     {
                         field = field,
-                        op = "contains",
+                        op = op,
                         value = searchText
                     };
                 columnFilterGroupOr.Filters.Add(condition);

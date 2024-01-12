@@ -39,7 +39,7 @@ namespace Application.UnitTests.UseCase.Messenger.User.Commands.FriendshipReques
         {
             // Arrange
             var friendshipRequestId = FriendshipRequest.NewId();
-            var request = FriendshipRequest.Create(friendshipRequestId,$"hey iam {UserInstance.UserName}. do you want to be my friend?", UserInstance.Id, UserFriendInstance.Id,DateTime.Now.ToTypedDateTime(),null,null);
+            var request = FriendshipRequest.Create(friendshipRequestId,$"hey iam {UserInstance.UserName}. do you want to be my friend?", UserInstance.Id, UserFriendInstance.Id,DateTime.UtcNow.ToTypedDateTime(),null,null);
             UserFriendInstance.AddFriendshipRequest(request);
             _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(UserFriendInstance,UserFriendInstance, UserInstance);
 

@@ -89,7 +89,7 @@
             _token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
             if(User.DateOfBirth==null)
             {
-                User.DateOfBirth = DateTime.Now;
+                User.DateOfBirth = DateTime.UtcNow;
             }
             if (User.UserTypeUuid!=null)
             {

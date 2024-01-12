@@ -18,7 +18,7 @@ namespace Shared.Authentification.Jwt
                 issuer,
                 audience,
                 claims,
-                expires: DateTime.Now.Add(expires),
+                expires: DateTime.UtcNow.Add(expires),
                 signingCredentials: credentials
             );
 

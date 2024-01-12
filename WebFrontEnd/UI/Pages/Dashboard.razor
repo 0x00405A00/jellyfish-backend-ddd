@@ -133,7 +133,7 @@
             SignalRClient.HubConnection.On<List<MessageDTO>>(nameof(SignalRClient.ReceiveMessage), ReceiveMessage);
             for (int i = 0; i < XAxisLastHoursBarCount; i++)
             {
-                var dt = DateTime.Now;
+                var dt = DateTime.UtcNow;
                 var calcDt = (dt.AddMinutes(-(i * 10)));
                 var calcTenMinSlot = (int)Math.Round((double)calcDt.Minute / 10) * 10;
                 XAxisLastHours[XAxisLastHoursBarCount - 1 - i] = "" + calcDt.Hour.ToString().PadLeft(2, '0') + ":" + calcTenMinSlot.ToString().PadLeft(2, '0');
@@ -161,12 +161,12 @@
         if (requestUsers.IsSuccess)
         {
             UsersList = requestUsers.Data;
-            var onlyRegisteredAndNotActivated = UsersList.Where(x => x.CreatedTime.Value.Year == DateTime.Now.Year && x.ActivationDateTime==null).Select(x => x.CreatedTime).GroupBy(x => x.Value.Month);
-            var newFullyRegisteredAccountThisYearCounts = UsersList.Where(x => x.ActivationDateTime != null && x.ActivationDateTime.Value.Year == DateTime.Now.Year).Select(x => x.ActivationDateTime).GroupBy(x => x.Value.Month);
-            var fullyRegisteredAccountPreYearDecCount = UsersList.Where(x => x.ActivationDateTime != null&&x.ActivationDateTime.Value.Year == DateTime.Now.Year - 1 && x.ActivationDateTime.Value.Month == 12).Select(x => x.ActivationDateTime).Count();
+            var onlyRegisteredAndNotActivated = UsersList.Where(x => x.CreatedTime.Value.Year == DateTime.UtcNow.Year && x.ActivationDateTime==null).Select(x => x.CreatedTime).GroupBy(x => x.Value.Month);
+            var newFullyRegisteredAccountThisYearCounts = UsersList.Where(x => x.ActivationDateTime != null && x.ActivationDateTime.Value.Year == DateTime.UtcNow.Year).Select(x => x.ActivationDateTime).GroupBy(x => x.Value.Month);
+            var fullyRegisteredAccountPreYearDecCount = UsersList.Where(x => x.ActivationDateTime != null&&x.ActivationDateTime.Value.Year == DateTime.UtcNow.Year - 1 && x.ActivationDateTime.Value.Month == 12).Select(x => x.ActivationDateTime).Count();
             foreach (var statistic in newFullyRegisteredAccountThisYearCounts)
             {
-                int preYear = DateTime.Now.Year - 1;
+                int preYear = DateTime.UtcNow.Year - 1;
                 int month = statistic.Key;
                 int monthCount=statistic.Count();
 

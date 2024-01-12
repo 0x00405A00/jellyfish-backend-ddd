@@ -1,9 +1,10 @@
 ﻿using Domain.Exceptions;
+using Domain.Primitives;
 using System.Text.RegularExpressions;
 
 namespace Domain.ValueObjects
 {
-    public class PhoneNumber:IEquatable<PhoneNumber>
+    public class PhoneNumber:IEquatable<PhoneNumber>, IValueObjectNonBinary
     {
         public static Regex PhoneNumberRegex = new Regex(@"^(?:\+49|0)(?:[1-9][0-9]{1,4})?[0-9]+$", RegexOptions.Compiled);
         public string PhoneNumb { get; private set; } 
@@ -17,6 +18,8 @@ namespace Domain.ValueObjects
         {
             PhoneNumb = value;
         }
+
+        public static implicit operator string(PhoneNumber phoneNumber) => phoneNumber.PhoneNumb;
 
         public static PhoneNumber Parse(string value)
         {
@@ -35,11 +38,6 @@ namespace Domain.ValueObjects
         public override string ToString()
         {
             return PhoneNumb;
-        }
-
-        public static bool Contains(PhoneNumber phoneNumber, string value)
-        {
-            return phoneNumber.PhoneNumb.IndexOf(value) >= 0;
         }
 
         public static bool operator !=(PhoneNumber phonelLeft, PhoneNumber phoneRight)

@@ -175,13 +175,13 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
 
                         int relativeIncrement = 0;
                         bool run = true;
-                        DateTime startGetData = DateTime.Now.AddSeconds(60);
+                        DateTime startGetData = DateTime.UtcNow.AddSeconds(60);
                         DataTable schemaData = reader.GetSchemaTable();
                         DataTable responseMetaData = schemaData;
 
                         while (await reader.ReadAsync() && run)
                         {
-                            if (startGetData <= DateTime.Now)
+                            if (startGetData <= DateTime.UtcNow)
                             {
                                 run = false;
                             }

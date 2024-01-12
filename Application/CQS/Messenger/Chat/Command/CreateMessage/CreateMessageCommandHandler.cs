@@ -83,7 +83,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
                             userId,
                             text,
                             mediaContent,
-                            (message.CreatedTime ?? DateTime.Now).ToTypedDateTime(),//Prüfung des CreatedTime auf null-Wert in 'UploadProfilePictureCommandValidator'
+                            (message.CreatedTime ?? DateTime.UtcNow).ToTypedDateTime(),//Prüfung des CreatedTime auf null-Wert in 'UploadProfilePictureCommandValidator'
                             userId,null,null,null,
                             null);
                         var createMessageEntity = chat.AddMessage(messageEntity);

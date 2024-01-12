@@ -1,5 +1,4 @@
 ﻿using Domain.Const;
-using Domain.Entities.Roles;
 using Domain.Entities.Users;
 using Domain.Primitives.Ids;
 using Domain.ValueObjects;
@@ -78,6 +77,16 @@ namespace Infrastructure.EFCore.DatabaseEntityConfiguration
                 .IsRequired()
                 .HasMaxLength(DbContextExtension.ColumnLength.EmailAddrLength)
                 .HasColumnName("email");
+
+            /*
+             * Data seeding currently not working with ownsone, because it determine that the Mail Property in User.cs is a navigation property...
+             * 
+             * builder.OwnsOne(e => e.Mail, navigationBuilder =>
+            {
+                    navigationBuilder.Property(e => e.EmailValue)
+                        .HasColumnName("email")
+                        .IsRequired();
+            });*/
 
             builder.Property(ut => ut.Phone)
                 .IsRequired(false)

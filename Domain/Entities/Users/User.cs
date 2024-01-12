@@ -62,7 +62,7 @@ namespace Domain.Entities.Users
         public static int MinimumAgeForRegistration = 16;
         public static TimeSpan PasswordResetExpiresInTime = new TimeSpan(12, 0, 0);
         public static DateTime MinimumBirthDayDate = new DateTime(1900, 1, 1);
-        public static DateTime MaximumBirthDayDate = DateTime.Now.AddYears(-MinimumAgeForRegistration);//man muss mindestens 16 sein
+        public static DateTime MaximumBirthDayDate = DateTime.UtcNow.AddYears(-MinimumAgeForRegistration);//man muss mindestens 16 sein
 
         private List<FriendshipRequest> _friendshipRequestsWhereIamRequester = new();
         private List<FriendshipRequest> _friendshipRequestsWhereIamTarget = new();
@@ -103,7 +103,7 @@ namespace Domain.Entities.Users
         public string PasswordResetCode { get; private set; }
         public string PasswordResetToken { get; private set; }
         public CustomDateTime? PasswordResetExpiresIn { get; private set; }
-        public Email Email { get; protected set; }
+        public Email Email { get; private set; }
         public PhoneNumber Phone { get; private set; }
         public Picture Picture { get; private set; }
 
@@ -288,8 +288,8 @@ namespace Domain.Entities.Users
                 null,
                 null,
                 null,
-                DateTime.Now.ToTypedDateOnly(),
-                DateTime.Now.ToTypedDateTime(),
+                DateTime.UtcNow.ToTypedDateOnly(),
+                DateTime.UtcNow.ToTypedDateTime(),
                 null,
                 null,
                 null,
@@ -326,7 +326,7 @@ namespace Domain.Entities.Users
                 throw new InvalidActivationTry();
             }
 
-            //ActivationDateTime = DateTime.Now;
+            //ActivationDateTime = DateTime.UtcNow;
             Raise(new UserActivatedDomainEvent(this.Id));
         }
         public void NewRegistered()
@@ -423,13 +423,13 @@ namespace Domain.Entities.Users
         public void ResetPasswordRequest()
         {
             PasswordResetCode = GenerateCode(ActivationCodeLen);
-            PasswordResetExpiresIn = DateTime.Now.Add(PasswordResetExpiresInTime).ToTypedDateTime();
+            PasswordResetExpiresIn = DateTime.UtcNow.Add(PasswordResetExpiresInTime).ToTypedDateTime();
             PasswordResetToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(Random.Shared.Next(1000) + Guid.NewGuid().ToString()));
             Raise(new UserPasswordResetRequestDomainEvent(this.Id));
         }
         public void ResetPassword(string newPassword, string newPasswordConfirm, string base64, string code)
         {
-            if (PasswordResetExpiresIn.DateTime <= DateTime.Now)
+            if (PasswordResetExpiresIn.DateTime <= DateTime.UtcNow)
             {
                 throw new InvalidPasswordException("password-reset action time frame is expired");
             }
@@ -593,7 +593,7 @@ namespace Domain.Entities.Users
                 UserHasRelationToFriend.NewId(),
                 this.Id,
                 friendId,
-                DateTime.Now.ToTypedDateTime(),
+                DateTime.UtcNow.ToTypedDateTime(),
                 execUser,
                 null,
                 null,
@@ -636,7 +636,7 @@ namespace Domain.Entities.Users
                 UserHasRelationToRole.NewId(),
                 this.Id,
                 role,
-                DateTime.Now.ToTypedDateTime(),
+                DateTime.UtcNow.ToTypedDateTime(),
                 assignerUser,
                 null,
                 null,
@@ -682,7 +682,7 @@ namespace Domain.Entities.Users
 
         public bool HasBirthday()
         {
-            return DateOfBirth == DateTime.Now.ToTypedDateOnly();
+            return DateOfBirth == DateTime.UtcNow.ToTypedDateOnly();
         }
         public bool HasFriends()
         {

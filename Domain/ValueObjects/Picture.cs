@@ -1,6 +1,8 @@
-﻿namespace Domain.ValueObjects
+﻿using Domain.Primitives;
+
+namespace Domain.ValueObjects
 {
-    public class Picture : MediaContent
+    public class Picture : MediaContent, IValueObjectBinary
     {
         private Picture():base()
         {

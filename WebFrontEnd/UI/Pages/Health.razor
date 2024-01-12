@@ -161,7 +161,7 @@
         if(responseMailQueue.IsSuccess)
         {
             MailQueue = responseMailQueue.ApiResponseDeserialized;
-            TimeFromRequestHealthCheckMailQueue = DateTime.Now;
+            TimeFromRequestHealthCheckMailQueue = DateTime.UtcNow;
         }
         _showSkeleton = false;
     }
@@ -172,7 +172,7 @@
         if (responseServices.IsSuccess)
         {
             HealthCheck = responseServices.ApiResponseDeserialized;
-            TimeFromRequestHealthCheckService = DateTime.Now;
+            TimeFromRequestHealthCheckService = DateTime.UtcNow;
         }
         _showSkeleton = false;
     }

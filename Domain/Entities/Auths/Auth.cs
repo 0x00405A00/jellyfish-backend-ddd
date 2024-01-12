@@ -117,12 +117,12 @@ public sealed partial class Auth : Entity<AuthId>, IAuth
 
     public void Logout()
     {
-        LogoutTime = DateTime.Now.ToTypedDateTime();
+        LogoutTime = DateTime.UtcNow.ToTypedDateTime();
     }
     public void Refresh(TimeSpan texpMinTimeSpan, TimeSpan rexpMinTimeSpan)
     {
-        TokenExpiresIn = DateTime.Now.Add(texpMinTimeSpan).ToTypedDateTime();
-        RefreshTokenExpiresIn = DateTime.Now.Add(rexpMinTimeSpan).ToTypedDateTime();
+        TokenExpiresIn = DateTime.UtcNow.Add(texpMinTimeSpan).ToTypedDateTime();
+        RefreshTokenExpiresIn = DateTime.UtcNow.Add(rexpMinTimeSpan).ToTypedDateTime();
     }
 }
 public sealed partial class Auth

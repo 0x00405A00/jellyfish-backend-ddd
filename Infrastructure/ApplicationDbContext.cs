@@ -130,6 +130,9 @@ namespace Infrastructure
             modelBuilder.CreateSampleData();
             _logger.LogWarning($"sample data is added");
             _logger.LogWarning($"!!! BE CAREFULL IN PRODUCTION WITH SAMPLE DATA !!!");
+            _logger.LogWarning($"try to add owned types...");
+            modelBuilder.CreateOwnedTypes();
+            _logger.LogWarning($"owned types are added");
 
             //modelBuilder.ApplyConfigurationsFromAssembly ignore any order so dependencies which are order depend could not be created (app runs in exception)
             //Data seeding: Schema initial data with: https://learn.microsoft.com/de-de/ef/core/modeling/data-seeding

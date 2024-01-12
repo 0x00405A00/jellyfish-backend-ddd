@@ -128,7 +128,7 @@ namespace Infrastructure.HostedService.Backgroundservice
                         mailAttachments,
                         mailIsHtml);
                     await mailHandler.SendMail(mailMessage);
-                    _logger.LogInformation($"{DateTime.Now.ToLongTimeString()}-mailservice send mail");
+                    _logger.LogInformation($"{DateTime.UtcNow.ToLongTimeString()}-mailservice send mail");
                     mailoutboxRepository.Remove(mail);
                 }
                 await unitOfWork.SaveChangesAsync();

@@ -74,7 +74,7 @@ namespace Infrastructure.Mail
         {
             get
             {
-                string fileName = string.Format("{0}-{1}.{2}", DateTime.Now.Year, DateTime.Now.Month, LoggerFileNamePostfixImap);
+                string fileName = string.Format("{0}-{1}.{2}", DateTime.UtcNow.Year, DateTime.UtcNow.Month, LoggerFileNamePostfixImap);
                 return Path.Combine(LoggerFileImapFolder, fileName);
             }
         }
@@ -91,7 +91,7 @@ namespace Infrastructure.Mail
         {
             get
             {
-                string fileName = string.Format("{0}-{1}.{2}", DateTime.Now.Year, DateTime.Now.Month, LoggerFilePostfixSmtp);
+                string fileName = string.Format("{0}-{1}.{2}", DateTime.UtcNow.Year, DateTime.UtcNow.Month, LoggerFilePostfixSmtp);
                 return Path.Combine(LoggerFileSmtpFolder, fileName);
             }
         }
@@ -187,7 +187,7 @@ namespace Infrastructure.Mail
                 using (EncryptionHandler encryp = new EncryptionHandler())
                 {
 
-                    string fileName = "tmp_" + (x.ContentDisposition?.FileName ?? x.ContentType.Name ?? "" + DateTime.Now.Ticks);
+                    string fileName = "tmp_" + (x.ContentDisposition?.FileName ?? x.ContentType.Name ?? "" + DateTime.UtcNow.Ticks);
 
                     string path = Path.Combine(storeFolder, fileName);
                     using (FileStream stream = File.Create(path))
@@ -558,7 +558,7 @@ namespace Infrastructure.Mail
                 }
                 catch (Exception ex)
                 {
-                    DateTime dateTime = DateTime.Now;
+                    DateTime dateTime = DateTime.UtcNow;
                     FileStream fileStream = File.Create(LoggerFileSmtpPath);
                     smtpClient = new SmtpClient(new ProtocolLogger(fileStream, true));
                 }

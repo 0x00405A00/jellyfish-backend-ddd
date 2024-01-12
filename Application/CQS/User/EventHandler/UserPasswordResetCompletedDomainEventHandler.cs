@@ -58,7 +58,7 @@ namespace Application.CQS.User.EventHandler
                     attachmentPath: imageJellyfishPath,
                     attachmentSha1: "xyz",
                     isEmbededInHtml: true,
-                    createdDateTime: DateTime.Now.ToTypedDateTime(),// Annahme: Aktuelles Datum und Uhrzeit
+                    createdDateTime: DateTime.UtcNow.ToTypedDateTime(),// Annahme: Aktuelles Datum und Uhrzeit
                     modifiedDateTime: null,
                     deletedDateTime: null
                 );
@@ -137,7 +137,7 @@ namespace Application.CQS.User.EventHandler
                             mailOutboxId,
                             emailType.Id,
                             user.Email.EmailValue,
-                            createdDateTime: DateTime.Now.ToTypedDateTime(),// Annahme: Aktuelles Datum und Uhrzeit
+                            createdDateTime: DateTime.UtcNow.ToTypedDateTime(),// Annahme: Aktuelles Datum und Uhrzeit
                             modifiedDateTime: null,
                             deletedDateTime: null);
 
@@ -157,7 +157,7 @@ namespace Application.CQS.User.EventHandler
                             subject,
                             bodyHtml,
                             bodyIsHtml,
-                            DateTime.Now.ToTypedDateTime(),
+                            DateTime.UtcNow.ToTypedDateTime(),
                             null,
                             null);
 

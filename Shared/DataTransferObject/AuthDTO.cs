@@ -21,9 +21,9 @@ namespace Shared.DataTransferObject
         [JsonPropertyName("refresh_token_expires_in")]
         public DateTime? RefreshTokenExpiresIn { get; set; }
 
-        public bool IsTokenExpired => TokenExpiresIn != null&&TokenExpiresIn <= DateTime.Now;
-        public bool IsRefreshTokenExpired => RefreshTokenExpiresIn!=null&&RefreshTokenExpiresIn <= DateTime.Now;
-        public bool IsAuthentificated => TokenExpiresIn != null && TokenExpiresIn > DateTime.Now;
+        public bool IsTokenExpired => TokenExpiresIn != null&&TokenExpiresIn <= DateTime.UtcNow;
+        public bool IsRefreshTokenExpired => RefreshTokenExpiresIn!=null&&RefreshTokenExpiresIn <= DateTime.UtcNow;
+        public bool IsAuthentificated => TokenExpiresIn != null && TokenExpiresIn > DateTime.UtcNow;
 
 
         public string LocalIp{ get; }

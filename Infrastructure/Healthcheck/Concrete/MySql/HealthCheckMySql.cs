@@ -52,7 +52,7 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
                         desciption = "Up-state=Up;SELECT 1=?;fetch-time=" + stopwatch.ElapsedMilliseconds + ";errors=yes;warning=no;details=;";
                     }
                 }
-                Assembly currentAssembly = Assembly.GetExecutingAssembly();
+                /*Assembly currentAssembly = Assembly.GetExecutingAssembly();
                 AssemblyName currentAssemblyName = currentAssembly.GetName();
                 string currentWorkingDir = Directory.GetParent(currentAssembly.Location).FullName;
                 string libFileName = "MySql.Data.dll";
@@ -70,7 +70,7 @@ namespace Infrastructure.Healthcheck.Concrete.MySql
                 {
                     desciption += "server-version=n.a.;client-version=" + versionClient.ToString() + ";version-compare=mismatch (incombabilities may there);";
                     healthStatus = HealthStatus.Degraded;
-                }
+                }*/
             }
             catch (DbException ex)
             {

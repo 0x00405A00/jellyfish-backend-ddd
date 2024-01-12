@@ -1,5 +1,6 @@
 ﻿using Domain.Entities.Users;
 using Infrastructure.Repository;
+using Shared.Linq;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Abstractions
@@ -31,5 +32,6 @@ namespace Infrastructure.Abstractions
         /// </summary>
         /// <returns></returns>
         public Task<List<FriendshipRequest>> GetAllFriendshipRequests(Expression<Func<User, bool>> expression);
+        public Task<ICollection<User>> TestA();
     }
 }

@@ -8,5 +8,9 @@ namespace Domain.Extension
         {
             return new CustomDateTime(dateTime);
         }
+        public static CustomDateTime Now(this CustomDateTime dateTime)
+        {
+            return new CustomDateTime(DateTime.UtcNow);
+        }
     }
 }

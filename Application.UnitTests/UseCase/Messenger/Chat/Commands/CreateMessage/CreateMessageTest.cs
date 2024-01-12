@@ -22,7 +22,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateMessage
                     new MessageDTO
                     {
                         Text = "Hello, World!",
-                        CreatedTime = DateTime.Now,
+                        CreatedTime = DateTime.UtcNow,
                         // Add other properties as needed
                     }
                 });

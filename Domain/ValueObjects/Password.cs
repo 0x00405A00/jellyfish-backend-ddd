@@ -1,9 +1,10 @@
 ﻿using Domain.Entities.Users;
+using Domain.Primitives;
 using System.Text;
 
 namespace Domain.ValueObjects
 {
-    public class Password
+    public class Password : IValueObjectNonBinary
     {
 
         public static string GeneratePassword()
@@ -41,6 +42,8 @@ namespace Domain.ValueObjects
 
             return passwordBuilder.ToString();
         }
+
+        public static implicit operator string(Password password) => throw new NotImplementedException("need factory method and private value handling");
 
         public static bool IsValidPassword(string password)
         {

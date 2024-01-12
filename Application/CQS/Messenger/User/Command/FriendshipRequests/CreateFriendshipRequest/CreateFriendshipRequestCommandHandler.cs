@@ -52,7 +52,7 @@ namespace Application.CQS.Messenger.User.Command.FriendshipRequests.CreateFriend
                     request.Message,
                     user.Id,
                     targetUser.Id,
-                    DateTime.Now.ToTypedDateTime(),
+                    DateTime.UtcNow.ToTypedDateTime(),
                     null,
                     null);
 

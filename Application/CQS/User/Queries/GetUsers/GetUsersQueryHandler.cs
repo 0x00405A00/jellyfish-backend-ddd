@@ -35,6 +35,9 @@ namespace Application.CQS.User.Queries.GetUsers
 
             var t = _mapper.Map<List<UserDTO>>(data.Data);
             var meta = Meta.Create(data.Meta.TotalItems, data.ColumnSearchAggregateDTO.SearchParams.page_size, data.ColumnSearchAggregateDTO.SearchParams.page_offset);
+
+            var t3 = await _userRepository.TestA();
+
             return Result<List<UserDTO>>.Success(t, meta);
         }
     }

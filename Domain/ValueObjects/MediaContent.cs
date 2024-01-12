@@ -1,6 +1,8 @@
-﻿namespace Domain.ValueObjects
+﻿using Domain.Primitives;
+
+namespace Domain.ValueObjects
 {
-    public class MediaContent
+    public class MediaContent : IValueObjectBinary
     {
         public byte[]? Data { get; private set; }
         public string FilePath { get; private set; }

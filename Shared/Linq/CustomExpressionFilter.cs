@@ -1,37 +1,30 @@
-﻿using Domain.Entities.Users;
-using Domain.ValueObjects;
+﻿using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Shared.DataFilter.Infrastructure;
+using Shared.Linq.Converters;
+using Shared.Linq.Converters.PropertyCompareExpressionConverters;
+using System;
+using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Reflection.Metadata;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 using static Shared.DataFilter.Infrastructure.ColumnFilterConst;
 
 namespace Shared.Linq
 {
     [Keyless]
-    public class CustomDbFunctions
+    public static class CustomDbFunctions
     {
-        [DbFunction("EmailContains", IsBuiltIn = true, IsNullable = true)]
-        public static bool EmailContains(string emailValue, string value)
-        {
-            var email = InstanceHelper.Construct<Email>(new Type[] { typeof(string)}, new object[] { emailValue });
-            return Email.Contains(email, value);
-        }
+        /*[DbFunction("emailcontains", IsBuiltIn = true, IsNullable = true)]
+        public static bool EmailContains(string emailValue, string value)=> throw new InvalidOperationException(); */
+        /*[DbFunction("TestCalc", IsBuiltIn = true, IsNullable = true)]
+        public static int Test(int t1, int t2) => throw new InvalidOperationException();
+
         [DbFunction("PhoneNumberContains", IsBuiltIn = true, IsNullable = true)]
-        public static bool PhoneNumberContains(string phoneNumber, string value)
-        {
-            var phone = InstanceHelper.Construct<PhoneNumber>(new Type[] { typeof(string)}, new object[] { phoneNumber });
-            return PhoneNumber.Contains(phone, value);
-        }
-        public static string EmailToString(Email email)
-        {
-            return email.ToString();
-        }
-        public static string PhoneNumberToString(PhoneNumber phoneNumber)
-        {
-            return phoneNumber.ToString();
-        }
+        public static bool PhoneNumberContains(string phoneNumber, string value) => throw new InvalidOperationException();*/
+
     }
     public static class InstanceHelper
     {
@@ -39,11 +32,11 @@ namespace Shared.Linq
         {
             Type t = typeof(T);
 
-            ConstructorInfo ci = t.GetConstructor(
+            ConstructorInfo ctorInfo = t.GetConstructor(
                 BindingFlags.Instance | BindingFlags.NonPublic,
                 null, paramTypes, null);
 
-            return (T)ci.Invoke(paramValues);
+            return (T)ctorInfo.Invoke(paramValues);
         }
         public static object GetValue(MemberExpression member)
         {
@@ -183,221 +176,12 @@ namespace Shared.Linq
 
         public static Expression GetExpressionByOperator(MemberExpression property, ExpressionFilter filter)
         {
-            Expression comparison = null;
-            if (property.Type == typeof(string))
-            {
-                var constant = Expression.Constant(filter.Value);
-                switch(filter.Operator)
-                {
-                    case OPERATOR.EQUAL:
-                        comparison = Expression.Equal(property, constant);
-                        break;
-                    case OPERATOR.CONTAINS:
-                        comparison = Expression.Call(property, "Contains", Type.EmptyTypes, constant);
-                        break;
-                    case OPERATOR.NOT_EQUAL:
-                        comparison = Expression.NotEqual(property, constant);
-                        break;
-                    default:
-                        comparison = Expression.Equal(property, constant);
-                        break;
-                }
-            }
-            else if (property.Type == typeof(double)|| property.Type == typeof(double?))
-            {
-                var constant = Expression.Constant(Convert.ToDouble(filter.Value));
-                switch (filter.Operator)
-                {
-                    case OPERATOR.EQUAL:
-                        comparison = Expression.Equal(property, constant);
-                        break;
-                    case OPERATOR.LESS_THAN:
-                        comparison = Expression.LessThan(property, constant);
-                        break;
-                    case OPERATOR.LESS_THAN_OR_EQUAL:
-                        comparison = Expression.LessThanOrEqual(property, constant);
-                        break;
-                    case OPERATOR.GREATER_THAN:
-                        comparison = Expression.GreaterThan(property, constant);
-                        break;
-                    case OPERATOR.GREATER_THAN_OR_EQUAL:
-                        comparison = Expression.GreaterThanOrEqual(property, constant);
-                        break;
-                    case OPERATOR.NOT_EQUAL:
-                        comparison = Expression.NotEqual(property, constant);
-                        break;
-                    default:
-                        comparison = Expression.Equal(property, constant);
-                        break;
-                }
-            }
-            else if (property.Type == typeof(Guid))
-            {
-                var constant = Expression.Constant(Guid.Parse(filter.Value));
-                switch (filter.Operator)
-                {
-                    case OPERATOR.EQUAL:
-                        comparison = Expression.Equal(property, constant);
-                        break;
-                    case OPERATOR.CONTAINS:
-                        comparison = Expression.Call(property, "Contains", Type.EmptyTypes, constant);
-                        break;
-                    case OPERATOR.NOT_EQUAL:
-                        comparison = Expression.NotEqual(property, constant);
-                        break;
-                    default:
-                        comparison = Expression.Equal(property, constant);
-                        break;
-                }
-            }
-            else if (property.Type == typeof(DateTime)|| property.Type == typeof(DateTime?))
-            {
-                DateTime? value = filter.Value == null ? null : DateTime.Parse(filter.Value);
-                var constant = Expression.Constant(value);
-                switch (filter.Operator)
-                {
-                    case OPERATOR.EQUAL:
-                        comparison = Expression.Equal(property, constant);
-                        break;
-                    case OPERATOR.CONTAINS:
-                        comparison = Expression.Call(property, "Contains", Type.EmptyTypes, constant);
-                        break;
-                    case OPERATOR.NOT_EQUAL:
-                        comparison = Expression.NotEqual(property, constant);
-                        break;
-                    default:
-                        comparison = Expression.Equal(property, constant);
-                        break;
-                }
-            }
-            else if (property.Type == typeof(DateOnly)||property.Type == typeof(DateOnly?))
-            {
-                var constant = Expression.Constant(DateOnly.Parse(filter.Value));
-                switch (filter.Operator)
-                {
-                    case OPERATOR.EQUAL:
-                        comparison = Expression.Equal(property, constant);
-                        break;
-                    case OPERATOR.CONTAINS:
-                        comparison = Expression.Call(property, "Contains", Type.EmptyTypes, constant);
-                        break;
-                    case OPERATOR.NOT_EQUAL:
-                        comparison = Expression.NotEqual(property, constant);
-                        break;
-                    default:
-                        comparison = Expression.Equal(property, constant);
-                        break;
-                }
-            }
-            else if (property.Type == typeof(bool) || property.Type == typeof(bool?))
-            {
-                var constant = Expression.Constant(bool.Parse(filter.Value));
-                switch (filter.Operator)
-                {
-                    case OPERATOR.EQUAL:
-                        comparison = Expression.Equal(property, constant);
-                        break;
-                    case OPERATOR.NOT_EQUAL:
-                        comparison = Expression.NotEqual(property, constant);
-                        break;
-                    default:
-                        comparison = Expression.Equal(property, constant);
-                        break;
-                }
-            }
-            else if(property.Type == typeof(int) || property.Type == typeof(int?)) 
-            {
-                var constant = Expression.Constant(Convert.ToInt32(filter.Value));
-                switch (filter.Operator)
-                {
-                    case OPERATOR.EQUAL:
-                        comparison = Expression.Equal(property, constant);
-                        break;
-                    case OPERATOR.LESS_THAN:
-                        comparison = Expression.LessThan(property, constant);
-                        break;
-                    case OPERATOR.LESS_THAN_OR_EQUAL:
-                        comparison = Expression.LessThanOrEqual(property, constant);
-                        break;
-                    case OPERATOR.GREATER_THAN:
-                        comparison = Expression.GreaterThan(property, constant);
-                        break;
-                    case OPERATOR.GREATER_THAN_OR_EQUAL:
-                        comparison = Expression.GreaterThanOrEqual(property, constant);
-                        break;
-                    case OPERATOR.NOT_EQUAL:
-                        comparison = Expression.NotEqual(property, constant);
-                        break;
-                    default:
-                        comparison = Expression.Equal(property, constant);
-                        break;
-                }
-            }
-            //Fehler bei WebFrontEnd bei Users-> Search nach name als bsp.
-            //extra fehler
-            else if (property.Type == typeof(Email))
-            {
-                var email = InstanceHelper.Construct<Email>(new Type[] {typeof(string) }, new object[] { filter.Value });
-                var constant = Expression.Constant(email);
-
-                var propertyExpression = Expression.Property(property, nameof(Email.EmailValue));
-
-                switch (filter.Operator)
-                {
-                    case OPERATOR.EQUAL:
-                        comparison = Expression.Equal(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
-                        break;
-                    case OPERATOR.CONTAINS:
-                        //comparison = Expression.Equal(property, constant); ... direct hit geht
-                        comparison = Expression.Call(property, "Contains", Type.EmptyTypes, constant);
-                        break;
-                    case OPERATOR.NOT_EQUAL:
-                        comparison = Expression.NotEqual(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
-                        break;
-                    default:
-                        comparison = Expression.Equal(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
-                        break;
-                }
-            }/*
-            else if (property.Type == typeof(PhoneNumber))
-            {
-                var constant = Expression.Constant(filter.Value);
-                var phoneToStringCall = Expression.Call(typeof(CustomDbFunctions).GetMethod(nameof(CustomDbFunctions.PhoneNumberToString)), property);
-                switch (filter.Operator)
-                {
-                    case OPERATOR.EQUAL:
-                        comparison = Expression.Equal(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
-                        break;
-                    case OPERATOR.CONTAINS:
-                        var phoneNumberContainsMethod = typeof(CustomDbFunctions).GetMethod(nameof(CustomDbFunctions.PhoneNumberContains));
-                        var constantValue = Expression.Constant(filter.Value);
-                        comparison = Expression.Call(phoneNumberContainsMethod, phoneToStringCall, constantValue);
-                        break;
-                    case OPERATOR.NOT_EQUAL:
-                        comparison = Expression.NotEqual(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
-                        break;
-                    default:
-                        comparison = Expression.Equal(property, constant);//kann nicht durch ef core translated werden, ebenfalls methoden für value object equal,notequal, sprich methoden definieren welche mit mit expression.call aufrufen kann
-                        break;
-                }
-            }*/
-            /*else
-            {
-                var constant = Expression.Constant(filter.Value);
-                switch (filter.Operator)
-                {
-                    case OPERATOR.EQUAL:
-                        comparison = Expression.Equal(property, constant);
-                        break;
-                    case OPERATOR.NOT_EQUAL:
-                        comparison = Expression.NotEqual(property, constant);
-                        break;
-                    default:
-                        comparison = Expression.Equal(property, constant);
-                        break;
-                }
-            }*/
+            var converter = ExpressionFilterExtension.GetExpressionByTypeConverter(property.Type);
+            if (converter is null)
+                return null;
+            Expression comparison = converter.Convert(property,filter);
             return comparison;
         }
+       
     }
 }

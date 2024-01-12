@@ -72,9 +72,9 @@ namespace Application.CQS.Auth.Command.CreateAuth
                     request.RemoteIp.ToString(),
                     request.RemoteIpPort,
                     tokenStr,
-                    DateTime.Now.Add(texpMinTimeSpan).ToTypedDateTime(),
+                    DateTime.UtcNow.Add(texpMinTimeSpan).ToTypedDateTime(),
                     request.UserAgent,
-                    DateTime.Now.Add(rexpMinTimeSpan).ToTypedDateTime(),
+                    DateTime.UtcNow.Add(rexpMinTimeSpan).ToTypedDateTime(),
                     refreshTokenStr,
                     null);
                 

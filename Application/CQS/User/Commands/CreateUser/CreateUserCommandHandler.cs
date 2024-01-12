@@ -94,7 +94,7 @@ namespace Application.CQS.User.Commands.CreateUser
                     null,
                     request.DateOfBirth.ToTypedDateOnly(),
                     null,
-                    DateTime.Now.ToTypedDateTime(),
+                    DateTime.UtcNow.ToTypedDateTime(),
                     createdByUser.Id,
                     null,
                     null,

@@ -78,7 +78,7 @@ namespace Domain.Entities.Chats
         {
             var id = ChatRelationToUser.NewId();
             bool isAdmin = true;
-            CustomDateTime createdDateTime = DateTime.Now.ToTypedDateTime();
+            CustomDateTime createdDateTime = DateTime.UtcNow.ToTypedDateTime();
             return Create(
                 id,
                 userId,
@@ -95,7 +95,7 @@ namespace Domain.Entities.Chats
         {
             var id = ChatRelationToUser.NewId();
             bool isAdmin = false;
-            CustomDateTime createdDateTime = DateTime.Now.ToTypedDateTime();
+            CustomDateTime createdDateTime = DateTime.UtcNow.ToTypedDateTime();
             return Create(
                 id,
                 userId,

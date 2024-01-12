@@ -67,7 +67,7 @@ namespace SharedTest.DomainTestInstance.Entity.Users
         {
             return UserType.Create(new UserTypeId(UserConst.UserType.User),
                                            typeName,
-                                           DateTime.Now.ToTypedDateTime(),
+                                           DateTime.UtcNow.ToTypedDateTime(),
                                            null,
                                            null,
                                            null,
@@ -82,7 +82,7 @@ namespace SharedTest.DomainTestInstance.Entity.Users
                 "be my new friend",
                 fromUser.Id,
                 toUser.Id,
-                DateTime.Now.ToTypedDateTime(),
+                DateTime.UtcNow.ToTypedDateTime(),
                 null,
                 null);
         }
@@ -92,7 +92,7 @@ namespace SharedTest.DomainTestInstance.Entity.Users
             return Role.Create(
                 new RoleId(RoleConst.UserRoleUuid),
                 UserConst.UserType.UserName,
-                DateTime.Now.ToTypedDateTime(),
+                DateTime.UtcNow.ToTypedDateTime(),
                 null,
                 null,
                 null,
@@ -104,7 +104,7 @@ namespace SharedTest.DomainTestInstance.Entity.Users
             return Role.Create(
                 new RoleId(RoleConst.AdminRoleUuid),
                 UserConst.UserType.AdminName,
-                DateTime.Now.ToTypedDateTime(),
+                DateTime.UtcNow.ToTypedDateTime(),
                 null,
                 null,
                 null,
@@ -116,7 +116,7 @@ namespace SharedTest.DomainTestInstance.Entity.Users
             return Role.Create(
                 new RoleId(RoleConst.RootRoleUuid),
                 UserConst.UserType.RootName,
-                DateTime.Now.ToTypedDateTime(),
+                DateTime.UtcNow.ToTypedDateTime(),
                 null,
                 null,
                 null,
@@ -129,7 +129,7 @@ namespace SharedTest.DomainTestInstance.Entity.Users
                 UserHasRelationToRole.NewId(),
                 user,
                 role.Id,
-                DateTime.Now.ToTypedDateTime(),
+                DateTime.UtcNow.ToTypedDateTime(),
                 null,
                 null,
                 null,

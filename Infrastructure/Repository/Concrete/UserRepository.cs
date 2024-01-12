@@ -4,6 +4,8 @@ using Infrastructure.Repository.Primitives;
 using Microsoft.EntityFrameworkCore;
 using Shared.DataFilter.Infrastructure;
 using Shared.Linq;
+using System.Buffers;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repository.Concrete
@@ -164,6 +166,13 @@ EF.CompileQuery((ApplicationDbContext context, Expression<Func<DatabaseEntity.Us
             var meta = new Primitives.Meta { TotalItems = count };
 
             return new RepositoryResponse<ICollection<User>>(data, ref meta, columnSearchAggregateDTO);
+        }
+        public async Task<ICollection<User>> TestA()
+        {
+            var searchValue = "root@localhost.local";//one hit
+            var users = await DbSet.Where(u => EF.Functions.Like(u.Email, searchValue))
+                .ToListAsync();
+            return users;
         }
     }
 }

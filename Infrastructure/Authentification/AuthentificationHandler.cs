@@ -112,7 +112,7 @@ namespace Infrastructure.Authentification
             {
                 return AuthenticateResult.Fail("unauthorized");
             }
-            if (DateTimeExtension.UnixTimeStampToDateTime((long)jwtToken.Payload.Exp) <= DateTime.Now)
+            if (DateTimeExtension.UnixTimeStampToDateTime((long)jwtToken.Payload.Exp) <= DateTime.UtcNow)
             {
                 return AuthenticateResult.Fail("unauthorized");
             }

@@ -1,9 +1,10 @@
 ﻿using Domain.Exceptions;
+using Domain.Primitives;
 using System.Text.RegularExpressions;
 
 namespace Domain.ValueObjects
 {
-    public class Email : IEquatable<Email>
+    public class Email : IEquatable<Email>, IValueObjectNonBinary
     {
         public static Regex EmailRegex = new Regex(@"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.Compiled|RegexOptions.IgnoreCase);
         public string EmailValue { get; private set; } 
@@ -17,6 +18,7 @@ namespace Domain.ValueObjects
         {
             EmailValue = value.ToLower();
         }
+        public static implicit operator string(Email email) => email.EmailValue;
 
         public static Email Parse(string value)
         {
@@ -36,16 +38,6 @@ namespace Domain.ValueObjects
         {
 
             return EmailValue;
-        }
-
-        public bool Contains(Email email)
-        {
-            return this.EmailValue.IndexOf(email.EmailValue) >= 0;
-        }
-
-        public static bool Contains(Email email,string value)
-        {
-            return email.EmailValue.IndexOf(value) >= 0;
         }
 
         public static bool operator !=(Email emailLeft, Email emailRight)

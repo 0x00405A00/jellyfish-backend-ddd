@@ -241,10 +241,10 @@
                     {
 
                         var calcTime = _token.TokenExpiresIn.Value.AddMinutes(-5);
-                        if (DateTime.Now >= calcTime)
+                        if (DateTime.UtcNow >= calcTime)
                         {
 
-                            LogoutTimer = _token.TokenExpiresIn.Value - DateTime.Now;
+                            LogoutTimer = _token.TokenExpiresIn.Value - DateTime.UtcNow;
                             StateHasChanged(); // Dies löst einen Rerender der Komponente aus
 
                         }

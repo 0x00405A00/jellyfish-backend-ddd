@@ -46,7 +46,7 @@ namespace Application.CQS.Role.Commands.CreateRole
                 role = Domain.Entities.Roles.Role.Create(
                     roleId,
                     request.Name,
-                    DateTime.Now.ToTypedDateTime(),
+                    DateTime.UtcNow.ToTypedDateTime(),
                     createdByUser.Id,
                     null,
                     null,

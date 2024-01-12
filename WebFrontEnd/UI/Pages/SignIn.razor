@@ -81,7 +81,7 @@
     public bool RegisterError => RegisterErrors.Any();
     public bool LoginError = false;
     public List<ApiError> RegisterErrors = new List<ApiError>();
-    public DateTime? RegisterDateTime = DateTime.Now;
+    public DateTime? RegisterDateTime = DateTime.UtcNow;
     public UserLoginDTO UserLoginDTO = new UserLoginDTO();
     public RegisterUserDTO RegisterUserDTO = new RegisterUserDTO();
     private MudTextField<string> userNameTextField;
