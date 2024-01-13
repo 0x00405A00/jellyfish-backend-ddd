@@ -70,6 +70,7 @@ namespace Shared.DataFilter
                             {
                                 columnFilterGroup.Filters[index].field = property.Name;
                                 columnFilterGroup.Filters[index].FoundFieldInDto = true;
+                                columnFilterGroup.Filters[index].Type = property.PropertyType;
                             }
                         }
                     }
@@ -85,6 +86,12 @@ namespace Shared.DataFilter
                         if(!filter.FoundFieldInDto)
                         {
                             errors.Add(new Error($"field with given name '{filter.field}' is not existing"));
+                        }
+                        var values = filter.GetValueCollection();
+                        var maxAllowedValues = ColumnFilterConst.GetAllowedValuesForOperator(filter.Op);
+                        if(values.Length != maxAllowedValues)
+                        {
+                            errors.Add(new Error($"field: {filter.field} with given operator {columnFilterGroup.Filters[i].op} can only consume {maxAllowedValues} values, but {values.Length} are given"));
                         }
                     }
                 }

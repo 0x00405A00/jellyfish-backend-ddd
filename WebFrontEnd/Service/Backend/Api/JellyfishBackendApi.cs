@@ -8,9 +8,9 @@ using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
 using Shared.DataTransferObject.Abstraction;
 using Shared.Reflection;
-using System;
+using System.Reflection;
+using System.Text.Json.Serialization;
 using WebFrontEnd.Authentification;
-using WebFrontEnd.Service.Authentification;
 
 namespace WebFrontEnd.Service.Backend.Api
 {
@@ -52,6 +52,70 @@ namespace WebFrontEnd.Service.Backend.Api
         {
             var url = "/user/" + userDTO.Id + "/profile-picture";
             var response = await this.TypedRequest<UserDTO, UserDTO>(url, RestSharp.Method.Delete, null, cancellationToken);
+            return response;
+        }
+        public async Task<JellyfishBackendApiResponse<List<UserDTO>>> GetUsers(string searchText,int selectedPage,int maxItemsPerPage, CancellationToken cancellationToken)
+        {
+            SearchParamsBody searchParamsBody = new SearchParamsBody();
+            searchParamsBody.page_offset = selectedPage;
+            searchParamsBody.page_size = maxItemsPerPage;
+            var columnFilterGroupAnd = new Shared.DataFilter.Infrastructure.ColumnFilterGroup
+            {
+                Group = "and",
+                Filters = new List<Shared.DataFilter.Infrastructure.ColumnFilter>
+                            {
+                                new Shared.DataFilter.Infrastructure.ColumnFilter
+                                {
+                                    field = "deleted_time", op = "eq", value = null
+                                }
+                            }
+            };
+            searchParamsBody.filters = new List<Shared.DataFilter.Infrastructure.ColumnFilterGroup>
+            {
+                columnFilterGroupAnd
+            };
+            if (!String.IsNullOrWhiteSpace(searchText))
+            {
+                var columnFilterGroupOr =
+                        new Shared.DataFilter.Infrastructure.ColumnFilterGroup
+                        {
+                            Group = "or",
+                            Filters = new List<Shared.DataFilter.Infrastructure.ColumnFilter>()
+                        };
+
+                var properties = typeof(UserDTO).GetProperties()
+                        .Where(x => x.CanWrite && (x.PropertyType == typeof(string) || (x.PropertyType == typeof(Guid) || x.PropertyType == typeof(Guid?)) || (x.PropertyType == typeof(DateTime) || x.PropertyType == typeof(DateTime?))))
+                        .Select(x => new { attr = x.GetCustomAttribute<JsonPropertyNameAttribute>(), propertyType = x.PropertyType })
+                        .ToList();
+                foreach (var prop in properties)
+                {
+                    string field = prop.attr.Name;
+                    string op = null;
+                    if (prop.propertyType == typeof(string) || prop.propertyType == typeof(Guid) || prop.propertyType == typeof(Guid?))
+                    {
+                        op = "contains";
+                    }
+                    else if (prop.propertyType == typeof(DateTime) || prop.propertyType == typeof(DateTime?))
+                    {
+                        op = "contains";
+                    }
+                    else
+                    {
+                        op = "eq";
+                    }
+
+                    var condition = new Shared.DataFilter.Infrastructure.ColumnFilter
+                    {
+                        field = field,
+                        op = op,
+                        value = searchText
+                    };
+                    columnFilterGroupOr.Filters.Add(condition);
+                }
+                searchParamsBody.filters.Add(columnFilterGroupOr);
+            }
+            var response = await this.GetUsers(searchParamsBody, cancellationToken);
+
             return response;
         }
         public async Task<JellyfishBackendApiResponse<List<UserDTO>>> GetUsers(SearchParamsBody searchParamsBody, CancellationToken cancellationToken)

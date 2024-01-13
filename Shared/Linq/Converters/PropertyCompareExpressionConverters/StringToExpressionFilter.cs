@@ -16,7 +16,7 @@ namespace Shared.Linq.Converters.PropertyCompareExpressionConverters
                 switch (filter.Operator)
                 {
                     case OPERATOR.CONTAINS:
-                        expression = Expression.Call(memberExpression, nameof(string.Contains), Type.EmptyTypes, ConstantExpression);
+                        expression = Expression.Call(memberExpression, nameof(string.Contains), Type.EmptyTypes, ConstantExpressions);
                         break;
                     default:
                         break;

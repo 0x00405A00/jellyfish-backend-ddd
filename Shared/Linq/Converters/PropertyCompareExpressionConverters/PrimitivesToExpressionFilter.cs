@@ -22,16 +22,22 @@ namespace Shared.Linq.Converters.PropertyCompareExpressionConverters
                 switch (filter.Operator)
                 {
                     case OPERATOR.LESS_THAN:
-                        expression = Expression.LessThan(memberExpression, ConstantExpression);
+                        expression = Expression.LessThan(memberExpression, ConstantExpressions.First());
                         break;
                     case OPERATOR.LESS_THAN_OR_EQUAL:
-                        expression = Expression.LessThanOrEqual(memberExpression, ConstantExpression);
+                        expression = Expression.LessThanOrEqual(memberExpression, ConstantExpressions.First());
                         break;
                     case OPERATOR.GREATER_THAN:
-                        expression = Expression.GreaterThan(memberExpression, ConstantExpression);
+                        expression = Expression.GreaterThan(memberExpression, ConstantExpressions.First());
                         break;
                     case OPERATOR.GREATER_THAN_OR_EQUAL:
-                        expression = Expression.GreaterThanOrEqual(memberExpression, ConstantExpression);
+                        expression = Expression.GreaterThanOrEqual(memberExpression, ConstantExpressions.First());
+                        break;
+                    case OPERATOR.BETWEEN:
+                        var left = Expression.Lambda<Func<T, bool>>(Expression.GreaterThanOrEqual(memberExpression, ConstantExpressions.First()));
+                        var right = Expression.Lambda<Func<T, bool>>(Expression.LessThanOrEqual(memberExpression, ConstantExpressions.Skip(1).First()));
+
+                        expression = Expression.And(left, right);
                         break;
                     default:
                         break;

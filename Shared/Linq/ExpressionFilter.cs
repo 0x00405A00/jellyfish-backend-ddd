@@ -6,7 +6,7 @@ namespace Shared.Linq
     {
         public string ColumnName { get; set; }
         public OPERATOR Operator { get; set; }
-        public string Value { get; set; }
+        public string[] Values { get; set; }
     }
 
 }

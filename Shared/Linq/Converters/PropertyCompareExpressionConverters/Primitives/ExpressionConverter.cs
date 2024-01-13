@@ -10,26 +10,30 @@ namespace Shared.Linq.Converters.PropertyCompareExpressionConverters.Primitives
     }
     internal abstract class ExpressionConverter<T> : IExpressionFilter
     {
-        protected ConstantExpression ConstantExpression { get; set; }
+        protected ConstantExpression[] ConstantExpressions { get; set; }
         protected ExpressionConverter()
         {
 
         }
-        public virtual ConstantExpression ConvertValueToConstantExpression(MemberExpression memberExpression, ExpressionFilter filter)
+        public virtual ConstantExpression[] ConvertValueToConstantExpression(MemberExpression memberExpression, ExpressionFilter filter)
         {
-            if(memberExpression.Type == typeof(T))
+            List<ConstantExpression> constantExpressions = new List<ConstantExpression>();
+            foreach(var val in filter.Values)
             {
-                ConstantExpression = Expression.Constant(filter.Value);
-                return ConstantExpression;
+
+                if (memberExpression.Type == typeof(T))
+                {
+                    var exp = Expression.Constant(val);
+                    constantExpressions.Add(exp);
+                    continue;
+                }
+                var converter = TypeDescriptor.GetConverter(memberExpression.Type);
+                var constantValue = converter.ConvertTo(val, typeof(T));
+                var constant = Expression.Constant(constantValue);
+                constantExpressions.Add(constant);  
             }
-            var converter = TypeDescriptor.GetConverter(memberExpression.Type);
-            var constantValue = converter.ConvertTo(filter.Value, typeof(T));
-            var constant = Expression.Constant(constantValue);
-            if (ConstantExpression is null)
-            {
-                ConstantExpression = constant;
-            }
-            return ConstantExpression;
+            ConstantExpressions = constantExpressions.ToArray();
+            return ConstantExpressions;
         }
         public virtual Expression Convert(MemberExpression memberExpression, ExpressionFilter filter)
         {
@@ -39,10 +43,10 @@ namespace Shared.Linq.Converters.PropertyCompareExpressionConverters.Primitives
             switch (filter.Operator)
             {
                 case OPERATOR.EQUAL:
-                    expression = Expression.Equal(memberExpression, constant);
+                    expression = Expression.Equal(memberExpression, constant.First());
                     break;
                 case OPERATOR.NOT_EQUAL:
-                    expression = Expression.NotEqual(memberExpression, constant);
+                    expression = Expression.NotEqual(memberExpression, constant.First());
                     break;
                 default:
                     break;

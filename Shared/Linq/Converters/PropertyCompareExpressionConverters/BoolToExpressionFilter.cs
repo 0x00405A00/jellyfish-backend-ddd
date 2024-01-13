@@ -12,10 +12,18 @@ namespace Shared.Linq.Converters.PropertyCompareExpressionConverters
 
             return expression;
         }
-        public override ConstantExpression ConvertValueToConstantExpression(MemberExpression memberExpression, ExpressionFilter filter)
+        public override ConstantExpression[] ConvertValueToConstantExpression(MemberExpression memberExpression, ExpressionFilter filter)
         {
-            var constant = Expression.Constant(bool.Parse(filter.Value));
-            return constant;
+            List<ConstantExpression> result = new List<ConstantExpression>();   
+
+            foreach(var val in filter.Values)
+            {
+
+                var constant = Expression.Constant(bool.Parse(val));
+                result.Add(constant);
+            }
+            ConstantExpressions = result.ToArray();
+            return ConstantExpressions;
         }
     }
 }

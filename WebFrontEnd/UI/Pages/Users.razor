@@ -10,7 +10,7 @@
 <CascadingAuthenticationState>
     <AuthorizeView Policy="Admin">
         <Authorized>
-            <MudText Typo="Typo.h5">@(_selectedItemsPerPage == UsersList.Count ? (_selectedPage * UsersList.Count) : (_totalUsers))/@_totalUsers Users</MudText>
+            <MudText Typo="Typo.h5">@(_selectedMaxItemsPerPage == UsersList.Count ? (_selectedPage * UsersList.Count) : (_totalUsers))/@_totalUsers Users</MudText>
 
             <MudToolBar Class="d-flex flex-wrap align-content-around w-100 m-0">
                 <MudButton OnClick="AddUser">
@@ -64,7 +64,7 @@
 
                      <RowTemplate Context="TableContext">
                          <MudTd>
-                             <MudText>#@(((_selectedPage-1) * _selectedItemsPerPage) + (UsersList.IndexOf(TableContext)+1))</MudText>
+                             <MudText>#@(((_selectedPage-1) * _selectedMaxItemsPerPage) + (UsersList.IndexOf(TableContext)+1))</MudText>
                          </MudTd>
                          <MudTd>
                             <ProfileAvatar User="@TableContext" HeightInPx=45 WidthInPx=45></ProfileAvatar>
@@ -103,12 +103,12 @@
     private MudTable<UserDTO> UserListTable;
     private string SearchText;
     private int _selectedPage = 1;
-    private int _selectedItemsPerPage = 10;
+    private int _selectedMaxItemsPerPage = 10;
     public int SelectedItemsPerPage
     {
         get
         {
-            return _selectedItemsPerPage;
+            return _selectedMaxItemsPerPage;
         }
         set
         {
@@ -176,11 +176,11 @@
     }
     private async void PageItemSelectionChanged(int value)
     {
-        if (value == _selectedItemsPerPage)
+        if (value == _selectedMaxItemsPerPage)
             return;
-        _selectedItemsPerPage = value;
+        _selectedMaxItemsPerPage = value;
         var data = _session.UsersPage;
-        data.MaxItemsPerPage = _selectedItemsPerPage;
+        data.MaxItemsPerPage = _selectedMaxItemsPerPage;
         _selectedPage = 1;
         SessionStorage.SetSession(_session, cancellationToken.Token);
         PageChanged(_selectedPage);
@@ -192,7 +192,7 @@
         {
             _session = await SessionStorage.GetSession(cancellationToken.Token);
             var data = _session.UsersPage;
-            _selectedItemsPerPage = data.MaxItemsPerPage;
+            _selectedMaxItemsPerPage = data.MaxItemsPerPage;
             _token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
             await GetData();
             StateHasChanged();
@@ -208,58 +208,7 @@
 
     public async Task<JellyfishBackendApi.JellyfishBackendApiResponse<List<UserDTO>>> GetUsers(string searchText = null)
     {
-
-        SearchParamsBody searchParamsBody = new SearchParamsBody();
-        searchParamsBody.page_offset = _selectedPage;
-        searchParamsBody.page_size = _selectedItemsPerPage;
-        var columnFilterGroupAnd = new Shared.DataFilter.Infrastructure.ColumnFilterGroup
-            {
-                Group = "and",
-                Filters = new List<Shared.DataFilter.Infrastructure.ColumnFilter>
-                            {
-                                new Shared.DataFilter.Infrastructure.ColumnFilter
-                                {
-                                    field = "deleted_time", op = "eq", value = null
-                                }
-                            }
-            };
-        searchParamsBody.filters = new List<Shared.DataFilter.Infrastructure.ColumnFilterGroup>
-        {
-            columnFilterGroupAnd
-        };
-        if (!String.IsNullOrWhiteSpace(searchText))
-        {
-            var columnFilterGroupOr =
-                    new Shared.DataFilter.Infrastructure.ColumnFilterGroup
-                        {
-                            Group = "or",
-                            Filters = new List<Shared.DataFilter.Infrastructure.ColumnFilter>()
-                        };
-
-            var properties = typeof(UserDTO).GetProperties().Where(x => x.CanWrite && (x.PropertyType == typeof(string) || (x.PropertyType == typeof(Guid) || x.PropertyType == typeof(Guid?)) || (x.PropertyType == typeof(DateTime) || x.PropertyType == typeof(DateTime?)))).Select(x => new { attr = x.GetCustomAttribute<JsonPropertyNameAttribute>(), propertyType = x.PropertyType }).ToList();
-            foreach (var prop in properties)
-            {
-                string field = prop.attr.Name;
-                string op = null; 
-                if (prop.propertyType == typeof(string) || prop.propertyType == typeof(Guid))
-                {
-                    op = "contains";
-                }
-                else
-                {
-                    op = "eq";
-                }
-                var condition = new Shared.DataFilter.Infrastructure.ColumnFilter
-                    {
-                        field = field,
-                        op = op,
-                        value = searchText
-                    };
-                columnFilterGroupOr.Filters.Add(condition);
-            }
-            searchParamsBody.filters.Add(columnFilterGroupOr);
-        }
-        var response = await WebApiClient.GetUsers(searchParamsBody, cancellationToken.Token);
+        var response = await WebApiClient.GetUsers(searchText,_selectedPage,_selectedMaxItemsPerPage, cancellationToken.Token);
 
         if (response.IsSuccess)
         {

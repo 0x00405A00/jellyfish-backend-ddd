@@ -91,7 +91,7 @@ namespace Shared.Linq
                         expressionFilters.Add(new ExpressionFilter()
                         {
                             ColumnName = item.field,
-                            Value = item.value,
+                            Values = item.GetValueCollection(),
                             Operator = item.Op
                         });
                     }
@@ -124,7 +124,7 @@ namespace Shared.Linq
             }
             catch (Exception ex)
             {
-                filters = null;
+                throw;
             }
             return filters;
         }

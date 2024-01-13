@@ -34,7 +34,7 @@ namespace Shared.Linq.Converters
             ExpressionFilterExtension.RegisterType(new PrimitivesToExpressionFilter<double>());
             ExpressionFilterExtension.RegisterType(new PrimitivesToExpressionFilter<long>());
             ExpressionFilterExtension.RegisterType(new StringToExpressionFilter<string>());
-            ExpressionFilterExtension.RegisterType(new DateTimeToExpressionFilter<DateTime>());
+            ExpressionFilterExtension.RegisterType(new PrimitivesToExpressionFilter<DateTime>());
             ExpressionFilterExtension.RegisterType(new CustomDateTimeToExpressionFilter<CustomDateTime>());
             ExpressionFilterExtension.RegisterType(new GuidToExpressionFilter<Guid>());
             ExpressionFilterExtension.RegisterType(new ValueObjectNonBinaryToExpressionFilter<Email>());

@@ -16,7 +16,7 @@ namespace Shared.Linq.Converters.PropertyCompareExpressionConverters
                 switch (filter.Operator)
                 {
                     case OPERATOR.CONTAINS:
-                        expression = Expression.Call(memberExpression, "Contains", Type.EmptyTypes, ConstantExpression);
+                        expression = Expression.Call(memberExpression, "Contains", Type.EmptyTypes, ConstantExpressions);
                         break;
                     default:
                         break;
@@ -24,11 +24,18 @@ namespace Shared.Linq.Converters.PropertyCompareExpressionConverters
             }
             return expression;
         }
-        public override ConstantExpression ConvertValueToConstantExpression(MemberExpression memberExpression, ExpressionFilter filter)
+        public override ConstantExpression[] ConvertValueToConstantExpression(MemberExpression memberExpression, ExpressionFilter filter)
         {
-            DateTime? value = filter.Value == null ? null : DateTime.Parse(filter.Value);
-            var constant = Expression.Constant(value);
-            return constant;
+            List<ConstantExpression> constantExpressions = new();
+            foreach (var val in filter.Values)
+            {
+
+                DateTime? value = filter.Values == null ? null : DateTime.Parse(val);
+                var constant = Expression.Constant(value);
+                constantExpressions.Add(constant);
+            }
+            ConstantExpressions = constantExpressions.ToArray();
+            return ConstantExpressions;
         }
     }
 }

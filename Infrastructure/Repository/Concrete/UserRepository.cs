@@ -7,6 +7,8 @@ using Shared.Linq;
 using System.Buffers;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace Infrastructure.Repository.Concrete
 {
@@ -172,6 +174,8 @@ EF.CompileQuery((ApplicationDbContext context, Expression<Func<DatabaseEntity.Us
             var searchValue = "root@localhost.local";//one hit
             var users = await DbSet.Where(u => EF.Functions.Like(u.Email, searchValue))
                 .ToListAsync();
+
+
             return users;
         }
     }
