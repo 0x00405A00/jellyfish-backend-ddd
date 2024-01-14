@@ -1,15 +1,8 @@
-﻿using Domain.ValueObjects;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
+﻿using Microsoft.EntityFrameworkCore;
 using Shared.DataFilter.Infrastructure;
 using Shared.Linq.Converters;
-using Shared.Linq.Converters.PropertyCompareExpressionConverters;
-using System;
-using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Reflection.Metadata;
-using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 using static Shared.DataFilter.Infrastructure.ColumnFilterConst;
 
 namespace Shared.Linq

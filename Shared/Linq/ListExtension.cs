@@ -6,7 +6,9 @@
         {
             if(o == null) return false;
             var oType = o.GetType();
-            return (oType.IsGenericType && (oType.GetGenericTypeDefinition() == typeof(List<>)));
+            var genericTypeDef = oType.IsGenericType?oType.GetGenericTypeDefinition():null;
+            bool isList = ((genericTypeDef!=null && (genericTypeDef == typeof(List<>) || genericTypeDef == typeof(ICollection<>))));
+            return isList;
         }
     }
 }

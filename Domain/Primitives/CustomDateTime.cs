@@ -9,10 +9,9 @@
 
         public static bool operator !=(CustomDateTime dtLeft, CustomDateTime dtRight)
         {
-            if (ReferenceEquals(dtLeft, null) && ReferenceEquals(dtRight, null)) return true;
-            if (ReferenceEquals(dtLeft, null) || ReferenceEquals(dtRight, null)) return false;
+            if (ReferenceEquals(dtLeft, null) && ReferenceEquals(dtRight, null)) return false;
 
-            return dtLeft.Equals(dtRight);
+            return !dtLeft.Equals(dtRight);
         }
 
         public static bool operator ==(CustomDateTime dtLeft, CustomDateTime dtRight)
