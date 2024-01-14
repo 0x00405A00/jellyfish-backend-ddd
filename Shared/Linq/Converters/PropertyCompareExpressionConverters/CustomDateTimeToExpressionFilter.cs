@@ -1,7 +1,7 @@
-﻿using System.Linq.Expressions;
-using Domain.Primitives;
+﻿using Domain.Primitives;
 using Microsoft.EntityFrameworkCore;
 using Shared.Linq.Converters.PropertyCompareExpressionConverters.Primitives;
+using System.Linq.Expressions;
 using static Shared.DataFilter.Infrastructure.ColumnFilterConst;
 
 namespace Shared.Linq.Converters.PropertyCompareExpressionConverters
@@ -27,7 +27,7 @@ namespace Shared.Linq.Converters.PropertyCompareExpressionConverters
                     var filterValueExpression = Expression.Add(
                                                         Expression.Add(
                                                             Expression.Constant("%"),
-                                                            Expression.Constant(filter.Values),
+                                                            Expression.Constant(filter.Values.First()),
                                                             concatMethod),
                                                         Expression.Constant("%"),
                                                         concatMethod);
@@ -39,16 +39,14 @@ namespace Shared.Linq.Converters.PropertyCompareExpressionConverters
                         filterValueExpression);
                     break;
                 case OPERATOR.BETWEEN:
-                    var left = Expression.Lambda<Func<T, bool>>(Expression.GreaterThanOrEqual(memberExpression, ConstantExpressions.First()));
-                    var right = Expression.Lambda<Func<T, bool>>(Expression.LessThanOrEqual(memberExpression, ConstantExpressions.First()));
+                    var left = Expression.GreaterThanOrEqual(memberExpression, ConstantExpressions.First());
+                    var right = Expression.LessThanOrEqual(memberExpression, ConstantExpressions.Skip(1).First());
 
                     expression = Expression.And(left, right);
                     break;
                 case OPERATOR.LESS_THAN:
 
                     expression = Expression.LessThan(memberExpression, ConstantExpressions.First());
-
-                    expression = Expression.Lambda<Func<T, bool>>(Expression.LessThanOrEqual(memberExpression,  ConstantExpressions.First()));
                     break;
                 case OPERATOR.LESS_THAN_OR_EQUAL:
                     expression = Expression.LessThanOrEqual(memberExpression, ConstantExpressions.First());
@@ -74,22 +72,25 @@ namespace Shared.Linq.Converters.PropertyCompareExpressionConverters
             {
 
                 object constantValue = null;
+                ConstantExpression constantExpression = null;
                 if (DateTime.TryParse(val, out DateTime result))
                 {
                     constantValue = result;
+                    constantExpression = Expression.Constant(new CustomDateTime(result), typeof(CustomDateTime));
                 }
                 else if (filter.Values is not null)
                 {
                     constantValue = val;
+                    constantExpression = Expression.Constant(constantValue);
                 }
                 else
                 {
                     constantValue = val;
+                    constantExpression = Expression.Constant(constantValue);
                 }
-                var constant = Expression.Constant(constantValue);
-                constantExpressions.Add(constant);
+                constantExpressions.Add(constantExpression);
             }
-            ConstantExpressions = constantExpressions.ToArray();
+            ConstantExpressions = constantExpressions.OrderBy(x=>x.Value).ToArray();
             return ConstantExpressions;
         }
     }

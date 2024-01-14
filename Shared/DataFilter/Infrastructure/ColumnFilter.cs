@@ -35,6 +35,7 @@ namespace Shared.DataFilter.Infrastructure
             {OperatorNames.GREATER_THAN, OPERATOR.GREATER_THAN},
             {OperatorNames.LESS_THAN_OR_EQUAL, OPERATOR.LESS_THAN_OR_EQUAL},
             {OperatorNames.GREATER_THAN_OR_EQUAL, OPERATOR.GREATER_THAN_OR_EQUAL},
+            {OperatorNames.BETWEEN, OPERATOR.BETWEEN},
         };
         public static OPERATOR GetOperator(string value)
         {
@@ -55,7 +56,7 @@ namespace Shared.DataFilter.Infrastructure
                 return new string[1] { this.value };
             }
             string[] response = this.value.Split(new string[] { ",", ";" }, StringSplitOptions.RemoveEmptyEntries);
-            if (response.Length > 0)
+            if (response.Length < 2)
             {
                 return new string[1] { this.value };
             }
