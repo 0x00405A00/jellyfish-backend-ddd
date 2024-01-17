@@ -1,6 +1,5 @@
 ﻿using Infrastructure.Abstractions;
 using Infrastructure.Authentification;
-using Infrastructure.EFCore.Interceptors;
 using Infrastructure.FileSys;
 using Infrastructure.Healthcheck.Concrete.Cache;
 using Infrastructure.Healthcheck.Concrete.MySql;
@@ -11,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shared.Authentification.Service;
+using Shared.Infrastructure.EFCore.Interceptors;
 using Shared.Linq.Converters;
 
 namespace Infrastructure

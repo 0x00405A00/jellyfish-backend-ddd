@@ -1,6 +1,6 @@
 using Application;
 using Infrastructure;
-using Infrastructure.EFCore.Extension;
+using Infrastructure.Extension.WebAppBuilderExtensions;
 using Infrastructure.Healthcheck.Response;
 using Infrastructure.SignalR;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;

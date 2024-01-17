@@ -7,13 +7,13 @@ using Domain.Entities.Users;
 using Domain.Primitives;
 using Domain.Primitives.Ids;
 using Domain.ValueObjects;
-using Infrastructure.EFCore;
-using Infrastructure.EFCore.Converter;
-using Infrastructure.EFCore.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Shared.Infrastructure.EFCore;
+using Shared.Infrastructure.EFCore.Converter;
+using Shared.Infrastructure.EFCore.Interceptors;
 
 namespace Infrastructure
 {
