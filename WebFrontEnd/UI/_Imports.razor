@@ -10,7 +10,6 @@
 @using Microsoft.JSInterop;
 @using WebFrontEnd;
 @using WebFrontEnd.Service.WebStorage.LocalStorage;
-@using WebFrontEnd.Service.Backend.Api;
 @using WebFrontEnd.UI.SharedComponents;
 @using Shared.DataTransferObject;
 @using WebFrontEnd.Primitives;
@@ -19,8 +18,10 @@
 @using Microsoft.Extensions.DependencyInjection;
 @using WebFrontEnd.Const;
 @using System.Reflection;
-@using WebFrontEnd.Service.Backend.SignalR;
-@using WebFrontEnd.Service.Backend.SignalR.Abstraction;
+@using Shared.Infrastructure.Backend.SignalR;
+@using Shared.Infrastructure.Backend.SignalR.Abstraction;
+@using Shared.Infrastructure.Backend.Api;
+@using Shared.Infrastructure.Backend;
 @using Shared.DataTransferObject.Messenger;
 @using MudBlazor;
 @using System.Timers;

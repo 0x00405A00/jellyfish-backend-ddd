@@ -1,16 +1,17 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Components.Authorization;
+using MudBlazor.Services;
 using RestSharp;
 using Shared.Const;
+using Shared.Infrastructure.Backend;
+using Shared.Infrastructure.Backend.Api;
+using Shared.Infrastructure.Backend.SignalR;
 using WebFrontEnd.Authentification;
 using WebFrontEnd.BackgroundService;
 using WebFrontEnd.Handler;
-using WebFrontEnd.Service.Backend.Api;
-using WebFrontEnd.Service.Backend.SignalR;
-using WebFrontEnd.Service.WebStorage.LocalStorage;
-using WebFrontEnd.Service.WebStorage;
-using MudBlazor.Services;
-using Microsoft.AspNetCore.Authentication;
 using WebFrontEnd.Service.Navigation;
+using WebFrontEnd.Service.WebStorage;
+using WebFrontEnd.Service.WebStorage.LocalStorage;
 
 namespace WebFrontEnd
 {
@@ -57,8 +58,8 @@ namespace WebFrontEnd
             serviceProvider.AddScoped<WebApiRestClient>();
             serviceProvider.AddScoped<SignalRClient>();
 
-            serviceProvider.AddScoped<CustomAuthentificationStateProvider>();
-            serviceProvider.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomAuthentificationStateProvider>());
+            serviceProvider.AddScoped<ICustomAuthentificationStateProvider,CustomAuthentificationStateProvider>();
+            serviceProvider.AddScoped<AuthenticationStateProvider>(s => (CustomAuthentificationStateProvider)s.GetRequiredService<ICustomAuthentificationStateProvider>());
 
             serviceProvider.AddScoped<JellyfishBackendApi>();
 

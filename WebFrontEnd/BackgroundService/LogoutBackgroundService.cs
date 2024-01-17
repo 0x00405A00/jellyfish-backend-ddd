@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using WebFrontEnd.Service.WebStorage.LocalStorage;
+using Shared.Infrastructure.Backend;
 
 namespace WebFrontEnd.BackgroundService
 {

@@ -9,11 +9,11 @@
         public int NextPage => (TotalPages!= -1 ? (CurrentPage + 1> TotalPages?1:CurrentPage+1):-1); 
         public int PrevPage => (TotalPages!= -1 ? (CurrentPage - 1 < 1 ? TotalPages : CurrentPage - 1):-1);
 
-        private Meta(int totalItems, int perPage, int currentPage) 
+        private Meta(int totalItems, int? perPage, int? currentPage) 
         { 
             TotalItems = totalItems;
-            PerPage = perPage;
-            CurrentPage = currentPage;
+            PerPage = perPage??-1;
+            CurrentPage = currentPage??-1;
         }
         private int CalculateTotalPages()
         {
@@ -24,7 +24,7 @@
             }
             return result;
         }
-        public static Meta Create(int totalItems, int perPage, int currentPage)
+        public static Meta Create(int totalItems, int? perPage, int? currentPage)
         {
             return new Meta(totalItems, perPage, currentPage);
         }

@@ -1,7 +1,7 @@
 ﻿using Shared.DataTransferObject;
+using Shared.Infrastructure.Backend;
 using WebFrontEnd.Const;
 using WebFrontEnd.DataTransferObject.SessionStorage;
-using WebFrontEnd.Service.WebStorage.LocalStorage;
 
 namespace WebFrontEnd.Service.WebStorage
 {

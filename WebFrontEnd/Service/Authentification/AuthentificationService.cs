@@ -1,9 +1,8 @@
 ﻿using Shared.ApiDataTransferObject;
 using Shared.DataTransferObject;
-using WebFrontEnd.Const;
-using WebFrontEnd.Service.Backend.Api;
-using WebFrontEnd.Service.WebStorage.LocalStorage;
-using static WebFrontEnd.Service.Backend.Api.JellyfishBackendApi;
+using Shared.Infrastructure.Backend;
+using Shared.Infrastructure.Backend.Api;
+using static Shared.Infrastructure.Backend.Api.JellyfishBackendApi;
 
 namespace WebFrontEnd.Service.Authentification
 {
@@ -29,7 +28,7 @@ namespace WebFrontEnd.Service.Authentification
             AuthDTO auth = new AuthDTO();
             try
             {
-                auth = await localStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(WebAppConst.BrowserLocalStorageItemKey.Authorization);
+                auth = await localStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(Shared.Const.AuthorizationConst.SessionStorage.AuthorizationKey);
             }
             catch (Exception ex)
             {
@@ -45,7 +44,7 @@ namespace WebFrontEnd.Service.Authentification
             {
                 return false;
             }
-            await localStorageService.SetDeserializedJsonItemFromKey(WebAppConst.BrowserLocalStorageItemKey.Authorization, response);
+            await localStorageService.SetDeserializedJsonItemFromKey(Shared.Const.AuthorizationConst.SessionStorage.AuthorizationKey, response);
             
 
             return true;
@@ -59,7 +58,7 @@ namespace WebFrontEnd.Service.Authentification
             if (token == null)
                 return false;
 
-            await localStorageService.RemoveItem(WebAppConst.BrowserLocalStorageItemKey.Authorization);
+            await localStorageService.RemoveItem(   Shared.Const.AuthorizationConst.SessionStorage.AuthorizationKey);
             var logoutResponse = await webApiRestClient.Request<object>(logoutEndpoint, RestSharp.Method.Post, cancellationToken, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
             if (!logoutResponse.IsSuccessStatusCode)
                 return false;
@@ -109,7 +108,7 @@ namespace WebFrontEnd.Service.Authentification
             {
                 return null;
             }
-            await localStorageService.SetDeserializedJsonItemFromKey(WebAppConst.BrowserLocalStorageItemKey.Authorization, response);
+            await localStorageService.SetDeserializedJsonItemFromKey(Shared.Const.AuthorizationConst.SessionStorage.AuthorizationKey, response);
             return response;
         }
 

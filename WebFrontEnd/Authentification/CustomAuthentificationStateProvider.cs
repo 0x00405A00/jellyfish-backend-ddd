@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Shared.Authentification.Jwt;
 using Shared.DataTransferObject;
+using Shared.Infrastructure.Backend;
 using System.Security.Claims;
 using WebFrontEnd.Service.Authentification;
-using static WebFrontEnd.Service.Backend.Api.JellyfishBackendApi;
+using static Shared.Infrastructure.Backend.Api.JellyfishBackendApi;
 
 namespace WebFrontEnd.Authentification
 {
-    public class CustomAuthentificationStateProvider : AuthenticationStateProvider,IAuthentificationService,IDisposable
+    public class CustomAuthentificationStateProvider : AuthenticationStateProvider, IAuthentificationService, IDisposable, ICustomAuthentificationStateProvider
     {
         private readonly CancellationTokenSource tokenSource = new CancellationTokenSource();
         private readonly IAuthentificationService authentificationService;
@@ -20,16 +21,16 @@ namespace WebFrontEnd.Authentification
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var auth = await this.GetCurrentAuthentification(tokenSource.Token);
-            if(auth == null)
+            if (auth == null)
             {
                 return new AuthenticationState(new ClaimsPrincipal());
             }
-            if(auth.IsTokenExpired)
+            if (auth.IsTokenExpired)
             {
                 return new AuthenticationState(new ClaimsPrincipal());
             }
-            var jwtDecoded = JwtHandler.DecodeJwt(auth.Token,null,null,null);
-            if (jwtDecoded == null) 
+            var jwtDecoded = JwtHandler.DecodeJwt(auth.Token, null, null, null);
+            if (jwtDecoded == null)
             {
                 return new AuthenticationState(new ClaimsPrincipal());
             }
@@ -55,7 +56,7 @@ namespace WebFrontEnd.Authentification
 
         public async Task<bool> Logout(CancellationToken cancellationToken)
         {
-            var result = await authentificationService.Logout(cancellationToken);   
+            var result = await authentificationService.Logout(cancellationToken);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
             return result;
         }
@@ -63,12 +64,12 @@ namespace WebFrontEnd.Authentification
         public async Task<AuthDTO> GetCurrentAuthentification(CancellationToken cancellationToken)
         {
             var result = await authentificationService.GetCurrentAuthentification(cancellationToken);
-            return result??new AuthDTO();
+            return result ?? new AuthDTO();
         }
 
         public async Task<JellyfishBackendApiResponse<UserDTO>> Register(RegisterUserDTO registerUserDTO, CancellationToken cancellationToken)
         {
-            var result = await authentificationService.Register(registerUserDTO,cancellationToken);
+            var result = await authentificationService.Register(registerUserDTO, cancellationToken);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
             return result;
         }
@@ -89,11 +90,11 @@ namespace WebFrontEnd.Authentification
         }
 
         // // TODO: Finalizer nur überschreiben, wenn "Dispose(bool disposing)" Code für die Freigabe nicht verwalteter Ressourcen enthält
-         ~CustomAuthentificationStateProvider()
-         {
-             // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
-             Dispose(disposing: false);
-         }
+        ~CustomAuthentificationStateProvider()
+        {
+            // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
+            Dispose(disposing: false);
+        }
 
         public void Dispose()
         {

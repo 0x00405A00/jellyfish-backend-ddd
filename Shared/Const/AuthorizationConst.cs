@@ -26,5 +26,9 @@
             public const string ClaimTypeUserEmail = "user_email";
             public const string ClaimTypeUserUuid = "user_id";
         }
+        public struct SessionStorage
+        {
+            public const string AuthorizationKey = "apiAuthorization";
+        }
     }
 }

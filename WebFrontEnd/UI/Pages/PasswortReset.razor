@@ -1,5 +1,4 @@
 ﻿@attribute [Route(RouteConst.Routes.ResetPassword)]
-@using Microsoft.AspNetCore.Http
 @inject JellyfishBackendApi WebApiClient
 @inject ILocalStorageService LocalStorageService
 @inject IExtendedNavigationManager NavigationManager
@@ -52,7 +51,7 @@
         var response = await WebApiClient.ResetPassword(PasswordResetDTO, cancellationToken.Token);
         if(response.IsSuccess)
         {
-            await LocalStorageService.SetDeserializedJsonItemFromKey(WebAppConst.BrowserLocalStorageItemKey.Authorization, response);
+            await LocalStorageService.SetDeserializedJsonItemFromKey(Shared.Const.AuthorizationConst.SessionStorage.AuthorizationKey, response);
             NavigationManager.NavigationManager.NavigateTo(RouteConst.Routes.Home);
         }
     }

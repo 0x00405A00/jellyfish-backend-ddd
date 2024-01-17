@@ -4,7 +4,6 @@
     {
         public struct BrowserLocalStorageItemKey
         {
-            public static string Authorization = "apiAuthorization";
             public static string SessionStorage = "apiSessionStorage";
         }
     }

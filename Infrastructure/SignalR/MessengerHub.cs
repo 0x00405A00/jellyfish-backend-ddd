@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
-using Shared.Infrastructure.SignalR;
+using Shared.Infrastructure.Backend.SignalR;
 
 namespace Infrastructure.SignalR
 {

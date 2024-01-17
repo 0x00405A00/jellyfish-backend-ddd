@@ -1,5 +1,6 @@
 ﻿using Microsoft.JSInterop;
 using Shared.DataTransferObject;
+using Shared.Infrastructure.Backend;
 using System.Text.Json;
 using WebFrontEnd.Const;
 using WebFrontEnd.Service.WebStorage.LocalStorage.Exception;
@@ -96,7 +97,7 @@ namespace WebFrontEnd.Service.WebStorage.LocalStorage
         {
             try
             {
-                var value = await GetDeserializedJsonItemFromKey<AuthDTO>(WebAppConst.BrowserLocalStorageItemKey.Authorization);
+                var value = await GetDeserializedJsonItemFromKey<AuthDTO>(Shared.Const.AuthorizationConst.SessionStorage.AuthorizationKey);
                 if(value!=null)
                 {
                     return !value.IsTokenExpired;

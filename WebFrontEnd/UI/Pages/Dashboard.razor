@@ -1,13 +1,12 @@
 ﻿@attribute [Route(RouteConst.Routes.DashBoard)]
 @implements IDisposable
 @implements INavigationInvoker
-@using Microsoft.AspNetCore.Http
 @inject JellyfishBackendApi WebApiClient
 @inject IExtendedNavigationManager NavigationManager
 @inject SignalRClient SignalRClient
 @inject IJSRuntime JsRuntime
 @inject IConfiguration Configuration
-@inject CustomAuthentificationStateProvider AuthentificationService
+@inject ICustomAuthentificationStateProvider AuthentificationService
 
 <MudText Typo="Typo.h5" >Dashboard</MudText>
 <div class="container ml-0 mt-2">
@@ -156,7 +155,7 @@
     private async Task GetData()
     {
         var token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token) ;
-        var requestUsers = await WebApiClient.GetUsers(new SearchParamsBody(),cancellationToken.Token);
+        var requestUsers = await WebApiClient.GetUsers(null,cancellationToken.Token);
 
         if (requestUsers.IsSuccess)
         {

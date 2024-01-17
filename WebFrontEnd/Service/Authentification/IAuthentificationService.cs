@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
-using Shared.DataTransferObject;
-using static WebFrontEnd.Service.Backend.Api.JellyfishBackendApi;
+﻿using Shared.DataTransferObject;
+using static Shared.Infrastructure.Backend.Api.JellyfishBackendApi;
 
 namespace WebFrontEnd.Service.Authentification
 {
