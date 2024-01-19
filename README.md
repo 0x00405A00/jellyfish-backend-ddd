@@ -661,7 +661,7 @@ Legacy over binary or with docker container.
 - [ ] Standalone characteristics opposite to WhatsApp etc.: 
 1. Mark messages as not able to screenshot: These messages a blured by Screenshot creation. Same by profile picture.
 2. Group calenders: Planing private activities together in a Groupchat calender.
-3. Not caring about sharing: Mark messages as not shareable, to make no care about not permitted share :)
+3. Caring about shareing: Mark messages as not shareable, to make no care about not permitted share :)
 4. Ability to host the messaging infrastructue by your own. No dependency to others!
 5. Against violence: Todays private chats  like Telegramm are abused by people for violence and adult content. So jellyfish brings the ability to avoid the share for such content. Machine Learning algorithm evaluate the Media that will be shared over the messenger. When violent content is recognized the message sent will be avoid. ** Requires Azure AI Vision or similar ML-Algorithm **
 6. Location share with live track: unnessesary if in groups or private chats, your movements will be streamed live to the chat members when the spectator Mode is on (only availble in live track map).
