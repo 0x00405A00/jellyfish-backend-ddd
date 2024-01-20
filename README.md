@@ -68,9 +68,11 @@ Legacy over binary or with docker container.
 ## To Do ##
 
 **Backend:**
-- [x] RateLimiter for specific actions
+- [ ] Docker.compose for JellyfishBackend, PostgreSql
+- [ ] RateLimiter for specific actions
 - [X] IModelBinder+IModelBinderProvider for HttpQuery and HttpBody to resolve and validate data that is inside of 'ApiDataTransferObject<T>'
 - [x] CRUD + Search Filter (Transition from http request (json) to dto filter model to linq expression to sql)
+- [x] Linq Expressions to sql: override/create operators in value objects and Domain models and translate them to linq expressions
 - [X] Cache Functionality (currently IMemoryCache)
 - [x] Password Reset Endpoint: Enable password reset via the "Edit User" feature; domain logic change: UpdateUser, updateuser command+handler update.
 - [ ] Password encrytion in database with best practise encryption method
@@ -79,16 +81,17 @@ Legacy over binary or with docker container.
 - [ ] File Upload / User Profile Pictures / Attachments from Jellyfish Messages or Media / Storing Strategy: Avoid storing in the database for performance reasons. Implement caching strategy, build up cache during backend start. Conduct virus checks using content and an external AI service (Azure= [link](https://azure.microsoft.com/en-us/products/ai-services/ai-content-safety), AWS) to detect uploads of violent media/pornography.
   - [x] Chain Of Responsibility for virus and inadmissible/violent content (abstraction implemented)
 - [x] Domain: Implement Chat Business Logic checks.
+- GDPR: Module for GDPR to make all GDPR actions available (reporting, deletion etc.)
 - [ ] Implementation of Presentation/Infrastructure/Application of Domain Entity Chat/Message/Userfriendship requests: Utilize SignalR to notify target users, etc. -> Event Handler
 - [ ] Forgettable Payload -> GDPR (German: DSGVO).
-- [ ] End-to-End encryption for Jellyfish users.
+- [ ] End-to-End encryption for Jellyfish users. Sequence: Users that will interact  to each other will share the Public Keys. When a message will be created by User-A, the message will be encrypted with the public key of User-B. The message will send to backend and will be stored (encrypted) in the database. User-B received the message over signalr or polls all unacknowleged messages from backend (polling by reconnect, when the connection is gone e.g. lost connection to radio cell). User-B acknowledge the message to backend (received rake will be  shown in User-A's App). User-B decrypt the message with the private key. 
   - [ ] Delete messages that are successfully delivered to target
 - [ ] SSL Encryption for Backend.
 - [x] Swagger Documentation
 - [x] Rewrite some default ASP.NET Core response messages with a filter: e.g., HTTP error 422 or unauthorized response -> rewrite to JSONAPI error response ----------> Presentation.Extension.JsonApiResultExtension.
 - [x] FluentValidation: Prepare Validators with response handling for JSONAPI error response due to validation errors. CommandHandlerValidators already implemented: ValidationPipelineBehavior; only the validation rule needs definition in constructors of each CommandValidation.
 - [ ] Chat Bounding Context implementations:
-    - [x] POST: /api/v1/chat, Create chat
+    - [x] POST: /api/v1/chat, Create chat  (only with friends, Domain-Logic requirements defined the rule that a chat needs at least one message to exists)
       - [x] Presentation
         - [x] Implementation
         - [ ] Test (Grey Box Test)
@@ -100,9 +103,9 @@ Legacy over binary or with docker container.
         - [x] Validation (Fluentvalidation)
         - [x] Handler
         - [ ] EventHandling
-      - [x] Domain
-        - [x] Implementation
-        - [x] Test (Unit-Test)
+      - [ ] Domain (removed completion state because of New Business rule)
+        - [ ] Implementation
+        - [ ] Test (Unit-Test)
     - [x] GET: /api/v1/chat/{chatId}, Gets the chat
       - [x] Presentation
         - [x] Implementation
@@ -608,7 +611,6 @@ Legacy over binary or with docker container.
   - [x] Social Media Icons with Channels
 
 ***Features (from Web-Frontend):***
-- [ ] Color and Blackmode (via MudBlazor Themes)
 - [ ] Snackbar for notifications (any action like edit user, get notification of service x/y, etc.) => https://mudblazor.com/components/snackbar#5ac08464-80c3-4c34-8cac-24f0947275e7
 - [x] SignIn Page with Password recovery function
 - [ ] Impressum
@@ -647,16 +649,24 @@ Legacy over binary or with docker container.
 
 
 **Mobile App:**
-- [ ] Remove old DTO and Model structure and old namespaces
-- [ ] Jsonhandler
+- [x] Remove old DTO and Model structure andold namespaces
 - [ ] Rewrite to new structure
 - [ ] Message/user cache in SQLite, adapt to new structure
-- [ ] Add new WebApiClient and SignalRClient (WebAPI client from WebFrontend into shared, new SignalR client (typed client) into shared for reusability)
+- [x] Add new WebApiClient and SignalRClient (WebAPI client from WebFrontend into shared, new SignalR client (typed client) into shared for reusability)
 - [ ] Msg-interceptor: Maintain the invoker chain for message/notification procedures (main messaging functionality)
 - [ ] Rewrite target endpoint URLs to backend to new backend structure
 - [ ] Chat: Messaging (UI+App backend)
 - [ ] Chat+Friendlist: See profile
 - [ ] Chat: Messaging (send attachments)
+- [ ] Standalone characteristics opposite to WhatsApp etc.: 
+1. Mark messages as not able to screenshot: These messages a blured by Screenshot creation. Same by profile picture.
+2. Group calenders: Planing private activities together in a Groupchat calender.
+3. Caring about shareing: Mark messages as not shareable, to make no care about not permitted share :)
+4. Ability to host the messaging infrastructue by your own. No dependency to others!
+5. Against violence: Todays private chats  like Telegramm are abused by people for violence and adult content. So jellyfish brings the ability to avoid the share for such content. Machine Learning algorithm evaluate the Media that will be shared over the messenger. When violent content is recognized the message sent will be avoid. ** Requires Azure AI Vision or similar ML-Algorithm **
+6. Location share with live track: unnessesary if in groups or private chats, your movements will be streamed live to the chat members when the spectator Mode is on (only availble in live track map).
+7. Oblivion: The right to forget is a cornerstone of todays GDPR. By removing the Account all data (also chat messages that are shared with friends) will be removed. Of course the media too. Im aware that a deletion of Media that is sent to chat members is not the today practice but every human has the right that his created data can be forgotten.
+8. Polls/Votes: In example to WhatsApp: Votes will be also available in jellyfish.
 
 
 **General:**
