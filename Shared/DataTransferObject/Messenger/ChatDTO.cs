@@ -22,10 +22,10 @@ namespace Shared.DataTransferObject.Messenger
         public string? PictureMimeType { get; set; }
 
         [JsonPropertyName("members")]
-        public ICollection<Guid>? Members { get; set; }
+        public ICollection<Guid>? Members { get; set; } = new List<Guid>();
 
         [JsonPropertyName("admins")]
-        public ICollection<Guid>? Admins { get; set; }
+        public ICollection<Guid>? Admins { get; set; } = new List<Guid>();
 
         [JsonPropertyName("messages")]
         public ICollection<MessageDTO>? Messages { get; set; }

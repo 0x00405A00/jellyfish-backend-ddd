@@ -40,13 +40,13 @@ namespace Infrastructure.Repository.Concrete
 
         public async override Task<ICollection<User>> ListAsync(Expression<Func<User, bool>> expression)
         {
-            var result = await _memoryCache.GetOrCreateAsync(CacheKeys.UsersKey("all"), async (cacheEntry) =>
+            /*var result = await _memoryCache.GetOrCreateAsync(CacheKeys.UsersKey("all"), async (cacheEntry) =>
             {
                 cacheEntry.AbsoluteExpirationRelativeToNow = UserCachePersistenceTime;
-                return await _userRepository.ListAsync(expression);
-            });
+            });*/
 
-            return result;
+            return await _userRepository.ListAsync(expression);
+            //return result;
         }
     }
 }
