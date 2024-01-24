@@ -1,12 +1,9 @@
 ﻿using Application.Abstractions.Messaging;
 using AutoMapper;
 using Domain.ValueObjects;
-using Domain.Entities;
 using Infrastructure.Abstractions;
 using Shared.DataFilter;
 using Shared.DataTransferObject;
-using System.Reflection;
-using System.Text.Json.Serialization;
 
 namespace Application.CQS.User.Queries.GetUsers
 {

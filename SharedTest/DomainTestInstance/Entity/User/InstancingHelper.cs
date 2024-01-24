@@ -4,7 +4,6 @@ using Domain.Entities.Users;
 using Domain.Extension;
 using Domain.Primitives.Ids;
 using Domain.ValueObjects;
-using Shared.ApiDataTransferObject;
 
 namespace SharedTest.DomainTestInstance.Entity.Users
 {

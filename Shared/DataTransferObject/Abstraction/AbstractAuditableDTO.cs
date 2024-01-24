@@ -16,11 +16,17 @@ namespace Shared.DataTransferObject.Abstraction
         [JsonPropertyName("deleted_by_user_uuid")]
         public Guid? DeletedByUserForeignKey { get; set; }
 
+        [JsonIgnore]
         public User? CreatedByUser { get; set; }
+        [JsonIgnore]
         public User? DeletedByUser { get; set; }
+        [JsonIgnore]
         public User? LastModifiedByUser { get; set; }
+        [JsonIgnore]
         UserId? IAuditableEntity.CreatedByUserForeignKey { get; set; }
+        [JsonIgnore]
         UserId? IAuditableEntity.DeletedByUserForeignKey { get; set; }
+        [JsonIgnore]
         UserId? IAuditableEntity.LastModifiedByUserForeignKey { get; set; }
     }
 }

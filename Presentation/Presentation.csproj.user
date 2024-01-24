@@ -4,7 +4,7 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>http-test</ActiveDebugProfile>
+    <ActiveDebugProfile>http-test-without-swagger</ActiveDebugProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Backend|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>

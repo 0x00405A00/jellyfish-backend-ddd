@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: jellyfish
+      POSTGRES_USER: jellyfish
+      POSTGRES_PASSWORD: meinDatabasePassword!
+    ports:
+      - "5432:5432"  # Port Mapping von Container-Port 5432 auf Host-Port 5432
+
+  presentation:
+    image: ${DOCKER_REGISTRY-}presentation
+    build:
+      context: .
+      dockerfile: Presentation/Dockerfile
+    ports:
+      - "80:80"  # Port Mapping von Container-Port 80 auf Host-Port 80
+    depends_on:
+      - postgres

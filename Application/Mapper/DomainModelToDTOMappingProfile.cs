@@ -35,6 +35,10 @@ namespace Application.Mapper
             CreateMap<Domain.ValueObjects.Picture, string>()
                 .ConvertUsing(dst => Convert.ToBase64String(dst.Data));
 
+            CreateMap<Guid, AuthId>()
+                .ConvertUsing(dst => new AuthId(dst));
+            CreateMap<AuthId, Guid>()
+                .ConvertUsing(dst => dst.Id);
             CreateMap<MessageId, Guid>()
                 .ConvertUsing(dst => dst.Id);
             CreateMap<Guid, MessageId>()

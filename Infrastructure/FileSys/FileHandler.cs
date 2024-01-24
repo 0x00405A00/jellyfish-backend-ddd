@@ -1,4 +1,4 @@
-﻿#define HOST_IS_WINDOWS
+﻿//#define HOST_IS_WINDOWS
 using Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 using System.Security.AccessControl;
@@ -180,13 +180,13 @@ namespace Infrastructure.FileSys
         };
 #else
         public static Dictionary<FileSystemRightsExt, string> FileSystemRightsToLinuxPermissions = new Dictionary<FileSystemRightsExt, string>
-            {
-            { FileSystemRightsExt.Read, "r" },
-            { FileSystemRightsExt.Write, "w" },
-            { FileSystemRightsExt.ExecuteFile, "x" },
-            { FileSystemRightsExt.ReadAndExecute, "rx" },
-            { FileSystemRightsExt.Read | FileSystemRightsExt.Write, "rw" },
-            { FileSystemRightsExt.FullControl, "rwx" },
+        {
+            { FileSystemRightsExt.Read, "400" },
+            { FileSystemRightsExt.Write, "200" },
+            { FileSystemRightsExt.ExecuteFile, "100" },
+            { FileSystemRightsExt.ReadAndExecute, "500" },
+            { FileSystemRightsExt.Read | FileSystemRightsExt.Write, "600" },
+            { FileSystemRightsExt.FullControl, "777" },
         };
 #endif
         public static DirectoryInfo CreateIfNotExistsDirectory(string path)
@@ -241,6 +241,7 @@ namespace Infrastructure.FileSys
             try
             {
                 string fileSystemRightsLinux = GetSystemRight(fileSystemRights);
+                System.Diagnostics.Debug.WriteLine($"set file acls: {fileSystemRightsLinux} {directoryInfo.FullName}");
                 var process = new System.Diagnostics.Process();
                 var startInfo = new System.Diagnostics.ProcessStartInfo
                 {
@@ -249,9 +250,10 @@ namespace Infrastructure.FileSys
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
-                    CreateNoWindow = true
-                };
+                    CreateNoWindow = true,
+                    WorkingDirectory = Environment.CurrentDirectory,
 
+                };
                 process.StartInfo = startInfo;
                 process.Start();
 

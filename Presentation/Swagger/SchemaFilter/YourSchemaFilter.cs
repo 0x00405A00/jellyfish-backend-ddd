@@ -7,7 +7,7 @@ namespace Presentation.Swagger.SchemaFilter
     {
         public void Apply(OpenApiSchema schema, SchemaFilterContext context)
         {
-            // Hier können Sie Ihr Schema anwenden
+
             schema.Properties.Add("property1", new OpenApiSchema { Type = "string" });
             schema.Properties.Add("property2", new OpenApiSchema { Type = "integer" });
         }
