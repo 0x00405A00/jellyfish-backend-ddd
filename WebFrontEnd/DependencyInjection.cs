@@ -56,6 +56,14 @@ namespace WebFrontEnd
             var apiBaseUrl = infrastructureApiSection.GetValue<string>("BaseUrl");
             serviceProvider.AddScoped(sp => new RestClient(new Uri(apiBaseUrl)));
             serviceProvider.AddScoped<WebApiRestClient>();
+
+
+            var infrastructureSignalRSection = configuration.GetSection("Infrastructure:SignalR");
+            string baseUrl = infrastructureSignalRSection["SignalRHubBaseUrl"];
+            int port = infrastructureSignalRSection.GetValue<int>("SignalRHubBaseUrlPort");
+            string hub = infrastructureSignalRSection["SignalRHubEndpoint"];
+            string transportProtocol = infrastructureSignalRSection["SignalRHubClientTransportProtocol"];
+            serviceProvider.AddScoped<SignalRConnectionParams>(sp=>new SignalRConnectionParams(baseUrl,port,hub,transportProtocol));
             serviceProvider.AddScoped<SignalRClient>();
 
             serviceProvider.AddScoped<ICustomAuthentificationStateProvider,CustomAuthentificationStateProvider>();

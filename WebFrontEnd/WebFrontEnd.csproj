@@ -5,12 +5,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <Configurations>Debug;Release;Backend</Configurations>
+    <UserSecretsId>51d5d536-c27e-4e0c-9978-207648d0ae39</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Remove="wwwroot\favicon.png" />
-    <Content Remove="wwwroot\static\media\jellyfish_image.png" />
-    <Content Remove="wwwroot\static\media\jellyfish_image.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,12 +23,11 @@
 
   <ItemGroup>
     <None Include="wwwroot\favicon.png" />
-    <None Include="wwwroot\static\media\jellyfish_image.png" />
-    <None Include="wwwroot\static\media\jellyfish_image.svg" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
     <PackageReference Include="MudBlazor" Version="6.11.2" />
     <PackageReference Include="RestSharp" Version="110.2.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.1" />
@@ -45,6 +44,12 @@
     </Content>
     <Content Update="UI\Dialog\ChangeUserPasswordDialog.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="wwwroot\static\media\jellyfish_image.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\static\media\jellyfish_image.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

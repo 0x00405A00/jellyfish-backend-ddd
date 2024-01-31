@@ -1,10 +1,12 @@
-﻿using Shared.DataTransferObject;
+﻿using Microsoft.AspNetCore.Components.Authorization;
+using Shared.DataTransferObject;
 using Shared.Infrastructure.Backend.Api;
 
 namespace Shared.Infrastructure.Backend
 {
     public interface ICustomAuthentificationStateProvider
     {
+        Task<AuthenticationState> GetAuthenticationStateAsync();
         Task<AuthDTO> GetCurrentAuthentification(CancellationToken cancellationToken);
         Task<bool> Login(string userName, string password, CancellationToken cancellationToken);
         Task<bool> Logout(CancellationToken cancellationToken);

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "lTjN8UDlyfIns3HoP2k+djIcHKc2qczvOgwRssUCZ1WK6xVgbx/nYJO/mtd7VXHgPxYk1er36X1/uR30j5d5sw==",
+  "dgSpecHash": "iRPMSWUK2YLXY3AwZ5Km2zoUJntVu9EP9FbC2/zyxi4P1KrWwTlDqUnf/q/ZnwDks72b0u7TMl713Fwd7ZgiQA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\WebFrontEnd.csproj",
   "expectedPackageFiles": [
@@ -41,6 +41,7 @@
     "C:\\Users\\Mika\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\6.15.1\\microsoft.identitymodel.protocols.openidconnect.6.15.1.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\microsoft.identitymodel.tokens\\6.15.1\\microsoft.identitymodel.tokens.6.15.1.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\microsoft.jsinterop\\7.0.14\\microsoft.jsinterop.7.0.14.nupkg.sha512",
+    "C:\\Users\\Mika\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.5\\microsoft.visualstudio.azure.containers.tools.targets.1.19.5.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\mudblazor\\6.11.2\\mudblazor.6.11.2.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\restsharp\\110.2.0\\restsharp.110.2.0.nupkg.sha512",
     "C:\\Users\\Mika\\.nuget\\packages\\sixlabors.imagesharp\\3.1.1\\sixlabors.imagesharp.3.1.1.nupkg.sha512",

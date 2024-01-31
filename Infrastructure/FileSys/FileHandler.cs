@@ -82,7 +82,7 @@ namespace Infrastructure.FileSys
 
                 try
                 {
-#if HOST_IS_WINDOWS
+/*#if HOST_IS_WINDOWS
 
                     folderInfo.SetFolderPermissions("jellyfish-ACL",
                         folderPathRightsExt);
@@ -90,7 +90,7 @@ namespace Infrastructure.FileSys
 
                     folderInfo.SetFolderPermissions(
                         folderPathRightsExt);
-#endif
+#endif*/
 
                     logger.LogInformation($"Permissions set for folder {folderPath}.");
                 }
@@ -201,6 +201,7 @@ namespace Infrastructure.FileSys
             }
             catch (Exception e)
             {
+                throw;
                 return null;
             }
             return directoryInfo;

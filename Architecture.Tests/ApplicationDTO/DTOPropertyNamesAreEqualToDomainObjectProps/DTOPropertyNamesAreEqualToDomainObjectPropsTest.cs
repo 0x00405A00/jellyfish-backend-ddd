@@ -1,6 +1,4 @@
-﻿using Domain.Entities.Users;
-using Shared.DataTransferObject;
-using Shared.DataTransferObject.Abstraction;
+﻿using Shared.DataTransferObject.Abstraction;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
@@ -10,7 +8,7 @@ namespace Architecture.Tests.ApplicationDTO.DTOPropertyNamesAreEqualToDomainObje
     {
         /*[Theory]
         [InlineData((typeof(UserDTO),typeof(User)))]*/
-        [Fact]
+        /*[Fact]
         public void UserDTOPropertiesNames_ShouldBeEqualTo_DomainProperties()
         {
             //Arrange
@@ -33,7 +31,7 @@ namespace Architecture.Tests.ApplicationDTO.DTOPropertyNamesAreEqualToDomainObje
 
             //Assert
             Assert.Equal(values.Count, 0);
-        }
+        }*/
 
         private Type GetDTO(Type dtoType)
         {

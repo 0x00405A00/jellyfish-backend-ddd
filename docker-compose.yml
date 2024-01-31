@@ -1,7 +1,10 @@
 version: '3.4'
+name: jellyfish-messenger
 
 services:
   postgres:
+    container_name: db
+    hostname: db
     image: postgres:latest
     environment:
       POSTGRES_DB: jellyfish
@@ -10,12 +13,45 @@ services:
     ports:
       - "5432:5432"  # Port Mapping von Container-Port 5432 auf Host-Port 5432
 
+  redis:
+    container_name: redis
+    hostname: redis
+    image: redis
+    depends_on:
+      - postgres
+
   presentation:
-    image: ${DOCKER_REGISTRY-}presentation
+    container_name: webapi
+    hostname: webapi
+    image: ${DOCKER_REGISTRY-}webapi
     build:
       context: .
       dockerfile: Presentation/Dockerfile
     ports:
-      - "80:80"  # Port Mapping von Container-Port 80 auf Host-Port 80
+      - "5000:80"  # Port Mapping von Container-Port 80 auf Host-Port 5000
     depends_on:
       - postgres
+
+  web-frontend:
+    container_name: webfrontend
+    hostname: webfrontend
+    image: ${DOCKER_REGISTRY-}webfrontend
+    build:
+      context: .
+      dockerfile: WebFrontEnd/Dockerfile
+    ports:
+      - "5001:8080"  
+      - "5002:8081"  
+    depends_on:
+      - presentation
+
+  smtp-server:
+    container_name: smtp-container
+    hostname: smtp-srv
+    image: smtp-postix
+    build:
+      context: .
+      dockerfile: docker-dep/smtp-srv/Dockerfile
+    ports:
+      - "25:25"
+      - "587:587"
