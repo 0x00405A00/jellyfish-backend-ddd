@@ -74,9 +74,9 @@ public sealed partial class MailOutbox : Entity<MailOutboxId>, IMailOutbox
         {
             throw new ArgumentNullException(nameof(attachment), "Attachment cannot be null.");
         }
-        if (!_attachments.Any(x => x.AttachmentSha1 == attachment.AttachmentSha1))
+        if (_attachments.Any(x => x.AttachmentSha1 == attachment.AttachmentSha1))
         {
-            throw new AttachmentAlreadyExistsException("Recipient cannot be null.");
+            throw new AttachmentAlreadyExistsException("Attachment already added.");
         }
 
         _attachments.Add(attachment);
@@ -88,16 +88,16 @@ public sealed partial class MailOutbox : Entity<MailOutboxId>, IMailOutbox
         {
             throw new ArgumentNullException(nameof(recipient), "Recipient cannot be null.");
         }
-        if (!_recipients.Any(x => x.Email == recipient.Email))
+        if (_recipients.Any(x => x.Email == recipient.Email))
         {
-            throw new RecipientAlreadyAddedException(nameof(recipient), "Recipient cannot be null.");
+            throw new RecipientAlreadyAddedException(nameof(recipient), "Recipient already added.");
         }
         _recipients.Add(recipient);
     }
 }
 public sealed partial class MailOutbox
 {
-    public IReadOnlyCollection<MailOutboxAttachment> Attachments { get => _attachments; }
-    public IReadOnlyCollection<MailOutboxRecipient> Recipients { get => _recipients; }
+    public IReadOnlyCollection<MailOutboxAttachment> Attachments => _attachments;
+    public IReadOnlyCollection<MailOutboxRecipient> Recipients=> _recipients;
 }
 

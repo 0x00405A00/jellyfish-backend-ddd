@@ -74,7 +74,7 @@ namespace Application.CQS.User.Commands.CreateUser
                 Domain.Entities.Users.User.CheckPasswordWithPolicy(request.Password, request.PasswordRepeat);
 
                 var userId = Domain.Entities.Users.User.NewId();
-                var userType = await _userTypeRepository.GetAsync(x => x.Id == UserTypeConst.UserTypeUuid.ToIdentification<UserTypeId>());
+                var userType = await _userTypeRepository.GetAsync(x => x.Id == UserConst.UserType.User.ToIdentification<UserTypeId>());
                 var userRole = await _roleRepository.GetAsync(x => x.Id == RoleConst.UserRoleUuid.ToIdentification<RoleId>());
                 user = Domain.Entities.Users.User.Create(
                     userId,

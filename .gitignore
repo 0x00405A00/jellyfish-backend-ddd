@@ -55,3 +55,7 @@ node_modules/
 
 # Ignore Visual Studio FileContentIndex
 .vs/JellyfishBackend/FileContentIndex/
+
+main.cf
+sasl_passwd
+appsettings-mail.json

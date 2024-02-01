@@ -152,7 +152,7 @@ namespace Domain.Entities.Users
             ActivationDateTime = activationDateTime;
             ActivationCode = activationCode;
             ActivationToken = activationToken;
-            _roles = roles;
+            _roles = roles??new List<UserHasRelationToRole>();
             PasswordResetCode = passwordResetCode;
             PasswordResetExpiresIn = passwordResetExpiresIn;
             PasswordResetToken = passwordResetToken;

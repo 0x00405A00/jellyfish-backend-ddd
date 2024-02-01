@@ -103,6 +103,7 @@ namespace Infrastructure
             optionsBuilder.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
             optionsBuilder.EnableSensitiveDataLogging(true);
             optionsBuilder.AddInterceptors(new DatabaseReaderInterceptor());
+            optionsBuilder.AddInterceptors(DbContextAuditLogInterceptor);
             //optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
 

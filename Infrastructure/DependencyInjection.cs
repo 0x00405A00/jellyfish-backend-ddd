@@ -6,6 +6,7 @@ using Infrastructure.Healthcheck.Concrete.MySql;
 using Infrastructure.HostedService.Backgroundservice;
 using Infrastructure.Mail;
 using Infrastructure.Repository.Concrete;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -37,10 +38,10 @@ namespace Infrastructure
             var fileHandler= serviceBuilder.GetRequiredService<IFileHandler>();
             fileHandler.CreateApplicationFolders();
 
-
             services.AddW3CLogging(x => {
                 
             });
+
             services.AddHttpContextAccessor();
             services.AddMemoryCache();//Singleton
 
@@ -75,8 +76,6 @@ namespace Infrastructure
                 .AddCheck<HealthCheckMySql>("mysql")
                 .AddCheck<HealthCheckCache>("cache");
 
-
-            
             var signalRSection = configuration.GetSection("Infrastructure:SignalR");
             if(signalRSection != null)
             {

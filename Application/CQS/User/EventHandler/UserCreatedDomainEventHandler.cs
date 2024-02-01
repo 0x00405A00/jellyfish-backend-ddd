@@ -1,4 +1,6 @@
-﻿using Domain.Entities.Mails;
+﻿using Application.Abstractions.Messaging;
+using Domain.Const;
+using Domain.Entities.Mails;
 using Domain.Entities.Users.Events;
 using Domain.Extension;
 using Domain.Primitives.Ids;
@@ -6,9 +8,11 @@ using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.Mail;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MimeKit.Utils;
+using System.Data.Common;
 using System.Text;
 
 namespace Application.CQS.User.EventHandler
@@ -23,7 +27,6 @@ namespace Application.CQS.User.EventHandler
         {
             this.serviceProvider = serviceProvider;
         }
-
         public async Task Handle(UserCreatedDomainEvent notification, CancellationToken cancellationToken)
         {
             using(var scope = serviceProvider.CreateAsyncScope())
@@ -36,11 +39,11 @@ namespace Application.CQS.User.EventHandler
 
                 var user = await userRepository.GetAsync(x=>x.Id == notification.UserId);
 
-                var mailSection = configuration.GetSection("Infrastructure:Mail");
+                var mailSection = configuration.GetSection(MailHandler.MailConfigurationKeys.Section);
                 var userSection = configuration.GetSection("Infrastructure:User:Registration");
                 var activationLink = string.Format("{0}{1}", userSection.GetValue<string>("account_activation_link"), user.ActivationToken);
 
-                var mailSender = mailSection.GetValue<string>("system_sender_anonymous_mail");
+                var mailSender = mailSection.GetValue<string>(MailHandler.MailConfigurationKeys.SystemDeliveryAddress);
                 Email systemEmail = Email.Parse(mailSender);
                 var mailOutboxId = MailOutbox.NewId();
                 var imageUuid = Guid.NewGuid();
@@ -64,7 +67,7 @@ namespace Application.CQS.User.EventHandler
                 );
 
 
-                var emailType = await emailTypeRepository.GetAsync(x => x.Name == MailHandler.MailType.To);
+                var emailType = await emailTypeRepository.GetAsync(x => x.Id == EmailConst.Type.To.ToIdentification<EmailTypeId>());
                 string bodyHtml = string.Format(@"
                                 <!DOCTYPE html>
                                 <html lang=""de"">

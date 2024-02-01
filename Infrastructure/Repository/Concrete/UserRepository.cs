@@ -61,21 +61,21 @@ EF.CompileQuery((ApplicationDbContext context, Expression<Func<DatabaseEntity.Us
         public async Task<bool> IsEmailAlreadyInUse(string email)
         {
             return await DbSet.AsNoTracking()
-                         .Where(x => x.Email.EmailValue == email.ToLower())
+                         .Where(x => x.Email == email.ToLower())
                          .AnyAsync();
         }
 
         public async Task<bool> IsPhoneAlreadyInUse(string phone)
         {
             return await DbSet.AsNoTracking()
-                         .Where(x => x.Phone.PhoneNumb == phone.ToLower())
+                         .Where(x => x.Phone == phone.ToLower())
                          .AnyAsync();
         }
 
         public async Task<bool> IsUserRegistered(string email)
         {
             return await DbSet.AsNoTracking()
-                         .Where(x => x.Email.EmailValue == email.ToLower() && x.ActivationDateTime != null)
+                         .Where(x => x.Email == email.ToLower() && x.ActivationDateTime != null)
                          .AnyAsync();
         }
 

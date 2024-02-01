@@ -7,21 +7,37 @@ using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MimeKit;
-using MimeKit.Utils;
-using Org.BouncyCastle.Asn1.Cms;
 using System.Collections.Concurrent;
-using System.Configuration;
-using System.IO;
 
 namespace Infrastructure.Mail
 {
     public class MailHandler : IMailHandler
     {
-        public struct MailType
+        public struct MailConfigurationKeys
         {
-            public const string To = "To";
-            public const string Cc = "Cc";
-            public const string Bcc = "Bcc";
+            public const string Section = "Mail";
+            public const string SystemDeliveryAddress = "system_sender_anonymous_mail";
+            public struct Imap
+            {
+                public const string Section = $"{MailConfigurationKeys.Section}:IMAP";
+                public static Properties Properties = new Properties();
+            }
+            public struct Smtp
+            {
+                public const string Section = $"{MailConfigurationKeys.Section}:SMTP";
+                public static Properties Properties = new Properties();
+            }
+
+            public class Properties
+            {
+                public readonly string User = "user";
+                public readonly string Password = "password";
+                public readonly string Server = "server";
+                public readonly string Port = "port";
+                public readonly string SecureSocketOptions = "secure_socket_options";
+                public readonly string TimeoutMs = "timeout_ms";
+                public readonly string LogFile = "logger_file_name";
+            }
         }
         private ConcurrentDictionary<string, ConcurrentQueue<MimeMessage>> _queue = new ConcurrentDictionary<string, ConcurrentQueue<MimeMessage>>();
 
@@ -112,27 +128,28 @@ namespace Infrastructure.Mail
 
         public MailHandler(ILogger<MailHandler> logger, IConfiguration configuration)
         {
-            var configImap = configuration.GetSection("Infrastructure:Mail:IMAP");
-            var configSmtp = configuration.GetSection("Infrastructure:Mail:SMTP");
+           
+            var configImap = configuration.GetSection(MailHandler.MailConfigurationKeys.Imap.Section);
+            var configSmtp = configuration.GetSection(MailHandler.MailConfigurationKeys.Smtp.Section);
 
             #region IMAP
-            UserImap = configImap.GetValue<string>("user");
-            PasswordImap = configImap.GetValue<string>("password");
-            ServerImap = configImap.GetValue<string>("server");
-            PortImap = configImap.GetValue<int>("port");
-            SecureSocketOptionsImap = configImap.GetValue<SecureSocketOptions>("secure_socket_options");
-            TimeoutImap = configImap.GetValue<int>("timeout_ms");
-            LoggerFileImapFolder = configImap.GetValue<string>("logger_file_name");
+            UserImap = configImap.GetValue<string>(MailHandler.MailConfigurationKeys.Imap.Properties.User);
+            PasswordImap = configImap.GetValue<string>(MailHandler.MailConfigurationKeys.Imap.Properties.Password);
+            ServerImap = configImap.GetValue<string>(MailHandler.MailConfigurationKeys.Imap.Properties.Server);
+            PortImap = configImap.GetValue<int>(MailHandler.MailConfigurationKeys.Imap.Properties.Port);
+            SecureSocketOptionsImap = configImap.GetValue<SecureSocketOptions>(MailHandler.MailConfigurationKeys.Imap.Properties.SecureSocketOptions);
+            TimeoutImap = configImap.GetValue<int>(MailHandler.MailConfigurationKeys.Imap.Properties.TimeoutMs);
+            LoggerFileImapFolder = configImap.GetValue<string>(MailHandler.MailConfigurationKeys.Imap.Properties.LogFile);
             #endregion
 
             #region SMTP
-            UserSmtp = configSmtp.GetValue<string>("user");
-            PasswordSmtp = configSmtp.GetValue<string>("password");
-            ServerSmtp = configSmtp.GetValue<string>("server");
-            PortSmtp = configSmtp.GetValue<int>("port");
-            SecureSocketOptionsSmtp = configSmtp.GetValue<SecureSocketOptions>("secure_socket_options");
-            TimeoutSmtp = configSmtp.GetValue<int>("timeout_ms");
-            LoggerFileSmtpFolder = configSmtp.GetValue<string>("logger_file_name");
+            UserSmtp = configSmtp.GetValue<string>(MailHandler.MailConfigurationKeys.Smtp.Properties.User);
+            PasswordSmtp = configSmtp.GetValue<string>(MailHandler.MailConfigurationKeys.Smtp.Properties.Password);
+            ServerSmtp = configSmtp.GetValue<string>(MailHandler.MailConfigurationKeys.Smtp.Properties.Server);
+            PortSmtp = configSmtp.GetValue<int>(MailHandler.MailConfigurationKeys.Smtp.Properties.Port);
+            SecureSocketOptionsSmtp = configSmtp.GetValue<SecureSocketOptions>(MailHandler.MailConfigurationKeys.Smtp.Properties.SecureSocketOptions);
+            TimeoutSmtp = configSmtp.GetValue<int>(MailHandler.MailConfigurationKeys.Smtp.Properties.TimeoutMs);
+            LoggerFileSmtpFolder = configSmtp.GetValue<string>(MailHandler.MailConfigurationKeys.Smtp.Properties.LogFile);
             #endregion
 
             _logger = logger;

@@ -6,9 +6,9 @@ namespace Infrastructure.Extension.WebAppBuilderExtensions
 {
     public static class WebApplicationBuilderExtensions
     {
-        public static WebApplication AppendMigrations(this WebApplication app)
+        public static IApplicationBuilder AppendMigrations(this IApplicationBuilder app)
         {
-            var scope = app.Services.CreateScope();
+            var scope = app.ApplicationServices.CreateScope();
             using ApplicationDbContext applicationDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             if (applicationDbContext.Database.EnsureCreated())
             {

@@ -1,6 +1,8 @@
-﻿using Domain.Entities.Mails;
+﻿using Domain.Const;
+using Domain.Entities.Mails;
 using Domain.Entities.Users.Events;
 using Domain.Extension;
+using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.Mail;
@@ -37,9 +39,9 @@ namespace Application.CQS.User.EventHandler
 
                 var user = await userRepository.GetAsync(x => x.Id == notification.UserId);
 
-                var mailSection = configuration.GetSection("Infrastructure:Mail");
+                var mailSection = configuration.GetSection(MailHandler.MailConfigurationKeys.Section);
 
-                var mailSender = mailSection.GetValue<string>("system_sender_anonymous_mail");
+                var mailSender = mailSection.GetValue<string>(MailHandler.MailConfigurationKeys.SystemDeliveryAddress);
                 Email systemEmail = Email.Parse(mailSender);
                 var mailOutboxId = MailOutbox.NewId();
 
@@ -96,7 +98,7 @@ namespace Application.CQS.User.EventHandler
                     deletedDateTime: null
                 );
 
-                var emailType = await emailTypeRepository.GetAsync(x=> x.Name == MailHandler.MailType.To);
+                var emailType = await emailTypeRepository.GetAsync(x=> x.Id == EmailConst.Type.To.ToIdentification<EmailTypeId>());
 
                 string bodyHtml = string.Format(@"
                                 <!DOCTYPE html>

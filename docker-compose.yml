@@ -28,7 +28,7 @@ services:
       context: .
       dockerfile: Presentation/Dockerfile
     ports:
-      - "5000:80"  # Port Mapping von Container-Port 80 auf Host-Port 5000
+      - "5000:5000"  # Port Mapping von Container-Port 80 auf Host-Port 5000
     depends_on:
       - postgres
 
@@ -44,14 +44,3 @@ services:
       - "5002:8081"  
     depends_on:
       - presentation
-
-  smtp-server:
-    container_name: smtp-container
-    hostname: smtp-srv
-    image: smtp-postix
-    build:
-      context: .
-      dockerfile: docker-dep/smtp-srv/Dockerfile
-    ports:
-      - "25:25"
-      - "587:587"

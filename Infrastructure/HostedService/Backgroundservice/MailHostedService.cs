@@ -1,4 +1,6 @@
-﻿using Infrastructure.Abstractions;
+﻿using Domain.Const;
+using Domain.Primitives.Ids;
+using Infrastructure.Abstractions;
 using Infrastructure.Mail;
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -72,13 +74,13 @@ namespace Infrastructure.HostedService.Backgroundservice
 
                         switch (recipient.SendingType.Name)
                         {
-                            case MailHandler.MailType.To:
+                            case EmailConst.Type.ToName:
                                 recipientsToList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
                                 break;
-                            case MailHandler.MailType.Cc:
+                            case EmailConst.Type.CcName:
                                 recipientsCcList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
                                 break;
-                            case MailHandler.MailType.Bcc:
+                            case EmailConst.Type.BccName:
                                 recipientsBccList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
                                 break;
                         }
