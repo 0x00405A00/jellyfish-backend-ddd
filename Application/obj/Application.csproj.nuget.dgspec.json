@@ -286,6 +286,10 @@
             "Scrutor": {
               "target": "Package",
               "version": "[4.2.2, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [

@@ -25,7 +25,7 @@ namespace Shared.Infrastructure.EFCore.DatabaseEntityConfiguration
 
             builder.Property(ut => ut.Body)
                 .IsRequired()
-                .HasMaxLength(DbContextExtension.ColumnLength.Names)
+                .HasColumnType("text")
                 .HasColumnName("body");
 
             builder.Property(ut => ut.IsBodyHtml)

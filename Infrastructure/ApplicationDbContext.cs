@@ -192,5 +192,9 @@ namespace Infrastructure
         public ApplicationDbContextMailService(IConfiguration configuration, DbContextOptions<ApplicationDbContext> options, DbSaveChangesInterceptor dbContextAuditLogInterceptor) : base(configuration, options, dbContextAuditLogInterceptor)
         {
         }
+
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder) => base.ConfigureConventions(configurationBuilder);
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder) => base.OnModelCreating(modelBuilder);
     }
 }

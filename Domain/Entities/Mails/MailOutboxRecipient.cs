@@ -1,4 +1,5 @@
-﻿using Domain.Primitives;
+﻿using Domain.Const;
+using Domain.Primitives;
 using Domain.Primitives.Ids;
 
 namespace Domain.Entities.Mails;
@@ -56,6 +57,10 @@ public sealed partial class MailOutboxRecipient : Entity<MailOutboxRecipientId>,
             modifiedDateTime,
             deletedDateTime);
     }
+
+    public bool IsReceiver() => EmailSendingTypeForeignKey.Id == EmailConst.Type.To;
+    public bool IsCopy() => EmailSendingTypeForeignKey.Id == EmailConst.Type.Cc;
+    public bool IsBlindCopy() => EmailSendingTypeForeignKey.Id == EmailConst.Type.Bcc;
 }
 public sealed partial class MailOutboxRecipient
 {

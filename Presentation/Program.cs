@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore;
 using Microsoft.Extensions.Configuration;
+using Serilog;
 
 namespace WebApi
 {
@@ -15,11 +17,14 @@ namespace WebApi
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
-                    logging.AddConsole(o => o.TimestampFormat = "[hh:mm:ss] ");
+                    //logging.AddConsole(o => o.TimestampFormat = "[hh:mm:ss] ");
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+                .UseSerilog((hostingContext, loggerConfiguration) =>
+                      loggerConfiguration.ReadFrom
+                      .Configuration(hostingContext.Configuration));
     }
 }

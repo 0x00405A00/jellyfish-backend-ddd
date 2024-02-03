@@ -347,7 +347,7 @@ namespace Infrastructure.Mail
                     }
                     catch (Exception ex)
                     {
-
+                        throw;
                     }
 
                 });
@@ -356,7 +356,7 @@ namespace Infrastructure.Mail
             }
             catch (Exception ex)
             {
-
+                throw;
             }
             return mimeMessages;
         }

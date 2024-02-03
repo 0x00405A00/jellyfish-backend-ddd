@@ -8,6 +8,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.FileProviders;
 using Presentation;
 using Presentation.Middleware;
+using Serilog;
 using Shared.Authentification.Service;
 using Shared.Const;
 

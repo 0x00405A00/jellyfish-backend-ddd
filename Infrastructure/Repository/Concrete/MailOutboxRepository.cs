@@ -16,12 +16,10 @@ namespace Infrastructure.Repository.Concrete
         {
             var result = expression == null ? await DbSet.Include(x => x.Attachments)
                 .Include(x => x.Recipients)
-                .ThenInclude(x => x.SendingType)
                 .AsSingleQuery()
                 .ToListAsync() :
                 await DbSet.Include(x => x.Attachments)
                 .Include(x => x.Recipients)
-                .ThenInclude(x => x.SendingType)
                 .AsSingleQuery()
                 .Where(expression)
                 .ToListAsync();

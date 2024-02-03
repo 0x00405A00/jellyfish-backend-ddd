@@ -179,8 +179,8 @@ namespace Application.CQS.User.EventHandler
                         }
                         mailoutboxRepository.Add(mail);
 
-                        await unitOfWork.SaveChangesAsync();
                         transaction.Commit();
+                        await unitOfWork.SaveChangesAsync();
                     }
                     catch(Exception ex)
                     {

@@ -12,13 +12,71 @@ services:
       POSTGRES_PASSWORD: meinDatabasePassword!
     ports:
       - "5432:5432"  # Port Mapping von Container-Port 5432 auf Host-Port 5432
-
+    restart: "on-failure"
+      
   redis:
     container_name: redis
     hostname: redis
     image: redis
     depends_on:
       - postgres
+    restart: "on-failure"
+    
+  mongodb:
+    container_name: mongodb
+    hostname: mongo
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    restart: "on-failure"
+
+  elasticsearch01:
+    container_name: elasticsearch01
+    hostname: elasticsearch01
+    image: elasticsearch:7.10.1
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - node.name=elasticsearch01
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - discovery.type=single-node
+      - http.host=0.0.0.0
+      - network.host=0.0.0.0
+      #- xpack.security.enabled=false
+     # - xpack.security.enrollment.enabled=false 
+      - "ES_JAVA_OPTS=-Dlog4j2.formatMsgNoLookups=true -Xms512m -Xmx512m"
+    mem_limit: 1g
+    #restart: "on-failure"
+      
+  graylog:
+    container_name: graylog
+    hostname: graylog
+    image: graylog/graylog:5.2.3
+    environment:
+      GRAYLOG_HTTP_ENABLE_CORS: true
+      GRAYLOG_HTTP_ENABLE_CORS_CREDENTIALS: true
+      GRAYLOG_HTTP_ENABLE_WEB_CORS: true
+      GRAYLOG_PASSWORD_SECRET: somepasswordpepper
+      GRAYLOG_ROOT_PASSWORD_SHA2: 8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+      GRAYLOG_ELASTICSEARCH_HOSTS: http://elastic:changeme@elasticsearch01:9200
+      #GRAYLOG_HTTP_EXTERNAL_URI: http://127.0.0.1:9001/
+      GRAYLOG_MONGODB_URI: mongodb://mongo/graylog
+      #GRAYLOG_MESSAGE_JOURNAL_ENABLED: true
+    #entrypoint: /usr/bin/tini -- wait-for-it elasticsearch01:9200 --  /docker-entrypoint.sh
+    ports:
+     - 9001:9000  
+     - "12201:12201/tcp" # GELF TCP
+     - "12201:12201/udp" # GELF UDP 
+     - 1514:1514    
+     - 5555:5555    
+    depends_on:
+      mongodb:
+        condition: "service_started"
+      elasticsearch01:
+        condition: "service_started"
+    #restart: "on-failure"
 
   presentation:
     container_name: webapi
@@ -30,7 +88,9 @@ services:
     ports:
       - "5000:5000"  # Port Mapping von Container-Port 80 auf Host-Port 5000
     depends_on:
-      - postgres
+      postgres:
+        condition: "service_started"
+    restart: "on-failure"
 
   web-frontend:
     container_name: webfrontend
@@ -43,4 +103,6 @@ services:
       - "5001:8080"  
       - "5002:8081"  
     depends_on:
-      - presentation
+      presentation:
+        condition: "service_started"
+    restart: "on-failure"

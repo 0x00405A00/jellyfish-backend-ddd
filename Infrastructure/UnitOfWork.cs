@@ -1,20 +1,22 @@
-﻿using Domain.Entities.Chats;
-using Domain.Primitives;
+﻿using Domain.Primitives;
 using Infrastructure.Abstractions;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using System.Runtime.ConstrainedExecution;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure
 {
     internal class UnitOfWork : IUnitOfWork
     {
+        private readonly ILogger<UnitOfWork> logger;
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly IMediator mediator;
 
-        public UnitOfWork(ApplicationDbContext applicationDbContext, IMediator mediator)
+        public UnitOfWork(ILogger<UnitOfWork> logger,
+                          ApplicationDbContext applicationDbContext,
+                          IMediator mediator)
         {
+            this.logger = logger;
             _applicationDbContext = applicationDbContext;
             this.mediator = mediator;
         }
@@ -55,7 +57,10 @@ namespace Infrastructure
     }
     internal class UnitOfWorkMailService : UnitOfWork, IUnitOfWorkMailService
     {
-        public UnitOfWorkMailService(ApplicationDbContextMailService applicationDbContext, IMediator mediator) : base(applicationDbContext,mediator)
+        public UnitOfWorkMailService(
+            ILogger<UnitOfWork> logger,
+            ApplicationDbContextMailService applicationDbContext,
+            IMediator mediator) : base(logger,applicationDbContext,mediator)
         {
         }
     }

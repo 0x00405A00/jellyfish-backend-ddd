@@ -21,12 +21,12 @@ namespace Shared.Infrastructure.EFCore.DatabaseEntityConfiguration
 
             builder.Property(ut => ut.Filename)
                 .IsRequired()
-                .HasMaxLength(DbContextExtension.ColumnLength.EmailSubject)
+                .HasMaxLength(DbContextExtension.ColumnLength.Names)
                 .HasColumnName("filename");
 
             builder.Property(ut => ut.AttachmentPath)
                 .IsRequired()
-                .HasMaxLength(DbContextExtension.ColumnLength.Names)
+                .HasMaxLength(DbContextExtension.ColumnLength.PathDescriptors)
                 .HasColumnName("attachment_path");
 
             builder.Property(ut => ut.Order)
@@ -40,12 +40,12 @@ namespace Shared.Infrastructure.EFCore.DatabaseEntityConfiguration
 
             builder.Property(ut => ut.MimeMediaType)
                 .IsRequired()
-                .HasMaxLength(DbContextExtension.ColumnLength.Names)
+                .HasMaxLength(DbContextExtension.ColumnLength.MimeTypes)
                 .HasColumnName("mime_media_type");
 
             builder.Property(ut => ut.MimeMediaSubType)
                 .IsRequired()
-                .HasMaxLength(DbContextExtension.ColumnLength.Names)
+                .HasMaxLength(DbContextExtension.ColumnLength.MimeTypes)
                 .HasColumnName("mime_media_subtype");
 
             builder.Property(ut => ut.MimeCid)
@@ -64,7 +64,7 @@ namespace Shared.Infrastructure.EFCore.DatabaseEntityConfiguration
             builder.HasOne(u => u.Mail)
                 .WithMany(x => x.Attachments)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.NoAction)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(fk => fk.MailOutboxForeignKey)
                 .HasConstraintName(mailConstraintName);
         }

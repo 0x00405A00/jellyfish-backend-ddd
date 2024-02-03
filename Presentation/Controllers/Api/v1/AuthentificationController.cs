@@ -36,7 +36,8 @@ namespace Presentation.Controllers.Api.v1
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDTO userLoginDTO)
         {
-
+            _logger.LogInformation("test info");
+            _logger.LogDebug("test info");
             var command = new CreateAuthCommand(userLoginDTO.Email, userLoginDTO.Password, HttpContext.Connection.LocalIpAddress, HttpContext.Connection.LocalPort, HttpContext.Connection.RemoteIpAddress, HttpContext.Connection.RemotePort, HttpContext.Request.Headers.UserAgent);
             var result = await _sender.Send(command);
             return result.IsSuccess ? Ok(result.Value) : BadRequest();

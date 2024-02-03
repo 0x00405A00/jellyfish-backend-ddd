@@ -1,16 +1,10 @@
 ﻿using Domain.Const;
-using Domain.Primitives.Ids;
 using Infrastructure.Abstractions;
 using Infrastructure.Mail;
-using Infrastructure.Repository;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
 using MimeKit;
-using System.IO;
-using System.Text;
 
 namespace Infrastructure.HostedService.Backgroundservice
 {
@@ -71,18 +65,17 @@ namespace Infrastructure.HostedService.Backgroundservice
 
                     foreach (var recipient in mail.Recipients)
                     {
-
-                        switch (recipient.SendingType.Name)
+                        if(recipient.IsReceiver())
                         {
-                            case EmailConst.Type.ToName:
-                                recipientsToList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
-                                break;
-                            case EmailConst.Type.CcName:
-                                recipientsCcList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
-                                break;
-                            case EmailConst.Type.BccName:
-                                recipientsBccList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
-                                break;
+                            recipientsToList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
+                        }
+                        else if(recipient.IsCopy())
+                        {
+                            recipientsCcList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
+                        }
+                        else if(recipient.IsBlindCopy())
+                        {
+                            recipientsBccList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
                         }
                     }
                     string subject = mail.Subject ?? String.Empty;

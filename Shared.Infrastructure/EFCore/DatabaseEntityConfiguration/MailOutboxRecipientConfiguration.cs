@@ -34,7 +34,7 @@ namespace Shared.Infrastructure.EFCore.DatabaseEntityConfiguration
             builder.HasOne(u => u.Mail)
                 .WithMany(x => x.Recipients)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.NoAction)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(fk => fk.MailOutboxForeignKey)
                 .HasConstraintName(mailConstraintName);
 

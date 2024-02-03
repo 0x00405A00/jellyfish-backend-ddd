@@ -167,6 +167,7 @@ namespace Application.CQS.User.EventHandler
                     mail.AddAttachment(item);
                 }
                 mailoutboxRepository.Add(mail);
+                await unitOfWork.SaveChangesAsync();
             }
 
         }
