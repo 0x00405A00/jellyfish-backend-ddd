@@ -80,13 +80,13 @@ namespace Shared.DataTransferObject
         public bool HasImage { get { return (!String.IsNullOrEmpty(PictureUrl) && Extension.IsValidUrl(PictureUrl) || (!String.IsNullOrEmpty(PictureBase64) && !String.IsNullOrEmpty(PictureMimeType))); } }
 
         [JsonIgnore]
-        public string ActivationCode{ get; }
+        public string? ActivationCode{ get; }
 
         [JsonIgnore]
         CustomDateTime? IUser.ActivationDateTime{ get; }
 
         [JsonIgnore]
-        public string ActivationToken{ get; }
+        public string? ActivationToken{ get; }
 
         [JsonIgnore]
         public IReadOnlyCollection<ChatInviteRequest>? ChatInvitesWhereIamRequester{ get; }
@@ -95,10 +95,10 @@ namespace Shared.DataTransferObject
         public IReadOnlyCollection<ChatInviteRequest>? ChatInvitesWhereIamTarget{ get; }
 
         [JsonIgnore]
-        CustomDateTime IUser.DateOfBirth{ get; }
+        CustomDateTime? IUser.DateOfBirth{ get; }
 
         [JsonIgnore]
-        Email IUser.Email{ get; }
+        Email? IUser.Email{ get; }
 
         [JsonIgnore]
         public IReadOnlyCollection<FriendshipRequest>? FriendshipRequestsWhereIamRequester{ get; }
@@ -119,19 +119,19 @@ namespace Shared.DataTransferObject
         public IReadOnlyCollection<MessageOutbox>? MessagesInOutbox{ get; }
 
         [JsonIgnore]
-        PhoneNumber IUser.Phone{ get; }
+        PhoneNumber? IUser.Phone{ get; }
 
         [JsonIgnore]
-        public Picture Picture{ get; }
+        public Picture? Picture{ get; }
 
         [JsonIgnore]
-        public IReadOnlyCollection<UserHasRelationToRole> UserHasRelationToRoles{ get; }
+        public IReadOnlyCollection<UserHasRelationToRole>? UserHasRelationToRoles{ get; }
 
         [JsonIgnore]
-        public UserType UserType { get; set; }
+        public UserType? UserType { get; set; }
 
         [JsonIgnore]
-        public UserTypeId UserTypeForeignKey{ get; }
+        public UserTypeId? UserTypeForeignKey{ get; }
 
         public UserDTO()
         {

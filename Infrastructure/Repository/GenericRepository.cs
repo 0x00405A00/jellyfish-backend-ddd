@@ -1,6 +1,6 @@
 ﻿using Domain.Primitives;
+using Domain.Specification;
 using Infrastructure.Repository.Primitives;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared.DataFilter.Infrastructure;
 using System.Linq.Expressions;
@@ -50,6 +50,12 @@ namespace Infrastructure.Repository
 
         #region Async
 
+        public IEnumerable<TEntity> GetBySpecification(ISpecification<TEntity> specification)
+        {
+            return DbSet.AsNoTracking()
+                .Where(specification.IsSatisfiedBy)
+                .ToList();
+        }
         public async virtual Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression)
         {
             var value = await DbSet.AsNoTracking()

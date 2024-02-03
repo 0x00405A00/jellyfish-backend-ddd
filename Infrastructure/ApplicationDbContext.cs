@@ -7,6 +7,7 @@ using Domain.Entities.Users;
 using Domain.Primitives;
 using Domain.Primitives.Ids;
 using Domain.ValueObjects;
+using Infrastructure.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -92,12 +93,18 @@ namespace Infrastructure
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         {
-            if(_configuration is not null)
+            ILoggerFactory loggerFactory;
+            if (_configuration is not null)
             {
                 ConnectionString = _configuration.GetConnectionString(ConnectionStringAlias);
+
+                loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+                _logger = loggerFactory.CreateLogger<ApplicationDbContext>();
             }
-            var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
-            _logger = loggerFactory.CreateLogger<ApplicationDbContext>();
+            else
+            {
+                loggerFactory = SerilogExtension.GetLoggerFactory(_configuration);
+            }
             optionsBuilder.UseNpgsql(ConnectionString);
             optionsBuilder.UseLoggerFactory(loggerFactory);
             optionsBuilder.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));

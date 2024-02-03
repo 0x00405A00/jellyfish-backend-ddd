@@ -3,12 +3,7 @@ using Infrastructure.Abstractions;
 using Infrastructure.Repository.Primitives;
 using Microsoft.EntityFrameworkCore;
 using Shared.DataFilter.Infrastructure;
-using Shared.Linq;
-using System.Buffers;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text.Json.Serialization;
 
 namespace Infrastructure.Repository.Concrete
 {
@@ -38,6 +33,12 @@ EF.CompileQuery((ApplicationDbContext context, Expression<Func<DatabaseEntity.Us
           .Where(expression)
           .FirstOrDefault());*/
 
+        public async Task<User> GetWithTrackingWithoutDependenciesAsync(Expression<Func<User, bool>> expression)
+        {
+            var value = await DbSet.AsTracking()
+                                    .FirstOrDefaultAsync(expression);
+            return value;
+        }
         public async override Task<User> GetAsync(Expression<Func<User, bool>> expression)
         {
             var value = await DbSet

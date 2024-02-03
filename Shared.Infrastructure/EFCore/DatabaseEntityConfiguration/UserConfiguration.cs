@@ -93,7 +93,19 @@ namespace Shared.Infrastructure.EFCore.DatabaseEntityConfiguration
                 .HasMaxLength(DbContextExtension.ColumnLength.EmailAddrLength)
                 .HasColumnName("phone");
 
-            builder.OwnsOne(ut => ut.Picture, navigationBuilder =>
+            /*builder.OwnsOne(ut => ut.Picture, navigationBuilder =>
+            {
+                navigationBuilder.WithOwner();
+                navigationBuilder.Property(img => img.FilePath)
+                .IsRequired(false)
+                .HasColumnName("profile_picture_path");
+                navigationBuilder.Property(img => img.FileExtension)
+                .IsRequired(false)
+                .HasColumnName("profile_picture_fileext");
+            });*/
+
+            //könnte beim data seeding probleme bereiten
+            builder.ComplexProperty(ut => ut.Picture, navigationBuilder =>
             {
                 navigationBuilder.Property(img => img.FilePath)
                 .IsRequired(false)
@@ -102,7 +114,6 @@ namespace Shared.Infrastructure.EFCore.DatabaseEntityConfiguration
                 .IsRequired(false)
                 .HasColumnName("profile_picture_fileext");
             });
-
             //alte Constraints-Erstellung vor builder.AddAuditableConstraints<EUser, UserId>(); Implementierung
             /*builder.HasOne(u => u.CreatedByUser)
                 .WithMany()

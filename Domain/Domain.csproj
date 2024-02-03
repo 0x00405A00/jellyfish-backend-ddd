@@ -8,7 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Entities\Auths\Specification\" />
+    <Folder Include="Entities\Chats\Specification\" />
+    <Folder Include="Entities\Mails\Specification\" />
+    <Folder Include="Entities\Messages\Specification\" />
     <Folder Include="Entities\Roles\Exceptions\" />
+    <Folder Include="Entities\Roles\Specification\" />
   </ItemGroup>
 
   <ItemGroup>

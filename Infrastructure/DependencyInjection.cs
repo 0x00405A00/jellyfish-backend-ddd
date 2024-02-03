@@ -6,10 +6,11 @@ using Infrastructure.Healthcheck.Concrete.MySql;
 using Infrastructure.HostedService.Backgroundservice;
 using Infrastructure.Mail;
 using Infrastructure.Repository.Concrete;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using Shared.Authentification.Service;
 using Shared.Infrastructure.EFCore.Interceptors;
 using Shared.Linq.Converters;
@@ -27,6 +28,12 @@ namespace Infrastructure
                 options.ServicesStopConcurrently = true;
             });
 
+            services.AddSerilog();
+            services.AddW3CLogging(logging =>
+            {
+                logging.LoggingFields = W3CLoggingFields.All;
+                logging.FlushInterval = TimeSpan.FromSeconds(2);
+            });
             services.AddScoped<IAntiVirus, AntiVirus>();
             services.AddScoped<IAzureAdultContentDetection, AzureAdultContentDetection>();
 

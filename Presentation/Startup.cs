@@ -49,7 +49,8 @@ namespace WebApi
             IServiceProvider serviceProvider,
             IWebHostEnvironment env)
         {
-            
+
+            app.UseW3CLogging();
             app.UseRouting();
             app.UseOverrideDefaultAspNetResponseMiddleware();
             app.UseAuthentication();
@@ -68,13 +69,17 @@ namespace WebApi
             }
 
             //Default wwwroot
-            app.UseStaticFiles(new StaticFileOptions
+            /*
+             * Disabled, data action will be handled over controllers
+             * e.g. /api/v1/user/profile-img/{fileName}
+             * app.UseStaticFiles(new StaticFileOptions
             {
+                 
                 FileProvider = new PhysicalFileProvider(
                 Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
-                RequestPath = "/wwwroot",
+                RequestPath = "",
                 OnPrepareResponse = serviceProvider.GetRequiredService<IFilePermissionService>().SetFilePermissions
-            }); // This line enables the serving of static files from the wwwroot folder.
+            });*/ // This line enables the serving of static files from the wwwroot folder.
 
             app.UseEndpoints(x =>
             {

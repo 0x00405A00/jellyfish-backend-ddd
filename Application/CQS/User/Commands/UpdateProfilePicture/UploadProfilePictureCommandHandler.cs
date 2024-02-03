@@ -37,7 +37,7 @@ namespace Application.CQS.User.Commands.UpdateProfilePicture
             {
                 return Result<UserDTO>.Failure("user not found");
             }
-            var user = await _userRepository.GetAsync(user => user.Id == request.UserId.ToIdentification<UserId>());
+            var user = await _userRepository.GetWithTrackingWithoutDependenciesAsync(user => user.Id == request.UserId.ToIdentification<UserId>());
             if (user is null)
             {
                 return Result<UserDTO>.Failure("user not found");
@@ -59,7 +59,15 @@ namespace Application.CQS.User.Commands.UpdateProfilePicture
                 return Result<UserDTO>.Failure(ex.Message);
             }
 
-            var mapValue = _mapper.Map<UserDTO>(user);
+            UserDTO mapValue =null;
+            try
+            {
+                mapValue = _mapper.Map<UserDTO>(user);
+            }
+            catch(Exception ex)
+            {
+
+            }
             return Result<UserDTO>.Success(mapValue);
         }
     }

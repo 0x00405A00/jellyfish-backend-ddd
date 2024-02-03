@@ -32,5 +32,6 @@ namespace Infrastructure.Abstractions
         /// </summary>
         /// <returns></returns>
         public Task<List<FriendshipRequest>> GetAllFriendshipRequests(Expression<Func<User, bool>> expression);
+        public Task<User> GetWithTrackingWithoutDependenciesAsync(Expression<Func<User, bool>> expression);
     }
 }

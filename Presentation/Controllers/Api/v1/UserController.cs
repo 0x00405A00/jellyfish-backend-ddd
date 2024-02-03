@@ -409,9 +409,19 @@ namespace Presentation.Controllers.Api.v1
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
             var command = new DeleteUserCommand(userUuid, id);
-            
+
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
+        }
+
+        [HttpGet("{id}/profile-img")]
+        public async Task<IActionResult> GetProfilePicture(Guid id, CancellationToken cancellationToken)
+        {
+
+            var command = new Application.CQS.User.Queries.GetUserProfilePicture.GetUserProfilePictureQuery(id);
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.IsSuccess?File(result.Value.Data, result.Value.FileExtension): result.PrepareResponse();
         }
 #if DEBUG
         [Consumes(MediaTypeNames.Application.Json)]

@@ -41,8 +41,10 @@
             return this.DateTime == other.DateTime;
         }
         public static CustomDateTime Now() 
-        { 
-            return new CustomDateTime(DateTime.UtcNow);
+        {
+            var unspecified = DateTime.UtcNow;
+            var specified = DateTime.SpecifyKind(unspecified, DateTimeKind.Utc);
+            return new CustomDateTime(specified);
         }
 
         public int CompareTo(object? obj)

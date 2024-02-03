@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore;
-using Microsoft.Extensions.Configuration;
+using Infrastructure.Logging;
 using Serilog;
 
 namespace WebApi
@@ -22,9 +21,8 @@ namespace WebApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior",true);
                 })
-                .UseSerilog((hostingContext, loggerConfiguration) =>
-                      loggerConfiguration.ReadFrom
-                      .Configuration(hostingContext.Configuration));
+                .UseCentralizedLogging();
     }
 }

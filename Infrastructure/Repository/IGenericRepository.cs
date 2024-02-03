@@ -1,4 +1,5 @@
 ﻿using Domain.Primitives;
+using Domain.Specification;
 using Infrastructure.Repository.Primitives;
 using Microsoft.EntityFrameworkCore;
 using Shared.DataFilter.Infrastructure;
@@ -20,7 +21,7 @@ namespace Infrastructure.Repository
 
         public int CountMax(Expression<Func<TEntity, bool>> expression = null);
         public Task<int> CountMaxAsync(Expression<Func<TEntity, bool>> expression = null);
-
+        public IEnumerable<TEntity> GetBySpecification(ISpecification<TEntity> specification);
         public Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression);
         public Task<ICollection<TEntity>> ListAsync(Expression<Func<TEntity, bool>> expression = null);
         public Task<ICollection<TEntity>> ListAsync(ColumnSearchAggregateDTO? columnSearchAggregateDTO);

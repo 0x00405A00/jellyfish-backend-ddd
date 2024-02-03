@@ -67,9 +67,9 @@ namespace Application.Mapper
                 .ForMember(dst => dst.BinaryContentBase64, dst => dst.MapFrom(x => x.MediaContent.ToString()))
                 .ForMember(dst => dst.BinaryContentMimeType, dst => dst.MapFrom(x => x.MediaContent.FileExtension))
                 .ForMember(dst => dst.OwnerUuid, dst => dst.MapFrom(x => x.UserForeignKey))
-                .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUser))
-                .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUser))
-                .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUser))
+                .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUserForeignKey))
+                .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUserForeignKey))
+                .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUserForeignKey))
                 .IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<Chat, ChatDTO>()
@@ -83,9 +83,9 @@ namespace Application.Mapper
                 .ForMember(dst => dst.CreatedTime, dst => dst.MapFrom(x => x.CreatedTime))
                 .ForMember(dst => dst.LastModifiedTime, dst => dst.MapFrom(x => x.LastModifiedTime))
                 .ForMember(dst => dst.DeletedTime, dst => dst.MapFrom(x => x.DeletedTime))
-                .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUser))
-                .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUser))
-                .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUser))
+                .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUserForeignKey))
+                .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUserForeignKey))
+                .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUserForeignKey))
                 .IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<Role, RoleDTO>()
@@ -93,9 +93,9 @@ namespace Application.Mapper
                 .ForMember(dst => dst.CreatedTime, dst => dst.MapFrom(x => x.CreatedTime))
                 .ForMember(dst => dst.LastModifiedTime, dst => dst.MapFrom(x => x.LastModifiedTime))
                 .ForMember(dst => dst.DeletedTime, dst => dst.MapFrom(x => x.DeletedTime))
-                .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUser))
-                .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUser))
-                .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUser))
+                .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUserForeignKey))
+                .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUserForeignKey))
+                .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUserForeignKey))
                 .IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<User, UserDTO>()
@@ -113,9 +113,9 @@ namespace Application.Mapper
                 .ForMember(dst => dst.CreatedTime, dst => dst.MapFrom(x => x.CreatedTime))
                 .ForMember(dst => dst.LastModifiedTime, dst => dst.MapFrom(x => x.LastModifiedTime))
                 .ForMember(dst => dst.DeletedTime, dst => dst.MapFrom(x => x.DeletedTime))
-                .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUser))
-                .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUser))
-                .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUser))
+                .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUserForeignKey))
+                .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUserForeignKey))
+                .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUserForeignKey))
                 .IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<User, MessengerUserDTO>()
@@ -125,9 +125,9 @@ namespace Application.Mapper
                 .ForMember(dst => dst.CreatedTime, dst => dst.MapFrom(x => x.CreatedTime))
                 .ForMember(dst => dst.LastModifiedTime, dst => dst.MapFrom(x => x.LastModifiedTime))
                 .ForMember(dst => dst.DeletedTime, dst => dst.MapFrom(x => x.DeletedTime))
-                .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUser))
-                .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUser))
-                .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUser))
+                .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUserForeignKey))
+                .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUserForeignKey))
+                .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUserForeignKey))
                 .IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<FriendshipRequest, FriendshipRequestDTO>()
@@ -146,18 +146,18 @@ namespace Application.Mapper
                 .ForMember(dst => dst.CreatedTime, dst => dst.MapFrom(x => x.CreatedTime))
                 .ForMember(dst => dst.LastModifiedTime, dst => dst.MapFrom(x => x.LastModifiedTime))
                 .ForMember(dst => dst.DeletedTime, dst => dst.MapFrom(x => x.DeletedTime))
-                .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUser))
-                .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUser))
-                .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUser))
+                .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUserForeignKey))
+                .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUserForeignKey))
+                .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUserForeignKey))
                 .IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<UserDTO, UserHasRelationToFriend>()
                 .ForMember(dst => dst.CreatedTime, dst => dst.MapFrom(x => x.CreatedTime))
                 .ForMember(dst => dst.LastModifiedTime, dst => dst.MapFrom(x => x.LastModifiedTime))
                 .ForMember(dst => dst.DeletedTime, dst => dst.MapFrom(x => x.DeletedTime))
-                .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUser))
-                .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUser))
-                .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUser))
+                .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUserForeignKey))
+                .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUserForeignKey))
+                .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUserForeignKey))
                 .IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<MailOutbox, MailOutboxDTO>()
@@ -183,9 +183,9 @@ namespace Application.Mapper
                 .ForMember(dst => dst.CreatedTime, dst => dst.MapFrom(x => x.CreatedTime))
                 .ForMember(dst => dst.LastModifiedTime, dst => dst.MapFrom(x => x.LastModifiedTime))
                 .ForMember(dst => dst.DeletedTime, dst => dst.MapFrom(x => x.DeletedTime))
-                .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUser))
-                .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUser))
-                .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUser))
+                .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUserForeignKey))
+                .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUserForeignKey))
+                .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUserForeignKey))
                 .IgnoreAllPropertiesWithAnInaccessibleSetter();
         }
     }
