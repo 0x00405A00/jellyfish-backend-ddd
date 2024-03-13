@@ -191,9 +191,9 @@
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        _token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
         if(firstRender)
         {
-            _token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
             var authState = await AuthentificationService.GetAuthenticationStateAsync();
             CurrentUser = await WebApiClient.GetCurrentUser(authState, cancellationToken.Token);
             StateHasChanged();
@@ -222,7 +222,7 @@
 
             bool? result = await DialogService.ShowMessageBox(
                 "Refreshlogin Error",
-                "Session cant extend, try again later!");
+                "Session can´t extend, try again later!");
             return;
         }
         _token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);

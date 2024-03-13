@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
+using MudBlazor;
 using MudBlazor.Services;
 using RestSharp;
 using Shared.Const;
@@ -19,8 +20,18 @@ namespace WebFrontEnd
     {
         public static IServiceCollection AddServices(this IServiceCollection serviceProvider)
         {
+            serviceProvider.AddMudServices(config =>
+            {
+                config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomRight;
 
-            serviceProvider.AddMudServices();
+                config.SnackbarConfiguration.PreventDuplicates = true;
+                config.SnackbarConfiguration.NewestOnTop = false;
+                config.SnackbarConfiguration.ShowCloseIcon = true;
+                config.SnackbarConfiguration.VisibleStateDuration = 2000;
+                config.SnackbarConfiguration.HideTransitionDuration = 500;
+                config.SnackbarConfiguration.ShowTransitionDuration = 500;
+                config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+            });
             serviceProvider.AddSingleton<ISystemClock, SystemClock>();
             serviceProvider.AddScoped<IExtendedNavigationManager, ExtendedNavigationManager>();
             serviceProvider.AddScoped<ILocalStorageService, LocalStorageService>();

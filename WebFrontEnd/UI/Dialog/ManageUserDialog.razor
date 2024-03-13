@@ -98,9 +98,11 @@
             if(User.Roles!=null)
             {
                 List<RoleDTO> roleDTOs = new List<RoleDTO>();
-                User.Roles.ToList().ForEach(x =>
+                Roles.ToList().ForEach(x =>
                 {
                     var fromRoles = Roles.Where(y=>y.Id == x.Id).First();
+                    if (fromRoles == null)
+                        throw new NullReferenceException("role not found");
                     roleDTOs.Add(fromRoles);
 
                 });

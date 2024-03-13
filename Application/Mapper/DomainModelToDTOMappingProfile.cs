@@ -106,7 +106,7 @@ namespace Application.Mapper
                 .ForMember(dst => dst.Password, dst => dst.MapFrom(x => string.Empty))//securtiy: password shouldnt transfer over network
                 .ForMember(dst => dst.PasswordConfirm, dst => dst.MapFrom(x => string.Empty))//securtiy: password shouldnt transfer over network
                 .ForMember(dst => dst.UserTypeUuid, dst => dst.MapFrom(x => x.UserType.Id.ToGuid()))
-                .ForMember(dst => dst.PictureUrl, dst => dst.MapFrom(x => Shared.Http.Extension.Create(contentDeliveryUrl + x.Picture.FilePath.ToString().Replace(@"\","/"))??null))
+                .ForMember(dst => dst.PictureUrl, dst => dst.MapFrom(x => Shared.Http.Extension.Create(contentDeliveryUrl + x.Id.ToString()+"/"+"profile-img")))
                 .ForMember(dst => dst.PictureMimeType, dst => dst.MapFrom(x => x.Picture.FileExtension))
                 .ForMember(dst => dst.Email, dst => dst.MapFrom(x => x.Email.ToString()))
                 .ForMember(dst => dst.Roles, dst=> dst.MapFrom(x=>x.UserHasRelationToRoles.ToList()))

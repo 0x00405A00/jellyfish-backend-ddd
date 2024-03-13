@@ -1,4 +1,8 @@
 ﻿@inject IExtendedNavigationManager NavigationManager
+@inject JellyfishBackendApi WebApiClient
+@inject ISnackbar SnackbarService
+@inject ICustomAuthentificationStateProvider AuthentificationService
+
 <Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
@@ -12,6 +16,38 @@
     </NotFound>
 </Router>
 @code{
+    private JellyfishBackendApi.ErrorOutputEventHandler _apiErrorOutputEventHandler;
+    protected override Task OnInitializedAsync()
+    {
+        _apiErrorOutputEventHandler += (sender, args) =>
+        {
+            foreach(var error in args.Errors)
+            {
+                RenderFragment message = (@<div>
+                                            <h3>@error.Title (@args.StatusCode)</h3>
+                                            <p>
+                                                @error.Message
+                                            </p>
+                                            <br />
+                                            <p>
+                                                @error.Details
+                                            </p>
+                                            <p>
+                                                @args.ResponseUri
+                                            </p>
+                                        </div>
+                                        );
+                SnackbarService.Add(message, Severity.Error);
+            }
+            if(args.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                AuthentificationService.Logout(CancellationToken.None);
+            }
+        
+        };
+        WebApiClient.AddErrorHandler(_apiErrorOutputEventHandler);
+        return base.OnInitializedAsync();
+    }
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
         NavigationManager.Initialize();

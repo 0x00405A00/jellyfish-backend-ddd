@@ -22,23 +22,30 @@ namespace Infrastructure.Healthcheck.Response
             Process currentProcess = null;
             HealthCheckResponseObject healthCheckResponseObject = new HealthCheckResponseObject();
             ConcurrentDictionary<int, ProcessUsage> usages = new ConcurrentDictionary<int, ProcessUsage>();
-            List<Task> getCpuUsageFromProcesses = new List<Task>();
-            foreach (Process proc in Process.GetProcesses())
+            //List<Task> getCpuUsageFromProcesses = new List<Task>();
+            try
             {
-                if (proc.Id == healthCheckResponseObject.ProcessId)
+                foreach (Process proc in Process.GetProcesses())
                 {
-                    currentProcess = proc;
+                    if (proc.Id == healthCheckResponseObject.ProcessId)
+                    {
+                        currentProcess = proc;
+                    }
+                    //var task = GetProcessUsage(proc, usages);
+                    //getCpuUsageFromProcesses.Add(task);
                 }
-                var task = GetProcessUsage(proc, usages);
-                getCpuUsageFromProcesses.Add(task);
+                //Task.WaitAll(getCpuUsageFromProcesses.ToArray());
+                var processUsage = await GetProcessUsage(currentProcess);
+                //healthCheckResponseObject.ProcessorUsageAll = usages.Values.Select(x => x.CpuUsage).Aggregate((current, usage) => current + usage);
+                healthCheckResponseObject.RamSystem = GC.GetGCMemoryInfo().TotalAvailableMemoryBytes / 1024.0 / 1024.0;
+                healthCheckResponseObject.RamUsage = processUsage.RamUsage;
+                healthCheckResponseObject.ProcessStartTime = currentProcess.StartTime;
+                healthCheckResponseObject.ProcessorUsage = processUsage.CpuUsage;
             }
-            Task.WaitAll(getCpuUsageFromProcesses.ToArray());
-            var processUsage = await GetProcessUsage(currentProcess);
-            healthCheckResponseObject.ProcessorUsageAll = usages.Values.Select(x => x.CpuUsage).Aggregate((current, usage) => current + usage);
-            healthCheckResponseObject.RamSystem = GC.GetGCMemoryInfo().TotalAvailableMemoryBytes / 1024.0 / 1024.0;
-            healthCheckResponseObject.RamUsage = processUsage.RamUsage;
-            healthCheckResponseObject.ProcessStartTime = currentProcess.StartTime;
-            healthCheckResponseObject.ProcessorUsage = processUsage.CpuUsage;
+            catch(Exception ex)
+            {
+
+            }
 
 
             using (var stream = new MemoryStream())

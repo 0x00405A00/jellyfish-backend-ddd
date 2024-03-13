@@ -252,17 +252,10 @@ namespace Shared.Infrastructure.Backend.Api
             responseModel.DefaultResponse = resp;
             if (resp != null && resp.Content != null && !string.IsNullOrEmpty(resp.Content))
             {
-                try
-                {
-                    string responseJson = resp.Content;
-                    var apiResponseModel = JsonSerializer.Deserialize<T1>(responseJson, JsonSerializerOptions);
-                    responseModel.ApiResponseDeserialized = apiResponseModel;
-                }
-                catch (Exception ex)
-                {
 
-
-                }
+                string responseJson = resp.Content;
+                var apiResponseModel = JsonSerializer.Deserialize<T1>(responseJson, JsonSerializerOptions);
+                responseModel.ApiResponseDeserialized = apiResponseModel;
             }
             return responseModel;
         }

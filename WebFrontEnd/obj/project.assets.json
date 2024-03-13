@@ -2177,5 +2177,17 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Das Paket \"SixLabors.ImageSharp\" 3.1.1 weist eine bekannte Hoch Schweregrad-Sicherheitsanfälligkeit auf, https://github.com/advisories/GHSA-65x7-c272-7g7r.",
+      "libraryId": "SixLabors.ImageSharp",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }

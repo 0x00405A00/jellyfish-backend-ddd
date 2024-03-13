@@ -13,6 +13,8 @@ services:
     ports:
       - "5432:5432"  # Port Mapping von Container-Port 5432 auf Host-Port 5432
     restart: "on-failure"
+    volumes:
+      - jellyfish-postgres:/var/lib/postgresql/data
       
   redis:
     container_name: redis
@@ -21,6 +23,8 @@ services:
     depends_on:
       - postgres
     restart: "on-failure"
+    volumes:
+      - jellyfish-redis:/data
     
   mongodb:
     container_name: mongodb
@@ -29,6 +33,8 @@ services:
     ports:
       - 27017:27017
     restart: "on-failure"
+    volumes:
+      - jellyfish-mongodb:/data/db
 
   elasticsearch01:
     container_name: elasticsearch01
@@ -91,6 +97,8 @@ services:
       postgres:
         condition: "service_started"
     restart: "on-failure"
+    volumes:
+      - jellyfish-backend:/app
 
   web-frontend:
     container_name: webfrontend
@@ -106,3 +114,12 @@ services:
       presentation:
         condition: "service_started"
     restart: "on-failure"
+    volumes:
+      - jellyfish-frontend:/app
+
+volumes:
+  jellyfish-postgres:
+  jellyfish-redis:
+  jellyfish-mongodb:
+  jellyfish-backend:
+  jellyfish-frontend:

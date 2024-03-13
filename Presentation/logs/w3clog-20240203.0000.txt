@@ -1,7 +1,0 @@
-#Version: 1.0
-#Start-Date: 2024-02-03 18:27:07
-#Fields: date time c-ip cs-username s-computername s-ip s-port cs-method cs-uri-stem cs-uri-query sc-status time-taken cs-version cs-host cs(User-Agent) cs(Cookie) cs(Referer)
-2024-02-03 18:27:04 ::1 - 0X00405A00-PC ::1 5000 POST /api/v1/authentification/login - 200 712.6568 HTTP/1.1 localhost:5000 PostmanRuntime/7.36.1 - -
-2024-02-03 18:27:42 ::1 - 0X00405A00-PC ::1 5000 POST /api/v1/authentification/login - 200 39.7426 HTTP/1.1 localhost:5000 PostmanRuntime/7.36.1 - -
-2024-02-03 18:27:49 ::1 - 0X00405A00-PC ::1 5000 POST /api/v1/authentification/login - 200 29.8016 HTTP/1.1 localhost:5000 PostmanRuntime/7.36.1 - -
-2024-02-03 18:28:04 ::1 - 0X00405A00-PC ::1 5000 GET /api/v1/user - 200 297.9605 HTTP/1.1 localhost:5000 PostmanRuntime/7.36.1 - -

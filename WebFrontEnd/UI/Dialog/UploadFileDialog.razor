@@ -19,7 +19,7 @@
             </MudFileUpload>
             @if (!isAllowedFileSizeError)
             {
-                <MudText Color="MudBlazor.Color.Error">Maximum Filesize is @(((double)MaxAllowedFileSizeMegaBytes))MB</MudText>
+                <MudText Color="MudBlazor.Color.Error">Maximum Filesize is @((MaxAllowedFileSizeMegaBytes))MB</MudText>
             }
             @if (!isAllowedFileExtError)
             {
@@ -27,7 +27,7 @@
             }
             @if (!isAllowedPixelSize)
             {
-                <MudText Color="MudBlazor.Color.Error">Pixelsizes lower/or equal 1000x1000 are allowed</MudText>
+                <MudText Color="MudBlazor.Color.Error">Pixelsizes lower/or equal 5000x5000 are allowed</MudText>
             }
         </MudStack>
     </DialogContent>
@@ -63,20 +63,22 @@
         return Task.CompletedTask;
     }
 
-    private async void Upload()
+    private async Task Upload()
     {
 
         MudDialog.Close(DialogResult.Ok(file));
     }
-    private async void OnInputFileChanged(InputFileChangeEventArgs e)
+    private async Task OnInputFileChanged(InputFileChangeEventArgs e)
     {
         ClearDragClass();
         isAllowedPixelSize = await IsAllowedPixelSize(e.File);
-        if (IsAllowedFileType(e.File) && IsAllowedFileSize(e.File) && isAllowedPixelSize)
+        isAllowedFileExtError = IsAllowedFileType(e.File);
+        isAllowedFileSizeError = IsAllowedFileSize(e.File);
+        if (isAllowedFileExtError && isAllowedFileSizeError && isAllowedPixelSize)
         {
             file = e.File;
+            StateHasChanged();
         }
-        StateHasChanged();
     }
 
     private async Task Clear()
@@ -113,13 +115,16 @@
             byte[] fileBytes = new byte[browserFile.Size];
             await browserFile.OpenReadStream(MaxAllowedFileSizeBytes).ReadAsync(fileBytes);
             using var image = SixLabors.ImageSharp.Image.Load(fileBytes);
-            return image.Height <= 1000 && image.Width <= 1000;
+            return image.Height <= 5000 && image.Width <= 5000;
         }
         catch(Exception ex)
         {
             return false;
         }
     }
-    void Cancel() => MudDialog.Cancel();
+    private async Task Cancel()
+    {
+        MudDialog.Close(DialogResult.Cancel());
+    }
 }
 

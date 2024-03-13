@@ -9,6 +9,7 @@ using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
 using Shared.DataTransferObject.Abstraction;
 using Shared.Reflection;
+using System.Net;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
@@ -16,7 +17,10 @@ namespace Shared.Infrastructure.Backend.Api
 {
     public partial class JellyfishBackendApi : WebApiRestClient
     {
+        public delegate void ErrorOutputEventHandler(object sender, JellyfishBackendApi.JellyfishApiErrorEventArgs e);
+        public sealed record JellyfishApiErrorEventArgs(HttpStatusCode StatusCode,Uri ResponseUri, List<ApiError> Errors);
 
+        private ICollection<ErrorOutputEventHandler> _eventHandler = new List<ErrorOutputEventHandler>();
         private readonly ICustomAuthentificationStateProvider _customAuthentificationStateProvider;
 
         public JellyfishBackendApi(
@@ -24,6 +28,21 @@ namespace Shared.Infrastructure.Backend.Api
             ICustomAuthentificationStateProvider customAuthentificationStateProvider) : base(configuration)
         {
             this._customAuthentificationStateProvider = customAuthentificationStateProvider;
+        }
+
+        public void AddErrorHandler(ErrorOutputEventHandler eventHandler)
+        {
+            _eventHandler.Add(eventHandler);
+        }
+        private void DispatchEventHandlers(JellyfishApiErrorEventArgs jellyfishApiErrorEventArgs)
+        {
+            if (_eventHandler.Any())
+            {
+                foreach (var eventHandler in _eventHandler)
+                {
+                    eventHandler.Invoke(this, jellyfishApiErrorEventArgs);
+                }
+            }
         }
 
         public async Task<JellyfishBackendApiResponse<Guid>> ChangePassword(Guid userId, PasswordChangeDTO passwordChangeDTO, CancellationToken cancellationToken)
@@ -251,14 +270,32 @@ namespace Shared.Infrastructure.Backend.Api
 
             T body = data;
             var response = await this.Request<ApiDataTransferObject<T2>, T>(url, method, cancellationToken, body);
+            var webApiResponseModel = JellyfishBackendApiResponse<T2>.CreateFromWebApiResponseModel(response);
+            if(webApiResponseModel != null && webApiResponseModel.HasErrors)
+            {
 
-            return JellyfishBackendApiResponse<T2>.CreateFromWebApiResponseModel(response);
+                if (_eventHandler.Any())
+                {
+                    var eventArgs = new JellyfishApiErrorEventArgs(webApiResponseModel.DefaultResponse.DefaultResponse.StatusCode,webApiResponseModel.DefaultResponse.DefaultResponse.ResponseUri,webApiResponseModel.Errors);
+                    DispatchEventHandlers(eventArgs);
+                }
+            }
+            return webApiResponseModel;
         }
 
         public async Task<List<KeyValuePair<string,string>>> CreateHeaders(CancellationToken cancellationToken)
         {
             var auth = await _customAuthentificationStateProvider.GetCurrentAuthentification(cancellationToken);
             return auth.CreateAuthorizationHeader();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(_eventHandler.Any())
+            {
+                _eventHandler.Clear();
+            }
+            base.Dispose(disposing);
         }
     }
 }

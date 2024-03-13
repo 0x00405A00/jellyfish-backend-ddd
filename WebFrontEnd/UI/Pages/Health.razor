@@ -6,108 +6,137 @@
 @inject IExtendedNavigationManager NavigationManager
 
 <h3>Health</h3>
+<MudCard Class="m-4">
+    <MudCardHeader>
+        <MudIcon Class="mr-5" Icon="@Icons.Material.Filled.Cloud"></MudIcon>
+        <MudText Typo="Typo.h6">Backend General</MudText>
+        <MudFab @ref=ExpandBackendGeneralTable Class="ml-2" Size=Size.Small Color="MudBlazor.Color.Transparent" StartIcon="@_expandHealthCheckBackendGeneralButtonIcon" OnClick="@ExpandHealthCheckBackendGeneral" />
+    </MudCardHeader>
+    <MudCardContent>
+        <MudCollapse Expanded=@_collapsedHealthCheckGeneral>
+            <MudTable T="(string ItemDesc,object value)" Items="@HealthCheckGeneralData" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@_showSkeleton" LoadingProgressColor="MudBlazor.Color.Info">
+                <HeaderContent>
+                    <MudTh>#</MudTh>
+                    <MudTh>Value</MudTh>
+                </HeaderContent>
+                <RowTemplate Context="TableContext">
+                    <MudTd DataLabel="#">@TableContext.ItemDesc</MudTd>
+                        <MudTd DataLabel="Value">@TableContext.value</MudTd>
+                    </RowTemplate>
+                </MudTable>
+        </MudCollapse>
 
-<MudTabs @ref="_mudTabs" Outlined="true" ActivePanelIndexChanged="TabChanged">
-    <MudTabPanel ID="@TabIdDatabase" Text="Database" Icon="@Icons.Material.Filled.DataArray">
-        @if (HealthCheck.Checks != null && HealthCheck.Checks.mysql != null)
-        {
+    </MudCardContent>
+</MudCard>
+<MudCard Class="m-4">
+    <MudCardContent>
 
-            <MudText Typo="Typo.caption">Stand: @TimeFromRequestHealthCheckService</MudText>
-            <MudText>@HealthCheck.Checks.mysql.description</MudText>
-        }
-        else
-        {
+        <MudTabs @ref="_mudTabs" Outlined="false" ActivePanelIndexChanged="TabChanged">
+            <MudTabPanel ID="@TabIdDatabase" Text="Database" Icon="@Icons.Material.Filled.DataArray">
+                @if (HealthCheck.Checks != null && HealthCheck.Checks.mysql != null)
+                {
+                    <MudText Typo="Typo.caption">Stand: @TimeFromRequestHealthCheckService</MudText>
+                    <MudText>@HealthCheck.Checks.mysql.description</MudText>
+                }
+                else
+                {
 
-            @if (_showSkeleton)
-            {
-                <MudSkeleton />
-                <MudSkeleton Animation="Animation.False" />
-                <MudSkeleton Animation="Animation.Wave" />
-            }
-            else
-            {
-                <MudText>No data</MudText>
-            }
-        }
-    </MudTabPanel>
-    <MudTabPanel ID="@TabIdCache" Text="Cache" Icon="@Icons.Material.Filled.Cached">
+                    @if (_showSkeleton)
+                    {
+                        <MudSkeleton />
+                        <MudSkeleton Animation="Animation.False" />
+                        <MudSkeleton Animation="Animation.Wave" />
+                    }
+                    else
+                    {
+                        <MudText>No data</MudText>
+                    }
+                }
+            </MudTabPanel>
+            <MudTabPanel ID="@TabIdCache" Text="Cache" Icon="@Icons.Material.Filled.Cached">
 
-        @if (HealthCheck.Checks != null && HealthCheck.Checks.cache != null)
-        {
+                @if (HealthCheck.Checks != null && HealthCheck.Checks.cache != null)
+                {
 
-            <MudText Typo="Typo.caption">Stand: @TimeFromRequestHealthCheckService</MudText>
-            <MudText>@HealthCheck.Checks.cache.description</MudText>
-        }
-        else
-        {
+                    <MudText Typo="Typo.caption">Stand: @TimeFromRequestHealthCheckService</MudText>
+                    <MudText>@HealthCheck.Checks.cache.description</MudText>
+                }
+                else
+                {
 
-            @if (_showSkeleton)
-            {
-                <MudSkeleton />
-                <MudSkeleton Animation="Animation.False" />
-                <MudSkeleton Animation="Animation.Wave" />
-            }
-            else
-            {
-                <MudText>No data</MudText>
-            }
-        }
-    </MudTabPanel>
-    <MudTabPanel ID="@TabIdSignalR" Text="SignalR" Icon="@Icons.Material.Filled.Message">
+                    @if (_showSkeleton)
+                    {
+                        <MudSkeleton />
+                        <MudSkeleton Animation="Animation.False" />
+                        <MudSkeleton Animation="Animation.Wave" />
+                    }
+                    else
+                    {
+                        <MudText>No data</MudText>
+                    }
+                }
+            </MudTabPanel>
+            <MudTabPanel ID="@TabIdSignalR" Text="SignalR" Icon="@Icons.Material.Filled.Message">
 
-        @if (HealthCheck.Checks != null && HealthCheck.Checks.cache!=null)
-        {
+                @if (HealthCheck.Checks != null && HealthCheck.Checks.cache != null)
+                {
 
-            <MudText Typo="Typo.caption">Stand: @TimeFromRequestHealthCheckService</MudText>
-            <MudText>@HealthCheck.Checks.cache.description</MudText>
-        }
-        else
-        {
+                    <MudText Typo="Typo.caption">Stand: @TimeFromRequestHealthCheckService</MudText>
+                    <MudText>@HealthCheck.Checks.cache.description</MudText>
+                }
+                else
+                {
 
-            @if (_showSkeleton)
-            {
-                <MudSkeleton />
-                <MudSkeleton Animation="Animation.False" />
-                <MudSkeleton Animation="Animation.Wave" />
-            }
-            else
-            {
-                <MudText>No data</MudText>
-            }
-        }
-    </MudTabPanel>
-    <MudTabPanel ID="@TabIdMailQueue" Text="Mail Queue" Icon="@Icons.Material.Filled.Queue">
+                    @if (_showSkeleton)
+                    {
+                        <MudSkeleton />
+                        <MudSkeleton Animation="Animation.False" />
+                        <MudSkeleton Animation="Animation.Wave" />
+                    }
+                    else
+                    {
+                        <MudText>No data</MudText>
+                    }
+                }
+            </MudTabPanel>
+            <MudTabPanel ID="@TabIdMailQueue" Text="Mail Queue" Icon="@Icons.Material.Filled.Queue">
 
-        @if (MailQueue!=null&&MailQueue.Any())
-        {
-            <MudText Typo="Typo.caption">Stand: @TimeFromRequestHealthCheckService</MudText>
-            <MudDataGrid Items=@MailQueue Filterable="false" SortMode="@SortMode.None" Groupable="false">
-                <Columns>
-                    <SelectColumn T="UserDTO" />
-                    <PropertyColumn Property="x => x.CreatedTime" Format="dd.MM.yyyy HH:mm:ss" />
-                    <PropertyColumn Property="x => x.From" />
-                    <PropertyColumn Property="x => x.Subject" />
-                    <PropertyColumn Property="x => x.RecipientsAggregate" />
-                </Columns>
-            </MudDataGrid>
-        }
-        else
-        {
+                @if (MailQueue != null && MailQueue.Any())
+                {
+                    <MudText Typo="Typo.caption">Stand: @TimeFromRequestHealthCheckService</MudText>
+                    <MudDataGrid Items=@MailQueue Filterable="false" SortMode="@SortMode.None" Groupable="false">
+                        <Columns>
+                            <SelectColumn T="UserDTO" />
+                            <PropertyColumn Property="x => x.CreatedTime" Format="dd.MM.yyyy HH:mm:ss" />
+                            <PropertyColumn Property="x => x.From" />
+                            <PropertyColumn Property="x => x.Subject" />
+                            <PropertyColumn Property="x => x.RecipientsAggregate" />
+                        </Columns>
+                    </MudDataGrid>
+                }
+                else
+                {
 
-            @if(_showSkeleton)
-            {
-                <MudSkeleton />
-                <MudSkeleton Animation="Animation.False" />
-                <MudSkeleton Animation="Animation.Wave" />
-            }
-            else
-            {
-                <MudText>No data</MudText>
-            }
-        }
-    </MudTabPanel>
-</MudTabs>
+                    @if (_showSkeleton)
+                    {
+                        <MudSkeleton />
+                        <MudSkeleton Animation="Animation.False" />
+                        <MudSkeleton Animation="Animation.Wave" />
+                    }
+                    else
+                    {
+                        <MudText>No data</MudText>
+                    }
+                }
+            </MudTabPanel>
+        </MudTabs>
+    </MudCardContent>
+</MudCard>
+
 @code {
+    private string _expandHealthCheckBackendGeneralButtonIcon = Icons.Material.Filled.ExpandMore;
+    private MudFab ExpandBackendGeneralTable;
+    private bool _collapsedHealthCheckGeneral = true;
     private readonly string TabIdMailQueue = "tab_mailqueue_"+Guid.NewGuid().ToString();
     private readonly string TabIdDatabase = "tab_database_" + Guid.NewGuid().ToString();
     private readonly string TabIdCache = "tab_cache_" + Guid.NewGuid().ToString();
@@ -124,6 +153,7 @@
     private string urlController = null;
     private AuthDTO token;
     private int currentTab;
+    public ICollection<(string ItemDesc, object Value)> HealthCheckGeneralData = new List<(string ItemDesc, object Value)>();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -173,8 +203,20 @@
         {
             HealthCheck = responseServices.ApiResponseDeserialized;
             TimeFromRequestHealthCheckService = DateTime.UtcNow;
+
+            var props = responseServices.ApiResponseDeserialized.GetType().GetProperties().Where(x=>x.PropertyType != typeof(Checks));
+            foreach(var prop in props)
+            {
+                var val = prop.GetValue(responseServices.ApiResponseDeserialized);
+                HealthCheckGeneralData.Add(new(prop.Name, val));
+            }
         }
         _showSkeleton = false;
+    }
+    private void ExpandHealthCheckBackendGeneral()
+    {
+        _collapsedHealthCheckGeneral = !_collapsedHealthCheckGeneral;
+        _expandHealthCheckBackendGeneralButtonIcon = _collapsedHealthCheckGeneral ? Icons.Material.Filled.ExpandMore : Icons.Material.Filled.ExpandLess;
     }
     private void Dispose()
     {

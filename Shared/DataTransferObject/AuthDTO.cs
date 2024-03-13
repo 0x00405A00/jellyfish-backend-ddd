@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace Shared.DataTransferObject
 {
-    public class AuthDTO :AbstractDTO, IAuth
+    public class AuthDTO :AbstractDTO//, IAuth
     {
         [JsonPropertyName("token")]
         public string? Token { get; set; }
@@ -21,9 +21,9 @@ namespace Shared.DataTransferObject
         [JsonPropertyName("refresh_token_expires_in")]
         public DateTime? RefreshTokenExpiresIn { get; set; }
 
-        public bool IsTokenExpired => TokenExpiresIn != null&&TokenExpiresIn <= DateTime.UtcNow;
-        public bool IsRefreshTokenExpired => RefreshTokenExpiresIn!=null&&RefreshTokenExpiresIn <= DateTime.UtcNow;
-        public bool IsAuthentificated => TokenExpiresIn != null && TokenExpiresIn > DateTime.UtcNow;
+        public bool IsTokenExpired => TokenExpiresIn == null||TokenExpiresIn != null&&TokenExpiresIn <= DateTime.UtcNow;
+        public bool IsRefreshTokenExpired => RefreshTokenExpiresIn==null||RefreshTokenExpiresIn != null&&RefreshTokenExpiresIn <= DateTime.UtcNow;
+        public bool IsAuthentificated => !IsTokenExpired;
 
 
         public string LocalIp{ get; }
@@ -42,9 +42,9 @@ namespace Shared.DataTransferObject
 
         public UserId UserId{ get; }
 
-        CustomDateTime IAuth.RefreshTokenExpiresIn{ get; }
+        //CustomDateTime IAuth.RefreshTokenExpiresIn{ get; }
 
-        CustomDateTime IAuth.TokenExpiresIn{ get; }
+        //CustomDateTime IAuth.TokenExpiresIn{ get; }
 
         public List<KeyValuePair<string, string>> CreateAuthorizationHeader()
         {
