@@ -1,13 +1,9 @@
-﻿using Infrastructure.Abstractions;
-using Infrastructure.Mail;
-using Infrastructure.SignalR;
+﻿using Infrastructure.SignalR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MimeKit;
 using Shared.Infrastructure.Backend.SignalR;
-using System.Text;
 
 namespace Infrastructure.HostedService.Backgroundservice
 {

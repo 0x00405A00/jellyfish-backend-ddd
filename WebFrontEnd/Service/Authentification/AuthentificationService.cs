@@ -1,4 +1,5 @@
-﻿using Shared.ApiDataTransferObject;
+﻿using Microsoft.AspNetCore.Components.Authorization;
+using Shared.ApiDataTransferObject;
 using Shared.DataTransferObject;
 using Shared.Infrastructure.Backend;
 using Shared.Infrastructure.Backend.Api;
@@ -112,5 +113,10 @@ namespace WebFrontEnd.Service.Authentification
             return response;
         }
 
+        public async Task<UserDTO> GetCurrentUser(AuthenticationState authenticationState,CancellationToken cancellationToken)
+        {
+            var response = await webApiRestClient.GetCurrentUser(authenticationState,cancellationToken);
+            return response;
+        }
     }
 }

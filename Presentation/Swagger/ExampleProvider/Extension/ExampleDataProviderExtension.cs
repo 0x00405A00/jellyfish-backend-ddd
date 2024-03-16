@@ -9,19 +9,14 @@ namespace Presentation.Swagger.ExampleProvider.Extension
         public static IDataTransferObjectExampleProvier<T>? GetExampleProviderObjects<T>()
             where T : IDataTransferObject
         {
-            try
-            {
-                var assembly = Assembly.GetAssembly(typeof(IDataTransferObjectExampleProvier<>));
-                var assemblyTypes = assembly.GetTypes();
-                var type = assemblyTypes
-                    .Where(t => t.IsClass && t.IsPublic && t.BaseType == (typeof(AbstractDTOExampleProvider<T>))).Single();
-
-                return (IDataTransferObjectExampleProvier<T>)Activator.CreateInstance(type);
-            }
-            catch (Exception ex)
-            {
+            var assembly = Assembly.GetAssembly(typeof(IDataTransferObjectExampleProvier<>));
+            var assemblyTypes = assembly.GetTypes();
+            var typeResult = assemblyTypes
+                .Where(t => t.IsClass && t.IsPublic && t.BaseType == (typeof(AbstractDTOExampleProvider<T>)));
+            if (!typeResult.Any())
                 return null;
-            }
+            var type = typeResult.Single();
+            return (IDataTransferObjectExampleProvier<T>)Activator.CreateInstance(type);
         }
     }
 }

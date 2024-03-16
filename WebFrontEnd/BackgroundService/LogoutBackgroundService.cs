@@ -28,7 +28,7 @@ namespace WebFrontEnd.BackgroundService
                 using var periodicTimer = new PeriodicTimer(Period);
                 do
                 {
-                    logger.LogInformation("LogoutBackgroundService elapsed");
+                    //logger.LogInformation("LogoutBackgroundService elapsed");
                     OnRerenderRequested?.Invoke();
                 }
                 while (!stoppingToken.IsCancellationRequested && await periodicTimer.WaitForNextTickAsync(stoppingToken));

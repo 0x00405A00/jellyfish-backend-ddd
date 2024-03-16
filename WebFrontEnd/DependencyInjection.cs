@@ -10,6 +10,7 @@ using Shared.Infrastructure.Backend.SignalR;
 using WebFrontEnd.Authentification;
 using WebFrontEnd.BackgroundService;
 using WebFrontEnd.Handler;
+using WebFrontEnd.Service;
 using WebFrontEnd.Service.Navigation;
 using WebFrontEnd.Service.WebStorage;
 using WebFrontEnd.Service.WebStorage.LocalStorage;
@@ -86,6 +87,8 @@ namespace WebFrontEnd
 
             serviceProvider.AddSingleton<LogoutBackgroundService>();
             serviceProvider.AddHostedService<LogoutBackgroundService>(p => p.GetService<LogoutBackgroundService>());
+            var sP = serviceProvider.BuildServiceProvider();
+            sP.AddJavascriptInvokableMethods();
             return serviceProvider;
         }
     }

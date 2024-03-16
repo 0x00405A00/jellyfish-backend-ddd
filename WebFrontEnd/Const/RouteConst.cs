@@ -13,6 +13,7 @@
             public const string Home = "home";
             public const string AboutUs = "about-us";
             public const string Blog = "blog";
+            public const string Profile = "profile";
             public const string Careere = "join-us";
             public const string Contact = "contact";
             public const string Privacy = "privacy";

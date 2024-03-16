@@ -22,7 +22,7 @@ namespace Shared.Infrastructure.Backend.SignalR
             this.Initialize(url, async () =>
             {
                 var token = await localStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(AuthorizationConst.SessionStorage.AuthorizationKey);
-                return token.Token;
+                return token?.Token;
             },
             SignalRTransportProtocol, SignalRTransferFormat
             );

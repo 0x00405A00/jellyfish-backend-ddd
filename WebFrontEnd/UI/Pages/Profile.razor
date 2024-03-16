@@ -1,0 +1,161 @@
+﻿@attribute [Route(RouteConst.Routes.Profile)]
+@inject JellyfishBackendApi WebApiClient
+@inject IDialogService DialogService
+@inject ICustomAuthentificationStateProvider AuthentificationService
+@inject DialogHandler DialogHandler
+@inject ISessionStorage SessionStorage
+@inject IJSRuntime JSRuntime
+
+<CascadingAuthenticationState>
+    <AuthorizeView Policy="User">
+        <Authorized>
+            <div class="w-100">
+
+                @if (!_loading)
+                {
+                    <MudGrid>
+                        <MudItem xs="7">
+                            <MudGrid Class="flex">
+                                <MudItem xs="12">
+                                    <div class="flex">
+                                        <ProfileAvatar Class="d-inline-flex" User="@User" HeightInPx="100" WidthInPx="100"></ProfileAvatar>
+                                    </div>
+
+                                    <MudToolBar Class="start-0">
+                                        <MudIconButton OnClick=@OpenUploadPictureDialog Icon="@Icons.Material.Outlined.UploadFile" />
+                                        @if (@User.HasImage)
+                                        {
+                                            <MudIconButton OnClick=@ClearProfilePicture Icon="@Icons.Material.Outlined.Clear" />
+                                        }
+                                    </MudToolBar>
+                                    <MudText Class="d-inline-flex mt-5" Typo="Typo.h4" GutterBottom="true">Profile of @User?.UserName</MudText>
+                                </MudItem>
+                                <MudItem xs="12">
+                                    <MudPaper>
+                                        <MudList Clickable="true">
+                                            <MudListItem Icon="@Icons.Material.Filled.Verified">
+                                                <div class="d-flex">
+                                                    <MudText>Activated</MudText>
+                                                    @if(User.IsActivated)
+                                                    {
+                                                        <MudIcon Class="ml-auto d-inline-flex" Icon="@Icons.Material.Filled.VerifiedUser" Color="MudBlazor.Color.Success"></MudIcon>
+                                                    }
+                                                    else
+                                                    {
+                                                        <MudIcon Class="ml-auto d-inline-flex" Icon="@Icons.Material.Outlined.VerifiedUser" Color="MudBlazor.Color.Warning"></MudIcon>
+                                                    }
+                                                </div>
+                                                </MudListItem>
+                                                <MudListItem Icon="@Icons.Material.Filled.CalendarViewDay">
+                                                    <div class="d-flex">
+                                                        <MudText>Date of Birth</MudText>
+                                                        <MudText Inline="true" Class="ml-auto">@User.DateOfBirth</MudText>
+                                                    </div>
+                                                </MudListItem>
+                                                <MudListItem Icon="@Icons.Material.Filled.People">
+                                                    <div class="d-flex">
+                                                        <MudText>Lastname</MudText>
+                                                        <MudText Inline="true" Class="ml-auto">@User.LastName</MudText>
+                                                    </div>
+                                                </MudListItem>
+                                                <MudListItem Icon="@Icons.Material.Filled.People">
+                                                    <div class="d-flex">
+                                                        <MudText>Firstname</MudText>
+                                                        <MudText Inline="true" Class="ml-auto">@User.FirstName</MudText>
+                                                    </div>
+                                                </MudListItem>
+                                                <MudListItem Icon="@Icons.Material.Filled.Cyclone">
+                                                    <div class="d-flex">
+                                                        <MudText>Username</MudText>
+                                                        <MudText Inline="true" Class="ml-auto">@User.UserName</MudText>
+                                                    </div>
+                                                </MudListItem>
+                                                <MudListItem Icon="@Icons.Material.Filled.Email">
+                                                    <div class="d-flex">
+                                                        <MudText>Email</MudText>
+                                                        <MudText Inline="true" Class="ml-auto">@User.Email</MudText>
+                                                    </div>
+                                                </MudListItem>
+                                                <MudListItem Icon="@Icons.Material.Filled.Phone">
+                                                    <div class="d-flex">
+                                                        <MudText>Phone</MudText>
+                                                        <MudText Inline="true" Class="ml-auto">@User.Phone</MudText>
+                                                    </div>
+                                                </MudListItem>
+                                        </MudList>
+
+                                    </MudPaper>
+                                </MudItem>
+                            </MudGrid>
+                        </MudItem>
+                    </MudGrid>
+                }
+                else
+                {
+                    <MudSkeleton SkeletonType="SkeletonType.Circle" Height="100" Width="100"></MudSkeleton>
+                    <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="400" Width="400"></MudSkeleton>
+                }
+            </div>
+        </Authorized>
+        <NotAuthorized>
+            <p>Sie haben keine Berechtigung, diese Seite anzuzeigen.</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
+
+@code {
+    private UserDTO User = new UserDTO();
+    private CancellationToken cancellationToken = CancellationToken.None;
+    private bool _loading = true;
+    private bool uploadProfilePicture = false;
+
+    private async void ClearProfilePicture()
+    {
+        uploadProfilePicture = true;
+        StateHasChanged();
+        var responseProfilePicDelete = await WebApiClient.DeleteUserProfilePicture(User, cancellationToken);
+        if (responseProfilePicDelete.IsSuccess)
+        {
+            User.PictureBase64 = null;
+            User.PictureUrl = null;
+            uploadProfilePicture = false;
+        }
+        StateHasChanged();
+    }
+    private async void OpenUploadPictureDialog()
+    {
+        var result = await DialogHandler.ShowUploadDialog("Upload a profile Picture.");
+        if (!result.Cancelled)
+        {
+            StateHasChanged();
+            var image = (IBrowserFile)result.Data;
+            byte[] fileBytes = new byte[image.Size];
+            await image.OpenReadStream((UploadFileDialog.MaxAllowedFileSizeBytes)).ReadAsync(fileBytes);
+            User.PictureBase64 = Convert.ToBase64String(fileBytes);
+            User.PictureMimeType = image.ContentType;
+
+            StateHasChanged();
+            uploadProfilePicture = true;
+            var responseProfilePicUpload = await WebApiClient.UpdateUserProfilePicture(User, cancellationToken);
+            if (responseProfilePicUpload.IsSuccess)
+            {
+                uploadProfilePicture = false;
+                User.PictureBase64 = null;
+                User.PictureUrl = responseProfilePicUpload.Data.PictureUrl;
+                StateHasChanged();
+
+            }
+        }
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            User = await AuthentificationService.GetCurrentUser(cancellationToken);
+            _loading = false;
+            StateHasChanged();
+        }
+    }
+}
+
+

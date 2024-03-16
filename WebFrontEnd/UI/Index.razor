@@ -2,6 +2,7 @@
 @inject ILocalStorageService LocalStorageService
 @inject NavigationManager NavigationManager
 @inject ISessionStorage SessionStorage
+@inject WebApiRestClient Rest
 
 <PageTitle>Index</PageTitle>
 
@@ -15,9 +16,10 @@ Welcome to your new app.
     private CancellationTokenSource cancellationToken = new();
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var token = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(Shared.Const.AuthorizationConst.SessionStorage.AuthorizationKey);
-        if (token!=null && !token.IsTokenExpired)
+        var auth = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(Shared.Const.AuthorizationConst.SessionStorage.AuthorizationKey);
+        if (auth!=null && !auth.IsTokenExpired)
         {
+            WebApiRestClient.CurrentWebApiSession = auth;
             _session = await SessionStorage.GetSession(cancellationToken.Token);
             var data = _session.General;
             NavigationManager.NavigateTo(data.LastRoute);

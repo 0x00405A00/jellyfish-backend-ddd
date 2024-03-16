@@ -1,15 +1,23 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Extensions.Configuration;
 using RestSharp;
 using Shared.ApiDataTransferObject;
+using Shared.ApiDataTransferObject.Object;
+using Shared.Authentification.Claims;
+using Shared.Const;
+using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
+using Shared.DataTransferObject.Abstraction;
+using Shared.Reflection;
 using System.Text.Json;
+using static Shared.Infrastructure.Backend.Api.JellyfishBackendApi;
 
 namespace Shared.Infrastructure.Backend.Api
 {
     public class WebApiRestClient : AbstractRestClient, IDisposable
     {
         private bool _isInit;
-        public AuthDTO CurrentWebApiSession = null;
+        public static AuthDTO CurrentWebApiSession = null;
         public string BaseUrl { get; set; }
         public string LoginSessionEndpoint { get; private set; }
         public string LogoutSessionEndpoint { get; private set; }
@@ -25,6 +33,7 @@ namespace Shared.Infrastructure.Backend.Api
         public string PasswordResetRequestDTOEndpoint { get; private set; }
         public string PasswordResetDataTransferModelEndpoint { get; private set; }
         private bool disposedValue;
+        private ICollection<ErrorOutputEventHandler> _eventHandler = new List<ErrorOutputEventHandler>();
 
         public WebApiRestClient(IConfiguration configuration)
         {
@@ -71,11 +80,88 @@ namespace Shared.Infrastructure.Backend.Api
             PasswordResetDataTransferModelEndpoint = BuildUrl(passwordResetEndpoint);
             _isInit = true;
         }
+        public void AddErrorHandler(ErrorOutputEventHandler eventHandler)
+        {
+            _eventHandler.Add(eventHandler);
+        }
+        private void DispatchEventHandlers(JellyfishApiErrorEventArgs jellyfishApiErrorEventArgs)
+        {
+            if (_eventHandler.Any())
+            {
+                foreach (var eventHandler in _eventHandler)
+                {
+                    eventHandler.Invoke(this, jellyfishApiErrorEventArgs);
+                }
+            }
+        }
         private void SetCredentials(string user, string password, bool sessionAutoRefresh = true)
         {
             User = user;
             Password = password;
             RefreshLogin = sessionAutoRefresh;
+        }
+        public async Task<UserDTO?> GetCurrentUser(AuthenticationState authenticationState, CancellationToken cancellationToken)
+        {
+            if (authenticationState is null)
+                return null;
+            if (authenticationState.User is null)
+                return null;
+            if (!authenticationState.User.Claims.Any())
+                return null;
+            var userUuid = authenticationState.User.Claims.GetClaims(x => x.Type == AuthorizationConst.Claims.ClaimTypeUserUuid)?.First();
+            var userProfile = await this.GetUser(Guid.Parse(userUuid.Value), cancellationToken);
+            return userProfile.IsSuccess ? userProfile.Data : null;
+        }
+        /// <summary>
+         /// 
+         /// </summary>
+         /// <typeparam name="T">Request Body Type</typeparam>
+         /// <typeparam name="T2">Response Type</typeparam>
+         /// <param name="url">Target Url, when <see cref="BaseUrl"</see> is already set you can request the target endpoint via path directly without write out the url complete e.g. full write out: https://mytargeturl/mytargetendpoint/1, short variant when <see cref="BaseUrl"></see>/> is set></param>
+         /// <param name="method">HTTP Method GET, POST, PUT, DELETE etc.</param>
+         /// <param name="data">Body data></param>
+         /// <param name="cancellationToken">To cancel the task</param>
+         /// <param name="paginationBase">Pagination behaviour of backend, influent the backend behaviour by evaluate the result</param>
+         /// <returns>Response Type <<see cref="T2"/></returns>
+        public virtual async Task<JellyfishBackendApiResponse<T2>> TypedRequest<T, T2>(string url, RestSharp.Method method, T? data, CancellationToken cancellationToken, PaginationBase paginationBase = null)
+
+        {
+            if (data is IDataTransferObject dataTransferObject || (ReflectionExtension.IsListAndGenericTypeImplementsT<IDataTransferObject>(typeof(T))))
+            {
+                var body = ApiDataTransferObject<T>.Create(data, paginationBase);
+                var response = await Request<ApiDataTransferObject<T2>, ApiDataTransferObject<T>>(url, method, cancellationToken, body);
+                return JellyfishBackendApiResponse<T2>.CreateFromWebApiResponseModel(response);
+            }
+            else if (data is SearchParamsBody)
+            {
+                return await RequestI<T, T2>(url, method, data, cancellationToken);
+            }
+            return await RequestI<T, T2>(url, method, data, cancellationToken);
+        }
+        private async Task<JellyfishBackendApiResponse<T2>> RequestI<T, T2>(string url, RestSharp.Method method, T? data, CancellationToken cancellationToken)
+        {
+
+            T body = data;
+            var response = await this.Request<ApiDataTransferObject<T2>, T>(url, method, cancellationToken, body);
+            var webApiResponseModel = JellyfishBackendApiResponse<T2>.CreateFromWebApiResponseModel(response);
+            if (webApiResponseModel != null && webApiResponseModel.HasErrors)
+            {
+
+                if (_eventHandler.Any())
+                {
+                    var eventArgs = new JellyfishApiErrorEventArgs(webApiResponseModel.DefaultResponse.DefaultResponse.StatusCode, webApiResponseModel.DefaultResponse.DefaultResponse.ResponseUri, webApiResponseModel.Errors);
+                    DispatchEventHandlers(eventArgs);
+                }
+            }
+            return webApiResponseModel;
+        }
+
+        public async Task<JellyfishBackendApiResponse<UserDTO>> GetUser(Guid userId, CancellationToken cancellationToken)
+        {
+
+            var url = "/user/" + userId + "";
+            var response = await this.TypedRequest<SearchParamsBody, UserDTO>(url, RestSharp.Method.Get, null, cancellationToken);
+            return response;
         }
         public string BuildUrl(string endPoint)
         {
@@ -102,8 +188,9 @@ namespace Shared.Infrastructure.Backend.Api
             RestResponse resp = await Request<AuthDTO>(LoginSessionEndpoint, Method.Post, cancellationToken, postData, null, null, true);
             if (resp.IsSuccessStatusCode)
             {
-                AuthDTO response;
-                response = JsonSerializer.Deserialize<AuthDTO>(resp.Content);
+                AuthDTO response = JsonSerializer.Deserialize<AuthDTO>(resp.Content);
+
+                CurrentWebApiSession = response;
                 return response;
             }
             return null;
@@ -132,7 +219,7 @@ namespace Shared.Infrastructure.Backend.Api
             {
                 throw new InvalidOperationException("please initialize the handler correctly via method: " + nameof(Init) + "");
             }
-            var resp = await Request<ApiDataTransferObject<UserDTO>, ApiDataTransferObject<RegisterUserDTO>>(RegisterEndpoint, Method.Post, cancellationToken, registerDataTransferModel, null, null, true);
+            var resp = await Request<ApiDataTransferObject<UserDTO>, ApiDataTransferObject<RegisterUserDTO>>(RegisterEndpoint, Method.Post, cancellationToken, registerDataTransferModel, null, null,true);
             if (resp != null)
             {
                 return resp;
@@ -184,6 +271,11 @@ namespace Shared.Infrastructure.Backend.Api
             {
                 headers = new List<KeyValuePair<string, string>>();
             }
+
+            if (CurrentWebApiSession != null && CurrentWebApiSession.IsAuthentificated)
+            {
+                headers.Add(new KeyValuePair<string, string>("Authorization", CurrentWebApiSession.Token));
+            }
             if (bodyObject != null)
             {
                 body = JsonSerializer.Serialize(bodyObject, JsonSerializerOptions);
@@ -208,10 +300,7 @@ namespace Shared.Infrastructure.Backend.Api
                                 var responseAuth = await Authentificate(User, Password, cancellationToken);
                                 if (responseAuth != null)
                                 {
-                                    CurrentWebApiSession = responseAuth;
                                     headers.Add(new KeyValuePair<string, string>("Authorization", CurrentWebApiSession.Token));
-
-
                                 }
                                 reauth = true;
                             }
@@ -247,6 +336,9 @@ namespace Shared.Infrastructure.Backend.Api
             List<KeyValuePair<string, string>> headers = null,
             bool donttryagain = true)
         {
+            if (headers == null)
+                headers = new List<KeyValuePair<string, string>>();
+
             WebApiHttpRequestResponseModel<T1> responseModel = new WebApiHttpRequestResponseModel<T1>();
             var resp = await Request<T2>(url, method, cancellationToken, bodyObject, query, headers, donttryagain);
             responseModel.DefaultResponse = resp;
@@ -269,8 +361,10 @@ namespace Shared.Infrastructure.Backend.Api
 
                 }
 
-                // TODO: Nicht verwaltete Ressourcen (nicht verwaltete Objekte) freigeben und Finalizer überschreiben
-                // TODO: Große Felder auf NULL setzen
+                if (_eventHandler.Any())
+                {
+                    _eventHandler.Clear();
+                }
                 disposedValue = true;
             }
         }

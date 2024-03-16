@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using Infrastructure.Cache;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Diagnostics;
 using System.Reflection;
@@ -7,9 +8,9 @@ namespace Infrastructure.Healthcheck.Concrete.Cache
 {
     public class HealthCheckCache : IHealthCheck
     {
-        private readonly IMemoryCache _cacheHandler;
+        private readonly ICachingHandler _cacheHandler;
 
-        public HealthCheckCache(IMemoryCache cacheHandler)
+        public HealthCheckCache(ICachingHandler cacheHandler)
         {
             _cacheHandler = cacheHandler;
         }
@@ -21,15 +22,11 @@ namespace Infrastructure.Healthcheck.Concrete.Cache
             HealthStatus healthStatus = HealthStatus.Unhealthy;
             string desciption = null;
             Stopwatch stopwatch = Stopwatch.StartNew();
-            var responseLocal = _cacheHandler.GetOrCreate("test-healthcheck-cache", (x) => {
-                x.AbsoluteExpirationRelativeToNow = new TimeSpan(0, 0, 5);
-                x.Value = "1";
-                return x;
-            });
+            var responseLocal = _cacheHandler.GetOrSet<object>("test-healthcheck-cache", ()=>Task.FromResult(new object()));
             stopwatch.Stop();
             HealthStatus[] cacheHealthStatus = new HealthStatus[1];
             HealthStatus cacheHealthStatusLocalCache = HealthStatus.Unhealthy;
-            if (responseLocal.Value == "1")
+            if (responseLocal != null)
             {
                 cacheHealthStatusLocalCache = stopwatch.ElapsedMilliseconds < 5 ? HealthStatus.Healthy : HealthStatus.Degraded;
             }

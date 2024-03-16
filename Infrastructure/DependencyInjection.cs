@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Abstractions;
 using Infrastructure.Authentification;
+using Infrastructure.Cache;
 using Infrastructure.FileSys;
 using Infrastructure.Healthcheck.Concrete.Cache;
 using Infrastructure.Healthcheck.Concrete.MySql;
@@ -51,6 +52,11 @@ namespace Infrastructure
 
             services.AddHttpContextAccessor();
             services.AddMemoryCache();//Singleton
+            services.AddDistributedMemoryCache(opt => 
+            { 
+
+            });//Singleton
+            services.AddSingleton<ICachingHandler, CachingHandler>();
 
             services.AddSingleton<IHealtCheckMySqlHandler,HealtCheckMySqlHandler>();
 
@@ -81,7 +87,8 @@ namespace Infrastructure
 
             services.AddHealthChecks()
                 .AddCheck<HealthCheckMySql>("mysql")
-                .AddCheck<HealthCheckCache>("cache");
+                .AddCheck<HealthCheckCache>("cache")
+                .AddCheck<HealthCheckSignalr>("signalr");
 
             var signalRSection = configuration.GetSection("Infrastructure:SignalR");
             if(signalRSection != null)

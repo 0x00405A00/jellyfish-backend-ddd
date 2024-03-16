@@ -77,34 +77,30 @@ namespace Shared.DataTransferObject
     {
         public Mysql mysql { get; set; }
         public Cache cache { get; set; }
+        public Signalr signalr { get; set; }
     }
-
-    [Serializable]
-    public class Mysql
+    public abstract class Check
     {
         public string instancestatestr { get; set; }
         public int instancestate { get; set; }
         public string description { get; set; }
-        public Data data { get; set; }
+        public object data { get; set; }
         public string duration { get; set; }
+        public string[] GetFormattedDescription(string separator = ";")=>description?.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
     }
-
-    public class Data
+    [Serializable]
+    public class Mysql : Check
     {
     }
 
     [Serializable]
-    public class Cache
+    public class Cache : Check
     {
-        public string instancestatestr { get; set; }
-        public int instancestate { get; set; }
-        public string description { get; set; }
-        public Data1 data { get; set; }
-        public string duration { get; set; }
+    }
+    [Serializable]
+    public class Signalr : Check
+    {
     }
 
-    public class Data1
-    {
-    }
 
 }

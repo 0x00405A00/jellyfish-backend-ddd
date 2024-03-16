@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using SharpCompress;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Text;
@@ -37,6 +39,12 @@ namespace Infrastructure.Healthcheck.Response
                 //Task.WaitAll(getCpuUsageFromProcesses.ToArray());
                 var processUsage = await GetProcessUsage(currentProcess);
                 //healthCheckResponseObject.ProcessorUsageAll = usages.Values.Select(x => x.CpuUsage).Aggregate((current, usage) => current + usage);
+                healthCheckResponseObject.EnvironmentVars = Environment.GetEnvironmentVariables()
+                                                                .Cast<DictionaryEntry>()
+                                                                .ToDictionary(
+                                                                    entry => entry.Key.ToString(),
+                                                                    entry => entry.Value.ToString()
+                                                                );
                 healthCheckResponseObject.RamSystem = GC.GetGCMemoryInfo().TotalAvailableMemoryBytes / 1024.0 / 1024.0;
                 healthCheckResponseObject.RamUsage = processUsage.RamUsage;
                 healthCheckResponseObject.ProcessStartTime = currentProcess.StartTime;

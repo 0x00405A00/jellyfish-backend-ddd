@@ -2,21 +2,20 @@
 using Shared.DataTransferObject;
 using Shared.Infrastructure.Backend;
 using System.Text.Json;
-using WebFrontEnd.Const;
 using WebFrontEnd.Service.WebStorage.LocalStorage.Exception;
 
 namespace WebFrontEnd.Service.WebStorage.LocalStorage
 {
-    public class LocalStorageService : ILocalStorageService,IDisposable
+    public class LocalStorageService : ILocalStorageService
     {
         private bool disposedValue;
 
-        public IJSRuntime JsRuntime { get; }
+        public IJSRuntime JS { get; }
 
 
         public LocalStorageService(IJSRuntime jsRuntime)
         {
-            JsRuntime = jsRuntime;
+            JS = jsRuntime;
         }
 
         public async Task SetItem(string key, string value)
@@ -25,7 +24,7 @@ namespace WebFrontEnd.Service.WebStorage.LocalStorage
             {
                 throw new InvalidKeyValuePairException("key is null");
             }
-            await JsRuntime.InvokeVoidAsync("localStorage.setItem", key, value);
+            await JS.InvokeVoidAsync("localStorage.setItem", key, value);
         }
 
         public async Task<string> GetItem(string key)
@@ -36,7 +35,7 @@ namespace WebFrontEnd.Service.WebStorage.LocalStorage
             }
             try
             {
-                return await JsRuntime.InvokeAsync<string>("localStorage.getItem", key);
+                return await JS.InvokeAsync<string>("localStorage.getItem", key);
             }
             catch (System.Exception ex)
             {
@@ -52,7 +51,7 @@ namespace WebFrontEnd.Service.WebStorage.LocalStorage
             }
             try
             {
-                await JsRuntime.InvokeVoidAsync("localStorage.removeItem", key);
+                await JS.InvokeVoidAsync("localStorage.removeItem", key);
             }
             catch(System.Exception ex)
             {
@@ -90,7 +89,7 @@ namespace WebFrontEnd.Service.WebStorage.LocalStorage
                 throw new InvalidKeyValuePairException("key is null");
             }
             string str = JsonSerializer.Serialize(value,typeof(T));
-            await JsRuntime.InvokeVoidAsync("localStorage.setItem", key, str);
+            await JS.InvokeVoidAsync("localStorage.setItem", key, str);
         }
 
         public async Task<bool> CheckIfValidTokenExists()
@@ -132,11 +131,5 @@ namespace WebFrontEnd.Service.WebStorage.LocalStorage
         //     Dispose(disposing: false);
         // }
 
-        public void Dispose()
-        {
-            // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
     }
 }

@@ -6,28 +6,7 @@
 @inject IExtendedNavigationManager NavigationManager
 
 <h3>Health</h3>
-<MudCard Class="m-4">
-    <MudCardHeader>
-        <MudIcon Class="mr-5" Icon="@Icons.Material.Filled.Cloud"></MudIcon>
-        <MudText Typo="Typo.h6">Backend General</MudText>
-        <MudFab @ref=ExpandBackendGeneralTable Class="ml-2" Size=Size.Small Color="MudBlazor.Color.Transparent" StartIcon="@_expandHealthCheckBackendGeneralButtonIcon" OnClick="@ExpandHealthCheckBackendGeneral" />
-    </MudCardHeader>
-    <MudCardContent>
-        <MudCollapse Expanded=@_collapsedHealthCheckGeneral>
-            <MudTable T="(string ItemDesc,object value)" Items="@HealthCheckGeneralData" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@_showSkeleton" LoadingProgressColor="MudBlazor.Color.Info">
-                <HeaderContent>
-                    <MudTh>#</MudTh>
-                    <MudTh>Value</MudTh>
-                </HeaderContent>
-                <RowTemplate Context="TableContext">
-                    <MudTd DataLabel="#">@TableContext.ItemDesc</MudTd>
-                        <MudTd DataLabel="Value">@TableContext.value</MudTd>
-                    </RowTemplate>
-                </MudTable>
-        </MudCollapse>
 
-    </MudCardContent>
-</MudCard>
 <MudCard Class="m-4">
     <MudCardContent>
 
@@ -36,7 +15,17 @@
                 @if (HealthCheck.Checks != null && HealthCheck.Checks.mysql != null)
                 {
                     <MudText Typo="Typo.caption">Stand: @TimeFromRequestHealthCheckService</MudText>
-                    <MudText>@HealthCheck.Checks.mysql.description</MudText>
+                    <MudList>
+                        @foreach(var item in HealthCheck.Checks.mysql.GetFormattedDescription())
+                        {
+                            <MudListItem>
+                                <div class="flex">
+                                    <MudIcon Class="d-inline-flex" Icon="@Icons.Material.Filled.Details"></MudIcon>
+                                    <MudText Inline Class="ml-auto">@item</MudText>
+                                </div>
+                            </MudListItem>
+                        }
+                    </MudList>
                 }
                 else
                 {
@@ -57,9 +46,18 @@
 
                 @if (HealthCheck.Checks != null && HealthCheck.Checks.cache != null)
                 {
-
                     <MudText Typo="Typo.caption">Stand: @TimeFromRequestHealthCheckService</MudText>
-                    <MudText>@HealthCheck.Checks.cache.description</MudText>
+                    <MudList>
+                        @foreach (var item in HealthCheck.Checks.cache.GetFormattedDescription())
+                        {
+                            <MudListItem>
+                                <div class="flex">
+                                    <MudIcon Class="d-inline-flex" Icon="@Icons.Material.Filled.Details"></MudIcon>
+                                    <MudText Inline Class="ml-auto">@item</MudText>
+                                    </div>
+                                </MudListItem>
+                        }
+                    </MudList>
                 }
                 else
                 {
@@ -78,11 +76,20 @@
             </MudTabPanel>
             <MudTabPanel ID="@TabIdSignalR" Text="SignalR" Icon="@Icons.Material.Filled.Message">
 
-                @if (HealthCheck.Checks != null && HealthCheck.Checks.cache != null)
+                @if (HealthCheck.Checks != null && HealthCheck.Checks.signalr != null)
                 {
-
                     <MudText Typo="Typo.caption">Stand: @TimeFromRequestHealthCheckService</MudText>
-                    <MudText>@HealthCheck.Checks.cache.description</MudText>
+                    <MudList>
+                        @foreach (var item in HealthCheck.Checks.signalr.GetFormattedDescription())
+                        {
+                            <MudListItem>
+                                <div class="flex">
+                                    <MudIcon Class="d-inline-flex" Icon="@Icons.Material.Filled.Details"></MudIcon>
+                                    <MudText Inline Class="ml-auto">@item</MudText>
+                                    </div>
+                                </MudListItem>
+                        }
+                    </MudList>
                 }
                 else
                 {
@@ -132,8 +139,30 @@
         </MudTabs>
     </MudCardContent>
 </MudCard>
+<MudCard Class="m-4">
+    <MudCardHeader>
+        <MudIcon Class="mr-5" Icon="@Icons.Material.Filled.Cloud"></MudIcon>
+        <MudText Typo="Typo.h6">Backend General</MudText>
+        <MudFab @ref=ExpandBackendGeneralTable Class="ml-2" Size=Size.Small Color="MudBlazor.Color.Transparent" StartIcon="@_expandHealthCheckBackendGeneralButtonIcon" OnClick="@ExpandHealthCheckBackendGeneral" />
+    </MudCardHeader>
+    <MudCardContent>
+        <MudCollapse Expanded=@_collapsedHealthCheckGeneral>
+            <MudTable T="(string ItemDesc,object value)" Items="@HealthCheckGeneralData" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@_showSkeleton" LoadingProgressColor="MudBlazor.Color.Info">
+                <HeaderContent>
+                    <MudTh>#</MudTh>
+                    <MudTh>Value</MudTh>
+                </HeaderContent>
+                <RowTemplate Context="TableContext">
+                    <MudTd DataLabel="#">@TableContext.ItemDesc</MudTd>
+                        <MudTd DataLabel="Value">@TableContext.value</MudTd>
+                    </RowTemplate>
+                </MudTable>
+        </MudCollapse>
 
-@code {
+    </MudCardContent>
+</MudCard>
+
+    @code {
     private string _expandHealthCheckBackendGeneralButtonIcon = Icons.Material.Filled.ExpandMore;
     private MudFab ExpandBackendGeneralTable;
     private bool _collapsedHealthCheckGeneral = true;
@@ -187,8 +216,8 @@
     {
         _showSkeleton = true;
         urlController += "/mail-queue";
-        var responseMailQueue = await WebApiClient.Request<List<MailOutboxDTO>, object>(urlController, RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
-        if(responseMailQueue.IsSuccess)
+        var responseMailQueue = await WebApiClient.Request<List<MailOutboxDTO>, object>(urlController, RestSharp.Method.Get, cancellationToken.Token, null);
+        if(responseMailQueue.IsSuccessStatusCode)
         {
             MailQueue = responseMailQueue.ApiResponseDeserialized;
             TimeFromRequestHealthCheckMailQueue = DateTime.UtcNow;
@@ -198,8 +227,8 @@
     private async Task GetDataHealthCheck()
     {
         _showSkeleton = true;
-        var responseServices = await WebApiClient.Request<HealthZDTO, object>(url, RestSharp.Method.Get, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", token.Token) });
-        if (responseServices.IsSuccess)
+        var responseServices = await WebApiClient.Request<HealthZDTO, object>(url, RestSharp.Method.Get, cancellationToken.Token, null);
+        if (responseServices.HasDeserializedData)
         {
             HealthCheck = responseServices.ApiResponseDeserialized;
             TimeFromRequestHealthCheckService = DateTime.UtcNow;
@@ -208,7 +237,19 @@
             foreach(var prop in props)
             {
                 var val = prop.GetValue(responseServices.ApiResponseDeserialized);
-                HealthCheckGeneralData.Add(new(prop.Name, val));
+
+                if(val is IDictionary<string,string> dict)
+                {
+                    string dictAggr = null;
+                    foreach(var keyValuePair in dict)
+                    {
+
+                        dictAggr += string.Format("{0}={1};", keyValuePair.Key,keyValuePair.Value);
+                    }
+                    HealthCheckGeneralData.Add(new(prop.Name, dictAggr));
+                }
+                else
+                    HealthCheckGeneralData.Add(new(prop.Name, val));
             }
         }
         _showSkeleton = false;

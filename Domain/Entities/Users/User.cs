@@ -667,6 +667,10 @@ namespace Domain.Entities.Users
 
         public void Remove(UserId deletedByUser)
         {
+            if(Id == UserConst.RootUserId.ToIdentification<UserId>())
+            {
+                throw new InvalidOperationException("the root user cant be deleted");
+            }
             if (IsDeleted())
             {
                 throw new UserAlreadyDeletedException("user is already deleted");

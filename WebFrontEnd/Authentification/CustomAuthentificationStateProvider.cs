@@ -14,6 +14,8 @@ namespace WebFrontEnd.Authentification
         private readonly IAuthentificationService authentificationService;
         private bool disposedValue;
 
+        private UserDTO _currentUser = null;
+
         public CustomAuthentificationStateProvider(IAuthentificationService authentificationService)
         {
             this.authentificationService = authentificationService;
@@ -108,5 +110,15 @@ namespace WebFrontEnd.Authentification
             return authentificationService.RefreshLogin(token, refreshToken, cancellationToken);
         }
 
+        public Task<UserDTO> GetCurrentUser(AuthenticationState authenticationState, CancellationToken cancellationToken)
+        {
+            return authentificationService.GetCurrentUser(authenticationState,cancellationToken);
+        }
+
+        public async Task<UserDTO> GetCurrentUser(CancellationToken cancellationToken)
+        {
+            var authenticationState = await this.GetAuthenticationStateAsync();
+            return await this.GetCurrentUser(authenticationState, cancellationToken);
+        }
     }
 }

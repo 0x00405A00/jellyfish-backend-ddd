@@ -1,5 +1,6 @@
 ﻿using Domain.Entities.Users;
 using Infrastructure.Abstractions;
+using Infrastructure.Cache;
 using Microsoft.Extensions.Caching.Memory;
 using System.Linq.Expressions;
 
@@ -10,11 +11,11 @@ namespace Infrastructure.Repository.Concrete
         public static TimeSpan UserCachePersistenceTime = TimeSpan.FromMinutes(60);
 
         private readonly IUserRepository _userRepository;
-        private readonly IMemoryCache _memoryCache;
+        private readonly ICachingHandler _memoryCache;
 
         public CachingUserRepository(ApplicationDbContext applicationDbContext,
                                      IUserRepository userRepository,
-                                     IMemoryCache memoryCache) : base(applicationDbContext)
+                                     ICachingHandler memoryCache) : base(applicationDbContext)
         {
             _userRepository = userRepository;
             _memoryCache = memoryCache;
@@ -25,9 +26,8 @@ namespace Infrastructure.Repository.Concrete
             var id = expression.ExtractValueFromExpression<User, Guid?>();
             if (id != null)
             {
-                var resultFromCache = await _memoryCache.GetOrCreateAsync(CacheKeys.UserKey(id ?? Guid.Empty), async (cacheEntry) =>
+                var resultFromCache = await _memoryCache.GetOrSet<User>(CacheKeys.UserKey(id ?? Guid.Empty), async () =>
                 {
-                    cacheEntry.AbsoluteExpirationRelativeToNow = UserCachePersistenceTime;
                     return await _userRepository.GetAsync(expression);
                 });
 

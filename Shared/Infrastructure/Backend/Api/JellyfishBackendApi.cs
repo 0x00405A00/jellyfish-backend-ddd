@@ -1,14 +1,8 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using RestSharp;
-using Shared.ApiDataTransferObject;
 using Shared.ApiDataTransferObject.Object;
-using Shared.Authentification.Claims;
-using Shared.Const;
 using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
-using Shared.DataTransferObject.Abstraction;
-using Shared.Reflection;
 using System.Net;
 using System.Reflection;
 using System.Text.Json.Serialization;
@@ -20,7 +14,6 @@ namespace Shared.Infrastructure.Backend.Api
         public delegate void ErrorOutputEventHandler(object sender, JellyfishBackendApi.JellyfishApiErrorEventArgs e);
         public sealed record JellyfishApiErrorEventArgs(HttpStatusCode StatusCode,Uri ResponseUri, List<ApiError> Errors);
 
-        private ICollection<ErrorOutputEventHandler> _eventHandler = new List<ErrorOutputEventHandler>();
         private readonly ICustomAuthentificationStateProvider _customAuthentificationStateProvider;
 
         public JellyfishBackendApi(
@@ -30,20 +23,6 @@ namespace Shared.Infrastructure.Backend.Api
             this._customAuthentificationStateProvider = customAuthentificationStateProvider;
         }
 
-        public void AddErrorHandler(ErrorOutputEventHandler eventHandler)
-        {
-            _eventHandler.Add(eventHandler);
-        }
-        private void DispatchEventHandlers(JellyfishApiErrorEventArgs jellyfishApiErrorEventArgs)
-        {
-            if (_eventHandler.Any())
-            {
-                foreach (var eventHandler in _eventHandler)
-                {
-                    eventHandler.Invoke(this, jellyfishApiErrorEventArgs);
-                }
-            }
-        }
 
         public async Task<JellyfishBackendApiResponse<Guid>> ChangePassword(Guid userId, PasswordChangeDTO passwordChangeDTO, CancellationToken cancellationToken)
         {
@@ -73,20 +52,38 @@ namespace Shared.Infrastructure.Backend.Api
             var response = await this.TypedRequest<UserDTO, UserDTO>(url, RestSharp.Method.Delete, null, cancellationToken);
             return response;
         }
-        public async Task<JellyfishBackendApiResponse<List<UserDTO>>> GetUsers(string searchText,int selectedPage,int maxItemsPerPage, CancellationToken cancellationToken)
+        public override Task<JellyfishBackendApiResponse<T2>> TypedRequest<T, T2>(string url, Method method, T? data, CancellationToken cancellationToken, PaginationBase paginationBase = null) where T : default
+        {
+            return base.TypedRequest<T, T2>(url, method, data, cancellationToken, paginationBase);
+        }
+        public async Task<JellyfishBackendApiResponse<List<UserDTO>>> GetUsers(string searchText,int selectedPage,int maxItemsPerPage,bool filterOnlyDeletedUsers, CancellationToken cancellationToken)
         {
             SearchParamsBody searchParamsBody = new SearchParamsBody();
             searchParamsBody.page_offset = selectedPage;
             searchParamsBody.page_size = maxItemsPerPage;
+
+            var columnFilterDeleted = new Shared.DataFilter.Infrastructure.ColumnFilter
+            {
+                field = "deleted_time",
+                op = "eq",
+                value = null
+            };
+            if (filterOnlyDeletedUsers)
+            {
+                columnFilterDeleted = new Shared.DataFilter.Infrastructure.ColumnFilter
+                {
+                    field = "deleted_time",
+                    op = "neq",
+                    value = null
+                };
+            }
+
             var columnFilterGroupAnd = new Shared.DataFilter.Infrastructure.ColumnFilterGroup
             {
                 Group = "and",
                 Filters = new List<Shared.DataFilter.Infrastructure.ColumnFilter>
                             {
-                                new Shared.DataFilter.Infrastructure.ColumnFilter
-                                {
-                                    field = "deleted_time", op = "eq", value = null
-                                }
+                                columnFilterDeleted
                             }
             };
             searchParamsBody.filters = new List<Shared.DataFilter.Infrastructure.ColumnFilterGroup>
@@ -144,13 +141,6 @@ namespace Shared.Infrastructure.Backend.Api
             //return JellyfishBackendApiResponse<List<UserDTO>>.CreateFromWebApiResponseModel(response);
             var url = "/user";
             var response = await this.TypedRequest<SearchParamsBody?, List<UserDTO>>(url, RestSharp.Method.Get, searchParamsBody, cancellationToken);
-            return response;
-        }
-        public async Task<JellyfishBackendApiResponse<UserDTO>> GetUser(Guid userId, CancellationToken cancellationToken)
-        {
-
-            var url = "/user/" + userId + "";
-            var response = await this.TypedRequest<SearchParamsBody, UserDTO>(url, RestSharp.Method.Get, null, cancellationToken);
             return response;
         }
         public async Task<JellyfishBackendApiResponse<UserDTO>> Activate(string base64Token, UserActivationDataTransferModel userActivationDataTransferModel, CancellationToken cancellationToken)
@@ -214,87 +204,9 @@ namespace Shared.Infrastructure.Backend.Api
             var response = await this.TypedRequest<List<RoleDTO>, List<Guid>>(url, RestSharp.Method.Delete, roleDTOs, cancellationToken);
             return response;
         }
-        public async Task<UserDTO?> GetCurrentUser(AuthenticationState authenticationState, CancellationToken cancellationToken)
-        {
-            if (authenticationState is null)
-                return null;
-            if (authenticationState.User is null)
-                return null;
-            if (!authenticationState.User .Claims.Any())
-                return null;
-            var userUuid = authenticationState.User.Claims.GetClaims(x => x.Type == AuthorizationConst.Claims.ClaimTypeUserUuid)?.First();
-            var userProfile = await this.GetUser(Guid.Parse(userUuid.Value), cancellationToken);
-            return userProfile.IsSuccess ? userProfile.Data : null;
-        }
-        public override async Task<WebApiHttpRequestResponseModel<T1>> Request<T1, T2>(string url, Method method, CancellationToken cancellationToken, T2 bodyObject, List<KeyValuePair<string, string>> query = null, List<KeyValuePair<string, string>> headers = null, bool donttryagain = true)
-        {
-            if(headers==null)
-            {
-                headers = await CreateHeaders(cancellationToken);
-            }
-            if (headers!=null&& headers.Any())
-            {
-                var newHeaders = await CreateHeaders(cancellationToken);
-                headers.AddRange(newHeaders);
-            }
-            return await base.Request<T1, T2>(url, method, cancellationToken, bodyObject, query, headers, donttryagain);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T">Request Body Type</typeparam>
-        /// <typeparam name="T2">Response Type</typeparam>
-        /// <param name="url">Target Url, when <see cref="BaseUrl"</see> is already set you can request the target endpoint via path directly without write out the url complete e.g. full write out: https://mytargeturl/mytargetendpoint/1, short variant when <see cref="BaseUrl"></see>/> is set></param>
-        /// <param name="method">HTTP Method GET, POST, PUT, DELETE etc.</param>
-        /// <param name="data">Body data></param>
-        /// <param name="cancellationToken">To cancel the task</param>
-        /// <param name="paginationBase">Pagination behaviour of backend, influent the backend behaviour by evaluate the result</param>
-        /// <returns>Response Type <<see cref="T2"/></returns>
-        public async Task<JellyfishBackendApiResponse<T2>> TypedRequest<T,T2>(string url, RestSharp.Method method, T? data, CancellationToken cancellationToken, PaginationBase paginationBase=null)
-            
-        {
-            if(data is IDataTransferObject dataTransferObject || (ReflectionExtension.IsListAndGenericTypeImplementsT<IDataTransferObject>(typeof(T))))
-            {
-                var body = ApiDataTransferObject<T>.Create(data,paginationBase);
-                var response = await Request<ApiDataTransferObject<T2>, ApiDataTransferObject<T>>(url, method, cancellationToken, body);
-                return JellyfishBackendApiResponse<T2>.CreateFromWebApiResponseModel(response);
-            }
-            else if(data is SearchParamsBody)
-            {
-                return await RequestI<T, T2>(url, method, data, cancellationToken);
-            }
-            return await RequestI<T,T2>(url, method,data,cancellationToken);
-        }
-        private async Task<JellyfishBackendApiResponse<T2>> RequestI<T,T2>(string url, RestSharp.Method method, T? data, CancellationToken cancellationToken)
-        {
-
-            T body = data;
-            var response = await this.Request<ApiDataTransferObject<T2>, T>(url, method, cancellationToken, body);
-            var webApiResponseModel = JellyfishBackendApiResponse<T2>.CreateFromWebApiResponseModel(response);
-            if(webApiResponseModel != null && webApiResponseModel.HasErrors)
-            {
-
-                if (_eventHandler.Any())
-                {
-                    var eventArgs = new JellyfishApiErrorEventArgs(webApiResponseModel.DefaultResponse.DefaultResponse.StatusCode,webApiResponseModel.DefaultResponse.DefaultResponse.ResponseUri,webApiResponseModel.Errors);
-                    DispatchEventHandlers(eventArgs);
-                }
-            }
-            return webApiResponseModel;
-        }
-
-        public async Task<List<KeyValuePair<string,string>>> CreateHeaders(CancellationToken cancellationToken)
-        {
-            var auth = await _customAuthentificationStateProvider.GetCurrentAuthentification(cancellationToken);
-            return auth.CreateAuthorizationHeader();
-        }
 
         protected override void Dispose(bool disposing)
         {
-            if(_eventHandler.Any())
-            {
-                _eventHandler.Clear();
-            }
             base.Dispose(disposing);
         }
     }

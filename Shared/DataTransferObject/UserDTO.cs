@@ -59,6 +59,9 @@ namespace Shared.DataTransferObject
         public ICollection<FriendshipRequestDTO>? FriendshipRequests { get; set; }
 
         [JsonIgnore]
+        public bool IsActivated => ActivationDateTime != null;
+
+        [JsonIgnore]
         public string? RoleStr
         {
             get

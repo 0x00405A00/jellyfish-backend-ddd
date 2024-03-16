@@ -7,6 +7,7 @@ namespace Shared.Infrastructure.Backend
     public interface ICustomAuthentificationStateProvider
     {
         Task<AuthenticationState> GetAuthenticationStateAsync();
+        Task<UserDTO> GetCurrentUser(CancellationToken cancellationToken);
         Task<AuthDTO> GetCurrentAuthentification(CancellationToken cancellationToken);
         Task<bool> Login(string userName, string password, CancellationToken cancellationToken);
         Task<bool> Logout(CancellationToken cancellationToken);

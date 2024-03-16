@@ -6,7 +6,7 @@ namespace Shared.Infrastructure.Backend.Api
     {
         public T ApiResponseDeserialized { get; set; }
         public RestResponse DefaultResponse { get; set; } = new RestResponse() { StatusCode = System.Net.HttpStatusCode.NotFound };
-        public bool IsSuccess
+        public bool IsSuccessStatusCode
         {
             get
             {

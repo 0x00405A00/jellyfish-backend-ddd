@@ -9,7 +9,7 @@ namespace Shared.Infrastructure.Backend.Api
         public class JellyfishBackendApiResponse<T> 
         {
             public WebApiHttpRequestResponseModel<ApiDataTransferObject<T>> DefaultResponse { get; set; }
-            public bool IsSuccess => DefaultResponse != null && DefaultResponse.IsSuccess;
+            public bool IsSuccess => DefaultResponse != null && DefaultResponse.IsSuccessStatusCode;
             public bool HasErrors => DefaultResponse.HasDeserializedData && DefaultResponse.ApiResponseDeserialized.HasErrors;
             public List<ApiError> Errors
             {

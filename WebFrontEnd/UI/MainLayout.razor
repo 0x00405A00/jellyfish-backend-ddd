@@ -8,6 +8,7 @@
 @inject ISessionStorage SessionStorage
 @inject JellyfishBackendApi WebApiClient
 @inject LogoutBackgroundService LogoutBackgroundService
+@inject SignalRClient SignalRClient
 
 <PageTitle>Jellyfish</PageTitle>
 
@@ -32,16 +33,16 @@
             }
             @if(IsLoggedIn) 
             {
-                <MudMenu AnchorOrigin="MudBlazor.Origin.BottomLeft">
+                <MudMenu  AnchorOrigin="MudBlazor.Origin.BottomLeft">
 
-                 <ActivatorContent>
+                    <ActivatorContent>
                         <ProfileAvatar User="@CurrentUser" Loading="@Loading" HeightInPx="32" WidthInPx="32"></ProfileAvatar>
                     </ActivatorContent>
                     <ChildContent>
-                     <MudMenuItem>Profile</MudMenuItem>
-                     <MudDivider></MudDivider>
+                        <MudMenuItem Href="@RouteConst.Routes.Profile">Profile</MudMenuItem>
+                        <MudDivider></MudDivider>
 
-                     @if (IsLoggedIn)
+                        @if (IsLoggedIn)
                         {
                             <MudMenuItem OnClick="@ClickLogout">Logout</MudMenuItem>
                         }
