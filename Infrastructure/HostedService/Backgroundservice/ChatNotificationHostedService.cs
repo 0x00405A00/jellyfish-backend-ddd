@@ -71,10 +71,11 @@ namespace Infrastructure.HostedService.Backgroundservice
                     _logger.LogDebug($"delivery:{x.Key}: start to deliver {x.Value.Count} messages to {x.Key}");
                     var messageIdsExtracted = x.Value.Select(x => x.MessageForeignKey.Id).ToList();
                     var connectionId = MessengerHubExtension.GetConnectionIdByUserId(x.Key);
-                    if (connectionId is null)
-                        return;
-                    signalRHub.Clients.Client(connectionId).ReceiveMessage(messageIdsExtracted);
-                    _logger.LogDebug($"delivery:{x.Key}: completed");
+                    if (connectionId is not null)
+                    {
+                        signalRHub.Clients.Client(connectionId).ReceiveMessage(messageIdsExtracted);
+                        _logger.LogDebug($"delivery:{x.Key}: completed");
+                    }
                 });
                 _logger.LogDebug($"delivery: end, next delivering at {CustomDateTime.Now().DateTime.AddSeconds(NotificationSentInterval)}");
 

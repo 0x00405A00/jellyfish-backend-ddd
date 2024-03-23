@@ -73,11 +73,11 @@ namespace Presentation.Controllers.Api.v1.Messenger
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(ApiDataTransferObject<List<MessageDTO>>), 200)]
         [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
-        [HttpGet("{chatId}/message/nack")]
-        public async Task<IActionResult> GetNotDeliveredMessagesByChat(Guid chatId, CancellationToken cancellationToken)
+        [HttpGet("message/nack")]
+        public async Task<IActionResult> GetNotDeliveredMessagesByChat(CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new GetNotDeliveredMessagesByChatQuery(userUuid,chatId);
+            var command = new GetNotDeliveredMessagesByChatQuery(userUuid);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
@@ -86,11 +86,11 @@ namespace Presentation.Controllers.Api.v1.Messenger
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(ApiDataTransferObject<List<MessageDTO>>), 200)]
         [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
-        [HttpPost("{chatId}/message/ack/{messageId}")]
-        public async Task<IActionResult> GetNotDeliveredMessagesByChat(Guid chatId,Guid messageId, CancellationToken cancellationToken)
+        [HttpPost("message/ack/{messageId}")]
+        public async Task<IActionResult> GetNotDeliveredMessagesByChat(Guid messageId, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
-            var command = new AcknowledgeMessageDeliveryByChatCommand(userUuid, messageId, chatId);
+            var command = new AcknowledgeMessageDeliveryByChatCommand(userUuid, messageId);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();

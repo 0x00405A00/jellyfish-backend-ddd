@@ -6,6 +6,8 @@ using RestSharp;
 using Shared.Const;
 using Shared.Infrastructure.Backend;
 using Shared.Infrastructure.Backend.Api;
+using Shared.Infrastructure.Backend.Interceptor.Abstraction;
+using Shared.Infrastructure.Backend.Interceptor;
 using Shared.Infrastructure.Backend.SignalR;
 using WebFrontEnd.Authentification;
 using WebFrontEnd.BackgroundService;
@@ -67,7 +69,7 @@ namespace WebFrontEnd
             var infrastructureApiSection = configuration.GetSection("Infrastructure:Api");
             var apiBaseUrl = infrastructureApiSection.GetValue<string>("BaseUrl");
             serviceProvider.AddScoped(sp => new RestClient(new Uri(apiBaseUrl)));
-            serviceProvider.AddScoped<WebApiRestClient>();
+            serviceProvider.AddScoped<IWebApiRestClient,WebApiRestClient>();
 
 
             var infrastructureSignalRSection = configuration.GetSection("Infrastructure:SignalR");
@@ -76,12 +78,14 @@ namespace WebFrontEnd
             string hub = infrastructureSignalRSection["SignalRHubEndpoint"];
             string transportProtocol = infrastructureSignalRSection["SignalRHubClientTransportProtocol"];
             serviceProvider.AddScoped<SignalRConnectionParams>(sp=>new SignalRConnectionParams(baseUrl,port,hub,transportProtocol));
-            serviceProvider.AddScoped<SignalRClient>();
+            serviceProvider.AddScoped<JellyfishSignalRClient>();
+
+            serviceProvider.AddSingleton<IInternalDataInterceptorApplicationDispatcher, InternalDataInterceptorApplicationDispatcher>();
 
             serviceProvider.AddScoped<ICustomAuthentificationStateProvider,CustomAuthentificationStateProvider>();
             serviceProvider.AddScoped<AuthenticationStateProvider>(s => (CustomAuthentificationStateProvider)s.GetRequiredService<ICustomAuthentificationStateProvider>());
 
-            serviceProvider.AddScoped<JellyfishBackendApi>();
+            serviceProvider.AddScoped<IJellyfishBackendApi,JellyfishBackendApi>();
 
             serviceProvider.AddScoped<DialogHandler>();
 

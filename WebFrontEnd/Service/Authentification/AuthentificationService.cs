@@ -10,13 +10,13 @@ namespace WebFrontEnd.Service.Authentification
     public class AuthentificationService : IAuthentificationService,IDisposable
     {
         private readonly IConfiguration configuration;
-        private readonly WebApiRestClient webApiRestClient;
+        private readonly IWebApiRestClient webApiRestClient;
         private readonly ILocalStorageService localStorageService;
         private bool disposedValue;
 
         public AuthentificationService(
             IConfiguration configuration,
-            WebApiRestClient webApiRestClient,
+            IWebApiRestClient webApiRestClient,
             ILocalStorageService localStorageService)
         {
             this.configuration = configuration;

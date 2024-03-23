@@ -16,7 +16,7 @@ namespace WebFrontEnd.Service
         public static Task<int[]> ReturnArrayAsync()
         {
             using var scope = _serviceProvider.CreateScope();
-            var service = scope.ServiceProvider.GetService<SignalRClient>();
+            var service = scope.ServiceProvider.GetService<JellyfishSignalRClient>();
             return Task.FromResult(new int[] { 1, 2, 3 });
         }
         [JSInvokable]

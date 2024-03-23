@@ -1,9 +1,9 @@
 ﻿@attribute [Route(RouteConst.Routes.DashBoard)]
 @implements IDisposable
 @implements INavigationInvoker
-@inject JellyfishBackendApi WebApiClient
+@inject IJellyfishBackendApi WebApiClient
 @inject IExtendedNavigationManager NavigationManager
-@inject SignalRClient SignalRClient
+@inject JellyfishSignalRClient SignalRClient
 @inject IJSRuntime JsRuntime
 @inject IConfiguration Configuration
 @inject ICustomAuthentificationStateProvider AuthentificationService
@@ -134,13 +134,7 @@
     {
         if(firstRender)
         {
-            if (!SignalRClient.IsBuilded)
-            {
-                SignalRClient.BuildConnection();
-
-            }
-            if (SignalRClient.HubConnection.State != HubConnectionState.Connected)
-                SignalRClient.OpenConnection();
+            SignalRClient.OpenConnection();
 
             SignalRClient.HubConnection.On<List<MessageDTO>>(nameof(SignalRClient.ReceiveMessage), ReceiveMessage);
             for (int i = 0; i < XAxisLastHoursBarCount; i++)

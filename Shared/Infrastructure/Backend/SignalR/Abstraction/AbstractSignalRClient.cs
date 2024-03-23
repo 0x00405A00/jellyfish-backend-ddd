@@ -120,6 +120,14 @@ namespace Shared.Infrastructure.Backend.SignalR.Abstraction
 
         public async void OpenConnection()
         {
+            if(!this.IsBuilded)
+            {
+                this.BuildConnection();
+            }
+            if(HubConnection.State == HubConnectionState.Connected || HubConnection.State == HubConnectionState.Connecting || HubConnection.State == HubConnectionState.Reconnecting)
+            {
+                return;
+            }
             try
             {
 

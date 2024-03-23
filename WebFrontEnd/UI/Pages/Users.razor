@@ -1,6 +1,6 @@
 ﻿@implements IDisposable
 @attribute [Route(RouteConst.Routes.Users)]
-@inject JellyfishBackendApi WebApiClient
+@inject IJellyfishBackendApi WebApiClient
 @inject IDialogService DialogService
 @inject ICustomAuthentificationStateProvider AuthentificationService
 @inject DialogHandler DialogHandler
@@ -329,10 +329,10 @@
             foreach (var user in SelectedItems)
             {
                 var url = "/user/" + user.Id + "";
-                var deleteUserRequest = await WebApiClient.Request < ApiDataTransferObject<Guid>, object>(url, RestSharp.Method.Delete, cancellationToken.Token, null, headers: new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Authorization", _token.Token) });
-                if (deleteUserRequest.IsSuccessStatusCode)
+                var deleteUserRequest = await WebApiClient.RemoveUser(user, cancellationToken.Token);
+                if (deleteUserRequest.IsSuccess)
                 {
-                    var userUuid = UsersList.Where(x => x.Id == deleteUserRequest.ApiResponseDeserialized.Data.Value).First();
+                    var userUuid = UsersList.Where(x => x.Id == deleteUserRequest.Data).First();
                     UsersList.Remove(userUuid);
                 }
             }

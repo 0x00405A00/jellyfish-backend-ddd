@@ -9,12 +9,54 @@ using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
 using Shared.DataTransferObject.Abstraction;
 using Shared.Reflection;
+using System.Net;
 using System.Text.Json;
 using static Shared.Infrastructure.Backend.Api.JellyfishBackendApi;
 
 namespace Shared.Infrastructure.Backend.Api
 {
-    public class WebApiRestClient : AbstractRestClient, IDisposable
+    public interface IWebApiRestClient
+    {
+        string BaseUrl { get; set; }
+        string ConnectionTestEndpoint { get; }
+        bool IsInit { get; }
+        string LoginSessionEndpoint { get; }
+        string LogoutSessionEndpoint { get; }
+        string Password { get; }
+        string PasswordResetDataTransferModelEndpoint { get; }
+        string PasswordResetRequestDTOEndpoint { get; }
+        bool RefreshLogin { get; }
+        string RefreshSessionEndpoint { get; }
+        string RegisterEndpoint { get; }
+        string RegistrationActivateEndpoint { get; }
+        string User { get; }
+        string ValidateSessionEndpoint { get; }
+
+        void AddErrorHandler(ErrorOutputEventHandler eventHandler);
+
+        Task<WebApiHttpRequestResponseModel<ApiDataTransferObject<UserDTO>>> Register(ApiDataTransferObject<RegisterUserDTO> registerDataTransferModel, CancellationToken cancellationToken);
+        Task<JellyfishBackendApi.JellyfishBackendApiResponse<UserDTO>> Register(RegisterUserDTO registerDataTransferModel, CancellationToken cancellationToken);
+        Task<JellyfishBackendApi.JellyfishBackendApiResponse<UserDTO>> Activate(string base64Token, UserActivationDataTransferModel userActivationDataTransferModel, CancellationToken cancellationToken);
+
+        Task<AuthDTO> Authentificate(string userName, string password, CancellationToken cancellationToken);
+        Task<AuthDTO> RefreshAuthentification(string token, string refreshToken, CancellationToken cancellationToken);
+        Task<HttpStatusCode> Logout(CancellationToken cancellationToken);
+
+        Task<JellyfishBackendApi.JellyfishBackendApiResponse<bool>> ResetPassword(PasswordResetDataTransferModel passwordResetDataTransferModel, CancellationToken cancellationToken);
+        Task<JellyfishBackendApi.JellyfishBackendApiResponse<bool>> ResetPasswordRequest(PasswordResetRequestDTO passwordResetRequestDTO, CancellationToken cancellationToken);
+
+        string BuildUrl(string endPoint);
+        Task<bool> ConnectionTest(CancellationToken cancellationToken);
+        Task<UserDTO?> GetCurrentUser(AuthenticationState authenticationState, CancellationToken cancellationToken);
+        Task<JellyfishBackendApiResponse<UserDTO>> GetUser(Guid userId, CancellationToken cancellationToken);
+        void Init(string baseUrl, string loginSessionEndpoint, string logoutSessionEndpoint, string registerEndpoint, string validateSessionEndpoint, string refreshSessionEndpoint, string connectionTestEndpoint, string passwordResetEndpoint, string passwordResetRequestEndpoint);
+        Task<WebApiHttpRequestResponseModel<T1>> Request<T1, T2>(string url, Method method, CancellationToken cancellationToken, T2 bodyObject, List<KeyValuePair<string, string>> query = null, List<KeyValuePair<string, string>> headers = null, bool donttryagain = true);
+        Task<RestResponse> Request<T2>(string url, Method method, CancellationToken cancellationToken, object bodyObject = null, List<KeyValuePair<string, string>> query = null, List<KeyValuePair<string, string>> headers = null, bool donttryagain = true);
+        Task<JellyfishBackendApiResponse<T2>> TypedRequest<T, T2>(string url, Method method, T? data, CancellationToken cancellationToken, PaginationBase paginationBase = null);
+
+    }
+
+    public class WebApiRestClient : AbstractRestClient, IDisposable, IWebApiRestClient
     {
         private bool _isInit;
         public static AuthDTO CurrentWebApiSession = null;
@@ -113,16 +155,16 @@ namespace Shared.Infrastructure.Backend.Api
             return userProfile.IsSuccess ? userProfile.Data : null;
         }
         /// <summary>
-         /// 
-         /// </summary>
-         /// <typeparam name="T">Request Body Type</typeparam>
-         /// <typeparam name="T2">Response Type</typeparam>
-         /// <param name="url">Target Url, when <see cref="BaseUrl"</see> is already set you can request the target endpoint via path directly without write out the url complete e.g. full write out: https://mytargeturl/mytargetendpoint/1, short variant when <see cref="BaseUrl"></see>/> is set></param>
-         /// <param name="method">HTTP Method GET, POST, PUT, DELETE etc.</param>
-         /// <param name="data">Body data></param>
-         /// <param name="cancellationToken">To cancel the task</param>
-         /// <param name="paginationBase">Pagination behaviour of backend, influent the backend behaviour by evaluate the result</param>
-         /// <returns>Response Type <<see cref="T2"/></returns>
+        /// 
+        /// </summary>
+        /// <typeparam name="T">Request Body Type</typeparam>
+        /// <typeparam name="T2">Response Type</typeparam>
+        /// <param name="url">Target Url, when <see cref="BaseUrl"</see> is already set you can request the target endpoint via path directly without write out the url complete e.g. full write out: https://mytargeturl/mytargetendpoint/1, short variant when <see cref="BaseUrl"></see>/> is set></param>
+        /// <param name="method">HTTP Method GET, POST, PUT, DELETE etc.</param>
+        /// <param name="data">Body data></param>
+        /// <param name="cancellationToken">To cancel the task</param>
+        /// <param name="paginationBase">Pagination behaviour of backend, influent the backend behaviour by evaluate the result</param>
+        /// <returns>Response Type <<see cref="T2"/></returns>
         public virtual async Task<JellyfishBackendApiResponse<T2>> TypedRequest<T, T2>(string url, RestSharp.Method method, T? data, CancellationToken cancellationToken, PaginationBase paginationBase = null)
 
         {
@@ -155,7 +197,44 @@ namespace Shared.Infrastructure.Backend.Api
             }
             return webApiResponseModel;
         }
+        
+        public async Task<JellyfishBackendApiResponse<UserDTO>> Activate(string base64Token, UserActivationDataTransferModel userActivationDataTransferModel, CancellationToken cancellationToken)
+        {
+            string url = RegistrationActivateEndpoint + "/" + base64Token;
+            var response = await this.TypedRequest<UserActivationDataTransferModel, UserDTO>(url, RestSharp.Method.Post, userActivationDataTransferModel, cancellationToken);
+            return response;
+        }
+        public async Task<JellyfishBackendApiResponse<UserDTO>> Register(RegisterUserDTO registerDataTransferModel, CancellationToken cancellationToken)
+        {
+            var response = await this.TypedRequest<RegisterUserDTO, UserDTO>(RegisterEndpoint, RestSharp.Method.Post, registerDataTransferModel, cancellationToken);
+            return response;
+        }
+        /// <summary>
+        /// Sends the confirmation secure code from users mail to backend to confirm the password request action
+        /// </summary>
+        /// <param name="passwordResetRequestDataTransferModel"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public async Task<JellyfishBackendApiResponse<bool>> ResetPasswordRequest(PasswordResetRequestDTO passwordResetRequestDTO, CancellationToken cancellationToken)
+        {
+            var response = await this.TypedRequest<PasswordResetRequestDTO, bool>(PasswordResetRequestDTOEndpoint, RestSharp.Method.Post, passwordResetRequestDTO, cancellationToken);
+            return response;
+        }
+        /// <summary>
+        /// Reset the password, previously the password reset must be requested and confirmed by secure code 
+        /// </summary>
+        /// <param name="passwordResetDataTransferModel"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public async Task<JellyfishBackendApiResponse<bool>> ResetPassword(PasswordResetDataTransferModel passwordResetDataTransferModel, CancellationToken cancellationToken)
+        {
+            string url = PasswordResetDataTransferModelEndpoint + passwordResetDataTransferModel.Base64Token;
 
+            var response = await this.TypedRequest<PasswordResetDataTransferModel, bool>(url, RestSharp.Method.Post, passwordResetDataTransferModel, cancellationToken);
+            return response;
+        }
         public async Task<JellyfishBackendApiResponse<UserDTO>> GetUser(Guid userId, CancellationToken cancellationToken)
         {
 
@@ -219,7 +298,7 @@ namespace Shared.Infrastructure.Backend.Api
             {
                 throw new InvalidOperationException("please initialize the handler correctly via method: " + nameof(Init) + "");
             }
-            var resp = await Request<ApiDataTransferObject<UserDTO>, ApiDataTransferObject<RegisterUserDTO>>(RegisterEndpoint, Method.Post, cancellationToken, registerDataTransferModel, null, null,true);
+            var resp = await Request<ApiDataTransferObject<UserDTO>, ApiDataTransferObject<RegisterUserDTO>>(RegisterEndpoint, Method.Post, cancellationToken, registerDataTransferModel, null, null, true);
             if (resp != null)
             {
                 return resp;

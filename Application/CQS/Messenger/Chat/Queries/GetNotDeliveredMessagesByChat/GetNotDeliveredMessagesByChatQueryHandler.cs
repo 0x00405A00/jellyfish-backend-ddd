@@ -8,24 +8,17 @@ using Shared.DataTransferObject.Messenger;
 
 namespace Application.CQS.Messenger.Chat.Queries.GetNotDeliveredMessagesByChat
 {
-    internal sealed class GetNotDeliveredMessagesByChatQueryHandler(IMapper mapper, IChatRepository chatRepository, IMessageOutboxRepository messageOutboxRepository) : IQueryHandler<GetNotDeliveredMessagesByChatQuery, ICollection<MessageDTO>>
+    internal sealed class GetNotDeliveredMessagesByChatQueryHandler(IMapper mapper, IMessageOutboxRepository messageOutboxRepository) : IQueryHandler<GetNotDeliveredMessagesByChatQuery, ICollection<MessageDTO>>
     {
         public async Task<Result<ICollection<MessageDTO>>> Handle(GetNotDeliveredMessagesByChatQuery request, CancellationToken cancellationToken)
         {
-            var chat = await chatRepository.GetAsync(x=>x.Id == request.ChatId.ToIdentification<ChatId>());
-            if(chat is null)
+            var notDeliveredMessages = await messageOutboxRepository.ListAsync(x=>x.UserForeignKey == request.UserId.ToIdentification<UserId>());
+            if(!notDeliveredMessages.Any())
             {
-                //chat doesnt exists
-                return Result<ICollection<MessageDTO>>.Failure("chat doesnt exists");
-            }
-            var requestUserId = request.UserId.ToIdentification<UserId>();
-            if(!chat.IsChatMember(requestUserId))
-            {
-                //user is not a chatmember
-                return Result<ICollection<MessageDTO>>.Failure("you are not member in this chat");
+                //no messages available to poll
+                return Result<ICollection<MessageDTO>>.Failure("no messages in queue");
             }
 
-            var notDeliveredMessages = await messageOutboxRepository.ListAsync(x=>x.Message.ChatForeignKey == chat.Id && x.UserForeignKey == requestUserId);
             var messagesExtracted = notDeliveredMessages.Select(x=>x.Message).ToList();
 
             var response = mapper.Map < List<MessageDTO>> (messagesExtracted);

@@ -1,6 +1,6 @@
 ﻿@implements IDisposable
 @attribute [Route(RouteConst.Routes.BackendHealth)]
-@inject WebApiRestClient WebApiClient
+@inject IWebApiRestClient WebApiClient
 @inject ICustomAuthentificationStateProvider AuthentificationService
 @inject IConfiguration Configuration
 @inject IExtendedNavigationManager NavigationManager
