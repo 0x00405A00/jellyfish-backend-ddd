@@ -11,6 +11,7 @@ using Presentation.Middleware;
 using Serilog;
 using Shared.Authentification.Service;
 using Shared.Const;
+using SharedApplication = Shared.Application;
 
 namespace WebApi
 {
@@ -40,7 +41,7 @@ namespace WebApi
         {
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddInfrastructure();
-            services.AddApplication(new System.Reflection.Assembly[] { Application.AssemblyReference.Assembly });
+            services.AddApplication(new System.Reflection.Assembly[] { Application.AssemblyReference.Assembly, SharedApplication.AssemblyReference.Assembly }) ;
             services.AddPresentation();
         }
 

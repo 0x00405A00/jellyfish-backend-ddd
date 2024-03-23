@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.Repository
 {
-    internal abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> 
+    internal abstract class GenericRepository<TEntity> : Domain.Repository.IGenericRepository<TEntity> 
         where TEntity : Entity
     {
 

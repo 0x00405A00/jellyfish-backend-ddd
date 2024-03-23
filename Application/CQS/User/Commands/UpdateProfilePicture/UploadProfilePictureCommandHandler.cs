@@ -4,7 +4,7 @@ using Domain.Extension;
 using Domain.Primitives.Ids;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
-using Infrastructure.FileSys;
+using Shared.Infrastructure.FileSys;
 using MediatR;
 using Shared.DataTransferObject;
 using Shared.MimePart;

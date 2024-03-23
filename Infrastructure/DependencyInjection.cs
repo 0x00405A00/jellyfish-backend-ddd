@@ -1,8 +1,6 @@
-﻿using Domain.Entities.Messages;
-using Infrastructure.Abstractions;
+﻿using Infrastructure.Abstractions;
 using Infrastructure.Authentification;
 using Infrastructure.Cache;
-using Infrastructure.FileSys;
 using Infrastructure.Healthcheck.Concrete.Cache;
 using Infrastructure.Healthcheck.Concrete.MySql;
 using Infrastructure.HostedService.Backgroundservice;
@@ -15,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Shared.Authentification.Service;
 using Shared.Infrastructure.EFCore.Interceptors;
+using Shared.Infrastructure.FileSys;
 using Shared.Linq.Converters;
 
 namespace Infrastructure

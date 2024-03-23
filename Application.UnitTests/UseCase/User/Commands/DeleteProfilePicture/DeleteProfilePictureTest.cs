@@ -2,7 +2,7 @@
 using AutoMapper;
 using Domain.ValueObjects;
 using Infrastructure.Abstractions;
-using Infrastructure.FileSys;
+using Shared.Infrastructure.FileSys;
 using MediatR;
 using NSubstitute.ExceptionExtensions;
 using System.Linq.Expressions;

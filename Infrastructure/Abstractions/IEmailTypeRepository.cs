@@ -1,9 +1,6 @@
-﻿using Infrastructure.Repository;
-using Domain.Entities.Mails;
-
-namespace Infrastructure.Abstractions
+﻿namespace Infrastructure.Abstractions
 {
-    public interface IEmailTypeRepository : IGenericRepository<EmailSendingType>
+    public interface IEmailTypeRepository : Domain.Repository.IEmailTypeRepository
     {
     }
 }

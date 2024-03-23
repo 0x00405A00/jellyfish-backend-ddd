@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CQS\Messenger\Chat\Command\AddChatMember\EventHandler\" />
+    <Folder Include="CQS\Messenger\Chat\Command\AssignChatAdmin\EventHandler\" />
+    <Folder Include="CQS\Messenger\Chat\Command\RemoveChatMember\EventHandler\" />
+    <Folder Include="CQS\Messenger\Chat\Command\RevokeChatAdmin\EventHandler\" />
+  </ItemGroup>
+
+  <!-- Code below allows given assembly access to internal objects (such as classes, interfaces) -->
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>Application.UnitTests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+</Project>

@@ -1,10 +1,9 @@
 ﻿using Application.Behaviour;
-using Application.Mapper;
-using AutoMapper;
 using FluentValidation;
 using MediatR;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SharedApplication = Shared.Application;
+using Shared.Application.Mapper;
 using System.Reflection;
 
 namespace Application
@@ -13,12 +12,7 @@ namespace Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, Assembly[] assemblies)
         {
-            //services.AddAutoMapper(typeof(DomainModelToDTOMappingProfile));
-
-            services.AddSingleton(provider => new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new DomainModelToDTOMappingProfile(provider.GetService<IConfiguration>()));
-            }).CreateMapper());
+            services.AddAutoMapper();
 
             services.AddMediatR(config =>
             {
@@ -30,7 +24,7 @@ namespace Application
             });
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelingBehaviour<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PrepareResponseForPresentationPipelingBehaviour<,>));
-            services.AddValidatorsFromAssembly(AssemblyReference.Assembly);
+            services.AddValidatorsFromAssemblies(assemblies);
             return services;    
 
         }

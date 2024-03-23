@@ -1,9 +1,8 @@
-﻿using Infrastructure.Repository;
-using Domain.Entities.Messages;
+﻿using Domain.Entities.Messages;
 
 namespace Infrastructure.Abstractions
 {
-    public interface IMessageRepository : IGenericRepository<Message>
+    public interface IMessageRepository : Domain.Repository.IMessageRepository
     {
 
     }

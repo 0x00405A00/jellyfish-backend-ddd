@@ -1,8 +1,8 @@
 ﻿using Application.CQS.User.Commands.UpdateProfilePicture;
-using Application.Mapper;
+using Application.Shared.Mapper;
 using AutoMapper;
 using Infrastructure.Abstractions;
-using Infrastructure.FileSys;
+using Shared.Infrastructure.FileSys;
 using MediatR;
 using System.Linq.Expressions;
 using System.Text;

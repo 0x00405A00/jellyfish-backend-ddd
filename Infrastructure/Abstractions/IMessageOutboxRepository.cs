@@ -1,9 +1,6 @@
-﻿using Infrastructure.Repository;
-using Domain.Entities.Messages;
-
-namespace Infrastructure.Abstractions
+﻿namespace Infrastructure.Abstractions
 {
-    public interface IMessageOutboxRepository : IGenericRepository<MessageOutbox>
+    public interface IMessageOutboxRepository : Domain.Repository.IMessageOutboxRepository
     {
 
     }

@@ -1,9 +1,6 @@
-﻿using Infrastructure.Repository;
-using Domain.Entities.Mails;
-
-namespace Infrastructure.Abstractions
+﻿namespace Infrastructure.Abstractions
 {
-    public interface IMailoutboxRepository : IGenericRepository<MailOutbox>
+    public interface IMailoutboxRepository : Domain.Repository.IMailoutboxRepository
     {
 
     }

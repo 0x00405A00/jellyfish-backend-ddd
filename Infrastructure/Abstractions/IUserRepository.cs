@@ -1,11 +1,10 @@
 ﻿using Domain.Entities.Users;
-using Infrastructure.Repository;
 using Shared.Linq;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Abstractions
 {
-    public interface IUserRepository : IGenericRepository<User>
+    public interface IUserRepository : Domain.Repository.IUserRepository, IGenericRepositorySearchExtended<User>
     {
         /// <summary>
         /// Check if user email is already in database

@@ -1,9 +1,6 @@
-﻿using Domain.Entities.Auths;
-using Infrastructure.Repository;
-
-namespace Infrastructure.Abstractions
+﻿namespace Infrastructure.Abstractions
 {
-    public interface IAuthRepository : IGenericRepository<Auth>
+    public interface IAuthRepository : Domain.Repository.IAuthRepository
     {
 
     }

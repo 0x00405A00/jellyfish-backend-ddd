@@ -1,0 +1,17 @@
+#Version: 1.0
+#Start-Date: 2024-03-23 20:10:34
+#Fields: date time c-ip cs-username s-computername s-ip s-port cs-method cs-uri-stem cs-uri-query sc-status time-taken cs-version cs-host cs(User-Agent) cs(Cookie) cs(Referer)
+2024-03-23 20:10:33 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/user/user-types - 200 476.66 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-03-23 20:10:33 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/role - 200 36.9531 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-03-23 20:10:32 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/user/c92db313-765b-46dd-bf40-ef7d5a5abd7b - 200 705.6692 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-03-23 20:10:33 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/user - 200 159.9478 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-03-23 20:10:36 10.0.0.199 - 0X00405A00-PC 10.0.0.199 5000 POST /api/v1/chat/ - 200 433.2876 HTTP/1.1 10.0.0.199:5000 PostmanRuntime/7.37.0 - -
+2024-03-23 20:10:43 10.0.0.199 - 0X00405A00-PC 10.0.0.199 5000 GET /api/v1/chat/message/nack - 200 49.3332 HTTP/1.1 10.0.0.199:5000 PostmanRuntime/7.37.0 - -
+2024-03-23 20:10:49 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /healthz - 200 600.3773 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-03-23 20:10:51 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 POST /messengerhub/negotiate ?negotiateVersion=1 200 22.1843 HTTP/1.1 webapi:5000 Microsoft+ASP.NET+Core - -
+2024-03-23 20:10:51 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/user - 200 65.8778 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-03-23 20:10:52 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/user/user-types - 200 15.0256 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-03-23 20:10:52 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/role - 200 13.7735 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-03-23 20:10:52 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/user - 200 23.8377 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-03-23 20:10:54 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/chat/message/nack - 200 14.9132 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-03-23 20:10:59 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/chat/message/nack - 200 13.8604 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -

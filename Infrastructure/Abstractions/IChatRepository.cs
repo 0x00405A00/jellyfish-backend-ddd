@@ -1,9 +1,6 @@
-﻿using Domain.Entities.Chats;
-using Infrastructure.Repository;
-
-namespace Infrastructure.Abstractions
+﻿namespace Infrastructure.Abstractions
 {
-    public interface IChatRepository : IGenericRepository<Chat>
+    public interface IChatRepository : Domain.Repository.IChatRepository
     {
 
     }
