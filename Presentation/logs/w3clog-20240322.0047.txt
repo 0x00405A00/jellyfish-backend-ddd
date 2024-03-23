@@ -1,0 +1,10 @@
+#Version: 1.0
+#Start-Date: 2024-03-22 22:49:37
+#Fields: date time c-ip cs-username s-computername s-ip s-port cs-method cs-uri-stem cs-uri-query sc-status time-taken cs-version cs-host cs(User-Agent) cs(Cookie) cs(Referer)
+2024-03-22 22:49:36 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 POST /messengerhub/negotiate ?negotiateVersion=1 200 222.4279 HTTP/1.1 webapi:5000 Microsoft+ASP.NET+Core - -
+2024-03-22 22:49:35 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/user/c92db313-765b-46dd-bf40-ef7d5a5abd7b - 200 637.6711 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-03-22 22:49:36 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/user - 200 519.9236 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-03-22 22:49:42 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/user/user-types - 200 34.2899 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-03-22 22:49:42 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/role - 200 29.1196 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-03-22 22:49:42 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/user - 200 97.6096 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-03-22 22:49:44 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /healthz - 200 593.6326 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -

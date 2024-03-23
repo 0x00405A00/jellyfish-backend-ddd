@@ -1,11 +1,12 @@
 ﻿@using System.Threading;
+@inject IJSRuntime JSRuntime
 
 <MudDialog Style="width: 30rem;">
     <DialogContent>
         <MudText>@Text</MudText>
             <MudStack Style="width: 100%">
                 <MudFileUpload T="IBrowserFile"
-                               Accept=".png, .jpg" OnFilesChanged="OnInputFileChanged" AppendMultipleFiles Hidden="false" Class="flex-1" InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20" InputStyle="opacity:0"
+                               Accept=".png, .jpg" OnFilesChanged="OnInputFileChanged" AppendMultipleFiles=false Hidden="false" Class="flex-1" InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20" InputStyle="opacity:0"
                             @ondragenter="@SetDragClass" @ondragleave="@ClearDragClass" @ondragend="@ClearDragClass">
                  <ButtonTemplate>
                      <MudPaper Height="300px" Outlined="true" Class="@DragClass">
@@ -32,7 +33,8 @@
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton Color="MudBlazor.Color.Primary" Disabled="@(!isFileUploaded)" OnClick="Upload">Upload</MudButton>
+        <input type="button" style="height: 20px; width: 50px; color: black; background-color: #ff3222" onclick=@(async()=>await JSRuntime.InvokeVoidAsync("alert", "Warning!")) />
+        <MudButton Color="MudBlazor.Color.Primary" Disabled="@(!isFileUploaded)" OnClick=@Upload>Upload</MudButton>
         <MudButton Color="MudBlazor.Color.Primary" Disabled="@(!isFileUploaded)" OnClick="Clear">Clear</MudButton>
         <MudButton OnClick="Cancel">Cancel</MudButton>
     </DialogActions>
@@ -63,7 +65,7 @@
         return Task.CompletedTask;
     }
 
-    private async Task Upload()
+    public void Upload()
     {
 
         MudDialog.Close(DialogResult.Ok(file));

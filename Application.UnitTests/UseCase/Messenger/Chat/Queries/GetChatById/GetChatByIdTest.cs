@@ -12,7 +12,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Queries.GetChatById
 
         // Add more queries for invalid scenarios if needed
 
-        private readonly GetChatQueryHandler _handler;
+        private readonly GetChatByIdQueryHandler _handler;
         private readonly IMapper _mapperMock;
         private readonly IChatRepository _chatRepositoryMock;
 
@@ -24,7 +24,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Queries.GetChatById
         {
             _mapperMock = Substitute.For<IMapper>();
             _chatRepositoryMock = Substitute.For<IChatRepository>();
-            _handler = new GetChatQueryHandler(_mapperMock, _chatRepositoryMock);
+            _handler = new GetChatByIdQueryHandler(_mapperMock, _chatRepositoryMock);
         }
 
         [Fact]

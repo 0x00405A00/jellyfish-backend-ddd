@@ -1,18 +1,12 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Domain.Extension;
+using Domain.Primitives.Ids;
+using Infrastructure.Extensions;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Shared.Infrastructure.Backend.SignalR;
-using SharpCompress;
 
 namespace Infrastructure.SignalR
 {
-    public class MessengerHubExtension
-    {
-        private static HashSet<string> _connectionsIds = new HashSet<string>();
-        public static ReadOnlyCollection<string> ConnectionsIds => _connectionsIds.ToReadOnly();
-
-        public static void AddConnection(string connectionId) => _connectionsIds.Add(connectionId);
-        public static void RemoveConnection(string connectionId) => _connectionsIds.Remove(connectionId);
-    }
     public class MessengerHub : Hub<IMessengerClient>
     {
         private readonly ILogger<MessengerHub> logger;
@@ -24,19 +18,29 @@ namespace Infrastructure.SignalR
 
         public override Task OnConnectedAsync()
         {
-            MessengerHubExtension.AddConnection(Context.ConnectionId);
-            logger.LogInformation($"Client connected: {Context.ConnectionId}");
+            logger.LogInformation($"client:{Context.ConnectionId}:connection:start");
+            var userUuid = Context.GetUserUuidFromRequest();
+            if(userUuid == Guid.Empty)
+            {
+                logger.LogInformation($"client:{Context.ConnectionId}:connection:start:without identity");
+            }
+
+            MessengerHubExtension.AddConnection(Context.ConnectionId,userUuid.ToIdentification<UserId>());
+            logger.LogInformation($"client:{Context.ConnectionId}:connection:established");
             return base.OnConnectedAsync();
         }
 
         public override Task OnDisconnectedAsync(Exception? exception)
         {
+            logger.LogInformation($"client:{Context.ConnectionId}:connection:begin closing");
+            var userUuid = Context.GetUserUuidFromRequest();
             MessengerHubExtension.RemoveConnection(Context.ConnectionId);
-            logger.LogInformation($"Client disconnected: {Context.ConnectionId}");
             if (exception != null)
             {
-                logger.LogError($"Exception: {exception.Message}");
+                logger.LogError($"client:{Context.ConnectionId}:connection:begin closing:exception happened");
+                logger.LogError($"exception: {exception.Message}");
             }
+            logger.LogInformation($"client:{Context.ConnectionId}:connection:disconnected");
             return base.OnDisconnectedAsync(exception);
         }
     }

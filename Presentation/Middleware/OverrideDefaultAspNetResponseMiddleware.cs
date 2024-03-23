@@ -38,6 +38,9 @@ namespace Presentation.Middleware
                         case HttpStatusCode.UnprocessableEntity:
                             responseOverride = ("Unprocessable entity", "Your request is bad");
                             break;
+                        case HttpStatusCode.NotAcceptable:
+                            responseOverride = ("NotAcceptable entity", "Your request is bad");
+                            break;
                         default:
                             if(context.Response.ContentLength is null || context.Response.ContentLength == 0)
                             {

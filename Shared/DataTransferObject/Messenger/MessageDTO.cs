@@ -27,16 +27,22 @@ namespace Shared.DataTransferObject.Messenger
         [JsonIgnore]
         public bool HasBase64ContentSet => !String.IsNullOrEmpty(this.BinaryContentBase64);
 
-        public Chat Chat{ get; }
+        [JsonIgnore]
+        public Chat? Chat{ get; }
 
-        public ChatId ChatForeignKey{ get; }
+        [JsonIgnore]
+        public ChatId? ChatForeignKey{ get; }
 
+        [JsonIgnore]
         public MediaContent? MediaContent{ get; }
 
+        [JsonIgnore]
         public IReadOnlyCollection<MessageOutbox>? MessagesInOutbox{ get; }
 
-        public User User{ get; }
+        [JsonIgnore]
+        public User? User{ get; }
 
-        public UserId UserForeignKey{ get; }
+        [JsonIgnore]
+        public UserId? UserForeignKey{ get; }
     }
 }

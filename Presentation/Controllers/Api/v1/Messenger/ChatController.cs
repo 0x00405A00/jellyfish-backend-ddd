@@ -1,3 +1,4 @@
+using Application.CQS.Messenger.Chat.Command.AcknowledgeMessageDeliveryByChat;
 using Application.CQS.Messenger.Chat.Command.AddChatMember;
 using Application.CQS.Messenger.Chat.Command.AssignChatAdmin;
 using Application.CQS.Messenger.Chat.Command.CreateChat;
@@ -9,6 +10,8 @@ using Application.CQS.Messenger.Chat.Command.RevokeChatAdmin;
 using Application.CQS.Messenger.Chat.Command.UpdateChat;
 using Application.CQS.Messenger.Chat.Command.UpdateMessage;
 using Application.CQS.Messenger.Chat.Queries.GetChatById;
+using Application.CQS.Messenger.Chat.Queries.GetNotDeliveredMessagesByChat;
+using Infrastructure.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -61,6 +64,33 @@ namespace Presentation.Controllers.Api.v1.Messenger
         public async Task<IActionResult> GetChat(Guid chatId, CancellationToken cancellationToken)
         {
             var command = new GetChatByIdQuery(chatId);
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.PrepareResponse();
+        }
+
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<List<MessageDTO>>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
+        [HttpGet("{chatId}/message/nack")]
+        public async Task<IActionResult> GetNotDeliveredMessagesByChat(Guid chatId, CancellationToken cancellationToken)
+        {
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var command = new GetNotDeliveredMessagesByChatQuery(userUuid,chatId);
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.PrepareResponse();
+        }
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<List<MessageDTO>>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
+        [HttpPost("{chatId}/message/ack/{messageId}")]
+        public async Task<IActionResult> GetNotDeliveredMessagesByChat(Guid chatId,Guid messageId, CancellationToken cancellationToken)
+        {
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var command = new AcknowledgeMessageDeliveryByChatCommand(userUuid, messageId, chatId);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();

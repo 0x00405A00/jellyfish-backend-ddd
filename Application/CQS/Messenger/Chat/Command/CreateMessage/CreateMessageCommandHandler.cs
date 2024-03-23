@@ -15,6 +15,8 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
     internal sealed class CreateMessageCommandHandler : ICommandHandler<CreateMessageCommand, List<MessageDTO>>
     {
         private readonly IChatRepository _chatRepository;
+        private readonly IMessageRepository _messageRepository;
+        private readonly IMessageOutboxRepository messageOutboxRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMediaService mediaService;
         private readonly IMediator mediator;
@@ -28,6 +30,8 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
             IAntiVirus antiVirus,
             IAzureAdultContentDetection azureAdultContentDetection,
             IChatRepository chatRepository,
+            IMessageRepository messageRepository,
+            IMessageOutboxRepository messageOutboxRepository,
             IUserRepository userRepository,
             IMediaService mediaService)
         {
@@ -36,6 +40,8 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
             this.antiVirus = antiVirus;
             this.azureAdultContentDetection = azureAdultContentDetection;
             _chatRepository = chatRepository;
+            this._messageRepository = messageRepository;
+            this.messageOutboxRepository = messageOutboxRepository;
             _userRepository = userRepository;
             this.mediaService = mediaService;
         }
@@ -55,6 +61,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
             }
             List<Error> errors = new List<Error>();
             var chatMember = chat.GetChatMemberById(userId);
+            List<Message> createdMessages = new List<Message>(request.Messages.Count);
             try
             {
                 foreach(var message in request.Messages)
@@ -76,18 +83,33 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
                             var filePath = mediaService.CheckContent(mediaContentDTO, cancellationToken);
                             mediaContent = MediaContent.Parse(binaryData, mimeType);
                         }
-
+                        var createdTime = (message.CreatedTime ?? DateTime.UtcNow).ToTypedDateTime();
                         Message messageEntity = Message.Create(
                             messageId,
                             chat.Id,
                             userId,
                             text,
                             mediaContent,
-                            (message.CreatedTime ?? DateTime.UtcNow).ToTypedDateTime(),//Prüfung des CreatedTime auf null-Wert in 'UploadProfilePictureCommandValidator'
+                            createdTime,//Prüfung des CreatedTime auf null-Wert in 'UploadProfilePictureCommandValidator'
                             userId,null,null,null,
                             null);
                         var createMessageEntity = chat.AddMessage(messageEntity);
-                        messageEntity.SetCreated(chatMember.UserForeignKey);
+                        messageEntity.SetCreated(userId);
+                        _messageRepository.Add(messageEntity);
+                        foreach(var chatUser in chat.Members)
+                        {
+                            var messageOutBoxId = MessageOutbox.NewId();
+                            var foreignChatMember = chatUser.UserForeignKey;
+                            var messageOutbox = MessageOutbox.Create(
+                                messageOutBoxId,
+                                messageId,
+                                foreignChatMember,
+                                createdTime,
+                                null,
+                                null);
+                            messageOutboxRepository.Add(messageOutbox);
+                        }
+                        createdMessages.Add(messageEntity); 
                     }
                     catch(Exception ex)
                     {
@@ -96,14 +118,13 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
 
                 }
                 //save nur wenn errs collected is empty
-                _chatRepository.Update(chat);
             }
             catch (Exception ex)
             {
                 return Result<List<MessageDTO>>.Failure("cant save messages to chat", Error.ERROR_CODE.Exception);
             }
 
-            var dto = _mapper.Map<List<MessageDTO>>(null);
+            var dto = _mapper.Map<List<MessageDTO>>(createdMessages);
             var result = Result<List<MessageDTO>>.Success(dto);
             if (errors.Any())
             {

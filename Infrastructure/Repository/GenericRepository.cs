@@ -11,6 +11,7 @@ namespace Infrastructure.Repository
         where TEntity : Entity
     {
 
+        public Expression<Func<TEntity, bool>> DefaultExpression = (entity) => 1 == 1;
         public DbSet<TEntity> DbSet { get; private set; }
         public ApplicationDbContext Context { get; private set; }
 
@@ -20,11 +21,11 @@ namespace Infrastructure.Repository
             DbSet = Context.Set<TEntity>();
         }
         #region Sync 
-        public void Add(TEntity entity)
+        public virtual void Add(TEntity entity)
         {
             DbSet.Add(entity);
         }
-        public void Attach(TEntity entity)
+        public virtual void Attach(TEntity entity)
         {
             DbSet.Attach(entity);
         }
@@ -33,7 +34,7 @@ namespace Infrastructure.Repository
             DbSet.Update(entity);
         }
 
-        public void Remove(TEntity entity)
+        public virtual void Remove(TEntity entity)
         {
             DbSet.Remove(entity);
         }

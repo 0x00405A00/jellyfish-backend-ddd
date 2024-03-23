@@ -17,6 +17,7 @@ using Application.CQS.User.Commands.UpdatePassword;
 using Application.CQS.User.Commands.UpdateProfilePicture;
 using Application.CQS.User.Commands.UpdateUser;
 using Application.CQS.User.Queries.GetUserById;
+using Infrastructure.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -266,6 +267,21 @@ namespace Presentation.Controllers.Api.v1
                 userDto.Email,
                 userDto.Phone,
                 (DateTime)userDto.DateOfBirth);
+
+            var result = await Sender.Send(command, cancellationToken);
+            return result.PrepareResponse();
+        }
+
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<UserDTO>), 200)]
+        [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
+        [HttpGet("own-profile")]
+        public async Task<IActionResult> OwnProfile(CancellationToken cancellationToken)
+        {
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+
+            var command = new Application.CQS.User.Queries.GetUserById.GetUserByIdQuery(userUuid);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();

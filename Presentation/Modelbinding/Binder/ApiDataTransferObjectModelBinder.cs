@@ -75,6 +75,10 @@ namespace Presentation.Modelbinding.Binder
 
                     bindingContext.Result = ModelBindingResult.Success(model);
                 }
+                catch(ModelBindingFailedException ex)
+                {
+                    bindingContext.Result = ModelBindingResult.Failed();
+                }
                 catch (Exception ex)
                 {
                     throw;

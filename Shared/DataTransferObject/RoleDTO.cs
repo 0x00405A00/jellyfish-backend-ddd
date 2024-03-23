@@ -10,6 +10,7 @@ namespace Shared.DataTransferObject
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
+        [JsonIgnore]
         public IReadOnlyCollection<UserHasRelationToRole> UserHasRelationToRoles { get; }
 
         public override string ToString() => Name;

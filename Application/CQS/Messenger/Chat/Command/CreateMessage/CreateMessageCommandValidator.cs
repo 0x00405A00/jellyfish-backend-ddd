@@ -18,7 +18,6 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
         {
             public MessageDTOValidator()
             {
-                RuleFor(message => message.Id).NotEmpty().WithMessage("Uuid must not be empty.");
                 RuleFor(message => message.ChatId).NotEmpty().WithMessage("ChatId must not be empty.");
                 RuleFor(message => message.OwnerUuid).NotEmpty().WithMessage("OwnerUuid must not be empty.");
                 RuleFor(message => message.Text).NotEmpty().When(message => string.IsNullOrEmpty(message.BinaryContentBase64))

@@ -29,7 +29,7 @@ namespace Infrastructure.Healthcheck.Concrete.Cache
                 stopwatch.Stop();
                 HealthStatus[] cacheHealthStatus = new HealthStatus[1];
 
-                var connectionCount = MessengerHubExtension.ConnectionsIds.Count();
+                var connectionCount = MessengerHubExtension.Connections.Count();
                 desciption += $"local-signalr=;Up-state=Up;connection-count={connectionCount};fetch-time=0ms;errors=no;warning=no;details=;\n";
                 return Task.FromResult(new HealthCheckResult(healthStatus, desciption));
 

@@ -53,7 +53,7 @@ namespace Shared.Infrastructure.Backend.SignalR
             return Task.CompletedTask;
         }
 
-        public Task ReceiveMessage(List<MessageDTO> messages)
+        public Task ReceiveMessage(List<Guid> MessageIds)
         {
             return Task.CompletedTask;
         }

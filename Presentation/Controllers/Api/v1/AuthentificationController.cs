@@ -1,6 +1,7 @@
 ﻿using Application.CQS.Auth.Command.CreateAuth;
 using Application.CQS.Auth.Command.RefreshAuth;
 using Application.CQS.Auth.Command.RemoveAuth;
+using Infrastructure.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;

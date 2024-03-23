@@ -105,7 +105,8 @@ namespace WebFrontEnd.Handler
                 { x => x.Text, caption }
             };
             var dialog = await dialogService.ShowAsync<UploadFileDialog>(caption, parameters, options);
-            return await dialog.Result;
+            var result = await dialog.Result;
+            return result;
         }
     }
 }

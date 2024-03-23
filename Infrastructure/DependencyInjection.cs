@@ -1,4 +1,5 @@
-﻿using Infrastructure.Abstractions;
+﻿using Domain.Entities.Messages;
+using Infrastructure.Abstractions;
 using Infrastructure.Authentification;
 using Infrastructure.Cache;
 using Infrastructure.FileSys;
@@ -73,9 +74,11 @@ namespace Infrastructure
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.Decorate<IUserRepository, CachingUserRepository>();
+            services.AddScoped<IMessageOutboxRepository, MessageOutboxRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
 
             services.AddHostedService<MailHostedService>();
-            services.AddHostedService<SignalRTestHostedService>();
+            services.AddHostedService<ChatNotificationHostedService>();
             services.AddScoped<IMailHandler, MailHandler>();
 
             services.Scan(selector => selector
