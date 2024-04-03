@@ -12,6 +12,7 @@ namespace Shared.Infrastructure.Backend.Api
 {
     public interface IJellyfishBackendApi
     {
+        Task<bool> ConnectionTest(CancellationToken cancellationToken);
         Task<UserDTO?> GetCurrentUser(AuthenticationState authenticationState, CancellationToken cancellationToken);
         void AddErrorHandler(ErrorOutputEventHandler eventHandler);
         Task<JellyfishBackendApi.JellyfishBackendApiResponse<UserDTO>> AddUser(UserDTO user, CancellationToken cancellationToken);
@@ -35,6 +36,9 @@ namespace Shared.Infrastructure.Backend.Api
         Task<JellyfishBackendApi.JellyfishBackendApiResponse<MessageDTO>> AcknowledgeNotDeliveredMessages(Guid messageId,CancellationToken cancellationToken);
 
         Task<AuthDTO> Authentificate(string userName, string password, CancellationToken cancellationToken);
+        void SetSession(AuthDTO authDTO);
+        void SetSession(Func<Task<AuthDTO>> funcGetAuthDTO);
+        Task<AuthDTO> GetSession();
         Task<AuthDTO> RefreshAuthentification(string token, string refreshToken, CancellationToken cancellationToken);
         Task<HttpStatusCode> Logout(CancellationToken cancellationToken);
     }

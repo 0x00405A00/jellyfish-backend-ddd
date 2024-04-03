@@ -1,6 +1,7 @@
 ﻿using Domain.Entities.Mails;
 using Infrastructure.Abstractions;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repository.Concrete
@@ -14,14 +15,32 @@ namespace Infrastructure.Repository.Concrete
 
         public override async Task<ICollection<MailOutbox>> ListAsync(Expression<Func<MailOutbox, bool>> expression = null)
         {
-            var result = expression == null ? await DbSet.Include(x => x.Attachments)
+            var result = await DbSet.Include(x => x.Attachments)
                 .Include(x => x.Recipients)
                 .AsSingleQuery()
-                .ToListAsync() :
-                await DbSet.Include(x => x.Attachments)
+                .Where(DefaultExpression)
+                .ToListAsync();
+            return result;
+        }
+
+        public async Task<ICollection<MailOutbox>> ListWithPessimisticLockAsync(Expression<Func<MailOutbox, bool>> expression = null)
+        {
+            const string query =
+                """
+                SELECT *
+                FROM public.mail_outbox 
+                ORDER BY created_time asc 
+                FOR UPDATE 
+                SKIP LOCKED
+                """;
+
+            var result = await DbSet
+                .FromSqlRaw<MailOutbox>(query)
+                .Include(x => x.Attachments)
                 .Include(x => x.Recipients)
+                .AsNoTracking() 
                 .AsSingleQuery()
-                .Where(expression)
+                .Where(expression??DefaultExpression)
                 .ToListAsync();
             return result;
         }

@@ -1,10 +1,15 @@
 ﻿using Domain.Const;
+using Domain.Entities.Mails;
+using Domain.ValueObjects;
 using Infrastructure.Abstractions;
 using Infrastructure.Mail;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MimeKit;
+using Shared.Logger;
+using System.Data;
+using System.Linq.Expressions;
 
 namespace Infrastructure.HostedService.Backgroundservice
 {
@@ -25,8 +30,6 @@ namespace Infrastructure.HostedService.Backgroundservice
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-
-
             using PeriodicTimer timer = new(TimeSpan.FromSeconds(MailSentIntervalInSeconds));
 
             try
@@ -39,7 +42,7 @@ namespace Infrastructure.HostedService.Backgroundservice
             }
             catch (OperationCanceledException)
             {
-
+                _logger.LogDebug($"operation canceled");
             }
         }
         private async Task TExecuteTask()
@@ -50,84 +53,138 @@ namespace Infrastructure.HostedService.Backgroundservice
                 var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWorkMailService>();
                 var mailoutboxRepository = scope.ServiceProvider.GetRequiredService<IMailoutboxRepositoryMailService>();
                 var mailHandler = scope.ServiceProvider.GetRequiredService<IMailHandler>();
-
-                var mails = await mailoutboxRepository.ListAsync();
-                if (mails.Count == 0)
-                    return;
-
-                foreach (var mail in mails)
+                using var transaction = dbContext.Database.BeginTransaction();
                 {
-                    var mailIsHtml = Convert.ToBoolean(mail.IsBodyHtml);
-                    var from = new MailboxAddress(mail.From, mail.From);
-                    InternetAddressList recipientsToList = new InternetAddressList();
-                    InternetAddressList recipientsCcList = new InternetAddressList();
-                    InternetAddressList recipientsBccList = new InternetAddressList();
-
-                    foreach (var recipient in mail.Recipients)
+                    try
                     {
-                        if(recipient.IsReceiver())
+                        var mails = await mailoutboxRepository.ListWithPessimisticLockAsync();
+
+                        if (mails.Count == 0)
                         {
-                            recipientsToList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
+                            _logger.LogDebug("no mails available to send");
+                            return;
                         }
-                        else if(recipient.IsCopy())
+
+                        _logger.LogDebug("delivery: prepare delivery for {Count}",mails.Count);
+                        foreach (var mail in mails)
                         {
-                            recipientsCcList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
+                            _logger.LogDebugForObject<MailOutbox>(x=>x.Id.ToString(), "delivery:preparation:start:", mail);
+                            var mailIsHtml = Convert.ToBoolean(mail.IsBodyHtml);
+                            var from = new MailboxAddress(mail.From, mail.From);
+                            InternetAddressList recipientsToList, recipientsCcList, recipientsBccList;
+                            recipientsToList = recipientsCcList = recipientsBccList = new();
+
+                            SetRecipients(mail.Recipients, ref recipientsToList, ref recipientsCcList, ref recipientsBccList);
+                            _logger.LogDebug("delivery: set recipients");
+
+                            string subject = mail.Subject ?? String.Empty;
+                            string body = mail.Body;
+                            MimeKit.AttachmentCollection mailAttachments = new MimeKit.AttachmentCollection();
+                            MimeKit.AttachmentCollection mailEmbeddedInHtmlMedia = new MimeKit.AttachmentCollection();
+                            
+                            SetAttachments(mail.Attachments,ref mailAttachments, ref mailEmbeddedInHtmlMedia);
+                            _logger.LogDebug("delivery: set attachments");
+
+                            _logger.LogDebug("delivery: start to create mime-message");
+                            var mailMessage = mailHandler.CreateMimeMessage(
+                                recipientsToList,
+                                recipientsCcList,
+                                recipientsBccList,
+                                from,
+                                subject,
+                                body,
+                                mailEmbeddedInHtmlMedia,
+                                mailAttachments,
+                                mailIsHtml);
+                            _logger.LogDebug("delivery: mime-message created");
+
+                            await mailHandler.SendMail(mailMessage);
+                            _logger.LogInformation($"delivery: {DateTime.UtcNow.ToLongTimeString()}-mailservice send mail with id {mail.Id}");
+                            mailoutboxRepository.Remove(mail);
+                            _logger.LogInformation($"delivery: remove mail with id {mail.Id} from repository");
                         }
-                        else if(recipient.IsBlindCopy())
-                        {
-                            recipientsBccList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
-                        }
+
+                        _logger.LogDebug($"start to save changes");
+                        await unitOfWork.SaveChangesAsync();
+                        _logger.LogDebug($"save changes successfull");
+                        _logger.LogDebug($"start committing");
+                        transaction.Commit();
+                        _logger.LogDebug($"committing successfull");
                     }
-                    string subject = mail.Subject ?? String.Empty;
-                    string body = mail.Body;
-                    MimeKit.AttachmentCollection mailAttachments = new MimeKit.AttachmentCollection();
-                    MimeKit.AttachmentCollection mailEmbeddedInHtmlMedia = new MimeKit.AttachmentCollection();
-                    foreach (var attachment in mail.Attachments)
+                    catch(DBConcurrencyException ex)
                     {
-                        var isEmbedded = Convert.ToBoolean(attachment.IsEmbededInHtml);
-                        string filePath = attachment.AttachmentPath;
-                        if (isEmbedded)
-                        {
-                            var builder = new BodyBuilder();
-                            var image = builder.LinkedResources.Add(filePath);
-                            image.ContentId = attachment.MimeCid;
-                            mailEmbeddedInHtmlMedia.Add(image);
-                        }
-                        else
-                        {
-                            using (FileStream fs = File.OpenRead(filePath))
-                            {
-                                var mediaAttachent = new MimePart(attachment.MimeMediaType, attachment.MimeMediaSubType)
-                                {
 
-                                    Content = new MimeContent(fs, ContentEncoding.Default),
-                                    ContentDisposition = new ContentDisposition(isEmbedded ? ContentDisposition.Inline : ContentDisposition.Attachment),
-                                    ContentTransferEncoding = ContentEncoding.Base64,
-                                    FileName = Path.GetFileName(attachment.Filename),
-                                    ContentId = attachment.MimeCid,
-                                };
-                                mailAttachments.Add(mediaAttachent);
-                                fs.Close();
-                            }
-
-                        }
+                        _logger.LogException(ex);
+                        transaction.Rollback();
+                        _logger.LogDebug($"rollback");
                     }
-                    var mailMessage = mailHandler.CreateMimeMessage(
-                        recipientsToList,
-                        recipientsCcList,
-                        recipientsBccList,
-                        from,
-                        subject,
-                        body,
-                        mailEmbeddedInHtmlMedia,
-                        mailAttachments,
-                        mailIsHtml);
-                    await mailHandler.SendMail(mailMessage);
-                    _logger.LogInformation($"{DateTime.UtcNow.ToLongTimeString()}-mailservice send mail");
-                    mailoutboxRepository.Remove(mail);
+                    catch(Exception ex)
+                    {
+                        _logger.LogException(ex);
+                        transaction.Rollback();
+                        _logger.LogDebug($"rollback");
+                    }
+
+                    
                 }
-                await unitOfWork.SaveChangesAsync();
+                
             }
+        }
+
+        private bool SetAttachments(IReadOnlyCollection<MailOutboxAttachment> mailAttachments,ref AttachmentCollection attachments, ref AttachmentCollection attachmentsEmbeded)
+        {
+            foreach (var attachment in mailAttachments)
+            {
+                var isEmbedded = Convert.ToBoolean(attachment.IsEmbededInHtml);
+                string filePath = attachment.AttachmentPath;
+                if (isEmbedded)
+                {
+                    var builder = new BodyBuilder();
+                    var image = builder.LinkedResources.Add(filePath);
+                    image.ContentId = attachment.MimeCid;
+                    attachmentsEmbeded.Add(image);
+                }
+                else
+                {
+                    using (FileStream fs = File.OpenRead(filePath))
+                    {
+                        var mediaAttachent = new MimePart(attachment.MimeMediaType, attachment.MimeMediaSubType)
+                        {
+
+                            Content = new MimeContent(fs, ContentEncoding.Default),
+                            ContentDisposition = new ContentDisposition(isEmbedded ? ContentDisposition.Inline : ContentDisposition.Attachment),
+                            ContentTransferEncoding = ContentEncoding.Base64,
+                            FileName = Path.GetFileName(attachment.Filename),
+                            ContentId = attachment.MimeCid,
+                        };
+                        attachments.Add(mediaAttachent);
+                        fs.Close();
+                    }
+
+                }
+            }
+            return true;
+        }
+
+        private bool SetRecipients(IReadOnlyCollection<MailOutboxRecipient> recipients, ref InternetAddressList toList, ref InternetAddressList ccList, ref InternetAddressList bccList)
+        {
+
+            foreach (var recipient in recipients)
+            {
+                if (recipient.IsReceiver())
+                {
+                    toList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
+                }
+                else if (recipient.IsCopy())
+                {
+                    ccList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
+                }
+                else if (recipient.IsBlindCopy())
+                {
+                    bccList.Add(MimeKit.InternetAddress.Parse(recipient.Email));
+                }
+            }
+            return true;
         }
 
     }

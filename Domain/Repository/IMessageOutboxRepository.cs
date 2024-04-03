@@ -2,7 +2,7 @@
 
 namespace Domain.Repository
 {
-    public interface IMessageOutboxRepository : IGenericRepository<MessageOutbox>
+    public interface IMessageOutboxRepository : IGenericRepository<MessageOutbox>, IPessimisticLockingRepository<MessageOutbox>
     {
 
     }

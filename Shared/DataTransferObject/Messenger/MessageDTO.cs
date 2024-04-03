@@ -16,6 +16,9 @@ namespace Shared.DataTransferObject.Messenger
         [JsonPropertyName("owner_uuid")]
         public Guid OwnerUuid { get; set; }
 
+        [JsonPropertyName("owner_name")]
+        public string? OwnerName { get; set; }
+
         [JsonPropertyName("text")]
         public string? Text { get; set; }
 

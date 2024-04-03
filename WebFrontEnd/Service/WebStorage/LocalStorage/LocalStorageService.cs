@@ -1,6 +1,7 @@
 ﻿using Microsoft.JSInterop;
 using Shared.DataTransferObject;
 using Shared.Infrastructure.Backend;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using WebFrontEnd.Service.WebStorage.LocalStorage.Exception;
 
@@ -35,7 +36,11 @@ namespace WebFrontEnd.Service.WebStorage.LocalStorage
             }
             try
             {
-                return await JS.InvokeAsync<string>("localStorage.getItem", key);
+                return await JS.InvokeAsync<string>("localStorage.getItem", key);//by server rendering it throws a InvalidOperationException because there is no localstorage available at this time, only when its rendered successfull by client
+            }
+            catch(InvalidOperationException ex)
+            {
+                return null;
             }
             catch (System.Exception ex)
             {
@@ -59,7 +64,7 @@ namespace WebFrontEnd.Service.WebStorage.LocalStorage
             }
         }
 
-        public async Task<T> GetDeserializedJsonItemFromKey<T>(string key)
+        public async Task<T> GetDeserializedJsonItemFromKey<T>(string key, [CallerMemberName] object caller = null)
         {
             if (String.IsNullOrEmpty(key))
             {
@@ -78,7 +83,6 @@ namespace WebFrontEnd.Service.WebStorage.LocalStorage
             catch(System.Exception ex)
             {
                 throw;
-                return default;
             }
         }
 
@@ -89,7 +93,14 @@ namespace WebFrontEnd.Service.WebStorage.LocalStorage
                 throw new InvalidKeyValuePairException("key is null");
             }
             string str = JsonSerializer.Serialize(value,typeof(T));
-            await JS.InvokeVoidAsync("localStorage.setItem", key, str);
+            try
+            {
+                await JS.InvokeVoidAsync("localStorage.setItem", key, str);
+            }
+            catch (TaskCanceledException ex)
+            {
+
+            }
         }
 
         public async Task<bool> CheckIfValidTokenExists()

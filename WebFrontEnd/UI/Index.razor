@@ -2,7 +2,8 @@
 @inject ILocalStorageService LocalStorageService
 @inject NavigationManager NavigationManager
 @inject ISessionStorage SessionStorage
-@inject IWebApiRestClient Rest
+@inject IJellyfishBackendApi JellyfishBackendApi
+@inject ICustomAuthentificationStateProvider AuthentificationService
 
 <PageTitle>Index</PageTitle>
 
@@ -16,14 +17,12 @@ Welcome to your new app.
     private CancellationTokenSource cancellationToken = new();
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var auth = await LocalStorageService.GetDeserializedJsonItemFromKey<AuthDTO>(Shared.Const.AuthorizationConst.SessionStorage.AuthorizationKey);
-        if (auth!=null && !auth.IsTokenExpired)
+        var auth = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
+        if (auth.IsAuthentificated)
         {
-            WebApiRestClient.CurrentWebApiSession = auth;
             _session = await SessionStorage.GetSession(cancellationToken.Token);
             var data = _session.General;
             NavigationManager.NavigateTo(data.LastRoute);
         }
-
     }
 }

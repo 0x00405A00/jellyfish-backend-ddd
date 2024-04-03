@@ -134,7 +134,7 @@
     {
         if(firstRender)
         {
-            SignalRClient.OpenConnection();
+            SignalRClient.OpenConnection(cancellationToken.Token);
 
             SignalRClient.HubConnection.On<List<MessageDTO>>(nameof(SignalRClient.ReceiveMessage), ReceiveMessage);
             for (int i = 0; i < XAxisLastHoursBarCount; i++)

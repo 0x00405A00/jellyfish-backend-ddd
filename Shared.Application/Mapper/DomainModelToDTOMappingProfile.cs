@@ -8,6 +8,7 @@ using Domain.Extension;
 using Domain.Primitives;
 using Domain.Primitives.Ids;
 using Microsoft.Extensions.Configuration;
+using Serilog.Sinks.Graylog.Core.Extensions;
 using Shared.DataTransferObject;
 using Shared.DataTransferObject.Messenger;
 using Shared.Http;
@@ -67,7 +68,8 @@ namespace Application.Shared.Mapper
                 .ForMember(dst => dst.ChatId, dst => dst.MapFrom(x => x.ChatForeignKey))
                 .ForMember(dst => dst.BinaryContentBase64, dst => dst.MapFrom(x => x.MediaContent.ToString()))
                 .ForMember(dst => dst.BinaryContentMimeType, dst => dst.MapFrom(x => x.MediaContent.FileExtension))
-                .ForMember(dst => dst.OwnerUuid, dst => dst.MapFrom(x => x.UserForeignKey))
+                .ForMember(dst => dst.OwnerUuid, dst => dst.MapFrom(x => x.CreatedByUserForeignKey))
+                .ForMember(dst => dst.OwnerName, dst => dst.MapFrom(x => x.CreatedByUser.UserName))
                 .ForMember(dst => dst.DeletedByUserForeignKey, dst => dst.MapFrom(x => x.DeletedByUserForeignKey))
                 .ForMember(dst => dst.CreatedByUserForeignKey, dst => dst.MapFrom(x => x.CreatedByUserForeignKey))
                 .ForMember(dst => dst.LastModifiedByUserForeignKey, dst => dst.MapFrom(x => x.LastModifiedByUserForeignKey))
@@ -78,6 +80,8 @@ namespace Application.Shared.Mapper
                 .ForMember(dst => dst.Description, src => src.MapFrom(x => x.Description))
                 .ForMember(dst => dst.Members, src => src.MapFrom(x => x.Members.Select(x => x.UserForeignKey.ToGuid()).ToList()))
                 .ForMember(dst => dst.Admins, src => src.MapFrom(x => x.Admins.Select(x => x.UserForeignKey.ToGuid()).ToList()))
+                .ForMember(dst => dst.MembersAsUsernames, src => src.MapFrom(x => x.Members.Select(x => x.User.UserName).ToList()))
+                .ForMember(dst => dst.AdminsAsUsernames, src => src.MapFrom(x => x.Admins.Select(x => x.User.UserName).ToList()))
                 .ForMember(dst => dst.PictureBase64, dst => dst.MapFrom(x => x.Picture.ToString()))
                 .ForMember(dst => dst.PictureMimeType, dst => dst.MapFrom(x => x.Picture.FileExtension))
                 .ForMember(dst => dst.Messages, src => src.MapFrom(x => x.Messages))

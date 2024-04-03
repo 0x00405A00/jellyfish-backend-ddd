@@ -82,9 +82,12 @@ namespace Shared.Infrastructure.Backend.SignalR
             }
             if(tmpAsList.Any())
             {
-                var messageIds = await jellyfishBackendApi.GetNotDeliveredMessages(CancellationToken.None);
-                var responseProccessing = await internalDataInterceptorApplicationDispatcher.ReceiveMessage(messageIds.Data.ToArray());
-                MessageIdQueue.Clear();
+                var notDeliveredMessagesResponse = await jellyfishBackendApi.GetNotDeliveredMessages(CancellationToken.None);
+                if(notDeliveredMessagesResponse.IsSuccess && notDeliveredMessagesResponse.Data.Any())
+                {
+                    var responseProccessing = await internalDataInterceptorApplicationDispatcher.ReceiveMessage(notDeliveredMessagesResponse.Data.ToArray());
+                    MessageIdQueue.Clear();
+                }
             }
         }
     }

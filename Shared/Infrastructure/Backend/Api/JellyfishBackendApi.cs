@@ -36,29 +36,29 @@ namespace Shared.Infrastructure.Backend.Api
             var response = await this.TypedRequest<UserDTO, UserDTO>($"/user", RestSharp.Method.Post, user, cancellationToken);
             return response;
         }
-        public async Task<JellyfishBackendApiResponse<UserDTO>> EditUser(UserDTO user, CancellationToken cancellationToken)
+        public Task<JellyfishBackendApiResponse<UserDTO>> EditUser(UserDTO user, CancellationToken cancellationToken)
         {
             var url = "/user/" + user.Id + "";
-            var response = await this.TypedRequest<UserDTO, UserDTO>(url, RestSharp.Method.Put, user, cancellationToken);
+            var response = this.TypedRequest<UserDTO, UserDTO>(url, RestSharp.Method.Put, user, cancellationToken);
             return response;
         }
-        public async Task<JellyfishBackendApiResponse<UserDTO>> UpdateUserProfilePicture(UserDTO user, CancellationToken cancellationToken)
+        public Task<JellyfishBackendApiResponse<UserDTO>> UpdateUserProfilePicture(UserDTO user, CancellationToken cancellationToken)
         {
             var url = "/user/" + user.Id + "/profile-picture";
-            var response = await this.TypedRequest<UserDTO, UserDTO>(url, RestSharp.Method.Put, user, cancellationToken);
+            var response = this.TypedRequest<UserDTO, UserDTO>(url, RestSharp.Method.Put, user, cancellationToken);
             return response;
         }
-        public async Task<JellyfishBackendApiResponse<UserDTO>> DeleteUserProfilePicture(UserDTO userDTO, CancellationToken cancellationToken)
+        public Task<JellyfishBackendApiResponse<UserDTO>> DeleteUserProfilePicture(UserDTO userDTO, CancellationToken cancellationToken)
         {
             var url = "/user/" + userDTO.Id + "/profile-picture";
-            var response = await this.TypedRequest<UserDTO, UserDTO>(url, RestSharp.Method.Delete, null, cancellationToken);
+            var response = this.TypedRequest<UserDTO, UserDTO>(url, RestSharp.Method.Delete, null, cancellationToken);
             return response;
         }
         public Task<JellyfishBackendApiResponse<T2>> TypedRequest<T, T2>(string url, Method method, T? data, CancellationToken cancellationToken, PaginationBase paginationBase = null)
         {
             return apiRestClient.TypedRequest<T, T2>(url, method, data, cancellationToken, paginationBase);
         }
-        public async Task<JellyfishBackendApiResponse<List<UserDTO>>> GetUsers(string searchText, int selectedPage, int maxItemsPerPage, bool filterOnlyDeletedUsers, CancellationToken cancellationToken)
+        public Task<JellyfishBackendApiResponse<List<UserDTO>>> GetUsers(string searchText, int selectedPage, int maxItemsPerPage, bool filterOnlyDeletedUsers, CancellationToken cancellationToken)
         {
             SearchParamsBody searchParamsBody = new SearchParamsBody();
             searchParamsBody.page_offset = selectedPage;
@@ -132,18 +132,16 @@ namespace Shared.Infrastructure.Backend.Api
                 }
                 searchParamsBody.filters.Add(columnFilterGroupOr);
             }
-            var response = await this.GetUsers(searchParamsBody, cancellationToken);
 
-            return response;
+            return this.GetUsers(searchParamsBody, cancellationToken);
         }
-        public async Task<JellyfishBackendApiResponse<List<UserDTO>>> GetUsers(SearchParamsBody? searchParamsBody, CancellationToken cancellationToken)
+        public Task<JellyfishBackendApiResponse<List<UserDTO>>> GetUsers(SearchParamsBody? searchParamsBody, CancellationToken cancellationToken)
         {
 
             //var response = await this.tx<ApiDataTransferObject<List<UserDTO>>, SearchParamsBody>("/user", RestSharp.Method.Get, cancellationToken, searchParamsBody);
             //return JellyfishBackendApiResponse<List<UserDTO>>.CreateFromWebApiResponseModel(response);
             var url = "/user";
-            var response = await this.TypedRequest<SearchParamsBody?, List<UserDTO>>(url, RestSharp.Method.Get, searchParamsBody, cancellationToken);
-            return response;
+            return this.TypedRequest<SearchParamsBody?, List<UserDTO>>(url, RestSharp.Method.Get, searchParamsBody, cancellationToken);
         }
         public Task<JellyfishBackendApiResponse<UserDTO>> Activate(string base64Token, UserActivationDataTransferModel userActivationDataTransferModel, CancellationToken cancellationToken)
         {
@@ -175,29 +173,24 @@ namespace Shared.Infrastructure.Backend.Api
         {
             return apiRestClient.ResetPassword(passwordResetDataTransferModel,cancellationToken);
         }
-        public async Task<JellyfishBackendApiResponse<List<UserTypeDTO>>> GetUserTypes(CancellationToken cancellationToken)
+        public Task<JellyfishBackendApiResponse<List<UserTypeDTO>>> GetUserTypes(CancellationToken cancellationToken)
+        {
+            return this.TypedRequest<object, List<UserTypeDTO>>("/user/user-types", RestSharp.Method.Get, null, cancellationToken);
+        }
+        public Task<JellyfishBackendApiResponse<List<RoleDTO>>> GetRoles(CancellationToken cancellationToken)
         {
 
-            var response = await this.TypedRequest<object, List<UserTypeDTO>>("/user/user-types", RestSharp.Method.Get, null, cancellationToken);
-            return response;
+            return this.TypedRequest<object, List<RoleDTO>>("/role", RestSharp.Method.Get, null, cancellationToken);
         }
-        public async Task<JellyfishBackendApiResponse<List<RoleDTO>>> GetRoles(CancellationToken cancellationToken)
-        {
-
-            var response = await this.TypedRequest<object, List<RoleDTO>>("/role", RestSharp.Method.Get, null, cancellationToken);
-            return response;
-        }
-        public async Task<JellyfishBackendApiResponse<List<Guid>>> AssignRoles(UserDTO user, List<RoleDTO> roleDTOs, CancellationToken cancellationToken)
+        public Task<JellyfishBackendApiResponse<List<Guid>>> AssignRoles(UserDTO user, List<RoleDTO> roleDTOs, CancellationToken cancellationToken)
         {
             var url = "/user/" + user.Id + "/role";
-            var response = await this.TypedRequest<List<RoleDTO>, List<Guid>>(url, RestSharp.Method.Patch, roleDTOs, cancellationToken);
-            return response;
+            return this.TypedRequest<List<RoleDTO>, List<Guid>>(url, RestSharp.Method.Patch, roleDTOs, cancellationToken);
         }
-        public async Task<JellyfishBackendApiResponse<List<Guid>>> RevokeRoles(UserDTO user, List<RoleDTO> roleDTOs, CancellationToken cancellationToken)
+        public Task<JellyfishBackendApiResponse<List<Guid>>> RevokeRoles(UserDTO user, List<RoleDTO> roleDTOs, CancellationToken cancellationToken)
         {
             var url = "/user/" + user.Id + "/role";
-            var response = await this.TypedRequest<List<RoleDTO>, List<Guid>>(url, RestSharp.Method.Delete, roleDTOs, cancellationToken);
-            return response;
+            return this.TypedRequest<List<RoleDTO>, List<Guid>>(url, RestSharp.Method.Delete, roleDTOs, cancellationToken);
         }
 
         public Task<UserDTO?> GetCurrentUser(AuthenticationState authenticationState, CancellationToken cancellationToken)
@@ -210,11 +203,10 @@ namespace Shared.Infrastructure.Backend.Api
             apiRestClient.AddErrorHandler(eventHandler);
         }
 
-        public async Task<JellyfishBackendApiResponse<Guid>> RemoveUser(UserDTO user, CancellationToken cancellationToken)
+        public Task<JellyfishBackendApiResponse<Guid>> RemoveUser(UserDTO user, CancellationToken cancellationToken)
         {
             var url = "/user/" + user.Id + "";
-            var deleteUserRequest = await this.TypedRequest<object, Guid>(url, RestSharp.Method.Delete, null, cancellationToken);
-            return deleteUserRequest;
+            return this.TypedRequest<object, Guid>(url, RestSharp.Method.Delete, null, cancellationToken);
         }
 
         public Task<AuthDTO> Authentificate(string userName, string password, CancellationToken cancellationToken)
@@ -232,18 +224,33 @@ namespace Shared.Infrastructure.Backend.Api
             return apiRestClient.Logout(cancellationToken) ;  
         }
 
-        public async Task<JellyfishBackendApiResponse<List<MessageDTO>>> GetNotDeliveredMessages(CancellationToken cancellationToken)
+        public Task<JellyfishBackendApiResponse<List<MessageDTO>>> GetNotDeliveredMessages(CancellationToken cancellationToken)
         {
             var url = "/chat/message/nack";
-            var response = await this.TypedRequest<object, List<MessageDTO>>(url, RestSharp.Method.Get, null, cancellationToken);
-            return response;
+            return this.TypedRequest<object, List<MessageDTO>>(url, RestSharp.Method.Get, null, cancellationToken);
         }
 
-        public async Task<JellyfishBackendApiResponse<MessageDTO>> AcknowledgeNotDeliveredMessages(Guid messageId, CancellationToken cancellationToken)
+        public Task<JellyfishBackendApiResponse<MessageDTO>> AcknowledgeNotDeliveredMessages(Guid messageId, CancellationToken cancellationToken)
         {
             var url = $"/chat/message/ack/{messageId}";
-            var response = await this.TypedRequest<object, MessageDTO>(url, RestSharp.Method.Post, null, cancellationToken);
-            return response;
+            return this.TypedRequest<object, MessageDTO>(url, RestSharp.Method.Post, null, cancellationToken);
+        }
+
+        public Task<bool> ConnectionTest(CancellationToken cancellationToken)
+        {
+            return this.apiRestClient.ConnectionTest(cancellationToken) ;
+        }
+
+        public void SetSession(AuthDTO authDTO)
+        {
+            this.apiRestClient.SetSession(authDTO) ;
+        }
+
+        public Task<AuthDTO> GetSession() => this.apiRestClient.GetSession();
+
+        public void SetSession(Func<Task<AuthDTO>> funcGetAuthDTO)
+        {
+            apiRestClient.SetSession(funcGetAuthDTO) ;
         }
     }
 }

@@ -1,0 +1,5 @@
+#Version: 1.0
+#Start-Date: 2024-04-03 21:40:35
+#Fields: date time c-ip cs-username s-computername s-ip s-port cs-method cs-uri-stem cs-uri-query sc-status time-taken cs-version cs-host cs(User-Agent) cs(Cookie) cs(Referer)
+2024-04-03 21:40:33 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/user/c92db313-765b-46dd-bf40-ef7d5a5abd7b - 200 577.1679 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-04-03 21:40:34 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /healthz - 200 814.361 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -

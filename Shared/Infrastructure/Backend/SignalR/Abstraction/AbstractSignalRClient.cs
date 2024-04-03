@@ -118,20 +118,16 @@ namespace Shared.Infrastructure.Backend.SignalR.Abstraction
             return userAgent;
         }
 
-        public async void OpenConnection()
+        public async void OpenConnection(CancellationToken cancellationToken)
         {
             if(!this.IsBuilded)
             {
                 this.BuildConnection();
             }
-            if(HubConnection.State == HubConnectionState.Connected || HubConnection.State == HubConnectionState.Connecting || HubConnection.State == HubConnectionState.Reconnecting)
-            {
-                return;
-            }
             try
             {
 
-                await HubConnection.ConnectWithRetryAsync(5000, CancellationToken.None);
+                await HubConnection.ConnectWithRetryAsync(5000, cancellationToken);
 
             }
             catch (Exception ex)
@@ -144,19 +140,19 @@ namespace Shared.Infrastructure.Backend.SignalR.Abstraction
 
             }
         }
-        public async void CloseConnection()
+        public async void CloseConnection(CancellationToken cancellationToken)
         {
             try
             {
-
+                this._isBuilded = false;
                 if (HubConnection != null && HubConnection.State == HubConnectionState.Connected)
                 {
-                    await HubConnection.StopAsync();
+                    await HubConnection.StopAsync(cancellationToken);
                 }
             }
             catch (Exception ex)
             {
-
+                throw;
             }
         }
 
@@ -203,7 +199,7 @@ namespace Shared.Infrastructure.Backend.SignalR.Abstraction
             {
                 if (disposing)
                 {
-                    CloseConnection();
+                    CloseConnection(CancellationToken.None);
                     ConnectionBuilder = null;
                     HubConnection = null;
                     SignalRHubUrl = null;

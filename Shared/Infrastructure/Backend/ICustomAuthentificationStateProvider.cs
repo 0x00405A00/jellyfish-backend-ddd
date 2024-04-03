@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Shared.DataTransferObject;
 using Shared.Infrastructure.Backend.Api;
+using System.Runtime.CompilerServices;
 
 namespace Shared.Infrastructure.Backend
 {
@@ -8,7 +9,7 @@ namespace Shared.Infrastructure.Backend
     {
         Task<AuthenticationState> GetAuthenticationStateAsync();
         Task<UserDTO> GetCurrentUser(CancellationToken cancellationToken);
-        Task<AuthDTO> GetCurrentAuthentification(CancellationToken cancellationToken);
+        Task<AuthDTO> GetCurrentAuthentification(CancellationToken cancellationToken, [CallerMemberName] object caller = null);
         Task<bool> Login(string userName, string password, CancellationToken cancellationToken);
         Task<bool> Logout(CancellationToken cancellationToken);
         Task<AuthDTO> RefreshLogin(string token, string refreshToken, CancellationToken cancellationToken);

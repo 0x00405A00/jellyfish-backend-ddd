@@ -13,13 +13,12 @@ namespace Infrastructure.SignalR
 
         public static void AddConnection(string connectionId,UserId userId) => _connections.Add(connectionId,userId);
         public static void RemoveConnection(string connectionId) => _connections.Remove(connectionId);
-        public static string GetConnectionIdByUserId(UserId userId)
+        public static IEnumerable<string> GetConnectionIdByUserId(UserId userId)
         {
             foreach (var connectionId in _connections)
             {
-                if(connectionId.Value ==  userId) return connectionId.Key;
+                if(connectionId.Value == userId) yield return connectionId.Key;
             }
-            return null;
         }
     }
 }

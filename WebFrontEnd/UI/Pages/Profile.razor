@@ -49,7 +49,7 @@
                                                 <MudListItem Icon="@Icons.Material.Filled.CalendarViewDay">
                                                     <div class="d-flex">
                                                         <MudText>Date of Birth</MudText>
-                                                        <MudText Inline="true" Class="ml-auto">@User.DateOfBirth</MudText>
+                                                        <MudText Inline="true" Class="ml-auto">@User.DateOfBirth.Value.ToShortDateString()</MudText>
                                                     </div>
                                                 </MudListItem>
                                                 <MudListItem Icon="@Icons.Material.Filled.People">

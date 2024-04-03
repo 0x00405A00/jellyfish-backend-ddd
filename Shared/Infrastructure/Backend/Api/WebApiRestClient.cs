@@ -39,6 +39,9 @@ namespace Shared.Infrastructure.Backend.Api
         Task<JellyfishBackendApi.JellyfishBackendApiResponse<UserDTO>> Activate(string base64Token, UserActivationDataTransferModel userActivationDataTransferModel, CancellationToken cancellationToken);
 
         Task<AuthDTO> Authentificate(string userName, string password, CancellationToken cancellationToken);
+        void SetSession(AuthDTO authDTO);
+        void SetSession(Func<Task<AuthDTO>> funcGetAuthDTO);
+        Task<AuthDTO> GetSession();
         Task<AuthDTO> RefreshAuthentification(string token, string refreshToken, CancellationToken cancellationToken);
         Task<HttpStatusCode> Logout(CancellationToken cancellationToken);
 
@@ -59,7 +62,9 @@ namespace Shared.Infrastructure.Backend.Api
     public class WebApiRestClient : AbstractRestClient, IDisposable, IWebApiRestClient
     {
         private bool _isInit;
-        public static AuthDTO CurrentWebApiSession = null;
+        private AuthDTO _currentWebApiSession;
+        private Func<Task<AuthDTO>> _currentWebApiSessionGetFunc;
+        
         public string BaseUrl { get; set; }
         public string LoginSessionEndpoint { get; private set; }
         public string LogoutSessionEndpoint { get; private set; }
@@ -269,7 +274,7 @@ namespace Shared.Infrastructure.Backend.Api
             {
                 AuthDTO response = JsonSerializer.Deserialize<AuthDTO>(resp.Content);
 
-                CurrentWebApiSession = response;
+                SetSession(response);
                 return response;
             }
             return null;
@@ -321,14 +326,14 @@ namespace Shared.Infrastructure.Backend.Api
             }
             return false;
         }
-
+        private bool IsValidWebApiSession(AuthDTO authDTO) => authDTO != null && authDTO.IsAuthentificated;
         public async Task<System.Net.HttpStatusCode> Logout(CancellationToken cancellationToken)
         {
             if (!IsInit)
             {
                 throw new InvalidOperationException("please initialize the handler correctly via method: " + nameof(Init) + "");
             }
-            if (CurrentWebApiSession != null && !CurrentWebApiSession.IsTokenExpired && !CurrentWebApiSession.IsRefreshTokenExpired)
+            if (IsValidWebApiSession((await GetSession())))
             {
                 var headers = new List<KeyValuePair<string, string>>();
 
@@ -350,10 +355,10 @@ namespace Shared.Infrastructure.Backend.Api
             {
                 headers = new List<KeyValuePair<string, string>>();
             }
-
-            if (CurrentWebApiSession != null && CurrentWebApiSession.IsAuthentificated)
+            var session = (await GetSession());
+            if (IsValidWebApiSession(session))
             {
-                headers.Add(new KeyValuePair<string, string>("Authorization", CurrentWebApiSession.Token));
+                headers.Add(new KeyValuePair<string, string>("Authorization", (session).Token));
             }
             if (bodyObject != null)
             {
@@ -379,7 +384,7 @@ namespace Shared.Infrastructure.Backend.Api
                                 var responseAuth = await Authentificate(User, Password, cancellationToken);
                                 if (responseAuth != null)
                                 {
-                                    headers.Add(new KeyValuePair<string, string>("Authorization", CurrentWebApiSession.Token));
+                                    headers.Add(new KeyValuePair<string, string>("Authorization", _currentWebApiSession.Token));
                                 }
                                 reauth = true;
                             }
@@ -406,6 +411,7 @@ namespace Shared.Infrastructure.Backend.Api
             while (retries < MaxRequestRetries && !donttryagain && !response.IsSuccessStatusCode);
             return response;
         }
+
         public virtual async Task<WebApiHttpRequestResponseModel<T1>> Request<T1, T2>(
             string url,
             Method method,
@@ -460,6 +466,29 @@ namespace Shared.Infrastructure.Backend.Api
             // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        public void SetSession(AuthDTO authDTO)
+        {
+            _currentWebApiSession = authDTO;
+        }
+
+        public async Task<AuthDTO> GetSession()
+        {
+            if(_currentWebApiSession == null)
+            {
+                if(_currentWebApiSessionGetFunc != null)
+                {
+                    var auth = await _currentWebApiSessionGetFunc();
+                    return auth;
+                }
+            }
+            return _currentWebApiSession;
+        }
+
+        public void SetSession(Func<Task<AuthDTO>> funcGetAuthDTO)
+        {
+            _currentWebApiSessionGetFunc = funcGetAuthDTO;
         }
     }
 }

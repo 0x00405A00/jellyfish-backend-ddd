@@ -2,6 +2,7 @@
 using Shared.Authentification.Jwt;
 using Shared.DataTransferObject;
 using Shared.Infrastructure.Backend;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using WebFrontEnd.Service.Authentification;
 using static Shared.Infrastructure.Backend.Api.JellyfishBackendApi;
@@ -63,7 +64,7 @@ namespace WebFrontEnd.Authentification
             return result;
         }
 
-        public async Task<AuthDTO> GetCurrentAuthentification(CancellationToken cancellationToken)
+        public async Task<AuthDTO> GetCurrentAuthentification(CancellationToken cancellationToken, [CallerMemberName] object caller = null)
         {
             var result = await authentificationService.GetCurrentAuthentification(cancellationToken);
             return result ?? new AuthDTO();

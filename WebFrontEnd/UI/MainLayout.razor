@@ -182,42 +182,42 @@
     private TimeSpan LogoutTimer = TimeSpan.MinValue;
     private bool LogoutTimerVisible => LogoutTimer != TimeSpan.MinValue;
     public bool Loading => CurrentUser is null;
-    private AuthDTO _token;
+    private AuthDTO _auth;
     public UserDTO CurrentUser;
     private bool ProfileButtonExpand = false;
-    private bool IsLoggedIn => _token!=null&& _token.IsAuthentificated;
+    private bool IsLoggedIn => _auth!=null&& _auth.IsAuthentificated;
     private CancellationTokenSource cancellationToken = new();
-    protected override async Task OnInitializedAsync()
-    {
-    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        _token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
         if(firstRender)
         {
-            var authState = await AuthentificationService.GetAuthenticationStateAsync();
-            CurrentUser = await WebApiClient.GetCurrentUser(authState, cancellationToken.Token);
-            StateHasChanged();
-            if (_token is not null)
+            _auth = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
+            WebApiClient.SetSession(_auth);
+            if (_auth.IsAuthentificated)
             {
+                var authState = await AuthentificationService.GetAuthenticationStateAsync();
+                CurrentUser = await WebApiClient.GetCurrentUser(authState, cancellationToken.Token);
                 LogoutBackgroundService.OnRerenderRequested += RequestRerender;
             }
+            StateHasChanged();
         }
-
-
     }
+
     public async Task ClickLogout()
     {
         await DialogHandler.ShowLogoutDialog(cancellationToken.Token);
     }
+
     public Task ProfileButtonClick()
     {
         ProfileButtonExpand = !ProfileButtonExpand;
         return Task.CompletedTask;
     }
+
     private async void ClickRefreshLogin()
     {
-        var response = await AuthentificationService.RefreshLogin(_token.Token,_token.RefreshToken,cancellationToken.Token);
+        var response = await AuthentificationService.RefreshLogin(_auth.Token,_auth.RefreshToken,cancellationToken.Token);
         if(response==null)
         {
 
@@ -226,31 +226,32 @@
                 "Session can´t extend, try again later!");
             return;
         }
-        _token = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
+        _auth = await AuthentificationService.GetCurrentAuthentification(cancellationToken.Token);
         LogoutTimer = TimeSpan.MinValue;
         StateHasChanged();
     }
+
     private void RequestRerender()
     {
         InvokeAsync(async() =>
         {
-            if (_token is not null)
+            if (_auth is not null)
             {
-                if (_token.TokenExpiresIn is not null)
+                if (_auth.TokenExpiresIn is not null)
                 {
-                    if (!_token.IsTokenExpired)
+                    if (!_auth.IsTokenExpired)
                     {
 
-                        var calcTime = _token.TokenExpiresIn.Value.AddMinutes(-5);
+                        var calcTime = _auth.TokenExpiresIn.Value.AddMinutes(-5);
                         if (DateTime.UtcNow >= calcTime)
                         {
 
-                            LogoutTimer = _token.TokenExpiresIn.Value - DateTime.UtcNow;
+                            LogoutTimer = _auth.TokenExpiresIn.Value - DateTime.UtcNow;
                             StateHasChanged(); // Dies löst einen Rerender der Komponente aus
 
                         }
                     }
-                    else if (_token.IsTokenExpired)
+                    else if (_auth.IsTokenExpired)
                     {
                         await AuthentificationService.Logout(cancellationToken.Token);
                         NavigationManager.NavigateTo(RouteConst.Routes.SignIn);

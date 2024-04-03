@@ -65,7 +65,7 @@ namespace Presentation.Controllers.Api.v1
         public async Task<IActionResult> Logout()
         {
             var jwt = HttpContextAccessor.HttpContext.Request.Headers.Authorization;
-            if(!jwt.Any())
+            if (!jwt.Any())
             {
                 return BadRequest();
             }
@@ -73,5 +73,10 @@ namespace Presentation.Controllers.Api.v1
             var result = await _sender.Send(command);
             return result.IsSuccess ? Ok(result.Value) : BadRequest();
         }
+        [AllowAnonymous]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(bool), 200)]
+        [HttpGet("test")]
+        public IActionResult Test() => Ok(true);
     }
 }

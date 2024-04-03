@@ -6,7 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Shared.Infrastructure.Backend.SignalR;
-using System.Reflection.Metadata.Ecma335;
+using Shared.Logger;
+using System.Data;
 
 namespace Infrastructure.HostedService.Backgroundservice
 {
@@ -27,8 +28,6 @@ namespace Infrastructure.HostedService.Backgroundservice
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-
-
             using PeriodicTimer timer = new(TimeSpan.FromSeconds(NotificationSentInterval));
 
             try
@@ -41,7 +40,7 @@ namespace Infrastructure.HostedService.Backgroundservice
             }
             catch (OperationCanceledException)
             {
-
+                _logger.LogDebug($"operation canceled");
             }
         }
         private async Task TExecuteTask()
@@ -49,36 +48,60 @@ namespace Infrastructure.HostedService.Backgroundservice
             using (var scope = serviceProvider.CreateScope())
             {
                 var signalRHub = scope.ServiceProvider.GetRequiredService<IHubContext<MessengerHub, IMessengerClient>>();
-                if(!MessengerHubExtension.HasConnectedClients)
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+                using var transaction = dbContext.Database.BeginTransaction();
                 {
-                    _logger.LogDebug($"no clients connected for push notifications");
-                    return;
-                }
-
-                _logger.LogDebug($"delivery: {MessengerHubExtension.Connections.Count} clients connected");
-                var messageOutbox = scope.ServiceProvider.GetRequiredService<IMessageOutboxRepository>();
-                var notDeliveredMessages = await messageOutbox.ListAsync(x=> MessengerHubExtension.Connections.Values.Contains(x.UserForeignKey));
-                if (!notDeliveredMessages.Any())
-                {
-                    _logger.LogDebug($"nothing to deliver");
-                    return;
-                }
-                _logger.LogDebug($"delivery: found {notDeliveredMessages.Count} messages for delivering...");
-                var notDeliveredMessagesGroupedByChat = notDeliveredMessages.GroupBy(x => x.UserForeignKey)
-                    .ToDictionary(x => x.Key, y => y.ToList());
-                Parallel.ForEach(notDeliveredMessagesGroupedByChat, x =>
-                {
-                    _logger.LogDebug($"delivery:{x.Key}: start to deliver {x.Value.Count} messages to {x.Key}");
-                    var messageIdsExtracted = x.Value.Select(x => x.MessageForeignKey.Id).ToList();
-                    var connectionId = MessengerHubExtension.GetConnectionIdByUserId(x.Key);
-                    if (connectionId is not null)
+                    try
                     {
-                        signalRHub.Clients.Client(connectionId).ReceiveMessage(messageIdsExtracted);
-                        _logger.LogDebug($"delivery:{x.Key}: completed");
-                    }
-                });
-                _logger.LogDebug($"delivery: end, next delivering at {CustomDateTime.Now().DateTime.AddSeconds(NotificationSentInterval)}");
+                        if (!MessengerHubExtension.HasConnectedClients)
+                        {
+                            _logger.LogDebug($"no clients connected for push notifications");
+                            return;
+                        }
 
+                        _logger.LogDebug($"delivery: {MessengerHubExtension.Connections.Count} clients connected");
+                        var messageOutbox = scope.ServiceProvider.GetRequiredService<IMessageOutboxRepository>();
+                        var notDeliveredMessages = await messageOutbox.ListWithPessimisticLockAsync(x => MessengerHubExtension.Connections.Values.Contains(x.UserForeignKey));
+                        if (!notDeliveredMessages.Any())
+                        {
+                            _logger.LogDebug($"nothing to deliver");
+                            return;
+                        }
+                        _logger.LogDebug($"delivery: found {notDeliveredMessages.Count} messages for delivering...");
+                        var connections = MessengerHubExtension.Connections;
+                        var notDeliveredMessagesGroupedByChat = notDeliveredMessages.GroupBy(x => (x.UserForeignKey))
+                            .ToDictionary(x => x.Key, y => y.ToList());
+
+                        Parallel.ForEach(notDeliveredMessagesGroupedByChat, x =>
+                        {
+                            _logger.LogDebug($"delivery:{x.Key}: start to deliver {x.Value.Count} messages to {x.Key}");
+                            var messageIdsExtracted = x.Value.Select(x => x.MessageForeignKey.Id).ToList();
+                            var connectionIds = MessengerHubExtension.GetConnectionIdByUserId(x.Key).ToList();
+                            foreach (var connectionId in connectionIds)
+                            {
+                                signalRHub.Clients.Client(connectionId).ReceiveMessage(messageIdsExtracted);
+                                _logger.LogDebug($"delivery:{x.Key}: completed");
+                            }
+                        });
+                        _logger.LogDebug($"delivery: end, next delivering at {CustomDateTime.Now().DateTime.AddSeconds(NotificationSentInterval)}");
+                        _logger.LogDebug($"start committing");
+                        transaction.Commit();
+                        _logger.LogDebug($"committing successfull");
+                    }
+                    catch(DBConcurrencyException ex)
+                    {
+                        _logger.LogException(ex);
+                        transaction.Rollback();
+                        _logger.LogDebug($"rollback");
+                    }
+                    catch(Exception ex)
+                    {
+                        _logger.LogException(ex);
+                        transaction.Rollback();
+                        _logger.LogDebug($"rollback");
+                    }
+                }
             }
         }
 

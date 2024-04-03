@@ -3,6 +3,7 @@ using Shared.ApiDataTransferObject;
 using Shared.DataTransferObject;
 using Shared.Infrastructure.Backend;
 using Shared.Infrastructure.Backend.Api;
+using System.Runtime.CompilerServices;
 using static Shared.Infrastructure.Backend.Api.JellyfishBackendApi;
 
 namespace WebFrontEnd.Service.Authentification
@@ -24,7 +25,7 @@ namespace WebFrontEnd.Service.Authentification
             this.localStorageService = localStorageService;
         }
 
-        public async Task<AuthDTO> GetCurrentAuthentification(CancellationToken cancellationToken)
+        public async Task<AuthDTO> GetCurrentAuthentification(CancellationToken cancellationToken, [CallerMemberName] object caller = null)
         {
             AuthDTO auth = new AuthDTO();
             try
