@@ -69,6 +69,7 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
                     try
                     {
                         var text = message.Text;
+                        var location = message.Location;
 
                         //Prüfung des Content in 'UploadProfilePictureCommandValidator'
                         MediaContent mediaContent = null;
@@ -92,7 +93,9 @@ namespace Application.CQS.Messenger.Chat.Command.CreateMessage
                             mediaContent,
                             createdTime,//Prüfung des CreatedTime auf null-Wert in 'UploadProfilePictureCommandValidator'
                             userId,null,null,null,
-                            null);
+                            null,
+                            location);
+
                         var createMessageEntity = chat.AddMessage(messageEntity);
                         messageEntity.SetCreated(userId);
                         _messageRepository.Add(messageEntity);

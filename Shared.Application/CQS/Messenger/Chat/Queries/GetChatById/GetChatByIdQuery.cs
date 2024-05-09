@@ -3,5 +3,5 @@ using Shared.DataTransferObject.Messenger;
 
 namespace Application.CQS.Messenger.Chat.Queries.GetChatById
 {
-    public sealed record GetChatByIdQuery(Guid Id) : IQuery<ChatDTO>;
+    public sealed record GetChatByIdQuery(Guid RequestUserId,Guid Id) : IQuery<ChatDTO>;
 }

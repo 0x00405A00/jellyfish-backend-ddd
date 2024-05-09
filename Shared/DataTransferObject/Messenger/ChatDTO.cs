@@ -21,11 +21,11 @@ namespace Shared.DataTransferObject.Messenger
         [JsonPropertyName("picture_mime_type")]
         public string? PictureMimeType { get; set; }
 
-        [JsonPropertyName("members")]
-        public ICollection<Guid>? Members { get; set; } = new List<Guid>();
+        [JsonPropertyName("member_ids")]
+        public ICollection<Guid>? MemberIds { get; set; } = new List<Guid>();
 
-        [JsonPropertyName("admins")]
-        public ICollection<Guid>? Admins { get; set; } = new List<Guid>();
+        [JsonPropertyName("admin_ids")]
+        public ICollection<Guid>? AdminIds { get; set; } = new List<Guid>();
 
         [JsonPropertyName("members_as_string")]
         public ICollection<string>? MembersAsUsernames { get; set; } = new List<string>();
@@ -35,6 +35,9 @@ namespace Shared.DataTransferObject.Messenger
 
         [JsonPropertyName("messages")]
         public ICollection<MessageDTO>? Messages { get; set; }
+
+        [JsonPropertyName("members")]
+        public ICollection<MessengerUserDTO>? MembersAsDTO { get; set; }
 
         [JsonIgnore]
         IReadOnlyCollection<ChatRelationToUser>? IChat.Admins{ get; }

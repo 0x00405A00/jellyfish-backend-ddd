@@ -48,7 +48,7 @@ namespace Presentation.Controllers.Api.v1.Messenger
             var commandCreateChat = new CreateChatCommand(userUuid,
                                                           chatDto.Name,
                                                           chatDto.Description,
-                                                          chatDto.Members,
+                                                          chatDto.MemberIds,
                                                           chatDto.PictureBase64,
                                                           chatDto.PictureMimeType);
 
@@ -63,7 +63,8 @@ namespace Presentation.Controllers.Api.v1.Messenger
         [HttpGet("{chatId}")]
         public async Task<IActionResult> GetChat(Guid chatId, CancellationToken cancellationToken)
         {
-            var command = new GetChatByIdQuery(chatId);
+            var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
+            var command = new GetChatByIdQuery(userUuid, chatId);
 
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
@@ -82,12 +83,11 @@ namespace Presentation.Controllers.Api.v1.Messenger
             var result = await Sender.Send(command, cancellationToken);
             return result.PrepareResponse();
         }
-        [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(ApiDataTransferObject<List<MessageDTO>>), 200)]
         [ProducesResponseType(typeof(ApiDataTransferObject<>), 400)]
         [HttpPost("message/ack/{messageId}")]
-        public async Task<IActionResult> GetNotDeliveredMessagesByChat(Guid messageId, CancellationToken cancellationToken)
+        public async Task<IActionResult> AckNotDeliveredMessage(Guid messageId, CancellationToken cancellationToken)
         {
             var userUuid = HttpContextAccessor.HttpContext.GetUserUuidFromRequest();
             var command = new AcknowledgeMessageDeliveryByChatCommand(userUuid, messageId);

@@ -22,6 +22,8 @@ namespace Shared.Infrastructure.Backend.Api
         Task<JellyfishBackendApi.JellyfishBackendApiResponse<UserDTO>> DeleteUserProfilePicture(UserDTO userDTO, CancellationToken cancellationToken);
         Task<JellyfishBackendApi.JellyfishBackendApiResponse<UserDTO>> EditUser(UserDTO user, CancellationToken cancellationToken);
         Task<JellyfishBackendApi.JellyfishBackendApiResponse<List<RoleDTO>>> GetRoles(CancellationToken cancellationToken);
+        Task<JellyfishBackendApi.JellyfishBackendApiResponse<ChatDTO>> GetChat(Guid chatId,CancellationToken cancellationToken);
+        Task<JellyfishBackendApiResponse<MessengerUserDTO>> GetMessengerUser(Guid userId, CancellationToken cancellationToken);
         Task<JellyfishBackendApi.JellyfishBackendApiResponse<List<UserDTO>>> GetUsers(SearchParamsBody? searchParamsBody, CancellationToken cancellationToken);
         Task<JellyfishBackendApi.JellyfishBackendApiResponse<List<UserDTO>>> GetUsers(string searchText, int selectedPage, int maxItemsPerPage, bool filterOnlyDeletedUsers, CancellationToken cancellationToken);
         Task<JellyfishBackendApi.JellyfishBackendApiResponse<List<UserTypeDTO>>> GetUserTypes(CancellationToken cancellationToken);

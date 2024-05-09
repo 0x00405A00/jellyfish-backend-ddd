@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Shared.ApiDataTransferObject;
 using Shared.Infrastructure.EFCore;
 using Shared.Infrastructure.EFCore.Converter;
 using Shared.Infrastructure.EFCore.Interceptors;
@@ -22,6 +23,7 @@ namespace Infrastructure
     {
         #region Const
         public const string ConnectionStringAlias = "JellyfishMySqlDatabase";
+        //Host=db;Port=5432;Username=jellyfish;Password=meinDatabasePassword!;Database=jellyfish;
         public static string ConnectionString = @"Host=127.0.0.1;Port=5432;Username=jellyfish;Password=meinDatabasePassword!;Database=jellyfish;";//hardcoded connection string, because cli tool dotnet ef migrations/database cant consume IConfiguration-Service from DI
 
         #endregion
@@ -97,16 +99,16 @@ namespace Infrastructure
             if (_configuration is not null)
             {
                 ConnectionString = _configuration.GetConnectionString(ConnectionStringAlias);
-
-                loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+                loggerFactory = SerilogExtension.GetLoggerFactory(_configuration);
                 _logger = loggerFactory.CreateLogger<ApplicationDbContext>();
             }
             else
             {
-                loggerFactory = SerilogExtension.GetLoggerFactory(_configuration);
+                loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+                _logger = loggerFactory.CreateLogger<ApplicationDbContext>();
             }
-            optionsBuilder.UseNpgsql(ConnectionString);
             optionsBuilder.UseLoggerFactory(loggerFactory);
+            optionsBuilder.UseNpgsql(ConnectionString);
             optionsBuilder.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
             optionsBuilder.EnableSensitiveDataLogging(true);
             optionsBuilder.AddInterceptors(new DatabaseReaderInterceptor());

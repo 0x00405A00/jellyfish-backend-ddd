@@ -1,18 +1,35 @@
-﻿using RestSharp;
+﻿using Microsoft.Extensions.Logging;
+using RestSharp;
+using Shared.Logger;
 
 namespace Shared.Infrastructure.Backend.Api
 {
     public abstract class AbstractRestClient : IRestClient
     {
+        /// <summary>
+        /// Maximum time till request abort
+        /// </summary>
+        public const int RequestTimeout = 5000;
         public static RestClient RestClient = null;
         public static Uri DefaultUrl = null;
         private List<KeyValuePair<string, string>> _permanentHeaders = new List<KeyValuePair<string, string>>();
+        private readonly ILogger<AbstractRestClient> logger;
+
         public List<KeyValuePair<string, string>> PermanentHeaders { get => _permanentHeaders; }
 
-        public AbstractRestClient()
+        public AbstractRestClient(ILogger<AbstractRestClient> logger)
         {
-
+            this.logger = logger;
         }
+
+        /// <summary>
+        /// Create a new singleton instance of RestClient
+        /// Lifetime: ApplicationLifetime
+        /// 
+        /// </summary>
+        /// <param name="defaultUrl"></param>
+        /// <returns></returns>
+        [Obsolete("will be remove in short time and will be changed to 'TypedHttpClient' over dependency injection")]
         public static RestClient Create(string defaultUrl = null)
         {
             if (Uri.TryCreate(defaultUrl, new UriCreationOptions(), out Uri uri))
@@ -39,44 +56,58 @@ namespace Shared.Infrastructure.Backend.Api
         {
             if (!Uri.TryCreate(urlOrEndpoint, new UriCreationOptions(), out Uri validationResult))
             {
-                throw new Exception("uri not valid '" + urlOrEndpoint + "'");
+                string exceptionMessage = "uri not valid '" + urlOrEndpoint + "'";
+                logger.LogMethod(exceptionMessage);
+                throw new Exception(exceptionMessage);
             }
             Uri final = DefaultUrl == null ? validationResult : new Uri(DefaultUrl, validationResult);
-            var requ = new RestRequest(final);
+            var requestObject = new RestRequest(final);
 
             if (string.IsNullOrEmpty(contentType) || string.IsNullOrEmpty(urlOrEndpoint))
-                throw new ArgumentNullException();
+            {
+                string exceptionMessage = $"{nameof(contentType)} or {nameof(urlOrEndpoint)} is null or empty";
+                logger.LogMethod(exceptionMessage);
+                throw new ArgumentNullException(exceptionMessage);
+            }
 
             if (body != null)
             {
-                requ.AddHeader("Content-Type", contentType);
-                requ.AddBody(body, contentType);
+                logger.LogMethod($"set body with content-type {contentType}: {body}");
+                requestObject.AddHeader("Content-Type", contentType);
+                requestObject.AddBody(body, contentType);
             }
             if (query != null)
             {
+                logger.LogMethod($"start to add query parameters");
                 foreach (var item in query)
                 {
-                    requ.AddQueryParameter(item.Key, item.Value);
+                    logger.LogMethod($"query-parameter: {item.Key}={item.Value}");
+                    requestObject.AddQueryParameter(item.Key, item.Value);
                 }
             }
             if (PermanentHeaders.Count > 0)
             {
+                logger.LogMethod($"permanent header values are given, add them");
                 foreach (var item in PermanentHeaders)
                 {
-                    requ.AddHeader(item.Key, item.Value);
+                    logger.LogMethod($"perm-header: {item.Key}={item.Value}");
+                    requestObject.AddHeader(item.Key, item.Value);
                 }
             }
             if (headerValues != null)
             {
+                logger.LogMethod($"header values are given (temporary), add them");
                 foreach (var item in headerValues)
                 {
-                    requ.AddHeader(item.Key, item.Value);
+                    logger.LogMethod($"temp-header: {item.Key}={item.Value}");
+                    requestObject.AddHeader(item.Key, item.Value);
                 }
             }
-            requ.Timeout = 5000;
-            requ.Method = httpMethod;
+            logger.LogMethod($"request timeout: {RequestTimeout}");
+            requestObject.Timeout = RequestTimeout;
+            requestObject.Method = httpMethod;
 
-            return requ;
+            return requestObject;
         }
 
         public void DeletePermantentHeaderValue(string header)
@@ -106,9 +137,12 @@ namespace Shared.Infrastructure.Backend.Api
             if (RestClient == null)
             {
                 RestClient = Create();
+                logger.LogMethod($"create restclient (httpclient) instance as singleton (static var for store instance)");
             }
-            var resp = await RestClient.ExecuteAsync(restRequest, cancellationToken);
-            return resp;
+            logger.LogMethod($"{nameof(RestClient.ExecuteAsync)}: start execution");
+            var response = await RestClient.ExecuteAsync(restRequest, cancellationToken);
+            logger.LogMethod($"{nameof(RestClient.ExecuteAsync)}: executed");
+            return response;
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Shared.Infrastructure.Backend.Interceptor.Abstraction;
+﻿using Shared.Infrastructure.Backend.Interceptor.Abstraction;
 
 namespace Shared.Infrastructure.Backend.Interceptor
 {
@@ -14,7 +9,7 @@ namespace Shared.Infrastructure.Backend.Interceptor
 
         public InternalDataInterceptorDispatcher()
         {
-            Invoker = new List<IInternalDataInterceptorInvoker>();
+            _interceptors = new List<IInternalDataInterceptorInvoker>();
         }
 
         public Task Dispatch(params object[]? data)

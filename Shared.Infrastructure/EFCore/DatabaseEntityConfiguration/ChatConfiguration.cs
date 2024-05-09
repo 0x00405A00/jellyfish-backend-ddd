@@ -1,5 +1,6 @@
 ﻿using Domain.Entities.Chats;
 using Domain.Primitives.Ids;
+using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Shared.Infrastructure.EFCore.Extension;
@@ -30,14 +31,28 @@ namespace Shared.Infrastructure.EFCore.DatabaseEntityConfiguration
 
             builder.OwnsOne(ut => ut.Picture, navigationBuilder =>
             {
-
                 navigationBuilder.Property(img => img.FilePath)
-                                             .HasColumnName("picture_path")
-                                             .IsRequired(false);
+                    .IsRequired(false)
+                    .HasMaxLength(DbContextExtension.ColumnLength.PathDescriptors)
+                    .HasColumnName("picture_binary_content_path");
+
                 navigationBuilder.Property(img => img.FileExtension)
-                                             .HasColumnName("picture_path_file_extension")
-                                             .IsRequired(false);
+                    .IsRequired(false)
+                    .HasMaxLength(DbContextExtension.ColumnLength.FileExtension)
+                    .HasColumnName("picture_binary_content_path_file_extension");
+
+                navigationBuilder.Property(img => img.Data)
+                    .IsRequired(false)
+                    .HasColumnName("picture_binary_content_base64");
+
+                navigationBuilder.Property(img => img.FileExtension)
+                    .IsRequired(false)
+                    .HasMaxLength(DbContextExtension.ColumnLength.MimeTypes)
+                    .HasColumnName("picture_binary_content_base64_mime_type");
+
+                
             });
+
 
             builder.AddAuditableConstraints<Chat, ChatId>();
         }

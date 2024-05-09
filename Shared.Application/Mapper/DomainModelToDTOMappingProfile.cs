@@ -8,7 +8,6 @@ using Domain.Extension;
 using Domain.Primitives;
 using Domain.Primitives.Ids;
 using Microsoft.Extensions.Configuration;
-using Serilog.Sinks.Graylog.Core.Extensions;
 using Shared.DataTransferObject;
 using Shared.DataTransferObject.Messenger;
 using Shared.Http;
@@ -78,8 +77,9 @@ namespace Application.Shared.Mapper
             CreateMap<Chat, ChatDTO>()
                 .ForMember(dst => dst.Name, src => src.MapFrom(x => x.Name))
                 .ForMember(dst => dst.Description, src => src.MapFrom(x => x.Description))
-                .ForMember(dst => dst.Members, src => src.MapFrom(x => x.Members.Select(x => x.UserForeignKey.ToGuid()).ToList()))
-                .ForMember(dst => dst.Admins, src => src.MapFrom(x => x.Admins.Select(x => x.UserForeignKey.ToGuid()).ToList()))
+                .ForMember(dst => dst.MembersAsDTO, src => src.MapFrom(x => x.Members.Select(x => x.User).ToList()))//Chat.ChatRelationToUser.User to MessengerUserDTO
+                .ForMember(dst => dst.MemberIds, src => src.MapFrom(x => x.Members.Select(x => x.UserForeignKey.ToGuid()).ToList()))
+                .ForMember(dst => dst.AdminIds, src => src.MapFrom(x => x.Admins.Select(x => x.UserForeignKey.ToGuid()).ToList()))
                 .ForMember(dst => dst.MembersAsUsernames, src => src.MapFrom(x => x.Members.Select(x => x.User.UserName).ToList()))
                 .ForMember(dst => dst.AdminsAsUsernames, src => src.MapFrom(x => x.Admins.Select(x => x.User.UserName).ToList()))
                 .ForMember(dst => dst.PictureBase64, dst => dst.MapFrom(x => x.Picture.ToString()))
@@ -104,6 +104,7 @@ namespace Application.Shared.Mapper
                 .IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<User, UserDTO>()
+                .ForMember(dst => dst.DateOfBirth, dst => dst.MapFrom(x => x.DateOfBirth))
                 .ForMember(dst => dst.Roles, dst => dst.MapFrom(x => x.UserHasRelationToRoles.Select(x => x.Role).ToList()))
                 .ForMember(dst => dst.Friends, dst => dst.MapFrom(x => x.GetFriends().Select(x => x.UserFriendForeignKey.ToGuid()).ToList()))
                 .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.GetFriendshipRequests()))
@@ -124,9 +125,9 @@ namespace Application.Shared.Mapper
                 .IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<User, MessengerUserDTO>()
-                .ForMember(dst => dst.Friends, dst => dst.MapFrom(x => x.GetFriends().Select(x => x.UserFriend).ToList()))
-                .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.FriendshipRequestsWhereIamTarget))
-                .ForMember(dst => dst.PictureBase64, dst => dst.MapFrom(x => x.Picture.ToString()))
+                .ForMember(dst => dst.DateOfBirth, dst => dst.MapFrom(x => x.DateOfBirth))
+                .ForMember(dst => dst.Friends, dst => dst.MapFrom(x => x.GetFriends().Select(x => x.UserFriendForeignKey.ToGuid()).ToList()))
+                .ForMember(dst => dst.FriendshipRequests, dst => dst.MapFrom(x => x.GetFriendshipRequests()))
                 .ForMember(dst => dst.CreatedTime, dst => dst.MapFrom(x => x.CreatedTime))
                 .ForMember(dst => dst.LastModifiedTime, dst => dst.MapFrom(x => x.LastModifiedTime))
                 .ForMember(dst => dst.DeletedTime, dst => dst.MapFrom(x => x.DeletedTime))

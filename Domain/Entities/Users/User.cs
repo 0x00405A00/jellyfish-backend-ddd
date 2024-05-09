@@ -265,6 +265,56 @@ namespace Domain.Entities.Users
             return user;
         }
 
+        /// <summary>
+        /// Factory Method for creating a User instance with specified attributes / Method for mobile application
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userName"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="picture"></param>
+        /// <param name="dateOfBirth"></param>
+        /// <returns>A new instance of User</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="InvalidDataException"></exception>
+        /// <exception cref="InvalidUserNameException"></exception>
+        public static User Create(
+            UserId id,
+            string userName,
+            string firstName,
+            string lastName,
+            Picture? picture,
+            CustomDateTime dateOfBirth)
+        {
+            
+            User user = new User(
+                id,
+                null,
+                userName,
+                null,
+                firstName,
+                lastName,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                picture,
+                null,
+                dateOfBirth,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+            return user;
+        }
+
         public static User GetSystemUser()
         {
             string emailStr = $"{UserConst.RootUserName}@localhost.local".ToLower();

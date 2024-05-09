@@ -1,8 +1,5 @@
-﻿using Domain.Entities.Users;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Components.Authorization;
 using RestSharp;
-using Shared.ApiDataTransferObject;
 using Shared.ApiDataTransferObject.Object;
 using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
@@ -182,6 +179,11 @@ namespace Shared.Infrastructure.Backend.Api
 
             return this.TypedRequest<object, List<RoleDTO>>("/role", RestSharp.Method.Get, null, cancellationToken);
         }
+        public Task<JellyfishBackendApiResponse<ChatDTO>> GetChat(Guid chatId, CancellationToken cancellationToken)
+        {
+            var url = "/chat/" + chatId + "";
+            return this.TypedRequest<object, ChatDTO>(url, RestSharp.Method.Get, null, cancellationToken);
+        }
         public Task<JellyfishBackendApiResponse<List<Guid>>> AssignRoles(UserDTO user, List<RoleDTO> roleDTOs, CancellationToken cancellationToken)
         {
             var url = "/user/" + user.Id + "/role";
@@ -192,7 +194,17 @@ namespace Shared.Infrastructure.Backend.Api
             var url = "/user/" + user.Id + "/role";
             return this.TypedRequest<List<RoleDTO>, List<Guid>>(url, RestSharp.Method.Delete, roleDTOs, cancellationToken);
         }
-
+        /// <summary>
+        /// Gets user data of a specific user from api (<see cref="MessengerUserDTO"/> less complex than <see cref="UserDTO"/>
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns><see cref="JellyfishBackendApiResponse"/> with trailing data of type <see cref="MessengerUserDTO"/></returns>
+        public Task<JellyfishBackendApiResponse<MessengerUserDTO>> GetMessengerUser(Guid userId, CancellationToken cancellationToken)
+        {
+            var url = "/user/messenger/" + userId + "";
+            return this.TypedRequest<object, MessengerUserDTO>(url, RestSharp.Method.Get, null, cancellationToken);
+        }
         public Task<UserDTO?> GetCurrentUser(AuthenticationState authenticationState, CancellationToken cancellationToken)
         {
             return apiRestClient.GetCurrentUser(authenticationState, cancellationToken);
@@ -252,5 +264,6 @@ namespace Shared.Infrastructure.Backend.Api
         {
             apiRestClient.SetSession(funcGetAuthDTO) ;
         }
+
     }
 }

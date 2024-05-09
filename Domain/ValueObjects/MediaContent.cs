@@ -2,26 +2,37 @@
 
 namespace Domain.ValueObjects
 {
-    public class MediaContent : IValueObjectBinary
+    public class Media : IValueObjectBinary
     {
-        public byte[]? Data { get; private set; }
-        public string FilePath { get; private set; }
+        public byte[]? Data { get; protected set; }
+        public string FilePath { get; protected set; }
         /// <summary>
         /// Filesystem Fileextension or MimeType
         /// </summary>
-        public string FileExtension { get; private set; }
-
-        protected MediaContent()
+        public string FileExtension { get; protected set; }
+        protected Media()
         {
-
+            
         }
-        public MediaContent(byte[] data, string filePath, string fileExtension)
+
+        protected Media(byte[] data, string filePath, string fileExtension)
         {
             Data = data;
             FilePath = filePath;
             FileExtension = fileExtension;
         }
-        public MediaContent(string filePath, string fileExtension):this(null,filePath,fileExtension)
+    }
+    public sealed class MediaContent : Media
+    {
+        private MediaContent()
+        {
+
+        }
+        public MediaContent(byte[] data, string filePath, string fileExtension) :base(data,filePath,fileExtension)
+        {
+
+        }
+        public MediaContent(string filePath, string fileExtension): base(null,filePath,fileExtension)
         {
         }
 
@@ -50,7 +61,8 @@ namespace Domain.ValueObjects
         {
             return new MediaContent(filePath, fileExtension);
         }
-        public void SetBinary(byte[] data)=> Data= data;    
+        public void SetBinary(byte[] data)=> Data= data;
+
         public override string ToString()
         {
             return Data == null ? null: Convert.ToBase64String(Data);

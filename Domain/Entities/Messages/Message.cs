@@ -15,6 +15,7 @@ namespace Domain.Entities.Messages
         Chat Chat { get; }
         ChatId ChatForeignKey { get; }
         MediaContent? MediaContent { get; }
+        Location? Location { get; }
         IReadOnlyCollection<MessageOutbox>? MessagesInOutbox { get; }
         string Text { get; }
         User User { get; }
@@ -29,9 +30,11 @@ namespace Domain.Entities.Messages
 
         public MediaContent? MediaContent { get; private set; }
 
+        public Location? Location { get; private set; }
+
         private Message() : base()
         {
-
+            
         }
         private Message(
             MessageId id,
@@ -44,7 +47,8 @@ namespace Domain.Entities.Messages
             CustomDateTime? modifiedDateTime,
             UserId? modifiedBy,
             CustomDateTime? deletedDateTime,
-            UserId? deletedBy) : base(id)
+            UserId? deletedBy,
+            Location? location = null) : base(id)
         {
             ChatForeignKey = chatId;
             UserForeignKey = userId;
@@ -57,6 +61,8 @@ namespace Domain.Entities.Messages
             LastModifiedByUserForeignKey = modifiedBy;
             DeletedTime = deletedDateTime;
             DeletedByUserForeignKey = deletedBy;
+
+            Location = location;
         }
         /// <summary>
         /// Factory Method for creating a Message
@@ -68,6 +74,7 @@ namespace Domain.Entities.Messages
         /// <param name="createdTime"></param>
         /// <param name="lastModifiedTime"></param>
         /// <param name="deletedTime"></param>
+        /// <param name="location"></param>
         /// <returns></returns>
         public static Message Create(
             MessageId id,
@@ -80,13 +87,14 @@ namespace Domain.Entities.Messages
             CustomDateTime? modifiedDateTime,
             UserId? modifiedBy,
             CustomDateTime? deletedDateTime,
-            UserId? deletedBy)
+            UserId? deletedBy,
+            Location? location = null)
         {
             if (!id.IsValid())
             {
                 throw new NotValidEntityIdentification();
             }
-            if (string.IsNullOrWhiteSpace(text) && mediaContent == null)
+            if (string.IsNullOrWhiteSpace(text) && (mediaContent == null||location == null))
             {
                 throw new NotValidMessageException();
             }
@@ -102,7 +110,8 @@ namespace Domain.Entities.Messages
                 modifiedDateTime,
                 modifiedBy,
                 deletedDateTime,
-                deletedBy);
+                deletedBy,
+                location);
 
             msg.Raise(new MessageCreatedDomainEvent(msg.Id));
             return msg;

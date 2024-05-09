@@ -27,6 +27,9 @@ namespace Shared.DataTransferObject.Messenger
         [JsonPropertyName("binary_content_mime_type")]
         public string? BinaryContentMimeType { get; set; }
 
+        [JsonPropertyName("location")]
+        public Location? Location { get; set; }
+
         [JsonIgnore]
         public bool HasBase64ContentSet => !String.IsNullOrEmpty(this.BinaryContentBase64);
 

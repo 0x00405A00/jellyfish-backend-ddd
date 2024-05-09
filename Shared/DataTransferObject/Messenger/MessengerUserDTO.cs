@@ -18,7 +18,7 @@ namespace Shared.DataTransferObject.Messenger
         public string? PictureBase64 { get; set; }
 
         [JsonPropertyName("date_of_birth")]
-        public DateOnly? DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         [JsonPropertyName("friends")]
         public ICollection<MessengerUserDTO>? Friends { get; set; }

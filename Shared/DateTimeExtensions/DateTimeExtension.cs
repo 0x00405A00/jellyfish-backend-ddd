@@ -1,4 +1,6 @@
-﻿namespace Application.DateTimeExtension
+﻿using Domain.Primitives;
+
+namespace Application.DateTimeExtension
 {
     public static class DateTimeExtension
     {

@@ -1,0 +1,8 @@
+#Version: 1.0
+#Start-Date: 2024-05-09 13:43:52
+#Fields: date time c-ip cs-username s-computername s-ip s-port cs-method cs-uri-stem cs-uri-query sc-status time-taken cs-version cs-host cs(User-Agent) cs(Cookie) cs(Referer)
+2024-05-09 13:43:51 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 POST /api/v1/authentification/login - 200 557.3836 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-05-09 13:43:52 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/user/c92db313-765b-46dd-bf40-ef7d5a5abd7b - 200 234.8134 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-05-09 13:43:53 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/user/user-types - 200 32.4509 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-05-09 13:43:53 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/role - 200 24.3126 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -
+2024-05-09 13:43:53 127.0.0.1 - 0X00405A00-PC 127.0.0.1 5000 GET /api/v1/user - 200 126.6525 HTTP/1.1 webapi:5000 RestSharp/110.2.0.0 - -

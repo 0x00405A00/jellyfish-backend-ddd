@@ -9,55 +9,14 @@ using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
 using Shared.DataTransferObject.Abstraction;
 using Shared.Reflection;
-using System.Net;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using static Shared.Infrastructure.Backend.Api.JellyfishBackendApi;
+using System;
+using Shared.Logger;
 
 namespace Shared.Infrastructure.Backend.Api
 {
-    public interface IWebApiRestClient
-    {
-        string BaseUrl { get; set; }
-        string ConnectionTestEndpoint { get; }
-        bool IsInit { get; }
-        string LoginSessionEndpoint { get; }
-        string LogoutSessionEndpoint { get; }
-        string Password { get; }
-        string PasswordResetDataTransferModelEndpoint { get; }
-        string PasswordResetRequestDTOEndpoint { get; }
-        bool RefreshLogin { get; }
-        string RefreshSessionEndpoint { get; }
-        string RegisterEndpoint { get; }
-        string RegistrationActivateEndpoint { get; }
-        string User { get; }
-        string ValidateSessionEndpoint { get; }
-
-        void AddErrorHandler(ErrorOutputEventHandler eventHandler);
-
-        Task<WebApiHttpRequestResponseModel<ApiDataTransferObject<UserDTO>>> Register(ApiDataTransferObject<RegisterUserDTO> registerDataTransferModel, CancellationToken cancellationToken);
-        Task<JellyfishBackendApi.JellyfishBackendApiResponse<UserDTO>> Register(RegisterUserDTO registerDataTransferModel, CancellationToken cancellationToken);
-        Task<JellyfishBackendApi.JellyfishBackendApiResponse<UserDTO>> Activate(string base64Token, UserActivationDataTransferModel userActivationDataTransferModel, CancellationToken cancellationToken);
-
-        Task<AuthDTO> Authentificate(string userName, string password, CancellationToken cancellationToken);
-        void SetSession(AuthDTO authDTO);
-        void SetSession(Func<Task<AuthDTO>> funcGetAuthDTO);
-        Task<AuthDTO> GetSession();
-        Task<AuthDTO> RefreshAuthentification(string token, string refreshToken, CancellationToken cancellationToken);
-        Task<HttpStatusCode> Logout(CancellationToken cancellationToken);
-
-        Task<JellyfishBackendApi.JellyfishBackendApiResponse<bool>> ResetPassword(PasswordResetDataTransferModel passwordResetDataTransferModel, CancellationToken cancellationToken);
-        Task<JellyfishBackendApi.JellyfishBackendApiResponse<bool>> ResetPasswordRequest(PasswordResetRequestDTO passwordResetRequestDTO, CancellationToken cancellationToken);
-
-        string BuildUrl(string endPoint);
-        Task<bool> ConnectionTest(CancellationToken cancellationToken);
-        Task<UserDTO?> GetCurrentUser(AuthenticationState authenticationState, CancellationToken cancellationToken);
-        Task<JellyfishBackendApiResponse<UserDTO>> GetUser(Guid userId, CancellationToken cancellationToken);
-        void Init(string baseUrl, string loginSessionEndpoint, string logoutSessionEndpoint, string registerEndpoint, string validateSessionEndpoint, string refreshSessionEndpoint, string connectionTestEndpoint, string passwordResetEndpoint, string passwordResetRequestEndpoint);
-        Task<WebApiHttpRequestResponseModel<T1>> Request<T1, T2>(string url, Method method, CancellationToken cancellationToken, T2 bodyObject, List<KeyValuePair<string, string>> query = null, List<KeyValuePair<string, string>> headers = null, bool donttryagain = true);
-        Task<RestResponse> Request<T2>(string url, Method method, CancellationToken cancellationToken, object bodyObject = null, List<KeyValuePair<string, string>> query = null, List<KeyValuePair<string, string>> headers = null, bool donttryagain = true);
-        Task<JellyfishBackendApiResponse<T2>> TypedRequest<T, T2>(string url, Method method, T? data, CancellationToken cancellationToken, PaginationBase paginationBase = null);
-
-    }
 
     public class WebApiRestClient : AbstractRestClient, IDisposable, IWebApiRestClient
     {
@@ -80,10 +39,13 @@ namespace Shared.Infrastructure.Backend.Api
         public string PasswordResetRequestDTOEndpoint { get; private set; }
         public string PasswordResetDataTransferModelEndpoint { get; private set; }
         private bool disposedValue;
-        private ICollection<ErrorOutputEventHandler> _eventHandler = new List<ErrorOutputEventHandler>();
+        private ICollection<ErrorOutputEventHandler> _errorOutputEventHandlers = new List<ErrorOutputEventHandler>();
 
-        public WebApiRestClient(IConfiguration configuration)
+        public WebApiRestClient(
+            ILogger<WebApiRestClient> logger,
+            IConfiguration configuration) : base(logger)
         {
+            this.logger = logger;
             var infrastructureApiSection = configuration.GetSection("Infrastructure:Api");
             string baseUrl = infrastructureApiSection.GetValue<string>("BaseUrl");
             string loginSessionEndpoint = infrastructureApiSection.GetValue<string>("LoginEndpoint");
@@ -126,17 +88,20 @@ namespace Shared.Infrastructure.Backend.Api
             PasswordResetRequestDTOEndpoint = BuildUrl(passwordResetRequestEndpoint);
             PasswordResetDataTransferModelEndpoint = BuildUrl(passwordResetEndpoint);
             _isInit = true;
+            logger.LogMethod("init");
         }
         public void AddErrorHandler(ErrorOutputEventHandler eventHandler)
         {
-            _eventHandler.Add(eventHandler);
+            logger.LogMethod($"add {nameof(ErrorOutputEventHandler)}: {nameof(eventHandler)}");
+            _errorOutputEventHandlers.Add(eventHandler);
         }
         private void DispatchEventHandlers(JellyfishApiErrorEventArgs jellyfishApiErrorEventArgs)
         {
-            if (_eventHandler.Any())
+            if (_errorOutputEventHandlers.Any())
             {
-                foreach (var eventHandler in _eventHandler)
+                foreach (var eventHandler in _errorOutputEventHandlers)
                 {
+                    logger.LogMethod($"invoke evenhandler {nameof(ErrorOutputEventHandler)}: {nameof(eventHandler)}");
                     eventHandler.Invoke(this, jellyfishApiErrorEventArgs);
                 }
             }
@@ -146,6 +111,7 @@ namespace Shared.Infrastructure.Backend.Api
             User = user;
             Password = password;
             RefreshLogin = sessionAutoRefresh;
+            logger.LogMethod($"set credentials for 'Authorization' header");
         }
         public async Task<UserDTO?> GetCurrentUser(AuthenticationState authenticationState, CancellationToken cancellationToken)
         {
@@ -173,14 +139,17 @@ namespace Shared.Infrastructure.Backend.Api
         public virtual async Task<JellyfishBackendApiResponse<T2>> TypedRequest<T, T2>(string url, RestSharp.Method method, T? data, CancellationToken cancellationToken, PaginationBase paginationBase = null)
 
         {
+            logger.LogMethod($"start exec {nameof(TypedRequest)}");
             if (data is IDataTransferObject dataTransferObject || (ReflectionExtension.IsListAndGenericTypeImplementsT<IDataTransferObject>(typeof(T))))
             {
+                logger.LogMethod($"body is {nameof(IDataTransferObject)} generic list with type");
                 var body = ApiDataTransferObject<T>.Create(data, paginationBase);
                 var response = await Request<ApiDataTransferObject<T2>, ApiDataTransferObject<T>>(url, method, cancellationToken, body);
                 return JellyfishBackendApiResponse<T2>.CreateFromWebApiResponseModel(response);
             }
             else if (data is SearchParamsBody)
             {
+                logger.LogMethod($"body is {nameof(SearchParamsBody)}");
                 return await RequestI<T, T2>(url, method, data, cancellationToken);
             }
             return await RequestI<T, T2>(url, method, data, cancellationToken);
@@ -189,15 +158,19 @@ namespace Shared.Infrastructure.Backend.Api
         {
 
             T body = data;
+            logger.LogMethod($"body data.ToString(): {body?.ToString()}");
             var response = await this.Request<ApiDataTransferObject<T2>, T>(url, method, cancellationToken, body);
             var webApiResponseModel = JellyfishBackendApiResponse<T2>.CreateFromWebApiResponseModel(response);
             if (webApiResponseModel != null && webApiResponseModel.HasErrors)
             {
 
-                if (_eventHandler.Any())
+                logger.LogMethod($"response has error data");
+                if (_errorOutputEventHandlers.Any())
                 {
+                    logger.LogMethod($"start to dispatch error eventhandlers");
                     var eventArgs = new JellyfishApiErrorEventArgs(webApiResponseModel.DefaultResponse.DefaultResponse.StatusCode, webApiResponseModel.DefaultResponse.DefaultResponse.ResponseUri, webApiResponseModel.Errors);
                     DispatchEventHandlers(eventArgs);
+                    logger.LogMethod($"dispatch completed");
                 }
             }
             return webApiResponseModel;
@@ -344,6 +317,8 @@ namespace Shared.Infrastructure.Backend.Api
             return System.Net.HttpStatusCode.Forbidden;
         }
         public static JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true, DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
+        private readonly ILogger<WebApiRestClient> logger;
+
         public async Task<RestResponse> Request<T2>(string url, Method method, CancellationToken cancellationToken, object bodyObject = null, List<KeyValuePair<string, string>> query = null, List<KeyValuePair<string, string>> headers = null, bool donttryagain = true)
         {
             if (!IsInit)
@@ -354,16 +329,18 @@ namespace Shared.Infrastructure.Backend.Api
             if (headers == null)
             {
                 headers = new List<KeyValuePair<string, string>>();
+                logger.LogMethod($"initialize headers, because it was previously null");
             }
             var session = (await GetSession());
             if (IsValidWebApiSession(session))
             {
                 headers.Add(new KeyValuePair<string, string>("Authorization", (session).Token));
+                logger.LogMethod($"add authorization header: Authorization {session.Token}");
             }
             if (bodyObject != null)
             {
                 body = JsonSerializer.Serialize(bodyObject, JsonSerializerOptions);
-
+                logger.LogMethod($"serialize body: {body}");
             }
             int retries = 0;
             bool reauth = false;
@@ -371,25 +348,33 @@ namespace Shared.Infrastructure.Backend.Api
             do
             {
                 url = url.ToLower().StartsWith("http") ? url : BuildUrl(url);
-                var requ = CreateRequest(url, method, ContentType.Json, body, query, headers);
-                response = await Send(requ, cancellationToken);
+                logger.LogMethod($"start create request object");
+                var requestObject = CreateRequest(url, method, ContentType.Json, body, query, headers);
+                logger.LogMethod($"create request object: completed");
+                logger.LogMethod($"request sending");
+                response = await Send(requestObject, cancellationToken);
+                logger.LogMethod($"request sent");
                 if (!response.IsSuccessStatusCode)
                 {
+                    logger.LogMethod($"response status-code: {response.StatusCode}");
                     if (RefreshLogin)
                     {
                         if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                         {
+                            logger.LogMethod($"reauthentificate for invalid token (expired or not set)");
                             if (!reauth)
                             {
                                 var responseAuth = await Authentificate(User, Password, cancellationToken);
                                 if (responseAuth != null)
                                 {
+                                    logger.LogMethod($"reauthentificated, set authorization header");
                                     headers.Add(new KeyValuePair<string, string>("Authorization", _currentWebApiSession.Token));
                                 }
                                 reauth = true;
                             }
                             else//da bereits die erste auth fehlgeschlagen ist werden die nächsten folgen d.h. do-while abort
                             {
+                                logger.LogMethod($"reauthentificate failed (check login credentials), reauth abort");
                                 donttryagain = true;
                             }
                         }
@@ -402,6 +387,7 @@ namespace Shared.Infrastructure.Backend.Api
                     }
 
                     retries++;
+                    logger.LogMethod($"try {retries} of {MaxRequestRetries}");
                 }
                 else
                 {
@@ -421,8 +407,12 @@ namespace Shared.Infrastructure.Backend.Api
             List<KeyValuePair<string, string>> headers = null,
             bool donttryagain = true)
         {
+            logger.LogMethod($"start exec");
             if (headers == null)
+            {
+                logger.LogMethod($"init headers");
                 headers = new List<KeyValuePair<string, string>>();
+            }
 
             WebApiHttpRequestResponseModel<T1> responseModel = new WebApiHttpRequestResponseModel<T1>();
             var resp = await Request<T2>(url, method, cancellationToken, bodyObject, query, headers, donttryagain);
@@ -430,26 +420,33 @@ namespace Shared.Infrastructure.Backend.Api
             if (resp != null && resp.Content != null && !string.IsNullOrEmpty(resp.Content))
             {
 
+                logger.LogMethod($"response content is given, start to deserialize to {typeof(T1).Name}");
                 string responseJson = resp.Content;
+                logger.LogMethod($"response content: {responseJson}");
                 var apiResponseModel = JsonSerializer.Deserialize<T1>(responseJson, JsonSerializerOptions);
                 responseModel.ApiResponseDeserialized = apiResponseModel;
+                logger.LogMethod($"deserialized to {typeof(T1).Name}");
             }
             return responseModel;
         }
 
         protected virtual void Dispose(bool disposing)
         {
+            logger.LogMethod($"disposing started");
             if (!disposedValue)
             {
+                logger.LogMethod($"disposing values");
                 if (disposing)
                 {
 
                 }
 
-                if (_eventHandler.Any())
+                if (_errorOutputEventHandlers.Any())
                 {
-                    _eventHandler.Clear();
+                    logger.LogMethod($"clear {nameof(_errorOutputEventHandlers)}");
+                    _errorOutputEventHandlers.Clear();
                 }
+                logger.LogMethod($"disposing completed, set boolean {disposedValue}");
                 disposedValue = true;
             }
         }
@@ -464,13 +461,16 @@ namespace Shared.Infrastructure.Backend.Api
         public void Dispose()
         {
             // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
+            logger.LogMethod($"disposing started");
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+            logger.LogMethod($"garbage collector invoked to suppress finalize");
         }
 
         public void SetSession(AuthDTO authDTO)
         {
             _currentWebApiSession = authDTO;
+            logger.LogMethod($"set session for 'Authorization' header");
         }
 
         public async Task<AuthDTO> GetSession()
@@ -489,6 +489,7 @@ namespace Shared.Infrastructure.Backend.Api
         public void SetSession(Func<Task<AuthDTO>> funcGetAuthDTO)
         {
             _currentWebApiSessionGetFunc = funcGetAuthDTO;
+            logger.LogMethod($"set session for 'Authorization' header");
         }
     }
 }

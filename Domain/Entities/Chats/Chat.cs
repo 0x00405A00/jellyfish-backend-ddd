@@ -20,7 +20,7 @@ namespace Domain.Entities.Chats
         IReadOnlyCollection<ChatRelationToUser> Members { get; }
         IReadOnlyCollection<Message> Messages { get; }
         string Name { get; }
-        Picture Picture { get; }
+        Picture? Picture { get; }
     }
 
     /// <summary>
@@ -33,9 +33,9 @@ namespace Domain.Entities.Chats
         private List<ChatInviteRequest> _invites = new();
         private List<Message> _messages = new();
 
-        public Picture Picture { get; private set; }
+        public Picture? Picture { get; private set; }
         public string Name { get; private set; }
-        public string Description { get; private set; }
+        public string? Description { get; private set; }
 
         public IReadOnlyCollection<ChatRelationToUser> Members => _members.ToImmutableList();
         public IReadOnlyCollection<ChatRelationToUser> Admins => _members.Where(x => x.IsChatAdmin ?? false).ToList().ToImmutableList();
