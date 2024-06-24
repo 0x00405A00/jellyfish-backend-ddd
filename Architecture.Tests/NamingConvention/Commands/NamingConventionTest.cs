@@ -12,8 +12,6 @@ namespace Architecture.Tests.NamingConvention.Commands
 
         public NamingConventionTest()
         {
-            
-
         }
 
         [Fact]
@@ -103,6 +101,7 @@ namespace Architecture.Tests.NamingConvention.Commands
             );
             return foundTypes;
         }
+        //Find all command types in assembly
         private static IEnumerable<Type> FindCommandTypes(Assembly assembly)
         {
             var allTypes = assembly.GetTypes();
