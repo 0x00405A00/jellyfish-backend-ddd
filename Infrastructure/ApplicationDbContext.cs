@@ -186,7 +186,7 @@ namespace Infrastructure
         }
         #endregion
     }
-    internal partial class ApplicationDbContextMailService : ApplicationDbContext
+    public partial class ApplicationDbContextMailService : ApplicationDbContext
     {
         public ApplicationDbContextMailService(IConfiguration configuration) : base(configuration)
         {
