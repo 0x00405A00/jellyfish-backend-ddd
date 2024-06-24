@@ -25,7 +25,7 @@ namespace Infrastructure
         #region Const
         public const string ConnectionStringAlias = "JellyfishMySqlDatabase";
         //Host=db;Port=5432;Username=jellyfish;Password=meinDatabasePassword!;Database=jellyfish;
-        public static string ConnectionString = @"Host=127.0.0.1;Port=5432;Username=jellyfish;Password=meinDatabasePassword!;Database=jellyfish;";//hardcoded connection string, because cli tool dotnet ef migrations/database cant consume IConfiguration-Service from DI
+        public static string ConnectionString = @"Host=db;Port=5432;Username=jellyfish;Password=meinDatabasePassword!;Database=jellyfish;";//hardcoded connection string, because cli tool dotnet ef migrations/database cant consume IConfiguration-Service from DI
 
         #endregion
         #region Consumed DI Services
@@ -102,11 +102,13 @@ namespace Infrastructure
                 ConnectionString = _configuration.GetConnectionString(ConnectionStringAlias);
                 loggerFactory = SerilogExtension.GetLoggerFactory(_configuration);
                 _logger = loggerFactory.CreateLogger<ApplicationDbContext>();
+                _logger.LogInformation("configuration is null, get default connectionstring");
             }
             else
             {
                 loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
                 _logger = loggerFactory.CreateLogger<ApplicationDbContext>();
+                _logger.LogInformation("get connectionstring from configuration");
             }
             optionsBuilder.UseLoggerFactory(loggerFactory);
             optionsBuilder.UseNpgsql(ConnectionString);
