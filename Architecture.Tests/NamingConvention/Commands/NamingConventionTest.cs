@@ -12,6 +12,7 @@ namespace Architecture.Tests.NamingConvention.Commands
 
         public NamingConventionTest()
         {
+             
         }
 
         [Fact]

@@ -41,7 +41,7 @@ namespace Presentation.Controllers.Api.v1
             _logger.LogDebug("test info");
             var command = new CreateAuthCommand(userLoginDTO.Email, userLoginDTO.Password, HttpContext.Connection.LocalIpAddress, HttpContext.Connection.LocalPort, HttpContext.Connection.RemoteIpAddress, HttpContext.Connection.RemotePort, HttpContext.Request.Headers.UserAgent);
             var result = await _sender.Send(command);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
         [AllowAnonymous]
         [Produces(MediaTypeNames.Application.Json)]
@@ -54,7 +54,7 @@ namespace Presentation.Controllers.Api.v1
             var token = HttpContext.GetAuthorizationHeader();
             var command = new RefreshAuthCommand(token, refreshToken);
             var result = await _sender.Send(command);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
         [Authorize]
         [Produces(MediaTypeNames.Application.Json)]
@@ -71,7 +71,7 @@ namespace Presentation.Controllers.Api.v1
             }
             var command = new RemoveAuthCommand(jwt);
             var result = await _sender.Send(command);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result);
         }
         [AllowAnonymous]
         [Produces(MediaTypeNames.Application.Json)]

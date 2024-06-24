@@ -67,9 +67,9 @@ namespace Application.CQS.Auth.Command.CreateAuth
                 var auth = Domain.Entities.Auths.Auth.Create(
                     Domain.Entities.Auths.Auth.NewId(),
                     user.Id,
-                    request.LocalIp.ToString(),
+                    request.LocalIp?.ToString(),
                     request.LocalIpPort,
-                    request.RemoteIp.ToString(),
+                    request.RemoteIp?.ToString(),
                     request.RemoteIpPort,
                     tokenStr,
                     DateTime.UtcNow.Add(texpMinTimeSpan).ToTypedDateTime(),

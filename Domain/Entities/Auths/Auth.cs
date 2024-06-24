@@ -80,15 +80,6 @@ public sealed partial class Auth : Entity<AuthId>, IAuth
         string refreshToken,
         CustomDateTime? logoutTime)
     {
-        if (string.IsNullOrWhiteSpace(remoteIp))
-        {
-            throw new ArgumentException("IP address remote cannot be null or empty.", nameof(remoteIp));
-        }
-
-        if (string.IsNullOrWhiteSpace(localIp))
-        {
-            throw new ArgumentException("IP address local cannot be null or empty.", nameof(localIp));
-        }
 
         if (string.IsNullOrWhiteSpace(token))
         {
