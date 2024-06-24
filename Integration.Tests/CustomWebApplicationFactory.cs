@@ -1,9 +1,12 @@
-﻿using Infrastructure;
+﻿using DotNet.Testcontainers.Containers;
+using Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.Net.Sockets;
+using System.Net;
 using Testcontainers.PostgreSql;
 using WebApi;
 
@@ -51,10 +54,48 @@ namespace Integration.Tests
         public async Task InitializeAsync()
         {
             await _postgreSqlContainer.StartAsync();
+            await _postgreSqlContainer.WaitForPort();
         }
         public new async Task DisposeAsync()
         {
             await _postgreSqlContainer.StopAsync();
+        }
+    }
+    public static class TestcontainerWorkaround
+    {
+
+        public static Task<bool> WaitForPort(this PostgreSqlContainer container, TimeSpan? maxWait = null)
+        {
+            return WaitForPort(container, PostgreSqlBuilder.PostgreSqlPort, maxWait ?? TimeSpan.FromSeconds(10));
+        }
+
+        public static async Task<bool> WaitForPort(this DockerContainer container, int unmappedPort, TimeSpan maxWait)
+        {
+            var ips = await Dns.GetHostAddressesAsync(container.Hostname);
+            if (ips.Length == 0)
+            {
+                throw new ArgumentException($"Expected minimum 1 IP to resolve from '{container.Hostname}', but got {ips.Length}");
+            }
+
+            int portNumber = container.GetMappedPublicPort(unmappedPort);
+
+            CancellationTokenSource ts = new();
+            ts.CancelAfter(maxWait);
+
+            using var tcpClient = new TcpClient();
+
+            while (!ts.IsCancellationRequested)
+            {
+                try
+                {
+                    await tcpClient.ConnectAsync(ips[0], portNumber, ts.Token);
+                    return true;
+                }
+                catch (SocketException) { }
+                await Task.Delay(500, ts.Token);
+            }
+
+            return false;
         }
     }
 }

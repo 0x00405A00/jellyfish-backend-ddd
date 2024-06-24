@@ -7,20 +7,16 @@
       "RelativeMoniker": "D:0:0:{1AAAAA02-F7B3-41F5-802B-C0B32B95EFBE}|Integration.Tests\\Integration.Tests.csproj|solutionrelative:integration.tests\\customwebapplicationfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\presentation\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|solutionrelative:presentation\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\infrastructure\\hostedservice\\backgroundservice\\chatnotificationhostedservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\hostedservice\\backgroundservice\\chatnotificationhostedservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{96746752-E0D7-4E83-AC21-EC899BA72CAD}|Shared.Infrastructure\\Shared.Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared.infrastructure\\filesys\\filehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{96746752-E0D7-4E83-AC21-EC899BA72CAD}|Shared.Infrastructure\\Shared.Infrastructure.csproj|solutionrelative:shared.infrastructure\\filesys\\filehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\infrastructure\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\infrastructure\\hostedservice\\backgroundservice\\chatnotificationhostedservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\hostedservice\\backgroundservice\\chatnotificationhostedservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\infrastructure\\hostedservice\\backgroundservice\\mailhostedservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -202,11 +198,11 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 7,
               "Title": "ChatController.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Controllers\\Api\\v1\\Messenger\\ChatController.cs",
               "RelativeDocumentMoniker": "Presentation\\Controllers\\Api\\v1\\Messenger\\ChatController.cs",
@@ -220,7 +216,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 12,
               "Title": "Chat.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Entities\\Chats\\Chat.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Chats\\Chat.cs",
@@ -234,7 +230,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 46,
               "Title": "IMessengerClient.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\SignalR\\IMessengerClient.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\SignalR\\IMessengerClient.cs",
@@ -248,7 +244,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 39,
               "Title": "MessengerHub.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\SignalR\\MessengerHub.cs",
               "RelativeDocumentMoniker": "Infrastructure\\SignalR\\MessengerHub.cs",
@@ -261,45 +257,6 @@
               "EditorCaption": ""
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\appsettings.json",
-              "RelativeDocumentMoniker": "Presentation\\appsettings.json",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\appsettings.json",
-              "RelativeToolTip": "Presentation\\appsettings.json",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAgAAAAnAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-06-24T13:53:06.787Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CustomWebApplicationFactory.cs",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Integration.Tests\\CustomWebApplicationFactory.cs",
-              "RelativeDocumentMoniker": "Integration.Tests\\CustomWebApplicationFactory.cs",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Integration.Tests\\CustomWebApplicationFactory.cs",
-              "RelativeToolTip": "Integration.Tests\\CustomWebApplicationFactory.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAA2AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-24T13:32:53.704Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "FileHandler.cs",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\FileSys\\FileHandler.cs",
-              "RelativeDocumentMoniker": "Shared.Infrastructure\\FileSys\\FileHandler.cs",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\FileSys\\FileHandler.cs",
-              "RelativeToolTip": "Shared.Infrastructure\\FileSys\\FileHandler.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAA1AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-24T13:36:31.801Z",
-              "EditorCaption": ""
-            },
-            {
               "$type": "Bookmark",
               "Name": "ST:0:0:{0174dea2-fdbe-4ef1-8f99-c0beae78880f}"
             },
@@ -309,7 +266,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
+              "Title": "CustomWebApplicationFactory.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Integration.Tests\\CustomWebApplicationFactory.cs",
+              "RelativeDocumentMoniker": "Integration.Tests\\CustomWebApplicationFactory.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Integration.Tests\\CustomWebApplicationFactory.cs",
+              "RelativeToolTip": "Integration.Tests\\CustomWebApplicationFactory.cs",
+              "ViewState": "AQIAAD8AAAAAAAAAAAAAAEcAAABRAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T13:32:53.704Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FileHandler.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\FileSys\\FileHandler.cs",
+              "RelativeDocumentMoniker": "Shared.Infrastructure\\FileSys\\FileHandler.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\FileSys\\FileHandler.cs",
+              "RelativeToolTip": "Shared.Infrastructure\\FileSys\\FileHandler.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAABQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T13:36:31.801Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "CreateMessageCommandHandler.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateMessage\\CreateMessageCommandHandler.cs",
               "RelativeDocumentMoniker": "Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateMessage\\CreateMessageCommandHandler.cs",
@@ -322,7 +305,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "Message.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Entities\\Messages\\Message.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Messages\\Message.cs",
@@ -335,7 +318,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 9,
               "Title": "MessageDTO.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\DataTransferObject\\Messenger\\MessageDTO.cs",
               "RelativeDocumentMoniker": "Shared\\DataTransferObject\\Messenger\\MessageDTO.cs",
@@ -348,7 +331,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 10,
               "Title": "ChatsQueryableExtension.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\Extension\\Repository\\ChatsQueryableExtension.cs",
               "RelativeDocumentMoniker": "Shared.Infrastructure\\Extension\\Repository\\ChatsQueryableExtension.cs",
@@ -361,20 +344,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "Infrastructure\\ApplicationDbContext.cs",
               "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\ApplicationDbContext.cs",
               "RelativeToolTip": "Infrastructure\\ApplicationDbContext.cs",
-              "ViewState": "AQIAALAAAAAAAAAAAAAiwLwAAAAKAAAA",
+              "ViewState": "AQIAAGAAAAAAAAAAAAAAABsAAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-11T19:02:03.242Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "MailHostedService.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\HostedService\\Backgroundservice\\MailHostedService.cs",
               "RelativeDocumentMoniker": "Infrastructure\\HostedService\\Backgroundservice\\MailHostedService.cs",
@@ -387,7 +370,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ChatNotificationHostedService.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\HostedService\\Backgroundservice\\ChatNotificationHostedService.cs",
               "RelativeDocumentMoniker": "Infrastructure\\HostedService\\Backgroundservice\\ChatNotificationHostedService.cs",
@@ -400,7 +383,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 8,
               "Title": "ApiDataTransferObjectModelBinder.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Modelbinding\\Binder\\ApiDataTransferObjectModelBinder.cs",
               "RelativeDocumentMoniker": "Presentation\\Modelbinding\\Binder\\ApiDataTransferObjectModelBinder.cs",
@@ -413,7 +396,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 16,
               "Title": "DialogHandler.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\Handler\\DialogHandler.cs",
               "RelativeDocumentMoniker": "WebFrontEnd\\Handler\\DialogHandler.cs",
@@ -426,7 +409,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 15,
               "Title": "Profile.razor",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\UI\\Pages\\Profile.razor",
               "RelativeDocumentMoniker": "WebFrontEnd\\UI\\Pages\\Profile.razor",
@@ -439,7 +422,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 11,
               "Title": "ChatRepository.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Repository\\Concrete\\ChatRepository.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Repository\\Concrete\\ChatRepository.cs",
@@ -452,7 +435,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 19,
               "Title": "DataInterceptorApplicationInvokerResponseModel.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Interceptor\\DataInterceptorApplicationInvokerResponseModel.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Interceptor\\DataInterceptorApplicationInvokerResponseModel.cs",
@@ -465,7 +448,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 25,
               "Title": "MessengerUserDTO.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\DataTransferObject\\Messenger\\MessengerUserDTO.cs",
               "RelativeDocumentMoniker": "Shared\\DataTransferObject\\Messenger\\MessengerUserDTO.cs",
@@ -478,7 +461,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 27,
               "Title": "GetChatByIdQuery.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Queries\\GetChatById\\GetChatByIdQuery.cs",
               "RelativeDocumentMoniker": "Shared.Application\\CQS\\Messenger\\Chat\\Queries\\GetChatById\\GetChatByIdQuery.cs",
@@ -491,7 +474,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 13,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Entities\\Users\\User.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Users\\User.cs",
@@ -504,7 +487,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 29,
               "Title": "AutoMapperExtension.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\Mapper\\AutoMapperExtension.cs",
               "RelativeDocumentMoniker": "Shared.Application\\Mapper\\AutoMapperExtension.cs",
@@ -517,7 +500,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 32,
               "Title": "GetUserQueryHandler.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\User\\Queries\\GetUserById\\GetUserQueryHandler.cs",
               "RelativeDocumentMoniker": "Shared.Application\\CQS\\Messenger\\User\\Queries\\GetUserById\\GetUserQueryHandler.cs",
@@ -530,7 +513,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 17,
               "Title": "IInternalDataInterceptorApplication.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Interceptor\\Abstraction\\IInternalDataInterceptorApplication.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Interceptor\\Abstraction\\IInternalDataInterceptorApplication.cs",
@@ -543,7 +526,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 31,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Controllers\\Api\\v1\\UserController.cs",
               "RelativeDocumentMoniker": "Presentation\\Controllers\\Api\\v1\\UserController.cs",
@@ -556,7 +539,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 20,
               "Title": "IInternalDataInterceptorApplicationInvoker.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Interceptor\\Abstraction\\IInternalDataInterceptorApplicationInvoker.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Interceptor\\Abstraction\\IInternalDataInterceptorApplicationInvoker.cs",
@@ -569,7 +552,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 22,
               "Title": "IInternalDataInterceptorInvoker.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Interceptor\\Abstraction\\IInternalDataInterceptorInvoker.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Interceptor\\Abstraction\\IInternalDataInterceptorInvoker.cs",
@@ -582,7 +565,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 21,
               "Title": "InternalDataInterceptorDispatcher.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Interceptor\\InternalDataInterceptorDispatcher.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Interceptor\\InternalDataInterceptorDispatcher.cs",
@@ -595,7 +578,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 18,
               "Title": "InternalDataInterceptorApplication.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Interceptor\\InternalDataInterceptorApplication.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Interceptor\\InternalDataInterceptorApplication.cs",
@@ -608,7 +591,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 26,
               "Title": "GetChatByIdQueryHandler.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Queries\\GetChatById\\GetChatByIdQueryHandler.cs",
               "RelativeDocumentMoniker": "Shared.Application\\CQS\\Messenger\\Chat\\Queries\\GetChatById\\GetChatByIdQueryHandler.cs",
@@ -621,7 +604,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 35,
               "Title": "CreateChatCommandHandler.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateChat\\CreateChatCommandHandler.cs",
               "RelativeDocumentMoniker": "Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateChat\\CreateChatCommandHandler.cs",
@@ -634,7 +617,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 36,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\appsettings.json",
               "RelativeDocumentMoniker": "WebFrontEnd\\appsettings.json",
@@ -647,7 +630,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 37,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "WebFrontEnd\\Properties\\launchSettings.json",
@@ -660,7 +643,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 33,
               "Title": "AbstractRestClient.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Api\\AbstractRestClient.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Api\\AbstractRestClient.cs",
@@ -673,7 +656,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 23,
               "Title": "BodyModelBinderProvider.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Modelbinding\\Provider\\HttpBody\\BodyModelBinderProvider.cs",
               "RelativeDocumentMoniker": "Presentation\\Modelbinding\\Provider\\HttpBody\\BodyModelBinderProvider.cs",
@@ -686,7 +669,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 42,
               "Title": "SignIn.razor",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\UI\\Pages\\SignIn.razor",
               "RelativeDocumentMoniker": "WebFrontEnd\\UI\\Pages\\SignIn.razor",
@@ -699,7 +682,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 38,
               "Title": "MainLayout.razor",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\UI\\MainLayout.razor",
               "RelativeDocumentMoniker": "WebFrontEnd\\UI\\MainLayout.razor",
@@ -712,7 +695,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 28,
               "Title": "IJellyfishBackendApi.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Api\\IJellyfishBackendApi.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Api\\IJellyfishBackendApi.cs",
@@ -725,7 +708,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 41,
               "Title": "Index.razor",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\UI\\Index.razor",
               "RelativeDocumentMoniker": "WebFrontEnd\\UI\\Index.razor",
@@ -738,7 +721,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 30,
               "Title": "JellyfishBackendApi.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Api\\JellyfishBackendApi.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Api\\JellyfishBackendApi.cs",
@@ -751,7 +734,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 24,
               "Title": "JellyfishSignalRClient.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\SignalR\\JellyfishSignalRClient.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\SignalR\\JellyfishSignalRClient.cs",
@@ -764,7 +747,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 34,
               "Title": "WebApiRestClient.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Api\\WebApiRestClient.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Api\\WebApiRestClient.cs",
@@ -777,7 +760,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 43,
               "Title": "GetNotDeliveredMessagesByChatQueryHandler.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Queries\\GetNotDeliveredMessagesByChat\\GetNotDeliveredMessagesByChatQueryHandler.cs",
               "RelativeDocumentMoniker": "Shared.Application\\CQS\\Messenger\\Chat\\Queries\\GetNotDeliveredMessagesByChat\\GetNotDeliveredMessagesByChatQueryHandler.cs",
@@ -790,7 +773,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 40,
               "Title": "AbstractSignalRClient.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\SignalR\\Abstraction\\AbstractSignalRClient.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\SignalR\\Abstraction\\AbstractSignalRClient.cs",
@@ -803,7 +786,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 14,
               "Title": "ChatDTO.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\DataTransferObject\\Messenger\\ChatDTO.cs",
               "RelativeDocumentMoniker": "Shared\\DataTransferObject\\Messenger\\ChatDTO.cs",
@@ -816,7 +799,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 45,
               "Title": "MailOutboxRepository.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Repository\\Concrete\\MailOutboxRepository.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Repository\\Concrete\\MailOutboxRepository.cs",
@@ -829,7 +812,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 44,
               "Title": "MessageOutboxRepository.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Repository\\Concrete\\MessageOutboxRepository.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Repository\\Concrete\\MessageOutboxRepository.cs",

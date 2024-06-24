@@ -1,4 +1,4 @@
-﻿//#define HOST_IS_WINDOWS
+﻿#define HOST_IS_WINDOWS
 using Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 using System.Security.AccessControl;
