@@ -16,7 +16,7 @@ namespace Integration.Tests
                 .WithDatabase("jellyfish")
                 .WithUsername("jellyfish")
                 .WithPassword("meinDatabasePassword!")
-                .WithName("postgres-infrastructure-tests")
+                .WithName("db")
                 .Build();
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
