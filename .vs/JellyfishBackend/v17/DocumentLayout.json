@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\presentation\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|solutionrelative:presentation\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1AAAAA02-F7B3-41F5-802B-C0B32B95EFBE}|Integration.Tests\\Integration.Tests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\integration.tests\\customwebapplicationfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1AAAAA02-F7B3-41F5-802B-C0B32B95EFBE}|Integration.Tests\\Integration.Tests.csproj|solutionrelative:integration.tests\\customwebapplicationfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\presentation\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|solutionrelative:presentation\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\infrastructure\\hostedservice\\backgroundservice\\chatnotificationhostedservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -202,7 +202,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
@@ -262,7 +262,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\appsettings.json",
               "RelativeDocumentMoniker": "Presentation\\appsettings.json",
@@ -275,13 +275,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "CustomWebApplicationFactory.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Integration.Tests\\CustomWebApplicationFactory.cs",
               "RelativeDocumentMoniker": "Integration.Tests\\CustomWebApplicationFactory.cs",
               "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Integration.Tests\\CustomWebApplicationFactory.cs",
               "RelativeToolTip": "Integration.Tests\\CustomWebApplicationFactory.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAsAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAA2AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-24T13:32:53.704Z",
               "EditorCaption": ""
