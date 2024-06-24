@@ -39,7 +39,7 @@ namespace Integration.Tests
                 // Add test-specific services if needed
                 services.RemoveAll(typeof(ApplicationDbContext));
                 services.RemoveAll(typeof(ApplicationDbContextMailService));
-
+                System.Diagnostics.Debug.WriteLine(_postgreSqlContainer.GetConnectionString());
                 services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(_postgreSqlContainer.GetConnectionString()));
 
