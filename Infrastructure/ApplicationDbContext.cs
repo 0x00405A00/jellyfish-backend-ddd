@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Shared.ApiDataTransferObject;
 using Shared.Infrastructure.EFCore;
 using Shared.Infrastructure.EFCore.Converter;
+using Shared.Infrastructure.EFCore.Converter.Time;
 using Shared.Infrastructure.EFCore.Interceptors;
 
 namespace Infrastructure
@@ -150,9 +151,10 @@ namespace Infrastructure
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
+
             configurationBuilder
                 .Properties<CustomDateTime>()
-                .HaveConversion<CustomDateTimeConverter>();
+                .HaveConversion<CustomDateTimeConverterForPostgreSql>();
 
             configurationBuilder
                 .Properties<UserId>()

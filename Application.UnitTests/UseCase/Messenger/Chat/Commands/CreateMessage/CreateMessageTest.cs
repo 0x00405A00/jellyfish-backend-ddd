@@ -1,9 +1,9 @@
 ﻿using Application.CQS.Messenger.Chat.Command.CreateMessage;
 using AutoMapper;
 using Infrastructure.Abstractions;
-using Infrastructure.FileSys;
 using MediatR;
 using Shared.DataTransferObject.Messenger;
+using Shared.Infrastructure.FileSys;
 using System.Linq.Expressions;
 
 namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateMessage
@@ -30,6 +30,8 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateMessage
         private readonly CreateMessageCommandHandler _handler;
         private readonly IMapper _mapperMock;
         private readonly IChatRepository _chatRepositoryMock;
+        private readonly IMessageRepository _messageRepository;
+        private readonly IMessageOutboxRepository _messageOutboxRepository;
         private readonly IUserRepository _userRepositoryMock;
         private readonly IMediaService _mediaServiceMock;
         private readonly IMediator _mediatorMock;
@@ -42,6 +44,8 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateMessage
         {
             _mapperMock = Substitute.For<IMapper>();
             _chatRepositoryMock = Substitute.For<IChatRepository>();
+            _messageRepository = Substitute.For<IMessageRepository>();
+            _messageOutboxRepository = Substitute.For<IMessageOutboxRepository>();
             _userRepositoryMock = Substitute.For<IUserRepository>();
             _mediaServiceMock = Substitute.For<IMediaService>();
             _mediatorMock = Substitute.For<IMediator>();
@@ -52,6 +56,8 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateMessage
                 Substitute.For<IAntiVirus>(),
                 Substitute.For<IAzureAdultContentDetection>(),
                 _chatRepositoryMock,
+                _messageRepository,
+                _messageOutboxRepository,
                 _userRepositoryMock,
                 _mediaServiceMock);
         }

@@ -5,6 +5,7 @@ using Shared.CustomException;
 using Shared.DataTransferObject.Abstraction;
 using System.Reflection;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Presentation.Modelbinding.Binder
 {
@@ -26,7 +27,16 @@ namespace Presentation.Modelbinding.Binder
                     {
                         throw new ModelBindingFailedException($"body is null");
                     }
-                    var data = JsonSerializer.Deserialize<ApiDataTransferObject<object>>(body, jsonOpt);
+
+                    ApiDataTransferObject<object> data = null;
+                    try
+                    {
+                        data = JsonSerializer.Deserialize<ApiDataTransferObject<object>>(body, jsonOpt);
+                    }
+                    catch (System.Text.Json.JsonException ex)
+                    {
+                        throw new ModelBindingFailedException(ex.Message);
+                    }
                     if(data==null|| data.Data != null && String.IsNullOrEmpty(data.Data.Type))
                     {
 

@@ -1,8 +1,7 @@
 ﻿using Application.CQS.Messenger.Chat.Command.CreateChat;
 using AutoMapper;
 using Infrastructure.Abstractions;
-using Infrastructure.FileSys;
-using Shared.DataTransferObject.Messenger;
+using Shared.Infrastructure.FileSys;
 using System.Linq.Expressions;
 
 namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.CreateChat

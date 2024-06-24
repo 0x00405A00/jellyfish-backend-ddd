@@ -44,6 +44,10 @@ namespace Application.CQS.User.Commands.UpdateProfilePicture
             }
 
             var updatedByUser = await _userRepository.GetAsync(x => x.Id == request.UpdatedBy.ToIdentification<UserId>());
+            if (updatedByUser is null)
+            {
+                return Result<UserDTO>.Failure("user not found");
+            }
             Picture picture = null!;
             try
             {

@@ -80,8 +80,8 @@ namespace Application.Shared.Mapper
                 .ForMember(dst => dst.MembersAsDTO, src => src.MapFrom(x => x.Members.Select(x => x.User).ToList()))//Chat.ChatRelationToUser.User to MessengerUserDTO
                 .ForMember(dst => dst.MemberIds, src => src.MapFrom(x => x.Members.Select(x => x.UserForeignKey.ToGuid()).ToList()))
                 .ForMember(dst => dst.AdminIds, src => src.MapFrom(x => x.Admins.Select(x => x.UserForeignKey.ToGuid()).ToList()))
-                .ForMember(dst => dst.MembersAsUsernames, src => src.MapFrom(x => x.Members.Select(x => x.User.UserName).ToList()))
-                .ForMember(dst => dst.AdminsAsUsernames, src => src.MapFrom(x => x.Admins.Select(x => x.User.UserName).ToList()))
+                .ForMember(dst => dst.MembersAsUsernames, src => src.MapFrom(x => x.Members.Where(x => x.User != null).Select(x => x.User.UserName).ToList()))
+                .ForMember(dst => dst.AdminsAsUsernames, src => src.MapFrom(x => x.Admins.Where(x=>x.User!=null).Select(x => x.User.UserName).ToList()))
                 .ForMember(dst => dst.PictureBase64, dst => dst.MapFrom(x => x.Picture.ToString()))
                 .ForMember(dst => dst.PictureMimeType, dst => dst.MapFrom(x => x.Picture.FileExtension))
                 .ForMember(dst => dst.Messages, src => src.MapFrom(x => x.Messages))

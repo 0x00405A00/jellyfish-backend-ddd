@@ -120,6 +120,8 @@ namespace Domain.ValueObjects
             $"{nameof(Course)}: {Course}, " +
             $"{nameof(Timestamp)}: {Timestamp}";
 
+        public static implicit operator string(Location location) => location.ToString();
+
         public static bool operator !=(Location locationLeft, Location locationRight)
         {
             if (ReferenceEquals(locationLeft, null) && ReferenceEquals(locationRight, null)) return true;

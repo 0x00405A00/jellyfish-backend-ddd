@@ -13,8 +13,9 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdateProfilePicture
     public class UpdateProfilePictureTest
     {
         private static readonly Guid UserId = Guid.NewGuid();
+        private static readonly Guid UserIdUpdatedByUser = Guid.NewGuid();
         private static readonly UploadProfilePictureCommand ValidCommand = new UploadProfilePictureCommand(
-            Guid.NewGuid(),
+            UserIdUpdatedByUser,
             UserId,
             Convert.ToBase64String(Encoding.UTF8.GetBytes("base64encodedimage")),
             "image/jpeg");
@@ -30,6 +31,7 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdateProfilePicture
         private readonly IConfiguration _configuration;
 
         private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance(UserId);
+        private static readonly Domain.Entities.Users.User UserUpdateByInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance(UserIdUpdatedByUser);
 
         public UpdateProfilePictureTest()
         {
@@ -60,7 +62,8 @@ namespace Application.UnitTests.UseCase.User.Commands.UpdateProfilePicture
         public async Task Handle_ValidCommand_ReturnsSuccessResult()
         {
             // Arrange
-            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(UserInstance);
+            _userRepositoryMock.GetWithTrackingWithoutDependenciesAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(UserInstance);
+            _userRepositoryMock.GetAsync(Arg.Any<Expression<Func<Domain.Entities.Users.User, bool>>>()).Returns(UserUpdateByInstance);
             _mediaService.CreateProfilePicture(Arg.Any<Guid>(), Arg.Any<string>(), Arg.Any<byte[]>(), Arg.Any<System.Threading.CancellationToken>())
                 .Returns("path/to/profile/picture.png");
 

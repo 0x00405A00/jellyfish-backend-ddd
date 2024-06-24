@@ -1,4 +1,4 @@
-﻿using Application.Mapper;
+﻿using Application.Shared.Mapper;
 using AutoMapper;
 using Domain.Entities.Messages;
 using Domain.Primitives;

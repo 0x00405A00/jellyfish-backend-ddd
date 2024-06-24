@@ -4,6 +4,7 @@ using Infrastructure.Abstractions;
 using Infrastructure.Repository.Primitives;
 using Shared.DataFilter;
 using Shared.DataFilter.Infrastructure;
+using Shared.DataFilter.Presentation;
 using Shared.DataTransferObject;
 using System.Linq.Expressions;
 
@@ -13,12 +14,12 @@ namespace Application.UnitTests.UseCase.User.Queries.GetUsers
     {
         private static readonly Guid UserId = Guid.NewGuid();
         //filter with conditional groups
-        private static readonly GetUsersQuery ValidQueryWithConditionalGroups = new GetUsersQuery(new Shared.DataFilter.Presentation.SearchParams { filters = "[{\"group\":\"and\",\"filters\":[{\"field\":\"deleted_time\",\"value\":null,\"op\":\"eq\"}]},{\"group\":\"and\",\"filters\":[{\"field\":\"email\",\"value\":\"johndoe@example.com\",\"op\":\"eq\"}]}]", order_by = "[{\"field\":\"email\",\"desc\":false}]", page_offset = 1, page_size = 5 });
+        private static readonly GetUsersQuery ValidQueryWithConditionalGroups = new GetUsersQuery(new SearchParams { filters = "[{\"group\":\"and\",\"filters\":[{\"field\":\"deleted_time\",\"value\":null,\"op\":\"eq\"}]},{\"group\":\"and\",\"filters\":[{\"field\":\"email\",\"value\":\"johndoe@example.com\",\"op\":\"eq\"}]}]", order_by = "[{\"field\":\"email\",\"desc\":false}]", page_offset = 1, page_size = 5 });
 
         //simple filter without concatination of contions like or,and,xor
-        private static readonly Shared.DataFilter.Presentation.SearchParams SearchParamWithFilterOnly = new Shared.DataFilter.Presentation.SearchParams { filters = "[{\"field\":\"email\",\"value\":\"johndoe@example.com\"}]", page_offset = 1, page_size = 5 };
-        private static readonly Shared.DataFilter.Presentation.SearchParams InvalidSearchParamWithFilterOnly = new Shared.DataFilter.Presentation.SearchParams { filters = "[{\"field\":\"fielddoenstexists\",\"value\":\"johndoe@example.com\"}]", page_offset = 1, page_size = 5 };
-        private static readonly Shared.DataFilter.Presentation.SearchParams InvalidSearchParamWithInvalidSorting = new Shared.DataFilter.Presentation.SearchParams { order_by = "[{\"field\":\"fielddoesnotexists\",\"desc\":false}]" };
+        private static readonly SearchParams SearchParamWithFilterOnly = new SearchParams { filters = "[{\"field\":\"email\",\"value\":\"johndoe@example.com\"}]", page_offset = 1, page_size = 5 };
+        private static readonly SearchParams InvalidSearchParamWithFilterOnly = new SearchParams { filters = "[{\"field\":\"fielddoenstexists\",\"value\":\"johndoe@example.com\"}]", page_offset = 1, page_size = 5 };
+        private static readonly SearchParams InvalidSearchParamWithInvalidSorting = new SearchParams { order_by = "[{\"field\":\"fielddoesnotexists\",\"desc\":false}]" };
         
         private static readonly GetUsersQuery ValidQueryWithoutConditionalGroups = new GetUsersQuery(SearchParamWithFilterOnly);
         private static readonly GetUsersQuery InvalidQueryWithoutConditionalGroups = new GetUsersQuery(InvalidSearchParamWithFilterOnly);

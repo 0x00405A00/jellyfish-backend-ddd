@@ -7,8 +7,9 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Queries.GetChatById
 {
     public class GetChatByIdTest
     {
+        private static readonly Guid RequestUserId = Guid.NewGuid();
         private static readonly Guid ChatId = Guid.NewGuid();
-        private static readonly GetChatByIdQuery ValidQuery = new GetChatByIdQuery(ChatId);
+        private static readonly GetChatByIdQuery ValidQuery = new GetChatByIdQuery(RequestUserId,ChatId);
 
         // Add more queries for invalid scenarios if needed
 
@@ -16,7 +17,7 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Queries.GetChatById
         private readonly IMapper _mapperMock;
         private readonly IChatRepository _chatRepositoryMock;
 
-        private static readonly Domain.Entities.Users.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance();
+        private static readonly Domain.Entities.Users.User UserAdminInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance(RequestUserId);
         private static readonly Domain.Entities.Users.User UserInstance = SharedTest.DomainTestInstance.Entity.Users.InstancingHelper.GetUserInstance();
         private static readonly Domain.Entities.Chats.Chat ChatInstance = SharedTest.DomainTestInstance.Entity.Chats.InstancingHelper.GetChatInstance(UserAdminInstance);
 
@@ -41,7 +42,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Queries.GetChatById
 
             // Assert
             Assert.True(result.IsSuccess);
-            // Add more assertions based on your specific success conditions
         }
 
         [Fact]
@@ -58,7 +58,6 @@ namespace Application.UnitTests.UseCase.Messenger.Chat.Queries.GetChatById
 
             // Assert
             Assert.False(result.IsSuccess);
-            // Add more assertions based on your specific failure conditions
         }
     }
 }

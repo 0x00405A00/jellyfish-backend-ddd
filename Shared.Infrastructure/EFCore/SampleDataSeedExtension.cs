@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Chats;
+﻿using Domain.Const;
+using Domain.Entities.Chats;
 using Domain.Entities.Messages;
 using Domain.Entities.Users;
 using Domain.Extension;
@@ -37,8 +38,8 @@ namespace Shared.Infrastructure.EFCore
         };
         private static List<(ChatId, string, string, Picture, List<UserId>)> _sampleChats = new List<(ChatId, string, string, Picture, List<UserId>)>()
         {
-            (SampleChatIds.PrivateChatWithTwoMembers,"Private Chat","Chatdesc",null,new List<UserId>(2){ SampleUserIds.DarthVader,SampleUserIds.DarthMaul}),
-            (SampleChatIds.GroupChatWith4Members,"Our Groupchat","Against the republic",null,new List<UserId>(4){SampleUserIds.DarthVader,SampleUserIds.DarthMaul,SampleUserIds.LukeSkywalker,SampleUserIds.LaiaOrgana }),
+            (SampleChatIds.PrivateChatWithTwoMembers,"Private Chat","Chatdesc",null,new List<UserId>(3){ SampleUserIds.DarthVader,SampleUserIds.DarthMaul, UserConst.RootUserId.ToIdentification<UserId>()}),
+            (SampleChatIds.GroupChatWith4Members,"Our Groupchat","Against the republic",null,new List<UserId>(5){ UserConst.RootUserId.ToIdentification<UserId>(),SampleUserIds.DarthVader,SampleUserIds.DarthMaul,SampleUserIds.LukeSkywalker,SampleUserIds.LaiaOrgana }),
         };
         public static Chat CreateSampleChat(
             ChatId chatId,
@@ -79,6 +80,7 @@ namespace Shared.Infrastructure.EFCore
         }
         public static Message CreateSampleMessage(
             MessageId messageId,
+            UserId messageOwner,
             ChatId chatId,
             UserId userId,
             string text,
@@ -89,8 +91,8 @@ namespace Shared.Infrastructure.EFCore
 
 
             MediaContent? media = mediaContent;
-            CustomDateTime createdDateTime = DateTime.UtcNow.ToTypedDateOnly();
-            UserId createdBy = RootUser.Id;
+            CustomDateTime createdDateTime = DateTime.UtcNow.AddDays(-randNumber).ToTypedDateOnly();
+            UserId createdBy = messageOwner;
             CustomDateTime? modifiedDateTime = null;
             UserId? modifiedBy = null;
             CustomDateTime? deletedDateTime = null;
@@ -267,15 +269,24 @@ namespace Shared.Infrastructure.EFCore
                     tmp,
                     chatDataTuple.Item4);
 
+                var randomMember = Random.Shared.Next(0, chatMembers.Count);
+                var messageOwner = chatMembers[randomMember];
                 for (int i = 0; i < 100; i++)
                 {
                     foreach (var memberTuple in chatDataTuple.Item5)
                     {
+                        string messageOwnerName = "Root";
+                        var selectedOwnerByRandom = _sampleUsers.Where(x => x.Item1 == messageOwner.UserForeignKey);
+                        if(selectedOwnerByRandom.Any())
+                        {
+                            messageOwnerName = selectedOwnerByRandom.First().Item2;
+                        }
                         var messageId = Message.NewId();
-                        string text = $"Hey i want to test jellyfish with this message, this messsage will repeat by all members! :)";
+                        string text = $"Hey i want to test jellyfish with this message, this messsage will repeat by all members! :) This is message with iteration level {i}. I am {messageOwnerName}";
 
                         var message = CreateSampleMessage(
                             messageId,
+                            messageOwner.UserForeignKey,
                             chatId,
                             memberTuple,
                             text);

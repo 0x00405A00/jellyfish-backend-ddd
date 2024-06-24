@@ -12,7 +12,11 @@ namespace Infrastructure.Extension.WebAppBuilderExtensions
             using ApplicationDbContext applicationDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             if (applicationDbContext.Database.EnsureCreated())
             {
-                applicationDbContext.Database.Migrate();
+                var migrations = applicationDbContext.Database.GetPendingMigrations();
+                if(migrations.Any())
+                {
+                    applicationDbContext.Database.Migrate();
+                }
             }
             return app;
         }

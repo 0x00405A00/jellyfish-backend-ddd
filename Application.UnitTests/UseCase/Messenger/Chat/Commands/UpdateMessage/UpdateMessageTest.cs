@@ -1,9 +1,9 @@
 ﻿using Application.CQS.Messenger.Chat.Command.UpdateMessage;
 using AutoMapper;
 using Infrastructure.Abstractions;
-using Infrastructure.FileSys;
 using MediatR;
 using Shared.DataTransferObject.Messenger;
+using Shared.Infrastructure.FileSys;
 using System.Linq.Expressions;
 using System.Text;
 

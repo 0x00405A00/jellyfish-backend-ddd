@@ -3,8 +3,108 @@
   "WorkspaceRootPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{69BB3FD0-802A-46AE-B361-27DEDADE33CB}|Domain\\Domain.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\domain\\valueobjects\\location.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69BB3FD0-802A-46AE-B361-27DEDADE33CB}|Domain\\Domain.csproj|solutionrelative:domain\\valueobjects\\location.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69BB3FD0-802A-46AE-B361-27DEDADE33CB}|Domain\\Domain.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\domain\\valueobjects\\email.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69BB3FD0-802A-46AE-B361-27DEDADE33CB}|Domain\\Domain.csproj|solutionrelative:domain\\valueobjects\\email.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\application.unittests\\usecase\\user\\commands\\updateprofilepicture\\updateprofilepicturetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|solutionrelative:application.unittests\\usecase\\user\\commands\\updateprofilepicture\\updateprofilepicturetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AEDC16C-A86B-4039-BF23-EA228CE3EE9B}|Application\\Application.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\application\\cqs\\user\\commands\\updateprofilepicture\\uploadprofilepicturecommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AEDC16C-A86B-4039-BF23-EA228CE3EE9B}|Application\\Application.csproj|solutionrelative:application\\cqs\\user\\commands\\updateprofilepicture\\uploadprofilepicturecommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\application.unittests\\usecase\\messenger\\chat\\commands\\assignchatadmin\\assignchatadmintest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|solutionrelative:application.unittests\\usecase\\messenger\\chat\\commands\\assignchatadmin\\assignchatadmintest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\application.unittests\\usecase\\messenger\\chat\\queries\\getchatbyid\\getchatbyidtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|solutionrelative:application.unittests\\usecase\\messenger\\chat\\queries\\getchatbyid\\getchatbyidtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{553C47A9-2FB9-4F31-8BC2-DE7C4AD7F3D9}|Shared.Application\\Shared.Application.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared.application\\mapper\\domainmodeltodtomappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{553C47A9-2FB9-4F31-8BC2-DE7C4AD7F3D9}|Shared.Application\\Shared.Application.csproj|solutionrelative:shared.application\\mapper\\domainmodeltodtomappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\application.unittests\\mapping\\domainmodeltochatdtotests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|solutionrelative:application.unittests\\mapping\\domainmodeltochatdtotests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\application.unittests\\usecase\\messenger\\chat\\commands\\createmessage\\createmessagetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|solutionrelative:application.unittests\\usecase\\messenger\\chat\\commands\\createmessage\\createmessagetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\application.unittests\\usecase\\messenger\\chat\\commands\\updatemessage\\updatemessagetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|solutionrelative:application.unittests\\usecase\\messenger\\chat\\commands\\updatemessage\\updatemessagetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\application.unittests\\usecase\\messenger\\chat\\commands\\revokechatadmin\\revokechatadmintest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|solutionrelative:application.unittests\\usecase\\messenger\\chat\\commands\\revokechatadmin\\revokechatadmintest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\application.unittests\\usecase\\messenger\\chat\\commands\\removechatmember\\removechatmembertest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|solutionrelative:application.unittests\\usecase\\messenger\\chat\\commands\\removechatmember\\removechatmembertest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\application.unittests\\usecase\\messenger\\chat\\commands\\deletemessage\\deletemessagetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|solutionrelative:application.unittests\\usecase\\messenger\\chat\\commands\\deletemessage\\deletemessagetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\application.unittests\\usecase\\messenger\\chat\\commands\\createchat\\createchattest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|solutionrelative:application.unittests\\usecase\\messenger\\chat\\commands\\createchat\\createchattest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\application.unittests\\usecase\\messenger\\chat\\commands\\addchatmember\\addchatmembertest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|solutionrelative:application.unittests\\usecase\\messenger\\chat\\commands\\addchatmember\\addchatmembertest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\application.unittests\\usecase\\user\\queries\\getusers\\getuserstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{353BA603-7175-4A3B-A3B9-19BA9096BC88}|Application.UnitTests\\Application.UnitTests.csproj|solutionrelative:application.unittests\\usecase\\user\\queries\\getusers\\getuserstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\presentation\\modelbinding\\binder\\apidatatransferobjectmodelbinder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|solutionrelative:presentation\\modelbinding\\binder\\apidatatransferobjectmodelbinder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{553C47A9-2FB9-4F31-8BC2-DE7C4AD7F3D9}|Shared.Application\\Shared.Application.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared.application\\cqs\\messenger\\chat\\command\\createmessage\\createmessagecommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{553C47A9-2FB9-4F31-8BC2-DE7C4AD7F3D9}|Shared.Application\\Shared.Application.csproj|solutionrelative:shared.application\\cqs\\messenger\\chat\\command\\createmessage\\createmessagecommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\presentation\\controllers\\api\\v1\\messenger\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|solutionrelative:presentation\\controllers\\api\\v1\\messenger\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2BA18C79-45A8-4EE6-959F-0C4EA61284D6}|Shared\\Shared.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared\\datatransferobject\\messenger\\messagedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2BA18C79-45A8-4EE6-959F-0C4EA61284D6}|Shared\\Shared.csproj|solutionrelative:shared\\datatransferobject\\messenger\\messagedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\infrastructure\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{96746752-E0D7-4E83-AC21-EC899BA72CAD}|Shared.Infrastructure\\Shared.Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared.infrastructure\\extension\\repository\\chatsqueryableextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96746752-E0D7-4E83-AC21-EC899BA72CAD}|Shared.Infrastructure\\Shared.Infrastructure.csproj|solutionrelative:shared.infrastructure\\extension\\repository\\chatsqueryableextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\infrastructure\\repository\\concrete\\chatrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\repository\\concrete\\chatrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69BB3FD0-802A-46AE-B361-27DEDADE33CB}|Domain\\Domain.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\domain\\entities\\chats\\chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69BB3FD0-802A-46AE-B361-27DEDADE33CB}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\chats\\chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\infrastructure\\extension\\webappbuilderextensions\\webapplicationbuilderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\extension\\webappbuilderextensions\\webapplicationbuilderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69BB3FD0-802A-46AE-B361-27DEDADE33CB}|Domain\\Domain.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\domain\\entities\\users\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69BB3FD0-802A-46AE-B361-27DEDADE33CB}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\users\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{553C47A9-2FB9-4F31-8BC2-DE7C4AD7F3D9}|Shared.Application\\Shared.Application.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared.application\\cqs\\messenger\\chat\\command\\updatemessage\\updatemessagecommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -15,36 +115,8 @@
       "RelativeMoniker": "D:0:0:{69BB3FD0-802A-46AE-B361-27DEDADE33CB}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\messages\\message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69BB3FD0-802A-46AE-B361-27DEDADE33CB}|Domain\\Domain.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\domain\\entities\\users\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69BB3FD0-802A-46AE-B361-27DEDADE33CB}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\users\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96746752-E0D7-4E83-AC21-EC899BA72CAD}|Shared.Infrastructure\\Shared.Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared.infrastructure\\efcore\\databaseentityconfiguration\\messageconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96746752-E0D7-4E83-AC21-EC899BA72CAD}|Shared.Infrastructure\\Shared.Infrastructure.csproj|solutionrelative:shared.infrastructure\\efcore\\databaseentityconfiguration\\messageconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96746752-E0D7-4E83-AC21-EC899BA72CAD}|Shared.Infrastructure\\Shared.Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared.infrastructure\\efcore\\databaseentityconfiguration\\chatconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96746752-E0D7-4E83-AC21-EC899BA72CAD}|Shared.Infrastructure\\Shared.Infrastructure.csproj|solutionrelative:shared.infrastructure\\efcore\\databaseentityconfiguration\\chatconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69BB3FD0-802A-46AE-B361-27DEDADE33CB}|Domain\\Domain.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\domain\\entities\\chats\\chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69BB3FD0-802A-46AE-B361-27DEDADE33CB}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\chats\\chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2BA18C79-45A8-4EE6-959F-0C4EA61284D6}|Shared\\Shared.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared\\datatransferobject\\messenger\\chatdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2BA18C79-45A8-4EE6-959F-0C4EA61284D6}|Shared\\Shared.csproj|solutionrelative:shared\\datatransferobject\\messenger\\chatdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2BA18C79-45A8-4EE6-959F-0C4EA61284D6}|Shared\\Shared.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared\\datatransferobject\\messenger\\messagedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2BA18C79-45A8-4EE6-959F-0C4EA61284D6}|Shared\\Shared.csproj|solutionrelative:shared\\datatransferobject\\messenger\\messagedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69BB3FD0-802A-46AE-B361-27DEDADE33CB}|Domain\\Domain.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\domain\\valueobjects\\phonenumber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69BB3FD0-802A-46AE-B361-27DEDADE33CB}|Domain\\Domain.csproj|solutionrelative:domain\\valueobjects\\phonenumber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DACA9D9D-2AA5-4BC7-B2F4-45D9BD3B1A25}|Domain.UnitTests\\Domain.UnitTests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\domain.unittests\\entites\\chats\\chatstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DACA9D9D-2AA5-4BC7-B2F4-45D9BD3B1A25}|Domain.UnitTests\\Domain.UnitTests.csproj|solutionrelative:domain.unittests\\entites\\chats\\chatstest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B00002FF-263D-45E9-90A4-1446AFD90920}|WebFrontEnd\\WebFrontEnd.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\webfrontend\\ui\\pages\\profile.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -53,14 +125,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B00002FF-263D-45E9-90A4-1446AFD90920}|WebFrontEnd\\WebFrontEnd.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\webfrontend\\handler\\dialoghandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B00002FF-263D-45E9-90A4-1446AFD90920}|WebFrontEnd\\WebFrontEnd.csproj|solutionrelative:webfrontend\\handler\\dialoghandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\infrastructure\\repository\\concrete\\chatrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\repository\\concrete\\chatrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\presentation\\modelbinding\\binder\\apidatatransferobjectmodelbinder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|solutionrelative:presentation\\modelbinding\\binder\\apidatatransferobjectmodelbinder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2BA18C79-45A8-4EE6-959F-0C4EA61284D6}|Shared\\Shared.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared\\infrastructure\\backend\\interceptor\\abstraction\\iinternaldatainterceptorapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -99,20 +163,12 @@
       "RelativeMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|solutionrelative:presentation\\middleware\\overridedefaultaspnetresponsemiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{553C47A9-2FB9-4F31-8BC2-DE7C4AD7F3D9}|Shared.Application\\Shared.Application.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared.application\\mapper\\domainmodeltodtomappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{553C47A9-2FB9-4F31-8BC2-DE7C4AD7F3D9}|Shared.Application\\Shared.Application.csproj|solutionrelative:shared.application\\mapper\\domainmodeltodtomappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2BA18C79-45A8-4EE6-959F-0C4EA61284D6}|Shared\\Shared.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared\\datatransferobject\\messenger\\messengeruserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2BA18C79-45A8-4EE6-959F-0C4EA61284D6}|Shared\\Shared.csproj|solutionrelative:shared\\datatransferobject\\messenger\\messengeruserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{553C47A9-2FB9-4F31-8BC2-DE7C4AD7F3D9}|Shared.Application\\Shared.Application.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared.application\\cqs\\messenger\\chat\\queries\\getchatbyid\\getchatbyidqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{553C47A9-2FB9-4F31-8BC2-DE7C4AD7F3D9}|Shared.Application\\Shared.Application.csproj|solutionrelative:shared.application\\cqs\\messenger\\chat\\queries\\getchatbyid\\getchatbyidqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\presentation\\controllers\\api\\v1\\messenger\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|solutionrelative:presentation\\controllers\\api\\v1\\messenger\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{553C47A9-2FB9-4F31-8BC2-DE7C4AD7F3D9}|Shared.Application\\Shared.Application.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared.application\\cqs\\messenger\\chat\\queries\\getchatbyid\\getchatbyidquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -214,31 +270,30 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 18,
               "Title": "ChatController.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Controllers\\Api\\v1\\Messenger\\ChatController.cs",
               "RelativeDocumentMoniker": "Presentation\\Controllers\\Api\\v1\\Messenger\\ChatController.cs",
               "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Controllers\\Api\\v1\\Messenger\\ChatController.cs",
               "RelativeToolTip": "Presentation\\Controllers\\Api\\v1\\Messenger\\ChatController.cs",
-              "ViewState": "AQIAADkAAAAAAAAAAAAiwEQAAAAMAAAA",
+              "ViewState": "AQIAAIIAAAAAAAAAAAAjwJAAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-22T18:52:39.957Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 23,
               "Title": "Chat.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Entities\\Chats\\Chat.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Chats\\Chat.cs",
               "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Entities\\Chats\\Chat.cs",
               "RelativeToolTip": "Domain\\Entities\\Chats\\Chat.cs",
-              "ViewState": "AQIAABkAAAAAAAAAAAAawCMAAAAWAAAA",
+              "ViewState": "AQIAACAAAAAAAAAAAAAawCcAAAA+AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-22T17:53:21.185Z",
               "IsPinned": true,
@@ -246,7 +301,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 64,
               "Title": "IMessengerClient.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\SignalR\\IMessengerClient.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\SignalR\\IMessengerClient.cs",
@@ -255,12 +310,11 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAA3AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-22T19:26:17.972Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 55,
               "Title": "MessengerHub.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\SignalR\\MessengerHub.cs",
               "RelativeDocumentMoniker": "Infrastructure\\SignalR\\MessengerHub.cs",
@@ -269,34 +323,7 @@
               "ViewState": "AQIAAAwAAAAAAAAAAAAAwBkAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-22T19:24:50.091Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UpdateMessageCommandHandler.cs",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Command\\UpdateMessage\\UpdateMessageCommandHandler.cs",
-              "RelativeDocumentMoniker": "Shared.Application\\CQS\\Messenger\\Chat\\Command\\UpdateMessage\\UpdateMessageCommandHandler.cs",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Command\\UpdateMessage\\UpdateMessageCommandHandler.cs",
-              "RelativeToolTip": "Shared.Application\\CQS\\Messenger\\Chat\\Command\\UpdateMessage\\UpdateMessageCommandHandler.cs",
-              "ViewState": "AQIAADMAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-09T13:47:16.999Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CreateMessageCommandHandler.cs",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateMessage\\CreateMessageCommandHandler.cs",
-              "RelativeDocumentMoniker": "Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateMessage\\CreateMessageCommandHandler.cs",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateMessage\\CreateMessageCommandHandler.cs",
-              "RelativeToolTip": "Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateMessage\\CreateMessageCommandHandler.cs",
-              "ViewState": "AQIAAFQAAAAAAAAAAAAAAGAAAAAkAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-09T13:45:24.07Z",
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -308,7 +335,251 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Email.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\ValueObjects\\Email.cs",
+              "RelativeDocumentMoniker": "Domain\\ValueObjects\\Email.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\ValueObjects\\Email.cs",
+              "RelativeToolTip": "Domain\\ValueObjects\\Email.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAABMAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T09:25:00.58Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Location.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\ValueObjects\\Location.cs",
+              "RelativeDocumentMoniker": "Domain\\ValueObjects\\Location.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\ValueObjects\\Location.cs",
+              "RelativeToolTip": "Domain\\ValueObjects\\Location.cs",
+              "ViewState": "AQIAAGwAAAAAAAAAAAAAAHoAAABYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T09:24:44.546Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "UpdateProfilePictureTest.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\User\\Commands\\UpdateProfilePicture\\UpdateProfilePictureTest.cs",
+              "RelativeDocumentMoniker": "Application.UnitTests\\UseCase\\User\\Commands\\UpdateProfilePicture\\UpdateProfilePictureTest.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\User\\Commands\\UpdateProfilePicture\\UpdateProfilePictureTest.cs",
+              "RelativeToolTip": "Application.UnitTests\\UseCase\\User\\Commands\\UpdateProfilePicture\\UpdateProfilePictureTest.cs",
+              "ViewState": "AQIAADUAAAAAAAAAAAAAwEEAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T09:00:53.805Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UploadProfilePictureCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application\\CQS\\User\\Commands\\UpdateProfilePicture\\UploadProfilePictureCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\CQS\\User\\Commands\\UpdateProfilePicture\\UploadProfilePictureCommandHandler.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application\\CQS\\User\\Commands\\UpdateProfilePicture\\UploadProfilePictureCommandHandler.cs",
+              "RelativeToolTip": "Application\\CQS\\User\\Commands\\UpdateProfilePicture\\UploadProfilePictureCommandHandler.cs",
+              "ViewState": "AQIAACAAAAAAAAAAAAASwBQAAAAPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T09:00:53.939Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "DomainModelToChatDTOTests.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\Mapping\\DomainModelToChatDTOTests.cs",
+              "RelativeDocumentMoniker": "Application.UnitTests\\Mapping\\DomainModelToChatDTOTests.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\Mapping\\DomainModelToChatDTOTests.cs",
+              "RelativeToolTip": "Application.UnitTests\\Mapping\\DomainModelToChatDTOTests.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T08:55:38.879Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AssignChatAdminTest.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\AssignChatAdmin\\AssignChatAdminTest.cs",
+              "RelativeDocumentMoniker": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\AssignChatAdmin\\AssignChatAdminTest.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\AssignChatAdmin\\AssignChatAdminTest.cs",
+              "RelativeToolTip": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\AssignChatAdmin\\AssignChatAdminTest.cs",
+              "ViewState": "AQIAAB0AAAAAAAAAAAAqwBUAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T08:55:49.731Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "CreateChatTest.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\CreateChat\\CreateChatTest.cs",
+              "RelativeDocumentMoniker": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\CreateChat\\CreateChatTest.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\CreateChat\\CreateChatTest.cs",
+              "RelativeToolTip": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\CreateChat\\CreateChatTest.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAqwBoAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T08:55:55.833Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CreateMessageTest.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\CreateMessage\\CreateMessageTest.cs",
+              "RelativeDocumentMoniker": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\CreateMessage\\CreateMessageTest.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\CreateMessage\\CreateMessageTest.cs",
+              "RelativeToolTip": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\CreateMessage\\CreateMessageTest.cs",
+              "ViewState": "AQIAACwAAAAAAAAAAAAqwDwAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T08:55:58.416Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "DeleteMessageTest.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\DeleteMessage\\DeleteMessageTest.cs",
+              "RelativeDocumentMoniker": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\DeleteMessage\\DeleteMessageTest.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\DeleteMessage\\DeleteMessageTest.cs",
+              "RelativeToolTip": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\DeleteMessage\\DeleteMessageTest.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAqwBoAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T08:56:00.411Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "RemoveChatMemberTest.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\RemoveChatMember\\RemoveChatMemberTest.cs",
+              "RelativeDocumentMoniker": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\RemoveChatMember\\RemoveChatMemberTest.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\RemoveChatMember\\RemoveChatMemberTest.cs",
+              "RelativeToolTip": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\RemoveChatMember\\RemoveChatMemberTest.cs",
+              "ViewState": "AQIAABYAAAAAAAAAAAAqwCMAAAA8AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T08:56:03.675Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DomainModelToDTOMappingProfile.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\Mapper\\DomainModelToDTOMappingProfile.cs",
+              "RelativeDocumentMoniker": "Shared.Application\\Mapper\\DomainModelToDTOMappingProfile.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\Mapper\\DomainModelToDTOMappingProfile.cs",
+              "RelativeToolTip": "Shared.Application\\Mapper\\DomainModelToDTOMappingProfile.cs",
+              "ViewState": "AQIAAFcAAAAAAAAAAAAjwFIAAAB2AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-01T12:52:03.42Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GetChatByIdTest.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Queries\\GetChatById\\GetChatByIdTest.cs",
+              "RelativeDocumentMoniker": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Queries\\GetChatById\\GetChatByIdTest.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Queries\\GetChatById\\GetChatByIdTest.cs",
+              "RelativeToolTip": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Queries\\GetChatById\\GetChatByIdTest.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAiwBMAAACoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T08:59:25.439Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "AddChatMemberTest.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\AddChatMember\\AddChatMemberTest.cs",
+              "RelativeDocumentMoniker": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\AddChatMember\\AddChatMemberTest.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\AddChatMember\\AddChatMemberTest.cs",
+              "RelativeToolTip": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\AddChatMember\\AddChatMemberTest.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAqwBYAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T08:55:46.116Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "RevokeChatAdminTest.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\RevokeChatAdmin\\RevokeChatAdminTest.cs",
+              "RelativeDocumentMoniker": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\RevokeChatAdmin\\RevokeChatAdminTest.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\RevokeChatAdmin\\RevokeChatAdminTest.cs",
+              "RelativeToolTip": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\RevokeChatAdmin\\RevokeChatAdminTest.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAqwBYAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T08:56:09.875Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "UpdateMessageTest.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\UpdateMessage\\UpdateMessageTest.cs",
+              "RelativeDocumentMoniker": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\UpdateMessage\\UpdateMessageTest.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\UpdateMessage\\UpdateMessageTest.cs",
+              "RelativeToolTip": "Application.UnitTests\\UseCase\\Messenger\\Chat\\Commands\\UpdateMessage\\UpdateMessageTest.cs",
+              "ViewState": "AQIAAB8AAAAAAAAAAAAqwCwAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T08:56:11.762Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "GetUsersTest.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\User\\Queries\\GetUsers\\GetUsersTest.cs",
+              "RelativeDocumentMoniker": "Application.UnitTests\\UseCase\\User\\Queries\\GetUsers\\GetUsersTest.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Application.UnitTests\\UseCase\\User\\Queries\\GetUsers\\GetUsersTest.cs",
+              "RelativeToolTip": "Application.UnitTests\\UseCase\\User\\Queries\\GetUsers\\GetUsersTest.cs",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAqwBMAAABNAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T08:56:13.438Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "WebApplicationBuilderExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Extension\\WebAppBuilderExtensions\\WebApplicationBuilderExtensions.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Extension\\WebAppBuilderExtensions\\WebApplicationBuilderExtensions.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Extension\\WebAppBuilderExtensions\\WebApplicationBuilderExtensions.cs",
+              "RelativeToolTip": "Infrastructure\\Extension\\WebAppBuilderExtensions\\WebApplicationBuilderExtensions.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAnwBIAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-11T17:48:03.16Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "UpdateMessageCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Command\\UpdateMessage\\UpdateMessageCommandHandler.cs",
+              "RelativeDocumentMoniker": "Shared.Application\\CQS\\Messenger\\Chat\\Command\\UpdateMessage\\UpdateMessageCommandHandler.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Command\\UpdateMessage\\UpdateMessageCommandHandler.cs",
+              "RelativeToolTip": "Shared.Application\\CQS\\Messenger\\Chat\\Command\\UpdateMessage\\UpdateMessageCommandHandler.cs",
+              "ViewState": "AQIAADMAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-09T13:47:16.999Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "CreateMessageCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateMessage\\CreateMessageCommandHandler.cs",
+              "RelativeDocumentMoniker": "Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateMessage\\CreateMessageCommandHandler.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateMessage\\CreateMessageCommandHandler.cs",
+              "RelativeToolTip": "Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateMessage\\CreateMessageCommandHandler.cs",
+              "ViewState": "AQIAACIAAAAAAAAAAAAjwDQAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-09T13:45:24.07Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
               "Title": "Message.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Entities\\Messages\\Message.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Messages\\Message.cs",
@@ -316,38 +587,11 @@
               "RelativeToolTip": "Domain\\Entities\\Messages\\Message.cs",
               "ViewState": "AQIAAB4AAAAAAAAAAAAuwBEAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-08T19:05:56.292Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-08T19:05:56.292Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ChatsTest.cs",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain.UnitTests\\Entites\\Chats\\ChatsTest.cs",
-              "RelativeDocumentMoniker": "Domain.UnitTests\\Entites\\Chats\\ChatsTest.cs",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain.UnitTests\\Entites\\Chats\\ChatsTest.cs",
-              "RelativeToolTip": "Domain.UnitTests\\Entites\\Chats\\ChatsTest.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-08T17:49:44.626Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "PhoneNumber.cs",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\ValueObjects\\PhoneNumber.cs",
-              "RelativeDocumentMoniker": "Domain\\ValueObjects\\PhoneNumber.cs",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\ValueObjects\\PhoneNumber.cs",
-              "RelativeToolTip": "Domain\\ValueObjects\\PhoneNumber.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAIBJwD0AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-08T17:49:44.818Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 29,
               "Title": "Profile.razor",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\UI\\Pages\\Profile.razor",
               "RelativeDocumentMoniker": "WebFrontEnd\\UI\\Pages\\Profile.razor",
@@ -360,7 +604,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 30,
               "Title": "DialogHandler.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\Handler\\DialogHandler.cs",
               "RelativeDocumentMoniker": "WebFrontEnd\\Handler\\DialogHandler.cs",
@@ -368,25 +612,72 @@
               "RelativeToolTip": "WebFrontEnd\\Handler\\DialogHandler.cs",
               "ViewState": "AQIAAGEAAAAAAAAAAAAiwGwAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-08T17:49:44.991Z",
+              "WhenOpened": "2024-05-08T17:49:44.991Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ApiDataTransferObjectModelBinder.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Modelbinding\\Binder\\ApiDataTransferObjectModelBinder.cs",
+              "RelativeDocumentMoniker": "Presentation\\Modelbinding\\Binder\\ApiDataTransferObjectModelBinder.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Modelbinding\\Binder\\ApiDataTransferObjectModelBinder.cs",
+              "RelativeToolTip": "Presentation\\Modelbinding\\Binder\\ApiDataTransferObjectModelBinder.cs",
+              "ViewState": "AQIAABUAAAAAAAAAAAAjwB0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-10T18:13:14.333Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 19,
+              "Title": "MessageDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\DataTransferObject\\Messenger\\MessageDTO.cs",
+              "RelativeDocumentMoniker": "Shared\\DataTransferObject\\Messenger\\MessageDTO.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\DataTransferObject\\Messenger\\MessageDTO.cs",
+              "RelativeToolTip": "Shared\\DataTransferObject\\Messenger\\MessageDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-01T12:16:19.621Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "ChatsQueryableExtension.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\Extension\\Repository\\ChatsQueryableExtension.cs",
+              "RelativeDocumentMoniker": "Shared.Infrastructure\\Extension\\Repository\\ChatsQueryableExtension.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\Extension\\Repository\\ChatsQueryableExtension.cs",
+              "RelativeToolTip": "Shared.Infrastructure\\Extension\\Repository\\ChatsQueryableExtension.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAqwBMAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-11T18:21:49.537Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Infrastructure\\ApplicationDbContext.cs",
+              "ViewState": "AQIAAJQAAAAAAAAAAAAAAJwAAABEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-11T19:02:03.242Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
               "Title": "ChatRepository.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Repository\\Concrete\\ChatRepository.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Repository\\Concrete\\ChatRepository.cs",
               "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Repository\\Concrete\\ChatRepository.cs",
               "RelativeToolTip": "Infrastructure\\Repository\\Concrete\\ChatRepository.cs",
-              "ViewState": "AQIAABAAAAAAAAAAAABBwCYAAAAyAAAA",
+              "ViewState": "AQIAACEAAAAAAAAAAAAnwC4AAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-05T14:50:07.45Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-05T14:50:07.45Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 33,
               "Title": "DataInterceptorApplicationInvokerResponseModel.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Interceptor\\DataInterceptorApplicationInvokerResponseModel.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Interceptor\\DataInterceptorApplicationInvokerResponseModel.cs",
@@ -394,12 +685,11 @@
               "RelativeToolTip": "Shared\\Infrastructure\\Backend\\Interceptor\\DataInterceptorApplicationInvokerResponseModel.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-05T14:26:58.514Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-05T14:26:58.514Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 40,
               "Title": "MessengerUserDTO.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\DataTransferObject\\Messenger\\MessengerUserDTO.cs",
               "RelativeDocumentMoniker": "Shared\\DataTransferObject\\Messenger\\MessengerUserDTO.cs",
@@ -407,12 +697,11 @@
               "RelativeToolTip": "Shared\\DataTransferObject\\Messenger\\MessengerUserDTO.cs",
               "ViewState": "AQIAAAoAAAAAAAAAAABBwBQAAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-05T12:17:02.986Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-05T12:17:02.986Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 42,
               "Title": "GetChatByIdQuery.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Queries\\GetChatById\\GetChatByIdQuery.cs",
               "RelativeDocumentMoniker": "Shared.Application\\CQS\\Messenger\\Chat\\Queries\\GetChatById\\GetChatByIdQuery.cs",
@@ -420,25 +709,24 @@
               "RelativeToolTip": "Shared.Application\\CQS\\Messenger\\Chat\\Queries\\GetChatById\\GetChatByIdQuery.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAA8AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-05T11:46:23.624Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-05T11:46:23.624Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 25,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Entities\\Users\\User.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Users\\User.cs",
               "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Entities\\Users\\User.cs",
               "RelativeToolTip": "Domain\\Entities\\Users\\User.cs",
-              "ViewState": "AQIAAGEAAAAAAAAAAAAawGsAAAAWAAAA",
+              "ViewState": "AQIAADABAAAAAAAAAAAnwEEBAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-05T11:22:28.589Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 44,
               "Title": "AutoMapperExtension.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\Mapper\\AutoMapperExtension.cs",
               "RelativeDocumentMoniker": "Shared.Application\\Mapper\\AutoMapperExtension.cs",
@@ -446,12 +734,11 @@
               "RelativeToolTip": "Shared.Application\\Mapper\\AutoMapperExtension.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-04T13:52:31.577Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-04T13:52:31.577Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 47,
               "Title": "GetUserQueryHandler.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\User\\Queries\\GetUserById\\GetUserQueryHandler.cs",
               "RelativeDocumentMoniker": "Shared.Application\\CQS\\Messenger\\User\\Queries\\GetUserById\\GetUserQueryHandler.cs",
@@ -459,12 +746,11 @@
               "RelativeToolTip": "Shared.Application\\CQS\\Messenger\\User\\Queries\\GetUserById\\GetUserQueryHandler.cs",
               "ViewState": "AQIAABAAAAAAAAAAAABBwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-04T13:36:24.305Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-04T13:36:24.305Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 31,
               "Title": "IInternalDataInterceptorApplication.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Interceptor\\Abstraction\\IInternalDataInterceptorApplication.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Interceptor\\Abstraction\\IInternalDataInterceptorApplication.cs",
@@ -472,12 +758,11 @@
               "RelativeToolTip": "Shared\\Infrastructure\\Backend\\Interceptor\\Abstraction\\IInternalDataInterceptorApplication.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-04T12:56:04.133Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-04T12:56:04.133Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 46,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Controllers\\Api\\v1\\UserController.cs",
               "RelativeDocumentMoniker": "Presentation\\Controllers\\Api\\v1\\UserController.cs",
@@ -490,7 +775,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 39,
               "Title": "OverrideDefaultAspNetResponseMiddleware.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Middleware\\OverrideDefaultAspNetResponseMiddleware.cs",
               "RelativeDocumentMoniker": "Presentation\\Middleware\\OverrideDefaultAspNetResponseMiddleware.cs",
@@ -498,12 +783,11 @@
               "RelativeToolTip": "Presentation\\Middleware\\OverrideDefaultAspNetResponseMiddleware.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-04T12:39:06.637Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-04T12:39:06.637Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 34,
               "Title": "IInternalDataInterceptorApplicationInvoker.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Interceptor\\Abstraction\\IInternalDataInterceptorApplicationInvoker.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Interceptor\\Abstraction\\IInternalDataInterceptorApplicationInvoker.cs",
@@ -511,12 +795,11 @@
               "RelativeToolTip": "Shared\\Infrastructure\\Backend\\Interceptor\\Abstraction\\IInternalDataInterceptorApplicationInvoker.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-04T11:08:52.467Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-04T11:08:52.467Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 36,
               "Title": "IInternalDataInterceptorInvoker.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Interceptor\\Abstraction\\IInternalDataInterceptorInvoker.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Interceptor\\Abstraction\\IInternalDataInterceptorInvoker.cs",
@@ -524,12 +807,11 @@
               "RelativeToolTip": "Shared\\Infrastructure\\Backend\\Interceptor\\Abstraction\\IInternalDataInterceptorInvoker.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAA0AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-04T10:56:56.004Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-04T10:56:56.004Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 35,
               "Title": "InternalDataInterceptorDispatcher.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Interceptor\\InternalDataInterceptorDispatcher.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Interceptor\\InternalDataInterceptorDispatcher.cs",
@@ -537,12 +819,11 @@
               "RelativeToolTip": "Shared\\Infrastructure\\Backend\\Interceptor\\InternalDataInterceptorDispatcher.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAqwAsAAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-04T10:56:53.2Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-04T10:56:53.2Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 32,
               "Title": "InternalDataInterceptorApplication.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Interceptor\\InternalDataInterceptorApplication.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Interceptor\\InternalDataInterceptorApplication.cs",
@@ -550,12 +831,11 @@
               "RelativeToolTip": "Shared\\Infrastructure\\Backend\\Interceptor\\InternalDataInterceptorApplication.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAABQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-04T10:56:05.041Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-04T10:56:05.041Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 41,
               "Title": "GetChatByIdQueryHandler.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Queries\\GetChatById\\GetChatByIdQueryHandler.cs",
               "RelativeDocumentMoniker": "Shared.Application\\CQS\\Messenger\\Chat\\Queries\\GetChatById\\GetChatByIdQueryHandler.cs",
@@ -563,12 +843,11 @@
               "RelativeToolTip": "Shared.Application\\CQS\\Messenger\\Chat\\Queries\\GetChatById\\GetChatByIdQueryHandler.cs",
               "ViewState": "AQIAABEAAAAAAAAAAAAiwCIAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-04T10:11:52.247Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-04T10:11:52.247Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 50,
               "Title": "CreateChatCommandHandler.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateChat\\CreateChatCommandHandler.cs",
               "RelativeDocumentMoniker": "Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateChat\\CreateChatCommandHandler.cs",
@@ -576,12 +855,11 @@
               "RelativeToolTip": "Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateChat\\CreateChatCommandHandler.cs",
               "ViewState": "AQIAADcAAAAAAAAAAAAkwEEAAABAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-04T10:06:36.619Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-04T10:06:36.619Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 52,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\appsettings.json",
               "RelativeDocumentMoniker": "WebFrontEnd\\appsettings.json",
@@ -589,12 +867,11 @@
               "RelativeToolTip": "WebFrontEnd\\appsettings.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-04-10T21:00:20.717Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-10T21:00:20.717Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 53,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "WebFrontEnd\\Properties\\launchSettings.json",
@@ -602,12 +879,11 @@
               "RelativeToolTip": "WebFrontEnd\\Properties\\launchSettings.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-04-10T21:00:14.285Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-10T21:00:14.285Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 48,
               "Title": "AbstractRestClient.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Api\\AbstractRestClient.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Api\\AbstractRestClient.cs",
@@ -615,12 +891,11 @@
               "RelativeToolTip": "Shared\\Infrastructure\\Backend\\Api\\AbstractRestClient.cs",
               "ViewState": "AQIAAEUAAAAAAAAAAAAqwDYAAABYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-10T20:35:05.57Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-10T20:35:05.57Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 37,
               "Title": "BodyModelBinderProvider.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Modelbinding\\Provider\\HttpBody\\BodyModelBinderProvider.cs",
               "RelativeDocumentMoniker": "Presentation\\Modelbinding\\Provider\\HttpBody\\BodyModelBinderProvider.cs",
@@ -628,12 +903,11 @@
               "RelativeToolTip": "Presentation\\Modelbinding\\Provider\\HttpBody\\BodyModelBinderProvider.cs",
               "ViewState": "AQIAAAEAAAAAAAAAAAAjwA4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-10T19:41:02.801Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-10T19:41:02.801Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 51,
               "Title": "Users.razor",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\UI\\Pages\\Users.razor",
               "RelativeDocumentMoniker": "WebFrontEnd\\UI\\Pages\\Users.razor",
@@ -641,25 +915,11 @@
               "RelativeToolTip": "WebFrontEnd\\UI\\Pages\\Users.razor",
               "ViewState": "AQIAAD0AAAAAAAAAAABBwEoAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-10T18:33:48.656Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-10T18:33:48.656Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "ApiDataTransferObjectModelBinder.cs",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Modelbinding\\Binder\\ApiDataTransferObjectModelBinder.cs",
-              "RelativeDocumentMoniker": "Presentation\\Modelbinding\\Binder\\ApiDataTransferObjectModelBinder.cs",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Modelbinding\\Binder\\ApiDataTransferObjectModelBinder.cs",
-              "RelativeToolTip": "Presentation\\Modelbinding\\Binder\\ApiDataTransferObjectModelBinder.cs",
-              "ViewState": "AQIAAEgAAAAAAAAAAAAiwFAAAAARAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-10T18:13:14.333Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 58,
               "Title": "SignIn.razor",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\UI\\Pages\\SignIn.razor",
               "RelativeDocumentMoniker": "WebFrontEnd\\UI\\Pages\\SignIn.razor",
@@ -667,12 +927,11 @@
               "RelativeToolTip": "WebFrontEnd\\UI\\Pages\\SignIn.razor",
               "ViewState": "AQIAAGwAAAAAAAAAAIBJwHEAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-03T20:50:43.699Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-03T20:50:43.699Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 54,
               "Title": "MainLayout.razor",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\UI\\MainLayout.razor",
               "RelativeDocumentMoniker": "WebFrontEnd\\UI\\MainLayout.razor",
@@ -680,12 +939,11 @@
               "RelativeToolTip": "WebFrontEnd\\UI\\MainLayout.razor",
               "ViewState": "AQIAALgAAAAAAAAAAABBwOgAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-03T20:44:03.395Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-03T20:44:03.395Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 43,
               "Title": "IJellyfishBackendApi.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Api\\IJellyfishBackendApi.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Api\\IJellyfishBackendApi.cs",
@@ -693,12 +951,11 @@
               "RelativeToolTip": "Shared\\Infrastructure\\Backend\\Api\\IJellyfishBackendApi.cs",
               "ViewState": "AQIAAAcAAAAAAAAAAAAiwAoAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-03T19:49:35.861Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-03T19:49:35.861Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 57,
               "Title": "Index.razor",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\WebFrontEnd\\UI\\Index.razor",
               "RelativeDocumentMoniker": "WebFrontEnd\\UI\\Index.razor",
@@ -706,12 +963,11 @@
               "RelativeToolTip": "WebFrontEnd\\UI\\Index.razor",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-03T19:43:00.658Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-03T19:43:00.658Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 45,
               "Title": "JellyfishBackendApi.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Api\\JellyfishBackendApi.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Api\\JellyfishBackendApi.cs",
@@ -719,12 +975,11 @@
               "RelativeToolTip": "Shared\\Infrastructure\\Backend\\Api\\JellyfishBackendApi.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAA2AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-03T19:41:51.102Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-03T19:41:51.102Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 38,
               "Title": "JellyfishSignalRClient.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\SignalR\\JellyfishSignalRClient.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\SignalR\\JellyfishSignalRClient.cs",
@@ -732,12 +987,11 @@
               "RelativeToolTip": "Shared\\Infrastructure\\Backend\\SignalR\\JellyfishSignalRClient.cs",
               "ViewState": "AQIAAA0AAAAAAAAAAABBwBkAAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-03T18:48:28.242Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-03T18:48:28.242Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 49,
               "Title": "WebApiRestClient.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\Api\\WebApiRestClient.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\Api\\WebApiRestClient.cs",
@@ -745,12 +999,11 @@
               "RelativeToolTip": "Shared\\Infrastructure\\Backend\\Api\\WebApiRestClient.cs",
               "ViewState": "AQIAAFMBAAAAAAAAAAAqwF8BAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-03T17:59:53.533Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-03T17:59:53.533Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 59,
               "Title": "GetNotDeliveredMessagesByChatQueryHandler.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Queries\\GetNotDeliveredMessagesByChat\\GetNotDeliveredMessagesByChatQueryHandler.cs",
               "RelativeDocumentMoniker": "Shared.Application\\CQS\\Messenger\\Chat\\Queries\\GetNotDeliveredMessagesByChat\\GetNotDeliveredMessagesByChatQueryHandler.cs",
@@ -758,25 +1011,11 @@
               "RelativeToolTip": "Shared.Application\\CQS\\Messenger\\Chat\\Queries\\GetNotDeliveredMessagesByChat\\GetNotDeliveredMessagesByChatQueryHandler.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAABXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-01T12:54:10.615Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-01T12:54:10.615Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "DomainModelToDTOMappingProfile.cs",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\Mapper\\DomainModelToDTOMappingProfile.cs",
-              "RelativeDocumentMoniker": "Shared.Application\\Mapper\\DomainModelToDTOMappingProfile.cs",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\Mapper\\DomainModelToDTOMappingProfile.cs",
-              "RelativeToolTip": "Shared.Application\\Mapper\\DomainModelToDTOMappingProfile.cs",
-              "ViewState": "AQIAAHUAAAAAAAAAAAAiwH8AAAAnAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-01T12:52:03.42Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 56,
               "Title": "AbstractSignalRClient.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\Infrastructure\\Backend\\SignalR\\Abstraction\\AbstractSignalRClient.cs",
               "RelativeDocumentMoniker": "Shared\\Infrastructure\\Backend\\SignalR\\Abstraction\\AbstractSignalRClient.cs",
@@ -784,12 +1023,11 @@
               "RelativeToolTip": "Shared\\Infrastructure\\Backend\\SignalR\\Abstraction\\AbstractSignalRClient.cs",
               "ViewState": "AQIAAIEAAAAAAAAAAADwv5IAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-01T12:31:07.396Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-01T12:31:07.396Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 28,
               "Title": "ChatDTO.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\DataTransferObject\\Messenger\\ChatDTO.cs",
               "RelativeDocumentMoniker": "Shared\\DataTransferObject\\Messenger\\ChatDTO.cs",
@@ -797,25 +1035,11 @@
               "RelativeToolTip": "Shared\\DataTransferObject\\Messenger\\ChatDTO.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-01T12:16:47.601Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-01T12:16:47.601Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "MessageDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\DataTransferObject\\Messenger\\MessageDTO.cs",
-              "RelativeDocumentMoniker": "Shared\\DataTransferObject\\Messenger\\MessageDTO.cs",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared\\DataTransferObject\\Messenger\\MessageDTO.cs",
-              "RelativeToolTip": "Shared\\DataTransferObject\\Messenger\\MessageDTO.cs",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAAAB4AAAAhAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-01T12:16:19.621Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 62,
               "Title": "MailOutboxRepository.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Repository\\Concrete\\MailOutboxRepository.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Repository\\Concrete\\MailOutboxRepository.cs",
@@ -823,12 +1047,11 @@
               "RelativeToolTip": "Infrastructure\\Repository\\Concrete\\MailOutboxRepository.cs",
               "ViewState": "AQIAABUAAAAAAAAAAAAjwCEAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-31T18:39:20.394Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-31T18:39:20.394Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 60,
               "Title": "MessageOutboxRepository.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Repository\\Concrete\\MessageOutboxRepository.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Repository\\Concrete\\MessageOutboxRepository.cs",
@@ -836,12 +1059,11 @@
               "RelativeToolTip": "Infrastructure\\Repository\\Concrete\\MessageOutboxRepository.cs",
               "ViewState": "AQIAACIAAAAAAAAAAABBwDsAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-31T09:37:38.209Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-31T09:37:38.209Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 61,
               "Title": "ChatNotificationHostedService.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\HostedService\\Backgroundservice\\ChatNotificationHostedService.cs",
               "RelativeDocumentMoniker": "Infrastructure\\HostedService\\Backgroundservice\\ChatNotificationHostedService.cs",
@@ -849,12 +1071,11 @@
               "RelativeToolTip": "Infrastructure\\HostedService\\Backgroundservice\\ChatNotificationHostedService.cs",
               "ViewState": "AQIAAD0AAAAAAAAAAABBwFIAAABqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-22T19:36:30.804Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-22T19:36:30.804Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 63,
               "Title": "MailHostedService.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\HostedService\\Backgroundservice\\MailHostedService.cs",
               "RelativeDocumentMoniker": "Infrastructure\\HostedService\\Backgroundservice\\MailHostedService.cs",
@@ -862,76 +1083,7 @@
               "RelativeToolTip": "Infrastructure\\HostedService\\Backgroundservice\\MailHostedService.cs",
               "ViewState": "AQIAAGQAAAAAAAAAAAAiwGwAAABGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-30T09:07:39.118Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Orientation": 0,
-      "VerticalTabListWidth": 256,
-      "FloatingWindowState": {
-        "Id": "b2a12a8b-1528-4267-9e90-04429d03c426",
-        "Display": 0,
-        "X": 662,
-        "Y": 258,
-        "Width": 2095,
-        "Height": 538,
-        "WindowState": 0
-      },
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ChatConfiguration.cs",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\EFCore\\DatabaseEntityConfiguration\\ChatConfiguration.cs",
-              "RelativeDocumentMoniker": "Shared.Infrastructure\\EFCore\\DatabaseEntityConfiguration\\ChatConfiguration.cs",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\EFCore\\DatabaseEntityConfiguration\\ChatConfiguration.cs",
-              "RelativeToolTip": "Shared.Infrastructure\\EFCore\\DatabaseEntityConfiguration\\ChatConfiguration.cs",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAowB8AAAAnAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-09T12:09:38.778Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Orientation": 0,
-      "VerticalTabListWidth": 256,
-      "FloatingWindowState": {
-        "Id": "4c46cb09-d128-4c22-ba01-0e1ec834373a",
-        "Display": 0,
-        "X": 932,
-        "Y": 618,
-        "Width": 721,
-        "Height": 314,
-        "WindowState": 0
-      },
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MessageConfiguration.cs",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\EFCore\\DatabaseEntityConfiguration\\MessageConfiguration.cs",
-              "RelativeDocumentMoniker": "Shared.Infrastructure\\EFCore\\DatabaseEntityConfiguration\\MessageConfiguration.cs",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\EFCore\\DatabaseEntityConfiguration\\MessageConfiguration.cs",
-              "RelativeToolTip": "Shared.Infrastructure\\EFCore\\DatabaseEntityConfiguration\\MessageConfiguration.cs",
-              "ViewState": "AQIAABMAAAAAAAAAAAAAACIAAAApAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-09T12:09:58.135Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-30T09:07:39.118Z"
             }
           ]
         }

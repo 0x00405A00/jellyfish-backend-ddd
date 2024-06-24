@@ -2,8 +2,8 @@
 using AutoMapper;
 using Domain.Extension;
 using Infrastructure.Abstractions;
-using Infrastructure.FileSys;
 using MediatR;
+using Shared.Infrastructure.FileSys;
 using System.Linq.Expressions;
 
 namespace Application.UnitTests.UseCase.Messenger.Chat.Commands.DeleteMessage
