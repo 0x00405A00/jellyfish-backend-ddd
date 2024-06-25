@@ -19,7 +19,7 @@ namespace Integration.Tests
                 .WithDatabase("jellyfish")
                 .WithUsername("jellyfish")
                 .WithPassword("meinDatabasePassword!")
-                .WithName("db")
+                .WithName("db-test")
                 .Build();
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -43,7 +43,8 @@ namespace Integration.Tests
                 // Add test-specific services if needed
                 services.RemoveAll(typeof(ApplicationDbContext));
                 services.RemoveAll(typeof(ApplicationDbContextMailService));
-                System.Diagnostics.Debug.WriteLine(_postgreSqlContainer.GetConnectionString());
+                var connStr = _postgreSqlContainer.GetConnectionString();
+                System.Diagnostics.Debug.WriteLine(connStr);
                 services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(_postgreSqlContainer.GetConnectionString()));
 

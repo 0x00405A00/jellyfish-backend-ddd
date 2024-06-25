@@ -111,7 +111,6 @@ namespace Infrastructure
                 _logger.LogInformation("get connectionstring from configuration");
             }
             optionsBuilder.UseLoggerFactory(loggerFactory);
-            optionsBuilder.UseNpgsql(ConnectionString);
             optionsBuilder.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
             optionsBuilder.EnableSensitiveDataLogging(true);
             optionsBuilder.AddInterceptors(new DatabaseReaderInterceptor());

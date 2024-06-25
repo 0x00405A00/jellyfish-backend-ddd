@@ -7,9 +7,12 @@ using Infrastructure.HostedService.Backgroundservice;
 using Infrastructure.Mail;
 using Infrastructure.Repository.Concrete;
 using Microsoft.AspNetCore.HttpLogging;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver.Core.Configuration;
 using Serilog;
 using Shared.Authentification.Service;
 using Shared.Infrastructure.EFCore.Interceptors;
@@ -63,11 +66,17 @@ namespace Infrastructure
             var sp = services.BuildServiceProvider();
             var configuration = sp.GetRequiredService<IConfiguration>();
             services.AddScoped<DbSaveChangesInterceptor>();
-            services.AddDbContext<ApplicationDbContext>();
+            services.AddDbContext<ApplicationDbContext>(options=>
+            {
+                options.UseNpgsql(ApplicationDbContext.ConnectionString);
+            });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IMailoutboxRepository, MailOutboxRepository>();
 
-            services.AddScoped<ApplicationDbContextMailService>();
+            services.AddDbContext<ApplicationDbContextMailService>(options =>
+            {
+                options.UseNpgsql(ApplicationDbContextMailService.ConnectionString);
+            });
             services.AddScoped<IUnitOfWorkMailService, UnitOfWorkMailService>();
             services.AddScoped<IMailoutboxRepositoryMailService, MailOutboxRepositoryMailService>();//<----- für MailHostedService
 
