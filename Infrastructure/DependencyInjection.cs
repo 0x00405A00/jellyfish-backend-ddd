@@ -66,17 +66,11 @@ namespace Infrastructure
             var sp = services.BuildServiceProvider();
             var configuration = sp.GetRequiredService<IConfiguration>();
             services.AddScoped<DbSaveChangesInterceptor>();
-            services.AddDbContext<ApplicationDbContext>(options=>
-            {
-                options.UseNpgsql(ApplicationDbContext.ConnectionString);
-            });
+            services.AddDbContext<ApplicationDbContext>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IMailoutboxRepository, MailOutboxRepository>();
-
-            services.AddDbContext<ApplicationDbContextMailService>(options =>
-            {
-                options.UseNpgsql(ApplicationDbContextMailService.ConnectionString);
-            });
+            //services.AddDbContext<ApplicationDbContextMailService>();
             services.AddScoped<IUnitOfWorkMailService, UnitOfWorkMailService>();
             services.AddScoped<IMailoutboxRepositoryMailService, MailOutboxRepositoryMailService>();//<----- für MailHostedService
 

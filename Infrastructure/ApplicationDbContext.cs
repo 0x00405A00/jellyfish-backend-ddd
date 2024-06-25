@@ -102,14 +102,15 @@ namespace Infrastructure
                 ConnectionString = _configuration.GetConnectionString(ConnectionStringAlias);
                 loggerFactory = SerilogExtension.GetLoggerFactory(_configuration);
                 _logger = loggerFactory.CreateLogger<ApplicationDbContext>();
-                _logger.LogInformation("configuration is null, get default connectionstring");
+                _logger.LogInformation("get connectionstring from configuration");
             }
             else
             {
                 loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
                 _logger = loggerFactory.CreateLogger<ApplicationDbContext>();
-                _logger.LogInformation("get connectionstring from configuration");
+                _logger.LogInformation("configuration is null, get default connectionstring");
             }
+            optionsBuilder.UseNpgsql(ConnectionString);
             optionsBuilder.UseLoggerFactory(loggerFactory);
             optionsBuilder.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
             optionsBuilder.EnableSensitiveDataLogging(true);
@@ -187,7 +188,7 @@ namespace Infrastructure
         }
         #endregion
     }
-    public partial class ApplicationDbContextMailService : ApplicationDbContext
+    /*public partial class ApplicationDbContextMailService : ApplicationDbContext
     {
         public ApplicationDbContextMailService(IConfiguration configuration) : base(configuration)
         {
@@ -208,5 +209,5 @@ namespace Infrastructure
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder) => base.ConfigureConventions(configurationBuilder);
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) => base.OnModelCreating(modelBuilder);
-    }
+    }*/
 }

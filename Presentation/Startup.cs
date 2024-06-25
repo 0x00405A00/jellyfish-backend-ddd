@@ -6,6 +6,8 @@ using Infrastructure.SignalR;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
 using Presentation;
 using Presentation.Middleware;
 using Serilog;
@@ -62,6 +64,8 @@ namespace WebApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
                 app.UseExceptionHandler("/error-debug");
+                var dbConext = serviceProvider.GetRequiredService<ApplicationDbContext>(); 
+                var connectionString = dbConext.Options.FindExtension<NpgsqlOptionsExtension>()?.ConnectionString;
                 app.AppendMigrations();
             }
             else

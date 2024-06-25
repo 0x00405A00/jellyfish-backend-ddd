@@ -40,9 +40,15 @@ namespace Shared.Infrastructure.EFCore
         }
         public static ModelBuilder CreateSampleData(this ModelBuilder modelBuilder)
         {
-            _isSampleDataLoaded = true;
             modelBuilder.SampleUsers();
             modelBuilder.SampleChats();
+            //dotnet ef tool doesnt take consideration of conditions, i dont know why (bug)
+            //-> dotnet ef database update --project .\Infrastructure.csproj --context ApplicationDbContext
+            //Usual the method calls "modelBuilder.SampleUsers();" and "modelBuilder.SampleChats();" are inside the below code block in reason of a ef core bug its moved out of the block upper here
+            if (!IsSampleDataLoaded())
+            {
+                _isSampleDataLoaded = true;
+            }
             return modelBuilder;
         }
         public static ModelBuilder CreateOwnedTypes(this ModelBuilder modelBuilder)

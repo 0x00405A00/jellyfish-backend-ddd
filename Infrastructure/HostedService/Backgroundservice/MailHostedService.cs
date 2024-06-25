@@ -49,7 +49,7 @@ namespace Infrastructure.HostedService.Backgroundservice
         {
             using (var scope = serviceProvider.CreateScope())
             {
-                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContextMailService>();
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWorkMailService>();
                 var mailoutboxRepository = scope.ServiceProvider.GetRequiredService<IMailoutboxRepositoryMailService>();
                 var mailHandler = scope.ServiceProvider.GetRequiredService<IMailHandler>();

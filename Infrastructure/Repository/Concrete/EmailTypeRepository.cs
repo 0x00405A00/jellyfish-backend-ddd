@@ -5,7 +5,7 @@ namespace Infrastructure.Repository.Concrete
 {
     internal class EmailTypeRepository : GenericRepository<EmailSendingType>, IEmailTypeRepository
     {
-        public EmailTypeRepository(ApplicationDbContextMailService applicationDbContext) : base(applicationDbContext)
+        public EmailTypeRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
         }
     }

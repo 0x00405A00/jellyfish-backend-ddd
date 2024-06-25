@@ -59,7 +59,7 @@ namespace Infrastructure
     {
         public UnitOfWorkMailService(
             ILogger<UnitOfWork> logger,
-            ApplicationDbContextMailService applicationDbContext,
+            ApplicationDbContext applicationDbContext,
             IMediator mediator) : base(logger,applicationDbContext,mediator)
         {
         }

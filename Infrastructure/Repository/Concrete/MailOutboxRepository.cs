@@ -47,7 +47,7 @@ namespace Infrastructure.Repository.Concrete
     }
     internal class MailOutboxRepositoryMailService : MailOutboxRepository, IMailoutboxRepositoryMailService
     {
-        public MailOutboxRepositoryMailService(ApplicationDbContextMailService applicationDbContext) : base(applicationDbContext)
+        public MailOutboxRepositoryMailService(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
         }
     }

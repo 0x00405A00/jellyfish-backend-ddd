@@ -38,8 +38,19 @@ namespace Shared.Infrastructure.EFCore
         };
         private static List<(ChatId, string, string, Picture, List<UserId>)> _sampleChats = new List<(ChatId, string, string, Picture, List<UserId>)>()
         {
-            (SampleChatIds.PrivateChatWithTwoMembers,"Private Chat","Chatdesc",null,new List<UserId>(3){ SampleUserIds.DarthVader,SampleUserIds.DarthMaul, UserConst.RootUserId.ToIdentification<UserId>()}),
-            (SampleChatIds.GroupChatWith4Members,"Our Groupchat","Against the republic",null,new List<UserId>(5){ UserConst.RootUserId.ToIdentification<UserId>(),SampleUserIds.DarthVader,SampleUserIds.DarthMaul,SampleUserIds.LukeSkywalker,SampleUserIds.LaiaOrgana }),
+            (SampleChatIds.PrivateChatWithTwoMembers,"Private Chat","Chatdesc",null,new List<UserId>(3)
+            { 
+                SampleUserIds.DarthVader,
+                SampleUserIds.DarthMaul, 
+                UserConst.RootUserId.ToIdentification<UserId>()
+            }),
+            (SampleChatIds.GroupChatWith4Members,"Our Groupchat","Against the republic",null,new List<UserId>(5){ 
+                UserConst.RootUserId.ToIdentification<UserId>(),
+                SampleUserIds.DarthVader,
+                SampleUserIds.DarthMaul,
+                SampleUserIds.LukeSkywalker,
+                SampleUserIds.LaiaOrgana 
+            }),
         };
         public static Chat CreateSampleChat(
             ChatId chatId,
@@ -257,6 +268,8 @@ namespace Shared.Infrastructure.EFCore
                             memberTuple,
                             owner);
                     }
+                    if (chatMembers.Any(x => x.UserForeignKey == chatRelationToUser.UserForeignKey && x.ChatForeignKey == chatRelationToUser.ChatForeignKey))
+                        throw new Exception("user is already a member in this chat");
 
                     chatMembers.Add(chatRelationToUser);
                     tmp.Add(chatRelationToUser);
@@ -302,6 +315,7 @@ namespace Shared.Infrastructure.EFCore
 
             modelBuilder.Entity<Chat>()
                 .HasData(chats);
+
             modelBuilder.Entity<ChatRelationToUser>()
                 .HasData(chatRelationToUsers);
             modelBuilder.Entity<Message>()
