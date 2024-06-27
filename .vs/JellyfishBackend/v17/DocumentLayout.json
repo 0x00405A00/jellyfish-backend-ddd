@@ -3,8 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9E8689F0-9B00-4511-A722-0145E1E79E44}|EndToEnd.Tests\\EndToEnd.Tests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\endtoend.tests\\customwebapplicationfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9E8689F0-9B00-4511-A722-0145E1E79E44}|EndToEnd.Tests\\EndToEnd.Tests.csproj|solutionrelative:endtoend.tests\\customwebapplicationfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\infrastructure\\infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{96746752-E0D7-4E83-AC21-EC899BA72CAD}|Shared.Infrastructure\\Shared.Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared.infrastructure\\filesys\\filehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96746752-E0D7-4E83-AC21-EC899BA72CAD}|Shared.Infrastructure\\Shared.Infrastructure.csproj|solutionrelative:shared.infrastructure\\filesys\\filehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\infrastructure\\signalr\\messengerhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\signalr\\messengerhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E8689F0-9B00-4511-A722-0145E1E79E44}|EndToEnd.Tests\\EndToEnd.Tests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\endtoend.tests\\authentification\\authentificationcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E8689F0-9B00-4511-A722-0145E1E79E44}|EndToEnd.Tests\\EndToEnd.Tests.csproj|solutionrelative:endtoend.tests\\authentification\\authentificationcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\presentation\\controllers\\api\\v1\\authentificationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|solutionrelative:presentation\\controllers\\api\\v1\\authentificationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1AAAAA02-F7B3-41F5-802B-C0B32B95EFBE}|Integration.Tests\\Integration.Tests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\integration.tests\\customwebapplicationfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -17,18 +33,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\presentation\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7FB47A1C-2D44-4B02-AC92-86A7F7BA1CC0}|Presentation\\Presentation.csproj|solutionrelative:presentation\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9E8689F0-9B00-4511-A722-0145E1E79E44}|EndToEnd.Tests\\EndToEnd.Tests.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\endtoend.tests\\authentification\\authentificationcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9E8689F0-9B00-4511-A722-0145E1E79E44}|EndToEnd.Tests\\EndToEnd.Tests.csproj|solutionrelative:endtoend.tests\\authentification\\authentificationcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96746752-E0D7-4E83-AC21-EC899BA72CAD}|Shared.Infrastructure\\Shared.Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared.infrastructure\\filesys\\filehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{96746752-E0D7-4E83-AC21-EC899BA72CAD}|Shared.Infrastructure\\Shared.Infrastructure.csproj|solutionrelative:shared.infrastructure\\filesys\\filehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{96746752-E0D7-4E83-AC21-EC899BA72CAD}|Shared.Infrastructure\\Shared.Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared.infrastructure\\efcore\\modelbuilderextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -53,10 +57,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{96746752-E0D7-4E83-AC21-EC899BA72CAD}|Shared.Infrastructure\\Shared.Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared.infrastructure\\efcore\\databaseentityconfiguration\\chatrelationtouserconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{96746752-E0D7-4E83-AC21-EC899BA72CAD}|Shared.Infrastructure\\Shared.Infrastructure.csproj|solutionrelative:shared.infrastructure\\efcore\\databaseentityconfiguration\\chatrelationtouserconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\infrastructure\\signalr\\messengerhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{90B9B56A-62E9-40C4-87C0-75085992A0CE}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\signalr\\messengerhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{96746752-E0D7-4E83-AC21-EC899BA72CAD}|Shared.Infrastructure\\Shared.Infrastructure.csproj|c:\\users\\mika\\source\\repos\\jellyfish-backend-ddd\\shared.infrastructure\\extension\\repository\\chatsqueryableextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -218,11 +218,11 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 15,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "ChatController.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Controllers\\Api\\v1\\Messenger\\ChatController.cs",
               "RelativeDocumentMoniker": "Presentation\\Controllers\\Api\\v1\\Messenger\\ChatController.cs",
@@ -236,7 +236,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "Chat.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Entities\\Chats\\Chat.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Chats\\Chat.cs",
@@ -264,13 +264,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 2,
               "Title": "MessengerHub.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\SignalR\\MessengerHub.cs",
               "RelativeDocumentMoniker": "Infrastructure\\SignalR\\MessengerHub.cs",
               "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\SignalR\\MessengerHub.cs",
               "RelativeToolTip": "Infrastructure\\SignalR\\MessengerHub.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAwBkAAAANAAAA",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAwBQAAABRAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-22T19:24:50.091Z",
               "IsPinned": true,
@@ -286,15 +286,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Message.cs",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Entities\\Messages\\Message.cs",
-              "RelativeDocumentMoniker": "Domain\\Entities\\Messages\\Message.cs",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Entities\\Messages\\Message.cs",
-              "RelativeToolTip": "Domain\\Entities\\Messages\\Message.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAuwBEAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-08T19:05:56.292Z",
+              "DocumentIndex": 0,
+              "Title": "Infrastructure",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Infrastructure.csproj",
+              "RelativeDocumentMoniker": "Infrastructure\\Infrastructure.csproj",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Infrastructure.csproj",
+              "RelativeToolTip": "Infrastructure\\Infrastructure.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-06-27T15:27:02.476Z",
               "EditorCaption": ""
             },
             {
@@ -312,7 +312,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 1,
+              "Title": "FileHandler.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\FileSys\\FileHandler.cs",
+              "RelativeDocumentMoniker": "Shared.Infrastructure\\FileSys\\FileHandler.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\FileSys\\FileHandler.cs",
+              "RelativeToolTip": "Shared.Infrastructure\\FileSys\\FileHandler.cs",
+              "ViewState": "AQIAADUAAAAAAAAAAAAjwEQAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T13:36:31.801Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Message.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Entities\\Messages\\Message.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\Messages\\Message.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Domain\\Entities\\Messages\\Message.cs",
+              "RelativeToolTip": "Domain\\Entities\\Messages\\Message.cs",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAuwBEAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-08T19:05:56.292Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AuthentificationController.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Controllers\\Api\\v1\\AuthentificationController.cs",
+              "RelativeDocumentMoniker": "Presentation\\Controllers\\Api\\v1\\AuthentificationController.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Controllers\\Api\\v1\\AuthentificationController.cs",
+              "RelativeToolTip": "Presentation\\Controllers\\Api\\v1\\AuthentificationController.cs",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-27T15:08:53.074Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "MailOutboxRepository.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\Repository\\Concrete\\MailOutboxRepository.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Repository\\Concrete\\MailOutboxRepository.cs",
@@ -325,7 +364,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "ModelBuilderExtension.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\EFCore\\ModelBuilderExtension.cs",
               "RelativeDocumentMoniker": "Shared.Infrastructure\\EFCore\\ModelBuilderExtension.cs",
@@ -338,7 +377,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "SampleDataSeedExtension.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\EFCore\\SampleDataSeedExtension.cs",
               "RelativeDocumentMoniker": "Shared.Infrastructure\\EFCore\\SampleDataSeedExtension.cs",
@@ -351,7 +390,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "CreateMessageCommandHandler.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateMessage\\CreateMessageCommandHandler.cs",
               "RelativeDocumentMoniker": "Shared.Application\\CQS\\Messenger\\Chat\\Command\\CreateMessage\\CreateMessageCommandHandler.cs",
@@ -364,7 +403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "DependencyInjection.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Infrastructure\\DependencyInjection.cs",
               "RelativeDocumentMoniker": "Infrastructure\\DependencyInjection.cs",
@@ -377,59 +416,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Startup.cs",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Startup.cs",
-              "RelativeDocumentMoniker": "Presentation\\Startup.cs",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Presentation\\Startup.cs",
-              "RelativeToolTip": "Presentation\\Startup.cs",
-              "ViewState": "AQIAACAAAAAAAAAAAAASwCwAAAAVAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-25T17:10:05.112Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CustomWebApplicationFactory.cs",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\EndToEnd.Tests\\CustomWebApplicationFactory.cs",
-              "RelativeDocumentMoniker": "EndToEnd.Tests\\CustomWebApplicationFactory.cs",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\EndToEnd.Tests\\CustomWebApplicationFactory.cs",
-              "RelativeToolTip": "EndToEnd.Tests\\CustomWebApplicationFactory.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAADYAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-27T14:22:56.526Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AuthentificationControllerTests.cs",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\EndToEnd.Tests\\Authentification\\AuthentificationControllerTests.cs",
-              "RelativeDocumentMoniker": "EndToEnd.Tests\\Authentification\\AuthentificationControllerTests.cs",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\EndToEnd.Tests\\Authentification\\AuthentificationControllerTests.cs",
-              "RelativeToolTip": "EndToEnd.Tests\\Authentification\\AuthentificationControllerTests.cs",
-              "ViewState": "AQIAABwAAAAAAAAAAAAqwCMAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-27T14:29:26.513Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "FileHandler.cs",
-              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\FileSys\\FileHandler.cs",
-              "RelativeDocumentMoniker": "Shared.Infrastructure\\FileSys\\FileHandler.cs",
-              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\FileSys\\FileHandler.cs",
-              "RelativeToolTip": "Shared.Infrastructure\\FileSys\\FileHandler.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-24T13:36:31.801Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "ChatRelationToUserConfiguration.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Shared.Infrastructure\\EFCore\\DatabaseEntityConfiguration\\ChatRelationToUserConfiguration.cs",
               "RelativeDocumentMoniker": "Shared.Infrastructure\\EFCore\\DatabaseEntityConfiguration\\ChatRelationToUserConfiguration.cs",
@@ -918,7 +905,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "CustomWebApplicationFactory.cs",
               "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\Integration.Tests\\CustomWebApplicationFactory.cs",
               "RelativeDocumentMoniker": "Integration.Tests\\CustomWebApplicationFactory.cs",
@@ -927,6 +914,40 @@
               "ViewState": "AQIAAA8AAAAAAAAAAAAowD4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-24T13:32:53.704Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "FloatingWindowState": {
+        "Id": "2e948028-ebdd-407d-94af-cfa7989a5034",
+        "Display": 0,
+        "X": 453,
+        "Y": 196,
+        "Width": 2304,
+        "Height": 628,
+        "WindowState": 0
+      },
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuthentificationControllerTests.cs",
+              "DocumentMoniker": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\EndToEnd.Tests\\Authentification\\AuthentificationControllerTests.cs",
+              "RelativeDocumentMoniker": "EndToEnd.Tests\\Authentification\\AuthentificationControllerTests.cs",
+              "ToolTip": "C:\\Users\\Mika\\source\\repos\\jellyfish-backend-ddd\\EndToEnd.Tests\\Authentification\\AuthentificationControllerTests.cs",
+              "RelativeToolTip": "EndToEnd.Tests\\Authentification\\AuthentificationControllerTests.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-27T14:29:26.513Z",
               "EditorCaption": ""
             }
           ]

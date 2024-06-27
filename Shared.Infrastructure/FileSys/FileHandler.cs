@@ -1,7 +1,9 @@
-﻿//#define HOST_IS_WINDOWS
-using Domain.ValueObjects;
+﻿using Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
+using System.Reflection;
+#if _WINDOWS
 using System.Security.AccessControl;
+#endif
 
 namespace Shared.Infrastructure.FileSys
 {
@@ -52,18 +54,26 @@ namespace Shared.Infrastructure.FileSys
             this.logger = logger;
             this.antiVirus = antiVirus;
             this.azureAdultContentDetection = azureAdultContentDetection;
-#if HOST_IS_WINDOWS
+#if _WINDOWS
             if (Environment.OSVersion.Platform == PlatformID.Unix)
             {
                 throw new Exception($"try to use {nameof(FileHandler)} with HOST_IS_WINDOWS==true, but Host is an unix derivat (Host should be Windows)");
             }
-#else
+#elif _LINUX
             if(Environment.OSVersion.Platform != PlatformID.Unix)
             {
                 throw new Exception($"try to use {nameof(FileHandler)} with HOST_IS_WINDOWS==false, but Hosts is anything other than Linux (Host should be Linux)");
             }
 #endif
+            var method1 = this.GetType().GetMethods();
         }
+
+#if _WINDOWS
+    public void TestWindows() {}
+#elif _LINUX
+
+    public void TestLinux() {}
+#endif
 
         void IFileHandler.CreateApplicationFolders()
         {
@@ -88,7 +98,7 @@ namespace Shared.Infrastructure.FileSys
                         folderPathRightsExt);
 #else
 
-                    folderInfo.SetFolderPermissions(
+        folderInfo.SetFolderPermissions(
                         folderPathRightsExt);
 #endif*/
 
@@ -168,7 +178,7 @@ namespace Shared.Infrastructure.FileSys
             return await File.ReadAllBytesAsync(mediaContent.FilePath, cancellationToken);
         }
 
-#if HOST_IS_WINDOWS
+#if _WINDOWS
         public static Dictionary<FileSystemRightsExt, FileSystemRights> FileSystemRightsToWindowsPermissions = new Dictionary<FileSystemRightsExt, FileSystemRights>
             {
             { FileSystemRightsExt.Read, FileSystemRights.Read },
@@ -178,7 +188,7 @@ namespace Shared.Infrastructure.FileSys
             { FileSystemRightsExt.Read | FileSystemRightsExt.Write, FileSystemRights.Read | FileSystemRights.Write },
             { FileSystemRightsExt.FullControl, FileSystemRights.FullControl },
         };
-#else
+#elif _LINUX
         public static Dictionary<FileSystemRightsExt, string> FileSystemRightsToLinuxPermissions = new Dictionary<FileSystemRightsExt, string>
         {
             { FileSystemRightsExt.Read, "400" },
@@ -207,7 +217,7 @@ namespace Shared.Infrastructure.FileSys
             return directoryInfo;
         }
 
-#if HOST_IS_WINDOWS
+#if _WINDOWS
         public static void SetFolderPermissions(this DirectoryInfo directoryInfo, string identityName, FileSystemRightsExt fileSystemRights)
         {
             try
@@ -236,7 +246,7 @@ namespace Shared.Infrastructure.FileSys
         {
             return FileSystemRightsToWindowsPermissions.TryGetValue(fileSystemRightsExt, out var result)? result: FileSystemRights.Read;
         }
-#else
+#elif _LINUX
         public static void SetFolderPermissions(this DirectoryInfo directoryInfo, FileSystemRightsExt fileSystemRights)
         {
             try
