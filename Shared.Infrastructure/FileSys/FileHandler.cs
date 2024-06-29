@@ -65,7 +65,6 @@ namespace Shared.Infrastructure.FileSys
                 throw new Exception($"try to use {nameof(FileHandler)} with HOST_IS_WINDOWS==false, but Hosts is anything other than Linux (Host should be Linux)");
             }
 #endif
-            var method1 = this.GetType().GetMethods();
         }
 
 #if _WINDOWS
@@ -73,6 +72,8 @@ namespace Shared.Infrastructure.FileSys
 #elif _LINUX
 
     public void TestLinux() {}
+#else
+        public void Other() { }
 #endif
 
         void IFileHandler.CreateApplicationFolders()

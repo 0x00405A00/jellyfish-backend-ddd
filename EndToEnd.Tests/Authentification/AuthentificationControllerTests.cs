@@ -1,4 +1,5 @@
 ﻿using Domain.ValueObjects;
+using EndToEnd.Tests.Shared;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Shared.ApiDataTransferObject;
 using Shared.DataTransferObject;
@@ -14,22 +15,14 @@ namespace EndToEnd.Tests.Authentification
 
         public AuthentificationControllerTests(CustomWebApplicationFactory<Startup> factory)
         {
-
-            var options = new WebApplicationFactoryClientOptions()
-            { 
-                AllowAutoRedirect = false,
-            };
-            _client = factory.CreateClient(options);
-            _client.DefaultRequestHeaders.Add("User-Agent", "NETHTTPCL");
-            _client.DefaultRequestHeaders.Add("Accept", "application/json");
-            var baseAddr  = _client.BaseAddress;
+            _client = factory.CreateHttpClient(Consts.API.V1.RelativePathBaseAddress);
         }
 
         [Fact]
         public async Task CreateAuth_ReturnsSuccessfullAuthentification()
         {
             //Arrange
-            var request = new HttpRequestMessage(HttpMethod.Post, "/api/v1/authentification/login");
+            var request = new HttpRequestMessage().AddUri(HttpMethod.Post, "authentification/login").PrepareRequest();
             var authObject = new UserLoginDTO { Email ="root@localhost.local",Password= "root@localhost.local" };
             string authObjectJson = JsonSerializer.Serialize(authObject);
             var content = new StringContent(authObjectJson, Encoding.UTF8, "application/json");
@@ -54,7 +47,7 @@ namespace EndToEnd.Tests.Authentification
         public async Task CreateAuth_ReturnsFailureAuthentification()
         {
             //Arrange
-            var request = new HttpRequestMessage(HttpMethod.Post, "/api/v1/authentification/login");
+            var request = new HttpRequestMessage().AddUri(HttpMethod.Post, "authentification/login").PrepareRequest();
             var authObject = new UserLoginDTO { Email = "iamnotregistered@web.de", Password = "root@localhost.local" };
             string authObjectJson = JsonSerializer.Serialize(authObject);
             var content = new StringContent(authObjectJson, Encoding.UTF8, "application/json");
@@ -76,12 +69,11 @@ namespace EndToEnd.Tests.Authentification
         public async Task Logout_ReturnsSuccessfullLogout()
         {
             //Arrange
-            var request = new HttpRequestMessage(HttpMethod.Post, "/api/v1/authentification/logout");
-            var authObject = new UserLoginDTO { Email = "root@localhost.local", Password = "root@localhost.local" };
-            string authObjectJson = JsonSerializer.Serialize(authObject);
-            var content = new StringContent(authObjectJson, Encoding.UTF8, "application/json");
-            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            request.Content = content;
+            string email = "root@localhost.local";
+            string password = "root@localhost.local";
+            var auth = await _client.GetTokenAsync("authentification/login", email, password);
+
+            var request = new HttpRequestMessage().AddUri(HttpMethod.Post, "authentification/logout").PrepareRequest(auth.Token);
 
             //Act
             var response = await _client.SendAsync(request);
@@ -95,28 +87,6 @@ namespace EndToEnd.Tests.Authentification
             Assert.NotEmpty(responseAuthentification.Token);
             Assert.NotEmpty(responseAuthentification.RefreshToken);
             Assert.Equal(responseAuthentification.IsAuthentificated, true);
-        }
-
-        [Fact]
-        public async Task Logout_ReturnsFailureLogout()
-        {
-            //Arrange
-            var request = new HttpRequestMessage(HttpMethod.Post, "/api/v1/authentification/login");
-            var authObject = new UserLoginDTO { Email = "iamnotregistered@web.de", Password = "root@localhost.local" };
-            string authObjectJson = JsonSerializer.Serialize(authObject);
-            var content = new StringContent(authObjectJson, Encoding.UTF8, "application/json");
-            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            request.Content = content;
-
-            //Act
-            var response = await _client.SendAsync(request);
-
-            //Assert 
-            var responseString = await response.Content.ReadAsStringAsync();
-            var responseAuthentification = JsonSerializer.Deserialize<ApiDataTransferObject<Result<AuthDTO>>>(responseString);
-
-            Assert.NotNull(responseAuthentification);
-            Assert.NotNull(responseAuthentification.Errors.Any(x => x.Message == "username or password wrong"));
         }
 
     }
